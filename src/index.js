@@ -2,12 +2,13 @@
  * TO FORCE BOOTSTRAP.CSS TO LOAD BEFORE MAIN.CSS
  * PLACE BEFORE ANYTHING ELSE
  */
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 /**
  * REACT
  */
-import React from 'react';
+import React, { Suspense, lazy }  from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter} from 'react-router-dom'
 /**
  * OUR UTILS LIBRARY
  */
@@ -28,14 +29,21 @@ import configureStore from 'configureStore';
  * and this.props.intl.formatMessage({id:'xxx.yyy'});
  */
 import {addLocaleData, IntlProvider} from 'react-intl';
-/**
- * APP
- */
-import App from 'screens/App/App';
+
 /**
  * CSS
  */
-import 'assets/css/style.css';
+import "font-awesome/css/font-awesome.min.css";
+import "./index.scss";
+import Spinner from "./components/spinner/spinner";
+/**
+ * APP
+ */
+//import App from 'screens/App/App';
+const App = lazy(() => import("./screens/App/App"));
+
+
+
 /**
  * Deployment environment
  */
@@ -66,15 +74,18 @@ const startApp = (lang, langFile) => {
 
 	const Wrapper = () => {
 		return (
-			<IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages}>
+			<IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages} >
 				<Provider store={store}>
-					<App />
+				<Suspense fallback={<Spinner />}>
+					<App {...this.props}/>
+				</Suspense>
 				</Provider>
 			</IntlProvider>
 		);
 	};
 
-	ReactDOM.render(<Wrapper />, document.getElementById('root'));
+	ReactDOM.render(<BrowserRouter><Wrapper /></BrowserRouter>, document.getElementById('root'));
+	
 };
 
 const activateLanguageSuccess = (lang, langFile) => {

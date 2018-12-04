@@ -2,14 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="https://livello-mission-control.netlify.com/android-chrome-192x192.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -19,8 +21,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-    <script>
+    <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900|Montserrat:300,400,500,600,700,800,900"
+      />
+    
+    <title>Livello Mission Control</title>
+
+    <!-- Latest minor release -->
+    <script src="https://cdn.auth0.com/js/lock/11.12/lock.min.js"></script>
+
+    <!-- Latest patch release (recommended for production) -->
+    <script src="https://cdn.auth0.com/js/lock/11.12.1/lock.min.js"></script>
+    
+    <script>     
+
+    
     // Simple cookie framework available on https://github.com/madmurphy/cookies.js
     window.Cookies = {
       getItem: function (sKey) {

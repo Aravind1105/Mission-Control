@@ -25,15 +25,16 @@ export default {
 		console.info('******** routesMapOptions FILTER onAfterChange *************');
 		const st = getState();
 		const { type } = st.location
-
+		
 		// GO TO STARTUP PAGE
 		// if the router identifies the location as / (HOME)
 		// means that we need to do the 1st main call and get from the api
 		// the information about which is the startup page to show
-		if(type==='HOME' && typeof st.app.startupPage !== 'undefined'){
+		if(type==='HOME' && typeof st.app.startupPage !== 'undefined'){			
 			dispatch({
-				type: st.app.startupPage
-			});
+				type: st.app.startupPage,
+				auth: st.app.auth							
+			});		
 		}
 	}
 }

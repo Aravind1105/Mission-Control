@@ -4,7 +4,9 @@ import { connectRoutes } from 'redux-first-router';
 
 import routesMap from 'routesMap';
 import routesFilter from 'routesMapOptions';
-import * as reducers from 'reducers';
+//import * as reducers from 'reducers';
+import app from './reducers/AppReducer';
+import contactsReducer from "./reducers/contacts/";
 import * as actionCreators from 'actions';
 
 import logger from 'redux-logger';
@@ -18,7 +20,7 @@ export default history => {
 		enhancer
 	} = connectRoutes( history, routesMap, routesFilter );
 
-	const rootReducer = combineReducers({ ...reducers, location: reducer });
+	const rootReducer = combineReducers({ app, contactsReducer, location: reducer });
 	const middlewares = applyMiddleware(middleware, thunk, logger);
 	const enhancers = composeEnhancers(enhancer, middlewares);
 

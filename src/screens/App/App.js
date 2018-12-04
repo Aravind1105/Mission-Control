@@ -1,45 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
+import "react-perfect-scrollbar/dist/css/styles.css";
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
+import Spinner from "../../components/spinner/spinner";
 
-import logo from 'assets/img/logo.svg';
-import './App.css';
+import MainLayout from "../../components/mainLayout";
+import LoginPage from "../../components/login";
+const LazyContacts = lazy(() => import("../../views/contacts/contacts"));
+
 
 /**
  * i18n
  * use <FormattedMessage id="xxx.yyy"/> when inside tags
  * and this.props.intl.formatMessage({id:'xxx.yyy'});
  */
-import { FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
-class App extends Component {
 
+class App extends Component { 
+  
   processMessage() {
 
   }
-
-  render() {
-    return (
+  
+  render() {        
+    return (      
       <div className="App">
       {{
-          'HOME': (
-            <div>
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <h1 className="App-title">
-                  <FormattedMessage id="screens.app.welcomeMessage"/>
-                </h1>
-              </header>
-              <p className="App-intro">
-                  <span title={this.props.intl.formatMessage({id:'screens.app.title1'},{other_form:'injectIntl'})}>
-                  <FormattedMessage id="screens.app.msg1" values={{script_path: <code>src/screens/App/App.js</code>}}/>
-                  </span>
-              </p>
-            </div>
-          ),
-          '@@redux-first-router/NOT_FOUND': (
-              <div>Page not found.</div>
-          )
+        'HOME': (          
+          <LoginPage ></LoginPage>                      
+        ),
+        'MAIN': (                            
+          <MainLayout></MainLayout> 
+        ),
+        'USERS': (            
+        <MainLayout><LazyContacts></LazyContacts></MainLayout>
+        ),
+        '@@redux-first-router/NOT_FOUND': (
+            <div>Page not found.</div>
+        )
       }[this.props.location.type]}
       </div>
     );

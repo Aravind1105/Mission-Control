@@ -1,0 +1,25 @@
+@import "../color";
+@import "../util";
+
+.login-layout {
+    background-image: url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e0245bb4e87077312cc3d102e68c1efd&auto=format&fit=crop&w=1035&q=80");
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    .navbar {
+        padding: 50px 50px;
+    }
+    .jumbotron {
+        padding: 100px 100px;
+        background-color: whitesmoke;  
+        opacity: 0.85;   
+    }
+    .h1{
+        text-decoration-color: white;
+    }
+    .footer {
+        padding: 120px 120px;
+    }
+}    
+
+

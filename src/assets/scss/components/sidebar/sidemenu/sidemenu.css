@@ -1,0 +1,28 @@
+.item {
+  line-height: 2rem;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 30px 10px 24px;
+  position: relative;
+  margin: 5px 0; }
+  .item .menu-icon {
+    top: 9px;
+    left: 22px;
+    position: absolute; }
+    .item .menu-icon svg {
+      stroke-width: 1.6;
+      color: #f8f9fa; }
+  .item .menu-item-text {
+    display: block;
+    margin-left: 40px;
+    font-weight: 400;
+    text-decoration: none;
+    color: #f8f9fa;
+    font-size: 0.95rem; }
+  .item:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+    cursor: pointer;
+    text-decoration: none; }
+  .item.singleItem {
+    padding: 10px 30px 10px 14px; }

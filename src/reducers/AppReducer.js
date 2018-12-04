@@ -1,3 +1,8 @@
+import { NOT_FOUND } from "redux-first-router";
+import Auth from '../Auth/Auth';
+
+const auth = new Auth();
+
 const initialState = {
 	showLoader: false,
 	message: {
@@ -6,13 +11,22 @@ const initialState = {
 		title: "Info!",
 		text: "This is an info message."
 	},
+	auth,
 	notifications: [],
 	defaultStartupPage: "HOME"
 };
 
 export default (state = initialState, action = {}) => {
 	switch(action.type){
-		default:
+		case "HOME":
 			return state;
+		case "MAIN":			
+			return state;
+		case "USERS":
+			return state;
+		case NOT_FOUND:
+			return null;
+		default:
+			return state;	
 	}
 };
