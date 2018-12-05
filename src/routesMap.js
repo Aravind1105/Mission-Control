@@ -29,13 +29,13 @@ const routesMap = {
 		// initialDispatch: false
 	},
 
-	CALENDER: {
-		path: '/calender',
-	}, 
-
 	USERS: {
 		path: '/users',
 		
+	}, 
+
+	PRODUCTS: {
+		path: '/products',		
 	}, 
 
 	DASHBOARD: {

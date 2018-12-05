@@ -24,6 +24,8 @@ export default (state = initialState, action = {}) => {
 			return state;
 		case "USERS":
 			return state;
+		case "PRODUCTS":
+			return state;
 		case NOT_FOUND:
 			return null;
 		default:

@@ -8,7 +8,7 @@
  */
 import React, { Suspense, lazy }  from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter} from 'react-router-dom'
+
 /**
  * OUR UTILS LIBRARY
  */
@@ -84,7 +84,7 @@ const startApp = (lang, langFile) => {
 		);
 	};
 
-	ReactDOM.render(<BrowserRouter><Wrapper /></BrowserRouter>, document.getElementById('root'));
+	ReactDOM.render(<Wrapper />, document.getElementById('root'));
 	
 };
 

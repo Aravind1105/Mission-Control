@@ -1,10 +1,14 @@
 // import external modules
-import React, { PureComponent } from "react";
+import React, { PureComponent, lazy } from "react";
 import classnames from "classnames";
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { BrowserRouter} from 'react-router-dom';
+import Auth from '../Auth/Auth';
+
 
 // import internal(own) modules
+
 import { FoldedContentConsumer, FoldedContentProvider } from "../utility/context/toggleContentContext";
 import Sidebar from "./sidebar/sidebar";
 import NavbarLayout from "./navbar/navbar";
@@ -13,10 +17,15 @@ import Footer from "./footer/footer";
 import "../assets/scss/layouts/mainLayout.scss";
 
 import templateConfig from "../templateConfig";
+const LazyContacts = lazy(() => import("../views/contacts/contacts"));
+const auth = new Auth();
 
+class MainLayout extends PureComponent {      
 
-class MainLayout extends PureComponent {   
-
+   constructor() {
+      super();            
+   }
+   
    state = {      
       width: window.innerWidth,
       sidebarState: 'close'      
@@ -27,27 +36,27 @@ class MainLayout extends PureComponent {
          width: window.innerWidth
       }));
    };
-
-   async componentDidMount() {
+   
+   async componentDidMount() {      
+      await this.props.app.auth.handleAuthentication();
+      //this.props.history.replace('/main');
       if (window !== "undefined") {
          window.addEventListener("resize", this.updateWidth, false)         
-      }
-      this.props.app.auth.handleAuthentication();      
+      }                
    }
-
+   
    componentWillUnmount() {
       if (window !== "undefined") {
          window.removeEventListener("resize", this.updateWidth, false);
-      }            
-      this.props.app.auth.handleAuthentication();
+      }                  
    }
 
    toggleSidebarMenu(sidebarState) {
       this.setState({ sidebarState });
    }
 
-   render() {      
-      console.log('------------------------------>children',this.props.children);
+   
+   render() {         
       return (
             <FoldedContentProvider>
                <FoldedContentConsumer>
@@ -68,7 +77,10 @@ class MainLayout extends PureComponent {
                            toggleSidebarMenu={this.toggleSidebarMenu.bind(this)}
                            sidebarState={this.state.sidebarState}
                         />   
-                        <main>{this.props.children}</main>                    
+                        
+                        <main>                              
+                             {this.props.children}
+                        </main>                        
                         <Footer />
                      </div>
                   )}

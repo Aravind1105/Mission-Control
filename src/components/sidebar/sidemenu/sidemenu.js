@@ -26,13 +26,14 @@ class SideMenuContent extends Component {
    render() {
       return (
          <SideMenu className="sidebar-content" toggleSidebarMenu={this.props.toggleSidebarMenu}>
-            <SideMenu.MenuMultiItems
-               name="Dashboard"
-               Icon={<Home size={18} />}
-               ArrowRight={<ChevronRight size={16} />}
-               collapsedSidebar={this.props.collapsedSidebar}
-            >
-            </SideMenu.MenuMultiItems>      
+            <SideMenu.MenuSingleItem>
+               <NavLink to="/dashboard" activeclassname="active">
+                  <i className="menu-icon">
+                     <Home size={18} />
+                  </i>
+                  <span className="menu-item-text">Dashboard</span>
+               </NavLink>
+            </SideMenu.MenuSingleItem> 
             <SideMenu.MenuSingleItem>
                <NavLink to="/users" activeclassname="active">
                   <i className="menu-icon">
@@ -72,37 +73,7 @@ class SideMenuContent extends Component {
                   </i>
                   <span className="menu-item-text">Payments</span>
                </NavLink>
-            </SideMenu.MenuSingleItem>                      
-            <SideMenu.MenuSingleItem >
-               <NavLink to="/email" activeclassname="active">
-                  <i className="menu-icon">
-                     <Mail size={18} />
-                  </i>
-                  <span className="menu-item-text">Email</span>
-               </NavLink>
-            </SideMenu.MenuSingleItem>
-            <SideMenu.MenuSingleItem>
-               <NavLink to="/calendar" activeclassname="active">
-                  <i className="menu-icon">
-                     <Calendar size={18} />
-                  </i>
-                  <span className="menu-item-text">Calender</span>
-               </NavLink>
-            </SideMenu.MenuSingleItem>
-            
-            <SideMenu.MenuMultiItems
-               name="Charts"
-               Icon={<BarChart2 size={18} />}
-               ArrowRight={<ChevronRight size={16} />}
-               collapsedSidebar={this.props.collapsedSidebar}
-            >
-               <NavLink to="/charts/chartjs" className="item" activeclassname="active">
-                  <span className="menu-item-text">ChartJS</span>
-               </NavLink>
-               <NavLink to="/charts/chartist" className="item" activeclassname="active">
-                  <span className="menu-item-text">ChartistJS</span>
-               </NavLink>
-            </SideMenu.MenuMultiItems>            
+            </SideMenu.MenuSingleItem> 
          </SideMenu>
       );
    }

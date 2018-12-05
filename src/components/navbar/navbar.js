@@ -12,7 +12,7 @@ import {
    NavItem,   
    UncontrolledDropdown,
    DropdownToggle,
-   DropdownMenu,
+   DropdownMenu,  
    DropdownItem
 } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -30,10 +30,11 @@ import {
    X,
    LogOut
 } from "react-feather";
-
 import ReactCountryFlag from "react-country-flag";
 
-import userImage from "../../assets/img/photos/baru.jpg";
+import Auth from '../../Auth/Auth';
+const auth = new Auth();
+const JSON = require('circular-json');
 
 // import internal(own) modules
 // import { FullScreenConsumer } from "../../../utility/context/fullScreenContext";
@@ -43,12 +44,12 @@ class ThemeNavbar extends Component {
    handleClick = e => {
       this.props.toggleSidebarMenu('open');
    };
-   constructor(props) {
+   constructor(props) {      
       super(props);      
       this.toggle = this.toggle.bind(this);
       this.state = {
          isOpen: false,         
-      };
+      };      
    }
    toggle() {
       this.setState({
@@ -57,11 +58,8 @@ class ThemeNavbar extends Component {
    }
 
    render() {
-
-      console.log('----->>>>> ',this.props.app.auth.userProfile["family_name"]);
-
-      const baru = this.props.app.auth.userProfile.family_name;
-      console.log('baru', baru);
+      var userProfile =JSON.parse(JSON.stringify(this.props.app.auth.profileN));
+      console.log('User Profileeeeeeeeeeeeeeeeeeeeeeeeeeeee', userProfile);
       
       return (
          <Navbar className="navbar navbar-expand-lg navbar-light bg-faded">
@@ -129,12 +127,12 @@ class ThemeNavbar extends Component {
 
                         <UncontrolledDropdown nav inNavbar className="pr-1">
                            <DropdownToggle nav>
-                              <img src={userImage} alt="logged-in-user" className="rounded-circle width-35" />
+                              <img src={userProfile.picture} alt="logged-in-user" className="rounded-circle width-35" />
                            </DropdownToggle>
                            <DropdownMenu right>
                               <DropdownItem>
                                  <span className="font-small-3">
-                                    {this.props.app.auth.userProfile.family_name} <span className="text-muted">(Guest)</span>
+                                    {userProfile.name} 
                                  </span>
                               </DropdownItem>
                               <DropdownItem divider />
