@@ -17,7 +17,6 @@ class StatisticCards extends Component {
          <Fragment>
             <h4 className="mt-4 mb-0 text-bold-400">Minimal Statistics With Chart & Gredient Background Color</h4>
             <p className="mb-0">Statistics on minimal cards with chart and gradient background color.</p>
-
             <Row className="row-eq-height">
                <Col sm="12" md="6" xl="3">
                   <MinimalStatisticsChart

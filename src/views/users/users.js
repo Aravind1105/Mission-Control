@@ -8,7 +8,7 @@ import ContactsSearch from "../../components/contacts/contactsSearch";
 import ContactsList from "../../containers/contacts/visibleContactsList";
 import ContactsDetails from "../../containers/contacts/visibleContactsDetails";
 
-class Contacts extends Component {
+class Users extends Component {
    render() {
       return (
          <Fragment>
@@ -32,4 +32,4 @@ class Contacts extends Component {
    }
 }
 
-export default Contacts;
+export default Users;

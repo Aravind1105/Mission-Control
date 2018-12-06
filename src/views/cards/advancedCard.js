@@ -15,7 +15,7 @@ import SalesPerVisitChartCard from "../../components/cards/salesPerVisitChartCar
 import DailyDietListCard from "../../components/cards/dailyDietListCard";
 
 import MonthlySalesStatisticsBarChartCard from "../../components/cards/monthlySalesStatisticsBarChartCard";
-import ShoppingCartCard from "../../components/cards/shoppingCartCard";
+import Products from "../../components/cards/Products";
 
 import HobbiesStatisticsBarChartCard from "../../components/cards/hobbiesStatisticsBarChartCard";
 import UserListCard from "../../components/cards/userListCard";
@@ -41,7 +41,7 @@ class BasicCards extends Component {
             </Row>
 
             <Row className="row-eq-height">
-               <Col sm="12" lg="6" xl="8">
+               <Col sm="12">
                   <VisitSalesStatisticsCard
                      visitSalesData={AdvancedCardData.VisitSalesData}
                      cardTitle="Visit & Sales Statistics"
@@ -79,7 +79,7 @@ class BasicCards extends Component {
             </Row>
 
             <Row className="row-eq-height">
-               <Col sm="12" md="8">
+               <Col sm="12">
                   <SalesPerVisitChartCard
                      salesPerVisitData={AdvancedCardData.SalesPerVisitData}
                      cardTitle="Sales Per Visit"
@@ -105,7 +105,7 @@ class BasicCards extends Component {
                   />
                </Col>
                <Col sm="12" md="8">
-                  <ShoppingCartCard shoppingCart={AdvancedCardData.ShoppingCart} cardTitle="Shopping Cart" />
+                  <Products productsData={AdvancedCardData.ProductsData} cardTitle="Products List" />
                </Col>
             </Row>
 

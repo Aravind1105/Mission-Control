@@ -145,7 +145,7 @@ const AdvancedCardData = {
       ]
    },
 
-   ShoppingCart: {
+   ProductsData: {
       list: [
          {
             img: "avatar-s-11",

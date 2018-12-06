@@ -29,23 +29,36 @@ const routesMap = {
 		// initialDispatch: false
 	},
 
+	DASHBOARD: {
+		path: '/dashboard',
+		thunk: async (dispatch, getState) => {
+			//let loc = getState();
+			//console.log('--> ',loc);
+		 //dispatch(accountsReadAccounts());
+	   }
+	},
+	
 	USERS: {
 		path: '/users',
 		
 	}, 
-
+	
+	FRIDGES: {
+		path: '/fridges',
+		
+	}, 	
+	
 	PRODUCTS: {
 		path: '/products',		
-	}, 
-
-	DASHBOARD: {
-	 	path: '/dashboard',
-	 	thunk: async (dispatch, getState) => {
-	 		//let loc = getState();
-	 		//console.log('--> ',loc);
-	      //dispatch(accountsReadAccounts());
-		}
-	}
+	},
+	
+	ORDERS: {
+		path: '/orders',		
+	}, 	
+	
+	PAYMENTS: {
+		path: '/payments',		
+	}	
 };
 
 export default routesMap;

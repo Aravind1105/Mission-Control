@@ -2,12 +2,13 @@ import React from "react";
 import { Col, Row, Form, FormGroup, Label, Button, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
 import { addContact } from "../../actions/contacts";
+import backgroundImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
 const mapStateToProps = state => ({
    id: state.contactsReducer.contacts.length
 });
 
-const AddContact = ({ id, dispatch }) => {
+const AddUser = ({ id, dispatch }) => {
    let firstname, lastname, department, company, phone, email, address, notes;
 
    return (
@@ -45,8 +46,8 @@ const AddContact = ({ id, dispatch }) => {
                <Row>
                   <Col md={6}>
                      <img
-                        src={"https://randomuser.me/api/portraits/men/" + id + ".jpg"}
-                        className="rounded-circle"
+                        src={backgroundImg}
+                        className="rounded-circle width-150 height-150"
                         alt={id}
                      />
                   </Col>
@@ -157,7 +158,7 @@ const AddContact = ({ id, dispatch }) => {
             </ModalBody>
             <ModalFooter>
                <Button color="primary" type="submit">
-                  Add Contact
+                  Add User
                </Button>
             </ModalFooter>
          </Form>
@@ -165,4 +166,4 @@ const AddContact = ({ id, dispatch }) => {
    );
 };
 
-export default connect(mapStateToProps)(AddContact);
+export default connect(mapStateToProps)(AddUser);

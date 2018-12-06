@@ -3,7 +3,6 @@ import "../../../assets/scss/components/sidebar/sidemenu/sidemenu.scss";
 
 // import external modules
 import React, { Component } from "react";
-
 import {
    Home,
    Mail,

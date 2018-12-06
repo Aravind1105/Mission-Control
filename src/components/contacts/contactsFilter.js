@@ -33,19 +33,19 @@ class ContactsFilter extends React.Component {
                            className="btn btn-raised btn-danger btn-block my-2 shadow-z-2"
                            onClick={this.toggle}
                         >
-                           <Icon.UserPlus size={18} className="mr-1" /> New Contact
+                           <Icon.UserPlus size={18} className="mr-1" /> New User
                         </button>
                      </div>
                      <h6 className="text-muted font-small-3 text-bold-600 text-uppercase my-3">Filters</h6>
                      <ul className="list-group list-group-messages">
                         <FilterLink filter={contactVisiblityFilter.SHOW_ALL}>
-                           <Icon.Users size={18} className="mr-1" /> All Contacts
+                           <Icon.Users size={18} className="mr-1" /> All Users
                         </FilterLink>
                         <FilterLink filter={contactVisiblityFilter.FREQUENT_CONTACT}>
                            <Icon.RefreshCw size={18} className="mr-1" /> Frequent
                         </FilterLink>
                         <FilterLink filter={contactVisiblityFilter.STARRED_CONTACT}>
-                           <Icon.Star size={18} className="mr-1" /> Starred contacts
+                           <Icon.Star size={18} className="mr-1" /> Starred users
                         </FilterLink>
                      </ul>
                      <h6 className="text-muted font-small-3 text-bold-600 text-uppercase my-3">Department</h6>
@@ -69,7 +69,7 @@ class ContactsFilter extends React.Component {
                   </div>
                </div>
                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} size="md">
-                  <ModalHeader toggle={this.toggle}>Add Contact</ModalHeader>
+                  <ModalHeader toggle={this.toggle}>Add User</ModalHeader>
                   <AddContact />
                </Modal>
             </PerfectScrollbar>

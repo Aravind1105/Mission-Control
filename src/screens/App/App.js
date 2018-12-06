@@ -1,23 +1,25 @@
+// import external modules
 import React, { Component, Suspense, lazy } from 'react';
-import { BrowserRouter} from 'react-router-dom';
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import Spinner from "../../components/spinner/spinner";
 
+// import internal(own) modules
 import MainLayout from "../../components/mainLayout";
 import LoginPage from "../../components/login";
-import ShoppingCartCard from "../../components/cards/shoppingCartCard";
+import Products from "../../views/products/products";
 import { AdvancedCardData } from "../../views/cards/advancedCardData";
-const LazyContacts = lazy(() => import("../../views/contacts/contacts"));
 
+//import views
+const Dashboard = lazy(() => import("../../views/dashboard/dashboard"));
+const Users = lazy(() => import("../../views/users/users"));
+const Fridges = lazy(() => import("../../views/fridges/fridges"));
 
 /**
  * i18n
  * use <FormattedMessage id="xxx.yyy"/> when inside tags
  * and this.props.intl.formatMessage({id:'xxx.yyy'});
  */
-
 
 class App extends Component { 
   
@@ -30,24 +32,39 @@ class App extends Component {
         <div className="App">
         {{
           'HOME': (          
-            <LoginPage ></LoginPage>                      
+            <LoginPage/>                      
           ),
           'MAIN': (                            
-            <MainLayout>                           
-            </MainLayout> 
+            <MainLayout/>     
           ),     
+          'DASHBOARD':(
+            <MainLayout>
+              <Dashboard/>
+            </MainLayout>  
+          ),
           'USERS':(
             <MainLayout> 
-              <LazyContacts></LazyContacts>                          
+              <Users></Users>                          
             </MainLayout>
           ),
+          'FRIDGES':(
+            <MainLayout>
+              <Fridges></Fridges>
+            </MainLayout>   
+          ),   
           'PRODUCTS':(
             <MainLayout> 
-              <ShoppingCartCard shoppingCart={AdvancedCardData.ShoppingCart} cardTitle="Products List"></ShoppingCartCard>                         
+              <Products productsData={AdvancedCardData.ProductsData} cardTitle="Products List"></Products>                         
             </MainLayout>
+          ),                 
+          'ORDERS':(
+            <MainLayout/>   
+          ),
+          'PAYMENTS':(
+            <MainLayout/>  
           ),
           '@@redux-first-router/NOT_FOUND': (
-              <div>Page not found.</div>
+            <div>Page not found.</div>
           )
         }[this.props.location.type]}
         </div>             

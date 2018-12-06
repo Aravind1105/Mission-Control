@@ -22,9 +22,17 @@ export default (state = initialState, action = {}) => {
 			return state;
 		case "MAIN":			
 			return state;
+		case "DASHBOARD":
+			return state;
 		case "USERS":
 			return state;
+		case "FRIDGES":
+			return state;
 		case "PRODUCTS":
+			return state;
+		case "ORDERS":
+			return state;
+		case "PAYMENTS":
 			return state;
 		case NOT_FOUND:
 			return null;

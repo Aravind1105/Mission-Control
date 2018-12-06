@@ -17,7 +17,6 @@ import Footer from "./footer/footer";
 import "../assets/scss/layouts/mainLayout.scss";
 
 import templateConfig from "../templateConfig";
-const LazyContacts = lazy(() => import("../views/contacts/contacts"));
 const auth = new Auth();
 
 class MainLayout extends PureComponent {      

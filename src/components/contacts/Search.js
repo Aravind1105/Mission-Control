@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 
 const Search = ({ value, onChange }) => (   
-   <input type="text" className="form-control round" placeholder="Search contacts" onChange={(e) => onChange(e.target.value)} defaultValue={value}/>
+   <input type="text" className="form-control round" placeholder="Search users" onChange={(e) => onChange(e.target.value)} defaultValue={value}/>
 );
 
 Search.propTypes = {
