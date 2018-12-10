@@ -1,3 +1,48 @@
+import {
+	appShowLoader,
+	appHideLoader
+} from '../AppActions';
+
+import Utils from '../../utility/Utils'
+
+/**
+ * Action creator fridgesGetProducts
+ * @return {action}
+ */
+export const getProducts = () => {
+	return (dispatch) => {
+		dispatch(appShowLoader());
+
+		Utils.fetch({
+			url:'/api/v1/fridges/7/products',
+			headers: {
+				"Content-Type": "application/json; charset=utf-8",
+				//"Access-Control-Allow-Origin": "http://localhost:3000"
+			},			
+			success: (result) => {
+				console.info('Success------------------------------> GetProducts',result);
+				dispatch(setProducts(result.items));
+				dispatch(appHideLoader());
+			},
+			error: (error) => {
+				console.error('error in home api call',error);
+				console.info('=====================================');
+				console.info(error);
+				console.info('=====================================');
+
+				dispatch(appHideLoader());
+			}
+		});
+	}
+};
+
+export const setProducts = (payload) => {
+	return {
+		type: 'SET_PRODUCTS',
+		payload
+	}
+};
+
 export const addProduct = (id, name, price, quantity) => ({
    type: "ADD_PRODUCT",
    id: id++,

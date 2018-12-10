@@ -35,6 +35,6 @@ export default {
 				type: st.app.startupPage,
 				auth: st.app.auth							
 			});		
-		} 
+		}		
 	}
 }

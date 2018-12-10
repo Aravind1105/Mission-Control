@@ -57,7 +57,7 @@ class Dashboard extends Component {
             </Row>     
             <Row className="row-eq-height">  
                <Col sm="12">
-                  <Products productsData={AdvancedCardData.ProductsData} cardTitle="Products List" />
+                  
                </Col>
             </Row>       
          </Fragment>

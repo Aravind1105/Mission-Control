@@ -37,3 +37,13 @@ export const appShowLoader = (payload = true) => {
 		payload: payload
 	}
 };
+
+/**
+ * Hide Application Preloader
+ * @return {action}
+ */
+export const appHideLoader = () => {
+	return {
+		type: 'APP_HIDE_LOADER'
+	}
+};

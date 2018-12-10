@@ -14,6 +14,7 @@ import { AdvancedCardData } from "../../views/cards/advancedCardData";
 const Dashboard = lazy(() => import("../../views/dashboard/dashboard"));
 const Users = lazy(() => import("../../views/users/users"));
 const Fridges = lazy(() => import("../../views/fridges/fridges"));
+const JSON = require('circular-json');
 
 /**
  * i18n
@@ -54,7 +55,7 @@ class App extends Component {
           ),   
           'PRODUCTS':(
             <MainLayout> 
-              <Products productsData={AdvancedCardData.ProductsData} cardTitle="Products List"></Products>                         
+              <Products productsData={JSON.parse(JSON.stringify(this.props.productsReducer))}></Products>                         
             </MainLayout>
           ),                 
           'ORDERS':(

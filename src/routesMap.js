@@ -1,3 +1,4 @@
+import {getProducts} from "./actions/products/";
 
 const routesMap = {
 	HOME: {
@@ -49,7 +50,11 @@ const routesMap = {
 	}, 	
 	
 	PRODUCTS: {
-		path: '/products',		
+		path: '/products',				
+		thunk: async (dispatch, getState) => {
+			dispatch(getProducts());
+	    }
+
 	},
 	
 	ORDERS: {

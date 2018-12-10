@@ -1,3 +1,4 @@
+
 export const addFridge = (id, address, status, serialNo, lastModified ) => ({
    type: "ADD_Fridge",
    id: id++,

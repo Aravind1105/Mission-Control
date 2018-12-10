@@ -6,6 +6,7 @@ import routesMap from 'routesMap';
 import routesFilter from 'routesMapOptions';
 //import * as reducers from 'reducers';
 import app from './reducers/AppReducer';
+import productsReducer from './reducers/productsReducer';
 import contactsReducer from "./reducers/contacts/";
 import * as actionCreators from 'actions';
 
@@ -20,7 +21,7 @@ export default history => {
 		enhancer
 	} = connectRoutes( history, routesMap, routesFilter );
 
-	const rootReducer = combineReducers({ app, contactsReducer, location: reducer });
+	const rootReducer = combineReducers({ app, contactsReducer, productsReducer, location: reducer });
 	const middlewares = applyMiddleware(middleware, thunk, logger);
 	const enhancers = composeEnhancers(enhancer, middlewares);
 
