@@ -72,7 +72,8 @@ class Utils {
 		}
 
 		fetch(options.url,options)
-		.then(function(response) {			
+		.then(function(response) {	
+			console.log('response', response);		
 			return response.json();
 		})
 		.then(function(jsonres) {			

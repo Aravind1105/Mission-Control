@@ -10,18 +10,18 @@ import Utils from '../../utility/Utils'
  * @return {action}
  */
 export const getProducts = () => {
+	console.log('tocken from storage........', localStorage.getItem('access_token'))
 	return (dispatch) => {
 		dispatch(appShowLoader());
 
 		Utils.fetch({
-			url:'/api/v1/fridges/7/products',
-			headers: {
-				"Content-Type": "application/json; charset=utf-8",
-				//"Access-Control-Allow-Origin": "http://localhost:3000"
+			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/products/line',
+			headers: {							
+        		"Authorization": "Bearer " + localStorage.getItem('access_token')
 			},			
 			success: (result) => {
 				console.info('Success------------------------------> GetProducts',result);
-				dispatch(setProducts(result.items));
+				dispatch(setProducts(result));
 				dispatch(appHideLoader());
 			},
 			error: (error) => {
@@ -79,5 +79,4 @@ export const deleteProduct = id => ({
    type: "DELETE_PRODUCT",
    id
 });
-
 

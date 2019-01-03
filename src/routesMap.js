@@ -63,7 +63,13 @@ const routesMap = {
 	
 	PAYMENTS: {
 		path: '/payments',		
-	}	
+	},
+	
+	STATISTICS: {
+		path: '/stats',		
+	}
 };
 
 export default routesMap;
+
+    

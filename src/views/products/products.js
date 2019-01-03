@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 //import { Card, CardHeader, CardTitle, Table, Button } from "reactstrap";
 import PropTypes from "prop-types";
-import Link from "redux-first-router-link"
+import Link from "redux-first-router-link";
 
 import { Table, Input, Modal, ModalHeader, Form } from "reactstrap";
 import { Edit, Trash2, Search } from "react-feather";
@@ -34,9 +34,7 @@ class Products extends PureComponent {
    };
 
 
-   render() {
-      console.log('props---------------------------------------->',this.props);
-      console.log('props product---------------------------------------->',this.props.productsData.products);
+   render() {      
       const productsList = this.props.productsData.products;      
       return (
          <div>              
@@ -77,15 +75,15 @@ class Products extends PureComponent {
                            <tr key={i}>
                               <td>
                                  <img
-                                    src={object.imageUrl ? require("../../assets/img/photos/" + object.imageUrl) : no_pic }
+                                    src={ no_pic }
                                     className="media-object round-media height-50"
                                     alt="Card cap 02"
                                  />
                               </td>
                               <td>{object.name}</td>
-                              <td>{object.price}</td>                              
-                              <td>{object.productItems.totalItems}</td>
-                              <td>{object.price * object.productItems.totalItems}</td>
+                              <td>{Number((object.price).toFixed(2))}</td>                              
+                              <td>{object.productItems === null ? 1 : object.productItems}</td>
+                              <td>{Number((object.price * (object.productItems != null ? Number(object.productItems) : 1)).toFixed(2))}</td>
                               <td>
                                  <Edit size={18} className="mr-2" />{" "}
                                  <Trash2 size={18} color="#FF586B" />

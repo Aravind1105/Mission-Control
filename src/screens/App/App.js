@@ -36,7 +36,9 @@ class App extends Component {
             <LoginPage/>                      
           ),
           'MAIN': (                            
-            <MainLayout/>     
+            <MainLayout>
+              <Dashboard/>
+            </MainLayout>     
           ),     
           'DASHBOARD':(
             <MainLayout>
@@ -62,6 +64,9 @@ class App extends Component {
             <MainLayout/>   
           ),
           'PAYMENTS':(
+            <MainLayout/>  
+          ),
+          'STATISTICS':(
             <MainLayout/>  
           ),
           '@@redux-first-router/NOT_FOUND': (
