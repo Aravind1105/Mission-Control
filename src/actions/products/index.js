@@ -43,13 +43,17 @@ export const setProducts = (payload) => {
 	}
 };
 
-export const addProduct = (id, name, price, quantity) => ({
+export const addProduct = (id, name, description, price, individualWeight, packagingWeight) => ({
    type: "ADD_PRODUCT",
    id: id++,
-   name: name ? name : "",
+	name: name ? name : "",
+	description: description ? description : "",
+	active: true,
    image: "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg",
    price: price ? price : "",
-   quantity: quantity ? quantity : ""   
+	individualWeight: individualWeight ? individualWeight : "",
+	packagingWeight: packagingWeight ? packagingWeight : ""
+	   
 });
 
 export const updateProduct = (id, field, value) => ({

@@ -7,9 +7,9 @@ import { Table, Input, Modal, ModalHeader, Form } from "reactstrap";
 import { Edit, Trash2, Search } from "react-feather";
 import * as Icon from "react-feather";
 
-import AddFridge from "../../containers/fridges/addFridge";
+import AddOrganization from "../../containers/organizations/addOrganization";
 
-class Fridges extends PureComponent {
+class Organizations extends PureComponent {
 
    constructor(props) {
       super(props);
@@ -28,15 +28,15 @@ class Fridges extends PureComponent {
 
 
    render() {      
-      const fridgesList = this.props.fridgesData.fridges; 
-      console.log('dataaaaaaaaaaaaaaaaa',typeof fridgesList, fridgesList)
+      const organizationsList = this.props.organizationsData.organizations; 
+      console.log('dataaaaaaaaaaaaaaaaa',typeof organizationsList, organizationsList)
       return (
          <div>              
             <div className="form-group form-group-compose text-left">
                 <div>
                     <Form className="float-left" role="search">
                         <div className="position-relative has-icon-right">
-                            <Input className="form-control round" placeholder="Search fridges" type="text" />
+                            <Input className="form-control round" placeholder="Search organizations" type="text" />
                                 <div className="form-control-position">
                                     <Search size={16} className="mb-0" />
                                 </div>
@@ -48,32 +48,24 @@ class Fridges extends PureComponent {
                   className="btn btn-danger float-right my-2 shadow-z-2" 
                   onClick={this.toggle}
                >
-                  <Icon.Plus size={18} className="mr-1" /> New Fridge
+                  <Icon.Plus size={18} className="mr-1" /> New Organization
                </button> 
             </div>
             <div>    
                <Table hover>
                   <thead >
                      <tr>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Serial No.</th>
-                        <th>Address</th>
-                        <th>Sales 24h</th>  
-                        <th>Stock</th>                  
+                        <th>Name</th>                        
+                        <th>Address</th>                                        
                         <th>Actions</th>      
                      </tr>
                   </thead>
                   <tbody>
-                     {fridgesList.hasOwnProperty('length') && fridgesList.length > 0 && fridgesList.map((object, i) => {                        
+                     {organizationsList.hasOwnProperty('length') && organizationsList.length > 0 && organizationsList.map((object, i) => {                        
                         return (
                            <tr key={i}>                              
-                              <td>{object.name}</td>
-                              <td>{object.state}</td>
-                              <td>{object.serialNumber}</td>
-                              <td>{object.location}</td>                              
-                              <td>NA</td>
-                              <td>NA</td>
+                              <td>{object.name}</td>                              
+                              <td>{object.address}</td> 
                               <td>
                                  <Edit size={18} className="mr-2" />{" "}
                                  <Trash2 size={18} color="#FF586B" />
@@ -85,16 +77,16 @@ class Fridges extends PureComponent {
                </Table>
             </div>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} size="md">
-               <ModalHeader toggle={this.toggle}>Add Fridge</ModalHeader>
-               <AddFridge />
+               <ModalHeader toggle={this.toggle}>Add Organization</ModalHeader>
+               <AddOrganization />
             </Modal>
          </div>   
        );
    }
 }
 
-Fridges.propTypes = {   
-   fridgesData: PropTypes.object
+Organizations.propTypes = {   
+   organizationsData: PropTypes.object
 };
 
-export default Fridges;
+export default Organizations;

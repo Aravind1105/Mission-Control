@@ -1,4 +1,6 @@
 import {getProducts} from "./actions/products/";
+import {getFridges} from "./actions/fridges/";
+import { getOrganizations } from "./actions/organizations";
 
 const routesMap = {
 	HOME: {
@@ -38,31 +40,38 @@ const routesMap = {
 		 //dispatch(accountsReadAccounts());
 	   }
 	},
-	
-	USERS: {
-		path: '/users',
-		
-	}, 
-	
+
 	FRIDGES: {
 		path: '/fridges',
-		
-	}, 	
+		thunk: async (dispatch, getState) => {
+			dispatch(getFridges());
+	    }		
+	}, 
+
+	ORGANIZATIONS: {
+		path: '/organizations',	
+		thunk: async (dispatch, getState) => {
+			dispatch(getOrganizations());
+	    }	
+	}, 
+	
+	USERS: {
+		path: '/users',		
+	}, 
 	
 	PRODUCTS: {
 		path: '/products',				
 		thunk: async (dispatch, getState) => {
 			dispatch(getProducts());
 	    }
-
 	},
 	
-	ORDERS: {
-		path: '/orders',		
+	TRANSACTIONS: {
+		path: '/transactions',		
 	}, 	
 	
-	PAYMENTS: {
-		path: '/payments',		
+	REPORTS: {
+		path: '/reports',		
 	},
 	
 	STATISTICS: {

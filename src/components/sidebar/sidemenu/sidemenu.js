@@ -3,18 +3,7 @@ import "../../../assets/scss/components/sidebar/sidemenu/sidemenu.scss";
 
 // import external modules
 import React, { Component } from "react";
-import {
-   Home,
-   Mail,
-   ChevronRight,      
-   BarChart2,
-   Calendar,   
-   Users,
-   Book,
-   Grid,
-   ShoppingCart,
-   CreditCard
-} from "react-feather";
+import * as Icon from "react-feather";
 import { NavLink } from "redux-first-router-link";
 
 
@@ -28,49 +17,57 @@ class SideMenuContent extends Component {
             <SideMenu.MenuSingleItem>
                <NavLink to="/dashboard" activeclassname="active">
                   <i className="menu-icon">
-                     <Home size={18} />
+                     <Icon.Home size={18} />
                   </i>
                   <span className="menu-item-text">Dashboard</span>
                </NavLink>
             </SideMenu.MenuSingleItem> 
             <SideMenu.MenuSingleItem>
-               <NavLink to="/users" activeclassname="active">
-                  <i className="menu-icon">
-                     <Users size={18} />
-                  </i>
-                  <span className="menu-item-text">Users</span>
-               </NavLink>
-            </SideMenu.MenuSingleItem>        
-            <SideMenu.MenuSingleItem>
                <NavLink to="/fridges" activeclassname="active">
                   <i className="menu-icon">
-                     <Book size={18} />
+                     <Icon.Book size={18} />
                   </i>
                   <span className="menu-item-text">Fridges</span>
                </NavLink>
-            </SideMenu.MenuSingleItem>         
+            </SideMenu.MenuSingleItem> 
             <SideMenu.MenuSingleItem>
-               <NavLink to="/products" activeclassname="active">
+               <NavLink to="/organizations" activeclassname="active">
                   <i className="menu-icon">
-                     <Grid size={18} />
+                     <Icon.Briefcase size={18} />
                   </i>
-                  <span className="menu-item-text">Products</span>
-               </NavLink>
-            </SideMenu.MenuSingleItem>   
-            <SideMenu.MenuSingleItem>
-               <NavLink to="/orders" activeclassname="active">
-                  <i className="menu-icon">
-                     <ShoppingCart size={18} />
-                  </i>
-                  <span className="menu-item-text">Orders</span>
+                  <span className="menu-item-text">Organizations</span>
                </NavLink>
             </SideMenu.MenuSingleItem> 
             <SideMenu.MenuSingleItem>
-               <NavLink to="/payments" activeclassname="active">
+               <NavLink to="/users" activeclassname="active">
                   <i className="menu-icon">
-                     <CreditCard size={18} />
+                     <Icon.Users size={18} />
                   </i>
-                  <span className="menu-item-text">Payments</span>
+                  <span className="menu-item-text">Users</span>
+               </NavLink>
+            </SideMenu.MenuSingleItem>   
+            <SideMenu.MenuSingleItem>
+               <NavLink to="/products" activeclassname="active">
+                  <i className="menu-icon">
+                     <Icon.Grid size={18} />
+                  </i>
+                  <span className="menu-item-text">Products</span>
+               </NavLink>
+            </SideMenu.MenuSingleItem> 
+            <SideMenu.MenuSingleItem>
+               <NavLink to="/transactions" activeclassname="active">
+                  <i className="menu-icon">
+                     <Icon.ShoppingCart size={18} />
+                  </i>
+                  <span className="menu-item-text">Transactions</span>
+               </NavLink>
+            </SideMenu.MenuSingleItem> 
+            <SideMenu.MenuSingleItem>
+               <NavLink to="/reports" activeclassname="active">
+                  <i className="menu-icon">
+                     <Icon.BarChart size={18} />
+                  </i>
+                  <span className="menu-item-text">Reports</span>
                </NavLink>
             </SideMenu.MenuSingleItem> 
          </SideMenu>

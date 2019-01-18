@@ -1,14 +1,14 @@
 import React from "react";
 import { Col, Row, Form, FormGroup, Label, Button, ModalBody, ModalFooter, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { connect } from "react-redux";
-import { addFridge } from "../../actions/fridges";
+import { addOrganization } from "../../actions/organizations";
 import backgroundImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
 const mapStateToProps = state => ({
-   id: state.contactsReducer.contacts.length
+   id: state.organizationsReducer.organizations.length
 });
 
-const AddFridge = ({ id, dispatch }) => {
+const AddOrganization = ({ id, dispatch }) => {
    let name, address, status, serialNo;
 
    return (
@@ -20,7 +20,7 @@ const AddFridge = ({ id, dispatch }) => {
                   return;
                }
                dispatch(
-                  addFridge(
+                  addOrganization(
                      name.value,
                      id,
                      address.value,
@@ -108,7 +108,7 @@ const AddFridge = ({ id, dispatch }) => {
             </ModalBody>
             <ModalFooter>
                <Button color="primary" type="submit">
-                  Add Fride
+                  Add Organization
                </Button>
             </ModalFooter>
          </Form>
@@ -116,4 +116,4 @@ const AddFridge = ({ id, dispatch }) => {
    );
 };
 
-export default connect(mapStateToProps)(AddFridge);
+export default connect(mapStateToProps)(AddOrganization);

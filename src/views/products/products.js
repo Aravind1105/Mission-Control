@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-//import { Card, CardHeader, CardTitle, Table, Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Link from "redux-first-router-link";
 
@@ -58,9 +57,9 @@ class Products extends PureComponent {
                </button> 
             </div>
             <div>    
-               <Table responsive>
+               <Table hover>
                   <thead>
-                     <tr>
+                     <tr font-weight="bold !">
                         <th>Image</th>
                         <th>Product</th>
                         <th>Price(€)</th>

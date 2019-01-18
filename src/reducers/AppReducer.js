@@ -24,15 +24,17 @@ export default (state = initialState, action = {}) => {
 			return state;
 		case "DASHBOARD":
 			return state;
-		case "USERS":
-			return state;
 		case "FRIDGES":
 			return state;
+		case "ORGANIZATIONS":
+			return state;
+		case "USERS":
+			return state;		
 		case "PRODUCTS":
 			return state;
-		case "ORDERS":
+		case "TRANSACTIONS":
 			return state;
-		case "PAYMENTS":
+		case "REPORTS":
 			return state;
 		case NOT_FOUND:
 			return null;

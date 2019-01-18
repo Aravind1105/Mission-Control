@@ -6,21 +6,21 @@ import {
 import Utils from '../../utility/Utils'
 
 /**
- * Action creator getFridges
+ * Action creator getOrganizations
  * @return {action}
  */
-export const getFridges = () => {	
+export const getOrganizations = () => {	
 	return (dispatch) => {
 		dispatch(appShowLoader());
 
 		Utils.fetch({
-			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/fridges?listAllFridges=True',
+			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/organisations',
 			headers: {							
         		"Authorization": "Bearer " + localStorage.getItem('access_token')
 			},			
 			success: (result) => {
-				console.info('Success------------------------------> GetFridges',result);
-				dispatch(setFridges(result.items));
+				console.info('Success------------------------------> GetOrganizations',result);
+				dispatch(setOrganizations(result.items));
 				dispatch(appHideLoader());
 			},
 			error: (error) => {
@@ -35,15 +35,15 @@ export const getFridges = () => {
 	}
 };
 
-export const setFridges = (payload) => {
+export const setOrganizations = (payload) => {
 	return {
-		type: 'SET_FRIDGES',
+		type: 'SET_ORGANIZATIONS',
 		payload
 	}
 };
 
-export const addFridge = (name, id, address, status, serialNo ) => ({
-   type: "ADD_Fridge",   
+export const addOrganization = (name, id, address, status, serialNo ) => ({
+   type: "ADD_ORGANIZATION",   
    name: name ? name : "",
    id: id++,
    address: address ? address : "",
@@ -78,5 +78,8 @@ export const deleteFridge = id => ({
    type: "DELETE_FRIDGE",
    id
 });
+
+
+
 
 

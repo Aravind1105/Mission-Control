@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const AddProduct = ({ id, dispatch }) => {
-   let name, price, quantity;
+   let name, description, price, individualWeight, packagingWeight;
 
    return (
       <React.Fragment>
@@ -23,13 +23,17 @@ const AddProduct = ({ id, dispatch }) => {
                   addProduct(
                      id,
                      name.value,
+                     description.value,
                      price.value,
-                     quantity.value                                         
+                     individualWeight.value,
+                     packagingWeight.value                                         
                   )
                );
                name.value = "";
+               description.value = "";
                price.value = "";
-               quantity.value = "";
+               individualWeight.value = "";
+               packagingWeight.value = "";
             }}
          >
             <ModalBody>
@@ -56,7 +60,17 @@ const AddProduct = ({ id, dispatch }) => {
                   </Col>
                </Row>
                <Row>
-                  <Col md={6}>                     
+                  <Col md={6}>     
+                  <FormGroup>
+                        <Label for="description">Description</Label>
+                        <input
+                           className="form-control"
+                           type="text"
+                           name="description"
+                           id="description"
+                           ref={node => (description = node)}
+                        />
+                     </FormGroup>                
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -72,22 +86,31 @@ const AddProduct = ({ id, dispatch }) => {
                   </Col>                  
                </Row>
                <Row>
-                  <Col md={6}>                     
+                  <Col md={6}> 
+                  <FormGroup>
+                        <Label for="proindividualWeightd_w">Product Weight</Label>
+                        <input
+                           className="form-control"
+                           type="text"
+                           name="individualWeight"
+                           id="individualWeight"
+                           ref={node => (individualWeight = node)}
+                        />
+                     </FormGroup>                                      
                   </Col>
                   <Col md={6}>
                      <FormGroup>
-                        <Label for="quantity">Quantity</Label>
+                        <Label for="packagingWeight">Package Weight</Label>
                         <input
                            className="form-control"
-                           type="quantity"
-                           name="quantity"
-                           id="quantity"
-                           ref={node => (quantity = node)}                           
+                           type="text"
+                           name="packagingWeight"
+                           id="packagingWeight"
+                           ref={node => (packagingWeight = node)}                           
                         />
                      </FormGroup>
                   </Col>                  
-               </Row>
-               
+               </Row>               
             </ModalBody>
             <ModalFooter>
                <Button color="primary" type="submit">

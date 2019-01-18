@@ -8,12 +8,12 @@ import { injectIntl } from 'react-intl';
 import MainLayout from "../../components/mainLayout";
 import LoginPage from "../../components/login";
 import Products from "../../views/products/products";
-import { AdvancedCardData } from "../../views/cards/advancedCardData";
+import Fridges from "../../views/fridges/fridges";
+import Organizations from '../../views/organizations/organizations';
 
 //import views
 const Dashboard = lazy(() => import("../../views/dashboard/dashboard"));
 const Users = lazy(() => import("../../views/users/users"));
-const Fridges = lazy(() => import("../../views/fridges/fridges"));
 const JSON = require('circular-json');
 
 /**
@@ -45,25 +45,30 @@ class App extends Component {
               <Dashboard/>
             </MainLayout>  
           ),
+          'FRIDGES':(
+            <MainLayout>
+              <Fridges fridgesData={JSON.parse(JSON.stringify(this.props.fridgesReducer))}></Fridges>
+            </MainLayout>   
+          ),
+          'ORGANIZATIONS':(
+            <MainLayout>
+            <Organizations organizationsData={JSON.parse(JSON.stringify(this.props.organizationsReducer))}></Organizations>
+            </MainLayout>   
+          ),
           'USERS':(
             <MainLayout> 
               <Users></Users>                          
             </MainLayout>
-          ),
-          'FRIDGES':(
-            <MainLayout>
-              <Fridges></Fridges>
-            </MainLayout>   
-          ),   
+          ),             
           'PRODUCTS':(
             <MainLayout> 
               <Products productsData={JSON.parse(JSON.stringify(this.props.productsReducer))}></Products>                         
             </MainLayout>
           ),                 
-          'ORDERS':(
+          'TRANSACTIONS':(
             <MainLayout/>   
           ),
-          'PAYMENTS':(
+          'REPORTS':(
             <MainLayout/>  
           ),
           'STATISTICS':(
