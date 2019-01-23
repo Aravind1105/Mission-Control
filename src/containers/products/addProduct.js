@@ -26,7 +26,7 @@ const AddProduct = ({ id, dispatch }) => {
                      description.value,
                      price.value,
                      individualWeight.value,
-                     packagingWeight.value                                         
+                     packagingWeight.value
                   )
                );
                name.value = "";
@@ -60,7 +60,7 @@ const AddProduct = ({ id, dispatch }) => {
                   </Col>
                </Row>
                <Row>
-                  <Col md={6}>     
+                  <Col md={6}>
                   <FormGroup>
                         <Label for="description">Description</Label>
                         <input
@@ -70,7 +70,7 @@ const AddProduct = ({ id, dispatch }) => {
                            id="description"
                            ref={node => (description = node)}
                         />
-                     </FormGroup>                
+                     </FormGroup>
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -83,7 +83,7 @@ const AddProduct = ({ id, dispatch }) => {
                            ref={node => (price = node)}
                         />
                      </FormGroup>
-                  </Col>                  
+                  </Col>
                </Row>
                <Row>
                   <Col md={6}> 
@@ -96,7 +96,7 @@ const AddProduct = ({ id, dispatch }) => {
                            id="individualWeight"
                            ref={node => (individualWeight = node)}
                         />
-                     </FormGroup>                                      
+                     </FormGroup>
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -106,11 +106,11 @@ const AddProduct = ({ id, dispatch }) => {
                            type="text"
                            name="packagingWeight"
                            id="packagingWeight"
-                           ref={node => (packagingWeight = node)}                           
+                           ref={node => (packagingWeight = node)}
                         />
                      </FormGroup>
-                  </Col>                  
-               </Row>               
+                  </Col>
+               </Row>
             </ModalBody>
             <ModalFooter>
                <Button color="primary" type="submit">

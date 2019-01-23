@@ -15,14 +15,9 @@ export const getFridges = () => {
 	return (dispatch) => { 
 		dispatch(appShowLoader());
 		window.api = new LivelloApi(localStorage.getItem('access_token'));
-		window.api.fridges.getProducts('5c0cfea352faff0001a8ac61', {
-			mode: 'cors', // no-cors, cors, *same-origin
-			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-			credentials: 'same-origin', // include, same-origin, *omit
-			
-	  })
+		window.api.fridges.getProducts('5c0cfea352faff0001a8ac61')
 		.then((result)=>{
-			console.log('call to the API...........', result.body.items)
+			console.log('call to the API...........', result);
 			/*
 			var errObj = ErrorFilter.Check4StripeError(result);
 			console.info('-----------> fridgesGetProducts ErrorFilter',errObj);
@@ -32,7 +27,6 @@ export const getFridges = () => {
 				// add inline error to screen
 				dispatch(ErrorInlineAdd(errObj));
 			}else{
-				
 				dispatch(fridgesSetProducts(result.body.items));
 			}
 			dispatch(appHideLoader()); */

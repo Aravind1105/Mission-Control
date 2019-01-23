@@ -16,9 +16,9 @@ export const getProducts = () => {
 
 		Utils.fetch({
 			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/products/line',
-			headers: {							
+			headers: {
         		"Authorization": "Bearer " + localStorage.getItem('access_token')
-			},			
+			},
 			success: (result) => {
 				console.info('Success------------------------------> GetProducts',result);
 				dispatch(setProducts(result));

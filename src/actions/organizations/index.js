@@ -9,15 +9,15 @@ import Utils from '../../utility/Utils'
  * Action creator getOrganizations
  * @return {action}
  */
-export const getOrganizations = () => {	
+export const getOrganizations = () => {
 	return (dispatch) => {
 		dispatch(appShowLoader());
 
 		Utils.fetch({
 			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/organisations',
-			headers: {							
+			headers: {
         		"Authorization": "Bearer " + localStorage.getItem('access_token')
-			},			
+			},
 			success: (result) => {
 				console.info('Success------------------------------> GetOrganizations',result);
 				dispatch(setOrganizations(result.items));
@@ -43,12 +43,12 @@ export const setOrganizations = (payload) => {
 };
 
 export const addOrganization = (name, id, address, status, serialNo ) => ({
-   type: "ADD_ORGANIZATION",   
+   type: "ADD_ORGANIZATION",
    name: name ? name : "",
    id: id++,
    address: address ? address : "",
    status: status ? status : "",
-   serialNo: serialNo ? serialNo : ""   
+   serialNo: serialNo ? serialNo : ""
 });
 
 export const updateFridge = (id, field, value) => ({

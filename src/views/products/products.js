@@ -59,7 +59,7 @@ class Products extends PureComponent {
             <div>    
                <Table hover>
                   <thead>
-                     <tr font-weight="bold !">
+                     <tr fontWeight="bold !">
                         <th>Image</th>
                         <th>Product</th>
                         <th>Price(€)</th>
