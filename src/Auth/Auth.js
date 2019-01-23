@@ -9,7 +9,7 @@ class Auth {
 
     auth0 = new auth0.WebAuth({
     domain: 'livello.eu.auth0.com',
-    clientID: 'wEXl6yLJ33YI4rIoH4HeJFeQuzNAIs2s',
+    clientID: 'Ur07El81MzIE0l9z2g864daSZWAAsn7s',
     redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/main' : 'https://livello-mission-control-v01.netlify.com/main',    
     responseType: 'token id_token',
     scope: 'openid profile email admin',
