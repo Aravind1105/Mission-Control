@@ -13,14 +13,14 @@ const initialState = {
 	},
 	auth,
 	notifications: [],
-	defaultStartupPage: "HOME"
+	startupPage: "HOME"
 };
 
-export default (state = initialState, action = {}) => {
+export default function APPZ (state = initialState, action = {}) {
 	switch(action.type){
 		case "HOME":
 			return state;
-		case "MAIN":			
+		case "MAIN":
 			return state;
 		case "DASHBOARD":
 			return state;
@@ -29,7 +29,7 @@ export default (state = initialState, action = {}) => {
 		case "ORGANIZATIONS":
 			return state;
 		case "USERS":
-			return state;		
+			return state;
 		case "PRODUCTS":
 			return state;
 		case "TRANSACTIONS":
@@ -39,6 +39,6 @@ export default (state = initialState, action = {}) => {
 		case NOT_FOUND:
 			return null;
 		default:
-			return state;	
+			return state;
 	}
 };

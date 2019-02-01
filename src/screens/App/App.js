@@ -1,20 +1,21 @@
 // import external modules
 import React, { Component, Suspense, lazy } from 'react';
-import "react-perfect-scrollbar/dist/css/styles.css";
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
 // import internal(own) modules
 import MainLayout from "../../components/mainLayout";
-import LoginPage from "../../components/login";
-import Products from "../../views/products/products";
-import Fridges from "../../views/fridges/fridges";
-import Organizations from '../../views/organizations/organizations';
+import LoginPage from "../Login/Login";
+import Products from "../Products/Products";
+import Fridges from "../Fridges/Fridges";
+import Organizations from '../Organizations/Organizations';
+
+// CSS
+import "react-perfect-scrollbar/dist/css/styles.css";
 
 //import views
-const Dashboard = lazy(() => import("../../views/dashboard/dashboard"));
-const Users = lazy(() => import("../../views/users/users"));
-const JSON = require('circular-json');
+const Dashboard = lazy(() => import("../Dashboard/Dashboard"));
+const Users = lazy(() => import("../Users/Users"));
 
 /**
  * i18n
@@ -22,69 +23,69 @@ const JSON = require('circular-json');
  * and this.props.intl.formatMessage({id:'xxx.yyy'});
  */
 
-class App extends Component { 
-  
-  processMessage() {
+class App extends Component {
 
-  }
-  
-  render() {        
-    return (        
-        <div className="App">
-        {{
-          'HOME': (          
-            <LoginPage/>                      
-          ),
-          'MAIN': (                            
-            <MainLayout>
-              <Dashboard/>
-            </MainLayout>     
-          ),     
-          'DASHBOARD':(
-            <MainLayout>
-              <Dashboard/>
-            </MainLayout>  
-          ),
-          'FRIDGES':(
-            <MainLayout>
-              <Fridges fridgesData={JSON.parse(JSON.stringify(this.props.fridgesReducer))}></Fridges>
-            </MainLayout>   
-          ),
-          'ORGANIZATIONS':(
-            <MainLayout>
-            <Organizations organizationsData={JSON.parse(JSON.stringify(this.props.organizationsReducer))}></Organizations>
-            </MainLayout>   
-          ),
-          'USERS':(
-            <MainLayout> 
-              <Users></Users>                          
-            </MainLayout>
-          ),             
-          'PRODUCTS':(
-            <MainLayout> 
-              <Products productsData={JSON.parse(JSON.stringify(this.props.productsReducer))}></Products>                         
-            </MainLayout>
-          ),                 
-          'TRANSACTIONS':(
-            <MainLayout/>   
-          ),
-          'REPORTS':(
-            <MainLayout/>  
-          ),
-          'STATISTICS':(
-            <MainLayout/>  
-          ),
-          '@@redux-first-router/NOT_FOUND': (
-            <div>Page not found.</div>
-          )
-        }[this.props.location.type]}
-        </div>             
-    );
-  }
+	processMessage() {
+
+	}
+
+	render() {
+		return (
+			<div className="App">
+			{{
+				'HOME': (
+					<LoginPage/>
+				),
+				'MAIN': (
+					<MainLayout>
+						<Dashboard/>
+					</MainLayout>
+				),
+				'DASHBOARD':(
+					<MainLayout>
+					<Dashboard/>
+					</MainLayout>
+				),
+				'FRIDGES':(
+					<MainLayout>
+						<Fridges/>
+					</MainLayout>
+				),
+				'ORGANIZATIONS':(
+					<MainLayout>
+					<Organizations/>
+					</MainLayout>
+				),
+				'USERS':(
+					<MainLayout>
+					<Users></Users>
+					</MainLayout>
+				),
+				'PRODUCTS':(
+					<MainLayout>
+					<Products/>
+					</MainLayout>
+				),
+				'TRANSACTIONS':(
+					<MainLayout/>
+				),
+				'REPORTS':(
+					<MainLayout/>
+				),
+				'STATISTICS':(
+					<MainLayout/>
+				),
+				'@@redux-first-router/NOT_FOUND': (
+					<div>Page not found.</div>
+				)
+			}[this.props.location.type]}
+			</div>
+		);
+	}
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
+ const mapStateToProps = (state) => {
+ 	return state;
+ };
 
-export default injectIntl(connect(mapStateToProps)(App));
+ export default injectIntl(connect(mapStateToProps)(App));

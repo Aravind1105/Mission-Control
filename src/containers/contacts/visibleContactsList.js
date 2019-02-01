@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { toggleStarredContact, deleteContact, contactVisiblityFilter, contactDetails } from "../../actions/contacts/";
+import { toggleStarredContact, deleteContact, contactVisiblityFilter, contactDetails } from "../../_actions";
 import contacsList from "../../components/contacts/contacsList";
 
 const getVisibleContacts = (contacts, filter, contactsSearch) => {

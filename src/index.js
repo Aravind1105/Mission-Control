@@ -85,7 +85,6 @@ const startApp = (lang, langFile) => {
 	};
 
 	ReactDOM.render(<Wrapper />, document.getElementById('root'));
-	
 };
 
 const activateLanguageSuccess = (lang, langFile) => {

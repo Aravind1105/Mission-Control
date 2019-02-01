@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader } from "reactstrap";
 import FilterLink from "../../containers/contacts/contactsFilterLink";
-import { contactVisiblityFilter } from "../../actions/contacts";
+import { contactVisiblityFilter } from "../../_actions";
 import AddContact from "../../containers/contacts/addContact";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import * as Icon from "react-feather";

@@ -1,9 +1,9 @@
 import {
 	appShowLoader,
 	appHideLoader
-} from '../AppActions';
+} from './appActions';
 
-import Utils from '../../utility/Utils'
+import Utils from '../utility/Utils'
 
 /**
  * Action creator fridgesGetProducts

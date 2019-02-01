@@ -1,6 +1,9 @@
-import {getProducts} from "./actions/products/";
-import {getFridges} from "./actions/fridges/";
-import { getOrganizations } from "./actions/organizations";
+import {
+	getProducts,
+	getFridges,
+	getOrganizations
+} from "./_actions";
+
 
 const routesMap = {
 	HOME: {

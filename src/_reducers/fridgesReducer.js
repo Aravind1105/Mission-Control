@@ -1,5 +1,5 @@
 const initialState = {
-	fridges: []
+	fridgeList: []
 };
 
 export default (state = initialState, action = {}) => {
@@ -8,7 +8,7 @@ export default (state = initialState, action = {}) => {
 
 	switch(action.type){
 		case 'SET_FRIDGES': {
-			return { ...state, ...{fridges: action.payload}}
+			return { ...state, ...{fridgeList: action.payload}}
 		}
 
 		default:

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setEditContactFlag,updateContact } from "../../actions/contacts/";
+import { setEditContactFlag,updateContact } from "../../_actions";
 import contactsDetails from "../../components/contacts/contactsDetails";
 
 const mapStateToProps = (state, ownProps) => ({

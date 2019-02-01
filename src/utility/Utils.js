@@ -72,11 +72,11 @@ class Utils {
 		}
 
 		fetch(options.url,options)
-		.then(function(response) {	
-			console.log('response', response);		
+		.then(function(response) {
+			console.log('response', response);
 			return response.json();
 		})
-		.then(function(jsonres) {			
+		.then(function(jsonres) {
 			if(typeof options.success === 'function') options.success(jsonres);
 		})
 		.catch( error => {

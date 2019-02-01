@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row, Form, FormGroup, Label, Button, ModalBody, ModalFooter, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { connect } from "react-redux";
-import { addFridge } from "../../actions/fridges";
+import { addFridge } from "../../_actions";
 import backgroundImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
 const mapStateToProps = state => ({
@@ -25,7 +25,7 @@ const AddFridge = ({ id, dispatch }) => {
                      id,
                      address.value,
                      status.value,
-                     serialNo.value            
+                     serialNo.value
                   )
                );
                name.value="";
@@ -42,7 +42,7 @@ const AddFridge = ({ id, dispatch }) => {
                         className="rounded-circle width-100 height-100"
                         alt={id}
                      />
-                  </Col>  
+                  </Col>
                   <Col md={6}>
                      <FormGroup>
                         <Label for="name">Name</Label>
@@ -55,10 +55,10 @@ const AddFridge = ({ id, dispatch }) => {
                            required
                         />
                      </FormGroup>
-                  </Col>                  
+                  </Col>
                </Row>
                <Row>
-                  <Col md={6}>                     
+                  <Col md={6}>
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -75,7 +75,7 @@ const AddFridge = ({ id, dispatch }) => {
                   </Col>
                </Row>
                <Row>
-                  <Col md={6}>                     
+                  <Col md={6}>
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -83,13 +83,13 @@ const AddFridge = ({ id, dispatch }) => {
                         <input type="select" name="status" id="status" multiple>
                            <option>Active</option>
                            <option>Staged</option>
-                           <option>Offline</option>                           
+                           <option>Offline</option>
                         </input>
-                     </FormGroup>                     
-                  </Col>                  
+                     </FormGroup>
+                  </Col>
                </Row>
                <Row>
-                  <Col md={6}>                     
+                  <Col md={6}>
                   </Col>
                   <Col md={6}>
                      <FormGroup>
@@ -103,7 +103,7 @@ const AddFridge = ({ id, dispatch }) => {
                            required
                         />
                      </FormGroup>
-                  </Col>                  
+                  </Col>
                </Row>
             </ModalBody>
             <ModalFooter>

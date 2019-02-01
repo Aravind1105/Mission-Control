@@ -2,7 +2,7 @@ export const contactList = [
    {
       id: 0,
       firstname: "Stephani",
-      lastname: "Dalling",      
+      lastname: "Dalling",
       image: "https://randomuser.me/api/portraits/med/men/0.jpg",
       department: "Sales",
       company: "Rhybox",
@@ -448,7 +448,7 @@ export const contactList = [
       frequentlycontacted: false,
       starred: false,
       deleted: false
-   }  
+   }
 ];
 
 export default contactList;

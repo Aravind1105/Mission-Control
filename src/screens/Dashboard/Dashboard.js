@@ -3,12 +3,12 @@ import { Row, Col } from "reactstrap";
 
 import * as Icon from "react-feather";
 
-import { AdvancedCardData } from "../cards/advancedCardData";
+import { AdvancedCardData } from "../../components/cards/advancedCardData";
 
 import ProductsSalesChartCard from "../../components/cards/productsSalesChartCard";
 
 import MonthlySalesStatisticsBarChartCard from "../../components/cards/monthlySalesStatisticsBarChartCard";
-import Products from "../../views/products/products";
+import Products from "../Products/Products";
 
 import VisitSalesStatisticsCard from "../../components/cards/visitSalesStatistics";
 import WeeklyStatisticsLineChartCard from "../../components/cards/weeklyStatisticsLineChartCard";

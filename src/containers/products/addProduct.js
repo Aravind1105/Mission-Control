@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row, Form, FormGroup, Label, Button, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
-import { addProduct } from "../../actions/products";
+import { addProduct } from "../../_actions";
 import backgroundImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
 const mapStateToProps = state => ({

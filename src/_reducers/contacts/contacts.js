@@ -21,8 +21,8 @@ const contacts = (state = contactList, action) => {
                deleted: false
             }
          ];
-      
-      case "UPDATE_CONTACT":         
+
+      case "UPDATE_CONTACT":
          return state.map(contact => (contact.id === action.id ? { ...contact, [action.field]: action.value } : contact));
 
       case "TOGGLE_STARRED_CONTACT":

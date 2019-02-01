@@ -1,18 +1,18 @@
 import {
 	appShowLoader,
 	appHideLoader
-} from '../AppActions';
+} from './appActions';
 
-import Utils from '../../utility/Utils'
+import Utils from '../utility/Utils'
 import LivelloApi from 'livello-api-js'
 
 /**
  * Action creator getFridges
  * @return {action}
  */
-export const getFridges = () => {		
+export const getFridges = () => {
 
-	return (dispatch) => { 
+	return (dispatch) => {
 		dispatch(appShowLoader());
 		window.api = new LivelloApi(localStorage.getItem('access_token'));
 		window.api.fridges.getProducts('5c0cfea352faff0001a8ac61')
@@ -36,14 +36,14 @@ export const getFridges = () => {
 			// add inline error to screen
 			//dispatch(ErrorInlineAdd(result));
 			//dispatch(appHideLoader());
-		}); 
+		});
 
 		/*Utils.fetch({
 			url:'https://platform-v2-dot-livello-backend.appspot.com/api/v1/fridges?listAllFridges=True',
 			method: 'GET',
-			headers: {							
+			headers: {
         		"Authorization": "Bearer " + localStorage.getItem('access_token')
-			},			
+			},
 			success: (result) => {
 				console.info('Success------------------------------> GetFridges',result);
 				dispatch(setFridges(result.items));
@@ -58,7 +58,7 @@ export const getFridges = () => {
 				dispatch(appHideLoader());
 			}
 		}); */
-	} 
+	}
 };
 
 export const setFridges = (payload) => {
@@ -69,12 +69,12 @@ export const setFridges = (payload) => {
 };
 
 export const addFridge = (name, id, address, status, serialNo ) => ({
-   type: "ADD_Fridge",   
+   type: "ADD_Fridge",
    name: name ? name : "",
    id: id++,
    address: address ? address : "",
    status: status ? status : "",
-   serialNo: serialNo ? serialNo : ""   
+   serialNo: serialNo ? serialNo : ""
 });
 
 export const updateFridge = (id, field, value) => ({

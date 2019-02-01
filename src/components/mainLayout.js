@@ -19,15 +19,15 @@ import "../assets/scss/layouts/mainLayout.scss";
 import templateConfig from "../templateConfig";
 const auth = new Auth();
 
-class MainLayout extends PureComponent {      
+class MainLayout extends PureComponent {
 
    constructor() {
-      super();            
+      super();
    }
-   
-   state = {      
+
+   state = {
       width: window.innerWidth,
-      sidebarState: 'close'      
+      sidebarState: 'close'
    };
 
    updateWidth = () => {
@@ -35,27 +35,27 @@ class MainLayout extends PureComponent {
          width: window.innerWidth
       }));
    };
-   
-   async componentDidMount() {      
+
+   async componentDidMount() {
       await this.props.app.auth.handleAuthentication();
       //this.props.history.replace('/main');
       if (window !== "undefined") {
-         window.addEventListener("resize", this.updateWidth, false)         
-      }                
+         window.addEventListener("resize", this.updateWidth, false)
+      }
    }
-   
+
    componentWillUnmount() {
       if (window !== "undefined") {
          window.removeEventListener("resize", this.updateWidth, false);
-      }                  
+      }
    }
 
    toggleSidebarMenu(sidebarState) {
       this.setState({ sidebarState });
    }
 
-   
-   render() {         
+
+   render() {
       return (
             <FoldedContentProvider>
                <FoldedContentConsumer>
@@ -75,11 +75,11 @@ class MainLayout extends PureComponent {
                         <NavbarLayout
                            toggleSidebarMenu={this.toggleSidebarMenu.bind(this)}
                            sidebarState={this.state.sidebarState}
-                        />   
-                        
-                        <main>                              
+                        />
+
+                        <main>
                              {this.props.children}
-                        </main>                        
+                        </main>
                         <Footer />
                      </div>
                   )}
@@ -92,6 +92,5 @@ class MainLayout extends PureComponent {
 const mapStateToProps = (state) => {
    return state;
 };
- 
+
 export default injectIntl(connect(mapStateToProps)(MainLayout));
- 

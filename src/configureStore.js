@@ -1,17 +1,9 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-
 import { connectRoutes } from 'redux-first-router';
-
 import routesMap from 'routesMap';
 import routesFilter from 'routesMapOptions';
-//import * as reducers from 'reducers';
-import app from './reducers/AppReducer';
-import productsReducer from './reducers/productsReducer';
-import fridgesReducer from './reducers/fridgesReducer';
-import organizationsReducer from './reducers/organizationsReducer';
-import contactsReducer from "./reducers/contacts/";
-import * as actionCreators from 'actions';
-
+import * as reducers from '_reducers';
+import * as actionCreators from '_actions';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -23,7 +15,7 @@ export default history => {
 		enhancer
 	} = connectRoutes( history, routesMap, routesFilter );
 
-	const rootReducer = combineReducers({ app, contactsReducer, productsReducer, fridgesReducer,organizationsReducer, location: reducer });
+	const rootReducer = combineReducers({ ...reducers, location: reducer });
 	const middlewares = applyMiddleware(middleware, thunk, logger);
 	const enhancers = composeEnhancers(enhancer, middlewares);
 
