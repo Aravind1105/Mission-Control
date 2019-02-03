@@ -2,15 +2,21 @@
 @import "../util";
 
 body {
-    background :-webkit-radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
-    background: radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
+
 }
 
 .login-layout {
     /*background-image: url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e0245bb4e87077312cc3d102e68c1efd&auto=format&fit=crop&w=1035&q=80");*/
     /*background-size: cover;*/
-    min-height: 100vh;
-    width: 100%;
+
+    background :-webkit-radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
+    background: radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
+    background: url('../../img/bg.jpg') center center;
+    background-size: 100% auto;
+
+    width: 100vw;
+    height: 100vh;
+
     .navbar {
         padding: 50px 50px;
     }

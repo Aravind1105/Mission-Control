@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 // import internal(own) modules
 import MainLayout from "../../components/mainLayout";
-import LoginPage from "../Login/Login";
+import Login from "../Login/Login";
 import Products from "../Products/Products";
 import Fridges from "../Fridges/Fridges";
 import Organizations from '../Organizations/Organizations';
@@ -34,7 +34,7 @@ class App extends Component {
 			<div className="App">
 			{{
 				'HOME': (
-					<LoginPage/>
+					<Login/>
 				),
 				'MAIN': (
 					<MainLayout>

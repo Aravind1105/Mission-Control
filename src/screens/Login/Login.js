@@ -1,28 +1,18 @@
 // import external modules
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
-import { Navbar, Jumbotron, Button} from 'reactstrap';
-
+import LoginPanel from "../../components/loginPanel/loginPanel";
 import Footer from "../../components/footer/footer";
 import "../../assets/scss/layouts/loginLayout.scss";
 
 
-class LoginPage extends Component {
+class LoginPage extends React.Component {
 
 	render() {
 		return (
 			<div className="login-layout">
-				<Navbar className="navbar" />
-				<Jumbotron className="jumbotron" >
-					<h1 className="display-3" text="white">Livello Mission Control</h1>
-					<p className="lead">
-						<Button color="success" onClick={this.props.app.auth.login}>Login</Button>
-					</p>
-				</Jumbotron>
-				<div className="footer">
-					<Footer />
-				</div>
+				<LoginPanel onLogin={this.props.app.auth.login} />
 			</div>
 		);
 	}
