@@ -1,7 +1,4 @@
 import { NOT_FOUND } from "redux-first-router";
-import Auth from '../Auth/Auth';
-
-const auth = new Auth();
 
 const initialState = {
 	showLoader: false,
@@ -11,7 +8,6 @@ const initialState = {
 		title: "Info!",
 		text: "This is an info message."
 	},
-	auth,
 	notifications: [],
 	startupPage: "HOME"
 };
