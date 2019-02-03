@@ -2,6 +2,11 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import {
+	authSetUserDetails,
+	authRemoveUserDetails
+} from '../../_actions';
+
 import Auth from '../../Auth/Auth';
 
 
@@ -17,18 +22,44 @@ class LoginPage extends React.Component {
 		this.auth = new Auth();
 	}
 
+	onLoginSuccess(res){
+		console.log('this is the success callback with res:', res);
+	}
+
+	onLoginError(res){
+		console.log('this is the error callback with res:', res);
+	}
+
 	render() {
 		return (
 			<div className="login-layout">
-				<LoginPanel onLogin={this.auth.login} />
+				<LoginPanel onLogin={() => {
+					let options = {
+						success: this.onLoginSuccess,
+						error: this.onLoginError
+					};
+					this.auth.login(options);
+				}} />
 			</div>
 		);
 	}
 }
 
-function mapStateToProps(state){
-	return state;
-}
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    dispatch,
+    setUserDetails: (userDetails) => {
+      dispatch(authSetUserDetails(userDetails));
+    },
+    removeUserDetails: () => {
+      dispatch(authRemoveUserDetails());
+    }
+  });
+};
 
 export default connect(mapStateToProps)(LoginPage);
 

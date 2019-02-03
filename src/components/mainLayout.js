@@ -17,7 +17,7 @@ import Footer from "./footer/footer";
 import "../assets/scss/layouts/mainLayout.scss";
 
 import templateConfig from "../templateConfig";
-const auth = new Auth();
+
 
 class MainLayout extends PureComponent {
 
@@ -37,7 +37,6 @@ class MainLayout extends PureComponent {
    };
 
    async componentDidMount() {
-      await this.props.app.auth.handleAuthentication();
       //this.props.history.replace('/main');
       if (window !== "undefined") {
          window.addEventListener("resize", this.updateWidth, false)

@@ -27,11 +27,11 @@ class Organizations extends PureComponent {
    };
 
 
-   render() {      
-      const organizationsList = this.props.organizationsData.organizations; 
+   render() {
+      const organizationsList = this.props.organizationsData.organizations;
       console.log('dataaaaaaaaaaaaaaaaa',typeof organizationsList, organizationsList)
       return (
-         <div>              
+         <div>
             <div className="form-group form-group-compose text-left">
                 <div>
                     <Form className="float-left" role="search">
@@ -40,32 +40,32 @@ class Organizations extends PureComponent {
                                 <div className="form-control-position">
                                     <Search size={16} className="mb-0" />
                                 </div>
-                        </div> 
+                        </div>
                     </Form>
                 </div>
                <button
-                  type="button"                  
-                  className="btn btn-danger float-right my-2 shadow-z-2" 
+                  type="button"
+                  className="btn btn-danger float-right my-2 shadow-z-2"
                   onClick={this.toggle}
                >
                   <Icon.Plus size={18} className="mr-1" /> New Organization
-               </button> 
+               </button>
             </div>
-            <div>    
+            <div>
                <Table hover>
                   <thead >
                      <tr>
-                        <th>Name</th>                        
-                        <th>Address</th>                                        
-                        <th>Actions</th>      
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Actions</th>
                      </tr>
                   </thead>
                   <tbody>
-                     {organizationsList.hasOwnProperty('length') && organizationsList.length > 0 && organizationsList.map((object, i) => {                        
+                     {organizationsList.hasOwnProperty('length') && organizationsList.length > 0 && organizationsList.map((object, i) => {
                         return (
-                           <tr key={i}>                              
-                              <td>{object.name}</td>                              
-                              <td>{object.address}</td> 
+                           <tr key={i}>
+                              <td>{object.name}</td>
+                              <td>{object.address}</td>
                               <td>
                                  <Edit size={18} className="mr-2" />{" "}
                                  <Trash2 size={18} color="#FF586B" />
@@ -80,12 +80,12 @@ class Organizations extends PureComponent {
                <ModalHeader toggle={this.toggle}>Add Organization</ModalHeader>
                <AddOrganization />
             </Modal>
-         </div>   
+         </div>
        );
    }
 }
 
-Organizations.propTypes = {   
+Organizations.propTypes = {
    organizationsData: PropTypes.object
 };
 

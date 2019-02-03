@@ -1,5 +1,3 @@
-// src/Auth/Auth.js
-
 import auth0 from 'auth0-js';
 
 import history from '../history/history';
@@ -24,8 +22,13 @@ class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
-  login() {
-    this.auth0.authorize();
+  login(options) {
+    console.log('auth was invoked');
+    this.successCallback = options.success;
+    this.errorCallback = options.error;
+    this.auth0.authorize({
+      connection: 'google-oauth2'
+    });
   }
 
   handleAuthentication() {
@@ -36,10 +39,12 @@ class Auth {
           if (profile) {
             this.profileN = profile;
             console.log('profile------------------------------------>',profile);
+            this.successCallback(profile);
             this.setSession(authResult);
           }
         });
       } else if (err) {
+        this.errorCallback(err);
         history.replace('/');
         console.log(err);
       }
@@ -74,6 +79,11 @@ class Auth {
     return new Date().getTime() < expiresAt;
   }
 
+  render(){
+    return (null);
+  }
+
 }
+
 
 export default Auth;

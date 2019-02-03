@@ -32,11 +32,14 @@ import {
 } from "react-feather";
 import ReactCountryFlag from "react-country-flag";
 
-// import internal(own) modules
-import Auth from '../../Auth/Auth';
 import avtarImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
-const auth = new Auth();
+import Auth from '../../Auth/Auth';
+
+import {
+	authRemoveUserDetails
+} from '../../_actions';
+
 const JSON = require('circular-json');
 
 class ThemeNavbar extends Component {
@@ -45,6 +48,7 @@ class ThemeNavbar extends Component {
 	};
 	constructor(props) {
 		super(props);
+		this.auth = new Auth();
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
@@ -56,9 +60,15 @@ class ThemeNavbar extends Component {
 		});
 	}
 
+	logout(){
+		this.props.removeUserDetails();
+		this.auth.logout();
+	}
+
 	render() {
-		var userProfile =JSON.parse(JSON.stringify(this.props.app.auth.profileN));
+		var userProfile = this.props.auth.profile;
 		console.log('User Profile: ', this.props);
+		console.log(userProfile.hasOwnProperty('picture') ? userProfile.picture : avtarImg );
 
 		return (
 			<Navbar className="navbar navbar-expand-lg navbar-light bg-faded">
@@ -94,7 +104,7 @@ class ThemeNavbar extends Component {
 								</UncontrolledDropdown>
 								<UncontrolledDropdown nav inNavbar className="pr-1">
 									<DropdownToggle nav>
-										<img src={userProfile.picture ? userProfile.picture : avtarImg } alt="logged-in-user" className="rounded-circle width-35 height-35" />
+										<img src={userProfile.hasOwnProperty('picture') ? userProfile.picture : avtarImg } alt="logged-in-user" className="rounded-circle width-35 height-35" />
 									</DropdownToggle>
 									<DropdownMenu right>
 										<DropdownItem>
@@ -114,7 +124,7 @@ class ThemeNavbar extends Component {
 										<DropdownItem divider />
 										<Link to={{type:'HOME'}} className="p-0">
 											<DropdownItem>
-												<LogOut onClick={this.props.app.auth.logout}size={16} className="mr-1" /> Logout
+												<LogOut onClick={this.logout.bind(this)}size={16} className="mr-1" /> Logout
 											</DropdownItem>
 										</Link>
 									</DropdownMenu>
@@ -132,4 +142,13 @@ const mapStateToProps = (state) => {
 	return state;
 };
 
-export default injectIntl(connect(mapStateToProps)(ThemeNavbar));
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    dispatch,
+    removeUserDetails: () => {
+      dispatch(authRemoveUserDetails());
+    }
+  });
+};
+
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ThemeNavbar));
