@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { connectRoutes } from 'redux-first-router';
 import routesMap from 'routesMap';
-import routesFilter from 'routesMapOptions';
+import routesMapOptions from 'routesMapOptions';
 import * as reducers from '_reducers';
 import * as actionCreators from '_actions';
 import logger from 'redux-logger';
@@ -13,7 +13,7 @@ export default history => {
 		reducer,
 		middleware,
 		enhancer
-	} = connectRoutes( history, routesMap, routesFilter );
+	} = connectRoutes( history, routesMap, routesMapOptions );
 
 	const rootReducer = combineReducers({ ...reducers, location: reducer });
 	const middlewares = applyMiddleware(middleware, thunk, logger);

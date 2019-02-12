@@ -2,7 +2,7 @@
  * TO FORCE BOOTSTRAP.CSS TO LOAD BEFORE MAIN.CSS
  * PLACE BEFORE ANYTHING ELSE
  */
-//import 'bootstrap/dist/css/bootstrap.css';
+
 /**
  * REACT
  */
@@ -13,16 +13,19 @@ import ReactDOM from 'react-dom';
  * OUR UTILS LIBRARY
  */
 import Utils from 'inc/Utils';
+
 /**
  * PWA
  */
 // import registerServiceWorker from './registerServiceWorker';
+
 /**
  * REDUX
  */
 import { Provider } from  'react-redux';
 import createHistory from 'history/createBrowserHistory'
 import configureStore from 'configureStore';
+
 /**
  * i18n
  * use <FormattedMessage id="xxx.yyy"/> when inside tags
@@ -36,20 +39,18 @@ import {addLocaleData, IntlProvider} from 'react-intl';
 import "font-awesome/css/font-awesome.min.css";
 import "./index.scss";
 import Spinner from "./components/spinner/spinner";
-/**
- * APP
- */
-//import App from 'screens/App/App';
-const App = lazy(() => import("./screens/App/App"));
-
-
 
 /**
  * Deployment environment
  */
 window.ENV = process.env.REACT_APP_ENV;
-console.log(process.env.REACT_APP_ENV);
-console.log(window.ENV);
+window.CONFIG = require('../config/env_'+window.ENV.toLowerCase()+".json");
+
+/**
+ * APP
+ */
+//import App from 'screens/App/App';
+const App = lazy(() => import("./screens/App/App"));
 
 const history = createHistory();
 
@@ -76,9 +77,9 @@ const startApp = (lang, langFile) => {
 		return (
 			<IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages} >
 				<Provider store={store}>
-				<Suspense fallback={<Spinner />}>
-					<App {...this.props}/>
-				</Suspense>
+					<Suspense fallback={<Spinner />}>
+						<App {...this.props}/>
+					</Suspense>
 				</Provider>
 			</IntlProvider>
 		);

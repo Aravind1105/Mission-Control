@@ -7,19 +7,14 @@ import {
 	authRemoveUserDetails
 } from '../../_actions';
 
-import Auth from '../../Auth/Auth';
-
-
 import LoginPanel from "../../components/loginPanel/loginPanel";
 import Footer from "../../components/footer/footer";
 import "../../assets/scss/layouts/loginLayout.scss";
-
 
 class LoginPage extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.auth = new Auth();
 	}
 
 	onLoginSuccess(res){
@@ -34,11 +29,7 @@ class LoginPage extends React.Component {
 		return (
 			<div className="login-layout">
 				<LoginPanel onLogin={() => {
-					let options = {
-						success: this.onLoginSuccess,
-						error: this.onLoginError
-					};
-					this.auth.login(options);
+					this.props.auth0.login();
 				}} />
 			</div>
 		);

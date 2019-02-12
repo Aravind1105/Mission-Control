@@ -34,8 +34,6 @@ import ReactCountryFlag from "react-country-flag";
 
 import avtarImg from "../../assets/img/photos/2880x1800-light-sea-green-solid-color-background.jpg"
 
-import Auth from '../../Auth/Auth';
-
 import {
 	authRemoveUserDetails
 } from '../../_actions';
@@ -48,7 +46,6 @@ class ThemeNavbar extends Component {
 	};
 	constructor(props) {
 		super(props);
-		this.auth = new Auth();
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
@@ -62,7 +59,7 @@ class ThemeNavbar extends Component {
 
 	logout(){
 		this.props.removeUserDetails();
-		this.auth.logout();
+		window.Auth.logout();
 	}
 
 	render() {

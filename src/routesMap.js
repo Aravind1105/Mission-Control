@@ -16,72 +16,66 @@ const routesMap = {
 
 		},
 		role: ['admin','users']
-		
+
 		// ,
 		// initialDispatch: false
 	},
 
-	MAIN: {
-		path: '/main',
-		//path: '/(list)?', // this should be the implementation of optional parameters
+	CALLBACK: {
+		path: '/callback',
 		thunk: async (dispatch, getState) => {
-			console.info('##########################################################');
-			console.log('-----------> MAIN page',getState());
-			console.info('##########################################################');
-
-		},
-		role: ['admin','users']
-		// ,
-		// initialDispatch: false
+			//let loc = getState();
+			//console.log('--> ',loc);
+			//dispatch(accountsReadAccounts());
+		}
 	},
 
 	DASHBOARD: {
 		path: '/dashboard',
 		thunk: async (dispatch, getState) => {
-			//let loc = getState();
-			//console.log('--> ',loc);
-		 //dispatch(accountsReadAccounts());
-	   }
+			// let loc = getState();
+			// console.log('--> ',loc);
+			//dispatch(accountsReadAccounts());
+		}
 	},
 
 	FRIDGES: {
 		path: '/fridges',
 		thunk: async (dispatch, getState) => {
 			dispatch(getFridges());
-	    }		
-	}, 
+	    }
+	},
 
 	ORGANIZATIONS: {
-		path: '/organizations',	
+		path: '/organizations',
 		thunk: async (dispatch, getState) => {
 			dispatch(getOrganizations());
-	    }	
-	}, 
-	
+	    }
+	},
+
 	USERS: {
-		path: '/users',		
-	}, 
-	
+		path: '/users',
+	},
+
 	PRODUCTS: {
-		path: '/products',				
+		path: '/products',
 		thunk: async (dispatch, getState) => {
 			dispatch(getProducts());
 	    }
 	},
-	
+
 	TRANSACTIONS: {
-		path: '/transactions',		
-	}, 	
-	
-	REPORTS: {
-		path: '/reports',		
+		path: '/transactions',
 	},
-	
+
+	REPORTS: {
+		path: '/reports',
+	},
+
 	STATISTICS: {
-		path: '/stats',		
+		path: '/stats',
 	}
 };
 
 export default routesMap;
 
-    

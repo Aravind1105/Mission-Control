@@ -4,8 +4,6 @@ import classnames from "classnames";
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { BrowserRouter} from 'react-router-dom';
-import Auth from '../Auth/Auth';
-
 
 // import internal(own) modules
 

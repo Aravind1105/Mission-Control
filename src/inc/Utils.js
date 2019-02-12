@@ -184,7 +184,7 @@ const Utils = {
 	/**
 	 * validates a string received against a regular expression to verify it's a valid e-mail
 	 * @param  {String} email string containing the e-mail to validate
-	 * @return {bool} the reslt of the regex evaluation      
+	 * @return {bool} the reslt of the regex evaluation
 	 */
 	validateEmail: (email = '') => {
 		return email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null;
@@ -200,76 +200,19 @@ const Utils = {
 		}
 		return ret;
 	},
-	generateFormStructures: (formData) => {
-		
-		let columns = [];
-		let schema = {
-			"type": "object",
-			required:[],
-			"properties": {}
-		};
-		let uiSchemaCreate = {};
-		let uiSchemaUpdate =  {};
-		let uiSchemaDelete =  {};
+	getHashParams() {
 
-		let keys = Object.keys(formData);
+		var hashParams = {};
+		var e,
+			a = /\+/g,  // Regex for replacing addition symbol with a space
+			r = /([^&;=]+)=?([^&;]*)/g,
+			d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+			q = window.location.hash.substring(1);
 
-		for(let i = 0; i < keys.length; i++){
+		while (e = r.exec(q))
+		   hashParams[d(e[1])] = d(e[2]);
 
-			let obj = formData[keys[i]];
-
-			// schema
-			if(obj.required) schema.required.push(keys[i]);
-
-			let tmp = {
-				"type": obj.type,
-				"title": obj.strings.label
-			};
-
-			if(obj.hasOwnProperty('enum') && typeof obj.enum.hasOwnProperty('length')){
-
-				tmp.enum = [];
-				tmp.enumNames = [];
-
-				for(let j = 0; j < obj.enum.length; j++){
-
-					tmp.enum.push(obj.enum[j].value);
-					tmp.enumNames.push(obj.enum[j].label);
-				}
-			}
-
-			schema.properties[keys[i]] = tmp;
-
-
-			// uiSchemaCreate
-			let tmpUiCreate = {
-				"ui:placeholder": obj.strings.placeholder
-			};
-			if(i === 0) tmpUiCreate['ui:autofocus'] = true;
-			uiSchemaCreate[keys[i]] = tmpUiCreate;
-
-			// uiSchemaUpdate
-			let tmpUiUpdate = {
-				"ui:placeholder": obj.strings.placeholder
-			};
-			if( obj.hasOwnProperty('editable') && obj.editable === false) tmpUiUpdate['ui:readonly'] = true;
-			uiSchemaUpdate[keys[i]] = tmpUiUpdate;
-
-			// uiSchemaDelete
-			uiSchemaDelete[keys[i]] = {
-				"ui:readonly": true
-			};
-
-			// columns
-			if(obj.column){
-				columns.push({
-					accessor: keys[i],
-					Header: obj.strings.column
-				});
-			}
-		}
-
-		return {columns, schema, uiSchemaCreate, uiSchemaUpdate, uiSchemaDelete};
+		return hashParams;
 	}
 };
 export default Utils;

@@ -1,0 +1,10 @@
+{
+	"auth":{
+		"domain": "livello.eu.auth0.com",
+		"clientID": "Ur07El81MzIE0l9z2g864daSZWAAsn7s",
+		"redirectUri": "https://livello-mission-control-v01.netlify.com/dashboard",
+		"responseType": "token id_token",
+		"scope": "openid profile email admin",
+		"audience": "https://livello-backend/api"
+	}
+}
