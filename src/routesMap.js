@@ -15,39 +15,11 @@ const routesMap = {
     // initialDispatch: false
   },
 
-<<<<<<< Updated upstream
-  CALLBACK: {
-    path: '/callback',
-    thunk: async (dispatch, getState) => {
-      //let loc = getState();
-      //console.log('--> ',loc);
-      //dispatch(accountsReadAccounts());
-    },
-=======
-  MAIN: {
-    path: '/main',
-    //path: '/(list)?', // this should be the implementation of optional parameters
-    thunk: async (dispatch, getState) => {
-      console.info('##########################################################');
-      console.log('-----------> MAIN page', getState());
-      console.info('##########################################################');
-    },
-    role: ['admin', 'users'],
-    // ,
-    // initialDispatch: false
->>>>>>> Stashed changes
-  },
-
   DASHBOARD: {
     path: '/dashboard',
     thunk: async (dispatch, getState) => {
-<<<<<<< Updated upstream
-      // let loc = getState();
-      // console.log('--> ',loc);
-=======
       //let loc = getState();
       //console.log('--> ',loc);
->>>>>>> Stashed changes
       //dispatch(accountsReadAccounts());
     },
   },

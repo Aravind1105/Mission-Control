@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-<<<<<<< Updated upstream
+
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
@@ -17,22 +17,6 @@ import Products from '../Products/Products';
 import VisitSalesStatisticsCard from '../../components/cards/visitSalesStatistics';
 import WeeklyStatisticsLineChartCard from '../../components/cards/weeklyStatisticsLineChartCard';
 
-=======
-import { Row, Col } from 'reactstrap';
-
-import * as Icon from 'react-feather';
-
-import { AdvancedCardData } from '../../components/cards/advancedCardData';
-
-import ProductsSalesChartCard from '../../components/cards/productsSalesChartCard';
-
-import MonthlySalesStatisticsBarChartCard from '../../components/cards/monthlySalesStatisticsBarChartCard';
-import Products from '../Products/Products';
-
-import VisitSalesStatisticsCard from '../../components/cards/visitSalesStatistics';
-import WeeklyStatisticsLineChartCard from '../../components/cards/weeklyStatisticsLineChartCard';
-
->>>>>>> Stashed changes
 import UserListCard from '../../components/cards/userListCard';
 
 import Utils from '../../inc/Utils';

@@ -8,11 +8,8 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 export default history => {
-<<<<<<< Updated upstream
-  const { reducer, middleware, enhancer } = connectRoutes(history, routesMap, routesMapOptions);
-=======
+
   const { reducer, middleware, enhancer } = connectRoutes(history, routesMap, routesFilter);
->>>>>>> Stashed changes
 
   const rootReducer = combineReducers({ ...reducers, location: reducer });
   const middlewares = applyMiddleware(middleware, thunk, logger);
