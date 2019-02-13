@@ -13,19 +13,16 @@ import ReactDOM from 'react-dom';
  * OUR UTILS LIBRARY
  */
 import Utils from 'inc/Utils';
-
 /**
  * PWA
  */
 // import registerServiceWorker from './registerServiceWorker';
-
 /**
  * REDUX
  */
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import configureStore from 'configureStore';
-
 /**
  * i18n
  * use <FormattedMessage id="xxx.yyy"/> when inside tags

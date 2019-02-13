@@ -5,7 +5,10 @@ import { injectIntl } from 'react-intl';
 
 // import internal(own) modules
 import MainLayout from '../../components/mainLayout';
+<<<<<<< Updated upstream
 import Callback from '../Callback/Callback';
+=======
+>>>>>>> Stashed changes
 import Login from '../Login/Login';
 import Products from '../Products/Products';
 import Fridges from '../Fridges/Fridges';
@@ -37,6 +40,7 @@ const handleAuthentication = ({ location }) => {
 class App extends Component {
   processMessage() {}
 
+<<<<<<< Updated upstream
   render() {
     return (
       <div className="App">
@@ -82,6 +86,61 @@ class App extends Component {
       </div>
     );
   }
+=======
+	render() {
+		return (
+			<div className="App">
+			{{
+				'HOME': (
+					<Login auth0={auth}/>
+				),
+				'CALLBACK': (
+					<MainLayout>
+						<Callback />
+					</MainLayout>
+				),
+				'DASHBOARD': (
+					<MainLayout>
+						<Dashboard auth0={auth}/>
+					</MainLayout>
+				),
+				'FRIDGES':(
+					<MainLayout>
+						<Fridges/>
+					</MainLayout>
+				),
+				'ORGANIZATIONS':(
+					<MainLayout>
+					<Organizations/>
+					</MainLayout>
+				),
+				'USERS':(
+					<MainLayout>
+					<Users></Users>
+					</MainLayout>
+				),
+				'PRODUCTS':(
+					<MainLayout>
+					<Products/>
+					</MainLayout>
+				),
+				'TRANSACTIONS':(
+					<MainLayout/>
+				),
+				'REPORTS':(
+					<MainLayout/>
+				),
+				'STATISTICS':(
+					<MainLayout/>
+				),
+				'@@redux-first-router/NOT_FOUND': (
+					<div>Page not found.</div>
+				)
+			}[this.props.location.type]}
+			</div>
+		);
+	}
+>>>>>>> Stashed changes
 }
 
 const mapStateToProps = state => {
