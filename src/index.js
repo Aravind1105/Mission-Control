@@ -6,7 +6,7 @@
 /**
  * REACT
  */
-import React, { Suspense, lazy }  from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 
 /**
@@ -22,8 +22,8 @@ import Utils from 'inc/Utils';
 /**
  * REDUX
  */
-import { Provider } from  'react-redux';
-import createHistory from 'history/createBrowserHistory'
+import { Provider } from 'react-redux';
+import createHistory from 'history/createBrowserHistory';
 import configureStore from 'configureStore';
 
 /**
@@ -31,69 +31,68 @@ import configureStore from 'configureStore';
  * use <FormattedMessage id="xxx.yyy"/> when inside tags
  * and this.props.intl.formatMessage({id:'xxx.yyy'});
  */
-import {addLocaleData, IntlProvider} from 'react-intl';
+import { addLocaleData, IntlProvider } from 'react-intl';
 
 /**
  * CSS
  */
-import "font-awesome/css/font-awesome.min.css";
-import "./index.scss";
-import Spinner from "./components/spinner/spinner";
+import 'font-awesome/css/font-awesome.min.css';
+import './index.scss';
+import Spinner from './components/spinner/spinner';
 
 /**
  * Deployment environment
  */
 window.ENV = process.env.REACT_APP_ENV;
-window.CONFIG = require('../config/env_'+window.ENV.toLowerCase()+".json");
+window.CONFIG = require('../config/env_' + window.ENV.toLowerCase() + '.json');
 
 /**
  * APP
  */
 //import App from 'screens/App/App';
-const App = lazy(() => import("./screens/App/App"));
+const App = lazy(() => import('./screens/App/App'));
 
 const history = createHistory();
 
 const store = configureStore(history);
 
 const startApp = (lang, langFile) => {
+  let dynLocaleData = require('react-intl/locale-data/' + lang);
+  addLocaleData(dynLocaleData);
 
-	let dynLocaleData = require('react-intl/locale-data/'+lang);
-	addLocaleData(dynLocaleData);
+  let i18nConfig = {
+    locale: lang,
+    messages: langFile,
+  };
 
-	let i18nConfig = {
-		locale: lang,
-		messages: langFile
-	};
+  // store.dispatch({
+  // 	type: "SCREEN_CHANGE",
+  // 	screen: {
+  // 		page: 'loginUsername'
+  // 	}
+  // });
 
-	// store.dispatch({
-	// 	type: "SCREEN_CHANGE",
-	// 	screen: {
-	// 		page: 'loginUsername'
-	// 	}
-	// });
+  const Wrapper = props => {
+    return (
+      <IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages}>
+        <Provider store={store}>
+          <Suspense fallback={<Spinner />}>
+            <App {...props} />
+          </Suspense>
+        </Provider>
+      </IntlProvider>
+    );
+  };
 
-	const Wrapper = () => {
-		return (
-			<IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages} >
-				<Provider store={store}>
-					<Suspense fallback={<Spinner />}>
-						<App {...this.props}/>
-					</Suspense>
-				</Provider>
-			</IntlProvider>
-		);
-	};
-
-	ReactDOM.render(<Wrapper />, document.getElementById('root'));
+  ReactDOM.render(<Wrapper />, document.getElementById('root'));
 };
 
 const activateLanguageSuccess = (lang, langFile) => {
-	startApp(lang, langFile)
+  startApp(lang, langFile);
 };
 
-window.changeLang = (lang) => {
-	Utils.activateLanguage(lang, activateLanguageSuccess);
+window.changeLang = lang => {
+  Utils.activateLanguage(lang, activateLanguageSuccess);
 };
 
 Utils.detectLanguage(window.changeLang);

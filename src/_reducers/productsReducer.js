@@ -1,17 +1,16 @@
 const initialState = {
-	products: []
+  products: [],
 };
 
 export default (state = initialState, action = {}) => {
+  if (typeof action.type === 'undefined') return;
 
-	if(typeof action.type === 'undefined') return;
+  switch (action.type) {
+    case 'SET_PRODUCTS': {
+      return { ...state, ...{ products: action.payload } };
+    }
 
-	switch(action.type){
-		case 'SET_PRODUCTS': {
-			return { ...state, ...{products: action.payload}}
-		}
-
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };

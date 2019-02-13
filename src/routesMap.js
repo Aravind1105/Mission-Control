@@ -1,81 +1,74 @@
-import {
-	getProducts,
-	getFridges,
-	getOrganizations
-} from "./_actions";
-
+import { getProducts, getFridges, getOrganizations } from './_actions';
 
 const routesMap = {
-	HOME: {
-		path: '/',
-		//path: '/(list)?', // this should be the implementation of optional parameters
-		thunk: async (dispatch, getState) => {
-			console.info('##########################################################');
-			console.log('-----------> 3 HOME thunk routesMap',getState());
-			console.info('##########################################################');
+  HOME: {
+    path: '/',
+    //path: '/(list)?', // this should be the implementation of optional parameters
+    thunk: async (dispatch, getState) => {
+      console.info('##########################################################');
+      console.log('-----------> 3 HOME thunk routesMap', getState());
+      console.info('##########################################################');
+    },
+    role: ['admin', 'users'],
 
-		},
-		role: ['admin','users']
+    // ,
+    // initialDispatch: false
+  },
 
-		// ,
-		// initialDispatch: false
-	},
+  CALLBACK: {
+    path: '/callback',
+    thunk: async (dispatch, getState) => {
+      //let loc = getState();
+      //console.log('--> ',loc);
+      //dispatch(accountsReadAccounts());
+    },
+  },
 
-	CALLBACK: {
-		path: '/callback',
-		thunk: async (dispatch, getState) => {
-			//let loc = getState();
-			//console.log('--> ',loc);
-			//dispatch(accountsReadAccounts());
-		}
-	},
+  DASHBOARD: {
+    path: '/dashboard',
+    thunk: async (dispatch, getState) => {
+      // let loc = getState();
+      // console.log('--> ',loc);
+      //dispatch(accountsReadAccounts());
+    },
+  },
 
-	DASHBOARD: {
-		path: '/dashboard',
-		thunk: async (dispatch, getState) => {
-			// let loc = getState();
-			// console.log('--> ',loc);
-			//dispatch(accountsReadAccounts());
-		}
-	},
+  FRIDGES: {
+    path: '/fridges',
+    thunk: async (dispatch, getState) => {
+      dispatch(getFridges());
+    },
+  },
 
-	FRIDGES: {
-		path: '/fridges',
-		thunk: async (dispatch, getState) => {
-			dispatch(getFridges());
-	    }
-	},
+  ORGANIZATIONS: {
+    path: '/organizations',
+    thunk: async (dispatch, getState) => {
+      dispatch(getOrganizations());
+    },
+  },
 
-	ORGANIZATIONS: {
-		path: '/organizations',
-		thunk: async (dispatch, getState) => {
-			dispatch(getOrganizations());
-	    }
-	},
+  USERS: {
+    path: '/users',
+  },
 
-	USERS: {
-		path: '/users',
-	},
+  PRODUCTS: {
+    path: '/products',
+    thunk: async (dispatch, getState) => {
+      dispatch(getProducts());
+    },
+  },
 
-	PRODUCTS: {
-		path: '/products',
-		thunk: async (dispatch, getState) => {
-			dispatch(getProducts());
-	    }
-	},
+  TRANSACTIONS: {
+    path: '/transactions',
+  },
 
-	TRANSACTIONS: {
-		path: '/transactions',
-	},
+  REPORTS: {
+    path: '/reports',
+  },
 
-	REPORTS: {
-		path: '/reports',
-	},
-
-	STATISTICS: {
-		path: '/stats',
-	}
+  STATISTICS: {
+    path: '/stats',
+  },
 };
 
 export default routesMap;
-
