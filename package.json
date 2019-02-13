@@ -30,16 +30,8 @@
     "react-perfect-scrollbar": "^1.4.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-<<<<<<< Updated upstream
     "react-scripts": "2.1.5",
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
     "react-spinners": "^0.5.1",
-=======
-    "react-scripts": "2.1.5",
-    "react-spinners": "^0.4.7",
->>>>>>> 873b83c14924ef318a3dbfa8d4be80f2b5ff4bce
     "reactstrap": "^6.4.0",
     "redux": "^4.0.0",
     "redux-first-router": "^1.9.19",
