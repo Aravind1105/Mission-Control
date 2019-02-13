@@ -1,56 +1,53 @@
 // import external modules
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import {
-	authSetUserDetails,
-	authRemoveUserDetails
-} from '../../_actions';
+import { authSetUserDetails, authRemoveUserDetails } from '../../_actions';
 
-import LoginPanel from "../../components/loginPanel/loginPanel";
-import Footer from "../../components/footer/footer";
-import "../../assets/scss/layouts/loginLayout.scss";
+import LoginPanel from '../../components/loginPanel/loginPanel';
+import Footer from '../../components/footer/footer';
+import '../../assets/scss/layouts/loginLayout.scss';
 
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-	constructor(props){
-		super(props);
-	}
+  onLoginSuccess(res) {
+    console.log('this is the success callback with res:', res);
+  }
 
-	onLoginSuccess(res){
-		console.log('this is the success callback with res:', res);
-	}
+  onLoginError(res) {
+    console.log('this is the error callback with res:', res);
+  }
 
-	onLoginError(res){
-		console.log('this is the error callback with res:', res);
-	}
-
-	render() {
-		return (
-			<div className="login-layout">
-				<LoginPanel onLogin={() => {
-					this.props.auth0.login();
-				}} />
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="login-layout">
+        <LoginPanel
+          onLogin={() => {
+            this.props.auth0.login();
+          }}
+        />
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return ({
+const mapDispatchToProps = dispatch => {
+  return {
     dispatch,
-    setUserDetails: (userDetails) => {
+    setUserDetails: userDetails => {
       dispatch(authSetUserDetails(userDetails));
     },
     removeUserDetails: () => {
       dispatch(authRemoveUserDetails());
-    }
-  });
+    },
+  };
 };
 
 export default connect(mapStateToProps)(LoginPage);
-

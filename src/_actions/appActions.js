@@ -16,15 +16,13 @@ export const APP_SHOW_LOADER = 'APP_SHOW_LOADER';
  * @param  {action} action [description]
  * @return {thunk} which will bring the result from the main app api call with several startup parameters
  */
-export const appMainCall = (action) => {
+export const appMainCall = action => {
+  return dispatch => {
+    // SHOW APP LOADER
+    dispatch(appShowLoader());
 
-	return (dispatch) => {
-
-		// SHOW APP LOADER
-		dispatch(appShowLoader());
-
-		return true;
-	}
+    return true;
+  };
 };
 
 /**
@@ -32,10 +30,10 @@ export const appMainCall = (action) => {
  * @return {action}
  */
 export const appShowLoader = (payload = true) => {
-	return {
-		type: APP_SHOW_LOADER,
-		payload: payload
-	}
+  return {
+    type: APP_SHOW_LOADER,
+    payload: payload,
+  };
 };
 
 /**
@@ -43,7 +41,7 @@ export const appShowLoader = (payload = true) => {
  * @return {action}
  */
 export const appHideLoader = () => {
-	return {
-		type: 'APP_HIDE_LOADER'
-	}
+  return {
+    type: 'APP_HIDE_LOADER',
+  };
 };

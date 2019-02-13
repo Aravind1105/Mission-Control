@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import VisibleContactList from "../../containers/contacts/visibleContactsList";
+import VisibleContactList from '../../containers/contacts/visibleContactsList';
 
 const App = () => (
-   <div>
-      <VisibleContactList />
-   </div>
+  <div>
+    <VisibleContactList />
+  </div>
 );
 
 export default App;

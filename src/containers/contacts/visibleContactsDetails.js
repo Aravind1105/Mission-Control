@@ -1,18 +1,18 @@
-import { connect } from "react-redux";
-import { setEditContactFlag,updateContact } from "../../_actions";
-import contactsDetails from "../../components/contacts/contactsDetails";
+import { connect } from 'react-redux';
+import { setEditContactFlag, updateContact } from '../../_actions';
+import contactsDetails from '../../components/contacts/contactsDetails';
 
 const mapStateToProps = (state, ownProps) => ({
-   selectedContacts: state.contactsReducer.contacts[state.contactsReducer.contactsDetails],
-   editContactFlag: state.contactsReducer.editContact
+  selectedContacts: state.contactsReducer.contacts[state.contactsReducer.contactsDetails],
+  editContactFlag: state.contactsReducer.editContact,
 });
 
 const mapDispatchToProps = dispatch => ({
-   onEditClick: () => dispatch(setEditContactFlag()),
-   onChange:(id, field, value) => dispatch(updateContact(id , field, value))
+  onEditClick: () => dispatch(setEditContactFlag()),
+  onChange: (id, field, value) => dispatch(updateContact(id, field, value)),
 });
 
 export default connect(
-   mapStateToProps,
-   mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(contactsDetails);
