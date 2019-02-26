@@ -1,0 +1,28 @@
+@import './globals/site.variables';
+@mobileNavTopPadding: 48px;
+
+.container-mobile {
+  padding-top: @mobileNavTopPadding;
+
+  .ui.menu.mobile-menu {
+    background-color: #fff;
+    border-bottom: 1px solid @grey;
+  }
+
+  .mobile-content {
+    min-height: calc(100vh - @mobileNavTopPadding);
+  }
+
+  .sidebar.menu {
+    max-width: calc(100% - 30px);
+  }
+
+  .item.brand-logo {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .bars.large.icon {
+    margin: 0 !important;
+  }
+}

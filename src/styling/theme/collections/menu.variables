@@ -1,0 +1,10 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@invertedBackground: @darkgrey;
+@borderRadius: 0;
+
+@itemVerticalPadding: 1.2em;
+
+@mediumWidth: 250px;
