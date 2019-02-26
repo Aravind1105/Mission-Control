@@ -1,8 +1,0 @@
-html, body{
-  height: 100%;
-}
-
-body {
-  background :-webkit-radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
-  background: radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
-}

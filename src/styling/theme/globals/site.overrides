@@ -1,0 +1,13 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+code {
+  background: #e0e1e2;
+  border: @black dashed 1px;
+}
+
+#root,
+.App {
+  height: 100%;
+}

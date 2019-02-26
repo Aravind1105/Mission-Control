@@ -1,0 +1,77 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+/*--------------
+     Custom Toggle - Desktop NAvigation
+---------------*/
+@toggleLaneWidthtCustom: 1.5rem;
+@toggleOnOffsetCustom: 0.75rem;
+@toggleHandleSizeCustom: 0.75rem;
+@toggleLaneHeightCustom: 0.75rem;
+
+.ui.toggle.checkbox.desktop-nav-toggle {
+  min-height: @toggleHeight;
+}
+
+/* Input */
+.ui.toggle.checkbox.desktop-nav-toggle input {
+  width: @toggleWidth;
+  height: @toggleHeight;
+}
+
+/* Switch */
+.ui.toggle.checkbox.desktop-nav-toggle .box:before,
+.ui.toggle.checkbox.desktop-nav-toggle label:before {
+  display: block;
+  position: absolute;
+  content: '';
+  z-index: 1;
+  transform: none;
+  border: 1px solid @grey;
+
+  top: @toggleLaneVerticalOffset;
+
+  background: @toggleLaneBackground;
+  box-shadow: @toggleLaneBoxShadow;
+  width: @toggleLaneWidthtCustom;
+  height: @toggleLaneHeightCustom;
+  border-radius: @toggleHandleRadius;
+}
+
+/* Handle */
+.ui.toggle.checkbox.desktop-nav-toggle .box:after,
+.ui.toggle.checkbox.desktop-nav-toggle label:after {
+  background: @handleBackground;
+  position: absolute;
+  content: '' !important;
+  opacity: 1;
+  z-index: 2;
+
+  border: none;
+  box-shadow: @handleBoxShadow;
+  width: @toggleHandleSizeCustom;
+  height: @toggleHandleSizeCustom;
+  top: @toggleHandleOffset;
+  left: 0em;
+
+  border-radius: @circularRadius;
+  transition: @toggleHandleTransition;
+}
+
+/* Focus */
+.ui.toggle.checkbox.desktop-nav-toggle input:focus ~ .box:before,
+.ui.toggle.checkbox.desktop-nav-toggle input:focus ~ label:before {
+  border: 1px solid @grey;
+}
+
+/* Hover */
+.ui.toggle.checkbox.desktop-nav-toggle .box:hover::before,
+.ui.toggle.checkbox.desktop-nav-toggle label:hover::before {
+  border: 1px solid @grey;
+}
+
+.ui.toggle.checkbox.desktop-nav-toggle input:checked ~ .box:after,
+.ui.toggle.checkbox.desktop-nav-toggle input:checked ~ label:after {
+  left: @toggleOnOffsetCustom;
+}

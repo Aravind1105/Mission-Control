@@ -1,9 +1,0 @@
-{
-	"screens" : {
-		"app":{
-			"welcomeMessage": "Welcome to TD-ReactJS-Boilerplate",
-			"msg1": "To get started, edit {script_path} and save to reload.",
-			"title1": "This is just a title to show how to use the {other_form} form."
-		}
-	}
-}
