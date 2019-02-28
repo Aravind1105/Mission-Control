@@ -22,3 +22,7 @@
     }
   }
 }
+
+.ui.grid > .row.no-padding {
+  padding: 0;
+}

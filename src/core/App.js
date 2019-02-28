@@ -54,7 +54,7 @@ class App extends Component {
               </AuthedLayout>
             ) : (
               <Switch>
-                <Route path="/imprint" component={<LoginScreen />} />
+                <Route path="/imprint" component={LoginScreen} />
                 <Route component={LoginScreen} />
               </Switch>
             )

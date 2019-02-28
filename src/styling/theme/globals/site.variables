@@ -4,16 +4,16 @@
 
 @primaryColor   : @green;
 @secondaryColor : @grey;
-@red            : #B03060;
-@orange         : #FE9A76;
+@red            : #DB2828;
+@orange         : #F2711C;
 @yellow         : #FFD700;
 @olive          : #32CD32;
 @green          : #7cb122;
-@teal           : #008080;
+@teal           : #00B5AD;
 @blue           : #0E6EB8;
 @violet         : #EE82EE;
 @purple         : #B413EC;
-@pink           : #FF1493;
+@pink           : #E03997;
 @brown          : #A52A2A;
 @grey           : #F5F7FA;
 @darkgrey       : #303032;
