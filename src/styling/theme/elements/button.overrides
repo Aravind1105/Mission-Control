@@ -1,3 +1,12 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.basic.icon.labeled.button > i.icon {
+  background-color: transparent;
+}
+
+.ui[class*='right labeled'].icon.button {
+  padding-right: 2.5em !important;
+  padding-left: 1.5em !important;
+}
