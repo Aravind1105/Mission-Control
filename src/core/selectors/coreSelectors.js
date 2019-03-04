@@ -6,3 +6,8 @@ export const getInitialized = createSelector(
   [getCoreState],
   coreState => coreState.initialized,
 );
+
+export const getLanguage = createSelector(
+  [getCoreState],
+  coreState => coreState.language,
+);

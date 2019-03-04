@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import UserProfileBar from './UserProfileBar';
+import LanguageSelect from './LanguageSelect';
 
 import logoSmall from '../../../styling/assets/images/logo-small.png';
 
@@ -31,6 +32,9 @@ const DesktopLayout = ({ children }) => {
       <div className="desktop-content">
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
+            <Menu.Item>
+              <LanguageSelect />
+            </Menu.Item>
             <Menu.Item>
               <UserProfileBar showName />
             </Menu.Item>

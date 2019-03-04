@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Dropdown, Header, Segment, Table } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Dropdown, Header, Segment } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
-// import ProductItemStats from '../ProductStatsItem';
-
 import { UniTable } from 'modules/shared/components/unitable';
 
 const optionsTime = [
@@ -105,12 +104,13 @@ const infos = [
 const ProductStats = ({ data }) => {
   const [timerange, setTimerange] = useState('today');
   const [fridge, setFridge] = useState('all');
+  const { t, i18n } = useTranslation();
 
   return (
     <Segment>
       <SegmentHeader>
         <Header as="h4">
-          <Header.Content>Products</Header.Content>
+          <Header.Content>{t('core.welcome')}</Header.Content>
         </Header>
         <div>
           <Dropdown
