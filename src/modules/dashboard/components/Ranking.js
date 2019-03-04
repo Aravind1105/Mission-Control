@@ -2,12 +2,60 @@ import React, { useState } from 'react';
 import { Dropdown, Header, Segment, Table } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
 import RankingItem from './RankingItem';
+import { UniTable } from 'modules/shared/components/unitable';
 
 const options = [
   { key: 1, text: 'Today', value: 'today' },
   { key: 2, text: 'This week', value: 'week' },
   { key: 3, text: 'This month', value: 'last_week' },
 ];
+
+// table configuration start
+
+const tableConfig = {
+  headless: true,
+  enumerated: true,
+  striped: true,
+  selectable: false,
+  sortation: 'sales',
+  sorting: 'descending',
+  clickArg: [],
+};
+const tableColumns = [
+  {
+    name: 'item',
+    label: 'Produkt',
+    unit: '',
+    width: 65,
+    align: 'left',
+  },
+  {
+    name: 'sales',
+    label: 'Verkäufe',
+    unit: '€',
+    width: 35,
+    align: 'right',
+  },
+];
+const filters = [];
+const infos = [
+  {
+    column: 'sales',
+    value: 100,
+    comparsion: 'lower',
+    type: 'error',
+    icon: 'attention',
+  },
+  {
+    column: 'sales',
+    value: 100,
+    comparsion: 'greater',
+    type: 'positive',
+    icon: 'star',
+  },
+];
+
+// table configuration end
 
 const Ranking = ({ title, data }) => {
   const [timerange, setTimerange] = useState('today');
@@ -31,7 +79,14 @@ const Ranking = ({ title, data }) => {
           />
         </div>
       </SegmentHeader>
-      <Table unstackable basic="very" size="small">
+      <UniTable
+        tableConfig={tableConfig}
+        tableColumns={tableColumns}
+        tableData={data}
+        filters={filters}
+        infos={infos}
+      />
+      {/* <Table unstackable basic="very" size="small">
         <Table.Body>
           {data.map((props, key) => (
             <RankingItem
@@ -41,7 +96,7 @@ const Ranking = ({ title, data }) => {
             />
           ))}
         </Table.Body>
-      </Table>
+      </Table> */}
     </Segment>
   );
 };

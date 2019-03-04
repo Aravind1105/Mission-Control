@@ -8,7 +8,7 @@ import ProductStats from './components/ProductStats';
 
 // Mock Data
 import { rankingOne, rankingTwo } from './mocks/ranking';
-import { productList } from './mocks/products';
+import { productsMockData } from './mocks/products';
 
 const DashboardScreen = () => (
   <Grid>
@@ -75,7 +75,7 @@ const DashboardScreen = () => (
 
     <Grid.Row>
       <Grid.Column>
-        <ProductStats data={productList} />
+        <ProductStats data={productsMockData} />
       </Grid.Column>
     </Grid.Row>
   </Grid>

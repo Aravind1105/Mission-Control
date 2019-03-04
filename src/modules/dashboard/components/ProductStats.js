@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Dropdown, Header, Segment, Table } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
-import ProductItemStats from '../ProductStatsItem';
+// import ProductItemStats from '../ProductStatsItem';
+
+import { UniTable } from 'modules/shared/components/unitable';
 
 const optionsTime = [
   { key: 1, text: 'Today', value: 'today' },
@@ -14,6 +16,91 @@ const optionsFridges = [
   { key: 2, text: 'Livello 1', value: 'lv_1' },
   { key: 3, text: 'Docomo', value: 'docomo' },
 ];
+
+// table configuration start
+
+const tableConfig = {
+  headless: false,
+  enumerated: true,
+  striped: true,
+  selectable: true,
+  sortation: 'name',
+  sorting: 'ascending',
+  clickArg: ['id', 'name'],
+};
+
+const tableColumns = [
+  {
+    name: 'id',
+    label: '',
+    unit: '',
+    width: 0,
+    align: '',
+  },
+  {
+    name: 'name',
+    label: 'Produktname',
+    unit: '',
+    width: 40,
+    align: 'left',
+  },
+  {
+    name: 'stock',
+    label: 'Bestand',
+    unit: 'Stk.',
+    width: 20,
+    align: 'center',
+  },
+  {
+    name: 'sales',
+    label: 'Verkäufe',
+    unit: '€',
+    width: 20,
+    align: 'center',
+  },
+  {
+    name: 'sold',
+    label: 'Verkauft',
+    unit: 'Stk.',
+    width: 20,
+    align: 'center',
+  },
+  {
+    name: 'margin',
+    label: 'Profit',
+    unit: '%',
+    width: 20,
+    align: 'center',
+  },
+];
+
+const filters = [];
+
+const infos = [
+  {
+    column: 'stock',
+    value: 150,
+    comparsion: 'lower',
+    type: 'error',
+    icon: 'attention',
+  },
+  {
+    column: 'sales',
+    value: 7000,
+    comparsion: 'greater',
+    type: 'positive',
+    icon: 'star',
+  },
+  {
+    column: 'margin',
+    value: 35,
+    comparsion: 'lower',
+    type: 'warning',
+    icon: 'question circle',
+  },
+];
+
+// table configuration end
 
 const ProductStats = ({ data }) => {
   const [timerange, setTimerange] = useState('today');
@@ -46,7 +133,15 @@ const ProductStats = ({ data }) => {
           />
         </div>
       </SegmentHeader>
-      <Table stackable size="small">
+      <UniTable
+        tableConfig={tableConfig}
+        tableColumns={tableColumns}
+        tableData={data}
+        filters={filters}
+        infos={infos}
+        onClickRow={(...args) => console.log('click on row: ', ...args)}
+      />
+      {/* <Table stackable size="small">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
@@ -61,7 +156,7 @@ const ProductStats = ({ data }) => {
             <ProductItemStats {...props} key={props.id} />
           ))}
         </Table.Body>
-      </Table>
+      </Table> */}
     </Segment>
   );
 };
