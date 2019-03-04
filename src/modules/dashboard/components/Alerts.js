@@ -1,6 +1,88 @@
 import React from 'react';
-import { Button, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
+
+import { UniTable } from 'modules/shared/components/unitable';
+
+import { alertsMockData } from '../mocks/alertsMocks';
+
+// // unitable configuration start
+
+const tableConfig = {
+  headless: false,
+  enumerated: false,
+  striped: true,
+  selectable: true,
+  sortation: 'timestamp',
+  sorting: 'ascending',
+  clickArg: ['id'],
+};
+
+const tableColumns = [
+  {
+    name: 'id',
+    label: '',
+    unit: '',
+    width: 0,
+    align: '',
+  },
+  {
+    name: 'message',
+    label: 'Nachricht',
+    unit: '',
+    width: 40,
+    align: 'left',
+  },
+  {
+    name: 'customer',
+    label: 'Kunde',
+    unit: '',
+    width: 40,
+    align: 'left',
+  },
+  {
+    name: 'timestamp',
+    label: 'Uhrzeit',
+    unit: 'hours ago',
+    width: 20,
+    align: 'left',
+  },
+  {
+    name: 'status',
+    label: 'Status',
+    unit: '',
+    width: 20,
+    align: 'left',
+  },
+];
+
+const filters = [];
+
+const infos = [
+  {
+    column: 'status',
+    value: 'New',
+    comparsion: 'equal',
+    type: 'negative',
+    icon: 'attention',
+  },
+  {
+    column: 'status',
+    value: 'Resolved',
+    comparsion: 'equal',
+    type: 'positive',
+    icon: 'check circle',
+  },
+  {
+    column: 'status',
+    value: 'In progress',
+    comparsion: 'equal',
+    type: 'warning',
+    icon: 'time',
+  },
+];
+
+// unitable configuration end
 
 const Alerts = () => {
   return (
@@ -17,7 +99,15 @@ const Alerts = () => {
           </Button>
         </div>
       </SegmentHeader>
-      <Table stackable basic="very" size="small">
+      <UniTable
+        tableConfig={tableConfig}
+        tableColumns={tableColumns}
+        tableData={alertsMockData}
+        filters={filters}
+        infos={infos}
+        onClickRow={(...args) => console.log('click on row: ', ...args)}
+      />
+      {/* <Table stackable basic="very" size="small">
         <Table.Body>
           <Table.Row>
             <Table.Cell>
@@ -60,7 +150,7 @@ const Alerts = () => {
             <Table.Cell>Resolved</Table.Cell>
           </Table.Row>
         </Table.Body>
-      </Table>
+      </Table> */}
     </Segment>
   );
 };

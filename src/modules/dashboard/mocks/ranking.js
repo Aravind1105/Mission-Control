@@ -1,45 +1,45 @@
 export const rankingOne = [
   {
     item: 'Publicis Media 1',
-    value: '€ 268',
+    sales: '268',
   },
   {
     item: 'Kontrast',
-    value: '€ 234',
+    sales: '234',
   },
   {
     item: 'Docomo',
-    value: '€ 198',
+    sales: '198',
   },
   {
     item: 'Exc.io',
-    value: '€ 188',
+    sales: '188',
   },
   {
     item: 'Adecco',
-    value: '€ 188',
+    sales: '188',
   },
 ];
 
 export const rankingTwo = [
   {
     item: 'Publicis Media 1',
-    value: '€ 68',
+    sales: '68',
   },
   {
     item: 'Kontrast',
-    value: '€ 74',
+    sales: '74',
   },
   {
     item: 'Docomo',
-    value: '€ 88',
+    sales: '88',
   },
   {
     item: 'Exc.io',
-    value: '€ 88',
+    sales: '88',
   },
   {
     item: 'Adecco',
-    value: '€ 98',
+    sales: '98',
   },
 ];
