@@ -1,8 +1,9 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV !== 'production';
 
 const autoprefixerOptions = {
   browsers: ['>0.2%', 'not dead', 'not ie <= 11', 'not op_mini all'],
@@ -61,6 +62,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: isDev ? '[name].css' : '[name].[hash].css',
       chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
+    }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
     }),
   ],
   resolve: {

@@ -18,7 +18,7 @@ module.exports = configMerge(commonConfig, {
     new HtmlWebpackPlugin({ template: 'src/index.html' }),
   ],
   devServer: {
-    contentBase: './dist',
+    contentBase: './public',
     hot: true,
     historyApiFallback: true,
     port: 3000,
