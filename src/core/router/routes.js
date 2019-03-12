@@ -1,12 +1,18 @@
 import { lazy } from 'react';
-import DashboardScreen from 'modules/dashboard/DashboardScreen';
-import KiosksScreen from 'modules/kiosks/KiosksScreen';
-import OrganizationsScreen from 'modules/organizations/OrganizationsScreen';
-import UsersScreen from 'modules/users/UsersScreen';
-import ProductsScreen from 'modules/products/ProductsScreen';
-import FulfillmentScreen from 'modules/fulfillment/FulfillmentScreen';
-import TransactionsScreen from 'modules/transactions/TransactionsScreen';
 
+const DashboardScreen = lazy(() => import('modules/dashboard/DashboardScreen'));
+const KiosksScreen = lazy(() => import('modules/kiosks/KiosksScreen'));
+const OrganizationsScreen = lazy(() =>
+  import('modules/organizations/OrganizationsScreen'),
+);
+const UsersScreen = lazy(() => import('modules/users/UsersScreen'));
+const ProductsScreen = lazy(() => import('modules/products/ProductsScreen'));
+const FulfillmentScreen = lazy(() =>
+  import('modules/fulfillment/FulfillmentScreen'),
+);
+const TransactionsScreen = lazy(() =>
+  import('modules/transactions/TransactionsScreen'),
+);
 const ReportsScreen = lazy(() => import('modules/reports/ReportsScreen'));
 
 export default [
