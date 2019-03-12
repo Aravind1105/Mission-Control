@@ -1,5 +1,10 @@
 # Livello Mission Control
 
+### Environment
+
+Before you can start local development or deployment you have to create a `.env` file.  
+You will find the contents at confluence: [#04 Mission Control](https://pm.livello.com/confluence/display/LIV/%2304+Mission+Control)
+
 ### Development:
 
 Run a development server on `http://localhost:3000`
@@ -11,13 +16,29 @@ Run a development server on `http://localhost:3000`
 
 ### Deployment:
 
-tbd.
+Currently builds and deployments are not CI/CD integrated.
+
+For building and deployment there are several build commands. You can always use `make help`.
+
+```
+help                           Show commands and description.
+build                          Build dist and docker image
+build-dist                     Build the application dist
+build-docker                   Build the docker container from dist
+run-local                      Run docker image local
+deploy-docker                  Deploys the docker image to Gcloud
+deploy-staging                 Deploy to staging
+deploy-staging-service         Deploy staging service
+```
 
 ### Application folder structure
 
 ```bash
 .
 ├── config # Webpack config
+├── dist # Webpack config
+├── public # Statics which get deployed to google bucket
+├── scripts # Helper scripts for deployment etc.
 └── src
     ├── core  # Application core, this is where everything gets combined and core functionality lives.
     │   ├── actions

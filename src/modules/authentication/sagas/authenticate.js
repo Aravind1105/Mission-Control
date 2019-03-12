@@ -18,15 +18,14 @@ import history from 'lib/history';
 import LivelloLS from 'lib/LocalStorage';
 
 const authConfig = {
-  domain: 'livello.eu.auth0.com',
-  clientID: 'Ur07El81MzIE0l9z2g864daSZWAAsn7s',
-  redirectUri: 'http://localhost:3000/',
+  domain: process.env.AUTH_DOMAIN,
+  clientID: process.env.AUTH_CLIENT_ID,
+  redirectUri: window.location.origin,
   responseType: 'token id_token',
   scope: 'openid profile email admin',
-  audience: 'https://livello-backend/api',
+  audience: process.env.AUTH_AUDIENCE,
 };
 
-// TODO: ENV this !!!
 const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
