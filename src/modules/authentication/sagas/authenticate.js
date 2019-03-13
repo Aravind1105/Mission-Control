@@ -30,7 +30,7 @@ const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
-  yield auth.authorize();
+  yield auth.authorize({connection: 'google-oauth2'});
 }
 
 function parseHash() {
