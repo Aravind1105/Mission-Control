@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "auth0-js": "^9.10.0",
+    "formik": "^1.5.1",
     "history": "^4.7.2",
     "i18next": "^15.0.4",
     "livello-js-sdk": "git+https://gitlab+deploy-token-38698:8z-1WamuEnwwCGrMhzjE@gitlab.com/livello-network/livello-js-sdk.git",
