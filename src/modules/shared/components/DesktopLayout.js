@@ -29,7 +29,7 @@ const DesktopLayout = ({ children }) => {
           />
         </Menu.Item>
       </Menu>
-      <div className="desktop-content">
+      <div className="desktop-content" style={{ backgroundColor: '#f4f7fa' }}>
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
             <Menu.Item>

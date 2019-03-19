@@ -13,7 +13,27 @@ import {
 import { Table } from 'semantic-ui-react';
 import Cell from './UniTableCell';
 import { compare } from './lib/comparsions';
-import './styles/uniTable.less';
+// import './styles/uniTable.less';
+
+const sortAndFilterData = (
+  contentData,
+  sortedColumn,
+  sortingDirection,
+  filters,
+) => {
+  let sortColumn =
+    sortingDirection === 'ascending'
+      ? sort(ascend(prop(sortedColumn)))
+      : sort(descend(prop(sortedColumn)));
+
+  return pipe(
+    ...map(
+      fi => filter(propSatisfies(compare(fi.comparsion)(fi.value))(fi.column)),
+      filters,
+    ),
+    sortColumn,
+  )(contentData);
+};
 
 const UniTable = ({
   tableConfig,
@@ -26,38 +46,37 @@ const UniTable = ({
   const [initialized, setInitialized] = useState(false);
   const [sortedColumn, setSortedColumn] = useState('');
   const [data, setData] = useState([]);
+  const [rawData, setRawData] = useState([]);
   const [direction, setDirection] = useState('');
   const [columns, setColumns] = useState([]);
+  const [activeRow, setActiveRow] = useState(-1);
 
   useEffect(() => {
     if (!initialized) {
-      let outputData = tableData;
-      const columnsFromData = Object.keys(tableData[0]);
+      const columnsFromData = tableColumns.map(col => col.name);
       const sortedColumnOnStart = tableConfig.sortation;
 
-      // not completed!
-      let sortColumn;
-      if (tableConfig.sorting === 'ascending') {
-        sortColumn = sort(ascend(prop(sortedColumnOnStart)));
-      } else if (tableConfig.sorting === 'descending') {
-        sortColumn = sort(descend(prop(sortedColumnOnStart)));
-      }
-
-      outputData = pipe(
-        ...map(
-          fi =>
-            filter(propSatisfies(compare(fi.comparsion)(fi.value))(fi.column)),
-          filters,
-        ),
-        sortColumn,
-        // sort(descend(prop(sortedColumnOnStart))),
-      )(outputData);
-
+      tableConfig.active !== 'undefined' && setActiveRow(tableConfig.active);
       setColumns(columnsFromData);
       setSortedColumn(sortedColumnOnStart);
-      setData(outputData);
+      setData(
+        sortAndFilterData(
+          tableData,
+          sortedColumnOnStart,
+          tableConfig.sorting,
+          filters,
+        ),
+      );
+      setRawData(tableData);
       setDirection(tableConfig.sorting);
       setInitialized(true);
+    }
+  });
+
+  useEffect(() => {
+    if (rawData !== tableData) {
+      setData(sortAndFilterData(tableData, sortedColumn, direction, filters));
+      setRawData(tableData);
     }
   });
 
@@ -81,6 +100,7 @@ const UniTable = ({
       compact
       striped={tableConfig.striped}
       className="unitable"
+      basic="very"
     >
       {!tableConfig.headless && (
         <Table.Header>
@@ -111,10 +131,22 @@ const UniTable = ({
         {data.map((row, index1) => {
           const rowProp = {};
           tableConfig.selectable &&
-            (rowProp.onClick = () =>
-              onClickRow(...tableConfig.clickArg.map(arg => row[arg])));
+            (rowProp.onClick = () => {
+              setActiveRow(index1);
+              onClickRow(...tableConfig.clickArg.map(arg => row[arg]));
+            });
           return (
-            <Table.Row key={index1} {...rowProp}>
+            <Table.Row
+              key={index1}
+              {...rowProp}
+              active={
+                activeRow === index1
+                  ? tableConfig.selectableActive
+                    ? true
+                    : false
+                  : false
+              }
+            >
               {mapObject(row, (value, index2) => {
                 const column = tableColumns.filter(c => c.name === index2)[0];
                 if (column.width > 0) {
