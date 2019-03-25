@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { SegmentHeader } from 'modules/shared/components';
+import { orange, teal, pink } from '../../../lib/colors';
 
 const data = [
   {
@@ -18,42 +19,56 @@ const data = [
     lv_1: 4000,
     docomo: 2400,
     amt: 2400,
+    kontrast: 1400,
+    adecco: 400,
   },
   {
     name: 'Product B',
     lv_1: 3000,
     docomo: 1398,
     amt: 2210,
+    kontrast: 1210,
+    adecco: 400,
   },
   {
     name: 'Product C',
     lv_1: 2000,
-    docomo: 9800,
+    docomo: 12800,
     amt: 2290,
+    kontrast: 1290,
+    adecco: 400,
   },
   {
     name: 'Product D',
     lv_1: 2780,
     docomo: 3908,
     amt: 2000,
+    kontrast: 1000,
+    adecco: 400,
   },
   {
     name: 'Product E',
     lv_1: 1890,
     docomo: 4800,
     amt: 2181,
+    kontrast: 1181,
+    adecco: 400,
   },
   {
     name: 'Product F',
     lv_1: 2390,
     docomo: 3800,
     amt: 2500,
+    kontrast: 1500,
+    adecco: 400,
   },
   {
     name: 'Product G',
     lv_1: 3490,
     docomo: 4300,
     amt: 2100,
+    kontrast: 1500,
+    adecco: 400,
   },
 ];
 
@@ -117,6 +132,9 @@ const ExampleChart = () => {
           <Legend />
           <Bar dataKey="lv_1" name="Livello 1" stackId="a" fill="#8884d8" />
           <Bar dataKey="docomo" name="Docomo" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="amt" name="AMT" stackId="a" fill={orange} />
+          <Bar dataKey="kontrast" name="Kontrast" stackId="a" fill={teal} />
+          <Bar dataKey="adecco" name="Adecco" stackId="a" fill={pink} />
         </BarChart>
       </ResponsiveContainer>
     </Segment>

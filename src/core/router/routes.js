@@ -50,8 +50,8 @@ export default [
     Component: ProductsScreen,
   },
   {
-    name: 'Replenishment',
-    path: '/replenishment',
+    name: 'Fulfillment',
+    path: '/fulfillment',
     icon: 'truck',
     Component: FulfillmentScreen,
   },
