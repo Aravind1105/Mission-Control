@@ -3,7 +3,7 @@ import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { SegmentHeader } from 'modules/shared/components';
 import {
-  UniTable,
+  Unitable,
   conditionalIcon,
   valueEquals,
 } from 'modules/shared/components/unitableReloaded';
@@ -54,7 +54,7 @@ const Alerts = () => {
           </Button>
         </div>
       </SegmentHeader>
-      <UniTable
+      <Unitable
         data={alertsMockData}
         columns={columns}
         sortable

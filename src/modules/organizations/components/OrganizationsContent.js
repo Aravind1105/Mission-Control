@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Segment, Pagination, Container } from 'semantic-ui-react';
-import { UniTable } from 'modules/shared/components/unitableReloaded';
+import { Unitable } from 'modules/shared/components/unitableReloaded';
 import { loadOrganizationsSaga } from '../actions/organizationsActions';
 
 const OrganizationsContent = ({
@@ -40,7 +40,7 @@ const OrganizationsContent = ({
 
   return (
     <Segment>
-      <UniTable
+      <Unitable
         data={organizations}
         columns={columns}
         onRowClick={clickRow}

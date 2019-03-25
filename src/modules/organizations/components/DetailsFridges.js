@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Header, Progress } from 'semantic-ui-react';
 
-import { UniTable } from 'modules/shared/components/unitableReloaded';
+import { Unitable } from 'modules/shared/components/unitableReloaded';
 import { fridgesTableData } from '../mocks/organziationsMocks';
 
 const columns = [
@@ -35,7 +35,7 @@ const DetailsFridges = ({ setSelectedFridge }) => {
       <Header as="h4" dividing>
         Fridges
       </Header>
-      <UniTable
+      <Unitable
         data={fridgesTableData}
         columns={columns}
         onRowClick={({ id }) => {
