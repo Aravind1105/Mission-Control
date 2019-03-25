@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, Container, Menu } from 'semantic-ui-react';
+import { Checkbox, Container, Menu, Icon, Label } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import UserProfileBar from './UserProfileBar';
 import LanguageSelect from './LanguageSelect';
@@ -32,6 +32,25 @@ const DesktopLayout = ({ children }) => {
       <div className="desktop-content" style={{ backgroundColor: '#f4f7fa' }}>
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
+            <Menu.Item>
+              <Icon
+                name="bell outline"
+                style={{
+                  fontSize: '1.5em',
+                }}
+              />
+              <Label
+                color="red"
+                floating
+                className="alerts-navi"
+                style={{
+                  fontSize: '8px',
+                  top: '1em',
+                }}
+              >
+                22
+              </Label>
+            </Menu.Item>
             <Menu.Item>
               <LanguageSelect />
             </Menu.Item>

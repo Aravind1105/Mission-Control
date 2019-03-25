@@ -1,3 +1,7 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.floating.label.alerts-navi {
+  margin: 0 0 0 -3.5em !important;
+}
