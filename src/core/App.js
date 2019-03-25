@@ -16,8 +16,13 @@ import { initializeApp } from './actions/coreActions';
 import { getInitialized } from './selectors/coreSelectors';
 
 import '../styling/semantic.less';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
-const Loading = () => <div>loading...</div>;
+const Loading = () => (
+  <Dimmer active inverted>
+    <Loader size="large">Loading</Loader>
+  </Dimmer>
+);
 
 class App extends Component {
   componentDidMount() {
@@ -27,7 +32,7 @@ class App extends Component {
   render() {
     const { initialized } = this.props;
 
-    if (!initialized) return <div>Loading</div>;
+    if (!initialized) return <Loading />;
 
     return (
       <Router history={history}>
