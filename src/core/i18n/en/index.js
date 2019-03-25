@@ -6,5 +6,6 @@ export default {
     message: 'Message',
     time: 'Time',
     status: 'Status',
+    products: 'Products',
   },
 };

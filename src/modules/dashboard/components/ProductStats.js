@@ -110,7 +110,7 @@ const ProductStats = ({ data }) => {
     <Segment>
       <SegmentHeader>
         <Header as="h4">
-          <Header.Content>{t('core.welcome')}</Header.Content>
+          <Header.Content>{t('products')}</Header.Content>
         </Header>
         <div>
           <Dropdown
