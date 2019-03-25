@@ -3,7 +3,7 @@ import { Segment, Container, Pagination } from 'semantic-ui-react';
 import {
   Unitable,
   valueEquals,
-  conditionalIcon,
+  conditionalValue,
 } from '../../shared/components/unitableReloaded';
 import { kiosksOverviewMock } from '../mocks/kiosksMock';
 
@@ -17,7 +17,7 @@ const KiosksContent = () => {
       positive: valueEquals('Active'),
       negative: valueEquals('Offline'),
       warning: valueEquals('Issue'),
-      icon: conditionalIcon([['Offline', 'attention']]),
+      icon: conditionalValue([['Offline', 'attention']]),
     },
     {
       name: 'Serial',

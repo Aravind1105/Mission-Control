@@ -113,12 +113,17 @@ const Unitable = ({
                   mapDataFrom,
                   postfix,
                   positive,
+                  color,
                   textAlign,
                   negative,
                   warning,
                 }) => {
                   const value =
                     tableData[key][mapDataFrom || name.toLowerCase()];
+
+                  const style = {
+                    color: color && color(value),
+                  };
 
                   return (
                     <Table.Cell
@@ -128,6 +133,7 @@ const Unitable = ({
                       warning={warning && warning(value)}
                       textAlign={textAlign}
                       className={type ? type : ''}
+                      style={style}
                     >
                       {type === 'progress' && (
                         <UnitableCellProgress
@@ -143,6 +149,7 @@ const Unitable = ({
                             tableData[key][mapDataFrom || name.toLowerCase()]
                           }
                           postfix={postfix}
+                          style={style}
                           textAlign={textAlign}
                         />
                       )}
@@ -168,6 +175,7 @@ Unitable.prototypes = {
       postfix: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       positive: PropTypes.func,
       progress: PropTypes.arrayOf['progress'],
+      color: PropTypes.func,
     }),
   ),
   data: PropTypes.array.isRequired,

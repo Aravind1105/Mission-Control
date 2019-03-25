@@ -16,12 +16,14 @@ UnitableCellContent.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   postfix: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: PropTypes.object,
 };
 
 UnitableCellContent.defaultProps = {
   icon: null,
   postfix: '',
   value: 'N.A.',
+  style: {},
 };
 
 export default UnitableCellContent;

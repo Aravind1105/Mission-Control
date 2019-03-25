@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { SegmentHeader } from 'modules/shared/components';
 import {
   Unitable,
-  conditionalIcon,
+  conditionalValue,
   valueEquals,
 } from 'modules/shared/components/unitableReloaded';
 import { alertsMockData } from '../mocks/alertsMocks';
@@ -32,7 +32,7 @@ const Alerts = () => {
       positive: valueEquals('Resolved'),
       negative: valueEquals('New'),
       warning: valueEquals('In progress'),
-      icon: conditionalIcon([
+      icon: conditionalValue([
         ['Resolved', 'check circle'],
         ['New', 'attention'],
         ['In progress', 'time'],

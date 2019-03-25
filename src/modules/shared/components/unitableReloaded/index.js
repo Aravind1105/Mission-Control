@@ -1,4 +1,4 @@
 import Unitable from './Unitable';
-import { conditionalIcon, valueEquals } from './helper';
+import { conditionalValue, valueEquals } from './helper';
 
-export { Unitable, conditionalIcon, valueEquals };
+export { Unitable, conditionalValue, valueEquals };
