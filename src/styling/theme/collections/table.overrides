@@ -4,4 +4,13 @@
 
 .ui.table.unitable {
   font-size: 11px;
+
+  td.progress {
+    padding-right: @cellHorizontalPadding !important;
+
+    .ui.tiny.progress {
+      margin: 0;
+      min-width: 60px;
+    }
+  }
 }

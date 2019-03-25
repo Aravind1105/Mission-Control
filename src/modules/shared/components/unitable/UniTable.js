@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { map as mapObject } from 'lodash';
 import {
   ascend,
@@ -168,6 +169,33 @@ const UniTable = ({
       </Table.Body>
     </Table>
   );
+};
+
+const tableConfigShape = PropTypes.shape({
+  headless: PropTypes.bool.isRequired,
+  enumerated: PropTypes.bool.isRequired,
+  striped: PropTypes.bool.isRequired,
+  selectable: PropTypes.bool.isRequired,
+  sortation: PropTypes.string.isRequired, // Initial sort by existing column name
+  sorting: PropTypes.oneOf(['ascending', 'descending']),
+  clickArg: PropTypes.arrayOf(PropTypes.string),
+});
+
+UniTable.propTypes = {
+  filters: PropTypes.array.isRequired,
+  infos: PropTypes.arrayOf(
+    PropTypes.shape({
+      column: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+      comparsion: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  tableConfig: tableConfigShape.isRequired,
+  tableColumns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default UniTable;

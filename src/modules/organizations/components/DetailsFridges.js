@@ -1,54 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Header, Progress } from 'semantic-ui-react';
 
-import { UniTable } from 'modules/shared/components/unitable';
-
+import { UniTable } from 'modules/shared/components/unitableReloaded';
 import { fridgesTableData } from '../mocks/organziationsMocks';
 
-const fridgesTableConfig = {
-  headless: true,
-  enumerated: false,
-  striped: false,
-  selectable: true,
-  selectableActive: true,
-  sortation: 'timestamp',
-  sorting: 'descending',
-  clickArg: ['id'],
-  active: 0,
-};
-
-const fridgesTableColumns = [
+const columns = [
   {
-    name: 'id',
-    label: '',
-    unit: '',
-    width: 0,
-    align: 'left',
+    name: 'Name',
+    textAlign: 'center',
   },
   {
-    name: 'name',
-    label: 'Name',
-    unit: '',
-    width: 30,
-    align: 'left',
+    name: 'Last Repl.',
+    mapDataFrom: 'timestamp',
   },
   {
-    name: 'timestamp',
-    label: 'Timestamp',
-    unit: '',
-    width: 42,
-    align: 'left',
-  },
-  {
-    name: 'level',
-    label: 'Level',
-    unit: 'progress--%',
-    width: 28,
-    align: 'left',
+    name: 'Inventory',
+    mapDataFrom: 'level',
+    type: 'progress',
   },
 ];
-
-const infos = [];
 
 const DetailsFridges = ({ setSelectedFridge }) => {
   const [initialized, setInitialized] = useState(false);
@@ -66,18 +36,17 @@ const DetailsFridges = ({ setSelectedFridge }) => {
         Fridges
       </Header>
       <UniTable
-        tableConfig={fridgesTableConfig}
-        tableColumns={fridgesTableColumns}
-        tableData={fridgesTableData}
-        filters={[]}
-        infos={infos}
-        onClickRow={id => setSelectedFridge(id)}
+        data={fridgesTableData}
+        columns={columns}
+        onRowClick={({ id }) => {
+          return setSelectedFridge(id);
+        }}
+        clickArgs={['id']}
+        selectable
+        sortByColumn="name"
       />
-      <Header as="h4" dividing>
-        Average level of all kiosks
-      </Header>
-      <Progress percent={28} error size={'small'}>
-        Overall level 28%
+      <Progress percent={49} warning progress="percent">
+        Overall capacity
       </Progress>
     </>
   );
