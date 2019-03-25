@@ -26,9 +26,9 @@ const OrganizationDetails = ({ match }) => {
   });
 
   return (
-    <Grid>
-      <Grid.Row>
-        <Grid.Column mobile={16} computer={11}>
+    <Grid stackable>
+      <Grid.Row columns="equal">
+        <Grid.Column>
           <Grid>
             <Grid.Row>
               <Grid.Column>
@@ -54,7 +54,7 @@ const OrganizationDetails = ({ match }) => {
           </Grid>
         </Grid.Column>
 
-        <Grid.Column mobile={16} computer={5}>
+        <Grid.Column width={5}>
           <Grid>
             <Grid.Row>
               <Grid.Column>

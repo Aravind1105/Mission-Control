@@ -36,6 +36,7 @@ const inventoryTableColumns = [
     unit: '',
     width: 42,
     align: 'left',
+    cellStyle: 'list',
   },
   {
     name: 'level',

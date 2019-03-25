@@ -15,6 +15,7 @@
     "history": "^4.7.2",
     "i18next": "^15.0.4",
     "livello-js-sdk": "git+https://gitlab+deploy-token-38698:8z-1WamuEnwwCGrMhzjE@gitlab.com/livello-network/livello-js-sdk.git",
+    "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",

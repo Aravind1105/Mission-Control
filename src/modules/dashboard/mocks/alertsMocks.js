@@ -24,7 +24,7 @@ export const alertsMockData = [
     id: '3948593',
     message: 'Loadcell fluctuating',
     customer: 'Siemens 2 #2392 (A3, B2)',
-    timestamp: 5,
+    timestamp: 1,
     status: 'New',
   },
   {

@@ -1,9 +1,30 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Table, Icon, Progress, List } from 'semantic-ui-react';
 import { forEach } from 'ramda';
 import { compare } from './lib/comparsions';
 
+const UniTableCellWrapper = ({
+  col,
+  children,
+  width,
+  toggleExpand,
+  cellProps,
+}) => (
+  <Table.Cell
+    className={`td-${col}`}
+    {...cellProps}
+    style={{
+      width: `${width}%`,
+    }}
+    onClick={() => toggleExpand()}
+  >
+    {children()}
+  </Table.Cell>
+);
+
 const UniTableCell = ({
+  cellStyle,
   col,
   label,
   value,
@@ -12,14 +33,15 @@ const UniTableCell = ({
   align,
   enumer,
   width,
+  ...rest
 }) => {
   const [expanded, setExpanded] = useState(true);
-  const propsArr = { warning: false, error: false, textAlign: align };
+  const cellProps = { warning: false, error: false, textAlign: align };
   let icon = null;
 
   const checkMatch = i => {
     if (i.column === col && compare(i.comparsion)(i.value)(value)) {
-      if (i.type !== '') propsArr[i.type] = true;
+      if (i.type !== '') cellProps[i.type] = true;
       icon = i.icon && <Icon name={i.icon} />;
     }
   };
@@ -62,33 +84,29 @@ const UniTableCell = ({
 
   const createList = listValues => {
     listValues = listValues[Object.keys(listValues)];
+
     return (
       <List style={{ marginTop: '3px' }} size="tiny" color={'pink'}>
-        {listValues.map(value => (
-          <List.Item key={value.text}>
-            <List.Icon
-              name="circle"
-              size="tiny"
-              verticalAlign="middle"
-              style={{ marginRight: '7px' }}
-              color={'teal'}
-            />
-            {value.text}
-          </List.Item>
-        ))}
+        {listValues &&
+          listValues.map(value => (
+            <List.Item key={value.text}>
+              <List.Icon
+                name="circle"
+                size="tiny"
+                verticalAlign="middle"
+                style={{ marginRight: '7px' }}
+                color={'teal'}
+              />
+              {value.text}
+            </List.Item>
+          ))}
       </List>
     );
   };
 
   const createCellContent = (unit, value) => {
     return isExtended(value) ? (
-      <>
-        <span className="value">
-          {Object.keys(value)[0]}
-          {expanded ? <Icon name="angle down" /> : <Icon name="angle right" />}
-        </span>
-        {expanded && createList(value)}
-      </>
+      <></>
     ) : (
       <>
         {icon}
@@ -104,17 +122,61 @@ const UniTableCell = ({
   };
 
   return (
-    <Table.Cell
-      className={`td-${col}`}
-      {...propsArr}
-      style={{
-        width: `${width}%`,
+    <UniTableCellWrapper toggleExpand={toggleExpand} cellProps={cellProps}>
+      {() => {
+        switch (cellStyle) {
+          case 'list':
+            console.log(value);
+            return (
+              <>
+                <span className="value">
+                  {typeof value === 'object' ? Object.keys(value)[0] : value}
+                  {expanded ? (
+                    <Icon name="angle down" />
+                  ) : (
+                    <Icon name="angle right" />
+                  )}
+                </span>
+                {expanded && createList(value)}
+              </>
+            );
+          default:
+            return (
+              <>
+                {icon}
+                <span className="value">
+                  {`${
+                    (unit === '€' || unit === '$') && typeof value === 'number'
+                      ? value.toFixed(2)
+                      : value
+                  } ${unit}`}
+                </span>
+              </>
+            );
+        }
       }}
-      onClick={() => toggleExpand()}
-    >
-      {createCellContent(unit, value)}
-    </Table.Cell>
+    </UniTableCellWrapper>
   );
+};
+
+UniTableCell.propTypes = {
+  cellStyle: PropTypes.oneOf(['default', 'progress', 'list']),
+  col: PropTypes.string.isRequired,
+  lable: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.object.isRequired,
+  ]),
+  infos: PropTypes.array.isRequired,
+  unit: PropTypes.string.isRequired,
+  align: PropTypes.oneOf(['left', 'right', 'center']),
+  enumer: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+UniTableCell.defaultProps = {
+  cellStyle: 'default',
 };
 
 export default UniTableCell;

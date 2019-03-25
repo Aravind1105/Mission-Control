@@ -2,51 +2,44 @@ import React from 'react';
 import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { SegmentHeader } from 'modules/shared/components';
-import { UniTable } from 'modules/shared/components/unitable';
+import {
+  UniTable,
+  conditionalIcon,
+  valueEquals,
+} from 'modules/shared/components/unitableReloaded';
 import { alertsMockData } from '../mocks/alertsMocks';
-
-// // unitable configuration start
-
-const tableConfig = {
-  headless: false,
-  enumerated: false,
-  striped: true,
-  selectable: true,
-  sortation: 'timestamp',
-  sorting: 'ascending',
-  clickArg: ['id'],
-};
-
-const filters = [];
-
-const infos = [
-  {
-    column: 'status',
-    value: 'New',
-    comparsion: 'equal',
-    type: 'negative',
-    icon: 'attention',
-  },
-  {
-    column: 'status',
-    value: 'Resolved',
-    comparsion: 'equal',
-    type: 'positive',
-    icon: 'check circle',
-  },
-  {
-    column: 'status',
-    value: 'In progress',
-    comparsion: 'equal',
-    type: 'warning',
-    icon: 'time',
-  },
-];
-
-// unitable configuration end
 
 const Alerts = () => {
   const { t } = useTranslation();
+
+  const columns = [
+    {
+      name: t('message'),
+      mapDataFrom: 'message',
+    },
+    {
+      name: t('customer'),
+      mapDataFrom: 'customer',
+    },
+    {
+      name: t('time'),
+      mapDataFrom: 'timestamp',
+      postfix: value => ` hour${value > 1 ? 's' : ''} ago`,
+    },
+    {
+      name: t('status'),
+      mapDataFrom: 'status',
+      positive: valueEquals('Resolved'),
+      negative: valueEquals('New'),
+      warning: valueEquals('In progress'),
+      icon: conditionalIcon([
+        ['Resolved', 'check circle'],
+        ['New', 'attention'],
+        ['In progress', 'time'],
+      ]),
+    },
+  ];
+
   return (
     <Segment>
       <SegmentHeader>
@@ -62,48 +55,10 @@ const Alerts = () => {
         </div>
       </SegmentHeader>
       <UniTable
-        tableConfig={tableConfig}
-        tableColumns={[
-          {
-            name: 'id',
-            label: '',
-            unit: '',
-            width: 0,
-            align: '',
-          },
-          {
-            name: 'message',
-            label: t('message'),
-            unit: '',
-            width: 40,
-            align: 'left',
-          },
-          {
-            name: 'customer',
-            label: t('customer'),
-            unit: '',
-            width: 40,
-            align: 'left',
-          },
-          {
-            name: 'timestamp',
-            label: t('time'),
-            unit: 'hours ago',
-            width: 20,
-            align: 'left',
-          },
-          {
-            name: 'status',
-            label: t('status'),
-            unit: '',
-            width: 20,
-            align: 'left',
-          },
-        ]}
-        tableData={alertsMockData}
-        filters={filters}
-        infos={infos}
-        onClickRow={(...args) => console.log('click on row: ', ...args)}
+        data={alertsMockData}
+        columns={columns}
+        sortable
+        sortByColumn="timestamp"
       />
     </Segment>
   );
