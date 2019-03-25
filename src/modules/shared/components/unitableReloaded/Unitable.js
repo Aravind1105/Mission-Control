@@ -34,6 +34,7 @@ const Unitable = ({
   sortByColumn,
   sortDirection,
   onRowClick,
+  clickArgs,
 }) => {
   const [activeColumn, setActiveColumn] = useState('');
   const [direction, setDirection] = useState('ascending');
@@ -102,7 +103,7 @@ const Unitable = ({
               active={activeRow === index}
               onClick={() => {
                 selectable && setActiveRow(index);
-                onRowClick(pick(['id'], tableData[key]));
+                onRowClick(pick(clickArgs, tableData[key]));
               }}
             >
               {columns.map(

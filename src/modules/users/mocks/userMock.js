@@ -2,11 +2,28 @@ import faker from 'faker';
 
 const types = ['Customer', 'Replenisher', 'Admin', 'Employee'];
 
-const generateUser = type => ({
-  id: faker.random.uuid(),
-  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
-  type,
-});
+const generateUser = type => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+  return {
+    id: faker.random.uuid(),
+    firstName,
+    lastName,
+    name: `${firstName} ${lastName}`,
+    type,
+    avatar: faker.image.avatar(),
+    organization: faker.company.companyName(),
+    address: `${faker.address.city()}, ${faker.address.streetName()} ${faker.random.number(
+      200,
+    )}`,
+    email: faker.internet.email(),
+    phone: faker.phone.phoneNumber(),
+    cardId: `LV${faker.random.number(500000)}`,
+    credit: `${faker.commerce.price(1, 500, 2, '€')}`,
+    allowance: `${faker.commerce.price(1, 25, 2, '€')}`,
+    loyality: faker.random.number(500),
+  };
+};
 
 export const genUserListMock = count => {
   const customers = [...Array((count / 100) * 60)].map(() =>

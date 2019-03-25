@@ -1,3 +1,19 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+.ui.massive.comments {
+  .text {
+    font-size: 1.4rem;
+  }
+  .actions {
+    font-size: 1.1rem;
+    color: #9c9c9c;
+  }
+  .avatar {
+    font-size: 2.3rem;
+  }
+  & > .comment > .avatar ~ .content {
+    margin-left: 4.5em;
+  }
+}
