@@ -1,8 +1,7 @@
 {
   "name": "livello-mission-control",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "private": true,
-  "proxy": "https://platform-v2-dot-livello-backend.appspot.com",
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack/webpack.config.dev.js --mode development",
     "build": "npm run clean && NODE_ENV=production webpack --config ./config/webpack/webpack.config.prod.js --mode production",
