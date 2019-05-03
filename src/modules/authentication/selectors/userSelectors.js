@@ -6,3 +6,8 @@ export const getAuth = createSelector(
   [getUserState],
   userState => userState.auth,
 );
+
+export const getRoot = createSelector(
+  [getUserState],
+  userState => userState.root,
+);

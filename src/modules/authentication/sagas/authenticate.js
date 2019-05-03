@@ -30,7 +30,7 @@ const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
-  yield auth.authorize({connection: 'google-oauth2'});
+  yield auth.authorize({ connection: 'google-oauth2' });
 }
 
 function parseHash() {
@@ -61,11 +61,29 @@ function* updateUserState(userPayload) {
   yield put(updateUser(userPayload));
 }
 
+function* getUserDetailsFromApi(token) {
+  const response = yield call(fetch, '/api/v1/users/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = yield call([response, response.json]);
+  return data;
+}
+
 function* processAuthData() {
   try {
     const result = yield call(parseHash);
 
-    yield call(updateUserState, { auth: true, ...result.idTokenPayload });
+    // Get user from api, should use SDK later
+    const userDetails = yield call(getUserDetailsFromApi, result.accessToken);
+
+    yield call(updateUserState, {
+      auth: true,
+      ...result.idTokenPayload,
+      ...userDetails,
+    });
     yield LivelloLS.setItem(IS_AUTH_STORAGE_KEY, 'true');
     yield LivelloLS.setItem(TOKEN_STORAGE_KEY, result.accessToken);
 
@@ -85,7 +103,15 @@ export function* renewSession() {
   if (isAuth) {
     try {
       const result = yield call(checkSession);
-      yield call(updateUserState, { auth: true, ...extractUserData(result) });
+
+      // Get user from api, should use SDK later
+      const userDetails = yield call(getUserDetailsFromApi, result.accessToken);
+
+      yield call(updateUserState, {
+        auth: true,
+        ...extractUserData(result),
+        ...userDetails,
+      });
       yield LivelloLS.setItem(TOKEN_STORAGE_KEY, result.accessToken);
     } catch (e) {
       console.log(e);
