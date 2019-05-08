@@ -1,5 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import auth0 from 'auth0-js';
+import history from 'lib/history';
+import LivelloLS from 'lib/LocalStorage';
 import {
   USER_SAGA_AUTHENTICATE,
   USER_SAGA_HANDLE_AUTH,
@@ -13,9 +15,6 @@ import {
   TOKEN_STORAGE_KEY,
 } from '../constants';
 import { extractUserData } from '../helpers';
-
-import history from 'lib/history';
-import LivelloLS from 'lib/LocalStorage';
 
 const authConfig = {
   domain: process.env.AUTH_DOMAIN,
