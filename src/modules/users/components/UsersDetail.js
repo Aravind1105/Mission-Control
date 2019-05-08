@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Button,
   Comment,
@@ -9,8 +10,9 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
+import { setRootUsersSaga } from '../actions/usersActions';
 
-const UsersDetail = ({ user }) => {
+const UsersDetail = ({ user, setRoot }) => {
   if (!user) return false;
 
   return (
@@ -82,8 +84,12 @@ const UsersDetail = ({ user }) => {
             </Table>
           </Grid.Column>
           <Grid.Column width={6} className="user-actions">
-            <Button style={{ marginBottom: 5 }} fluid>
-              Edit
+            <Button
+              style={{ marginBottom: 5 }}
+              fluid
+              onClick={() => setRoot({ value: !user.root, _id: user._id })}
+            >
+              {user.root ? 'Revoke Root' : 'Grant Root'}
             </Button>
             <Button style={{ marginBottom: 5 }} fluid>
               Transactions
@@ -207,10 +213,18 @@ UsersDetail.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
   }),
+  setRoot: PropTypes.func.isRequired,
 };
 
 UsersDetail.defaultProps = {
   user: {},
 };
 
-export default UsersDetail;
+const mapDispatchToProps = dispatch => ({
+  setRoot: value => dispatch(setRootUsersSaga(value)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(UsersDetail);
