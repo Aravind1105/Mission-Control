@@ -2,12 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-  Segment,
-  Grid,
-  Input,
-  Dropdown,
-  Button,
-  Icon,
+  Segment, Grid, Input, Dropdown, Button, Icon,
 } from 'semantic-ui-react';
 
 const stateOptions = [
@@ -15,17 +10,13 @@ const stateOptions = [
   { key: 'license', value: 'license', text: 'license' },
 ];
 
-const OrganizationsToolbar = ({ openModal }) => {
+const OrganizationsToolbar = () => {
   return (
     <Segment className="toolbar">
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={6}>
-            <Input
-              icon="search"
-              placeholder="Search..."
-              className="full-width"
-            />
+            <Input icon="search" placeholder="Search..." className="full-width" />
           </Grid.Column>
 
           <Grid.Column>
@@ -51,7 +42,8 @@ const OrganizationsToolbar = ({ openModal }) => {
               labelPosition="left"
               color="green"
               compact
-              // onClick={() => openModal(true)}
+              as={Link}
+              to="/organizations/add/new"
             >
               <Icon name="right arrow" />
               Add organization
@@ -59,7 +51,6 @@ const OrganizationsToolbar = ({ openModal }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Link to="/organizations/add" />
     </Segment>
   );
 };

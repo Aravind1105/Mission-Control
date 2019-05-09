@@ -1,7 +1,10 @@
 import React from 'react';
-import { Button, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Button, Header, Icon, Segment,
+} from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { SegmentHeader } from 'modules/shared/components';
+import SegmentHeader from 'modules/shared/components/SegmentHeader';
+
 import {
   Unitable,
   conditionalValue,

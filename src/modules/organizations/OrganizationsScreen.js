@@ -4,7 +4,7 @@ import { Route, withRouter } from 'react-router-dom';
 import OrganizationsToolbar from './components/OrganizationsToolbar';
 import OrganizationsContent from './components/OrganizationsContent';
 import OrganizationDetails from './components/OrganizationDetails';
-import OrganizationsForm from './components/OrganizationsForm';
+import OrganizationsModal from './components/OrganizationModal';
 
 const OrganizationsScreen = () => {
   return (
@@ -21,17 +21,11 @@ const OrganizationsScreen = () => {
       />
       <Route
         exact
-        path="/organizations/add"
-        render={() => <OrganizationsForm />}
+        path="/organizations/add/new"
+        render={props => <OrganizationsModal open {...props} title="Add a new organization" />}
       />
-      <Route
-        path="/organizations/edit/:id"
-        render={() => <OrganizationsForm />}
-      />
-      <Route
-        path="/organizations/organization/:id"
-        render={() => <OrganizationDetails />}
-      />
+      <Route path="/organizations/edit/:id" render={() => <OrganizationsModal />} />
+      <Route path="/organizations/organization/:id" render={() => <OrganizationDetails />} />
     </>
   );
 };
