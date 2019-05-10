@@ -10,9 +10,8 @@ const OrganizationsContent = ({ history, loadOrganizations, organizations }) => 
     loadOrganizations();
   }, []);
 
-  const clickRow = ({ id }) => {
-    console.log('I: ', id);
-    history.push(`organizations/organization/${id}`);
+  const clickRow = ({ slug }) => {
+    history.push(`organizations/${slug}`);
   };
 
   const columns = [
@@ -41,7 +40,7 @@ const OrganizationsContent = ({ history, loadOrganizations, organizations }) => 
         data={organizations}
         columns={columns}
         onRowClick={clickRow}
-        clickArgs={['id']}
+        clickArgs={['slug']}
         sortable
         selectable
         sortByColumn="name"

@@ -6,9 +6,7 @@ import {
   Button, Input, Modal, Form, Message,
 } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import {
-  Formik, FieldArray, Field, getIn,
-} from 'formik';
+import { Formik, FieldArray, Field } from 'formik';
 import { path } from 'ramda';
 import * as Yup from 'yup';
 import { addOrganizationsSaga } from '../actions/organizationsActions';

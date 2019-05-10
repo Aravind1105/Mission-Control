@@ -25,7 +25,7 @@ const OrganizationsScreen = () => {
         render={props => <OrganizationsModal open {...props} title="Add a new organization" />}
       />
       <Route path="/organizations/edit/:id" render={() => <OrganizationsModal />} />
-      <Route path="/organizations/organization/:id" render={() => <OrganizationDetails />} />
+      <Route path="/organizations/:slug" render={() => <OrganizationDetails />} />
     </>
   );
 };
