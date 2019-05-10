@@ -43,7 +43,7 @@ const OrganizationsToolbar = () => {
               color="green"
               compact
               as={Link}
-              to="/organizations/add/new"
+              to="/organizations/list/add/new"
             >
               <Icon name="right arrow" />
               Add organization

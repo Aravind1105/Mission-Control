@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import {
-  Button, Input, Modal, Form, Message,
+  Button, Modal, Form, Select,
 } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { Formik, FieldArray, Field } from 'formik';
@@ -14,12 +14,15 @@ import { addOrganizationsSaga } from '../actions/organizationsActions';
 // {errors.name && touched.name && <div className="input-feedback">{errors.name}</div>}
 
 const emptyAddress = {
-  name: '',
-  line1: '',
-  postalCode: '',
-  line2: '',
-  state: '',
-  country: '',
+  properties: {
+    name: '',
+    line1: '',
+    postalCode: '',
+    line2: '',
+    city: '',
+    state: '',
+    country: '',
+  },
 };
 
 const OrganizationModal = ({
@@ -35,7 +38,13 @@ const OrganizationModal = ({
     <Modal.Header>{title}</Modal.Header>
     <Modal.Content>
       <Formik
-        initialValues={{ name: '', slug: '' }}
+        initialValues={{
+          name: '',
+          slug: '',
+          eanPrefix: '',
+          imageUrl: '',
+          address: [],
+        }}
         onSubmit={(values, { setSubmitting }) => {
           addOrganization(values);
           // alert(JSON.stringify(values, null, 2));
@@ -48,15 +57,16 @@ const OrganizationModal = ({
             .strict()
             .lowercase()
             .required('Required'),
+          eanPrefix: Yup.string().strict(),
           address: Yup.array().of(
             Yup.object().shape({
               properties: Yup.object().shape({
-                name: Yup.string().required(),
-                line1: Yup.string().required(),
-                postalCode: Yup.number().required(),
-                city: Yup.string().required(),
-                state: Yup.string().required(),
-                country: Yup.string().required(),
+                name: Yup.string().required('Required'),
+                line1: Yup.string().required('Required'),
+                postalCode: Yup.number().required('Required'),
+                city: Yup.string().required('Required'),
+                state: Yup.string().required('Required'),
+                country: Yup.string().required('Required'),
               }),
             }),
           ),
@@ -64,45 +74,99 @@ const OrganizationModal = ({
       >
         {(props) => {
           const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
+            values, touched, errors, isSubmitting, handleSubmit,
           } = props;
           return (
             <Form onSubmit={handleSubmit} error={!!errors}>
               <Form.Field
-                control={Input}
-                id="name"
+                control={Field}
+                name="name"
                 label="Name"
                 placeholder="Name"
                 type="text"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.name && touched.name ? 'text-input error' : 'text-input'}
+                className={
+                  path(['name'], errors) && path(['name'], touched)
+                    ? 'text-input error'
+                    : 'text-input'
+                }
                 required
               />
-              <Form.Field
-                control={Input}
-                id="slug"
-                label="Slug"
-                placeholder="e.g. livello"
-                type="text"
-                value={values.slug}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.slug && touched.slug ? 'text-input error' : 'text-input'}
-                required
-              />
-              {errors.slug && touched.slug && (
-                <Message error header="Validation Error" content={errors.slug} />
-              )}
+
+              <Form.Group widths="equal">
+                <Form.Field
+                  control={Field}
+                  name="slug"
+                  label="Slug"
+                  placeholder="e.g. livello"
+                  type="text"
+                  className={
+                    path(['slug'], errors) && path(['slug'], touched)
+                      ? 'text-input error'
+                      : 'text-input'
+                  }
+                  required
+                />
+
+                <Form.Field
+                  control={Field}
+                  name="eanPrefix"
+                  label="EAN-Prefix"
+                  className={
+                    path(['eanPrefix'], errors) && path(['eanPrefix'], touched)
+                      ? 'text-input error'
+                      : 'text-input'
+                  }
+                />
+              </Form.Group>
+
+              <Form.Group widths="equal">
+                <Form.Field
+                  control={Field}
+                  name="imageUrl"
+                  label="Image-Url"
+                  placeholder="https://storage.googleapis.com/livello-public/img/organizations/livello.png"
+                  type="text"
+                  className={
+                    path(['imageUrl'], errors) && path(['imageUrl'], touched)
+                      ? 'text-input error'
+                      : 'text-input'
+                  }
+                />
+
+                <Form.Field
+                  control={Select}
+                  label="Role"
+                  options={[
+                    {
+                      key: '5cc1d39bd20d2788f7a50a27',
+                      text: 'Livello Service Provider',
+                      value: '5cc1d39bd20d2788f7a50a27',
+                    },
+                    {
+                      key: '5cc1d39bd20d2788f7a50a28',
+                      text: 'Supplier',
+                      value: '5cc1d39bd20d2788f7a50a28',
+                    },
+                    {
+                      key: '5cc1d39bd20d2788f7a50a29',
+                      text: 'Service Center',
+                      value: '5cc1d39bd20d2788f7a50a29',
+                    },
+                    {
+                      key: '5cc1d39bd20d2788f7a50a2a',
+                      text: 'End Customer',
+                      value: '5cc1d39bd20d2788f7a50a2a',
+                    },
+                    {
+                      key: '5cc1d39bd20d2788f7a50a2b',
+                      text: 'Licensee',
+                      value: '5cc1d39bd20d2788f7a50a2b',
+                    },
+                  ]}
+                  placeholder="Role"
+                  required
+                />
+              </Form.Group>
 
               <h4 className="form-header">Adresses</h4>
               <FieldArray
@@ -239,7 +303,14 @@ const OrganizationModal = ({
                 )}
               />
 
-              <Button type="submit" disabled={isSubmitting}>
+              <Button
+                basic
+                color="green"
+                fluid
+                style={{ marginTop: '50px' }}
+                type="submit"
+                disabled={isSubmitting}
+              >
                 Save organization
               </Button>
             </Form>

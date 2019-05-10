@@ -1,37 +1,52 @@
 import React from 'react';
-import { Segment, Grid, Header, List, Button, Icon } from 'semantic-ui-react';
-import logo from '../mocks/mock-org-logo.png';
+import {
+  Segment, Grid, Header, List, Button, Icon,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import logo from '../mocks/mock-org-logo.png';
 
 const DetailsInfo = ({
-  data: { name, street, postal, city, taxID, cm, phone, id },
+  data: {
+    name, imageUrl, address, taxID, cm, phone, id,
+  },
 }) => {
   return (
     <Segment>
       <Grid>
         <Grid.Row columns="equal">
           <Grid.Column textAlign="center" verticalAlign="middle">
-            <img src={logo} width="175px" />
+            <img src={imageUrl} width="100px" />
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={12}>
             <Header as="h3">
               <Header.Content>{name}</Header.Content>
             </Header>
             <List>
-              <List.Item>
-                <List.Content>{`${street}`}</List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Content>{`${postal} ${city}`}</List.Content>
-              </List.Item>
+              {address[0] && (
+                <>
+                  <List.Item>
+                    <List.Content>{`${address[0].properties.line1}`}</List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+                      {`${address[0].properties.postalCode} ${
+                        address[0].properties.city
+                      }`}
+                    </List.Content>
+                  </List.Item>
+                </>
+              )}
               <List.Item>
                 <List.Content>
-                  <b>USt.-IdNr.:</b> {taxID}
+                  <b>USt.-IdNr.:</b>
+                  {taxID}
                 </List.Content>
               </List.Item>
               <List.Item>
                 <List.Content>
-                  <b>CM:</b> {`${cm}, ${phone}`}
+                  <b>CM:</b>
+                  {' '}
+                  {`${cm}, ${phone}`}
                 </List.Content>
               </List.Item>
             </List>
@@ -40,13 +55,7 @@ const DetailsInfo = ({
         <Grid.Row columns="equal">
           <Grid.Column textAlign="center">
             <Link to={`/organizations/edit/${id}`}>
-              <Button
-                icon
-                labelPosition="left"
-                color={'teal'}
-                compact
-                size="tiny"
-              >
+              <Button icon labelPosition="left" color="teal" compact size="tiny">
                 <Icon name="building" />
                 Edit organization data
               </Button>

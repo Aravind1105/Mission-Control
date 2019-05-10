@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 
 import OrganizationsToolbar from './components/OrganizationsToolbar';
 import OrganizationsContent from './components/OrganizationsContent';
@@ -9,9 +9,9 @@ import OrganizationsModal from './components/OrganizationModal';
 const OrganizationsScreen = () => {
   return (
     <>
+      <Route exact path="/organizations" render={() => <Redirect to="/organizations/list" />} />
       <Route
-        exact
-        path="/organizations"
+        path="/organizations/list"
         render={() => (
           <>
             <OrganizationsToolbar />
@@ -19,13 +19,8 @@ const OrganizationsScreen = () => {
           </>
         )}
       />
-      <Route
-        exact
-        path="/organizations/add/new"
-        render={props => <OrganizationsModal open {...props} title="Add a new organization" />}
-      />
-      <Route path="/organizations/edit/:id" render={() => <OrganizationsModal />} />
-      <Route path="/organizations/:slug" render={() => <OrganizationDetails />} />
+      <Route exact path="/organizations/edit/:id" render={() => <OrganizationsModal />} />
+      <Route exact path="/organizations/:slug/detail" render={() => <OrganizationDetails />} />
     </>
   );
 };
