@@ -5,11 +5,7 @@ import { Segment, Pagination, Container } from 'semantic-ui-react';
 import { Unitable } from 'modules/shared/components/unitableReloaded';
 import { loadOrganizationsSaga } from '../actions/organizationsActions';
 
-const OrganizationsContent = ({
-  history,
-  loadOrganizations,
-  organizations,
-}) => {
+const OrganizationsContent = ({ history, loadOrganizations, organizations }) => {
   useEffect(() => {
     loadOrganizations();
   }, []);
@@ -32,6 +28,7 @@ const OrganizationsContent = ({
     },
     {
       name: 'Address',
+      type: 'address',
     },
     {
       name: 'Users',

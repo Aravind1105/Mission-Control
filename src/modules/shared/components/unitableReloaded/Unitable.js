@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import { ascend, descend, prop, sortWith, pick } from 'ramda';
+import {
+  ascend, descend, prop, sortWith, pick,
+} from 'ramda';
 import UnitableHeaderCell from './UnitableHeaderCell';
 import UnitableCellContent from './UnitableCellContent';
 import UnitableCellProgress from './UnitableCellProgress';
+import UnitableCellAddress from './UnitableCellAddress';
 
 const ASC = 'ascending';
 const DESC = 'descending';
 
-const sortData = (column, direction) =>
-  direction === DESC
-    ? sortWith([descend(prop(column))])
-    : sortWith([ascend(prop(column))]);
+const sortData = (column, direction) => direction === DESC ? sortWith([descend(prop(column))]) : sortWith([ascend(prop(column))]);
 
-const applySorting = (
-  data,
-  column,
-  direction,
-  { setActiveColumn, setTableData, setDirection },
-) => {
+const applySorting = (data, column, direction, { setActiveColumn, setTableData, setDirection }) => {
   setActiveColumn(column);
   setTableData(sortData(column, direction)(data));
   setDirection(direction);
@@ -73,13 +68,7 @@ const Unitable = ({
   }, []);
 
   return (
-    <Table
-      sortable={sortable}
-      celled
-      className="unitable"
-      basic="very"
-      selectable={selectable}
-    >
+    <Table sortable={sortable} celled className="unitable" basic="very" selectable={selectable}>
       {!headless && (
         <Table.Header>
           <Table.Row>
@@ -119,8 +108,7 @@ const Unitable = ({
                   negative,
                   warning,
                 }) => {
-                  const value =
-                    tableData[key][mapDataFrom || name.toLowerCase()];
+                  const value = tableData[key][mapDataFrom || name.toLowerCase()];
 
                   const style = {
                     color: color && color(value),
@@ -133,22 +121,23 @@ const Unitable = ({
                       negative={negative && negative(value)}
                       warning={warning && warning(value)}
                       textAlign={textAlign}
-                      className={type ? type : ''}
+                      className={type || ''}
                       style={style}
                     >
                       {type === 'progress' && (
                         <UnitableCellProgress
-                          value={
-                            tableData[key][mapDataFrom || name.toLowerCase()]
-                          }
+                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
+                        />
+                      )}
+                      {type === 'address' && (
+                        <UnitableCellAddress
+                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
                         />
                       )}
                       {!type && (
                         <UnitableCellContent
                           icon={icon}
-                          value={
-                            tableData[key][mapDataFrom || name.toLowerCase()]
-                          }
+                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
                           postfix={postfix}
                           style={style}
                           textAlign={textAlign}
@@ -175,7 +164,7 @@ Unitable.prototypes = {
       mapDataFrom: PropTypes.string,
       postfix: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       positive: PropTypes.func,
-      progress: PropTypes.arrayOf['progress'],
+      progress: PropTypes.arrayOf.progress,
       color: PropTypes.func,
     }),
   ),
