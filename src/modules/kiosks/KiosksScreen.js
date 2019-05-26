@@ -1,14 +1,15 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import KiosksToolbar from './components/KiosksToolbar';
 import KiosksContent from './components/KiosksContent';
+import KioskDetails from './components/KioskDetails';
 
 const KiosksScreen = () => {
   return (
     <>
+      <Route exact path="/kiosks" render={() => <Redirect to="/kiosks/list" />} />
       <Route
-        exact
-        path="/kiosks"
+        path="/kiosks/list"
         render={() => (
           <>
             <KiosksToolbar />
@@ -16,6 +17,7 @@ const KiosksScreen = () => {
           </>
         )}
       />
+      <Route exact path="/kiosks/:id/detail" render={() => <KioskDetails />} />
     </>
   );
 };
