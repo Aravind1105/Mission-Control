@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Segment, Container, Pagination } from 'semantic-ui-react';
-import {
-  Unitable,
-  valueEquals,
-  conditionalValue,
-} from '../../shared/components/unitableReloaded';
-import { kiosksOverviewMock } from '../mocks/kiosksMock';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Unitable, valueEquals, conditionalValue } from '../../shared/components/unitableReloaded';
+import { loadKiosksSaga } from '../actions/kioskActions';
 
-const KiosksContent = () => {
+const KiosksContent = ({ loadKiosks, kiosks, history }) => {
+  useEffect(() => {
+    loadKiosks();
+  }, []);
+
+  const clickRow = ({ _id }) => {
+    history.push(`/kiosks/${_id}/detail`);
+  };
+
   const columns = [
     {
       name: 'Name',
@@ -38,10 +45,10 @@ const KiosksContent = () => {
   return (
     <Segment>
       <Unitable
-        data={kiosksOverviewMock}
+        data={kiosks}
         columns={columns}
-        // onRowClick={clickRow}
-        // clickArgs={['id']}
+        onRowClick={clickRow}
+        clickArgs={['_id']}
         sortable
         selectable
         sortByColumn="name"
@@ -63,4 +70,22 @@ const KiosksContent = () => {
   );
 };
 
-export default KiosksContent;
+const mapStateToProps = state => ({
+  kiosks: state.kiosks,
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadKiosks: () => dispatch(loadKiosksSaga()),
+});
+
+KiosksContent.propTypes = {
+  kiosks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadKiosks: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(KiosksContent),
+);

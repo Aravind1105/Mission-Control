@@ -21,10 +21,10 @@ module.exports = configMerge(commonConfig, {
     contentBase: './public',
     hot: true,
     historyApiFallback: true,
-    port: 3000,
+    port: 8080,
     proxy: {
       '/api': {
-        target: 'https://api.livello.com',
+        target: 'http://127.0.0.1:3000',
         secure: false,
       },
     },

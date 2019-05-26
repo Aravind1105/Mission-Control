@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from 'react';
-// import { connect } from 'react-redux';
-import { Grid, Segment, Breadcrumb, Button, Icon } from 'semantic-ui-react';
-import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Grid, Segment } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
 import DetailsBreadcrumb from './DetailsBreadcrumb';
 import DetailsInfo from './DetailsInfo';
 import DetailsOrders from './DetailsOrders';
 import DetailsFridges from './DetailsFridges';
 import DetailsInventory from './DetailsInventory';
+import { getOrganizationBySlug } from '../selectors/organizationsSelector';
 
-//mockData
-import { orgsData } from '../mocks/organziationsMocks';
-
-const OrganizationDetails = ({ match }) => {
+const OrganizationDetails = ({ match, organization }) => {
   const [selectedFridge, setSelectedFridge] = useState(null);
-  const [initialized, setInitialized] = useState(false);
-  const [organizationData, setOrganizationData] = useState({});
 
   useEffect(() => {
-    if (!initialized) {
-      const orgData = orgsData.filter(org => org.id === match.params.id);
-      setOrganizationData(orgData[0]);
-      setInitialized(true);
+    if (!organization) {
+      console.log('FETCH ORGANIZATION');
     }
-  });
+  }, []);
+
+  if (!organization) return false;
 
   return (
     <Grid stackable>
@@ -33,14 +29,14 @@ const OrganizationDetails = ({ match }) => {
             <Grid.Row>
               <Grid.Column>
                 <Segment>
-                  <DetailsBreadcrumb />
+                  <DetailsBreadcrumb organizationName={organization.name} />
                 </Segment>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column>
-                <DetailsInfo data={organizationData} />
+                <DetailsInfo data={organization} />
               </Grid.Column>
             </Grid.Row>
 
@@ -77,4 +73,8 @@ const OrganizationDetails = ({ match }) => {
   );
 };
 
-export default withRouter(OrganizationDetails);
+const mapStateToProps = (state, ownProps) => ({
+  organization: getOrganizationBySlug(ownProps.match.params.slug)(state),
+});
+
+export default withRouter(connect(mapStateToProps)(OrganizationDetails));

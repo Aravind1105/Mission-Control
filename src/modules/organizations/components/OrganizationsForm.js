@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Header, Icon, Message } from 'semantic-ui-react';
+import {
+  Modal, Button, Header, Icon, Message,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
@@ -39,7 +41,7 @@ const OrganizationsForm = ({ history, match }) => {
   };
 
   return (
-    <Modal open={true}>
+    <Modal open>
       <Header icon="building" content="Organization Data" />
       <Modal.Content>
         <Formik
@@ -103,13 +105,10 @@ const OrganizationsForm = ({ history, match }) => {
       </Modal.Content>
       <Modal.Actions>
         <Button color="red" onClick={() => clearAndAbort()}>
-          <Icon name="remove" /> Abort
+          <Icon name="remove" />
+          Abort
         </Button>
-        <Button
-          loading={buttonLoading}
-          color="green"
-          onClick={() => saveOrganizationsData()}
-        >
+        <Button loading={buttonLoading} color="green" onClick={() => saveOrganizationsData()}>
           <Icon name="checkmark" />
           Save Organization
         </Button>

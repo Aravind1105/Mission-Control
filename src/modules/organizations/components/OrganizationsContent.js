@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Segment, Pagination, Container } from 'semantic-ui-react';
 import { Unitable } from 'modules/shared/components/unitableReloaded';
 import { loadOrganizationsSaga } from '../actions/organizationsActions';
+import OrganizationModal from './OrganizationModal';
 
 const OrganizationsContent = ({
-  history,
-  loadOrganizations,
-  organizations,
+  history, loadOrganizations, organizations, match,
 }) => {
   useEffect(() => {
     loadOrganizations();
   }, []);
 
-  const clickRow = ({ id }) => {
-    console.log('I: ', id);
-    history.push(`organizations/organization/${id}`);
+  const clickRow = ({ slug }) => {
+    history.push(`${slug}/detail`);
   };
 
   const columns = [
@@ -32,6 +30,7 @@ const OrganizationsContent = ({
     },
     {
       name: 'Address',
+      type: 'address',
     },
     {
       name: 'Users',
@@ -39,30 +38,35 @@ const OrganizationsContent = ({
   ];
 
   return (
-    <Segment>
-      <Unitable
-        data={organizations}
-        columns={columns}
-        onRowClick={clickRow}
-        clickArgs={['id']}
-        sortable
-        selectable
-        sortByColumn="name"
+    <>
+      <Segment>
+        <Unitable
+          data={organizations}
+          columns={columns}
+          onRowClick={clickRow}
+          clickArgs={['slug']}
+          sortable
+          sortByColumn="name"
+        />
+        {false && (
+          <Container textAlign="center">
+            <Pagination
+              style={{ marginTop: '10px' }}
+              defaultActivePage={1}
+              boundaryRange={0}
+              onPageChange={null}
+              size="mini"
+              siblingRange={1}
+              totalPages={1}
+            />
+          </Container>
+        )}
+      </Segment>
+      <Route
+        path={`${match.url}/add/new`}
+        render={props => <OrganizationModal open {...props} title="Add a new organization" />}
       />
-      {false && (
-        <Container textAlign="center">
-          <Pagination
-            style={{ marginTop: '10px' }}
-            defaultActivePage={1}
-            boundaryRange={0}
-            onPageChange={null}
-            size="mini"
-            siblingRange={1}
-            totalPages={1}
-          />
-        </Container>
-      )}
-    </Segment>
+    </>
   );
 };
 

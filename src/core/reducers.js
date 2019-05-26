@@ -1,9 +1,17 @@
 import { combineReducers } from 'redux';
-import core from './reducers/coreReducer';
 
 // Shared reducers
 import user from 'modules/authentication/reducers/userReducer';
-import organizations from 'modules/organizations/reducers/organizationsReducer.js';
+import organizations from 'modules/organizations/reducers/organizationsReducer';
+import kiosks from 'modules/kiosks/reducers/kiosksReducer';
+import users from 'modules/users/reducers/usersReducer';
+import core from './reducers/coreReducer';
 
 // Module reducers
-export default combineReducers({ core, user, organizations });
+export default combineReducers({
+  core,
+  user,
+  users,
+  organizations,
+  kiosks,
+});
