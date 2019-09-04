@@ -7,6 +7,9 @@ export const loadKiosksSaga = createAction(KIOSK_SAGA_LOAD);
 export const KIOSKS_SAGA_RESET = '@@saga/KIOSKS_RESET';
 export const resetKioskSaga = createAction(KIOSKS_SAGA_RESET);
 
+export const KIOSKS_SAGA_OPEN = '@@saga/KIOSKS_OPEN';
+export const openKioskSaga = createAction(KIOSKS_SAGA_OPEN);
+
 // State actions
 export const KIOSKS_STATE_UPDATE = '@@state/KIOSKS_UPDATE';
 export const updateKiosks = createAction(KIOSKS_STATE_UPDATE);

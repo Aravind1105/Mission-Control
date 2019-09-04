@@ -7,7 +7,7 @@ const commonConfig = require('./webpack.config.common');
 module.exports = configMerge(commonConfig, {
   entry: './src/index.js',
   output: {
-    path: __dirname + '/dist',
+    path: `${__dirname}/dist`,
     publicPath: '/',
     filename: 'bundle.js',
     chunkFilename: '[name].bundle.js',
