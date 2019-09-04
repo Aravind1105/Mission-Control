@@ -1,4 +1,6 @@
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import {
+  all, call, put, takeEvery,
+} from 'redux-saga/effects';
 import auth0 from 'auth0-js';
 import history from 'lib/history';
 import LivelloLS from 'lib/LocalStorage';
