@@ -3,7 +3,7 @@
 ### Environment
 
 Before you can start local development or deployment you have to create a `.env` file.  
-You will find the contents at confluence: [#04 Mission Control](https://livello.atlassian.net/wiki/spaces/LIV/pages/753822/Mission+Control)
+You will find the contents at confluence: [#04 Mission Control](https://livello.atlassian.net/wiki/spaces/LIV/pages/753759/04+Mission+Control)
 
 ### Development:
 
