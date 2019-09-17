@@ -7,10 +7,12 @@ import { withRouter } from 'react-router-dom';
 
 import DetailsBreadcrumb from './DetailsBreadcrumb';
 import { getKioskById } from '../selectors/kiosksSelector';
-import { resetKioskSaga, loadKiosksSaga } from '../actions/kioskActions';
+import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from '../actions/kioskActions';
 
 
-const KioskDetails = ({ match, kiosk, resetKiosk, loadKiosks }) => {
+const KioskDetails = ({
+  match, kiosk, resetKiosk, loadKiosks, openKiosk,
+}) => {
   useEffect(() => {
     if (!kiosk) {
       console.log('FETCH ORGANIZATION');
@@ -19,6 +21,18 @@ const KioskDetails = ({ match, kiosk, resetKiosk, loadKiosks }) => {
   }, []);
 
   if (!kiosk) return false;
+
+  const toggleResetKiosk = () => {
+    if (window.confirm('Willst Du die Session wirklich zurücksetzen?')) {
+      resetKiosk(kiosk);
+    }
+  };
+
+  const toggleOpenDoor = () => {
+    if (window.confirm('Willst Du das Kiosk wirklich im Refill Mode öffnen?')) {
+      openKiosk(kiosk);
+    }
+  };
 
   return (
     <Grid stackable>
@@ -41,8 +55,11 @@ const KioskDetails = ({ match, kiosk, resetKiosk, loadKiosks }) => {
                   </Header>
                   <div>{`Door: ${kiosk.doorStatus}`}</div>
                   <div>{`Session: ${kiosk.session}`}</div>
-                  <Button style={{ marginBottom: 5 }} onClick={() => resetKiosk(kiosk)}>
+                  <Button style={{ marginBottom: 5 }} onClick={toggleResetKiosk}>
                     Reset Door & Session
+                  </Button>
+                  <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
+                    Open Door
                   </Button>
                   <pre>{JSON.stringify(kiosk, null, 1)}</pre>
                 </Segment>
@@ -83,6 +100,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   resetKiosk: kiosk => dispatch(resetKioskSaga(kiosk)),
   loadKiosks: () => dispatch(loadKiosksSaga()),
+  openKiosk: kiosk => dispatch(openKioskSaga(kiosk)),
 });
 
 export default withRouter(
