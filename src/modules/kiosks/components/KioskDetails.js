@@ -35,26 +35,29 @@ const KioskDetails = ({
   };
 
   const avgTemp = kiosk.temperature.value[0].$numberDecimal;
+
   const productLines = [];
 
-  for (let i = 0; i < kiosk.inventory.loadCells.length; i += 1) {
+  kiosk.inventory.loadCells.map((item) => {
     productLines.push({
-      loadCell: kiosk.inventory.loadCells[i].cellId,
-      loadCellProducts: kiosk.inventory.loadCells[i].products.length,
-      productLine: kiosk.inventory.loadCells[i].productLine.name,
+      loadCell: item.cellId,
+      productLine: item.productLine.name,
+      loadCellProducts: item.products.length,
     });
-  }
+    return null;
+  });
 
   const pl = productLines.map((productLine, idx) => {
     const key = idx + productLine.loadCell;
     const res = (
-      <div key={key} style={{ marginTop: 10 }}>
-        LoadCell {idx} : {productLine.productLine} -- amount:
-        {JSON.stringify(productLines[idx])}
-      </div>
+      <li key={key} style={{ marginTop: 10 }}>
+        LoadCell {idx} | productLine: {productLines[idx].productLine} | amount:
+        {JSON.stringify(productLines[idx].loadCellProducts)}
+      </li>
     );
     return res;
   });
+
   return (
     <Grid stackable>
       <Grid.Row columns="equal">
@@ -82,7 +85,7 @@ const KioskDetails = ({
                   <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
                     Open Door
                   </Button>
-                  <div>{`Average Temperature:  ${avgTemp} °C`}</div>
+                  <p>{`Average Temperature:  ${avgTemp} °C`}</p>
                   {pl}
                 </Segment>
               </Grid.Column>
