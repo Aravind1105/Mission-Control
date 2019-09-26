@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -8,7 +9,6 @@ import { withRouter } from 'react-router-dom';
 import DetailsBreadcrumb from './DetailsBreadcrumb';
 import { getKioskById } from '../selectors/kiosksSelector';
 import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from '../actions/kioskActions';
-
 
 const KioskDetails = ({
   match, kiosk, resetKiosk, loadKiosks, openKiosk,
@@ -34,6 +34,27 @@ const KioskDetails = ({
     }
   };
 
+  const avgTemp = kiosk.temperature.value[0].$numberDecimal;
+  const productLines = [];
+
+  for (let i = 0; i < kiosk.inventory.loadCells.length; i += 1) {
+    productLines.push({
+      loadCell: kiosk.inventory.loadCells[i].cellId,
+      loadCellProducts: kiosk.inventory.loadCells[i].products.length,
+      productLine: kiosk.inventory.loadCells[i].productLine.name,
+    });
+  }
+
+  const pl = productLines.map((productLine, idx) => {
+    const key = idx + productLine.loadCell;
+    const res = (
+      <div key={key} style={{ marginTop: 10 }}>
+        LoadCell {idx} : {productLine.productLine} -- amount:
+        {JSON.stringify(productLines[idx])}
+      </div>
+    );
+    return res;
+  });
   return (
     <Grid stackable>
       <Grid.Row columns="equal">
@@ -61,7 +82,8 @@ const KioskDetails = ({
                   <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
                     Open Door
                   </Button>
-                  <pre>{JSON.stringify(kiosk, null, 1)}</pre>
+                  <div>{`Average Temperature:  ${avgTemp} °C`}</div>
+                  {pl}
                 </Segment>
               </Grid.Column>
             </Grid.Row>
