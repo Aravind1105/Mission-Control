@@ -34,7 +34,7 @@ const KioskDetails = ({
     }
   };
 
-  const avgTemp = kiosk.temperature.value[0].$numberDecimal;
+  const avgTemp = kiosk.temperature.value.$numberDecimal;
 
   const productLines = [];
 
