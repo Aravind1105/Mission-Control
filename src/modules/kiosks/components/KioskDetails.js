@@ -34,7 +34,7 @@ const KioskDetails = ({
     }
   };
 
-  const avgTemp = kiosk.temperature.value.$numberDecimal;
+  const avgTemp = kiosk.temperature.value;
 
   const productLines = [];
 
@@ -45,6 +45,15 @@ const KioskDetails = ({
       loadCellProducts: item.products.length,
     });
     return null;
+  });
+
+  const tempSensors = kiosk.temperature.sensors.map((v, id) => {
+    const res = (
+      <li style={{ margin: 5 }} key={v.id}>
+        Sensor:  {id} | Temperature: {v.temperature}
+      </li>
+    );
+    return res;
   });
 
   const pl = productLines.map((productLine, idx) => {
@@ -85,7 +94,10 @@ const KioskDetails = ({
                   <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
                     Open Door
                   </Button>
-                  <p>{`Average Temperature:  ${avgTemp} °C`}</p>
+                  <div style={{ borderStyle: 'solid' }}>
+                    <p style={{ margin: 5 }}>{`Average Temperature:  ${avgTemp} °C`}</p>
+                    {tempSensors}
+                  </div>
                   {pl}
                 </Segment>
               </Grid.Column>
@@ -114,7 +126,7 @@ const KioskDetails = ({
           </Grid>
         </Grid.Column>
       </Grid.Row>
-    </Grid>
+    </Grid >
   );
 };
 
