@@ -56,6 +56,8 @@ const KioskDetails = ({
     return res;
   });
 
+  const kioskPin = kiosk.pin;
+
   const pl = productLines.map((productLine, idx) => {
     const key = idx + productLine.loadCell;
     const res = (
@@ -94,6 +96,7 @@ const KioskDetails = ({
                   <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
                     Open Door
                   </Button>
+                  <p style={{ margin: 5 }}>KioskPin: {kioskPin}</p>
                   <div style={{ borderStyle: 'solid' }}>
                     <p style={{ margin: 5 }}>{`Average Temperature:  ${avgTemp} °C`}</p>
                     {tempSensors}

@@ -24,7 +24,7 @@ module.exports = configMerge(commonConfig, {
     port: 8080,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3000',
+        target: 'https://api-stage.livello.com',
         secure: false,
       },
     },
