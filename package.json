@@ -1,6 +1,6 @@
 {
-  "name": "livello-mission-control",
-  "version": "0.3.6",
+  "name": "livello-mission-control-prod",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack/webpack.config.dev.js --mode development",
