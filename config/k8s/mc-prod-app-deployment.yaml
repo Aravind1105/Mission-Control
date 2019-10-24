@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livello-mc-prod
+  labels:
+    app: livello-mc-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: livello-mc-prod
+  template:
+    metadata:
+      labels:
+        app: livello-mc-prod
+    spec:
+      containers:
+        - name: livello-mc-prod
+          image: gcr.io/livello-backend/livello-mission-control-prod:0.4.3
+          ports:
+            - containerPort: 8080
