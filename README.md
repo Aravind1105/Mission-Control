@@ -17,6 +17,16 @@ Run a development server on `http://localhost:3000`
 ### Deployment:
 
 Currently builds and deployments are not CI/CD integrated.
+## !!! Attention !!!
+you have to alter the .env for the environment before deploy!
+please meke sure that at least the name of the app ends with `prod` or `stage` and
+the `API_PROXY_URL` is the right one: (stage or prod)
+
+```
+APP_NAME=livello-mission-control-stage
+API_PROXY_URL=https://api-stage.livello.com/api
+```
+
 
 For building and deployment there are several build commands. You can always use `make help`.
 
