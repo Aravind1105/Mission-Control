@@ -21,14 +21,16 @@ Currently builds and deployments are not CI/CD integrated.
 For building and deployment there are several build commands. You can always use `make help`.
 
 ```
-help                           Show commands and description.
-build                          Build dist and docker image
-build-dist                     Build the application dist
-build-docker                   Build the docker container from dist
-run-local                      Run docker image local
-deploy-docker                  Deploys the docker image to Gcloud
-deploy-staging                 Deploy to staging
-deploy-staging-service         Deploy staging service
+make help                           Show commands and description.
+make build                          Build dist and docker image
+make build-dist                     Build the application dist
+make build-docker                   Build the docker container from dist
+make run-local                      Run docker image local
+make deploy-docker                  Deploys the docker image to Gcloud
+make deploy-staging                 Deploy to staging
+make deploy-staging-service         Deploy staging service
+make deploy-production              Deploy to production
+make deploy-production-service      Deploy production service
 ```
 
 ### Application folder structure
