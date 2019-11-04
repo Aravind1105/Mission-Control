@@ -21,7 +21,7 @@ metadata:
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
     certmanager.k8s.io/acme-http01-edit-in-place: 'true'
   labels:
-    app: livello-mc-stage
+    app: livello-mc-stage-stage
 spec:
   backend:
     serviceName: livello-mc-stage-svc

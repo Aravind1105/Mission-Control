@@ -13,7 +13,7 @@ import {
 
 function* loadKiosks() {
   const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
-  const response = yield call(fetch, '/api/v1/kiosks', {
+  const response = yield call(fetch, '/api/v1/kiosks/mc', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
