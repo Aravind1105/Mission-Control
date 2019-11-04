@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import KiosksToolbar from './components/KiosksToolbar';
 import KiosksContent from './components/KiosksContent';
 import KioskDetails from './components/KioskDetails';

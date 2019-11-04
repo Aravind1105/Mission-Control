@@ -17,18 +17,30 @@ Run a development server on `http://localhost:3000`
 ### Deployment:
 
 Currently builds and deployments are not CI/CD integrated.
+## !!! Attention !!!
+you have to alter the .env for the environment before deploy!
+please meke sure that at least the name of the app ends with `prod` or `stage` and
+the `API_PROXY_URL` is the right one: (stage or prod)
+
+```
+APP_NAME=livello-mission-control-stage
+API_PROXY_URL=https://api-stage.livello.com/api
+```
+
 
 For building and deployment there are several build commands. You can always use `make help`.
 
 ```
-help                           Show commands and description.
-build                          Build dist and docker image
-build-dist                     Build the application dist
-build-docker                   Build the docker container from dist
-run-local                      Run docker image local
-deploy-docker                  Deploys the docker image to Gcloud
-deploy-staging                 Deploy to staging
-deploy-staging-service         Deploy staging service
+make help                           Show commands and description.
+make build                          Build dist and docker image
+make build-dist                     Build the application dist
+make build-docker                   Build the docker container from dist
+make run-local                      Run docker image local
+make deploy-docker                  Deploys the docker image to Gcloud
+make deploy-staging                 Deploy to staging
+make deploy-staging-service         Deploy staging service
+make deploy-production              Deploy to production
+make deploy-production-service      Deploy production service
 ```
 
 ### Application folder structure

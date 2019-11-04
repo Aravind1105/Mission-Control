@@ -33,5 +33,5 @@ deploy-staging-service: ## Deploy staging service
 deploy-production: ## Deploy to production
 	kubectl apply -f config/k8s/mc-prod-app-deployment.yaml --namespace=production
 
-deploy-production-service: ## Deploy production service
-	kubectl apply -f config/k8s/mc-prod-app-service.yaml --namespace=staging
+deploy-production-service: ## Deploy staging service
+	kubectl apply -f config/k8s/mc-prod-app-service.yaml --namespace=production
