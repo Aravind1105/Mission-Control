@@ -58,11 +58,16 @@ const KioskDetails = ({
 
   const kioskPin = kiosk.pin;
 
+  // sort productLines per loadCell id increment
+  productLines.sort((a, b) => {
+    return a.loadCell - b.loadCell;
+  });
+
   const pl = productLines.map((productLine, idx) => {
     const key = idx + productLine.loadCell;
     const res = (
       <li key={key} style={{ marginTop: 10 }}>
-        LoadCell {idx} | productLine: {productLines[idx].productLine} | amount:
+        LoadCell {productLines[idx].loadCell} | productLine: {productLines[idx].productLine} | amount:
         {JSON.stringify(productLines[idx].loadCellProducts)}
       </li>
     );

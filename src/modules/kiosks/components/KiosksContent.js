@@ -28,6 +28,7 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
     },
     {
       name: 'Serial',
+      mapDataFrom: 'Serial',
     },
     {
       name: 'Address',
