@@ -1,5 +1,5 @@
 {
-  "name": "livello-mission-control-prod",
+  "name": "livello-mission-control-stage",
   "version": "0.5.11",
   "private": true,
   "scripts": {
