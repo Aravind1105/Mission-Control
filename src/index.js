@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import '../node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';

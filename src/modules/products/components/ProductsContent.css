@@ -1,0 +1,22 @@
+.pagination {
+  float: right;
+}
+#search-bar-0 {
+  border-radius: 20px;
+  width: 500px;
+}
+.search-label {
+  margin-left: 2rem;
+}
+/* .ui.grid {
+  margin: 0px !important;
+}
+.ui.grid > .row {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 1200px !important;
+  }
+}

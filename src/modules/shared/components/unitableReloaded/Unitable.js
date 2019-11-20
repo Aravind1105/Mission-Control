@@ -109,7 +109,6 @@ const Unitable = ({
                   warning,
                 }) => {
                   const value = tableData[key][mapDataFrom || name.toLowerCase()];
-
                   const style = {
                     color: color && color(value),
                   };
@@ -142,6 +141,7 @@ const Unitable = ({
                           style={style}
                           textAlign={textAlign}
                         />
+
                       )}
                     </Table.Cell>
                   );
@@ -185,7 +185,7 @@ Unitable.defaultProps = {
   sortable: false,
   sortByColumn: null,
   sortDirection: ASC,
-  onRowClick: () => {},
+  onRowClick: () => { },
   clickArgs: [],
 };
 

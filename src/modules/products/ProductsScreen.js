@@ -1,17 +1,17 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import ProductsToolbar from './components/ProductsToolbar';
 import ProductsContent from './components/ProductsContent';
 
 const ProductsScreen = () => {
   return (
     <>
+      <Route exact path="/products" render={() => <Redirect to="/products/list" />} />
       <Route
-        exact
-        path="/products"
+        path="/products/list"
         render={() => (
           <>
-            <ProductsToolbar />
+            {/* <ProductsToolbar /> */}
             <ProductsContent />
           </>
         )}
@@ -20,4 +20,4 @@ const ProductsScreen = () => {
   );
 };
 
-export default ProductsScreen;
+export default withRouter(ProductsScreen);

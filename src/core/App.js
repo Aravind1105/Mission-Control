@@ -62,11 +62,11 @@ class App extends React.Component {
               </Suspense>
             </AuthedLayout>
           ) : (
-            <Switch>
-              <Route path="/imprint" component={LoginScreen} />
-              <Route component={LoginScreen} />
-            </Switch>
-          )
+              <Switch>
+                <Route path="/imprint" component={LoginScreen} />
+                <Route component={LoginScreen} />
+              </Switch>
+            )
           }
         </CheckAuthentication>
       </Router>

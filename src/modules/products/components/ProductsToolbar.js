@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
 } from 'semantic-ui-react';
+import ProductModal from './ProductModal';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
@@ -22,7 +23,7 @@ const ProductsToolbar = ({ openModal }) => {
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={6}>
             <Input
-              icon="search"
+              icon="user"
               placeholder="Search..."
               className="full-width"
             />
@@ -51,15 +52,16 @@ const ProductsToolbar = ({ openModal }) => {
               labelPosition="left"
               color="green"
               compact
-              // onClick={() => openModal(true)}
+              as={Link}
+              to="/products/list/add/newProduct"
+            // onClick={() => <ProductModal open {...props} title="Add a new product" />}
             >
               <Icon name="right arrow" />
-              Add Kiosk
+              Add Products
             </Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Link to="/kiosks/add" />
     </Segment>
   );
 };

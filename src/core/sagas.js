@@ -7,6 +7,7 @@ import usersSaga from 'modules/users/sagas/usersSaga';
 
 import coreSaga from './sagas/core';
 import languageSaga from './sagas/i18n';
+import productsSaga from '../modules/products/sagas/productsSaga';
 
 // Shared sagas
 
@@ -17,6 +18,7 @@ const sagas = [
   organizationsSaga(),
   usersSaga(),
   kiosksSaga(),
+  productsSaga()
 ];
 
 export default function* rootSaga() {
