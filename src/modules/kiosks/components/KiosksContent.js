@@ -75,6 +75,7 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
 
     },
     {
+<<<<<<< HEAD
       dataField: 'temperature.updated',
       text: 'Last Heartbeat',
       align: 'center',
@@ -120,6 +121,10 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
           }
         }
       },
+=======
+      name: 'Serial',
+      mapDataFrom: 'Serial',
+>>>>>>> eea004cc31c0ea21eb178a79c48c2093789bdaf7
     },
     {
       dataField: 'serialNumber',
