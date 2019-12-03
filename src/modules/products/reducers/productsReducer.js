@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions';
-import { PRODUCTS_STATE_UPDATE, TAX_STATE_UPDATE, FAMILY_STATE_UPDATE } from '../actions/productActions';
+import { PRODUCTS_STATE_UPDATE, TAX_STATE_UPDATE, FAMILY_STATE_UPDATE, Search_Text } from '../actions/productActions';
 
 const initialState = {
     product: [],
     family: [],
-    tax: []
+    tax: [],
+    searchText: ''
 };
 
 export const productsReducer = handleActions(
@@ -21,7 +22,11 @@ export const productsReducer = handleActions(
             ...state,
             tax: payload,
         }),
+        [Search_Text]: (state, { payload }) => ({
+            ...state,
+            searchText: payload,
 
+        }),
     },
     initialState,
 );

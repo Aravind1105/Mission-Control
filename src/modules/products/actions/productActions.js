@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { EventEmitter } from 'events';
 
 
 // Saga actions
@@ -20,3 +21,6 @@ export const updateFamily = createAction(FAMILY_STATE_UPDATE);
 
 export const TAX_STATE_UPDATE = '@@state/TAX_UPDATE';
 export const updateTax = createAction(TAX_STATE_UPDATE);
+
+
+export const Search_Text = '@@state/Search_Text';

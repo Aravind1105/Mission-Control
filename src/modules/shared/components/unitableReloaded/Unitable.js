@@ -79,6 +79,7 @@ const Unitable = ({
                 activeColumn={activeColumn}
                 sortDirection={direction}
                 handleSort={handleSort}
+                columnHeader={column.header !== undefined && column.header !== null ? column.header : column.name}
               />
             ))}
           </Table.Row>
@@ -108,7 +109,24 @@ const Unitable = ({
                   negative,
                   warning,
                 }) => {
-                  const value = tableData[key][mapDataFrom || name.toLowerCase()];
+                  if (mapDataFrom !== undefined) {
+                    var splitarray = mapDataFrom.split('.')
+                    if (splitarray.length > 0) {
+                      var tryvalue = tableData[key]
+                      splitarray.forEach(order => {
+                        if (tryvalue !== undefined) {
+                          tryvalue = tryvalue[order];
+                        } else {
+                          tryvalue = 'NULL';
+                        }
+                      });
+                    } else {
+                      tryvalue = tableData[key][mapDataFrom];
+                    }
+                  } else {
+                    tryvalue = tableData[key][mapDataFrom || name.toLowerCase()];
+                  }
+                  const value = tryvalue;
                   const style = {
                     color: color && color(value),
                   };
@@ -125,18 +143,18 @@ const Unitable = ({
                     >
                       {type === 'progress' && (
                         <UnitableCellProgress
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
+                          value={value}
                         />
                       )}
                       {type === 'address' && (
                         <UnitableCellAddress
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
+                          value={value}
                         />
                       )}
                       {!type && (
                         <UnitableCellContent
                           icon={icon}
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
+                          value={value}
                           postfix={postfix}
                           style={style}
                           textAlign={textAlign}

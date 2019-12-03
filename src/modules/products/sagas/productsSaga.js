@@ -1,7 +1,7 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import LivelloLS from 'lib/LocalStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
-import { updateProducts, PRODUCT_SAGA_LOAD, PRODUCT_SAGA_ADD, FAMILYANDTAX_SAGA_ADD, updateFamily, updateTax } from '../actions/productActions';
+import { updateProducts, PRODUCT_SAGA_LOAD, PRODUCT_SAGA_ADD, FAMILYANDTAX_SAGA_ADD, updateFamily, updateTax, handleSearchTextChange } from '../actions/productActions';
 
 function* loadProducts() {
     const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
@@ -15,6 +15,7 @@ function* loadProducts() {
 
     yield put(updateProducts(data));
 }
+
 function* addProducts(action) {
     const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
     const response = yield call(fetch, '/api/v1/product-lines', {
