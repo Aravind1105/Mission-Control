@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import './KioskContent.css';
 import styled from 'styled-components';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import paginationFactory from 'react-bootstrap-table2-paginator';

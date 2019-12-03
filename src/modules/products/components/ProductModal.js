@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, { bool } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
-// import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import $ from 'jquery';
 import {
     Button, Form, Select, Message
@@ -13,7 +12,6 @@ import { path } from 'ramda';
 import * as Yup from 'yup';
 import { addProductsSaga, loadFamilyAndTaxSaga } from '../actions/productActions';
 import Modal from 'react-bootstrap/Modal'
-import './ProductsContent.css'
 import { isBoolean } from 'util';
 
 
