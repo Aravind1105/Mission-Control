@@ -12,7 +12,7 @@ const KiosksScreen = () => {
         path="/kiosks/list"
         render={() => (
           <>
-            {/* <KiosksToolbar /> */}
+            <KiosksToolbar />
             <KiosksContent />
           </>
         )}
