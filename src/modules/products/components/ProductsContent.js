@@ -1,9 +1,5 @@
 import React, { useEffect, Component } from 'react';
-import { withRouter, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import {
   Grid,
   Segment,
@@ -12,11 +8,7 @@ import {
   Button,
   Icon,
 } from 'semantic-ui-react';
-// import { FaSearch } from 'react-icons/fa';
-import PropTypes from 'prop-types';
-import ProductModal from './ProductModal';
 import { loadProductsSaga } from '../actions/productActions';
-import OrganizationModal from '../../organizations/components/OrganizationModal';
 
 import {
   Unitable,

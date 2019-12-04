@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
 import styled from 'styled-components';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import { Grid, Input, Dropdown, Button, Icon } from 'semantic-ui-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -196,18 +192,10 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
             </Grid>
             {/* <FaSearch /> */}
             <hr />
-            <BootstrapTable
-              bootstrap4
-              hover
-              {...props.baseProps}
-              defaultSorted={defaultSorted}
-              pagination={paginationFactory()}
-              rowEvents={rowEvents}
-            />
           </div>
         )}
       </ToolkitProvider>
-      {/* <Unitable
+      <Unitable
         data={kiosks}
         columns={columns}
         onRowClick={clickRow}
@@ -215,18 +203,8 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
         sortable
         selectable
         sortByColumn="name"
-      /> */}
-      {/* <BootstrapTable
-        bootstrap4
-        hover
-        keyField='_id'
-        data={kiosks}
-        columns={columns}
-        rowEvents={rowEvents}
-        defaultSorted={defaultSorted}
-        filter={filterFactory()}
-        pagination={paginationFactory()}
-      /> */}
+      />
+
       {/* {true && (
         <Container textAlign="center">
           <Pagination

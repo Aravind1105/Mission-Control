@@ -1,6 +1,6 @@
 {
   "name": "livello-mission-control-stage",
-  "version": "0.5.12",
+  "version": "0.5.14",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack/webpack.config.dev.js --mode development",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "auth0-js": "^9.10.2",
-    "bootstrap": "^4.3.1",
     "dateformat": "^3.0.3",
     "formik": "^1.5.4",
     "history": "^4.9.0",
@@ -24,12 +23,6 @@
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-awesome-modal": "^2.0.5",
-    "react-bootstrap": "^1.0.0-beta.14",
-    "react-bootstrap-modal": "^4.2.0",
-    "react-bootstrap-table-next": "^3.2.1",
-    "react-bootstrap-table2-filter": "^1.2.0",
-    "react-bootstrap-table2-paginator": "^2.1.0",
-    "react-bootstrap-table2-toolkit": "^2.1.0",
     "react-dom": "^16.8.6",
     "react-i18next": "^10.9.0",
     "react-icons": "^3.8.0",
@@ -110,6 +103,7 @@
     "extends": "react-app"
   },
   "browserslist": [
+    "defaults",
     ">0.2%",
     "not dead",
     "not ie <= 11",
