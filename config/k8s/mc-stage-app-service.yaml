@@ -18,15 +18,15 @@ metadata:
   name: livello-mc-stage-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: 'livello-mc-staging-ip'
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-    certmanager.k8s.io/acme-http01-edit-in-place: 'true'
+    # certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    # certmanager.k8s.io/acme-http01-edit-in-place: 'true'
   labels:
     app: livello-mc-stage-stage
 spec:
   backend:
     serviceName: livello-mc-stage-svc
     servicePort: 8080
-  tls:
-    - secretName: mc-stage-livello-com-cert
-      hosts:
-        - 'mc-stage.livello.com'
+  # tls:
+  #   - secretName: mc-stage-livello-com-cert
+  #     hosts:
+  #       - 'mc-stage.livello.com'
