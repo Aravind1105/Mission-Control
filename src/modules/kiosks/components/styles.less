@@ -1,0 +1,34 @@
+@import './globals/site.variables';
+
+.marginBottom {
+  margin-bottom: 0;
+}
+.text-align-right {
+  text-align: right;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+.load-cell {
+  padding: 15px 20px 15px 15px;
+  background-color: @grey;
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 82px;
+  .load-cell-header {
+    position: relative;
+  }
+  .edit-icon {
+    position: absolute;
+    top: -1px;
+    right: -14px;
+    z-index: 10;
+  }
+}
+.edit-icon {
+  color: @black;
+  cursor: pointer;
+  &:hover {
+    color: @black;
+  }
+}

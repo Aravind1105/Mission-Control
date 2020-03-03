@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Segment,
@@ -15,7 +15,10 @@ const stateOptions = [
   { key: 'license', value: 'license', text: 'license' },
 ];
 
-const KiosksToolbar = ({ openModal }) => {
+const Toolbar = ({ search, setSearch }) => {
+  const handleSearchChange = ({ target }) => {
+    setSearch(target.value);
+  };
   return (
     <Segment className="toolbar">
       <Grid stackable>
@@ -23,6 +26,8 @@ const KiosksToolbar = ({ openModal }) => {
           <Grid.Column width={6}>
             <Input
               icon="search"
+              value={search}
+              onChange={handleSearchChange}
               placeholder="Search..."
               className="full-width"
             />
@@ -46,13 +51,7 @@ const KiosksToolbar = ({ openModal }) => {
           </Grid.Column>
 
           <Grid.Column textAlign="right">
-            <Button
-              icon
-              labelPosition="left"
-              color="green"
-              compact
-              // onClick={() => openModal(true)}
-            >
+            <Button icon labelPosition="left" color="green" compact>
               <Icon name="right arrow" />
               Add Kiosk
             </Button>
@@ -64,4 +63,9 @@ const KiosksToolbar = ({ openModal }) => {
   );
 };
 
-export default connect()(KiosksToolbar);
+Toolbar.propTypes = {
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
+};
+
+export default Toolbar;

@@ -1,21 +1,25 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  Grid, Segment, Header, Button,
-} from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
+import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
+import { pathOr, sortBy, prop } from 'ramda';
 
-import DetailsBreadcrumb from './DetailsBreadcrumb';
-import { getKioskById } from '../selectors/kiosksSelector';
-import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from '../actions/kioskActions';
+import DetailsBreadcrumb from './components/DetailsBreadcrumb';
+import DetailsLoadCells from './components/DetailsLoadCells';
+import DetailsInventory from './components/DetailsInventory';
+import DetailsHeader from './components/DetailsHeader';
+import { getKioskById } from './selectors/kiosksSelector';
+import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from './actions';
 
 const KioskDetails = ({
-  match, kiosk, resetKiosk, loadKiosks, openKiosk,
+  kiosk,
+  loadCells,
+  resetKiosk,
+  loadKiosks,
+  openKiosk,
 }) => {
   useEffect(() => {
     if (!kiosk) {
-      console.log('FETCH ORGANIZATION');
       loadKiosks();
     }
   }, []);
@@ -34,45 +38,16 @@ const KioskDetails = ({
     }
   };
 
-  const avgTemp = kiosk.temperature.value;
-
-  const productLines = [];
-
-  kiosk.inventory.loadCells.map((item) => {
-    productLines.push({
-      loadCell: item.cellId,
-      productLine: item.productLine.name,
-      loadCellProducts: item.products.length,
-    });
-    return null;
-  });
-
   const tempSensors = kiosk.temperature.sensors.map((v, id) => {
     const res = (
       <li style={{ margin: 5 }} key={v.id}>
-        Sensor:  {id} | Temperature: {v.temperature}
+        Sensor: {id} | Temperature: {v.temperature}
       </li>
     );
     return res;
   });
 
   const kioskPin = kiosk.pin;
-
-  // sort productLines per loadCell id increment
-  productLines.sort((a, b) => {
-    return a.loadCell - b.loadCell;
-  });
-
-  const pl = productLines.map((productLine, idx) => {
-    const key = idx + productLine.loadCell;
-    const res = (
-      <li key={key} style={{ marginTop: 10 }}>
-        LoadCell {productLines[idx].loadCell} | productLine: {productLines[idx].productLine} | amount:
-        {JSON.stringify(productLines[idx].loadCellProducts)}
-      </li>
-    );
-    return res;
-  });
 
   return (
     <Grid stackable>
@@ -90,23 +65,33 @@ const KioskDetails = ({
             <Grid.Row>
               <Grid.Column>
                 <Segment>
-                  <Header as="h4">
-                    <Header.Content>{kiosk.name}</Header.Content>
+                  <DetailsHeader
+                    name={kiosk.name}
+                    temp={kiosk.temperature.value}
+                    connection={kiosk.internet.signalStrength}
+                    doorStatus={kiosk.doorStatus}
+                  />
+                  <Divider />
+                  <Header as="h3">
+                    <Header.Content>{`#${kiosk.serialNumber}`}</Header.Content>
                   </Header>
-                  <div>{`Door: ${kiosk.doorStatus}`}</div>
                   <div>{`Session: ${kiosk.session}`}</div>
-                  <Button style={{ marginBottom: 5 }} onClick={toggleResetKiosk}>
-                    Reset Door & Session
+                  <Button
+                    style={{ marginBottom: 5 }}
+                    onClick={toggleResetKiosk}
+                  >
+                    Reset Door &amp; Session
                   </Button>
                   <Button style={{ marginBottom: 5 }} onClick={toggleOpenDoor}>
                     Open Door
                   </Button>
                   <p style={{ margin: 5 }}>KioskPin: {kioskPin}</p>
                   <div style={{ borderStyle: 'solid' }}>
-                    <p style={{ margin: 5 }}>{`Average Temperature:  ${avgTemp} °C`}</p>
+                    <p style={{ margin: 5 }}>
+                      {`Average Temperature:  ${kiosk.temperature.value} °C`}
+                    </p>
                     {tempSensors}
                   </div>
-                  {pl}
                 </Segment>
               </Grid.Column>
             </Grid.Row>
@@ -114,6 +99,12 @@ const KioskDetails = ({
             <Grid.Row>
               <Grid.Column>
                 <Segment>RFID</Segment>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column>
+                <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -128,19 +119,36 @@ const KioskDetails = ({
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Segment>Inventory</Segment>
+                <DetailsInventory cells={loadCells} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Grid.Column>
       </Grid.Row>
-    </Grid >
+    </Grid>
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  kiosk: getKioskById(ownProps.match.params.id)(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const kiosk = getKioskById(ownProps.match.params.id)(state);
+  const cells = pathOr([], ['inventory', 'loadCells'], kiosk).sort(
+    (a, b) => a.cellId - b.cellId,
+  );
+  const loadCells = sortBy(prop('planogramPosition'), cells).map(
+    ({ products, ...rest }) => ({
+      ...rest,
+      products,
+      availableProducts: products.filter(
+        el => el.status === 'in_kiosk_available',
+      ).length,
+    }),
+  );
+
+  return {
+    kiosk,
+    loadCells,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   resetKiosk: kiosk => dispatch(resetKioskSaga(kiosk)),
@@ -148,9 +156,4 @@ const mapDispatchToProps = dispatch => ({
   openKiosk: kiosk => dispatch(openKioskSaga(kiosk)),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(KioskDetails),
-);
+export default connect(mapStateToProps, mapDispatchToProps)(KioskDetails);
