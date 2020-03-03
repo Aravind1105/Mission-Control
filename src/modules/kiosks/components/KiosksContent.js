@@ -86,9 +86,11 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
 };
 
 const mapStateToProps = (state, { search }) => ({
-  kiosks: state.kiosks.filter(({ name }) =>
-    name.toUpperCase().includes(search.toUpperCase()),
-  ),
+  kiosks: search
+    ? state.kiosks.filter(({ name }) =>
+        name.toUpperCase().includes(search.toUpperCase()),
+      )
+    : state.kiosks,
 });
 
 const mapDispatchToProps = dispatch => ({

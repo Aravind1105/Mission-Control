@@ -3,7 +3,6 @@ import { Segment, Header, Grid, Divider, Icon, Table } from 'semantic-ui-react';
 import { pathOr } from 'ramda';
 
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
-import './styles.less';
 
 const initObj = { available: 0, total: 0, totalPrice: 0 };
 
