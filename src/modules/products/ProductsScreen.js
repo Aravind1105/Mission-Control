@@ -1,17 +1,12 @@
 import React from 'react';
-import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import ProductsMainPage from './ProductsMainPage';
 
-export default class ProductsScreen extends React.Component {
-  render() {
-    return (
+const ProductsScreen = () => (
+  <Switch>
+    <Route exact path="/products/list" component={ProductsMainPage} />
+    <Redirect to="/products/list" />
+  </Switch>
+);
 
-      <Switch>
-        <Route exact path="/products" render={() => <Redirect to="/products/list" />} />
-        <Route path="/products/list" component={ProductsMainPage} />
-      </Switch>
-
-    );
-  }
-}
-
+export default ProductsScreen;

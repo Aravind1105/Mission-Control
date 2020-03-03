@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions';
 import { findIndex, propEq, update } from 'ramda';
-import { KIOSKS_STATE_UPDATE, KIOSKS_STATE_UPDATE_BY_ID } from '../actions/kioskActions';
+import { updateKiosks, updateKioskById } from '../actions';
 
 const initialState = [];
 
 export const kiosksReducer = handleActions(
   {
-    [KIOSKS_STATE_UPDATE]: (state, { payload }) => payload,
-    [KIOSKS_STATE_UPDATE_BY_ID]: (state, { payload }) => {
+    [updateKiosks]: (state, { payload }) => payload,
+    [updateKioskById]: (state, { payload }) => {
       const index = findIndex(propEq('_id', payload._id))(state);
       return update(index, { ...state[index], ...payload }, state);
     },

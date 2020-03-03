@@ -1,52 +1,66 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Container, Pagination } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Unitable, valueEquals, conditionalValue } from '../../shared/components/unitableReloaded';
-import { loadKiosksSaga } from '../actions/kioskActions';
+
+import { Unitable } from 'modules/shared/components/unitableReloaded';
+import { loadKiosksSaga } from '../actions';
+
+const columns = [
+  {
+    name: 'Name',
+  },
+  {
+    name: 'DoorStatus',
+    mapDataFrom: 'doorStatus',
+  },
+  {
+    name: 'Temperature',
+    mapDataFrom: 'temperature.value',
+  },
+  {
+    name: 'Last HeartBeat',
+    mapDataFrom: 'temperature.updated',
+    type: 'timeDifference',
+  },
+  {
+    name: 'Serial',
+    mapDataFrom: 'serialNumber',
+  },
+  {
+    name: 'Address',
+    mapDataFrom: 'ownerOrganization.address.0.properties.city',
+  },
+  {
+    name: 'Sales',
+    postfix: ' €',
+  },
+];
 
 const KiosksContent = ({ loadKiosks, kiosks, history }) => {
+  const [page, setPage] = useState(0);
+  const perPage = 10;
+  const totalPages = Math.ceil(kiosks.length / perPage);
+
   useEffect(() => {
     loadKiosks();
   }, []);
+
+  const handlePageChange = (e, { activePage }) => {
+    setPage(activePage - 1);
+  };
 
   const clickRow = ({ _id }) => {
     history.push(`/kiosks/${_id}/detail`);
   };
 
-  const columns = [
-    {
-      name: 'Name',
-    },
-    {
-      name: 'Status',
-      positive: valueEquals('Active'),
-      negative: valueEquals('Offline'),
-      warning: valueEquals('Issue'),
-      icon: conditionalValue([['Offline', 'attention']]),
-    },
-    {
-      name: 'Serial',
-      mapDataFrom: 'Serial',
-    },
-    {
-      name: 'Address',
-    },
-    {
-      name: 'Sales',
-      postfix: ' €',
-    },
-    {
-      name: 'Level',
-      type: 'progress',
-    },
-  ];
+  const kioskList = kiosks.slice(page * perPage, page * perPage + perPage);
 
   return (
     <Segment>
       <Unitable
-        data={kiosks}
+        data={kioskList}
         columns={columns}
         onRowClick={clickRow}
         clickArgs={['_id']}
@@ -54,25 +68,27 @@ const KiosksContent = ({ loadKiosks, kiosks, history }) => {
         selectable
         sortByColumn="name"
       />
-      {true && (
+      {kioskList.length ? (
         <Container textAlign="center">
           <Pagination
-            style={{ marginTop: '10px' }}
-            defaultActivePage={1}
-            boundaryRange={0}
-            onPageChange={null}
-            size="mini"
-            siblingRange={1}
-            totalPages={1}
+            activePage={1 + page}
+            totalPages={totalPages}
+            firstItem={null}
+            lastItem={null}
+            pointing
+            secondary
+            onPageChange={handlePageChange}
           />
         </Container>
-      )}
+      ) : null}
     </Segment>
   );
 };
 
-const mapStateToProps = state => ({
-  kiosks: state.kiosks,
+const mapStateToProps = (state, { search }) => ({
+  kiosks: state.kiosks.filter(({ name }) =>
+    name.toUpperCase().includes(search.toUpperCase()),
+  ),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -85,8 +101,5 @@ KiosksContent.propTypes = {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(KiosksContent),
+  connect(mapStateToProps, mapDispatchToProps)(KiosksContent),
 );

@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader/root';
-import {
-  Redirect, Router, Route, Switch,
-} from 'react-router-dom';
+import { Router, Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import history from 'lib/history';
@@ -40,28 +38,27 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <CheckAuthentication>
-          {isAuthenticated => isAuthenticated ? (
-            <AuthedLayout>
-              <Suspense fallback={<Loading />}>
-                <Switch>
-                  {routes.map(({
-                    Component, name, path, pathOptions,
-                  }) => {
-                    return (
-                      <Route
-                        exact={(pathOptions && pathOptions.exact) || false}
-                        path={path}
-                        key={name}
-                      >
-                        <Component />
-                      </Route>
-                    );
-                  })}
-                  <Redirect to="/" />
-                </Switch>
-              </Suspense>
-            </AuthedLayout>
-          ) : (
+          {isAuthenticated =>
+            isAuthenticated ? (
+              <AuthedLayout>
+                <Suspense fallback={<Loading />}>
+                  <Switch>
+                    {routes.map(({ Component, name, path, pathOptions }) => {
+                      return (
+                        <Route
+                          exact={(pathOptions && pathOptions.exact) || false}
+                          path={path}
+                          key={name}
+                        >
+                          <Component />
+                        </Route>
+                      );
+                    })}
+                    <Redirect to="/" />
+                  </Switch>
+                </Suspense>
+              </AuthedLayout>
+            ) : (
               <Switch>
                 <Route path="/imprint" component={LoginScreen} />
                 <Route component={LoginScreen} />
@@ -87,9 +84,4 @@ const mapDispatchToProps = dispatch => ({
   initApp: () => dispatch(initializeApp()),
 });
 
-export default hot(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(App),
-);
+export default hot(connect(mapStateToProps, mapDispatchToProps)(App));

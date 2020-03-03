@@ -3,8 +3,8 @@ import { withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { Search_Text } from '../actions/productActions'
-import { put } from 'redux-saga/effects'
+import { Search_Text } from '../actions/productActions';
+import { put } from 'redux-saga/effects';
 import {
   Segment,
   Grid,
@@ -21,8 +21,6 @@ const stateOptions = [
 ];
 class ProductsToolbar extends React.Component {
   render() {
-
-    console.log("khara", this.props.searchText)
     return (
       <Segment className="toolbar">
         <Grid stackable>
@@ -62,34 +60,31 @@ class ProductsToolbar extends React.Component {
                 compact
                 as={Link}
                 to="/products/list/add/newProduct"
-              // onClick={() => <ProductModal open {...props} title="Add a new product" />}
+                // onClick={() => <ProductModal open {...props} title="Add a new product" />}
               >
                 <Icon name="right arrow" />
                 Add Products
-            </Button>
+              </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Segment>
     );
-  };
+  }
 }
 
 const mapStateToProps = state => ({
-  searchText: state.products.searchText
+  searchText: state.products.searchText,
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleTextChanged: (e, { value }) => dispatch({
-    type: Search_Text,
-    payload: value
-  }),
+  handleTextChanged: (e, { value }) =>
+    dispatch({
+      type: Search_Text,
+      payload: value,
+    }),
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(ProductsToolbar),
+  connect(mapStateToProps, mapDispatchToProps)(ProductsToolbar),
 );
-
