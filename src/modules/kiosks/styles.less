@@ -27,8 +27,31 @@
 }
 .edit-icon {
   color: @black;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   cursor: pointer;
   &:hover {
     color: @black;
+  }
+}
+
+.kiosk-info {
+  button {
+    margin: 0 0 10px !important;
+    width: 100%;
+  }
+}
+.info-row {
+  padding: 5px 0;
+  display: flex;
+  .info-title {
+    width: 150px;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .info-description {
+    width: 100%;
   }
 }
