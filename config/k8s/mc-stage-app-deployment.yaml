@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: livello-mc-stage
-          image: gcr.io/livello-backend/livello-mission-control-stage:0.6.0
+          image: gcr.io/livello-backend/livello-mission-control-stage:0.6.1
           ports:
             - containerPort: 8080
