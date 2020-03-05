@@ -59,7 +59,7 @@ const DetailLoadCellsSide = ({ cells, handleEdit }) => (
             productLine={productLine}
             products={products}
             availableProducts={availableProducts}
-            handleEdit={handleEdit({ productLine, cellId })}
+            handleEdit={handleEdit({ productLine, cellId, availableProducts })}
           />
         ),
       )}

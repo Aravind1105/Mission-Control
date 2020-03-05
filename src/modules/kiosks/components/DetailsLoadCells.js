@@ -17,12 +17,12 @@ const separateToSides = cells =>
     { A: [], B: [] },
   );
 
-const DetailsLoadCells = ({ cells, kioskName }) => {
+const DetailsLoadCells = ({ cells, kioskName, serial }) => {
   const [product, selectProduct] = useState(null);
 
-  const handleEdit = ({ productLine, cellId }) => () => {
+  const handleEdit = ({ productLine, cellId, availableProducts }) => () => {
     const data = pick(productLine, ['_id', 'name']);
-    selectProduct({ ...data, cellId });
+    selectProduct({ ...data, cellId, availableProducts });
   };
 
   const handleClose = () => selectProduct(null);

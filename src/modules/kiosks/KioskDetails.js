@@ -7,6 +7,7 @@ import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
+import DetailQRCode from './components/DetailQRCode';
 import { getKioskById, getShelvesByKioskId } from './selectors';
 import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from './actions';
 
@@ -18,9 +19,10 @@ const KioskDetails = ({
   resetKiosk,
   loadKiosks,
   openKiosk,
+  isLoading,
 }) => {
   useEffect(() => {
-    if (!kiosk) {
+    if (!kiosk && !isLoading) {
       loadKiosks();
     }
   }, []);
@@ -63,7 +65,7 @@ const KioskDetails = ({
                   />
                   <Divider />
                   <Header as="h3">{`#${kiosk.serialNumber}`}</Header>
-                  <DetailsInfo>
+                  <DetailsInfo session={kiosk.session}>
                     <>
                       <Button onClick={toggleOpenDoor}>Open Door</Button>
                       <Button>Edit</Button>
@@ -86,11 +88,7 @@ const KioskDetails = ({
 
         <Grid.Column width={5}>
           <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>Sales</Segment>
-              </Grid.Column>
-            </Grid.Row>
+            <DetailQRCode qrCode={kiosk.qrcode} />
             <Grid.Row>
               <Grid.Column>
                 <DetailsInventory cells={loadCells} />
@@ -100,7 +98,11 @@ const KioskDetails = ({
         </Grid.Column>
       </Grid>
 
-      <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
+      <DetailsLoadCells
+        cells={loadCells}
+        kioskName={kiosk.name}
+        serial={kiosk.serialNumber}
+      />
     </>
   );
 };
@@ -108,6 +110,7 @@ const KioskDetails = ({
 const mapStateToProps = (state, { match: { params } }) => ({
   kiosk: getKioskById(params.id)(state),
   loadCells: getShelvesByKioskId(params.id)(state),
+  isLoading: state.kiosks.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -6,7 +6,7 @@ const OrganizationsScreen = lazy(() =>
   import('modules/organizations/OrganizationsScreen'),
 );
 const UsersScreen = lazy(() => import('modules/users/UsersScreen'));
-const ProductsScreen = lazy(() => import('modules/products/ProductsScreen'));
+const Products = lazy(() => import('modules/products'));
 const FulfillmentScreen = lazy(() =>
   import('modules/fulfillment/FulfillmentScreen'),
 );
@@ -47,7 +47,7 @@ export default [
     name: 'Products',
     path: '/products',
     icon: 'box',
-    Component: ProductsScreen,
+    Component: Products,
   },
   {
     name: 'Fulfillment',

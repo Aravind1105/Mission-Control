@@ -13,13 +13,14 @@ InfoRow.propTypes = {
   description: PropTypes.string,
 };
 
-const DetailsInfo = ({ children }) => (
+const DetailsInfo = ({ children, session }) => (
   <div className="kiosk-info">
     <Grid>
       <Grid.Column width={12}>
         <div className="info-wrapper">
           <InfoRow title="Device version:" description="fsdaf d fd" />
           <InfoRow title="Connection:" description="sdasds" />
+          <InfoRow title="Session:" description={session || 'no session'} />
         </div>
         <Divider />
         <div className="info-wrapper">
@@ -46,5 +47,9 @@ const DetailsInfo = ({ children }) => (
     </div>
   </div>
 );
+
+DetailsInfo.propTypes = {
+  session: PropTypes.string,
+};
 
 export default DetailsInfo;
