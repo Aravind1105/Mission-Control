@@ -4,7 +4,16 @@ import sortBy from 'lodash/sortBy';
 
 const twoHours = 1000 * 60 * 60 * 2;
 
-export const getKiosksState = state => state.kiosks;
+export const getKiosksState = state => state.kiosks.list;
+
+export const getKiosksWithSearch = searchText =>
+  createSelector(getKiosksState, kiosks => {
+    const search = searchText.trim().toLowerCase();
+
+    return search
+      ? kiosks.filter(({ name }) => name.toLowerCase().includes(search))
+      : kiosks;
+  });
 
 export const getKioskById = id =>
   createSelector(getKiosksState, kiosksState =>
@@ -26,7 +35,7 @@ export const getShelvesByKioskId = id =>
     return loadCells;
   });
 
-export const getKiosksTempAlerts = createSelector(getKiosksState, kiosks => {
+export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
   const filteredTempKiosks = kiosks
     .filter(({ temperature }) => temperature && temperature.value > 7)
     .map(({ _id: id, name }) => ({

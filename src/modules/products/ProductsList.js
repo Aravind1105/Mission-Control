@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import ProductsToolbar from './components/ProductsToolbar';
+import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
-import { loadProductsSaga } from './actions/productActions';
+import { loadProductsSaga } from './actions';
 
 const ProductsMainPage = () => {
+  const [search, changeSearch] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,8 +15,8 @@ const ProductsMainPage = () => {
 
   return (
     <>
-      <ProductsToolbar />
-      <ProductsContent />
+      <Toolbar changeSearch={changeSearch} />
+      <ProductsContent search={search} />
     </>
   );
 };

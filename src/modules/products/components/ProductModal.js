@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 import { Formik, FieldArray, Field } from 'formik';
 import { path } from 'ramda';
 import * as Yup from 'yup';
-import { addProductsSaga, loadFamilyAndTaxSaga } from '../actions/productActions';
+import { addProductsSaga, loadFamilyAndTaxSaga } from '../actions';
 import { isBoolean } from 'util';
 
 

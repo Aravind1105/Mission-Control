@@ -1,20 +1,11 @@
-import React, { useEffect, Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Grid,
-  Segment,
-  Container,
-  Pagination,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
-import { loadProductsSaga } from '../actions/productActions';
+import { Grid, Segment } from 'semantic-ui-react';
 
-import {
-  Unitable,
-  valueEquals,
-  conditionalValue,
-} from '../../shared/components/unitableReloaded';
+import history from 'lib/history';
+import { Unitable } from 'modules/shared/components/unitableReloaded';
+import TableWithPagination from 'modules/shared/components/TableWithPagination';
+import { getProductsWithFilter } from '../selectors';
 
 const columns = [
   {
@@ -36,71 +27,38 @@ const columns = [
     mapDataFrom: 'priceHistory.0.price',
     name: 'Price',
     postfix: ' €',
-  }
+  },
 ];
-class ProductsContent extends React.Component {
-  constructor(props) {
-    super(props);
 
-  }
-  state = {
-    products: []
-  }
-  getProductsData = () => {
-    let productsarray = [];
-    if (this.props.products !== undefined && this.props.products !== null && this.props.products.length > 0 && this.props.searchText !== undefined && this.props.searchText !== null && this.props.searchText.toString().trim() !== '') {
-      this.props.products.forEach(productObject => {
-        if (productObject.name !== undefined && (productObject.name.toString().trim().toLowerCase().includes(this.props.searchText.toString().trim().toLowerCase())
-          || productObject.manufacturer.toString().trim().toLowerCase().includes(this.props.searchText.toString().trim().toLowerCase())
-          || productObject.category.toString().trim().toLowerCase().includes(this.props.searchText.toString().trim().toLowerCase()))) {
+const ProductsContent = ({ products }) => {
+  const clickRow = ({ _id }) => {
+    history.push(`/products/${_id}`);
+  };
 
-          productsarray.push(productObject)
-        }
-      });
-    } else {
-      productsarray = this.props.products
-    }
-    return productsarray
-  }
-  render() {
-    return (
-      <>
-        <Segment>
-          <Grid stackable>
-            <Grid.Row columns="equal" style={{ marginLeft: '0px', height: '470px' }}>
-              <div style={{ height: '100%', overflow: 'auto', width: '100%' }}>
+  return (
+    <>
+      <Segment>
+        <Grid stackable>
+          <Grid.Row
+            columns="equal"
+            style={{ marginLeft: '0px', height: '470px' }}
+          >
+            <div style={{ height: '100%', overflow: 'auto', width: '100%' }}>
+              <TableWithPagination list={products}>
                 <Unitable
-                  data={this.getProductsData()}
                   columns={columns}
-                  // onRowClick={clickRow}
-                  // clickArgs={['id']}
+                  onRowClick={clickRow}
+                  clickArgs={['_id']}
                   sortable
                   selectable
                   sortByColumn="name"
                 />
-              </div>
-            </Grid.Row>
-            <Grid.Row columns="equal" style={{ marginLeft: '0px', height: '50px', paddingTop: '0px', paddingBottom: '0px' }}>
-              <Grid.Column width={6} />
-              <Grid.Column width={3}>
-                {true && (
-                  <Container textAlign="center">
-                    <Pagination
-                      defaultActivePage={1}
-                      boundaryRange={0}
-                      onPageChange={null}
-                      size="mini"
-                      siblingRange={1}
-                      totalPages={1}
-                    />
-                  </Container>
-                )}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-       
-        </Segment >
-        {/*<Route
+              </TableWithPagination>
+            </div>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+      {/*<Route
           exact
           path={`${match.url}/add/newProduct`}
           render={props => <ProductModal open {...props} title="Add a new product"
@@ -108,24 +66,14 @@ class ProductsContent extends React.Component {
           />}
         />
         {/* <Route exact path="/products/list/add/newProduct" component={withRouter(ProductModal)} /> */}
-      </>
-    );
-  };
-}
-const mapStateToProps = state => ({
-  products: state.products.product,
+    </>
+  );
+};
+
+const mapStateToProps = (state, { search }) => ({
+  products: getProductsWithFilter(search)(state),
   family: state.products.family,
   tax: state.products.tax,
-  searchText: state.products.searchText
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadProducts: () => dispatch(loadProductsSaga()),
-
-});
-export default
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(ProductsContent)
-
+export default connect(mapStateToProps)(ProductsContent);

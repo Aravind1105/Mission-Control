@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
-import { getKiosksTempAlerts } from 'modules/kiosks/selectors';
+import { getKiosksAlerts } from 'modules/kiosks/selectors';
+import { loadKiosksSaga } from 'modules/kiosks/actions';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
 import LanguageSelect from '../LanguageSelect';
@@ -10,10 +11,13 @@ import AlertsList from '../AlertsList';
 import logoSmall from '../../../../styling/assets/images/logo-small.png';
 import './desktopLayout.less';
 
-const DesktopLayout = ({ children }) => {
+const DesktopLayout = ({ children, isLoading, alerts, loadKiosksSaga }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
-  const alerts = useSelector(getKiosksTempAlerts);
+
+  useEffect(() => {
+    if (!isLoading) loadKiosksSaga();
+  }, []);
 
   return (
     <div className={`desktop-container${minimized ? ' minimized' : ''}`}>
@@ -52,4 +56,13 @@ const DesktopLayout = ({ children }) => {
   );
 };
 
-export default DesktopLayout;
+const mapStateToProps = state => ({
+  isLoading: state.kiosks.isLoading,
+  alerts: getKiosksAlerts(state),
+});
+
+const mapDispatchToProps = {
+  loadKiosksSaga,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DesktopLayout);

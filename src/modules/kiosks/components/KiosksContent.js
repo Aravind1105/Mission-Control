@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Container, Pagination } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Unitable } from 'modules/shared/components/unitableReloaded';
+import TableWithPagination from 'modules/shared/components/TableWithPagination';
+import Loader from 'modules/shared/components/Loader';
+import { getKiosksWithSearch } from '../selectors';
 import { loadKiosksSaga } from '../actions';
 
 const columns = [
@@ -38,68 +41,46 @@ const columns = [
   },
 ];
 
-const KiosksContent = ({ loadKiosks, kiosks, history }) => {
-  const [page, setPage] = useState(0);
-  const perPage = 10;
-  const totalPages = Math.ceil(kiosks.length / perPage);
-
+const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
   useEffect(() => {
-    loadKiosks();
+    if (!isLoading) loadKiosksSaga();
   }, []);
 
-  const handlePageChange = (e, { activePage }) => {
-    setPage(activePage - 1);
-  };
-
   const clickRow = ({ _id }) => {
-    history.push(`/kiosks/${_id}/detail`);
+    history.push(`/kiosks/${_id}`);
   };
-
-  const kioskList = kiosks.slice(page * perPage, page * perPage + perPage);
-
   return (
-    <Segment>
-      <Unitable
-        data={kioskList}
-        columns={columns}
-        onRowClick={clickRow}
-        clickArgs={['_id']}
-        sortable
-        selectable
-        sortByColumn="name"
-      />
-      {kioskList.length ? (
-        <Container textAlign="center">
-          <Pagination
-            activePage={1 + page}
-            totalPages={totalPages}
-            firstItem={null}
-            lastItem={null}
-            pointing
-            secondary
-            onPageChange={handlePageChange}
+    <>
+      {isLoading && <Loader />}
+      <Segment>
+        <TableWithPagination list={kiosks}>
+          <Unitable
+            columns={columns}
+            onRowClick={clickRow}
+            clickArgs={['_id']}
+            sortable
+            selectable
+            sortByColumn="name"
           />
-        </Container>
-      ) : null}
-    </Segment>
+        </TableWithPagination>
+      </Segment>
+    </>
   );
 };
 
 const mapStateToProps = (state, { search }) => ({
-  kiosks: search
-    ? state.kiosks.filter(({ name }) =>
-        name.toUpperCase().includes(search.toUpperCase()),
-      )
-    : state.kiosks,
+  kiosks: getKiosksWithSearch(search)(state),
+  isLoading: state.kiosks.isLoading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadKiosks: () => dispatch(loadKiosksSaga()),
-});
+const mapDispatchToProps = {
+  loadKiosksSaga,
+};
 
 KiosksContent.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   kiosks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loadKiosks: PropTypes.func.isRequired,
+  loadKiosksSaga: PropTypes.func.isRequired,
 };
 
 export default withRouter(

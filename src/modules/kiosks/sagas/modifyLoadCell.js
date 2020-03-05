@@ -1,9 +1,11 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
+
 import ls from 'lib/LocalStorage';
+import { updateSingleProduct } from 'modules/products/actions';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 import { modifyKioskLoadCell, loadKiosksSaga } from '../actions';
 
-function handlerRequest(payload, id) {
+function handlerProductChange(payload, id) {
   const token = ls.getItem(TOKEN_STORAGE_KEY);
   return fetch(`/api/v1/kiosks/${id}/configLoadCells`, {
     method: 'PATCH',
@@ -15,16 +17,64 @@ function handlerRequest(payload, id) {
   });
 }
 
-function* handler({ payload: { kioskId, loadCellConfigs, callback } }) {
-  const response = yield call(handlerRequest, { loadCellConfigs }, kioskId);
-  const data = yield call([response, response.json]);
+function handlerProductPriceChange(payload, productId) {
+  const token = ls.getItem(TOKEN_STORAGE_KEY);
+  return fetch(`/api/v1/product-lines/${productId}/createPrice`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+}
 
-  if (!data.error) {
+function* handler({ payload }) {
+  const { callback, productId, cellId, kioskId, price } = payload;
+  try {
+    if (cellId) {
+      const productPayload = {
+        loadCellConfigs: [
+          {
+            productLine: productId,
+            cellId,
+          },
+        ],
+      };
+      const response = yield call(
+        handlerProductChange,
+        productPayload,
+        kioskId,
+      );
+      const data = yield call([response, response.json]);
+      if (data.error) {
+        throw Error(data.message.error);
+      }
+    }
+    if (price) {
+      const changePriceData = {
+        price,
+        default: false,
+        validForKiosks: [kioskId],
+      };
+      const response = yield call(
+        handlerProductPriceChange,
+        changePriceData,
+        productId,
+      );
+      const data = yield call([response, response.json]);
+      if (data.error) {
+        throw Error(data.message.error);
+      }
+      yield put(updateSingleProduct(data));
+    }
     yield put(loadKiosksSaga());
+    callback();
+  } catch (error) {
+    console.log(error);
   }
-  callback();
 }
 
 export default function* modifyLoadCellSaga() {
-  yield takeEvery(modifyKioskLoadCell, handler);
+  yield takeLatest(modifyKioskLoadCell, handler);
 }
