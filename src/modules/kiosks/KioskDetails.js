@@ -7,6 +7,7 @@ import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
+import DetailQRCode from './components/DetailQRCode';
 import { getKioskById, getShelvesByKioskId } from './selectors';
 import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from './actions';
 
@@ -87,11 +88,7 @@ const KioskDetails = ({
 
         <Grid.Column width={5}>
           <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>Sales</Segment>
-              </Grid.Column>
-            </Grid.Row>
+            <DetailQRCode qrCode={kiosk.qrcode} />
             <Grid.Row>
               <Grid.Column>
                 <DetailsInventory cells={loadCells} />
