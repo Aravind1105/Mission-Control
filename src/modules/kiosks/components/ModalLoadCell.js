@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 import Select from 'react-select';
 
-import { loadProductsSaga } from 'modules/products/actions';
+import { getProductListSaga } from 'modules/products/actions';
 import {
   getProductsSimpleList,
   getProductsHistory,
@@ -37,7 +37,7 @@ const ModalLoadCell = ({
   defaultPrice,
   productsHistory,
   isProductLoading,
-  loadProductsSaga,
+  getProductListSaga,
   modifyKioskLoadCell,
   match,
 }) => {
@@ -54,7 +54,7 @@ const ModalLoadCell = ({
   const disabled = selected.value === product._id && price === defaultPrice;
 
   useEffect(() => {
-    loadProductsSaga();
+    getProductListSaga();
   }, []);
 
   useEffect(() => {
@@ -161,7 +161,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
 };
 
 const mapDispatchToProps = {
-  loadProductsSaga,
+  getProductListSaga,
   modifyKioskLoadCell,
 };
 

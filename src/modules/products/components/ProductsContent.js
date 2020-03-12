@@ -39,12 +39,9 @@ const ProductsContent = ({ products }) => {
     <>
       <Segment>
         <Grid stackable>
-          <Grid.Row
-            columns="equal"
-            style={{ marginLeft: '0px', height: '470px' }}
-          >
+          <Grid.Row columns="equal" style={{ marginLeft: '0px' }}>
             <div style={{ height: '100%', overflow: 'auto', width: '100%' }}>
-              <TableWithPagination list={products}>
+              <TableWithPagination list={products} perPage={25}>
                 <Unitable
                   columns={columns}
                   onRowClick={clickRow}
@@ -58,20 +55,12 @@ const ProductsContent = ({ products }) => {
           </Grid.Row>
         </Grid>
       </Segment>
-      {/*<Route
-          exact
-          path={`${match.url}/add/newProduct`}
-          render={props => <ProductModal open {...props} title="Add a new product"
-          // component={ProductModal}
-          />}
-        />
-        {/* <Route exact path="/products/list/add/newProduct" component={withRouter(ProductModal)} /> */}
     </>
   );
 };
 
-const mapStateToProps = (state, { search }) => ({
-  products: getProductsWithFilter(search)(state),
+const mapStateToProps = (state, { search, category }) => ({
+  products: getProductsWithFilter({ search, category })(state),
   family: state.products.family,
   tax: state.products.tax,
 });

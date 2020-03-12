@@ -17,7 +17,7 @@ function handlerProductChange(payload, id) {
   });
 }
 
-function handlerProductPriceChange(payload, productId) {
+function handlerProductPriceChange(body, productId) {
   const token = ls.getItem(TOKEN_STORAGE_KEY);
   return fetch(`/api/v1/product-lines/${productId}/createPrice`, {
     method: 'PATCH',
@@ -25,7 +25,7 @@ function handlerProductPriceChange(payload, productId) {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body,
   });
 }
 
@@ -52,11 +52,11 @@ function* handler({ payload }) {
       }
     }
     if (price) {
-      const changePriceData = {
+      const changePriceData = JSON.stringify({
         price,
         default: false,
         validForKiosks: [kioskId],
-      };
+      });
       const response = yield call(
         handlerProductPriceChange,
         changePriceData,
