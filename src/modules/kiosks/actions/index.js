@@ -4,6 +4,7 @@ import { createAction } from 'redux-actions';
 export const loadKiosksSaga = createAction('@@saga/KIOSK_LOAD');
 export const resetKioskSaga = createAction('@@saga/KIOSKS_RESET');
 export const openKioskSaga = createAction('@@saga/KIOSKS_OPEN');
+export const modifyKiosk = createAction('@@saga/MODIFY_KIOSK');
 export const modifyKioskLoadCell = createAction(
   '@@saga/MODIFY_KIOSK_LOAD_CELL',
 );

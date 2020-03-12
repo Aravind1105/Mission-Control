@@ -31,14 +31,14 @@ const backLink = {
 const KioskDetails = ({
   kiosk,
   loadCells,
-  resetKiosk,
-  loadKiosks,
-  openKiosk,
   isLoading,
+  resetKioskSaga,
+  loadKiosksSaga,
+  openKioskSaga,
 }) => {
   useEffect(() => {
     if (!kiosk && !isLoading) {
-      loadKiosks();
+      loadKiosksSaga();
     }
   }, []);
 
@@ -46,13 +46,13 @@ const KioskDetails = ({
 
   const toggleResetKiosk = () => {
     if (window.confirm('Willst Du die Session wirklich zurücksetzen?')) {
-      resetKiosk(kiosk);
+      resetKioskSaga(kiosk);
     }
   };
 
   const toggleOpenDoor = () => {
     if (window.confirm('Willst Du das Kiosk wirklich im Refill Mode öffnen?')) {
-      openKiosk(kiosk);
+      openKioskSaga(kiosk);
     }
   };
 
@@ -132,10 +132,10 @@ const mapStateToProps = (state, { match: { params } }) => ({
   isLoading: state.kiosks.isLoading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  resetKiosk: kiosk => dispatch(resetKioskSaga(kiosk)),
-  loadKiosks: () => dispatch(loadKiosksSaga()),
-  openKiosk: kiosk => dispatch(openKioskSaga(kiosk)),
-});
+const mapDispatchToProps = {
+  resetKioskSaga,
+  loadKiosksSaga,
+  openKioskSaga,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskDetails);

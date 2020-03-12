@@ -46,17 +46,21 @@ function* handler({ payload: { values, formActions, initialValues } }) {
           })
         : null,
     ]);
-    const respData = yield call([response, response.json]);
+    let respData = yield call([response, response.json]);
 
     if ('error' in respData && respData.status !== 200) {
       const errors = responseErrorFormatter(respData);
       if (errors) yield put(formActions.setErrors(errors));
       throw Error('error in saga');
     }
-    const prod = yield call(handlerGetProduct, respData._id);
-    const prodObj = yield call([prod, prod.json]);
-    history.replace(`/products/${prod._id}`);
-    yield put(actionSuccess(prodObj));
+    if (id) {
+      const prod = yield call(handlerGetProduct, respData._id);
+      respData = yield call([prod, prod.json]);
+    } else {
+      history.replace(`/products/${respData._id}`);
+    }
+
+    yield put(actionSuccess(respData));
   } catch (e) {
     console.log(e);
   }
