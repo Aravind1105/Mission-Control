@@ -59,3 +59,10 @@ export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
 
   return [...filteredTempKiosks, ...filteredOfflineKiosks];
 });
+
+export const getKioskListName = createSelector(getKiosksState, kiosks =>
+  kiosks.reduce((prev, { _id, name }) => {
+    prev[_id] = name;
+    return prev;
+  }, {}),
+);

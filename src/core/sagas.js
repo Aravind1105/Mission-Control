@@ -7,7 +7,7 @@ import usersSaga from 'modules/users/sagas/usersSaga';
 
 import coreSaga from './sagas/core';
 import languageSaga from './sagas/i18n';
-import productsSaga from '../modules/products/sagas/productsSaga';
+import productsSaga from '../modules/products/sagas';
 
 export default function* rootSaga() {
   yield all([

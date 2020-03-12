@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Pagination } from 'semantic-ui-react';
 
-const perPage = 10;
-
-const TableWithPagination = ({ children, list }) => {
+const TableWithPagination = ({ children, list, perPage }) => {
   const [page, setPage] = useState(0);
   const totalPages = Math.ceil(list.length / perPage);
 
@@ -39,8 +37,13 @@ const TableWithPagination = ({ children, list }) => {
 };
 
 TableWithPagination.propTypes = {
+  perPage: PropTypes.number,
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: PropTypes.node,
+};
+
+TableWithPagination.defaultProps = {
+  perPage: 10,
 };
 
 export default TableWithPagination;

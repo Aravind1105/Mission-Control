@@ -3,20 +3,21 @@ import { useDispatch } from 'react-redux';
 
 import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
-import { loadProductsSaga } from './actions';
+import { getProductListSaga } from './actions';
 
 const ProductsMainPage = () => {
   const [search, changeSearch] = useState('');
+  const [category, changeCategory] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadProductsSaga());
+    dispatch(getProductListSaga());
   }, []);
 
   return (
     <>
-      <Toolbar changeSearch={changeSearch} />
-      <ProductsContent search={search} />
+      <Toolbar changeSearch={changeSearch} changeCategory={changeCategory} />
+      <ProductsContent search={search} category={category} />
     </>
   );
 };

@@ -8,7 +8,7 @@ const DetailsHeader = ({ name, temp, connection, doorStatus }) => {
     <Grid>
       <Grid.Row relaxed="very" columns={4}>
         <Grid.Column width={6}>
-          <Header as="h3">{`${name}`}</Header>
+          <Header as="h3">{name}</Header>
         </Grid.Column>
         <Grid.Column width={3}>
           <Icon name="signal" color="green" />

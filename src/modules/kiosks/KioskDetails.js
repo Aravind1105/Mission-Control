@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
 
-import DetailsBreadcrumb from './components/DetailsBreadcrumb';
+import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
@@ -12,6 +12,21 @@ import { getKioskById, getShelvesByKioskId } from './selectors';
 import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from './actions';
 
 import './styles.less';
+
+const links = [
+  {
+    name: 'Home',
+    link: '/dashboard',
+  },
+  {
+    name: 'Kiosks',
+    link: '/kiosks',
+  },
+];
+const backLink = {
+  name: 'Back to kiosks',
+  link: '/kiosks',
+};
 
 const KioskDetails = ({
   kiosk,
@@ -49,7 +64,11 @@ const KioskDetails = ({
             <Grid.Row>
               <Grid.Column>
                 <Segment>
-                  <DetailsBreadcrumb kioskName={kiosk.name} />
+                  <Breadcrumbs
+                    backLink={backLink}
+                    links={links}
+                    activeLink={kiosk.name}
+                  />
                 </Segment>
               </Grid.Column>
             </Grid.Row>

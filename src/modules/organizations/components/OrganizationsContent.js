@@ -5,10 +5,12 @@ import { Segment, Pagination, Container } from 'semantic-ui-react';
 import { Unitable } from 'modules/shared/components/unitableReloaded';
 import { loadOrganizationsSaga } from '../actions/organizationsActions';
 import OrganizationModal from './OrganizationModal';
-import ProductModal from '../../products/components/ProductModal';
 
 const OrganizationsContent = ({
-  history, loadOrganizations, organizations, match,
+  history,
+  loadOrganizations,
+  organizations,
+  match,
 }) => {
   useEffect(() => {
     loadOrganizations();
@@ -65,7 +67,9 @@ const OrganizationsContent = ({
       </Segment>
       <Route
         path={`${match.url}/add/new`}
-        render={props => <OrganizationModal open {...props} title="Add a new pro" />}
+        render={props => (
+          <OrganizationModal open {...props} title="Add a new pro" />
+        )}
       />
     </>
   );
@@ -80,8 +84,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(OrganizationsContent),
+  connect(mapStateToProps, mapDispatchToProps)(OrganizationsContent),
 );
