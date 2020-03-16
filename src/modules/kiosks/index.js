@@ -3,14 +3,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import KiosksList from './KiosksList';
 import KioskDetails from './KioskDetails';
-import KioskNew from './KioskEdit';
+import KioskEdit from './KioskEdit';
 
 const KiosksScreen = () => (
   <Switch>
-    <Route path="/kiosks/list" exact component={KiosksList} />
-    <Route path="/kiosks/new" exact component={KioskNew} />
-    <Route path="/kiosks/:id" exact component={KioskDetails} />
-    <Redirect to="/kiosks/list" />
+    <Route path="/kiosks" exact component={KiosksList} />
+    <Route path="/kiosks/detail/:id" exact component={KioskDetails} />
+    <Route path="/kiosks/edit/:id" exact component={KioskEdit} />
+    <Redirect to="/kiosks" />
   </Switch>
 );
 
