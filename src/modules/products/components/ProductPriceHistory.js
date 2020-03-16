@@ -15,7 +15,6 @@ const ProductPriceHistory = ({ priceHistory, kiosks }) => {
           const date = new Date(updated).toLocaleDateString();
           const [id] = validForKiosks;
           const kioskName = kiosks[id] || 'noname';
-          console.log(kiosks);
           return <p key={_id}>{`${kioskName}: ${price}€ - ${date}`}</p>;
         })}
       </div>

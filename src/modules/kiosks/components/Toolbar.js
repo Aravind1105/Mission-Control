@@ -51,7 +51,14 @@ const Toolbar = ({ search, setSearch }) => {
           </Grid.Column>
 
           <Grid.Column textAlign="right">
-            <Button icon labelPosition="left" color="green" compact>
+            <Button
+              icon
+              labelPosition="left"
+              color="green"
+              compact
+              as={Link}
+              to="/kiosks/new"
+            >
               <Icon name="right arrow" />
               Add Kiosk
             </Button>
