@@ -1,88 +1,92 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Container, Pagination } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Unitable, valueEquals, conditionalValue } from '../../shared/components/unitableReloaded';
+import { loadKiosksSaga } from '../actions/kioskActions';
 
-import { Unitable } from 'modules/shared/components/unitableReloaded';
-import TableWithPagination from 'modules/shared/components/TableWithPagination';
-import Loader from 'modules/shared/components/Loader';
-import { getKiosksWithSearch } from '../selectors';
-import { loadKiosksSaga } from '../actions';
-
-const columns = [
-  {
-    name: 'Name',
-  },
-  {
-    name: 'DoorStatus',
-    mapDataFrom: 'doorStatus',
-  },
-  {
-    name: 'Temperature',
-    mapDataFrom: 'temperature.value',
-  },
-  {
-    name: 'Last HeartBeat',
-    mapDataFrom: 'temperature.updated',
-    type: 'timeDifference',
-  },
-  {
-    name: 'Serial',
-    mapDataFrom: 'serialNumber',
-  },
-  {
-    name: 'Address',
-    mapDataFrom: 'ownerOrganization.address.0.properties.city',
-  },
-  {
-    name: 'Sales',
-    postfix: ' €',
-  },
-];
-
-const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
+const KiosksContent = ({ loadKiosks, kiosks, history }) => {
   useEffect(() => {
-    if (!isLoading) loadKiosksSaga();
+    loadKiosks();
   }, []);
 
   const clickRow = ({ _id }) => {
-    history.push(`/kiosks/detail/${_id}`);
+    history.push(`/kiosks/${_id}/detail`);
   };
+
+  const columns = [
+    {
+      name: 'Name',
+    },
+    {
+      name: 'Status',
+      positive: valueEquals('Active'),
+      negative: valueEquals('Offline'),
+      warning: valueEquals('Issue'),
+      icon: conditionalValue([['Offline', 'attention']]),
+    },
+    {
+      name: 'Serial',
+      mapDataFrom: 'Serial',
+    },
+    {
+      name: 'Address',
+    },
+    {
+      name: 'Sales',
+      postfix: ' €',
+    },
+    {
+      name: 'Level',
+      type: 'progress',
+    },
+  ];
+
   return (
-    <>
-      {isLoading && <Loader />}
-      <Segment>
-        <TableWithPagination list={kiosks}>
-          <Unitable
-            columns={columns}
-            onRowClick={clickRow}
-            clickArgs={['_id']}
-            sortable
-            selectable
-            sortByColumn="name"
+    <Segment>
+      <Unitable
+        data={kiosks}
+        columns={columns}
+        onRowClick={clickRow}
+        clickArgs={['_id']}
+        sortable
+        selectable
+        sortByColumn="name"
+      />
+      {true && (
+        <Container textAlign="center">
+          <Pagination
+            style={{ marginTop: '10px' }}
+            defaultActivePage={1}
+            boundaryRange={0}
+            onPageChange={null}
+            size="mini"
+            siblingRange={1}
+            totalPages={1}
           />
-        </TableWithPagination>
-      </Segment>
-    </>
+        </Container>
+      )}
+    </Segment>
   );
 };
 
-const mapStateToProps = (state, { search }) => ({
-  kiosks: getKiosksWithSearch(search)(state),
-  isLoading: state.kiosks.isLoading,
+const mapStateToProps = state => ({
+  kiosks: state.kiosks,
 });
 
-const mapDispatchToProps = {
-  loadKiosksSaga,
-};
+const mapDispatchToProps = dispatch => ({
+  loadKiosks: () => dispatch(loadKiosksSaga()),
+});
 
 KiosksContent.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
   kiosks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loadKiosksSaga: PropTypes.func.isRequired,
+  loadKiosks: PropTypes.func.isRequired,
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(KiosksContent),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(KiosksContent),
 );

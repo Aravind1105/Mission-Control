@@ -8,7 +8,7 @@ import DetailsInfo from './DetailsInfo';
 import DetailsOrders from './DetailsOrders';
 import DetailsFridges from './DetailsFridges';
 import DetailsInventory from './DetailsInventory';
-import { getOrganizationBySlug } from '../selectors';
+import { getOrganizationBySlug } from '../selectors/organizationsSelector';
 
 const OrganizationDetails = ({ match, organization }) => {
   const [selectedFridge, setSelectedFridge] = useState(null);

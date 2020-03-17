@@ -7,7 +7,7 @@ const Dotenv = require('dotenv-webpack');
 const isDev = process.env.NODE_ENV !== 'production';
 
 const autoprefixerOptions = {
-  // browsers: ['>0.2%', 'not dead', 'not ie <= 11', 'not op_mini all'],
+  browsers: ['>0.2%', 'not dead', 'not ie <= 11', 'not op_mini all'],
   flexbox: 'no-2009',
 };
 

@@ -1,13 +1,15 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import {
+  all, call, put, takeEvery,
+} from 'redux-saga/effects';
 import LivelloLS from 'lib/LocalStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 import {
-  loadKiosksSaga,
+  KIOSK_SAGA_LOAD,
   updateKiosks,
-  resetKioskSaga,
+  KIOSKS_SAGA_RESET,
   updateKioskById,
-  openKioskSaga,
-} from '../actions';
+  KIOSKS_SAGA_OPEN,
+} from '../actions/kioskActions';
 
 function* loadKiosks() {
   const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
@@ -24,17 +26,13 @@ function* loadKiosks() {
 
 function* reset(action) {
   const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
-  const response = yield call(
-    fetch,
-    `/api/v1/kiosks/${action.payload._id}/reset`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+  const response = yield call(fetch, `/api/v1/kiosks/${action.payload._id}/reset`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-  );
+  });
 
   const data = yield call([response, response.json]);
 
@@ -57,14 +55,18 @@ function* open(action) {
   yield put(updateKioskById(data));
 }
 
-export function* handleReset() {
-  yield takeEvery(resetKioskSaga, reset);
+function* handleReset() {
+  yield takeEvery(KIOSKS_SAGA_RESET, reset);
 }
 
-export function* handleOpen() {
-  yield takeEvery(openKioskSaga, open);
+function* handleOpen() {
+  yield takeEvery(KIOSKS_SAGA_OPEN, open);
 }
 
-export function* handleLoadKiosks() {
-  yield takeEvery(loadKiosksSaga, loadKiosks);
+function* handleLoadKiosks() {
+  yield takeEvery(KIOSK_SAGA_LOAD, loadKiosks);
+}
+
+export default function* kiosksSaga() {
+  yield all([handleLoadKiosks(), handleReset(), handleOpen()]);
 }

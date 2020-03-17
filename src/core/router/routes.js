@@ -1,18 +1,12 @@
 import { lazy } from 'react';
 
 const DashboardScreen = lazy(() => import('modules/dashboard/DashboardScreen'));
-const KiosksScreen = lazy(() => import('modules/kiosks'));
-const OrganizationsScreen = lazy(() =>
-  import('modules/organizations/OrganizationsScreen'),
-);
+const KiosksScreen = lazy(() => import('modules/kiosks/KiosksScreen'));
+const OrganizationsScreen = lazy(() => import('modules/organizations/OrganizationsScreen'));
 const UsersScreen = lazy(() => import('modules/users/UsersScreen'));
-const Products = lazy(() => import('modules/products'));
-const FulfillmentScreen = lazy(() =>
-  import('modules/fulfillment/FulfillmentScreen'),
-);
-const TransactionsScreen = lazy(() =>
-  import('modules/transactions/TransactionsScreen'),
-);
+const ProductsScreen = lazy(() => import('modules/products/ProductsScreen'));
+const FulfillmentScreen = lazy(() => import('modules/fulfillment/FulfillmentScreen'));
+const TransactionsScreen = lazy(() => import('modules/transactions/TransactionsScreen'));
 const ReportsScreen = lazy(() => import('modules/reports/ReportsScreen'));
 
 export default [
@@ -47,7 +41,7 @@ export default [
     name: 'Products',
     path: '/products',
     icon: 'box',
-    Component: Products,
+    Component: ProductsScreen,
   },
   {
     name: 'Fulfillment',

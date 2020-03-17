@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Button, Modal, Form, Select } from 'semantic-ui-react';
+import {
+  Button, Modal, Form, Select,
+} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { Formik, FieldArray, Field } from 'formik';
 import { path } from 'ramda';
 import * as Yup from 'yup';
-import { addOrganizationsSaga } from '../actions';
+import { addOrganizationsSaga } from '../actions/organizationsActions';
 
 // {errors.name && touched.name && <div className="input-feedback">{errors.name}</div>}
 
@@ -23,7 +25,9 @@ const emptyAddress = {
   },
 };
 
-const OrganizationModal = ({ addOrganization, history, open, title }) => (
+const OrganizationModal = ({
+  addOrganization, history, open, title,
+}) => (
   <Modal
     open={open}
     centered={false}
@@ -31,7 +35,7 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
       history.push('/organizations');
     }}
   >
-    {/* <Modal.Header>{title}</Modal.Header> */}
+    <Modal.Header>{title}</Modal.Header>
     <Modal.Content>
       <Formik
         initialValues={{
@@ -68,8 +72,10 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
           ),
         })}
       >
-        {props => {
-          const { values, touched, errors, isSubmitting, handleSubmit } = props;
+        {(props) => {
+          const {
+            values, touched, errors, isSubmitting, handleSubmit,
+          } = props;
           return (
             <Form onSubmit={handleSubmit} error={!!errors}>
               <Form.Field
@@ -187,14 +193,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                             placeholder="e.g. Headquarter"
                             type="text"
                             className={
-                              path(
-                                ['address', index, 'properties', 'name'],
-                                errors,
-                              ) &&
-                              path(
-                                ['address', index, 'properties', 'name'],
-                                touched,
-                              )
+                              path(['address', index, 'properties', 'name'], errors)
+                              && path(['address', index, 'properties', 'name'], touched)
                                 ? 'text-input error'
                                 : 'text-input'
                             }
@@ -207,14 +207,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                               label="Line 1"
                               placeholder="e.g. Kaistraße, 5"
                               className={
-                                path(
-                                  ['address', index, 'properties', 'line1'],
-                                  errors,
-                                ) &&
-                                path(
-                                  ['address', index, 'properties', 'line1'],
-                                  touched,
-                                )
+                                path(['address', index, 'properties', 'line1'], errors)
+                                && path(['address', index, 'properties', 'line1'], touched)
                                   ? 'text-input error'
                                   : 'text-input'
                               }
@@ -225,24 +219,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                               label="Postalcode"
                               placeholder="e.g. 40221"
                               className={
-                                path(
-                                  [
-                                    'address',
-                                    index,
-                                    'properties',
-                                    'postalCode',
-                                  ],
-                                  errors,
-                                ) &&
-                                path(
-                                  [
-                                    'address',
-                                    index,
-                                    'properties',
-                                    'postalCode',
-                                  ],
-                                  touched,
-                                )
+                                path(['address', index, 'properties', 'postalCode'], errors)
+                                && path(['address', index, 'properties', 'postalCode'], touched)
                                   ? 'text-input error'
                                   : 'text-input'
                               }
@@ -262,14 +240,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                               label="City"
                               placeholder="e.g. Düsseldorf"
                               className={
-                                path(
-                                  ['address', index, 'properties', 'city'],
-                                  errors,
-                                ) &&
-                                path(
-                                  ['address', index, 'properties', 'city'],
-                                  touched,
-                                )
+                                path(['address', index, 'properties', 'city'], errors)
+                                && path(['address', index, 'properties', 'city'], touched)
                                   ? 'text-input error'
                                   : 'text-input'
                               }
@@ -283,14 +255,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                               label="State"
                               placeholder="e.g. NRW"
                               className={
-                                path(
-                                  ['address', index, 'properties', 'state'],
-                                  errors,
-                                ) &&
-                                path(
-                                  ['address', index, 'properties', 'state'],
-                                  touched,
-                                )
+                                path(['address', index, 'properties', 'state'], errors)
+                                && path(['address', index, 'properties', 'state'], touched)
                                   ? 'text-input error'
                                   : 'text-input'
                               }
@@ -301,14 +267,8 @@ const OrganizationModal = ({ addOrganization, history, open, title }) => (
                               label="Country"
                               placeholder="e.g. DE"
                               className={
-                                path(
-                                  ['address', index, 'properties', 'country'],
-                                  errors,
-                                ) &&
-                                path(
-                                  ['address', index, 'properties', 'country'],
-                                  touched,
-                                )
+                                path(['address', index, 'properties', 'country'], errors)
+                                && path(['address', index, 'properties', 'country'], touched)
                                   ? 'text-input error'
                                   : 'text-input'
                               }
@@ -376,4 +336,9 @@ const mapDispatchToProps = dispatch => ({
   addOrganization: organization => dispatch(addOrganizationsSaga(organization)),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(OrganizationModal));
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(OrganizationModal),
+);

@@ -9,7 +9,6 @@ const UnitableHeaderCell = ({
   name,
   sortDirection,
   textAlign,
-  columnHeader
 }) => {
   const nameKey = mapDataFrom || name.toLowerCase();
 
@@ -19,7 +18,7 @@ const UnitableHeaderCell = ({
       onClick={handleSort(nameKey)}
       textAlign={textAlign}
     >
-      {columnHeader}
+      {name}
     </TableHeaderCell>
   );
 };
@@ -29,7 +28,6 @@ UnitableHeaderCell.propTypes = {
   handleSort: PropTypes.func,
   mapDataFrom: PropTypes.string,
   name: PropTypes.string.isRequired,
-  columnHeader: PropTypes.string,
   sortDirection: PropTypes.oneOf(['ascending', 'descending', '']),
   textAlign: PropTypes.oneOf(['left', 'right', 'center']),
 };
