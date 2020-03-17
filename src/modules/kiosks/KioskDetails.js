@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
+import get from 'lodash/get';
 
+import history from 'lib/history';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
@@ -9,7 +11,12 @@ import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
 import { getKioskById, getShelvesByKioskId } from './selectors';
-import { resetKioskSaga, loadKiosksSaga, openKioskSaga } from './actions';
+import {
+  resetKioskSaga,
+  loadKiosksSaga,
+  openKioskSaga,
+  selectKiosk,
+} from './actions';
 
 import './styles.less';
 
@@ -32,6 +39,7 @@ const KioskDetails = ({
   kiosk,
   loadCells,
   isLoading,
+  selectKiosk,
   resetKioskSaga,
   loadKiosksSaga,
   openKioskSaga,
@@ -44,6 +52,10 @@ const KioskDetails = ({
 
   if (!kiosk) return false;
 
+  const handleEdit = () => {
+    selectKiosk(kiosk);
+    history.push(`/kiosks/edit/${kiosk._id}`);
+  };
   const toggleResetKiosk = () => {
     if (window.confirm('Willst Du die Session wirklich zurücksetzen?')) {
       resetKioskSaga(kiosk);
@@ -84,10 +96,14 @@ const KioskDetails = ({
                   />
                   <Divider />
                   <Header as="h3">{`#${kiosk.serialNumber}`}</Header>
-                  <DetailsInfo session={kiosk.session}>
+                  <DetailsInfo
+                    session={kiosk.session}
+                    location={kiosk.location}
+                    ownerOrganization={get(kiosk, 'ownerOrganization.name', '')}
+                  >
                     <>
                       <Button onClick={toggleOpenDoor}>Open Door</Button>
-                      <Button>Edit</Button>
+                      <Button onClick={handleEdit}>Edit</Button>
                       <Button onClick={toggleResetKiosk}>Sync / Restart</Button>
                       <Button>Temp Log.</Button>
                       <Button>Activity Log.</Button>
@@ -136,6 +152,7 @@ const mapDispatchToProps = {
   resetKioskSaga,
   loadKiosksSaga,
   openKioskSaga,
+  selectKiosk,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskDetails);

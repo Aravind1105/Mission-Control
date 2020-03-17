@@ -1,7 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 
 import authenticateSaga from 'modules/authentication/sagas/authenticate';
-import organizationsSaga from 'modules/organizations/sagas/organizationsSaga';
+import organizationsSaga from 'modules/organizations/sagas';
 import kiosksSaga from 'modules/kiosks/sagas';
 import usersSaga from 'modules/users/sagas/usersSaga';
 

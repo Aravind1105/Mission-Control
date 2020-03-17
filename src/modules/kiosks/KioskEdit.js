@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
-import get from 'lodash/get';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
-// import { getKioskListName } from 'modules/kiosks/selectors';
+import { getOrganizations } from 'modules/organizations/actions';
+import { getOrganizationsAsOptions } from 'modules/organizations/selectors';
 import KioskForm from './components/KioskForm';
+import { selectKiosk, getKiosk } from './actions';
+import { getKioskInitValues } from './selectors';
 // import ProductPriceHistory from './components/ProductPriceHistory';
-// import { modifyKiosk } from './actions';
-// import {
-//   selectorGetProductInitValue,
-//   selectorGetProductFamilyForm,
-//   selectorProductTaxOptions,
-// } from './selectors';
 
 const links = [
   {
@@ -30,7 +26,32 @@ const backLink = {
   link: '/kiosks',
 };
 
-const KioskEdit = () => {
+const KioskEdit = ({
+  match: { params },
+  initialValues,
+  isOrgLoading,
+  isKioskLoading,
+  organizationsOptions,
+  getOrganizations,
+  selectKiosk,
+  getKiosk,
+}) => {
+  useEffect(() => {
+    const isEdit = params.id !== 'new';
+    const hasData = isEdit ? initialValues.id === params.id : true;
+
+    if (!isOrgLoading) getOrganizations();
+    if (!hasData && !isKioskLoading) {
+      getKiosk(params.id);
+    }
+
+    return () => selectKiosk(null);
+  }, []);
+
+  const isEdit = params.id !== 'new';
+  const hasData = isEdit ? initialValues.id === params.id : true;
+  const isLoaded = !isOrgLoading && !!organizationsOptions.length && hasData;
+  const kioskName = isEdit ? initialValues.name : 'New kiosk';
   return (
     <Grid stackable>
       <Grid.Column width={11}>
@@ -41,41 +62,45 @@ const KioskEdit = () => {
                 <Breadcrumbs
                   links={links}
                   backLink={backLink}
-                  activeLink="New kiosk"
+                  activeLink={kioskName}
                 />
               </Segment>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column>
-              <Segment>
-                <Header as="h3">New kiosk</Header>
-                <Divider />
-                <KioskForm initialValues={{ name: '' }} />
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
+          {isLoaded ? (
+            <Grid.Row>
+              <Grid.Column>
+                <Segment>
+                  <Header as="h3">{kioskName}</Header>
+                  <Divider />
+                  <KioskForm
+                    initialValues={initialValues}
+                    organizations={organizationsOptions}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          ) : (
+            <Loader />
+          )}
         </Grid>
       </Grid.Column>
     </Grid>
   );
 };
 
-// const mapStateToProps = state => {
-//   const options = selectorGetProductFamilyForm(state);
-//   return {
-//     kiosks: getKioskListName(state),
-//     product: selectorGetProductInitValue(state),
-//     taxesOption: selectorProductTaxOptions(state),
-//     categoryOption: options.categories,
-//     familyOption: options.families,
-//   };
-// };
+const mapStateToProps = state => ({
+  initialValues: getKioskInitValues(state),
+  organizationsOptions: getOrganizationsAsOptions(state),
+  isOrgLoading: state.organizations.isOrgLoading,
+  isKioskLoading: state.kiosks.kioskIsLoading,
+});
 
-// const mapDispatchToProps = {
-//   getProductSuccess,
-//   getFullProductData,
-// };
+const mapDispatchToProps = {
+  getOrganizations,
+  selectKiosk,
+  getKiosk,
+};
 
-export default KioskEdit;
+export default connect(mapStateToProps, mapDispatchToProps)(KioskEdit);

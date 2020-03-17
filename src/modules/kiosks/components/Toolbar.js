@@ -57,7 +57,7 @@ const Toolbar = ({ search, setSearch }) => {
               color="green"
               compact
               as={Link}
-              to="/kiosks/new"
+              to="/kiosks/edit/new"
             >
               <Icon name="right arrow" />
               Add Kiosk
@@ -65,7 +65,6 @@ const Toolbar = ({ search, setSearch }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Link to="/kiosks/add" />
     </Segment>
   );
 };

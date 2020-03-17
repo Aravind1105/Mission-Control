@@ -1,9 +1,19 @@
-import { handleActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 import { findIndex, propEq, update } from 'ramda';
-import { loadKiosksSaga, updateKiosks, updateKioskById } from '../actions';
+import {
+  loadKiosksSaga,
+  updateKiosks,
+  updateKioskById,
+  selectKiosk,
+  getKiosk,
+  getKioskSuccess,
+  modifyKioskSuccess,
+} from '../actions';
 
 const initialState = {
   list: [],
+  kiosk: null,
+  kioskIsLoading: false,
   isLoading: false,
 };
 
@@ -12,6 +22,10 @@ export const kiosksReducer = handleActions(
     [loadKiosksSaga]: state => ({
       ...state,
       isLoading: true,
+    }),
+    [getKiosk]: state => ({
+      ...state,
+      kioskIsLoading: true,
     }),
     [updateKiosks]: (state, { payload }) => ({
       ...state,
@@ -26,6 +40,14 @@ export const kiosksReducer = handleActions(
         isLoading: false,
       };
     },
+    [combineActions(selectKiosk, getKioskSuccess, modifyKioskSuccess)]: (
+      state,
+      { payload },
+    ) => ({
+      ...state,
+      kiosk: payload,
+      kioskIsLoading: false,
+    }),
   },
   initialState,
 );

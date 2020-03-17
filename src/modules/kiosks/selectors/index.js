@@ -1,10 +1,13 @@
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
+import pick from 'lodash/pick';
 
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
+
+export const getKioskSingle = state => state.kiosks.kiosk;
 
 export const getKiosksWithSearch = searchText =>
   createSelector(getKiosksState, kiosks => {
@@ -66,3 +69,35 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
     return prev;
   }, {}),
 );
+
+const kioskInitialValues = {
+  name: '',
+  serialNumber: '',
+  location: {
+    address: {
+      line1: '',
+      line2: '',
+      postalCode: '',
+      city: '',
+      state: '',
+      country: '',
+    },
+  },
+};
+
+export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
+  return kiosk
+    ? {
+        id: kiosk._id,
+        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+        ownerOrganization: kiosk.ownerOrganization._id,
+        location: {
+          address: get(
+            kiosk,
+            'location.address',
+            kioskInitialValues.location.address,
+          ),
+        },
+      }
+    : kioskInitialValues;
+});

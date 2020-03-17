@@ -47,7 +47,7 @@ const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
   }, []);
 
   const clickRow = ({ _id }) => {
-    history.push(`/kiosks/${_id}`);
+    history.push(`/kiosks/detail/${_id}`);
   };
   return (
     <>
