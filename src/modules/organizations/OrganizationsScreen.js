@@ -19,7 +19,7 @@ const OrganizationsScreen = () => {
           </>
         )}
       />
-      <Route exact path="/organizations/edit/:id" render={() => <OrganizationsModal />} />
+      {/* <Route exact path="/organizations/edit/:id" render={() => <OrganizationsModal />} /> */}
       <Route exact path="/organizations/:slug/detail" render={() => <OrganizationDetails />} />
     </>
   );

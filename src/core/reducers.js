@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 // Shared reducers
 import user from 'modules/authentication/reducers/userReducer';
 import organizations from 'modules/organizations/reducers/organizationsReducer';
-import kiosks from 'modules/kiosks/reducers/kiosksReducer';
+import products from 'modules/products/reducers';
+import kiosks from 'modules/kiosks/reducers';
 import users from 'modules/users/reducers/usersReducer';
 import core from './reducers/coreReducer';
 
@@ -14,4 +15,5 @@ export default combineReducers({
   users,
   organizations,
   kiosks,
+  products,
 });

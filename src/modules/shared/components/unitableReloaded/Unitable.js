@@ -1,20 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import {
-  ascend, descend, prop, sortWith, pick,
-} from 'ramda';
+import { ascend, descend, prop, sortWith, pick } from 'ramda';
 import UnitableHeaderCell from './UnitableHeaderCell';
 import UnitableCellContent from './UnitableCellContent';
 import UnitableCellProgress from './UnitableCellProgress';
 import UnitableCellAddress from './UnitableCellAddress';
+import CellPrice from './CellPrice';
+import CellHeartbeat from './CellHeartbeat';
 
 const ASC = 'ascending';
 const DESC = 'descending';
+const sortData = (column, direction) =>
+  direction === DESC
+    ? sortWith([descend(prop(column))])
+    : sortWith([ascend(prop(column))]);
 
-const sortData = (column, direction) => direction === DESC ? sortWith([descend(prop(column))]) : sortWith([ascend(prop(column))]);
+const applySorting = (
+  data,
+  column,
+  direction,
+  { setActiveColumn, setTableData, setDirection },
+) => {
+  /* let columnname;
+   if (column !== undefined) {
+     var splitarray = column.split('.')
+     if (splitarray.length > 0) {
+       console.log("split array", splitarray)
+       splitarray.forEach(order => {
+         columnname = (columnname !== undefined ? columnname : '') + '[' + order + ']';
+         console.log("column name", columnname)
+       });
+     } else {
+       columnname = column;
+     }
+   } else {
+     columnname = column;
+   }
+   console.log("column sort", sortData(column, direction))
 
-const applySorting = (data, column, direction, { setActiveColumn, setTableData, setDirection }) => {
+   console.log("let's know", prop(column), descend(prop(column)), sortWith([descend(prop(column))])) */
   setActiveColumn(column);
   setTableData(sortData(column, direction)(data));
   setDirection(direction);
@@ -35,8 +60,10 @@ const Unitable = ({
   const [direction, setDirection] = useState('ascending');
   const [tableData, setTableData] = useState([]);
   const [activeRow, setActiveRow] = useState(-1);
+  var priceValue;
 
   const handleSort = clickedColumn => () => {
+    //   console.log("clickedColumn", clickedColumn, activeColumn)
     if (!sortable) return;
 
     if (activeColumn !== clickedColumn) {
@@ -68,19 +95,33 @@ const Unitable = ({
   }, []);
 
   return (
-    <Table sortable={sortable} celled className="unitable" basic="very" selectable={selectable}>
+    <Table
+      sortable={sortable}
+      celled
+      className="unitable"
+      basic="very"
+      selectable={selectable}
+    >
       {!headless && (
         <Table.Header>
           <Table.Row>
-            {columns.map(column => (
-              <UnitableHeaderCell
-                {...column}
-                key={column.name}
-                activeColumn={activeColumn}
-                sortDirection={direction}
-                handleSort={handleSort}
-              />
-            ))}
+            {columns.map(column => {
+              //  console.log("let's see", column.name, column.mapDataFrom)
+              return (
+                <UnitableHeaderCell
+                  {...column}
+                  key={column.name}
+                  activeColumn={activeColumn}
+                  sortDirection={direction}
+                  handleSort={handleSort}
+                  columnHeader={
+                    column.header !== undefined && column.header !== null
+                      ? column.header
+                      : column.name
+                  }
+                />
+              );
+            })}
           </Table.Row>
         </Table.Header>
       )}
@@ -108,8 +149,36 @@ const Unitable = ({
                   negative,
                   warning,
                 }) => {
-                  const value = tableData[key][mapDataFrom || name.toLowerCase()];
-
+                  let tryvalue = '';
+                  if (mapDataFrom !== undefined && columns.type != 'price') {
+                    const splitarray = mapDataFrom.split('.');
+                    if (splitarray.length > 0) {
+                      tryvalue = tableData[key];
+                      splitarray.forEach(order => {
+                        if (tryvalue !== undefined) {
+                          if (
+                            order === 'priceHistory' &&
+                            tryvalue[order].length > 0
+                          ) {
+                            tryvalue[order].forEach(priceVal => {
+                              if (priceVal.default) {
+                                priceValue = priceVal.price;
+                              }
+                            });
+                          }
+                          tryvalue = tryvalue[order];
+                        } else {
+                          tryvalue = 'NULL';
+                        }
+                      });
+                    } else {
+                      tryvalue = tableData[key][mapDataFrom];
+                    }
+                  } else {
+                    tryvalue =
+                      tableData[key][mapDataFrom || name.toLowerCase()];
+                  }
+                  const value = tryvalue;
                   const style = {
                     color: color && color(value),
                   };
@@ -125,19 +194,21 @@ const Unitable = ({
                       style={style}
                     >
                       {type === 'progress' && (
-                        <UnitableCellProgress
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
-                        />
+                        <UnitableCellProgress value={value} />
+                      )}
+                      {type === 'timeDifference' && (
+                        <CellHeartbeat value={value} />
+                      )}
+                      {type === 'price' && (
+                        <CellPrice value={priceValue} postfix={postfix} />
                       )}
                       {type === 'address' && (
-                        <UnitableCellAddress
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
-                        />
+                        <UnitableCellAddress value={value} />
                       )}
                       {!type && (
                         <UnitableCellContent
                           icon={icon}
-                          value={tableData[key][mapDataFrom || name.toLowerCase()]}
+                          value={value}
                           postfix={postfix}
                           style={style}
                           textAlign={textAlign}

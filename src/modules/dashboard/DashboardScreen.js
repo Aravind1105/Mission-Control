@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+
 import Alerts from './components/Alerts';
 import StatsCard from './components/StatsCard';
 import Ranking from './components/Ranking';
