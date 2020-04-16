@@ -1,0 +1,99 @@
+stages:
+  - docker-build-push
+  - cloudrun-service-deploy
+
+variables:
+  project_id: "livello-backend"
+  gcr_path: "livello-backend/mission-control"
+  region: "europe-west4"
+  platform: "managed"
+  app_name: livello-mission-control-stage
+  app_domain_map: "mc-stage.livello.com"
+  app_port: 8080
+  api_proxy_url: $API_PROXY_URL
+  auth_domain: $AUTH_DOMAIN_MC
+  auth_client_id: $AUTH_CLIENT_ID_MC
+  auth_audience: $AUTH_AUDIENCE_MC
+
+.build-push-template: &build-push-template
+  stage: docker-build-push
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
+    - apk update && apk add git
+    - BUILD_TAG=`git describe --abbrev=0 --tags |cut -c 2-`
+    - DATE_TAG=${BUILD_TAG%.*}.$(date -u +%Y-%m-%d_%H-%M-%S)
+    #.env - File Contents needs to be created to .env for webpack ease
+    - echo AUTH_DOMAIN=$auth_domain >> .env
+    - echo AUTH_CLIENT_ID=$auth_client_id >> .env
+    - echo AUTH_AUDIENCE=$auth_audience >> .env
+    - echo API_PROXY_URL=$api_proxy_url >> .env
+  script:
+    - docker build --build-arg app_name=$app_name -t gcr.io/$gcr_path/$app_name:$BUILD_TAG .
+    - docker tag gcr.io/$gcr_path/$app_name:$BUILD_TAG gcr.io/$gcr_path/$app_name:$DATE_TAG
+    - docker tag gcr.io/$gcr_path/$app_name:$BUILD_TAG gcr.io/$gcr_path/$app_name:latest
+    - docker push gcr.io/$gcr_path/$app_name:$BUILD_TAG
+    - docker push gcr.io/$gcr_path/$app_name:$DATE_TAG
+    - docker push gcr.io/$gcr_path/$app_name:latest
+
+.cloud-run-template: &clound-run-template
+  stage: cloudrun-service-deploy
+  image: google/cloud-sdk:alpine
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == "master"
+  before_script:
+    # - mkdir GSDK && cd ./GSDK
+    - BUILD_TAG=`git describe --abbrev=0 --tags |cut -c 2-`
+    # - wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+    # - tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --usage-reporting=false --path-update=true
+    # - source /root/.bashrc
+    - gcloud components install beta --quiet
+  script:
+    - gcloud auth activate-service-account --key-file $(echo $CLOUDRUN_CICD_SA_KEY)
+    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:$BUILD_TAG --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
+    #- echo $app_domain_map
+    #- gcloud beta run domain-mappings create --service $app_name --domain=$app_domain_map --project $project_id --region=$region --platform $platform
+
+build-push-staging:
+  variables:
+    app_name: livello-mission-control-stage
+    app_domain_map: $MC_DOMAIN_NAME_STAGE
+    api_proxy_url: $API_PROXY_URL_STAGE
+  <<: *build-push-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging-master"
+      when: always
+
+build-push-master:
+  variables:
+    app_name: livello-mission-control-prod
+    app_domain_map: $MC_DOMAIN_NAME_PROD
+    api_proxy_url: $API_PROXY_URL_PROD
+  <<: *build-push-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+
+clound-run-staging:
+  variables:
+    app_name: livello-mission-control-stage
+    app_domain_map: $MC_DOMAIN_NAME_STAGE
+    api_proxy_url: $API_PROXY_URL_STAGE
+  <<: *clound-run-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging-master"
+      when: on_success
+
+clound-run-master:
+  variables:
+    app_name: livello-mission-control-prod
+    app_domain_map: $MC_DOMAIN_NAME_PROD
+    api_proxy_url: $API_PROXY_URL_PROD
+  <<: *clound-run-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success

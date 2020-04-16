@@ -3,6 +3,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -65,12 +66,10 @@ module.exports = {
       filename: isDev ? '[name].css' : '[name].[hash].css',
       chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
     }),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-    }),
     new Dotenv({
       safe: true,
     }),
+    new ManifestPlugin(),
   ],
   resolve: {
     alias: {
