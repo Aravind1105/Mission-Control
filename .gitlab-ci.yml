@@ -30,6 +30,7 @@ variables:
     - echo AUTH_CLIENT_ID=$auth_client_id >> .env
     - echo AUTH_AUDIENCE=$auth_audience >> .env
     - echo API_PROXY_URL=$api_proxy_url >> .env
+    - echo BUILD_TAG=$BUILD_TAG >> .env
   script:
     - docker build --build-arg app_name=$app_name -t gcr.io/$gcr_path/$app_name:$BUILD_TAG .
     - docker tag gcr.io/$gcr_path/$app_name:$BUILD_TAG gcr.io/$gcr_path/$app_name:$DATE_TAG
