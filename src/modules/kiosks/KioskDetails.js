@@ -49,7 +49,6 @@ const KioskDetails = ({
       loadKiosksSaga();
     }
   }, []);
-
   if (!kiosk) return false;
 
   const handleEdit = () => {
@@ -123,7 +122,8 @@ const KioskDetails = ({
 
         <Grid.Column width={5}>
           <Grid>
-            <DetailQRCode qrCode={kiosk.qrcode} />
+            <DetailQRCode
+              qrCode={`http://qrdeeplink.livello.com?id=${kiosk.qrcode}`} />
             <Grid.Row>
               <Grid.Column>
                 <DetailsInventory cells={loadCells} />
