@@ -31,11 +31,11 @@ increment-build-version:
     - git push -o ci.skip --tags
   script:
     - git describe --abbrev=0 --tags | cut -c 2-
-  # rules:
-  #   - if: $CI_COMMIT_BRANCH == "master"
-  #     when: always
-  #   # - if: $CI_COMMIT_BRANCH == "staging-master"
-  #   #   when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "staging-master"
+      when: always
 
 .build-push-template: &build-push-template
   stage: docker-build-push
