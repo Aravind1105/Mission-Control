@@ -24,13 +24,13 @@ increment-build-version:
     GIT_AUTHOR_EMAIL: "gitlab-cicd@livello.com"
   before_script:
     - apk --no-cache --virtual build-dependencies add git
-  script:
     - git config --global user.email ${GIT_AUTHOR_EMAIL}
     - git config --global user.name ${GIT_AUTHOR_NAME}
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
-    - npm version patch
+    - npm version patch --git-tag-version=true
+    - git push -o ci.skip --tags
+  script:
     - git describe --abbrev=0 --tags | cut -c 2-
-    - git push -o ci.skip origin --all
   # rules:
   #   - if: $CI_COMMIT_BRANCH == "master"
   #     when: always
