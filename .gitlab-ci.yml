@@ -19,6 +19,8 @@ variables:
 increment-build-version:
   stage: increment-build-version
   image: node:lts-alpine
+  before_script:
+    - apk --no-cache --virtual build-dependencies add git
   script:
     - npm version patch 
     - git push
