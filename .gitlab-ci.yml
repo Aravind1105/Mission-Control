@@ -19,11 +19,17 @@ variables:
 increment-build-version:
   stage: increment-build-version
   image: node:lts-alpine
+  variables:
+    GIT_AUTHOR_NAME: "Gitlab-ci-livello"
+    GIT_AUTHOR_EMAIL: "gitlab-cicd@livello.com"
   before_script:
     - apk --no-cache --virtual build-dependencies add git
   script:
-    - npm version patch 
-    - git push
+    - git config --global user.email ${GIT_AUTHOR_EMAIL}
+    - git config --global user.name ${GIT_AUTHOR_NAME}
+    - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
+    - npm version patch
+    - git push -o ci.skip origin
   when: always
 
 .build-push-template: &build-push-template
