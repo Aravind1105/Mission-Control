@@ -28,7 +28,7 @@ increment-build-version:
     - git config --global user.name ${GIT_AUTHOR_NAME}
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
     - npm version patch --git-tag-version=true
-    - git push -o ci.skip --tags
+    - git push -o ci.skip --tags -f
   script:
     - git describe --abbrev=0 --tags | cut -c 2-
   rules:
