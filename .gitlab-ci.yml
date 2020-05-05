@@ -45,31 +45,42 @@ increment-build-version:
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
-    - BUILD_TAG=`git describe --abbrev=0 --tags | cut -c 2-`
-    - DATE_TAG=$(date +%s)
+    - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
+    - BUILD_TAG=$(date +%s)
     #.env - File Contents needs to be created to .env for webpack ease
     - echo AUTH_DOMAIN=$auth_domain >> .env
     - echo AUTH_CLIENT_ID=$auth_client_id >> .env
     - echo AUTH_AUDIENCE=$auth_audience >> .env
     - echo API_PROXY_URL=$api_proxy_url >> .env
-    - echo BUILD_TAG=$BUILD_TAG_b$DATE_TAG >> .env
+    - echo BUILD_TAG=$VERSION_b$BUILD_TAG >> .env
   script:
-    - docker build --build-arg app_name=$app_name -t gcr.io/$gcr_path/$app_name:$BUILD_TAG .
-    - docker tag gcr.io/$gcr_path/$app_name:$BUILD_TAG gcr.io/$gcr_path/$app_name:$BUILD_TAG_b$DATE_TAG
-    - docker tag gcr.io/$gcr_path/$app_name:$BUILD_TAG gcr.io/$gcr_path/$app_name:latest
-    - docker push gcr.io/$gcr_path/$app_name:$BUILD_TAG
-    - docker push gcr.io/$gcr_path/$app_name:$BUILD_TAG_b$DATE_TAG
+    - docker build --build-arg app_name=$app_name -t gcr.io/$gcr_path/$app_name:$VERSION .
+    - docker tag gcr.io/$gcr_path/$app_name:$VERSION gcr.io/$gcr_path/$app_name:$VERSION_b$BUILD_TAG
+    - docker tag gcr.io/$gcr_path/$app_name:$VERSION gcr.io/$gcr_path/$app_name:latest
+    - docker push gcr.io/$gcr_path/$app_name:$VERSION
+    - docker push gcr.io/$gcr_path/$app_name:$VERSION_b$BUILD_TAG
     - docker push gcr.io/$gcr_path/$app_name:latest
+    - echo $BUILD_TAG > BUILD_TAG.txt
+  artifacts:
+    expire_in: 1 days
+    name: "$CI_COMMIT_BRANCH"
+    paths:
+      - BUILD_TAG.txt
 
 .cloud-run-template: &clound-run-template
   stage: cloudrun-service-deploy
   image: google/cloud-sdk:alpine
   before_script:
-    - BUILD_TAG=`git describe --abbrev=0 --tags |cut -c 2-`
+    - BUILD_TAG=$(head -1 BUILD_TAG.txt)
     - gcloud components install beta --quiet
   script:
     - gcloud auth activate-service-account --key-file $(echo $CLOUDRUN_CICD_SA_KEY)
-    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:$BUILD_TAG --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
+    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:$VERSION_b$BUILD_TAG --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
+  artifacts:
+    expire_in: 1 days
+    name: "$CI_COMMIT_BRANCH"
+    paths:
+      - BUILD_TAG.txt
 
 build-push-staging:
   variables:
