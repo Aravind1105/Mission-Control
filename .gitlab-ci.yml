@@ -23,6 +23,8 @@ variables:
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
+    - npm version patch 
+    - git push
     - BUILD_TAG=`git describe --abbrev=0 --tags |cut -c 2-`
     - DATE_TAG=${BUILD_TAG%.*}.$(date -u +%Y-%m-%d_%H-%M-%S)
     #.env - File Contents needs to be created to .env for webpack ease
