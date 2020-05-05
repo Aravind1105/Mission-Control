@@ -30,7 +30,7 @@ increment-build-version:
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
     - npm version patch
     - git describe --abbrev=0 --tags | cut -c 2-
-    - git push -o ci.skip origin ${CI_COMMIT_BRANCH}
+    - git push -o ci.skip --all origin
   # rules:
   #   - if: $CI_COMMIT_BRANCH == "master"
   #     when: always
