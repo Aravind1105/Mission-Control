@@ -34,8 +34,8 @@ increment-build-version:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: always
-    - if: $CI_COMMIT_BRANCH == "staging-master"
-      when: manual
+    # - if: $CI_COMMIT_BRANCH == "staging-master"
+    #   when: manual
 
 .build-push-template: &build-push-template
   stage: docker-build-push
