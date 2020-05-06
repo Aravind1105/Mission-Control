@@ -60,7 +60,7 @@ increment-build-version:
     - docker push gcr.io/$gcr_path/$app_name:$VERSION
     - docker push gcr.io/$gcr_path/$app_name:${VERSION}_b${BUILD_TAG}
     - docker push gcr.io/$gcr_path/$app_name:latest
-    - echo $BUILD_TAG > BUILD_TAG.txt
+    - echo ${VERSION}_b${BUILD_TAG} > BUILD_TAG.txt
   artifacts:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
@@ -75,7 +75,7 @@ increment-build-version:
     - gcloud components install beta --quiet
   script:
     - gcloud auth activate-service-account --key-file $(echo $CLOUDRUN_CICD_SA_KEY)
-    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:${VERSION}_b${BUILD_TAG} --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
+    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:${BUILD_TAG} --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
   artifacts:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
