@@ -29,6 +29,7 @@ increment-build-version:
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
   script:
     - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}")
+    - git push -o ci.skip --all
     - git push -o ci.skip origin ${TAG}
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
     - echo ${VERSION}
