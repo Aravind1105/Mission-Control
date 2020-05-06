@@ -27,17 +27,27 @@ increment-build-version:
     - git config --global user.email ${GIT_AUTHOR_EMAIL}
     - git config --global user.name ${GIT_AUTHOR_NAME}
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
-    - git checkout $CI_COMMIT_BRANCH
-    - git pull --tags
+    - git pull origin $CI_COMMIT_BRANCH --tags
     - npm version patch -f
     - git push -o ci.skip --all --force
   script:
-    - git describe --abbrev=0 --tags | cut -c 2-
+    - git push -o ci.skip origin staging-master --tags
+    - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
+    - echo ${VERSION}
+    - BUILD_TAG=$(date +%s)
+  after_script:
+    - echo ${VERSION} > BUILD_TAG.txt
+    - echo ${BUILD_TAG} >> BUILD_TAG.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: always
     - if: $CI_COMMIT_BRANCH == "staging-master"
       when: always
+  artifacts:
+    expire_in: 1 days
+    name: "$CI_COMMIT_BRANCH"
+    paths:
+      - BUILD_TAG.txt
 
 .build-push-template: &build-push-template
   stage: docker-build-push
@@ -50,8 +60,8 @@ increment-build-version:
     - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - git describe --abbrev=0 --tags | cut -c 2-
-    - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
-    - BUILD_TAG=$(date +%s)
+    - VERSION=$(cat BUILD_TAG.txt | sed -n 1p )
+    - BUILD_TAG=$(cat BUILD_TAG.txt | sed -n 2p )
     #.env - File Contents needs to be created to .env for webpack ease
     - echo AUTH_DOMAIN=$auth_domain >> .env
     - echo AUTH_CLIENT_ID=$auth_client_id >> .env
@@ -65,7 +75,6 @@ increment-build-version:
     - docker push gcr.io/$gcr_path/$app_name:$VERSION
     - docker push gcr.io/$gcr_path/$app_name:${VERSION}_b${BUILD_TAG}
     - docker push gcr.io/$gcr_path/$app_name:latest
-    - echo ${VERSION}_b${BUILD_TAG} > BUILD_TAG.txt
   artifacts:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
@@ -76,11 +85,12 @@ increment-build-version:
   stage: cloudrun-service-deploy
   image: google/cloud-sdk:alpine
   before_script:
-    - BUILD_TAG=$(head -1 BUILD_TAG.txt)
+    - VERSION=$(cat BUILD_TAG.txt | sed -n 1p )
+    - BUILD_TAG=$(cat BUILD_TAG.txt | sed -n 2p )
     - gcloud components install beta --quiet
   script:
     - gcloud auth activate-service-account --key-file $(echo $CLOUDRUN_CICD_SA_KEY)
-    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:${BUILD_TAG} --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
+    - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:${VERSION}_b${BUILD_TAG} --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
   artifacts:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
