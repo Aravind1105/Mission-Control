@@ -27,6 +27,7 @@ increment-build-version:
     - git config --global user.email ${GIT_AUTHOR_EMAIL}
     - git config --global user.name ${GIT_AUTHOR_NAME}
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
+    - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - npm version patch -f
     - git push -o ci.skip --all --force
@@ -46,6 +47,7 @@ increment-build-version:
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
+    - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - git describe --abbrev=0 --tags | cut -c 2-
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
