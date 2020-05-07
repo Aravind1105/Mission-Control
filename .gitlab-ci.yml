@@ -1,3 +1,9 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: always
+
 stages:
   - increment-build-version
   - docker-build-push
@@ -32,7 +38,7 @@ increment-build-version:
     - git pull
     - npm version from-git --allow-same-version 
     - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}" -f )
-    - git push -o ci.skip --all --force
+    - git push --all --force
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
     - echo ${VERSION}
     - BUILD_TAG=$(date +%s)
