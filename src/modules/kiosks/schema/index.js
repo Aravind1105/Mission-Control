@@ -132,3 +132,21 @@ export const LOAD_CELL_CONFIG_MUTATION = gql`
     }
   }
 `;
+
+export const KIOSK_REFILL_MUTATION = gql`
+  mutation createRefill($kioskId: String!) {
+    createRefill(kioskId: $kioskId) {
+      _id
+      sessionClosedAt
+    }
+  }
+`;
+
+export const KIOSK_RESET_MUTATION = gql`
+  mutation resetKiosk($id: String!) {
+    kioskReset(id: $id) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
+`;

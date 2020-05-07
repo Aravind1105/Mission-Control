@@ -12,12 +12,7 @@ import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
 import { getKioskSingle, getKioskShelves } from './selectors';
-import {
-  resetKioskSaga,
-  loadKiosksSaga,
-  openKioskSaga,
-  getKiosk,
-} from './actions';
+import { resetKiosk, loadKiosksSaga, refillKiosk, getKiosk } from './actions';
 
 import './styles.less';
 
@@ -41,8 +36,8 @@ const KioskDetails = ({
   kiosk,
   loadCells,
   isKioskLoading,
-  resetKioskSaga,
-  openKioskSaga,
+  resetKiosk,
+  refillKiosk,
   getKiosk,
 }) => {
   useEffect(() => {
@@ -52,18 +47,18 @@ const KioskDetails = ({
     }
   }, []);
 
-  const handleEdit = () => {
+  const handlerEdit = () => {
     history.push(`/kiosks/edit/${kiosk._id}`);
   };
-  const toggleResetKiosk = () => {
+  const handlerResetKiosk = () => {
     if (window.confirm('Willst Du die Session wirklich zurücksetzen?')) {
-      resetKioskSaga(kiosk);
+      resetKiosk(kiosk._id);
     }
   };
 
-  const toggleOpenDoor = () => {
+  const handlerOpenDoor = () => {
     if (window.confirm('Willst Du das Kiosk wirklich im Refill Mode öffnen?')) {
-      openKioskSaga(kiosk);
+      refillKiosk(kiosk._id);
     }
   };
   const loaded = kiosk && kiosk._id === match.params.id;
@@ -101,9 +96,11 @@ const KioskDetails = ({
                     ownerOrganization={get(kiosk, 'ownerOrganization.name', '')}
                   >
                     <>
-                      <Button onClick={toggleOpenDoor}>Open Door</Button>
-                      <Button onClick={handleEdit}>Edit</Button>
-                      <Button onClick={toggleResetKiosk}>Sync / Restart</Button>
+                      <Button onClick={handlerOpenDoor}>Open Door</Button>
+                      <Button onClick={handlerEdit}>Edit</Button>
+                      <Button onClick={handlerResetKiosk}>
+                        Sync / Restart
+                      </Button>
                       <Button>Temp Log.</Button>
                       <Button>Activity Log.</Button>
                     </>
@@ -123,7 +120,8 @@ const KioskDetails = ({
         <Grid.Column width={5}>
           <Grid>
             <DetailQRCode
-              qrCode={`http://qrdeeplink.livello.com?id=${kiosk.qrcode}`} />
+              qrCode={`http://qrdeeplink.livello.com?id=${kiosk.qrcode}`}
+            />
             <Grid.Row>
               <Grid.Column>
                 <DetailsInventory cells={loadCells} />
@@ -147,9 +145,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  resetKioskSaga,
+  resetKiosk,
   loadKiosksSaga,
-  openKioskSaga,
+  refillKiosk,
   getKiosk,
 };
 

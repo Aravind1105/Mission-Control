@@ -7,6 +7,8 @@ import {
   getKiosk,
   getKioskSuccess,
   modifyKioskSuccess,
+  resetKiosk,
+  resetKioskSuccess,
 } from '../actions';
 
 const initialState = {
@@ -22,7 +24,7 @@ export const kiosksReducer = handleActions(
       ...state,
       isLoading: true,
     }),
-    [getKiosk]: state => ({
+    [combineActions(getKiosk, resetKiosk)]: state => ({
       ...state,
       isKioskLoading: true,
     }),
@@ -39,7 +41,7 @@ export const kiosksReducer = handleActions(
         isLoading: false,
       };
     },
-    [combineActions(getKioskSuccess, modifyKioskSuccess)]: (
+    [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
       state,
       { payload },
     ) => ({
