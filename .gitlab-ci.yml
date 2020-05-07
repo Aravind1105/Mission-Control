@@ -29,16 +29,14 @@ increment-build-version:
     GIT_AUTHOR_NAME: "Gitlab-ci-livello"
     GIT_AUTHOR_EMAIL: "gitlab-cicd@livello.com"
   before_script:
-    # - apk --no-cache --virtual build-dependencies add git
+    - apk --no-cache --virtual build-dependencies add git
     # - git config --global user.email ${GIT_AUTHOR_EMAIL}
     # - git config --global user.name ${GIT_AUTHOR_NAME}
     # - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
   script:
-    # - git checkout ${CI_COMMIT_BRANCH}
-    # - git pull
-    # - npm version from-git --allow-same-version 
-    # - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}" -f )
-    # - git push -o ci.skip --all --force
+    - npm version from-git
+    - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}" -f --no-git-tag-version )
+    - git push origin TAG
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
     - echo ${VERSION}
     - BUILD_TAG=$(date +%s)
