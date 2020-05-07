@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment, Header, Grid, Divider, Icon, Table } from 'semantic-ui-react';
-import { pathOr } from 'ramda';
+import get from 'lodash/get';
 
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 
@@ -11,7 +11,9 @@ const DetailsInventory = ({ cells }) => {
     (prev, { productLine, products, availableProducts }) => {
       const available = availableProducts + prev.available;
       const total = products.length + prev.total;
-      const totalPrice = pathOr(0, ['tax'], productLine) + prev.totalPrice;
+      const totalPrice = +(
+        get(productLine, 'price', 0) + prev.totalPrice
+      ).toFixed(2);
       return { available, total, totalPrice };
     },
     initObj,
@@ -37,8 +39,8 @@ const DetailsInventory = ({ cells }) => {
       <Divider />
       <Table basic="very">
         <Table.Body>
-          {cells.map(({ _id, productLine, availableProducts, products }) => (
-            <Table.Row key={_id}>
+          {cells.map(({ cellId, productLine, availableProducts, products }) => (
+            <Table.Row key={cellId}>
               <Table.Cell>
                 <ColoredBlock
                   value={(availableProducts * 100) / products.length}
@@ -46,14 +48,16 @@ const DetailsInventory = ({ cells }) => {
                   {`${availableProducts}/${products.length}`}
                 </ColoredBlock>
               </Table.Cell>
-              <Table.Cell>{pathOr('', ['name'], productLine)}</Table.Cell>
-              <Table.Cell>{`€ ${pathOr(0, ['tax'], productLine)}`}</Table.Cell>
+              <Table.Cell>{productLine ? productLine.name : ''}</Table.Cell>
+              <Table.Cell>{`€ ${
+                productLine ? productLine.price : 0
+              }`}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table>
       <div>
-        <b>{`Total Value: €${totalPrice}`}</b>
+        <b>{`Total Value: € ${totalPrice}`}</b>
       </div>
     </Segment>
   );

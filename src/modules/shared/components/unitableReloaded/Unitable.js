@@ -106,7 +106,6 @@ const Unitable = ({
         <Table.Header>
           <Table.Row>
             {columns.map(column => {
-              //  console.log("let's see", column.name, column.mapDataFrom)
               return (
                 <UnitableHeaderCell
                   {...column}
@@ -150,12 +149,12 @@ const Unitable = ({
                   warning,
                 }) => {
                   let tryvalue = '';
-                  if (mapDataFrom !== undefined && columns.type != 'price') {
+                  if (mapDataFrom !== undefined && columns.type !== 'price') {
                     const splitarray = mapDataFrom.split('.');
-                    if (splitarray.length > 0) {
+                    if (splitarray.length) {
                       tryvalue = tableData[key];
                       splitarray.forEach(order => {
-                        if (tryvalue !== undefined) {
+                        if (tryvalue !== null && tryvalue !== undefined) {
                           if (
                             order === 'priceHistory' &&
                             tryvalue[order].length > 0

@@ -1,0 +1,134 @@
+@import './globals/site.variables';
+
+.one-line-chart {
+  color: #afb3b4;
+  font-size: 14px;
+  &.chart-bordered {
+    border: none !important;
+    border-bottom: 3px solid !important;
+    &.--green {
+      border-color: #5eb179 !important;
+    }
+    &.--blue {
+      border-color: #3b5db9 !important;
+    }
+    &.--red {
+      border-color: #af2f44 !important;
+    }
+  }
+  &__header {
+    padding: 30px 30px 20px;
+  }
+  .currency-sign {
+    margin: 0 8px 0 0;
+    font-size: 1.7em;
+    font-weight: 700;
+  }
+  .currency-amount {
+    color: #000;
+    font-size: 2.3em;
+    font-weight: 700;
+  }
+}
+
+.progress-bar {
+  color: #afb3b4;
+  font-size: 14px;
+  &__statistic {
+    margin: 0 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__value {
+    font-size: 1.5em;
+    margin: 0 8px 0 0;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .progress {
+    width: 100%;
+    &:last-child {
+      margin: 0 !important;
+    }
+  }
+}
+
+.report {
+  &__sub-title {
+    padding: 20px 20px 10px;
+    color: #b0b1b6;
+    text-transform: uppercase;
+  }
+  &__short-stat {
+    padding: 0 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .short-stat {
+      &__value {
+        margin: 0 8px 0 0;
+        font-size: 28px;
+        font-weight: 700;
+      }
+      &__sign {
+        margin: 0 16px 0 0;
+        color: #b0b1b6;
+        font-size: 22px;
+      }
+      &__sub-value {
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+  }
+}
+.authors-list {
+  .author {
+    &-item {
+      margin: 0 0 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__avatar {
+      width: 54px;
+      flex-shrink: 0;
+    }
+    &__data {
+      padding: 0 16px;
+      width: 100%;
+    }
+    &__value {
+      width: 70px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    &__label {
+      margin: 4px auto 0;
+      padding: 1px 14px;
+      display: inline-block;
+      border-radius: 10px;
+      background: @darkgrey;
+      color: @white;
+    }
+  }
+}
+.button__report-update {
+  position: fixed;
+  right: 15px;
+  bottom: 22px;
+  z-index: 1000;
+  background: @white;
+  border-radius: 4px;
+  & * {
+    margin: 0 !important;
+  }
+  .button {
+    padding: 1rem !important;
+  }
+}
+
+.performance-graph {
+  margin: 0 12px 0 0;
+}

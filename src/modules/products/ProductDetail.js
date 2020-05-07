@@ -8,7 +8,7 @@ import Loader from 'modules/shared/components/Loader';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
-import { getFullProductData, getProductSuccess } from './actions';
+import { getFullProductData } from './actions';
 import {
   selectorGetProductInitValue,
   selectorGetProductFamilyForm,
@@ -39,21 +39,19 @@ const ProductDetail = ({
   isLoading,
   match,
   getFullProductData,
-  getProductSuccess,
 }) => {
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
     }
-    return () => getProductSuccess(null);
   }, []);
   const { id } = match.params;
   const isNewProduct = id === 'new';
   const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
   const { priceHistory, ...initialValues } = product;
   const isProductLoaded = isNewProduct
-    ? Boolean(product)
+    ? !get(product, 'id')
     : product && product.id;
   const loaded = familyOption.length && isProductLoaded;
 
@@ -113,7 +111,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  getProductSuccess,
   getFullProductData,
 };
 

@@ -1,8 +1,8 @@
 import { all, fork } from 'redux-saga/effects';
 
 import getOrganizationsSaga from './getOrganizations';
-import addOrganizationSaga from './addOrganization';
+import modifyOrganizationSaga from './modifyOrganization';
 
 export default function* kiosksSaga() {
-  yield all([fork(getOrganizationsSaga), fork(addOrganizationSaga)]);
+  yield all([fork(getOrganizationsSaga), fork(modifyOrganizationSaga)]);
 }

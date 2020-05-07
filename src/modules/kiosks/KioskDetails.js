@@ -5,17 +5,18 @@ import get from 'lodash/get';
 
 import history from 'lib/history';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
+import Loader from 'modules/shared/components/Loader';
 import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
-import { getKioskById, getShelvesByKioskId } from './selectors';
+import { getKioskSingle, getKioskShelves } from './selectors';
 import {
   resetKioskSaga,
   loadKiosksSaga,
   openKioskSaga,
-  selectKiosk,
+  getKiosk,
 } from './actions';
 
 import './styles.less';
@@ -36,23 +37,22 @@ const backLink = {
 };
 
 const KioskDetails = ({
+  match,
   kiosk,
   loadCells,
-  isLoading,
-  selectKiosk,
+  isKioskLoading,
   resetKioskSaga,
-  loadKiosksSaga,
   openKioskSaga,
+  getKiosk,
 }) => {
   useEffect(() => {
-    if (!kiosk && !isLoading) {
-      loadKiosksSaga();
+    const { id } = match.params;
+    if ((!kiosk || kiosk._id !== id) && !isKioskLoading) {
+      getKiosk(id);
     }
   }, []);
-  if (!kiosk) return false;
 
   const handleEdit = () => {
-    selectKiosk(kiosk);
     history.push(`/kiosks/edit/${kiosk._id}`);
   };
   const toggleResetKiosk = () => {
@@ -66,8 +66,8 @@ const KioskDetails = ({
       openKioskSaga(kiosk);
     }
   };
-
-  return (
+  const loaded = kiosk && kiosk._id === match.params.id;
+  return loaded ? (
     <>
       <Grid stackable>
         <Grid.Column width={11}>
@@ -133,26 +133,24 @@ const KioskDetails = ({
         </Grid.Column>
       </Grid>
 
-      <DetailsLoadCells
-        cells={loadCells}
-        kioskName={kiosk.name}
-        serial={kiosk.serialNumber}
-      />
+      <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
     </>
+  ) : (
+    <Loader />
   );
 };
 
-const mapStateToProps = (state, { match: { params } }) => ({
-  kiosk: getKioskById(params.id)(state),
-  loadCells: getShelvesByKioskId(params.id)(state),
-  isLoading: state.kiosks.isLoading,
+const mapStateToProps = state => ({
+  kiosk: getKioskSingle(state),
+  loadCells: getKioskShelves(state),
+  isKioskLoading: state.kiosks.isKioskLoading,
 });
 
 const mapDispatchToProps = {
   resetKioskSaga,
   loadKiosksSaga,
   openKioskSaga,
-  selectKiosk,
+  getKiosk,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskDetails);

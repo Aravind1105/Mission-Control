@@ -4,40 +4,50 @@ import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Unitable } from 'modules/shared/components/unitableReloaded';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
 import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import Loader from 'modules/shared/components/Loader';
+import CellHeartbeat from './CellHeartbeat';
 import { getKiosksWithSearch } from '../selectors';
 import { loadKiosksSaga } from '../actions';
 
 const columns = [
   {
-    name: 'Name',
+    title: 'Name',
+    field: 'name',
   },
   {
-    name: 'DoorStatus',
-    mapDataFrom: 'doorStatus',
+    title: 'DoorStatus',
+    field: 'doorStatus',
   },
   {
-    name: 'Temperature',
-    mapDataFrom: 'temperature.value',
+    title: 'Temperature',
+    field: 'temperature.value',
   },
   {
-    name: 'Last HeartBeat',
-    mapDataFrom: 'temperature.updated',
-    type: 'timeDifference',
+    title: 'Last HeartBeat',
+    field: 'temperature.updated',
+    formatter: ({ temperature }) => <CellHeartbeat temperature={temperature} />,
   },
   {
-    name: 'Serial',
-    mapDataFrom: 'serialNumber',
+    title: 'Serial',
+    field: 'serialNumber',
   },
   {
-    name: 'Address',
-    mapDataFrom: 'ownerOrganization.address.0.properties.city',
+    title: 'Address',
+    field: 'location',
+    formatter: ({ location: { address } }) => {
+      const { line1, city } = address;
+      const addr = [city || '', line1 || '']
+        .filter(el => Boolean(el))
+        .join(', ');
+      return addr || 'N.A.';
+    },
   },
   {
-    name: 'Sales',
-    postfix: ' €',
+    title: 'Sales',
+    field: 'sales',
+    formatter: ({ sales = 'N.A.' }) => `${sales}  €`,
   },
 ];
 
@@ -46,7 +56,7 @@ const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
     if (!isLoading) loadKiosksSaga();
   }, []);
 
-  const clickRow = ({ _id }) => {
+  const handlerClickRow = ({ _id }) => {
     history.push(`/kiosks/detail/${_id}`);
   };
   return (
@@ -54,10 +64,9 @@ const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
       {isLoading && <Loader />}
       <Segment>
         <TableWithPagination list={kiosks}>
-          <Unitable
+          <CustomTable
             columns={columns}
-            onRowClick={clickRow}
-            clickArgs={['_id']}
+            onRowClick={handlerClickRow}
             sortable
             selectable
             sortByColumn="name"

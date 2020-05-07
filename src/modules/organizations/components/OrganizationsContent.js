@@ -1,48 +1,54 @@
 import React, { useEffect } from 'react';
-import { withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
+import get from 'lodash/get';
 
-import { Unitable } from 'modules/shared/components/unitableReloaded';
+import history from 'lib/history';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import TableWithPagination from 'modules/shared/components/TableWithPagination';
-import OrganizationModal from './OrganizationModal';
 import { getOrganizationsState } from '../selectors';
 import { getOrganizations } from '../actions';
 
 const columns = [
   {
-    name: 'Name',
+    title: 'Name',
+    field: 'name',
   },
   {
-    name: 'Type',
+    title: 'Type',
+    field: 'address.0.type',
   },
   {
-    name: 'Fridges',
-    mapDataFrom: 'fridges',
+    title: 'Fridges',
+    field: 'fridges',
   },
   {
-    name: 'Address',
-    type: 'address',
+    title: 'Address',
+    field: 'address',
+    formatter: ({ address }) => {
+      const { city = '', line1 = '' } = get(address, '0.properties', {});
+      const adr = [city, line1].filter(el => Boolean(el)).join(', ');
+      return adr || 'N.A.';
+    },
   },
   {
-    name: 'Users',
+    title: 'Users',
+    field: 'user',
   },
 ];
 
 const OrganizationsContent = ({
   organizations,
   isLoading,
-  history,
-  loadOrganizations,
-  match,
+  getOrganizations,
 }) => {
   useEffect(() => {
-    if (!isLoading) loadOrganizations();
+    if (!isLoading) getOrganizations();
   }, []);
 
   const clickRow = ({ slug }) => {
-    history.push(`${slug}/detail`);
+    history.push(`detail/${slug}`);
   };
 
   return (
@@ -50,22 +56,15 @@ const OrganizationsContent = ({
       {isLoading && <Loader />}
       <Segment>
         <TableWithPagination list={organizations}>
-          <Unitable
+          <CustomTable
             columns={columns}
             onRowClick={clickRow}
-            clickArgs={['slug']}
             sortable
             selectable
             sortByColumn="name"
           />
         </TableWithPagination>
       </Segment>
-      <Route
-        path={`${match.url}/add/new`}
-        render={props => (
-          <OrganizationModal open {...props} title="Add a new pro" />
-        )}
-      />
     </>
   );
 };
@@ -75,10 +74,11 @@ const mapStateToProps = state => ({
   isLoading: state.organizations.isLoading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadOrganizations: () => dispatch(getOrganizations()),
-});
+const mapDispatchToProps = {
+  getOrganizations,
+};
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(OrganizationsContent),
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OrganizationsContent);

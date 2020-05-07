@@ -1,13 +1,14 @@
 import { all, fork } from 'redux-saga/effects';
 
-import { handleLoadKiosks, handleReset, handleOpen } from './kiosksSaga';
+import { handleReset, handleOpen } from './kiosksSaga';
+import loadKiosksSaga from './loadKiosks';
 import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
 
 export default function* kiosksSaga() {
   yield all([
-    fork(handleLoadKiosks),
+    fork(loadKiosksSaga),
     fork(handleReset),
     fork(handleOpen),
     fork(modifyLoadCellSaga),

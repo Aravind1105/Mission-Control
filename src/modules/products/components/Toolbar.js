@@ -1,56 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  Segment,
-  Grid,
-  Input,
-  Dropdown,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Segment, Grid, Dropdown, Button, Icon } from 'semantic-ui-react';
 
-import { getProductFamilySaga } from '../actions';
+import SearchInput from 'modules/shared/components/SearchInput';
 import { selectorGetProductCategories } from '../selectors';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
   { key: 'license', value: 'license', text: 'license' },
 ];
-const Toolbar = ({
-  changeSearch,
-  changeCategory,
-  categories,
-  getProductFamilySaga,
-}) => {
+const Toolbar = ({ changeSearch, changeCategory, categories }) => {
   const isCategoriesLoading = categories.length <= 1;
 
-  const handleChangeSearch = ({ target }) => {
-    changeSearch(target.value);
-  };
   const handleChangeCategory = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     changeCategory(text);
   };
-
-  useEffect(() => {
-    if (isCategoriesLoading) {
-      getProductFamilySaga();
-    }
-  }, []);
 
   return (
     <Segment className="toolbar">
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={7}>
-            <Input
-              icon="search"
-              placeholder="Search..."
-              fluid
-              onChange={handleChangeSearch}
-              className="input-search"
-            />
+            <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column>
 
           <Grid.Column width={3}>
@@ -96,8 +69,4 @@ const mapStateToProps = state => ({
   categories: selectorGetProductCategories(state),
 });
 
-const mapDispatchToProps = {
-  getProductFamilySaga,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default connect(mapStateToProps)(Toolbar);

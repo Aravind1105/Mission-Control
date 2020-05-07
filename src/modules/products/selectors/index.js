@@ -2,7 +2,9 @@ import { createSelector } from 'reselect';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
 
-export const getProducts = state => state.products.list;
+export const selectorGetProducts = state => state.products.list;
+
+export const getTotalProductsCount = state => state.products.totalProducts;
 
 export const selectorGetProduct = state => state.products.product;
 
@@ -10,33 +12,13 @@ export const selectorGetProductFamily = state => state.products.family;
 
 export const selectorGetProductTax = state => state.products.taxes;
 
-export const getProductsHistory = createSelector(getProducts, products =>
-  products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
+export const getProductsHistory = createSelector(
+  selectorGetProducts,
+  products => products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
 );
 
-export const getProductsWithFilter = ({ search, category: catSearch }) =>
-  createSelector(getProducts, products => {
-    const searchText = search.trim().toLowerCase();
-
-    if (searchText || catSearch) {
-      return products.filter(
-        ({ name = '', manufacturer = '', category = '' }) => {
-          const res = searchText
-            ? name.toLowerCase().includes(searchText) ||
-              manufacturer.toLowerCase().includes(searchText) ||
-              category.toLowerCase().includes(searchText)
-            : true;
-          return catSearch
-            ? res && category.toLowerCase() === catSearch.toLowerCase()
-            : res;
-        },
-      );
-    }
-    return products;
-  });
-
 export const getProductsSimpleList = (id = '') =>
-  createSelector(getProducts, products =>
+  createSelector(selectorGetProducts, products =>
     products
       .map(({ _id, name }) => ({
         value: _id,
@@ -50,7 +32,8 @@ export const selectorProductTaxOptions = createSelector(
   taxes =>
     taxes.map(el => ({
       text: el.taxId,
-      value: el._id,
+      value: el.taxValue,
+      key: el._id,
     })),
 );
 
@@ -60,7 +43,10 @@ export const selectorGetProductFamilyForm = createSelector(
     family.reduce(
       (prev, curr) => {
         const category = curr.category.map(text => ({ text, value: text }));
-        prev.families.push({ value: curr._id, text: curr.name });
+        prev.families.push({
+          value: curr._id,
+          text: curr.name,
+        });
         prev.categories[curr._id] = category;
         return prev;
       },
@@ -122,13 +108,12 @@ const defaultFormInit = {
 
 export const selectorGetProductInitValue = createSelector(
   selectorGetProduct,
-  selectorGetProductTax,
-  (product, taxes) => {
+  product => {
     if (!product) return defaultFormInit;
-    const { packagingOptions, family, tax, ...rest } = product;
+    const { packagingOptions, family, taxHistory, ...rest } = product;
+    const tax = taxHistory ? taxHistory.slice(-1) : null;
     const [packaging] = packagingOptions.slice(-1);
     const priceHistory = rest.priceHistory.find(el => el.default);
-    const taxValue = taxes.find(el => Number(el.taxValue) === Number(tax));
     const initialValues = pick(rest, [
       'allergens',
       'carbo',
@@ -168,7 +153,7 @@ export const selectorGetProductInitValue = createSelector(
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),
       family: family._id,
-      tax: taxValue ? taxValue._id : '',
+      tax: get(tax, '0.taxEntry.taxValue', ''),
     };
   },
 );

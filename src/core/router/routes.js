@@ -1,19 +1,15 @@
 import { lazy } from 'react';
 
-const DashboardScreen = lazy(() => import('modules/dashboard/DashboardScreen'));
+const Dashboard = lazy(() => import('modules/dashboard'));
 const KiosksScreen = lazy(() => import('modules/kiosks'));
-const OrganizationsScreen = lazy(() =>
-  import('modules/organizations/OrganizationsScreen'),
-);
-const UsersScreen = lazy(() => import('modules/users/UsersScreen'));
+const Organizations = lazy(() => import('modules/organizations'));
+const Users = lazy(() => import('modules/users'));
 const Products = lazy(() => import('modules/products'));
 const FulfillmentScreen = lazy(() =>
   import('modules/fulfillment/FulfillmentScreen'),
 );
-const TransactionsScreen = lazy(() =>
-  import('modules/transactions/TransactionsScreen'),
-);
-const ReportsScreen = lazy(() => import('modules/reports/ReportsScreen'));
+const Transactions = lazy(() => import('modules/transactions'));
+const Reports = lazy(() => import('modules/reports'));
 
 export default [
   {
@@ -23,7 +19,7 @@ export default [
       exact: true,
     },
     icon: 'home',
-    Component: DashboardScreen,
+    Component: Dashboard,
   },
   {
     name: 'Kiosks',
@@ -35,13 +31,13 @@ export default [
     name: 'Organizations',
     path: '/organizations',
     icon: 'building',
-    Component: OrganizationsScreen,
+    Component: Organizations,
   },
   {
     name: 'Users',
     path: '/users',
     icon: 'users',
-    Component: UsersScreen,
+    Component: Users,
   },
   {
     name: 'Products',
@@ -59,12 +55,12 @@ export default [
     name: 'Reports',
     path: '/reports',
     icon: 'chart line',
-    Component: ReportsScreen,
+    Component: Reports,
   },
   {
     name: 'Transactions',
     path: '/transactions',
     icon: 'shopping cart',
-    Component: TransactionsScreen,
+    Component: Transactions,
   },
 ];

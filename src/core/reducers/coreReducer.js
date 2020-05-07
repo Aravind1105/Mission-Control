@@ -1,8 +1,5 @@
 import { handleActions } from 'redux-actions';
-import {
-  CORE_STATE_SET_INIT,
-  CORE_STATE_SET_LANGUAGE,
-} from '../actions/coreActions';
+import { setAppInitialized, setLanguageState } from '../actions/coreActions';
 
 const initialState = {
   initialized: false,
@@ -11,11 +8,11 @@ const initialState = {
 
 export const coreReducer = handleActions(
   {
-    [CORE_STATE_SET_INIT]: (state, { payload }) => ({
+    [setAppInitialized]: (state, { payload }) => ({
       ...state,
       initialized: payload,
     }),
-    [CORE_STATE_SET_LANGUAGE]: (state, { payload }) => ({
+    [setLanguageState]: (state, { payload }) => ({
       ...state,
       language: payload,
     }),

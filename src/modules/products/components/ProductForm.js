@@ -141,7 +141,7 @@ const ProductForm = ({
               <Grid.Column width={6}>
                 <Field
                   name="packagingOptions[0].packageWeightGrams"
-                  label="Weight actual - with packaging(g)"
+                  label="Weight of package(g)"
                   type="number"
                   min={0}
                   required
