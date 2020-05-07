@@ -10,11 +10,24 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { setRootUsersSaga } from '../actions/usersActions';
+import get from 'lodash/get';
 
-const UsersDetail = ({ user, setRoot }) => {
-  if (!user) return false;
+import { toggleUserRole } from '../actions';
+import { getActiveUserState } from '../selectors';
 
+const UsersDetail = ({ user, toggleUserRole }) => {
+  const handlerRoleToggle = () => {
+    const payload = {
+      userId: user._id,
+      root: !user.root,
+    };
+    toggleUserRole(payload);
+  };
+
+  const name = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  const city = get(user, 'address.city', '');
+  const line1 = get(user, 'address.line1', '');
+  const address = `${city ? `${city}, '` : ''} ${line1}`;
   return (
     <Segment>
       <Grid>
@@ -24,8 +37,10 @@ const UsersDetail = ({ user, setRoot }) => {
               <Comment>
                 <Comment.Avatar as="a" src={user.avatarUrl} />
                 <Comment.Content>
-                  <Comment.Author as="a">{user.name}</Comment.Author>
-                  <Comment.Text>{user.type}</Comment.Text>
+                  <Comment.Author as="a">{name}</Comment.Author>
+                  <Comment.Text>
+                    {user.root ? 'Admin' : 'Consumer'}
+                  </Comment.Text>
                   <Comment.Actions>Last Activity: 25.03.2019</Comment.Actions>
                 </Comment.Content>
               </Comment>
@@ -45,8 +60,8 @@ const UsersDetail = ({ user, setRoot }) => {
                   <Table.Cell>{user.organization}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell>City/Adress:</Table.Cell>
-                  <Table.Cell>{user.address}</Table.Cell>
+                  <Table.Cell>City/Address:</Table.Cell>
+                  <Table.Cell>{address}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>E-Mail:</Table.Cell>
@@ -87,7 +102,7 @@ const UsersDetail = ({ user, setRoot }) => {
             <Button
               style={{ marginBottom: 5 }}
               fluid
-              onClick={() => setRoot({ value: !user.root, _id: user._id })}
+              onClick={handlerRoleToggle}
             >
               {user.root ? 'Revoke Root' : 'Grant Root'}
             </Button>
@@ -213,18 +228,15 @@ UsersDetail.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
   }),
-  setRoot: PropTypes.func.isRequired,
+  toggleUserRole: PropTypes.func.isRequired,
 };
 
-UsersDetail.defaultProps = {
-  user: {},
-};
-
-const mapDispatchToProps = dispatch => ({
-  setRoot: value => dispatch(setRootUsersSaga(value)),
+const mapStateToProps = state => ({
+  user: getActiveUserState(state),
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(UsersDetail);
+const mapDispatchToProps = {
+  toggleUserRole,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersDetail);

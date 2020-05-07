@@ -2,7 +2,7 @@
 
 ### Environment
 
-Before you can start local development or deployment you have to create a `.env` file.  
+Before you can start local development or deployment you have to create a `.env` file.
 You will find the contents at confluence: [#04 Mission Control](https://livello.atlassian.net/wiki/spaces/LIV/pages/753759/04+Mission+Control)
 
 ### Development:
@@ -17,7 +17,9 @@ Run a development server on `http://localhost:3000`
 ### Deployment:
 
 Currently builds and deployments are not CI/CD integrated.
+
 ## !!! Attention !!!
+
 you have to alter the .env for the environment before deploy!
 please meke sure that at least the name of the app ends with `prod` or `stage` and
 the `API_PROXY_URL` is the right one: (stage or prod)
@@ -26,7 +28,6 @@ the `API_PROXY_URL` is the right one: (stage or prod)
 APP_NAME=livello-mission-control-stage
 API_PROXY_URL=https://api-stage.livello.com/api
 ```
-
 
 For building and deployment there are several build commands. You can always use `make help`.
 
@@ -108,7 +109,7 @@ Your routes and a nav entry will be generated.
 If you want your route to be lazy loaded e.g.:
 
 ```js
-const ReportsScreen = lazy(() => import('modules/reports/ReportsScreen'));
+const Reports = lazy(() => import('modules/reports'));
 ```
 
 ### Conventions

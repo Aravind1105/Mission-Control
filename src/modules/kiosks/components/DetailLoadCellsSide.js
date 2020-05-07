@@ -32,7 +32,7 @@ const Side = ({
         </p>
         <p>
           <b>
-            {productLine ? `${productLine.name}: €${productLine.tax}` : null}
+            {productLine ? `${productLine.name}: €${productLine.price}` : null}
           </b>
         </p>
       </div>
@@ -45,7 +45,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit }) => (
     <Grid divided="vertically">
       {cells.map(
         ({
-          _id,
           cellId,
           planogramPosition,
           productLine,
@@ -53,7 +52,7 @@ const DetailLoadCellsSide = ({ cells, handleEdit }) => (
           availableProducts,
         }) => (
           <Side
-            key={_id}
+            key={cellId}
             cellId={cellId}
             planogramPosition={planogramPosition}
             productLine={productLine}

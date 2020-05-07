@@ -1,6 +1,6 @@
-import AuthedLayout from './AuthedLayout';
+import AuthorizedLayout from './AuthorizedLayout';
 import Navigation from './Navigation';
 import Logo from './Logo';
 import SegmentHeader from './SegmentHeader';
 
-export { AuthedLayout, Logo, Navigation, SegmentHeader };
+export { AuthorizedLayout, Logo, Navigation, SegmentHeader };

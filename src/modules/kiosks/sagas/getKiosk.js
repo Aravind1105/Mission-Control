@@ -1,29 +1,56 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import get from 'lodash/get';
 
-import ls from 'lib/LocalStorage';
-import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
+import gqlKiosk from 'lib/https/gqlKiosk';
 import { getKiosk, getKioskSuccess } from '../actions';
-
-function handlerRequest(id) {
-  const token = ls.getItem(TOKEN_STORAGE_KEY);
-
-  return fetch(`/api/v1/kiosks/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
-}
+import { GET_KIOSK_QUERY } from '../schema';
 
 function* handler({ payload }) {
+  const variables = {
+    id: payload,
+  };
   try {
-    const response = yield call(handlerRequest, payload);
-    const data = yield call([response, response.json]);
+    let kiosk = null;
+    if (payload !== 'new') {
+      const {
+        data: { getKioskById },
+      } = yield call(gqlKiosk.query, {
+        query: GET_KIOSK_QUERY,
+        variables,
+      });
 
-    if ('error' in data && data.status !== 200) {
-      throw Error('error in saga');
+      kiosk = {
+        ...getKioskById,
+        // TODO: reduce logic of inventory prop after queries can work with pagination and filter
+        inventory: {
+          loadCells: getKioskById.inventory.loadCells.map(el => ({
+            ...el,
+            products: el.products.map(({ _id, statusHistory }) => ({
+              _id,
+              status: get(statusHistory.slice(-1), '0.status', ''),
+            })),
+            productLine: el.productLine
+              ? {
+                  _id: el.productLine._id,
+                  name: el.productLine.name,
+                  price: get(
+                    el.productLine.priceHistory
+                      .reverse()
+                      .find(
+                        price =>
+                          price.validForKiosks.includes(payload) ||
+                          price.default,
+                      ),
+                    'price',
+                    0,
+                  ),
+                }
+              : null,
+          })),
+        },
+      };
     }
-    yield put(getKioskSuccess(data));
+    yield put(getKioskSuccess(kiosk));
   } catch (error) {
     console.log(error);
   }

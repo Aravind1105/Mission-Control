@@ -1,26 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import LivelloLS from 'lib/LocalStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
-import {
-  loadKiosksSaga,
-  updateKiosks,
-  resetKioskSaga,
-  updateKioskById,
-  openKioskSaga,
-} from '../actions';
-
-function* loadKiosks() {
-  const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
-  const response = yield call(fetch, '/api/v1/kiosks/mc', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const data = yield call([response, response.json]);
-
-  yield put(updateKiosks(data));
-}
+import { resetKioskSaga, updateKioskById, openKioskSaga } from '../actions';
 
 function* reset(action) {
   const token = LivelloLS.getItem(TOKEN_STORAGE_KEY);
@@ -63,8 +44,4 @@ export function* handleReset() {
 
 export function* handleOpen() {
   yield takeEvery(openKioskSaga, open);
-}
-
-export function* handleLoadKiosks() {
-  yield takeEvery(loadKiosksSaga, loadKiosks);
 }

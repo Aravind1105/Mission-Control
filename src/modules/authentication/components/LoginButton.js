@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
-import { authenticateUserSaga } from 'modules/authentication/actions/userActions';
+
+import { authenticateUserSaga } from 'modules/authentication/actions';
 
 const LoginButton = ({ doLoginUser, ...props }) => (
   <Button primary onClick={doLoginUser} icon labelPosition="left" {...props}>
@@ -14,7 +15,4 @@ const mapDispatchToProps = dispatch => ({
   doLoginUser: () => dispatch(authenticateUserSaga()),
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(LoginButton);
+export default connect(null, mapDispatchToProps)(LoginButton);

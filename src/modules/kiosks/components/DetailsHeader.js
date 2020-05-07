@@ -12,7 +12,7 @@ const DetailsHeader = ({ name, temp, connection, doorStatus }) => {
         </Grid.Column>
         <Grid.Column width={3}>
           <Icon name="signal" color="green" />
-          {connection ? `${connection}%` : ''}
+          {`${connection || 0}%`}
         </Grid.Column>
         <Grid.Column width={3}>
           Temp:

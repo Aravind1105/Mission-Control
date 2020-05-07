@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const CellHeartbeat = ({ value }) => {
-  const lastTime = new Date(value).toUTCString();
-  const now = new Date().toUTCString();
+  const lastTime = new Date(value);
 
-  const dif = moment(now).diff(moment(lastTime), 'minutes');
+  const dif = differenceInMinutes(new Date(), lastTime);
   return (
     <>
       {dif <= 5 ? (

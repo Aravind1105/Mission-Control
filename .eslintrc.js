@@ -2,6 +2,7 @@ module.exports = {
   extends: ['airbnb', 'plugin:import/recommended'],
   parser: 'babel-eslint',
   rules: {
+    'no-shadow': 'off',
     'react/jsx-filename-extension': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-underscore-dangle': 'off',

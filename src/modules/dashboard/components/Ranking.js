@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Dropdown, Header, Segment, Table } from 'semantic-ui-react';
+import { Dropdown, Header, Segment } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
-import RankingItem from './RankingItem';
 import { UniTable } from 'modules/shared/components/unitable';
 
 const options = [
@@ -86,17 +85,6 @@ const Ranking = ({ title, data }) => {
         filters={filters}
         infos={infos}
       />
-      {/* <Table unstackable basic="very" size="small">
-        <Table.Body>
-          {data.map((props, key) => (
-            <RankingItem
-              {...props}
-              key={`${key}-${props.item}`}
-              rank={key + 1}
-            />
-          ))}
-        </Table.Body>
-      </Table> */}
     </Segment>
   );
 };

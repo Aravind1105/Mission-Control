@@ -1,25 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import ls from 'lib/LocalStorage';
-import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
-import { getOrganizations as action, updateOrganizations } from '../actions';
-
-function handlerGetOrganizations() {
-  const token = ls.getItem(TOKEN_STORAGE_KEY);
-
-  return fetch('/api/v1/organizations', {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
+import gqlOrganization from 'lib/https/gqlOrganization';
+import { GET_ORGANIZATIONS_LIST_QUERY } from '../schema';
+import {
+  getOrganizations as action,
+  getOrganizationsSuccess as actionSuccess,
+} from '../actions';
 
 function* handler() {
-  const response = yield call(handlerGetOrganizations);
-  const data = yield call([response, response.json]);
-
-  yield put(updateOrganizations(data));
+  try {
+    const { data } = yield call(gqlOrganization.query, {
+      query: GET_ORGANIZATIONS_LIST_QUERY,
+    });
+    yield put(actionSuccess(data.getAllOrganizations));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export default function* saga() {

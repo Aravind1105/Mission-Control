@@ -14,6 +14,7 @@ const FormSelect = ({
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name];
   const errMsg = isTouched && error ? { content: error } : undefined;
+
   return (
     <Form.Select
       fluid

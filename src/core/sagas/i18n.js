@@ -1,8 +1,8 @@
 import { all, call, takeEvery, put } from 'redux-saga/effects';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LivelloLS from 'lib/LocalStorage';
-import { I18N_SAGA_CHANGE_LANGUAGE } from '../actions/i18nActions';
+import ls from 'lib/LocalStorage';
+import { changeLanguageSaga } from '../actions/i18nActions';
 import { setLanguageState } from '../actions/coreActions';
 import baseLanguage from '../i18n';
 import {
@@ -40,11 +40,11 @@ function* loadLanguage(lng) {
   }
 }
 
-function* changeLanguage({ payload }) {
+function* handler({ payload }) {
   yield call(loadLanguage, payload);
   yield put(setLanguageState(payload));
   yield i18n.changeLanguage(payload);
-  LivelloLS.setItem(LANGUAGE_STORAGE_KEY, payload);
+  ls.setItem(LANGUAGE_STORAGE_KEY, payload);
 }
 
 function* initializeI18nDev() {
@@ -59,11 +59,11 @@ function* initializeI18nDev() {
     },
   });
 
-  const choosenLanguage = LivelloLS.getItem(LANGUAGE_STORAGE_KEY);
-  yield call(changeLanguage, { payload: choosenLanguage || DEFAULT_LANGUAGE });
+  const chosenLanguage = ls.getItem(LANGUAGE_STORAGE_KEY);
+  yield call(handler, { payload: chosenLanguage || DEFAULT_LANGUAGE });
 }
 function* watchChangeLanguage() {
-  yield takeEvery(I18N_SAGA_CHANGE_LANGUAGE, changeLanguage);
+  yield takeEvery(changeLanguageSaga, handler);
 }
 
 export function* initializeI18n() {

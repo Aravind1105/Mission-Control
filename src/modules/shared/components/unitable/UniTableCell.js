@@ -126,7 +126,6 @@ const UniTableCell = ({
       {() => {
         switch (cellStyle) {
           case 'list':
-            console.log(value);
             return (
               <>
                 <span className="value">

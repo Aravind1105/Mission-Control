@@ -1,68 +1,61 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Grid, Segment } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
+import get from 'lodash/get';
 
 import history from 'lib/history';
-import { Unitable } from 'modules/shared/components/unitableReloaded';
-import TableWithPagination from 'modules/shared/components/TableWithPagination';
-import { getProductsWithFilter } from '../selectors';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
 
 const columns = [
   {
-    name: 'Name',
+    title: 'Name',
+    field: 'name',
   },
   {
-    name: 'Supplier',
-    mapDataFrom: 'manufacturer',
+    title: 'Supplier',
+    field: 'manufacturer',
   },
   {
-    name: 'Category',
+    title: 'Category',
+    field: 'category',
   },
   {
-    mapDataFrom: 'packagingOptions.0.grossWeightGrams',
-    name: 'Weight',
-    postfix: ' g',
+    title: 'Weight',
+    field: 'weight',
+    formatter: ({ packagingOptions }) => {
+      const weight = get(packagingOptions, '0.grossWeightGrams', 0);
+      return `${weight} g`;
+    },
   },
   {
-    mapDataFrom: 'priceHistory.0.price',
-    name: 'Price',
-    postfix: ' €',
+    title: 'Price',
+    field: 'price',
+    formatter: ({ priceHistory }) => {
+      const { price = 0 } = priceHistory.find(el => el.default) || {};
+      return `${price} €`;
+    },
   },
 ];
 
-const ProductsContent = ({ products }) => {
+const ProductsContent = ({ products, getData, isLoading }) => {
   const clickRow = ({ _id }) => {
     history.push(`/products/${_id}`);
   };
 
   return (
-    <>
-      <Segment>
-        <Grid stackable>
-          <Grid.Row columns="equal" style={{ marginLeft: '0px' }}>
-            <div style={{ height: '100%', overflow: 'auto', width: '100%' }}>
-              <TableWithPagination list={products} perPage={25}>
-                <Unitable
-                  columns={columns}
-                  onRowClick={clickRow}
-                  clickArgs={['_id']}
-                  sortable
-                  selectable
-                  sortByColumn="name"
-                />
-              </TableWithPagination>
-            </div>
-          </Grid.Row>
-        </Grid>
-      </Segment>
-    </>
+    <Segment>
+      <CustomTable
+        sortByColumn="name"
+        columns={columns}
+        data={products}
+        onRowClick={clickRow}
+        getData={getData}
+        sortable
+        selectable
+        isLoading={isLoading}
+        excludeSortBy={['price']}
+      />
+    </Segment>
   );
 };
 
-const mapStateToProps = (state, { search, category }) => ({
-  products: getProductsWithFilter({ search, category })(state),
-  family: state.products.family,
-  tax: state.products.tax,
-});
-
-export default connect(mapStateToProps)(ProductsContent);
+export default ProductsContent;

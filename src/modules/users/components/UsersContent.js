@@ -1,97 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment, Container, Pagination, Grid } from 'semantic-ui-react';
-import { findIndex, propEq } from 'ramda';
-import {
-  Unitable,
-  conditionalValue,
-} from '../../shared/components/unitableReloaded';
-import { loadUsersSaga } from '../actions/usersActions';
+import { Segment, Grid } from 'semantic-ui-react';
+
+import { primaryColor, red, orange, teal } from 'lib/colors';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import UsersDetail from './UsersDetail';
-import { primaryColor, red, orange, teal } from '../../../lib/colors';
+import { getUsers, setActiveUser } from '../actions';
+import { getUsersListForTable, getActiveUserIDState } from '../selectors';
 
-// const userList = genUserListMock(20);
+const colors = {
+  Consumer: primaryColor,
+  Admin: red,
+  Employee: orange,
+  Replenisher: teal,
+};
 
-const UsersContent = ({ loadUsers, userList }) => {
-  const [activeUser, setActiveUser] = useState(0);
+const columns = [
+  {
+    title: 'Name',
+    field: 'name',
+  },
+  {
+    title: 'Type',
+    field: 'type',
+    formatter: ({ type }) => (
+      <span style={{ color: colors[type] }}>{type}</span>
+    ),
+  },
+];
 
+const UsersContent = ({
+  getUsers,
+  setActiveUser,
+  isUserListLoading,
+  userList,
+  activeUserID,
+}) => {
   useEffect(() => {
-    loadUsers();
+    if (!isUserListLoading) getUsers();
   }, []);
 
-  const columns = [
-    {
-      name: 'Name',
-    },
-    {
-      name: 'Type',
-      color: conditionalValue([
-        ['Consumer', primaryColor],
-        ['Admin', red],
-        ['Employee', orange],
-        ['Replenisher', teal],
-      ]),
-    },
-  ];
+  const handleRowClick = ({ _id }) => {
+    setActiveUser(_id);
+  };
 
   return (
     <Grid>
       <Grid.Row columns="equal" stretched>
         <Grid.Column width={5}>
           <Segment>
-            <Unitable
-              data={userList}
-              columns={columns}
-              onRowClick={({ _id }) => {
-                setActiveUser(findIndex(propEq('_id', _id))(userList));
-              }}
-              clickArgs={['_id']}
-              sortable
-              selectable
-              sortByColumn="name"
-            />
-            {true && (
-              <Container textAlign="center">
-                <Pagination
-                  style={{ marginTop: '10px' }}
-                  defaultActivePage={1}
-                  boundaryRange={0}
-                  onPageChange={null}
-                  size="mini"
-                  siblingRange={1}
-                  totalPages={1}
-                />
-              </Container>
-            )}
+            <TableWithPagination list={userList} perPage={25}>
+              <CustomTable
+                sortByColumn="name"
+                columns={columns}
+                onRowClick={handleRowClick}
+                sortable
+                selectable
+              />
+            </TableWithPagination>
           </Segment>
         </Grid.Column>
-        <Grid.Column>
-          <UsersDetail user={userList[activeUser]} />
-        </Grid.Column>
+        <Grid.Column>{activeUserID && <UsersDetail />}</Grid.Column>
       </Grid.Row>
     </Grid>
   );
 };
 
 export const UserShape = PropTypes.shape({
-  name: PropTypes.string,
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 });
 
 UsersContent.propTypes = {
-  loadUsers: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   userList: PropTypes.arrayOf(UserShape).isRequired,
 };
 
 const mapStateToProps = state => ({
-  userList: state.users,
+  userList: getUsersListForTable(state),
+  activeUserID: getActiveUserIDState(state),
+  isLoading: state.users.isLoading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadUsers: () => dispatch(loadUsersSaga()),
-});
+const mapDispatchToProps = {
+  getUsers,
+  setActiveUser,
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UsersContent);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContent);
