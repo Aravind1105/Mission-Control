@@ -29,10 +29,10 @@ increment-build-version:
     GIT_AUTHOR_NAME: "Gitlab-ci-livello"
     GIT_AUTHOR_EMAIL: "gitlab-cicd@livello.com"
   before_script:
-    - apk --no-cache --virtual build-dependencies add git
-    - git config --global user.email ${GIT_AUTHOR_EMAIL}
-    - git config --global user.name ${GIT_AUTHOR_NAME}
-    - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
+    # - apk --no-cache --virtual build-dependencies add git
+    # - git config --global user.email ${GIT_AUTHOR_EMAIL}
+    # - git config --global user.name ${GIT_AUTHOR_NAME}
+    # - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
   script:
     # - git checkout ${CI_COMMIT_BRANCH}
     # - git pull
