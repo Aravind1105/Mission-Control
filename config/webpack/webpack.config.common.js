@@ -1,7 +1,6 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
@@ -20,9 +19,8 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
-
       {
-        test: /\.less$/,
+        test: /\.(less|css)$/,
         use: [
           isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
