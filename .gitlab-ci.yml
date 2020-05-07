@@ -37,8 +37,8 @@ increment-build-version:
     - echo ${VERSION}
     - BUILD_TAG=$(date +%s)
   after_script:
-    - echo ${VERSION} > BUILD_TAG.txt
-    - echo ${BUILD_TAG} >> BUILD_TAG.txt
+    - echo $VERSION > BUILD_TAG.txt
+    - echo $BUILD_TAG >> BUILD_TAG.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: always
