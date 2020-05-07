@@ -4,16 +4,17 @@ import {
   updateTax,
   updateSingleProduct,
   getProductListSaga,
+  getProductLinesWithFilter,
   getProductSaga,
   getFullProductData,
   getProductSuccess,
-  getProductFamilySuccess,
   getFullProductDataSuccess,
   modifyProductSuccess,
 } from '../actions';
 
 const initialState = {
   list: [],
+  totalProducts: 0,
   product: null,
   isLoading: false,
   family: [],
@@ -22,13 +23,19 @@ const initialState = {
 
 export default handleActions(
   {
-    [combineActions(getProductListSaga, getFullProductData)]: state => ({
+    [combineActions(
+      getProductListSaga,
+      getFullProductData,
+      getProductLinesWithFilter,
+    )]: state => ({
       ...state,
       isLoading: true,
     }),
     [getProductListSuccess]: (state, { payload }) => ({
       ...state,
-      list: payload,
+      list: payload.products,
+      family: payload.families,
+      totalProducts: payload.totalProducts || 0,
       isLoading: false,
     }),
     [updateSingleProduct]: (state, { payload }) => ({
@@ -56,10 +63,6 @@ export default handleActions(
     ) => ({
       ...state,
       product: payload,
-    }),
-    [getProductFamilySuccess]: (state, { payload }) => ({
-      ...state,
-      family: payload,
     }),
   },
   initialState,

@@ -1,19 +1,23 @@
 import { combineReducers } from 'redux';
 
 // Shared reducers
-import user from 'modules/authentication/reducers/userReducer';
-import organizations from 'modules/organizations/reducers/organizationsReducer';
+import user from 'modules/authentication/reducers';
+import organizations from 'modules/organizations/reducers';
 import products from 'modules/products/reducers';
 import kiosks from 'modules/kiosks/reducers';
-import users from 'modules/users/reducers/usersReducer';
+import transactions from 'modules/transactions/reducers';
+import users from 'modules/users/reducers';
+import reports from 'modules/reports/reducers';
 import core from './reducers/coreReducer';
 
 // Module reducers
 export default combineReducers({
   core,
+  kiosks,
+  organizations,
+  products,
+  reports,
+  transactions,
   user,
   users,
-  organizations,
-  kiosks,
-  products,
 });

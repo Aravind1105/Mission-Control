@@ -2,10 +2,12 @@ import { createAction } from 'redux-actions';
 
 // Saga actions
 export const getOrganizations = createAction('@@saga/GET_ORGANIZATIONS');
-
-export const ORGANIZATIONS_SAGA_ADD = '@@saga/ORGANIZATIONS_ADD';
-export const addOrganizationsSaga = createAction(ORGANIZATIONS_SAGA_ADD);
+export const modifyOrganization = createAction('@@saga/MODIFY_ORGANIZATION');
 
 // State actions
-export const ORGANIZATIONS_STATE_UPDATE = '@@state/ORGANIZATIONS_UPDATE';
-export const updateOrganizations = createAction(ORGANIZATIONS_STATE_UPDATE);
+export const getOrganizationsSuccess = createAction(
+  '@@state/GET_ORGANIZATIONS_SUCCESS',
+);
+export const modifyOrganizationSuccess = createAction(
+  '@@state/MODIFY_ORGANIZATION_SUCCESS',
+);

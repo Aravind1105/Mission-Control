@@ -1,0 +1,134 @@
+import gql from 'graphql-tag';
+
+const FragmentLocation = {
+  location: gql`
+    fragment LocationForKiosk on Location {
+      address {
+        line1
+        line2
+        postalCode
+        city
+        state
+        country
+      }
+    }
+  `,
+};
+
+const FragmentInventory = {
+  inventory: gql`
+    fragment InventoryForKiosk on Inventory {
+      loadCells {
+        cellId
+        products {
+          _id
+          statusHistory {
+            status
+          }
+        }
+        productLine {
+          _id
+          name
+          priceHistory {
+            price
+            default
+            validForKiosks
+          }
+        }
+      }
+    }
+  `,
+};
+
+const FragmentKioskOnKiosk = gql`
+  fragment FragmentKiosk on Kiosk {
+    _id
+    name
+    doorStatus
+    serialNumber
+    qrcode
+    pin
+    temperature {
+      value
+      updated
+    }
+    location {
+      ...LocationForKiosk
+    }
+    ownerOrganization {
+      _id
+      address {
+        properties {
+          city
+        }
+      }
+    }
+    internet {
+      signalStrength
+    }
+    session {
+      type
+    }
+    inventory {
+      ...InventoryForKiosk
+    }
+  }
+  ${FragmentLocation.location}
+  ${FragmentInventory.inventory}
+`;
+
+export const GET_ALL_KIOSKS_QUERY = gql`
+  {
+    getAllKiosks {
+      _id
+      name
+      doorStatus
+      serialNumber
+      temperature {
+        value
+        updated
+      }
+      location {
+        address {
+          line1
+          city
+        }
+      }
+    }
+  }
+`;
+
+export const GET_KIOSK_QUERY = gql`
+  query kiosk($id: String!) {
+    getKioskById(id: $id) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
+`;
+
+export const CREATE_KIOSK_MUTATION = gql`
+  mutation kioskCreate($data: KioskInput!) {
+    kioskCreate(data: $data) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
+`;
+
+export const UPDATE_KIOSK_MUTATION = gql`
+  mutation kioskUpdate($id: String!, $data: KioskInput!) {
+    kioskUpdate(id: $id, data: $data) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
+`;
+
+export const LOAD_CELL_CONFIG_MUTATION = gql`
+  mutation modifyLoadCells($data: LoadCellsInput!) {
+    configureLoadCells(data: $data) {
+      _id
+    }
+  }
+`;

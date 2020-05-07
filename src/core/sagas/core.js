@@ -1,16 +1,17 @@
-import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { renewSession } from 'modules/authentication/sagas/authenticate';
-import { CORE_SAGA_INIT, setAppInitialized } from '../actions/coreActions';
-import { initializeI18n } from './i18n';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 
-function* initialize() {
+import { renewSession } from 'modules/authentication/sagas/authenticate';
+import { initializeI18n } from './i18n';
+import { initializeApp, setAppInitialized } from '../actions/coreActions';
+
+function* handler() {
   yield call(renewSession);
   yield call(initializeI18n);
   yield put(setAppInitialized(true));
 }
 
 function* watchInitialize() {
-  yield takeEvery(CORE_SAGA_INIT, initialize);
+  yield takeLatest(initializeApp, handler);
 }
 
 export default function* initializeSaga() {

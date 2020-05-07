@@ -1,23 +1,29 @@
-import React, { memo } from 'react';
-import { Dropdown, Image } from 'semantic-ui-react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { getUserState } from 'modules/authentication/selectors/userSelectors';
-import { logoutUserSaga } from 'modules/authentication/actions/userActions';
+import { Dropdown, Image } from 'semantic-ui-react';
+
+import { getUserState } from 'modules/authentication/selectors';
+import { logoutUserSaga } from 'modules/authentication/actions';
 
 const UserProfileBar = ({
-  handleLogout,
+  logoutUserSaga,
   userInfo: { name, picture },
   showName,
 }) => {
   const trigger = (
     <span>
-      <Image avatar src={picture} /> {showName && name}
+      <Image avatar src={picture} />
+      {showName ? name : ''}
     </span>
   );
   return (
     <Dropdown trigger={trigger} pointing="top left" icon={null}>
       <Dropdown.Menu>
-        <Dropdown.Item icon="sign-out" text="Sign out" onClick={handleLogout} />
+        <Dropdown.Item
+          icon="sign-out"
+          text="Sign out"
+          onClick={logoutUserSaga}
+        />
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -27,13 +33,6 @@ const mapStateToProps = state => ({
   userInfo: getUserState(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleLogout: () => dispatch(logoutUserSaga()),
-});
+const mapDispatchToProps = { logoutUserSaga };
 
-export default memo(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(UserProfileBar),
-);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileBar);

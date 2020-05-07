@@ -36,6 +36,7 @@ const KioskForm = ({ initialValues, organizations }) => {
                   name="serialNumber"
                   label="Serial Number"
                   required
+                  disabled={initialValues.id}
                   component={FormInput}
                 />
               </Grid.Column>

@@ -1,55 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Header, Progress } from 'semantic-ui-react';
+import React from 'react';
+import {
+  Container,
+  Header,
+  Segment,
+  Button,
+  Icon,
+  Divider,
+} from 'semantic-ui-react';
 
-import { Unitable } from 'modules/shared/components/unitableReloaded';
-import { fridgesTableData } from '../mocks/organziationsMocks';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
 
 const columns = [
   {
-    name: 'Name',
-    textAlign: 'center',
+    title: 'Name',
+    field: 'name',
   },
   {
-    name: 'Last Repl.',
-    mapDataFrom: 'timestamp',
+    title: 'Location',
+    field: 'location',
   },
   {
-    name: 'Inventory',
-    mapDataFrom: 'level',
-    type: 'progress',
+    title: 'Status',
+    field: 'status',
+  },
+  {
+    title: '',
+    field: 'edit',
+    formatter: () => <Icon name="edit outline" fitted />,
   },
 ];
 
-const DetailsFridges = ({ setSelectedFridge }) => {
-  const [initialized, setInitialized] = useState(false);
+const DetailsFridges = ({ kiosks }) => (
+  <Segment>
+    <Header as="h3">{`Kiosks (${kiosks.length})`}</Header>
+    <Divider />
+    <CustomTable
+      basic="very"
+      data={kiosks}
+      columns={columns}
+      sortByColumn="name"
+    />
+    <Container textAlign="center">
+      <Button color="green" compact>
+        + Add kiosk
+      </Button>
+    </Container>
+  </Segment>
+);
 
-  useEffect(() => {
-    if (!initialized) {
-      fridgesTableData.length > 0 && setSelectedFridge(fridgesTableData[0].id);
-      setInitialized(true);
-    }
-  });
-
-  return (
-    <>
-      <Header as="h4" dividing>
-        Fridges
-      </Header>
-      <Unitable
-        data={fridgesTableData}
-        columns={columns}
-        onRowClick={({ id }) => {
-          return setSelectedFridge(id);
-        }}
-        clickArgs={['id']}
-        selectable
-        sortByColumn="name"
-      />
-      <Progress percent={49} warning progress="percent">
-        Overall capacity
-      </Progress>
-    </>
-  );
+DetailsFridges.defaultProps = {
+  kiosks: [{}, {}],
 };
 
 export default DetailsFridges;

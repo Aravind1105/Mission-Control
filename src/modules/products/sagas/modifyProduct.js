@@ -1,66 +1,67 @@
 import { call, all, put, takeLatest, select } from 'redux-saga/effects';
+import get from 'lodash/get';
 
-import ls from 'lib/LocalStorage';
 import history from 'lib/history';
-import responseErrorFormatter from 'lib/responseErrorFormatter';
-import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
-import updatePrice from './updatePrice';
-import { handlerGetProduct } from './getProduct';
+import gqlProducts from 'lib/https/gqlProducts';
+// import updatePrice from './updatePrice';
+import {
+  CREATE_PRODUCT_LINE_MUTATION,
+  UPDATE_PRODUCT_LINE_MUTATION,
+  UPDATE_PRODUCT_LINE_PRICE_MUTATION,
+} from '../schema';
 import { selectorGetProductTax } from '../selectors';
 import {
   modifyProductSaga as action,
   modifyProductSuccess as actionSuccess,
 } from '../actions';
 
-function handlerModifyProduct(data, id) {
-  const token = ls.getItem(TOKEN_STORAGE_KEY);
-  const route = id ? `/${id}` : '';
-
-  return fetch(`/api/v1/product-lines${route}`, {
-    method: id ? 'PUT' : 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-}
-
-function* handler({ payload: { values, formActions, initialValues } }) {
-  const { id, defaultPriceId, ...data } = values;
-  const isPriceUpdate = id && initialValues.defaultPrice !== data.defaultPrice;
+function* handler({ payload: { values, initialValues } }) {
+  const { id, defaultPriceId, ...rest } = values;
+  const isPriceUpdate = id && initialValues.defaultPrice !== rest.defaultPrice;
   try {
     const taxes = yield select(selectorGetProductTax);
-    const tax = data.tax
-      ? taxes.find(el => el._id === data.tax)
-      : { _id: data.tax };
-    data.tax = tax._id;
 
-    const [response] = yield all([
-      call(handlerModifyProduct, data, id),
+    const tax = rest.tax ? taxes.find(el => el.taxValue === rest.tax) : '';
+    rest.tax = tax ? tax._id : '';
+    const variables = {
+      data: rest,
+    };
+    if (id) {
+      variables.id = id;
+    }
+    const [{ data }, priceMutation] = yield all([
+      call(gqlProducts.mutate, {
+        mutation: id
+          ? UPDATE_PRODUCT_LINE_MUTATION
+          : CREATE_PRODUCT_LINE_MUTATION,
+        variables,
+      }),
       isPriceUpdate
-        ? call(updatePrice, id, {
-            priceId: defaultPriceId,
-            price: data.defaultPrice,
-            default: true,
+        ? call(gqlProducts.mutate, {
+            mutation: UPDATE_PRODUCT_LINE_PRICE_MUTATION,
+            variables: {
+              id,
+              data: {
+                priceId: defaultPriceId,
+                price: rest.defaultPrice,
+                default: true,
+              },
+            },
           })
         : null,
     ]);
-    let respData = yield call([response, response.json]);
+    const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
+    const priceHistory = get(
+      priceMutation,
+      'data.updateProductLinePrice.priceHistory',
+      responseData.priceHistory,
+    );
 
-    if ('error' in respData && respData.status !== 200) {
-      const errors = responseErrorFormatter(respData);
-      if (errors) yield put(formActions.setErrors(errors));
-      throw Error('error in saga');
-    }
-    if (id) {
-      const prod = yield call(handlerGetProduct, respData._id);
-      respData = yield call([prod, prod.json]);
-    } else {
-      history.replace(`/products/${respData._id}`);
+    if (!id) {
+      history.replace(`/products/${responseData._id}`);
     }
 
-    yield put(actionSuccess(respData));
+    yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
   }

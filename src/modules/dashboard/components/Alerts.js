@@ -1,47 +1,53 @@
-import React from 'react';
-import {
-  Button, Header, Icon, Segment,
-} from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
+import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
 
-import {
-  Unitable,
-  conditionalValue,
-  valueEquals,
-} from 'modules/shared/components/unitableReloaded';
-import { alertsMockData } from '../mocks/alertsMocks';
+const iconType = {
+  Resolved: 'check circle',
+  New: 'attention',
+  'In progress': 'time',
+};
 
-const Alerts = () => {
+const Alerts = ({ list }) => {
+  const [rowLimit, setRowLimit] = useState(5);
+
   const { t } = useTranslation();
-
   const columns = [
     {
-      name: t('message'),
-      mapDataFrom: 'message',
+      title: t('message'),
+      field: 'message',
     },
     {
-      name: t('customer'),
-      mapDataFrom: 'customer',
+      title: t('Name'),
+      field: 'name',
     },
     {
-      name: t('time'),
-      mapDataFrom: 'timestamp',
-      postfix: value => ` hour${value > 1 ? 's' : ''} ago`,
+      title: t('Time'),
+      field: 'date',
+      formatter: ({ date }) =>
+        date || date === 0 ? `${date} hour${date > 1 ? 's' : ''} ago` : '',
     },
     {
-      name: t('status'),
-      mapDataFrom: 'status',
-      positive: valueEquals('Resolved'),
-      negative: valueEquals('New'),
-      warning: valueEquals('In progress'),
-      icon: conditionalValue([
-        ['Resolved', 'check circle'],
-        ['New', 'attention'],
-        ['In progress', 'time'],
-      ]),
+      title: t('status'),
+      field: 'status',
+      formatter: ({ status }) => {
+        const name = iconType[status];
+        return (
+          <>
+            <Icon name={name} />
+            {status}
+          </>
+        );
+      },
     },
   ];
+
+  const handlerToggle = () => {
+    setRowLimit(val => (val ? 0 : 5));
+  };
 
   return (
     <Segment>
@@ -51,17 +57,19 @@ const Alerts = () => {
           <Header.Content>Alerts</Header.Content>
         </Header>
         <div>
-          <Button icon labelPosition="right" basic>
+          <Button icon labelPosition="right" basic onClick={handlerToggle}>
             Show all
-            <Icon name="angle right" />
+            <Icon name={`angle ${rowLimit ? 'right' : 'down'}`} />
           </Button>
         </div>
       </SegmentHeader>
-      <Unitable
-        data={alertsMockData}
-        columns={columns}
+      <CustomTable
+        sortByColumn="date"
         sortable
-        sortByColumn="timestamp"
+        fixed
+        data={list}
+        columns={columns}
+        rowLimit={rowLimit}
       />
     </Segment>
   );

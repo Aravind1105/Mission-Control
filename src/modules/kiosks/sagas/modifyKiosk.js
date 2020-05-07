@@ -1,42 +1,32 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import ls from 'lib/LocalStorage';
-import responseErrorFormatter from 'lib/responseErrorFormatter';
+// import responseErrorFormatter from 'lib/responseErrorFormatter';
 import history from 'lib/history';
-import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
+import gqlKiosk from 'lib/https/gqlKiosk';
 import {
   modifyKiosk as action,
   modifyKioskSuccess as actionSuccess,
 } from '../actions';
-
-function handlerRequest(id, body) {
-  const token = ls.getItem(TOKEN_STORAGE_KEY);
-  const route = id ? `/${id}` : '';
-
-  return fetch(`/api/v1/kiosks${route}`, {
-    method: id ? 'PATCH' : 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-}
+import { CREATE_KIOSK_MUTATION, UPDATE_KIOSK_MUTATION } from '../schema';
 
 function* handler({ payload: { values, formActions } }) {
   try {
     const { id, ...rest } = values;
-    const body = JSON.stringify(rest);
-    const response = yield call(handlerRequest, id, body);
-    const data = yield call([response, response.json]);
-
-    if (!data._id) {
-      const errors = responseErrorFormatter(data);
-      if (errors) yield put(formActions.setErrors(errors));
-      throw Error('error in saga');
+    const variables = {
+      data: rest,
+    };
+    if (id) {
+      variables.id = id;
     }
-    history.push(`/kiosks/edit/${data._id}`);
-    yield put(actionSuccess(data));
+
+    const { data } = yield call(gqlKiosk.mutate, {
+      mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
+      variables,
+    });
+    const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
+
+    history.push(`/kiosks/edit/${responseData._id}`);
+    yield put(actionSuccess(responseData));
   } catch (error) {
     console.log(error);
   }

@@ -4,7 +4,6 @@ import {
   loadKiosksSaga,
   updateKiosks,
   updateKioskById,
-  selectKiosk,
   getKiosk,
   getKioskSuccess,
   modifyKioskSuccess,
@@ -13,7 +12,7 @@ import {
 const initialState = {
   list: [],
   kiosk: null,
-  kioskIsLoading: false,
+  isKioskLoading: false,
   isLoading: false,
 };
 
@@ -25,7 +24,7 @@ export const kiosksReducer = handleActions(
     }),
     [getKiosk]: state => ({
       ...state,
-      kioskIsLoading: true,
+      isKioskLoading: true,
     }),
     [updateKiosks]: (state, { payload }) => ({
       ...state,
@@ -40,13 +39,13 @@ export const kiosksReducer = handleActions(
         isLoading: false,
       };
     },
-    [combineActions(selectKiosk, getKioskSuccess, modifyKioskSuccess)]: (
+    [combineActions(getKioskSuccess, modifyKioskSuccess)]: (
       state,
       { payload },
     ) => ({
       ...state,
       kiosk: payload,
-      kioskIsLoading: false,
+      isKioskLoading: false,
     }),
   },
   initialState,

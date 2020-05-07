@@ -17,7 +17,7 @@ const separateToSides = cells =>
     { A: [], B: [] },
   );
 
-const DetailsLoadCells = ({ cells, kioskName, serial }) => {
+const DetailsLoadCells = ({ cells, kioskName }) => {
   const [product, selectProduct] = useState(null);
 
   const handleEdit = ({ productLine, cellId, availableProducts }) => () => {
