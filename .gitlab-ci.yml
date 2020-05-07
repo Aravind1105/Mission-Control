@@ -36,7 +36,7 @@ increment-build-version:
   script:
     - npm version from-git
     - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}" -f --no-git-tag-version )
-    - git push origin $TAG
+    - git push --tags --force
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
     - echo ${VERSION}
     - BUILD_TAG=$(date +%s)
