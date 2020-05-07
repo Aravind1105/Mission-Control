@@ -36,9 +36,9 @@ increment-build-version:
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
     - echo ${VERSION}
     - BUILD_TAG=$(date +%s)
-  after_script:
-    - echo $VERSION > BUILD_TAG.txt
-    - echo $BUILD_TAG >> BUILD_TAG.txt
+    - echo $VERSION > buildTag.txt
+    - echo $BUILD_TAG >> buildTag.txt
+    - cat buildTag.txt
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: always
@@ -48,7 +48,7 @@ increment-build-version:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
     paths:
-      - BUILD_TAG.txt
+      - buildTag.txt
 
 .build-push-template: &build-push-template
   stage: docker-build-push
@@ -61,8 +61,8 @@ increment-build-version:
     - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - git describe --abbrev=0 --tags | cut -c 2-
-    - VERSION=$(cat BUILD_TAG.txt | sed -n 1p )
-    - BUILD_TAG=$(cat BUILD_TAG.txt | sed -n 2p )
+    - VERSION=$(cat buildTag.txt | sed -n 1p )
+    - BUILD_TAG=$(cat buildTag.txt | sed -n 2p )
     #.env - File Contents needs to be created to .env for webpack ease
     - echo AUTH_DOMAIN=$auth_domain >> .env
     - echo AUTH_CLIENT_ID=$auth_client_id >> .env
@@ -80,14 +80,14 @@ increment-build-version:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
     paths:
-      - BUILD_TAG.txt
+      - buildTag.txt
 
 .cloud-run-template: &clound-run-template
   stage: cloudrun-service-deploy
   image: google/cloud-sdk:alpine
   before_script:
-    - VERSION=$(cat BUILD_TAG.txt | sed -n 1p )
-    - BUILD_TAG=$(cat BUILD_TAG.txt | sed -n 2p )
+    - VERSION=$(cat buildTag.txt | sed -n 1p )
+    - BUILD_TAG=$(cat buildTag.txt | sed -n 2p )
     - gcloud components install beta --quiet
   script:
     - gcloud auth activate-service-account --key-file $(echo $CLOUDRUN_CICD_SA_KEY)
@@ -96,7 +96,7 @@ increment-build-version:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
     paths:
-      - BUILD_TAG.txt
+      - buildTag.txt
 
 build-push-staging:
   variables:
