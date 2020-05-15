@@ -11,16 +11,17 @@ module.exports = configMerge(commonConfig, {
   output: {
     path: dist,
     publicPath: '/',
-    filename: 'bundle.js',
-    chunkFilename: '[name].bundle.js',
+    filename: '[name].[contenthash].bundle.js',
+    chunkFilename: '[name].[contenthash].bundle.js',
   },
   optimization: {
     splitChunks: {
       chunks: 'all',
     },
+    runtimeChunk: 'single',
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+    new HtmlWebpackPlugin({ title: 'Caching', template: 'src/index.html' }),
   ],
 });

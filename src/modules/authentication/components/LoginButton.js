@@ -4,15 +4,13 @@ import { Button, Icon } from 'semantic-ui-react';
 
 import { authenticateUserSaga } from 'modules/authentication/actions';
 
-const LoginButton = ({ doLoginUser, ...props }) => (
-  <Button primary onClick={doLoginUser} icon labelPosition="left" {...props}>
+const LoginButton = ({ authUser, ...props }) => (
+  <Button primary onClick={authUser} icon labelPosition="left" {...props}>
     <Icon name="google" />
     Sign in with Google
   </Button>
 );
 
-const mapDispatchToProps = dispatch => ({
-  doLoginUser: () => dispatch(authenticateUserSaga()),
-});
+const mapDispatchToProps = { authUser: authenticateUserSaga };
 
 export default connect(null, mapDispatchToProps)(LoginButton);
