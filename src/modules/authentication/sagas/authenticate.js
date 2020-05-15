@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import auth0 from 'auth0-js';
 import history from 'lib/history';
-import LivelloLS from 'lib/LocalStorage';
+import LivelloLS from 'lib/localStorage';
 import gqlOrganization from 'lib/https/gqlOrganization';
 import {
   USER_SAGA_AUTHENTICATE,

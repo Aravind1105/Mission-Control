@@ -2,7 +2,7 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react';
 import format from 'date-fns/format';
 
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 
 const itemsPurchasedFormatter = items => {

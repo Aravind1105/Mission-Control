@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dropdown, Header, Segment } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
-import { UniTable } from 'modules/shared/components/unitable';
+import CustomTable from 'modules/shared/components/CustomTable';
 
 const options = [
   { key: 1, text: 'Today', value: 'today' },
@@ -9,52 +9,17 @@ const options = [
   { key: 3, text: 'This month', value: 'last_week' },
 ];
 
-// table configuration start
-
-const tableConfig = {
-  headless: true,
-  enumerated: true,
-  striped: true,
-  selectable: false,
-  sortation: 'sales',
-  sorting: 'descending',
-  clickArg: [],
-};
-const tableColumns = [
+const columns = [
   {
-    name: 'item',
-    label: 'Produkt',
-    unit: '',
-    width: 65,
-    align: 'left',
+    title: 'Sellers',
+    field: 'item',
   },
   {
-    name: 'sales',
-    label: 'Verkäufe',
-    unit: '€',
-    width: 35,
-    align: 'right',
+    title: 'Price',
+    field: 'sales',
+    formatter: ({ sales }) => `€${sales}`,
   },
 ];
-const filters = [];
-const infos = [
-  {
-    column: 'sales',
-    value: 100,
-    comparsion: 'lower',
-    type: 'error',
-    icon: 'attention',
-  },
-  {
-    column: 'sales',
-    value: 100,
-    comparsion: 'greater',
-    type: 'positive',
-    icon: 'star',
-  },
-];
-
-// table configuration end
 
 const Ranking = ({ title, data }) => {
   const [timerange, setTimerange] = useState('today');
@@ -65,25 +30,24 @@ const Ranking = ({ title, data }) => {
         <Header as="h4">
           <Header.Content>{title}</Header.Content>
         </Header>
-        <div>
-          <Dropdown
-            onChange={(e, { value }) => {
-              setTimerange(value);
-            }}
-            options={options}
-            placeholder="Choose an option"
-            selection
-            value={timerange}
-            style={{ minWidth: 115 }}
-          />
-        </div>
+
+        <Dropdown
+          onChange={(e, { value }) => {
+            setTimerange(value);
+          }}
+          options={options}
+          placeholder="Choose an option"
+          selection
+          value={timerange}
+          style={{ minWidth: 115 }}
+        />
       </SegmentHeader>
-      <UniTable
-        tableConfig={tableConfig}
-        tableColumns={tableColumns}
-        tableData={data}
-        filters={filters}
-        infos={infos}
+      <CustomTable
+        columns={columns}
+        data={data}
+        headless
+        sortDirection="DESC"
+        sortByColumn="sales"
       />
     </Segment>
   );

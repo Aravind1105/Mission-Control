@@ -13,7 +13,7 @@ const initialState = {
   isLoading: false,
 };
 
-export const usersReducer = handleActions(
+const usersReducer = handleActions(
   {
     [getUsers]: state => ({
       ...state,

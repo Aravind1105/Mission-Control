@@ -28,15 +28,21 @@ const CustomTable = ({
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
-  const [direction, setDirection] = useState(sortTypes[sortDirection]);
+  const [direction, setDirection] = useState(
+    sortTypes[sortDirection.toUpperCase()],
+  );
   const [sortBy, setSortBy] = useState(sortByColumn);
   const [activeRow, setActiveRow] = useState(-1);
 
   useEffect(() => {
+    let res = data;
     if (sortBy) {
-      const res = getData ? data : orderBy(data, [sortBy], ['asc']);
+      res = getData
+        ? data
+        : orderBy(data, [sortBy], sortDirection.toLowerCase() || ['asc']);
       setTableData(res);
     }
+    setTableData(res);
   }, [data]);
 
   const handlerHCellClick = key => () => {

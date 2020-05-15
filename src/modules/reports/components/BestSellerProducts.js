@@ -2,10 +2,10 @@ import React from 'react';
 import { Segment, Header, Icon } from 'semantic-ui-react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
+import colorGenerator from 'lib/colorGenerator';
 import CircleChart from 'modules/shared/components/CircleChart';
 
-const randomColor = () => `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
-const colors = Array.from({ length: 5 }).map(() => randomColor());
+const colors = Array.from({ length: 5 }).map(() => colorGenerator());
 
 const TopSellers = ({ data }) => (
   <Segment.Group>

@@ -1,7 +1,7 @@
 import { all, call, takeEvery, put } from 'redux-saga/effects';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import ls from 'lib/LocalStorage';
+import ls from 'lib/localStorage';
 import { changeLanguageSaga } from '../actions/i18nActions';
 import { setLanguageState } from '../actions/coreActions';
 import baseLanguage from '../i18n';

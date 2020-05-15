@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
-import { loadKiosksSaga } from 'modules/kiosks/actions';
+import { getAllKiosks } from 'modules/kiosks/actions';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
 import LanguageSelect from '../LanguageSelect';
@@ -11,12 +11,12 @@ import AlertsList from '../AlertsList';
 import logoSmall from '../../../../styling/assets/images/logo-small.png';
 import './desktopLayout.less';
 
-const DesktopLayout = ({ children, isLoading, alerts, loadKiosksSaga }) => {
+const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
 
   useEffect(() => {
-    if (!isLoading) loadKiosksSaga();
+    if (!isLoading) getAllKiosks();
   }, []);
 
   return (
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadKiosksSaga,
+  getAllKiosks,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DesktopLayout);

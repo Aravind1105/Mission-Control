@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Segment, Grid } from 'semantic-ui-react';
 
 import { primaryColor, red, orange, teal } from 'lib/colors';
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import UsersDetail from './UsersDetail';
 import { getUsers, setActiveUser } from '../actions';

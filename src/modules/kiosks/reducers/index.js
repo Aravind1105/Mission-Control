@@ -1,7 +1,7 @@
 import { handleActions, combineActions } from 'redux-actions';
 import { findIndex, propEq, update } from 'ramda';
 import {
-  loadKiosksSaga,
+  getAllKiosks,
   updateKiosks,
   updateKioskById,
   getKiosk,
@@ -18,9 +18,9 @@ const initialState = {
   isLoading: false,
 };
 
-export const kiosksReducer = handleActions(
+const kiosksReducer = handleActions(
   {
-    [loadKiosksSaga]: state => ({
+    [getAllKiosks]: state => ({
       ...state,
       isLoading: true,
     }),

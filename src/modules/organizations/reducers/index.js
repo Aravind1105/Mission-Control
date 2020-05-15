@@ -10,7 +10,7 @@ const initialState = {
   isLoading: false,
 };
 
-export const organizationsReducer = handleActions(
+const organizationsReducer = handleActions(
   {
     [getOrganizations]: state => ({
       ...state,
