@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
 import { GET_ALL_KIOSKS_QUERY } from '../schema';
-import { updateKiosks, loadKiosksSaga } from '../actions';
+import { updateKiosks, getAllKiosks } from '../actions';
 
 function* handler() {
   try {
@@ -16,5 +16,5 @@ function* handler() {
 }
 
 export default function* saga() {
-  yield takeLatest(loadKiosksSaga, handler);
+  yield takeLatest(getAllKiosks, handler);
 }

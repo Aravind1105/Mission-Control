@@ -12,7 +12,7 @@ import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
 import { getKioskSingle, getKioskShelves } from './selectors';
-import { resetKiosk, loadKiosksSaga, refillKiosk, getKiosk } from './actions';
+import { resetKiosk, getAllKiosks, refillKiosk, getKiosk } from './actions';
 
 import './styles.less';
 
@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   resetKiosk,
-  loadKiosksSaga,
+  getAllKiosks,
   refillKiosk,
   getKiosk,
 };

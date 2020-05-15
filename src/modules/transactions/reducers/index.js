@@ -8,7 +8,7 @@ const initialState = {
   isLoading: false,
 };
 
-export const transactionsReducer = handleActions(
+const transactionsReducer = handleActions(
   {
     [getAllTransactions]: state => ({
       ...state,

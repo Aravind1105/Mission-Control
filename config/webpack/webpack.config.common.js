@@ -20,6 +20,11 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
+        test: /\.(js|jsx)$/,
+        use: 'react-hot-loader/webpack',
+        include: /node_modules/,
+      },
+      {
         test: /\.(less|css)$/,
         use: [
           isDev ? 'style-loader' : MiniCssExtractPlugin.loader,

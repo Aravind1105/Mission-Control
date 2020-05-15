@@ -31,7 +31,7 @@ const App = ({ initialized, isAuthenticated, initializeApp }) => {
             <Switch>
               {routes.map(({ Component, name, path, pathOptions }) => (
                 <Route
-                  exact={(pathOptions && pathOptions.exact) || false}
+                  exact={Boolean(pathOptions && pathOptions.exact)}
                   path={path}
                   key={name}
                 >

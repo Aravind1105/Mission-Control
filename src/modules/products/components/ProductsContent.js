@@ -3,7 +3,7 @@ import { Segment } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {

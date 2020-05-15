@@ -8,7 +8,7 @@ import {
   Container,
 } from 'semantic-ui-react';
 
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {

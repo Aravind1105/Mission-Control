@@ -1,6 +1,6 @@
 import { ApolloLink } from 'apollo-link';
 
-import ls from 'lib/LocalStorage';
+import ls from 'lib/localStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 
 const requestInterceptor = new ApolloLink((operation, forward) => {

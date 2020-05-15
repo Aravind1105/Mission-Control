@@ -8,11 +8,13 @@ import kiosks from 'modules/kiosks/reducers';
 import transactions from 'modules/transactions/reducers';
 import users from 'modules/users/reducers';
 import reports from 'modules/reports/reducers';
+import dashboard from 'modules/dashboard/reducers';
 import core from './reducers/coreReducer';
 
 // Module reducers
 export default combineReducers({
   core,
+  dashboard,
   kiosks,
   organizations,
   products,
