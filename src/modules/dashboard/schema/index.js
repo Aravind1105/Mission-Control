@@ -1,0 +1,61 @@
+import gql from 'graphql-tag';
+
+const FragmentStatisticOnSalesByFridgeId = gql`
+  fragment FragmentStatistic on SalesByFridgeId {
+    type
+    week
+    kiosk
+    line {
+      _id
+      name
+    }
+  }
+`;
+
+export const GET_HOURLY_SALES_STATISTIC_QUERY = gql`
+  query getStatistic($kioskId: String) {
+    hourlySalesByKiosk(kioskId: $kioskId) {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesByFridgeId}
+`;
+
+export const GET_DAILY_SALES_STATISTIC_QUERY = gql`
+  query getStatistic($kioskId: String) {
+    dailySalesByKiosk(kioskId: $kioskId) {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesByFridgeId}
+`;
+
+export const GET_WEEKLY_SALES_STATISTIC_QUERY = gql`
+  query getStatistic($kioskId: String) {
+    weeklySalesByKiosk(kioskId: $kioskId) {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesByFridgeId}
+`;
+
+export const GET_MONTHLY_SALES_STATISTIC_QUERY = gql`
+  query getStatistic($kioskId: String) {
+    monthlySalesByKiosk(kioskId: $kioskId) {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesByFridgeId}
+`;

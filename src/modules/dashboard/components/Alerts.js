@@ -3,7 +3,7 @@ import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 
 const iconType = {
   Resolved: 'check circle',

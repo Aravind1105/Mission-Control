@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
 };
 
-export const reportsReducer = handleActions(
+const reportsReducer = handleActions(
   {
     [getReports]: state => ({
       ...state,

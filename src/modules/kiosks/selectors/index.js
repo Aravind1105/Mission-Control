@@ -107,6 +107,14 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
+export const getKioskOptions = createSelector(getKiosksState, kiosks => [
+  { value: '', label: 'All Fridges' },
+  ...kiosks.map(({ _id, name }) => ({
+    value: _id,
+    label: name,
+  })),
+]);
+
 export const kioskInitialValues = {
   name: '',
   serialNumber: '',

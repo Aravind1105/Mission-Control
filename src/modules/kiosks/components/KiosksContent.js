@@ -4,12 +4,12 @@ import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import Loader from 'modules/shared/components/Loader';
 import CellHeartbeat from './CellHeartbeat';
 import { getKiosksWithSearch } from '../selectors';
-import { loadKiosksSaga } from '../actions';
+import { getAllKiosks } from '../actions';
 
 const columns = [
   {
@@ -51,9 +51,9 @@ const columns = [
   },
 ];
 
-const KiosksContent = ({ isLoading, loadKiosksSaga, kiosks, history }) => {
+const KiosksContent = ({ isLoading, getAllKiosks, kiosks, history }) => {
   useEffect(() => {
-    if (!isLoading) loadKiosksSaga();
+    if (!isLoading) getAllKiosks();
   }, []);
 
   const handlerClickRow = ({ _id }) => {
@@ -83,13 +83,13 @@ const mapStateToProps = (state, { search }) => ({
 });
 
 const mapDispatchToProps = {
-  loadKiosksSaga,
+  getAllKiosks,
 };
 
 KiosksContent.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   kiosks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loadKiosksSaga: PropTypes.func.isRequired,
+  getAllKiosks: PropTypes.func.isRequired,
 };
 
 export default withRouter(

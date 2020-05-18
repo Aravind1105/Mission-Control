@@ -1,12 +1,8 @@
 import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
-// import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 import CircleChart from 'modules/shared/components/CircleChart';
 import StatisticBlock from './StatisticBlock';
-
-// const randomColor = () => `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
-// const colors = Array.from({ length: 5 }).map(() => randomColor());
 
 const PortfolioPerfGraph = ({ data }) => (
   <Segment>

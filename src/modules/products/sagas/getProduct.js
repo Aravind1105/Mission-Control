@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import ls from 'lib/LocalStorage';
+import ls from 'lib/localStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 import {
   getProductSaga as action,

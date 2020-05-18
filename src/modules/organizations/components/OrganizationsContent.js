@@ -4,7 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
-import CustomTable from 'modules/shared/components/unitableReloaded/CustomTable';
+import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import { getOrganizationsState } from '../selectors';

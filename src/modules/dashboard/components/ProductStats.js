@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, Header, Segment } from 'semantic-ui-react';
 import { SegmentHeader } from 'modules/shared/components';
-import { UniTable } from 'modules/shared/components/unitable';
+import CustomTable from 'modules/shared/components/CustomTable';
 
 const optionsTime = [
   { key: 1, text: 'Today', value: 'today' },
@@ -16,95 +16,35 @@ const optionsFridges = [
   { key: 3, text: 'Docomo', value: 'docomo' },
 ];
 
-// table configuration start
-
-const tableConfig = {
-  headless: false,
-  enumerated: true,
-  striped: true,
-  selectable: true,
-  sortation: 'name',
-  sorting: 'ascending',
-  clickArg: ['id', 'name'],
-};
-
-const tableColumns = [
+const columns = [
   {
-    name: 'id',
-    label: '',
-    unit: '',
-    width: 0,
-    align: '',
+    title: 'Produktname',
+    field: 'name',
   },
   {
-    name: 'name',
-    label: 'Produktname',
-    unit: '',
-    width: 40,
-    align: 'left',
+    title: 'Bestand',
+    field: 'stock',
   },
   {
-    name: 'stock',
-    label: 'Bestand',
-    unit: 'Stk.',
-    width: 20,
-    align: 'center',
+    title: '€ Verkäufe',
+    field: 'sales',
+    formatter: ({ sales }) => `€${sales}`,
   },
   {
-    name: 'sales',
-    label: 'Verkäufe',
-    unit: '€',
-    width: 20,
-    align: 'center',
+    title: '# Verkauft',
+    field: 'sold',
   },
   {
-    name: 'sold',
-    label: 'Verkauft',
-    unit: 'Stk.',
-    width: 20,
-    align: 'center',
-  },
-  {
-    name: 'margin',
-    label: 'Profit',
-    unit: '%',
-    width: 20,
-    align: 'center',
+    title: 'Profit',
+    field: 'margin',
+    formatter: ({ margin }) => `${margin}%`,
   },
 ];
-
-const filters = [];
-
-const infos = [
-  {
-    column: 'stock',
-    value: 150,
-    comparsion: 'lower',
-    type: 'error',
-    icon: 'attention',
-  },
-  {
-    column: 'sales',
-    value: 7000,
-    comparsion: 'greater',
-    type: 'positive',
-    icon: 'star',
-  },
-  {
-    column: 'margin',
-    value: 35,
-    comparsion: 'lower',
-    type: 'warning',
-    icon: 'question circle',
-  },
-];
-
-// table configuration end
 
 const ProductStats = ({ data }) => {
   const [timerange, setTimerange] = useState('today');
   const [fridge, setFridge] = useState('all');
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Segment>
@@ -133,30 +73,7 @@ const ProductStats = ({ data }) => {
           />
         </div>
       </SegmentHeader>
-      <UniTable
-        tableConfig={tableConfig}
-        tableColumns={tableColumns}
-        tableData={data}
-        filters={filters}
-        infos={infos}
-        onClickRow={(...args) => console.log('click on row: ', ...args)}
-      />
-      {/* <Table stackable size="small">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Current inventory</Table.HeaderCell>
-            <Table.HeaderCell>€ Sales</Table.HeaderCell>
-            <Table.HeaderCell># Sold</Table.HeaderCell>
-            <Table.HeaderCell>Margin</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map(props => (
-            <ProductItemStats {...props} key={props.id} />
-          ))}
-        </Table.Body>
-      </Table> */}
+      <CustomTable columns={columns} data={data} />
     </Segment>
   );
 };
