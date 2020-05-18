@@ -35,7 +35,7 @@ const DesktopLayout = ({ children, isLoading, alerts, loadKiosksSaga }) => {
             onClick={() => setMinimized(!minimized)}
           />
         </Menu.Item>
-        <Menu.Item>Version {process.env.BUILD_TAG}</Menu.Item>
+        <Menu.Item>Ver: {process.env.BUILD_TAG}</Menu.Item>
       </Menu>
       <div className="desktop-content">
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
