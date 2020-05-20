@@ -45,7 +45,20 @@ module.exports = {
           { loader: require.resolve('less-loader') },
         ],
       },
-
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        issuer: {
+          test: /\.jsx?$/,
+        },
+        use: ['babel-loader', '@svgr/webpack', 'url-loader'],
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: require.resolve('file-loader'),
+        options: {
+          name: 'static/media/[name].[hash:8].[ext]',
+        },
+      },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: require.resolve('url-loader'),
@@ -56,7 +69,7 @@ module.exports = {
       },
 
       {
-        test: [/\.eot$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
+        test: [/\.eot$/, /\.ttf$/, /\.woff$/, /\.woff2$/],
         loader: require.resolve('file-loader'),
         options: {
           name: 'static/media/[name].[hash:8].[ext]',
@@ -87,6 +100,7 @@ module.exports = {
       ),
       lib: path.resolve('src', 'lib'),
       core: path.resolve('src', 'core'),
+      styling: path.resolve('src', 'styling'),
     },
     extensions: ['.js', '.json', '.jsx', '.less'],
   },

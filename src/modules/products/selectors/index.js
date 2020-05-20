@@ -92,6 +92,7 @@ const defaultFormInit = {
   ingredientsList: '',
   salt: '',
   defaultPrice: '',
+  images: [],
   packagingOptions: [
     {
       ean: '',
@@ -130,6 +131,7 @@ export const selectorGetProductInitValue = createSelector(
       'protein',
       'salt',
       'priceHistory',
+      'images',
     ]);
     return {
       ...defaultFormInit,

@@ -8,6 +8,7 @@ import Loader from 'modules/shared/components/Loader';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
+import ImageUploader from './components/ImageUploader';
 import { getFullProductData } from './actions';
 import {
   selectorGetProductInitValue,
@@ -32,6 +33,8 @@ const backLink = {
 
 const ProductDetail = ({
   product,
+  isProductLoaded,
+  productImg,
   kiosks,
   categoryOption,
   familyOption,
@@ -40,20 +43,18 @@ const ProductDetail = ({
   match,
   getFullProductData,
 }) => {
+  const { id } = match.params;
+  const isNewProduct = id === 'new';
+  const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
+  const { priceHistory, ...initialValues } = product;
+  const loaded = familyOption.length && isProductLoaded;
+
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
     }
   }, []);
-  const { id } = match.params;
-  const isNewProduct = id === 'new';
-  const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
-  const { priceHistory, ...initialValues } = product;
-  const isProductLoaded = isNewProduct
-    ? !get(product, 'id')
-    : product && product.id;
-  const loaded = familyOption.length && isProductLoaded;
 
   return (
     <Grid stackable>
@@ -92,18 +93,29 @@ const ProductDetail = ({
         </Grid>
       </Grid.Column>
 
-      <Grid.Column width={5}>
-        <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
-      </Grid.Column>
+      {isProductLoaded ? (
+        <Grid.Column width={5}>
+          <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
+          <ImageUploader src={productImg} />
+        </Grid.Column>
+      ) : null}
     </Grid>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, { match: { params } }) => {
   const options = selectorGetProductFamilyForm(state);
+  const product = selectorGetProductInitValue(state);
+  const isProductLoaded =
+    params.id === 'new'
+      ? !get(product, 'id')
+      : product && product.id === params.id;
+
   return {
+    product,
+    isProductLoaded,
     kiosks: getKioskListName(state),
-    product: selectorGetProductInitValue(state),
+    productImg: get(product, 'images[0]', ''),
     taxesOption: selectorProductTaxOptions(state),
     categoryOption: options.categories,
     familyOption: options.families,
