@@ -33,6 +33,7 @@ const productOnProductLine = gql`
     allergens
     carbo
     carboSugar
+    images
     taxHistory {
       taxEntry {
         taxId
