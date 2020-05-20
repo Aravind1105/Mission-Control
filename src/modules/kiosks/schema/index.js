@@ -133,6 +133,18 @@ export const LOAD_CELL_CONFIG_MUTATION = gql`
   }
 `;
 
+export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
+  mutation resetLoadCell(
+    $id: String!
+    $cellId: String!
+    $data: ResetLoadcellAmountInput!
+  ) {
+    resetLoadcellInventory(id: $id, cellId: $cellId, data: $data) {
+      _id
+    }
+  }
+`;
+
 export const KIOSK_REFILL_MUTATION = gql`
   mutation createRefill($kioskId: String!) {
     createRefill(kioskId: $kioskId) {

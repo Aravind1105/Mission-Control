@@ -141,7 +141,6 @@ export const selectorGetProductInitValue = createSelector(
             'ean',
             'unitCount',
             'grossWeightGrams',
-            'packageWeightGrams',
             'netWeightGrams',
             'shelfLifeDays',
             'tolerancePercentage',
