@@ -21,7 +21,10 @@ const DetailsInfo = ({
             <Grid.Row>
               <InfoRow title="Device version" description="fsdaf d fd" />
               <InfoRow title="Connection" description="sdasds" />
-              <InfoRow title="Session" description={session || 'no session'} />
+              <InfoRow
+                title="Session"
+                description={session ? session.type : 'no session'}
+              />
             </Grid.Row>
           </Grid>
 
@@ -64,7 +67,11 @@ const DetailsInfo = ({
 };
 
 DetailsInfo.propTypes = {
-  session: PropTypes.string,
+  session: PropTypes.oneOfType([
+    PropTypes.shape({
+      type: PropTypes.string,
+    }),
+  ]),
   ownerOrganization: PropTypes.string.isRequired,
   location: PropTypes.shape({
     address: PropTypes.shape({

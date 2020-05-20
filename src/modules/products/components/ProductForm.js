@@ -118,10 +118,20 @@ const ProductForm = ({
             </Grid.Row>
 
             <Grid.Row>
-              <Grid.Column width={3}>
+              <Grid.Column width={5}>
                 <Field
                   name="packagingOptions[0].netWeightGrams"
-                  label="Weight Net(g)"
+                  label="Net Quantity (ml/g)"
+                  type="number"
+                  min={0}
+                  required
+                  component={FormInput}
+                />
+              </Grid.Column>
+              <Grid.Column width={7}>
+                <Field
+                  name="packagingOptions[0].grossWeightGrams"
+                  label="Actual Weight (g)"
                   type="number"
                   min={0}
                   required
@@ -129,26 +139,6 @@ const ProductForm = ({
                 />
               </Grid.Column>
               <Grid.Column width={4}>
-                <Field
-                  name="packagingOptions[0].grossWeightGrams"
-                  label="Weight Gross(g)"
-                  type="number"
-                  min={0}
-                  required
-                  component={FormInput}
-                />
-              </Grid.Column>
-              <Grid.Column width={6}>
-                <Field
-                  name="packagingOptions[0].packageWeightGrams"
-                  label="Weight of package(g)"
-                  type="number"
-                  min={0}
-                  required
-                  component={FormInput}
-                />
-              </Grid.Column>
-              <Grid.Column width={3}>
                 <Field
                   name="packagingOptions[0].shelfLifeDays"
                   label="Shelf life (days)"

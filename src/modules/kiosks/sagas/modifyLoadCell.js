@@ -3,13 +3,29 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import gqlProduct from 'lib/https/gqlProducts';
 import { CREATE_PRODUCT_LINE_PRICE_MUTATION } from 'modules/products/schema';
-import { LOAD_CELL_CONFIG_MUTATION } from '../schema';
+import {
+  LOAD_CELL_CONFIG_MUTATION,
+  RESET_LOAD_CELL_INVENTORY_MUTATION,
+} from '../schema';
 import { modifyKioskLoadCell, getKiosk } from '../actions';
 
 function* handler({ payload }) {
-  const { callback, productId, cellId, kioskId, price } = payload;
+  const {
+    callback,
+    isPriceChanged,
+    isProductChanged,
+    isQuantityChanged,
+    data,
+  } = payload;
+  const {
+    cellId,
+    kioskId,
+    price,
+    quantity,
+    product: { value: productId },
+  } = data;
   try {
-    if (cellId) {
+    if (isProductChanged) {
       const variables = {
         data: {
           kioskId,
@@ -27,7 +43,21 @@ function* handler({ payload }) {
         variables,
       });
     }
-    if (price) {
+
+    if (isQuantityChanged) {
+      const variables = {
+        id: kioskId,
+        cellId,
+        data: { amount: quantity },
+      };
+      const a = yield call(gqlKiosk.mutate, {
+        mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,
+        variables,
+      });
+      console.log(a);
+    }
+
+    if (isPriceChanged) {
       const variables = {
         id: productId,
         data: {
