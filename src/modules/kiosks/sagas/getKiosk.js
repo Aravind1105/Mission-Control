@@ -5,6 +5,13 @@ import gqlKiosk from 'lib/https/gqlKiosk';
 import { getKiosk, getKioskSuccess } from '../actions';
 import { GET_KIOSK_QUERY } from '../schema';
 
+const getPrice = (priceArr, kioskId) => {
+  const priceForKiosk = priceArr
+    .reverse()
+    .find(price => price.validForKiosks.includes(kioskId) || price.default);
+  return priceForKiosk ? priceForKiosk.price : 0;
+};
+
 function* handler({ payload }) {
   const variables = {
     id: payload,
@@ -33,17 +40,8 @@ function* handler({ payload }) {
               ? {
                   _id: el.productLine._id,
                   name: el.productLine.name,
-                  price: get(
-                    el.productLine.priceHistory
-                      .reverse()
-                      .find(
-                        price =>
-                          price.validForKiosks.includes(payload) ||
-                          price.default,
-                      ),
-                    'price',
-                    0,
-                  ),
+                  image: get(el, 'productLine.images.0', ''),
+                  price: getPrice(el.productLine.priceHistory, payload),
                 }
               : null,
           })),

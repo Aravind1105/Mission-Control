@@ -20,6 +20,7 @@ const FragmentInventory = {
     fragment InventoryForKiosk on Inventory {
       loadCells {
         cellId
+        planogramPosition
         products {
           _id
           statusHistory {
@@ -29,6 +30,7 @@ const FragmentInventory = {
         productLine {
           _id
           name
+          images
           priceHistory {
             price
             default

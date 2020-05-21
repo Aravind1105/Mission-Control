@@ -11,10 +11,27 @@
 }
 .load-cell {
   padding: 15px 20px 15px 15px;
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
   background-color: @grey;
   border-radius: 10px;
   overflow: hidden;
   min-height: 82px;
+  .load-cell-icon {
+    margin: 0 10px 0 0;
+    width: 50px;
+    flex-shrink: 0;
+    align-self: center;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .load-cell-content {
+    width: 100%;
+  }
   .load-cell-header {
     position: relative;
   }
