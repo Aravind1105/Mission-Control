@@ -20,7 +20,7 @@ const separateToSides = cells =>
 const DetailsLoadCells = ({ cells, kioskName }) => {
   const [product, selectProduct] = useState(null);
 
-  const handleEdit = ({ productLine, cellId, availableProducts }) => () => {
+  const handleEdit = ({ productLine, cellId, availableProducts }) => {
     const data = pick(productLine, ['_id', 'name']);
     selectProduct({ ...data, cellId, availableProducts });
   };

@@ -1,13 +1,10 @@
 import { lazy } from 'react';
 
 const Dashboard = lazy(() => import('modules/dashboard'));
-const KiosksScreen = lazy(() => import('modules/kiosks'));
+const Kiosks = lazy(() => import('modules/kiosks'));
 const Organizations = lazy(() => import('modules/organizations'));
 const Users = lazy(() => import('modules/users'));
 const Products = lazy(() => import('modules/products'));
-const FulfillmentScreen = lazy(() =>
-  import('modules/fulfillment/FulfillmentScreen'),
-);
 const Transactions = lazy(() => import('modules/transactions'));
 const Reports = lazy(() => import('modules/reports'));
 
@@ -25,7 +22,7 @@ export default [
     name: 'Kiosks',
     path: '/kiosks',
     icon: 'snowflake',
-    Component: KiosksScreen,
+    Component: Kiosks,
   },
   {
     name: 'Organizations',
@@ -44,12 +41,6 @@ export default [
     path: '/products',
     icon: 'box',
     Component: Products,
-  },
-  {
-    name: 'Fulfillment',
-    path: '/fulfillment',
-    icon: 'truck',
-    Component: FulfillmentScreen,
   },
   {
     name: 'Reports',
