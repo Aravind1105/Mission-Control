@@ -5,13 +5,27 @@ import pick from 'lodash/pick';
 import DetailLoadCellsSide from './DetailLoadCellsSide';
 import ModalLoadCell from './ModalLoadCell';
 
+const calculateIndex = arr => {
+  const { length } = arr[arr.length - 1] || [];
+  if (!length) {
+    return 0;
+  }
+  return length < 2 ? arr.length - 1 : arr.length;
+};
+
 const separateToSides = cells =>
   cells.reduce(
     (prev, curr) => {
-      const key = curr.planogramPosition
-        ? curr.planogramPosition.substr(0, 1)
-        : 'A';
-      if (prev[key]) prev[key].push(curr);
+      const [key, row] = curr.planogramPosition
+        ? [...curr.planogramPosition]
+        : ['A', calculateIndex(prev['A'])];
+
+      if (prev[key]) {
+        if (!prev[key][row]) {
+          prev[key][row] = [];
+        }
+        prev[key][row].push(curr);
+      }
       return prev;
     },
     { A: [], B: [] },
@@ -49,8 +63,8 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
             <Divider />
 
             <Grid columns={isTwoSides ? 2 : 1} divided>
-              <DetailLoadCellsSide cells={sides.B} handleEdit={handleEdit} />
               <DetailLoadCellsSide cells={sides.A} handleEdit={handleEdit} />
+              <DetailLoadCellsSide cells={sides.B} handleEdit={handleEdit} />
             </Grid>
           </Segment>
         </Grid.Column>

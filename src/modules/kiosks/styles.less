@@ -9,15 +9,26 @@
 .text-capitalize {
   text-transform: capitalize;
 }
+.load-cell-row {
+  padding: 0 1rem !important;
+}
 .load-cell {
   padding: 15px 20px 15px 15px;
-  display: flex;
-  justify-content: flex-start;
   height: 100%;
-  background-color: @grey;
-  border-radius: 10px;
+  border-right: 1px dashed #d4d4d4;
+  border-bottom: 1px dashed #d4d4d4;
   overflow: hidden;
   min-height: 82px;
+  &:last-child {
+    border-right: none;
+  }
+  .load-cell-header {
+    position: relative;
+  }
+  .load-cell-content {
+    display: flex;
+    justify-content: flex-start;
+  }
   .load-cell-icon {
     margin: 0 10px 0 0;
     width: 50px;
@@ -29,16 +40,16 @@
       height: auto;
     }
   }
-  .load-cell-content {
+  .load-cell-body {
     width: 100%;
-  }
-  .load-cell-header {
-    position: relative;
+    p:not(:last-child) {
+      margin: 0 0 4px;
+    }
   }
   .edit-icon {
     position: absolute;
     top: -1px;
-    right: -14px;
+    right: 0;
     z-index: 10;
   }
 }
