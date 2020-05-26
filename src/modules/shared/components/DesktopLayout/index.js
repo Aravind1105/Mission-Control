@@ -2,18 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
+import logoSmall from 'styling/assets/images/logo-small.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
 import LanguageSelect from '../LanguageSelect';
 import AlertsList from '../AlertsList';
-import logoSmall from '../../../../styling/assets/images/logo-small.png';
 import './desktopLayout.less';
+
+const pjson = require('../../../../../package.json');
 
 const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
+
+  const handleClick = () => {
+    setMinimized(!minimized);
+  };
 
   useEffect(() => {
     if (!isLoading) getAllKiosks();
@@ -32,10 +38,10 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
             toggle
             className="desktop-nav-toggle"
             checked={!minimized}
-            onClick={() => setMinimized(!minimized)}
+            onClick={handleClick}
           />
         </Menu.Item>
-        <Menu.Item>Ver: {process.env.BUILD_TAG}</Menu.Item>
+        <Menu.Item>{`Ver: ${pjson.version || ''}`}</Menu.Item>
       </Menu>
       <div className="desktop-content">
         <Menu secondary fixed="top" className="desktop-navigation-secondary">

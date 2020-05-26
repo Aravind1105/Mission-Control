@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Segment, Header, Grid, Divider } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import pick from 'lodash/pick';
 
 import DetailLoadCellsSide from './DetailLoadCellsSide';
@@ -42,31 +42,23 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
   const handleClose = () => selectProduct(null);
   const sides = separateToSides(cells);
   const isTwoSides = sides.A.length && sides.B.length;
-  const fridgeWidth = isTwoSides ? 16 : 11;
 
   return (
     <>
       <Grid>
-        <Grid.Column width={fridgeWidth}>
-          <Segment>
-            <Grid>
-              <Grid.Row>
-                <Grid.Column width={10}>
-                  <Header as="h3">Load Cells</Header>
-                </Grid.Column>
-                <Grid.Column width={6} className="text-align-right">
-                  Active Shelves:
-                  <b className="textGreen">{` ${cells.length}`}</b>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <Divider />
-
-            <Grid columns={isTwoSides ? 2 : 1} divided>
-              <DetailLoadCellsSide cells={sides.A} handleEdit={handleEdit} />
-              <DetailLoadCellsSide cells={sides.B} handleEdit={handleEdit} />
-            </Grid>
-          </Segment>
+        <Grid.Column width={isTwoSides ? 16 : 11}>
+          <Grid columns={isTwoSides ? 2 : 1}>
+            <DetailLoadCellsSide
+              cells={sides.A}
+              handleEdit={handleEdit}
+              title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
+            />
+            <DetailLoadCellsSide
+              cells={sides.B}
+              handleEdit={handleEdit}
+              title="Planogram 2 - Right Kiosk"
+            />
+          </Grid>
         </Grid.Column>
       </Grid>
 
