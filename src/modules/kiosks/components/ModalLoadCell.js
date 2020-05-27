@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Field } from 'formik';
-import { Button, Container, Modal, Grid, Popup, Icon } from 'semantic-ui-react';
+import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
 
 import { getProductListSaga } from 'modules/products/actions';
 import {
@@ -13,6 +13,7 @@ import {
 import FormAsyncSelect from 'modules/shared/components/FormAsyncSelect';
 import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
+import ConfirmModal from 'modules/shared/components/ConfirmModal';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import { modifyKioskLoadCell } from '../actions';
 
@@ -69,14 +70,13 @@ const ModalLoadCell = ({
   };
 
   return (
-    <Modal open onClose={handleClose} size="tiny">
-      <Modal.Header className="text-align-center">
-        <Container textAlign="center">
-          <h3>{`${kioskName}  #${initVal.cellId}`}</h3>
-        </Container>
-      </Modal.Header>
-      <Formik onSubmit={handleSave} initialValues={initVal} key={initVal.price}>
-        {({ dirty, handleSubmit }) => (
+    <Formik onSubmit={handleSave} initialValues={initVal} key={initVal.price}>
+      {({ dirty, handleSubmit }) => (
+        <ConfirmModal
+          onClose={handleClose}
+          isPristine={!dirty}
+          title={`${kioskName}  #${initVal.cellId}`}
+        >
           <form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
               {isProductLoading && <Loader />}
@@ -134,9 +134,9 @@ const ModalLoadCell = ({
               </Button>
             </Modal.Actions>
           </form>
-        )}
-      </Formik>
-    </Modal>
+        </ConfirmModal>
+      )}
+    </Formik>
   );
 };
 

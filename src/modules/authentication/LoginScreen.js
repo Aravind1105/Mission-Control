@@ -10,14 +10,13 @@ import bg from '../../styling/assets/images/bg.jpg';
 
 import './loginScreen.less';
 
-const LoginScreen = ({ location }) => {
+const LoginScreen = () => {
   const dispatch = useDispatch();
 
-  if (/access_token|id_token|error/.test(location.hash)) {
+  if (/access_token|id_token|error/.test(window.location.hash)) {
     dispatch(handleAuthUserSaga());
     return false;
   }
-
   return (
     <div
       className="login-screen-wrapper"
