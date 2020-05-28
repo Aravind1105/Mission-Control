@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Grid, Dropdown } from 'semantic-ui-react';
+import format from 'date-fns/format';
 
 import SearchInput from 'modules/shared/components/SearchInput';
 import DatePicker from 'modules/shared/components/Datepicker';
@@ -16,7 +17,10 @@ const Toolbar = ({ changeSearch, changeDate, changePage }) => {
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] = curr.toISOString();
+        prev[key] =
+          i % 2
+            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
+            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
         return prev;
       }, {});
     }

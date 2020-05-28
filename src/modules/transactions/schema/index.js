@@ -8,13 +8,9 @@ export const GET_TRANSACTIONS_QUERY = gql`
         _id
         created
         total
-        session {
-          user {
-            firstName
-            lastName
-          }
-        }
         itemsPurchased {
+          price
+          tax
           productLine {
             _id
             name
