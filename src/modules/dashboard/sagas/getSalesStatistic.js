@@ -27,7 +27,7 @@ const queryKey = {
 };
 
 function* handler({ payload: { kioskId, time } }) {
-  const variables = { kioskId };
+  const variables = kioskId ? { kioskId } : {};
   try {
     const { data } = yield call(gqlReports.query, {
       query: query[time],
@@ -41,7 +41,7 @@ function* handler({ payload: { kioskId, time } }) {
     const res = Object.keys(formatted).map(key => {
       const obj = formatted[key].reduce((prev, { amount, _id }) => {
         const value = Math.round(amount * 100) / 100;
-        const productName = _id.line.name || 'unknown';
+        const productName = (_id.line ? _id.line.name : '') || 'unknown';
         const sum = prev[productName] || 0;
         if (!products.includes(productName)) {
           products.push(productName);

@@ -5,7 +5,7 @@ import Pagination from 'modules/shared/components/Pagination';
 import Toolbar from './components/Toolbar';
 import TransactionsContent from './components/TransactionsContent';
 import {
-  getAllTransactionsState,
+  getTransactionsTableState,
   getTotalTransactionsCount,
 } from './selectors';
 import { getAllTransactions } from './actions';
@@ -84,7 +84,7 @@ const ProductsList = ({
 };
 
 const mapStateToProps = state => ({
-  transactions: getAllTransactionsState(state),
+  transactions: getTransactionsTableState(state),
   total: getTotalTransactionsCount(state),
   isLoading: state.transactions.isLoading,
 });
