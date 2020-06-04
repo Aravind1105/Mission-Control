@@ -45,22 +45,20 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
 
   return (
     <>
-      <Grid>
-        <Grid.Column width={isTwoSides ? 16 : 11}>
-          <Grid columns={isTwoSides ? 2 : 1}>
-            <DetailLoadCellsSide
-              cells={sides.A}
-              handleEdit={handleEdit}
-              title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
-            />
-            <DetailLoadCellsSide
-              cells={sides.B}
-              handleEdit={handleEdit}
-              title="Planogram 2 - Right Kiosk"
-            />
-          </Grid>
-        </Grid.Column>
-      </Grid>
+      <Grid.Column>
+        <Grid columns={isTwoSides ? 2 : 1}>
+          <DetailLoadCellsSide
+            cells={sides.A}
+            handleEdit={handleEdit}
+            title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
+          />
+          <DetailLoadCellsSide
+            cells={sides.B}
+            handleEdit={handleEdit}
+            title="Planogram 2 - Right Kiosk"
+          />
+        </Grid>
+      </Grid.Column>
 
       {product && (
         <ModalLoadCell

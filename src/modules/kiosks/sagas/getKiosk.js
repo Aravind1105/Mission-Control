@@ -32,10 +32,6 @@ function* handler({ payload }) {
         inventory: {
           loadCells: getKioskById.inventory.loadCells.map(el => ({
             ...el,
-            products: el.products.map(({ _id, statusHistory }) => ({
-              _id,
-              status: get(statusHistory.slice(-1), '0.status', ''),
-            })),
             productLine: el.productLine
               ? {
                   _id: el.productLine._id,
@@ -43,7 +39,7 @@ function* handler({ payload }) {
                   image: get(el, 'productLine.images.0', ''),
                   price: getPrice(el.productLine.priceHistory, payload),
                 }
-              : null,
+              : {},
           })),
         },
       };

@@ -26,13 +26,14 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'planogramPosition').map(
-    ({ products, ...rest }) => ({
-      ...rest,
-      products,
-      availableProducts: products.filter(
-        el => el.status === 'in_kiosk_available',
-      ).length,
-    }),
+    ({ products, ...rest }) => {
+      const totalProducts = products.length;
+      return {
+        ...rest,
+        totalProducts,
+        totalPrice: totalProducts * rest.productLine.price,
+      };
+    },
   );
   return loadCells;
 });

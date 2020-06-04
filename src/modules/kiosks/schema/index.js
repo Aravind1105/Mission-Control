@@ -23,9 +23,6 @@ const FragmentInventory = {
         planogramPosition
         products {
           _id
-          statusHistory {
-            status
-          }
         }
         productLine {
           _id
