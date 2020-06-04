@@ -36,7 +36,9 @@ export const getTransactionsTableState = createSelector(
         return prev;
       }, []);
 
-      newArr = newArr.concat(item, arr);
+      const product =
+        arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
+      newArr = newArr.concat(product);
     });
     return newArr;
   },

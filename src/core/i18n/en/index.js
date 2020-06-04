@@ -143,7 +143,6 @@ const x = {
   weightGross: 'Weight Gross',
   weightActualWithPack: 'Weight actual - with packaging',
   shelfLife: 'Shelf life',
-  tolerancePercentages: 'Tolerance percentages',
   priceSellingGross: 'Price - Selling - Gross',
   vat: 'VAT',
   packagingDescription: 'Packaging description',
