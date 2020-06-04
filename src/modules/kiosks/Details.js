@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
 import get from 'lodash/get';
 
@@ -101,17 +102,16 @@ const KioskDetails = ({
                       <Button onClick={handlerResetKiosk}>
                         Sync / Restart
                       </Button>
-                      <Button>Temp Log.</Button>
-                      <Button>Activity Log.</Button>
+                      <Link
+                        className="ui button"
+                        to={`/kiosks/log/${kiosk._id}`}
+                      >
+                        Temp Log.
+                      </Link>
+                      <Button disabled>Activity Log.</Button>
                     </>
                   </DetailsInfo>
                 </Segment>
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>RFID</Segment>
               </Grid.Column>
             </Grid.Row>
           </Grid>

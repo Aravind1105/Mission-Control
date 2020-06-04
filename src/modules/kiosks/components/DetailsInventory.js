@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Header, Grid, Divider, Icon, Table } from 'semantic-ui-react';
+import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
@@ -23,16 +23,11 @@ const DetailsInventory = ({ cells }) => {
     <Segment>
       <Grid>
         <Grid.Row>
-          <Grid.Column width={14}>
+          <Grid.Column width={16}>
             <Header as="h3">
               Inventory:
               <ColoredBlock value={percent}>{` ${percent}%`}</ColoredBlock>
             </Header>
-          </Grid.Column>
-          <Grid.Column width={2}>
-            <a href="/" className="edit-icon">
-              <Icon name="edit" size="small" />
-            </a>
           </Grid.Column>
         </Grid.Row>
       </Grid>

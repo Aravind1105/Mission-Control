@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Pagination } from 'semantic-ui-react';
 
-const TableWithPagination = ({ children, list, perPage }) => {
+import Pagination from '../Pagination';
+
+const TableWithPagination = ({ children, list, ...rest }) => {
   const [page, setPage] = useState(0);
-  const totalPages = Math.ceil(list.length / perPage);
+  const [perPage, setPerPage] = useState(rest.perPage);
 
   useEffect(() => {
     setPage(0);
   }, [list.length]);
 
-  const handlePageChange = (e, { activePage }) => {
-    setPage(activePage - 1);
+  const handlePageChange = activePage => {
+    setPage(activePage);
   };
 
   const data = list.slice(page * perPage, page * perPage + perPage);
@@ -19,19 +20,13 @@ const TableWithPagination = ({ children, list, perPage }) => {
   return (
     <>
       {component}
-      {list.length ? (
-        <Container textAlign="center">
-          <Pagination
-            activePage={1 + page}
-            totalPages={totalPages}
-            firstItem={null}
-            lastItem={null}
-            pointing
-            secondary
-            onPageChange={handlePageChange}
-          />
-        </Container>
-      ) : null}
+      <Pagination
+        totalCount={list.length}
+        page={page}
+        perPage={perPage}
+        changePage={handlePageChange}
+        changePerPage={setPerPage}
+      />
     </>
   );
 };
@@ -43,7 +38,7 @@ TableWithPagination.propTypes = {
 };
 
 TableWithPagination.defaultProps = {
-  perPage: 10,
+  perPage: 25,
 };
 
 export default TableWithPagination;

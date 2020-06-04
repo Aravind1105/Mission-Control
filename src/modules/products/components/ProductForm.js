@@ -151,17 +151,7 @@ const ProductForm = ({
             </Grid.Row>
 
             <Grid.Row>
-              <Grid.Column width={5}>
-                <Field
-                  name="packagingOptions[0].tolerancePercentage"
-                  label="Tolerance percentages(%)"
-                  type="number"
-                  min={0}
-                  required
-                  component={FormInput}
-                />
-              </Grid.Column>
-              <Grid.Column width={7}>
+              <Grid.Column width={8}>
                 <Field
                   name="defaultPrice"
                   label="Price - Selling - Gross(€)"
@@ -171,7 +161,7 @@ const ProductForm = ({
                   component={FormInput}
                 />
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column width={8}>
                 <Field
                   name="tax"
                   label="VAT (%)"
