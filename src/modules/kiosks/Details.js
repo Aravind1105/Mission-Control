@@ -114,6 +114,9 @@ const KioskDetails = ({
                 </Segment>
               </Grid.Column>
             </Grid.Row>
+            <Grid.Row>
+              <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
+            </Grid.Row>
           </Grid>
         </Grid.Column>
 
@@ -130,8 +133,6 @@ const KioskDetails = ({
           </Grid>
         </Grid.Column>
       </Grid>
-
-      <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
     </>
   ) : (
     <Loader />

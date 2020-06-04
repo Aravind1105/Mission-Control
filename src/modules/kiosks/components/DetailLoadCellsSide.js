@@ -1,21 +1,13 @@
 import React from 'react';
 import { Grid, Icon, Divider, Segment } from 'semantic-ui-react';
 
-import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
+import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import LoadCellsHeader from './LoadCellsHeader';
 
-const Card = ({
-  cellId,
-  productLine,
-  products,
-  availableProducts,
-  handleEdit,
-}) => {
-  const percent = (availableProducts * 100) / products.length;
-  const quantityText = `${availableProducts}/${products.length}`;
+const Card = ({ cellId, productLine, totalProducts, handleEdit }) => {
   const handleClick = () => {
-    handleEdit({ productLine, cellId, availableProducts });
+    handleEdit({ productLine, cellId, availableProducts: totalProducts });
   };
 
   return (
@@ -40,8 +32,8 @@ const Card = ({
             <b>{productLine ? `${productLine.name}` : null}</b>
           </p>
           <p>
-            <ColoredBlock type="b" value={percent}>
-              {quantityText}
+            <ColoredBlock type="b" value={totalProducts ? 100 : 0}>
+              {totalProducts}
             </ColoredBlock>
           </p>
           <p>{`€${productLine.price}`}</p>
