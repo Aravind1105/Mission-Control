@@ -34,35 +34,40 @@ const separateToSides = cells =>
 const DetailsLoadCells = ({ cells, kioskName }) => {
   const [product, selectProduct] = useState(null);
 
-  const handleEdit = ({ productLine, cellId, availableProducts }) => {
+  const handleEdit = ({
+    productLine,
+    cellId,
+    availableProducts,
+    planogramPosition,
+  }) => {
     const data = pick(productLine, ['_id', 'name']);
-    selectProduct({ ...data, cellId, availableProducts });
+    selectProduct({ ...data, cellId, planogramPosition, availableProducts });
   };
 
   const handleClose = () => selectProduct(null);
   const sides = separateToSides(cells);
   const isTwoSides = sides.A.length && sides.B.length;
+  const loadedPosition = product
+    ? cells.map(({ planogramPosition }) => planogramPosition)
+    : [];
 
   return (
     <>
-      <Grid.Column>
-        <Grid columns={isTwoSides ? 2 : 1}>
-          <DetailLoadCellsSide
-            cells={sides.A}
-            handleEdit={handleEdit}
-            title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
-          />
-          <DetailLoadCellsSide
-            cells={sides.B}
-            handleEdit={handleEdit}
-            title="Planogram 2 - Right Kiosk"
-          />
-        </Grid>
-      </Grid.Column>
+      <DetailLoadCellsSide
+        cells={sides.A}
+        handleEdit={handleEdit}
+        title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
+      />
+      <DetailLoadCellsSide
+        cells={sides.B}
+        handleEdit={handleEdit}
+        title="Planogram 2 - Right Kiosk"
+      />
 
       {product && (
         <ModalLoadCell
           product={product}
+          loadedPosition={loadedPosition}
           handleClose={handleClose}
           kioskName={kioskName}
         />

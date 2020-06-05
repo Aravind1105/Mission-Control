@@ -1,16 +1,12 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
-import format from 'date-fns/format';
 
 import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {
     title: 'Date/Time',
-    field: 'created',
-    formatter: ({ created }) => {
-      return created ? format(new Date(created), 'dd-MM-yyyy HH:mm:ss') : '';
-    },
+    field: 'date',
   },
   {
     title: 'Status',

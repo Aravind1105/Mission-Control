@@ -144,6 +144,17 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
   }
 `;
 
+export const SET_PLANOGRAM_POSITION_MUTATION = gql`
+  mutation setPlanogramPosition(
+    $kioskId: String!
+    $data: SetLoadcellPlanogramPositionInput!
+  ) {
+    setLoadcellPlanogramPosition(kioskId: $kioskId, data: $data) {
+      _id
+    }
+  }
+`;
+
 export const KIOSK_REFILL_MUTATION = gql`
   mutation createRefill($kioskId: String!) {
     createRefill(kioskId: $kioskId) {

@@ -114,7 +114,7 @@ const KioskDetails = ({
                 </Segment>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
+            <Grid.Row columns="equal">
               <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
             </Grid.Row>
           </Grid>

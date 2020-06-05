@@ -6,6 +6,7 @@ import { CREATE_PRODUCT_LINE_PRICE_MUTATION } from 'modules/products/schema';
 import {
   LOAD_CELL_CONFIG_MUTATION,
   RESET_LOAD_CELL_INVENTORY_MUTATION,
+  SET_PLANOGRAM_POSITION_MUTATION,
 } from '../schema';
 import { modifyKioskLoadCell, getKiosk } from '../actions';
 
@@ -15,6 +16,7 @@ function* handler({ payload }) {
     isPriceChanged,
     isProductChanged,
     isQuantityChanged,
+    isPositionIdChanged,
     data,
   } = payload;
   const {
@@ -22,6 +24,7 @@ function* handler({ payload }) {
     kioskId,
     price,
     quantity,
+    positionId,
     product: { value: productId },
   } = data;
   try {
@@ -68,6 +71,20 @@ function* handler({ payload }) {
       };
       yield call(gqlProduct.mutate, {
         mutation: CREATE_PRODUCT_LINE_PRICE_MUTATION,
+        variables,
+      });
+    }
+
+    if (isPositionIdChanged) {
+      const variables = {
+        kioskId,
+        data: {
+          cellId,
+          positionId,
+        },
+      };
+      yield call(gqlProduct.mutate, {
+        mutation: SET_PLANOGRAM_POSITION_MUTATION,
         variables,
       });
     }
