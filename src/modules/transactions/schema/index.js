@@ -8,6 +8,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
         _id
         created
         total
+        type
         itemsPurchased {
           price
           tax

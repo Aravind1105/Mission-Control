@@ -34,6 +34,7 @@ const ModalLoadCell = ({
   getProductListSaga,
   modifyKioskLoadCell,
   match,
+  loadedPosition,
 }) => {
   useEffect(() => {
     getProductListSaga();
@@ -50,6 +51,7 @@ const ModalLoadCell = ({
 
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
+    const isPositionIdChanged = initVal.positionId !== data.positionId;
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== data.quantity;
     const isPriceChanged =
@@ -59,10 +61,22 @@ const ModalLoadCell = ({
         kioskId: match.params.id,
       }) !== +data.price;
 
+    if (
+      isPositionIdChanged &&
+      loadedPosition.some(el => el === data.positionId)
+    ) {
+      const isConfirmed = window.confirm(
+        `“A loadcell is already assigned to this position (${data.positionId})! Do you want to switch positions?`,
+      );
+      if (!isConfirmed) {
+        return '';
+      }
+    }
     const payload = {
       isPriceChanged,
       isProductChanged,
       isQuantityChanged,
+      isPositionIdChanged,
       data,
       callback: handleClose,
     };
@@ -126,6 +140,23 @@ const ModalLoadCell = ({
                     />
                   </Grid.Column>
                 </Grid.Row>
+                <Grid.Row columns="equal">
+                  <Grid.Column>
+                    <Field
+                      name="positionId"
+                      label="Position"
+                      component={FormInput}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Field
+                      name="cellId"
+                      label="Cable ID"
+                      disabled
+                      component={FormInput}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
               </Grid>
             </Modal.Content>
             <Modal.Actions>
@@ -144,6 +175,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
   const productsHistory = getProductsHistory(state);
   const initVal = {
     cellId: product.cellId,
+    positionId: product.planogramPosition,
     kioskId: params.id,
     product: {
       value: product._id,

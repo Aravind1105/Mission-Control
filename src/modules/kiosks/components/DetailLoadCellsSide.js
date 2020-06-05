@@ -5,9 +5,20 @@ import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import LoadCellsHeader from './LoadCellsHeader';
 
-const Card = ({ cellId, productLine, totalProducts, handleEdit }) => {
+const Card = ({
+  cellId,
+  planogramPosition,
+  productLine,
+  totalProducts,
+  handleEdit,
+}) => {
   const handleClick = () => {
-    handleEdit({ productLine, cellId, availableProducts: totalProducts });
+    handleEdit({
+      productLine,
+      planogramPosition,
+      cellId,
+      availableProducts: totalProducts,
+    });
   };
 
   return (

@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import format from 'date-fns/format';
 
 export const getAllTransactionsState = state => state.transactions.list;
 
@@ -9,10 +10,11 @@ export const getTransactionsTableState = createSelector(
   getAllTransactionsState,
   transactions => {
     let newArr = [];
-    transactions.forEach(({ itemsPurchased, ...rest }) => {
+    transactions.forEach(({ itemsPurchased, created, ...rest }) => {
       const item = {
         transactionID: rest._id,
-        created: rest.created,
+        type: rest.type,
+        date: format(new Date(created), 'dd-MM-yyyy HH:mm:ss'),
         session: rest.session,
         total: rest.total,
         kioskName:
