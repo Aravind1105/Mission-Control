@@ -101,6 +101,7 @@ const defaultFormInit = {
       packageWeightGrams: 0,
       netWeightGrams: 0,
       shelfLifeDays: 0,
+      tolerancePercentage: 0,
       description: '',
     },
   ],
