@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Grid } from 'semantic-ui-react';
 import pick from 'lodash/pick';
 
 import DetailLoadCellsSide from './DetailLoadCellsSide';
@@ -53,15 +52,17 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
 
   return (
     <>
+      {isTwoSides && (
+        <DetailLoadCellsSide
+          cells={sides.B}
+          handleEdit={handleEdit}
+          title="Planogram - Left Kiosk"
+        />
+      )}
       <DetailLoadCellsSide
         cells={sides.A}
         handleEdit={handleEdit}
-        title={isTwoSides ? 'Planogram 1 - Left Kiosk' : 'Load Cells'}
-      />
-      <DetailLoadCellsSide
-        cells={sides.B}
-        handleEdit={handleEdit}
-        title="Planogram 2 - Right Kiosk"
+        title={isTwoSides ? 'Planogram - Right Kiosk' : 'Load Cells'}
       />
 
       {product && (
