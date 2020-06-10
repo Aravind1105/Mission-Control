@@ -47,6 +47,20 @@ function* handler({ payload }) {
       });
     }
 
+    if (isPositionIdChanged) {
+      const variables = {
+        kioskId,
+        data: {
+          cellId,
+          positionId,
+        },
+      };
+      yield call(gqlKiosk.mutate, {
+        mutation: SET_PLANOGRAM_POSITION_MUTATION,
+        variables,
+      });
+    }
+
     if (isQuantityChanged) {
       const variables = {
         id: kioskId,
@@ -71,20 +85,6 @@ function* handler({ payload }) {
       };
       yield call(gqlProduct.mutate, {
         mutation: CREATE_PRODUCT_LINE_PRICE_MUTATION,
-        variables,
-      });
-    }
-
-    if (isPositionIdChanged) {
-      const variables = {
-        kioskId,
-        data: {
-          cellId,
-          positionId,
-        },
-      };
-      yield call(gqlProduct.mutate, {
-        mutation: SET_PLANOGRAM_POSITION_MUTATION,
         variables,
       });
     }
