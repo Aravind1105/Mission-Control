@@ -82,7 +82,6 @@ export const GET_ALL_KIOSKS_QUERY = gql`
       _id
       name
       doorStatus
-      serialNumber
       temperature {
         value
         updated
@@ -151,15 +150,6 @@ export const SET_PLANOGRAM_POSITION_MUTATION = gql`
   ) {
     setLoadcellPlanogramPosition(kioskId: $kioskId, data: $data) {
       _id
-    }
-  }
-`;
-
-export const KIOSK_REFILL_MUTATION = gql`
-  mutation createRefill($kioskId: String!) {
-    createRefill(kioskId: $kioskId) {
-      _id
-      sessionClosedAt
     }
   }
 `;

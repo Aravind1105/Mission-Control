@@ -30,10 +30,6 @@ const columns = [
     formatter: ({ temperature }) => <CellHeartbeat temperature={temperature} />,
   },
   {
-    title: 'Serial',
-    field: 'serialNumber',
-  },
-  {
     title: 'Address',
     field: 'location',
     formatter: ({ location: { address } }) => {

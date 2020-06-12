@@ -5,6 +5,7 @@ import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
+import { createRefill } from 'modules/transactions/actions';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
 import DetailsLoadCells from './components/DetailsLoadCells';
@@ -13,7 +14,7 @@ import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
 import { getKioskSingle, getKioskShelves } from './selectors';
-import { resetKiosk, getAllKiosks, refillKiosk, getKiosk } from './actions';
+import { resetKiosk, getAllKiosks, getKiosk } from './actions';
 
 import './styles.less';
 
@@ -38,7 +39,7 @@ const KioskDetails = ({
   loadCells,
   isKioskLoading,
   resetKiosk,
-  refillKiosk,
+  createRefill,
   getKiosk,
 }) => {
   useEffect(() => {
@@ -59,7 +60,7 @@ const KioskDetails = ({
 
   const handlerOpenDoor = () => {
     if (window.confirm('Willst Du das Kiosk wirklich im Refill Mode öffnen?')) {
-      refillKiosk(kiosk._id);
+      createRefill(kiosk._id);
     }
   };
   const loaded = kiosk && kiosk._id === match.params.id;
@@ -115,7 +116,7 @@ const KioskDetails = ({
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns="equal">
-              <DetailsLoadCells cells={loadCells} kioskName={kiosk.name} />
+              <DetailsLoadCells cells={loadCells.list} kioskName={kiosk.name} />
             </Grid.Row>
           </Grid>
         </Grid.Column>
@@ -127,7 +128,7 @@ const KioskDetails = ({
             />
             <Grid.Row>
               <Grid.Column>
-                <DetailsInventory cells={loadCells} />
+                <DetailsInventory {...loadCells} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -148,7 +149,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   resetKiosk,
   getAllKiosks,
-  refillKiosk,
+  createRefill,
   getKiosk,
 };
 

@@ -19,8 +19,8 @@ const DetailsInfo = ({
         <Grid.Column width={12}>
           <Grid>
             <Grid.Row>
-              <InfoRow title="Device version" description="fsdaf d fd" />
-              <InfoRow title="Connection" description="sdasds" />
+              <InfoRow title="Device version" description="" />
+              <InfoRow title="Connection" description="" />
               <InfoRow
                 title="Session"
                 description={session ? session.type : 'no session'}
@@ -34,12 +34,12 @@ const DetailsInfo = ({
             <Grid.Row>
               <InfoRow title="Address" description={addressFull} />
               <InfoRow title="Organization" description={ownerOrganization} />
-              <InfoRow title="Logistics Org" description="sdasds" />
-              <InfoRow title="Local contact" description="sdasds" />
-              <InfoRow title="EMail" description="sdasds" />
+              <InfoRow title="Logistics Org" description="" />
+              <InfoRow title="Local contact" description="" />
+              <InfoRow title="EMail" description="" />
               <InfoRow title="Phone Number" description="+7(524)-52-35-845" />
-              <InfoRow title="Admin Card ID(s)" description="d3zsdf845" />
-              <InfoRow title="Location Notes" description="d3zsdf845" />
+              <InfoRow title="Admin Card ID(s)" description="" />
+              <InfoRow title="Location Notes" description="" />
             </Grid.Row>
           </Grid>
         </Grid.Column>
@@ -50,8 +50,8 @@ const DetailsInfo = ({
 
       <Grid>
         <Grid.Row>
-          <InfoRow title="Allowance" description="2 Euros Daily" />
-          <InfoRow title="Promotions" description="30% dsa fd gfds" />
+          <InfoRow title="Allowance" description="" />
+          <InfoRow title="Promotions" description="" />
         </Grid.Row>
       </Grid>
 

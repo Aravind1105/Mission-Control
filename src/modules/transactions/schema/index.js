@@ -26,4 +26,13 @@ export const GET_TRANSACTIONS_QUERY = gql`
   }
 `;
 
+export const CREATE_REFILL_MUTATION = gql`
+  mutation createRefill($kioskId: String!) {
+    createRefill(kioskId: $kioskId) {
+      _id
+      sessionClosedAt
+    }
+  }
+`;
+
 export default {};

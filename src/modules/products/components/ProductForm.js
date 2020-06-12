@@ -154,8 +154,10 @@ const ProductForm = ({
               <Grid.Column width={8}>
                 <Field
                   name="defaultPrice"
-                  label="Price - Selling - Gross(€)"
+                  label="Price - Selling - Gross"
                   type="number"
+                  icon="euro"
+                  iconPosition="left"
                   min={0}
                   required
                   component={FormInput}

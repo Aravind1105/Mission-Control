@@ -1,19 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  Segment,
-  Grid,
-  Input,
-  Dropdown,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
-
-const stateOptions = [
-  { key: 'client', value: 'client', text: 'client' },
-  { key: 'license', value: 'license', text: 'license' },
-];
+import { Segment, Grid, Input, Button, Icon } from 'semantic-ui-react';
 
 const Toolbar = ({ search, setSearch }) => {
   const handleSearchChange = ({ target }) => {
@@ -29,23 +17,6 @@ const Toolbar = ({ search, setSearch }) => {
               value={search}
               onChange={handleSearchChange}
               placeholder="Search..."
-              className="full-width"
-            />
-          </Grid.Column>
-
-          <Grid.Column>
-            <Dropdown
-              placeholder="All types"
-              selection
-              options={stateOptions}
-              className="full-width"
-            />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown
-              placeholder="All types"
-              selection
-              options={stateOptions}
               className="full-width"
             />
           </Grid.Column>

@@ -15,15 +15,19 @@ const calculateIndex = arr => {
 const separateToSides = cells =>
   cells.reduce(
     (prev, curr) => {
-      const [key, row] = curr.planogramPosition
+      const [key, row, cell] = curr.planogramPosition
         ? [...curr.planogramPosition]
         : ['A', calculateIndex(prev['A'])];
-
+      console.log(key, row, cell);
       if (prev[key]) {
         if (!prev[key][row]) {
           prev[key][row] = [];
         }
-        prev[key][row].push(curr);
+        if (cell == undefined) {
+          prev[key][row].push(curr);
+        } else {
+          prev[key][row][cell] = curr;
+        }
       }
       return prev;
     },
@@ -45,7 +49,8 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
 
   const handleClose = () => selectProduct(null);
   const sides = separateToSides(cells);
-  const isTwoSides = sides.A.length && sides.B.length;
+  console.log(sides);
+  const isTwoSides = Boolean(sides.A.length && sides.B.length);
   const loadedPosition = product
     ? cells.map(({ planogramPosition }) => planogramPosition)
     : [];
