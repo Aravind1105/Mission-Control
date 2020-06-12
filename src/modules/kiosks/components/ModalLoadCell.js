@@ -15,6 +15,7 @@ import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ConfirmModal';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
+import prettierNumber from 'lib/prettierNumber';
 import { modifyKioskLoadCell } from '../actions';
 
 const ToolTip = () => (
@@ -136,6 +137,7 @@ const ModalLoadCell = ({
                       type="number"
                       icon="euro"
                       min={0}
+                      prettier={prettierNumber}
                       component={FormInput}
                     />
                   </Grid.Column>

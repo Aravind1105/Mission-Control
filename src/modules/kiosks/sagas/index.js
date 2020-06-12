@@ -5,13 +5,11 @@ import getAllKiosks from './getAllKiosks';
 import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
-import refillKiosk from './refillKiosk';
 
 export default function* kiosksSaga() {
   yield all([
     fork(getAllKiosks),
     fork(resetKiosk),
-    fork(refillKiosk),
     fork(modifyLoadCellSaga),
     fork(modifyKioskSaga),
     fork(getKioskSaga),

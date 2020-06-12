@@ -8,7 +8,7 @@ const LoadCellsHeader = ({ title, activeShelves }) => (
         <Header as="h3">{title}</Header>
       </Grid.Column>
       <Grid.Column width={6} className="text-align-right">
-        Active Shelves:
+        Active scales:
         <b className="textGreen">{` ${activeShelves}`}</b>
       </Grid.Column>
     </Grid.Row>

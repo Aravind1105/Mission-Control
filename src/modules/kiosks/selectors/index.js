@@ -25,16 +25,25 @@ export const getKioskById = id =>
 
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
-  const loadCells = sortBy(cells, 'planogramPosition').map(
-    ({ products, ...rest }) => {
+  const loadCells = sortBy(cells, 'productLine.name').reduce(
+    (prev, { products, productLine, ...rest }) => {
       const totalProducts = products.length;
-      return {
+      const totalPrice = totalProducts * productLine.price;
+      prev.list.push({
         ...rest,
+        productLine: {
+          ...productLine,
+          price: productLine.price.toFixed(2),
+        },
         totalProducts,
-        totalPrice: totalProducts * rest.productLine.price,
-      };
+        totalPrice,
+      });
+      prev.total += totalPrice;
+      return prev;
     },
+    { list: [], total: 0 },
   );
+  loadCells.total = Number(loadCells.total).toFixed(2);
   return loadCells;
 });
 

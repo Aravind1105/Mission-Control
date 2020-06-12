@@ -3,7 +3,6 @@ import { createAction } from 'redux-actions';
 // Saga actions
 export const getAllKiosks = createAction('@@saga/KIOSK_LOAD');
 export const resetKiosk = createAction('@@saga/RESET_KIOSK');
-export const refillKiosk = createAction('@@saga/REFILL_KIOSK');
 export const modifyKiosk = createAction('@@saga/MODIFY_KIOSK');
 export const modifyKioskLoadCell = createAction(
   '@@saga/MODIFY_KIOSK_LOAD_CELL',
