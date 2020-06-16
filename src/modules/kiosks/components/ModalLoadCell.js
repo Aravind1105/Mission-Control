@@ -61,7 +61,6 @@ const ModalLoadCell = ({
         productId: data.product.value,
         kioskId: match.params.id,
       }) !== +data.price;
-
     if (
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.positionId)

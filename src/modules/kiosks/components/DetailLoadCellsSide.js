@@ -47,7 +47,7 @@ const Card = ({
               {totalProducts}
             </ColoredBlock>
           </p>
-          <p>{`€${productLine.price}`}</p>
+          <p>{`€ ${productLine.price}`}</p>
         </div>
       </div>
     </Grid.Column>
@@ -67,9 +67,16 @@ const DetailLoadCellsSide = ({ title, cells, handleEdit }) => {
         <Grid>
           {cells.map((row, i) => (
             <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
-              {row.map(props => (
-                <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-              ))}
+              {row.map(props =>
+                props ? (
+                  <Card {...props} key={props.cellId} handleEdit={handleEdit} />
+                ) : (
+                  <Grid.Column
+                    key={performance.now().toString(32)}
+                    className="load-cell"
+                  />
+                ),
+              )}
             </Grid.Row>
           ))}
         </Grid>
