@@ -34,6 +34,7 @@ function* handler({ payload }) {
           kioskId,
           loadCellConfigs: [
             {
+              planogramPosition: positionId,
               productLine: productId,
               cellId,
             },
@@ -71,7 +72,6 @@ function* handler({ payload }) {
         mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,
         variables,
       });
-      console.log(a);
     }
 
     if (isPriceChanged) {
