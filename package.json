@@ -38,7 +38,6 @@
     "recharts": "^2.0.0-beta.5",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
-    "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.0.1",
     "reselect": "^4.0.0",
     "semantic-ui-less": "^2.4.1",

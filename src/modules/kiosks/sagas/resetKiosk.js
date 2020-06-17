@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
+import toFlatLoadCellItem from 'lib/toFlatLoadCells';
 import {
   resetKiosk as action,
   resetKioskSuccess as actionSuccess,
@@ -12,13 +13,20 @@ function* handler({ payload }) {
     const variables = {
       id: payload,
     };
-    const { data } = yield call(gqlKiosk.mutate, {
+    const {
+      data: { kioskReset },
+    } = yield call(gqlKiosk.mutate, {
       mutation: KIOSK_RESET_MUTATION,
       variables,
     });
-    console.log(data);
+    const kiosk = {
+      ...kioskReset,
+      inventory: {
+        loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
+      },
+    };
 
-    yield put(actionSuccess(data.kioskReset));
+    yield put(actionSuccess(kiosk));
   } catch (error) {
     console.log(error);
   }
