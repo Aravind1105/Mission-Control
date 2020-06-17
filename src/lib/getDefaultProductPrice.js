@@ -7,7 +7,7 @@ const getDefaultProductPrice = ({ products, productId, kioskId }) => {
     priceList.reverse().find(el => el.validForKiosks.includes(kioskId)) ||
     priceList.find(el => el.default);
   const price = get(priceHistory, 'price', 0);
-  return price;
+  return price.toFixed(2);
 };
 
 export default getDefaultProductPrice;
