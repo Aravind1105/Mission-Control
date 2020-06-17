@@ -16,6 +16,7 @@ import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ConfirmModal';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
+import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
 
 const ToolTip = () => (
@@ -52,21 +53,24 @@ const ModalLoadCell = ({
 
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
-    const isPositionIdChanged = initVal.positionId !== data.positionId;
+    const isPositionIdChanged =
+      initVal.planogramPosition !== data.planogramPosition;
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== data.quantity;
     const isPriceChanged =
-      getDefaultProductPrice({
-        products: productsHistory,
-        productId: data.product.value,
-        kioskId: match.params.id,
-      }) !== +data.price;
+      1 *
+        getDefaultProductPrice({
+          products: productsHistory,
+          productId: data.product.value,
+          kioskId: match.params.id,
+        }) !==
+      +data.price;
     if (
       isPositionIdChanged &&
-      loadedPosition.some(el => el === data.positionId)
+      loadedPosition.some(el => el === data.planogramPosition)
     ) {
       const isConfirmed = window.confirm(
-        `“A loadcell is already assigned to this position (${data.positionId})! Do you want to switch positions?`,
+        `A loadcell is already assigned to this position (${data.planogramPosition})! Do you want to switch positions?`,
       );
       if (!isConfirmed) {
         return '';
@@ -84,7 +88,12 @@ const ModalLoadCell = ({
   };
 
   return (
-    <Formik onSubmit={handleSave} initialValues={initVal} key={initVal.price}>
+    <Formik
+      onSubmit={handleSave}
+      initialValues={initVal}
+      key={initVal.price}
+      validateOnBlur
+    >
       {({ dirty, handleSubmit }) => (
         <ConfirmModal
           onClose={handleClose}
@@ -98,7 +107,7 @@ const ModalLoadCell = ({
                 <Grid.Row>
                   <Grid.Column width={6}>
                     <b>Product&nbsp;</b>
-                    {initVal.availableProducts ? <ToolTip /> : null}
+                    {initVal.quantity ? <ToolTip /> : null}
                   </Grid.Column>
                   <Grid.Column width={10}>
                     <Field
@@ -144,8 +153,10 @@ const ModalLoadCell = ({
                 <Grid.Row columns="equal">
                   <Grid.Column>
                     <Field
-                      name="positionId"
+                      name="planogramPosition"
                       label="Position"
+                      required
+                      validate={validatePlanogramPosition}
                       component={FormInput}
                     />
                   </Grid.Column>
@@ -176,7 +187,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
   const productsHistory = getProductsHistory(state);
   const initVal = {
     cellId: product.cellId,
-    positionId: product.planogramPosition,
+    planogramPosition: product.planogramPosition,
     kioskId: params.id,
     product: {
       value: product._id,

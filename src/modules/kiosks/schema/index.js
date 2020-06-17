@@ -143,17 +143,6 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
   }
 `;
 
-export const SET_PLANOGRAM_POSITION_MUTATION = gql`
-  mutation setPlanogramPosition(
-    $kioskId: String!
-    $data: SetLoadcellPlanogramPositionInput!
-  ) {
-    setLoadcellPlanogramPosition(kioskId: $kioskId, data: $data) {
-      _id
-    }
-  }
-`;
-
 export const KIOSK_RESET_MUTATION = gql`
   mutation resetKiosk($id: String!) {
     kioskReset(id: $id) {
