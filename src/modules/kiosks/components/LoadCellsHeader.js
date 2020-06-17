@@ -9,7 +9,7 @@ const LoadCellsHeader = ({ title, activeShelves }) => (
       </Grid.Column>
       <Grid.Column width={6} className="text-align-right">
         Active scales:
-        <b className="textGreen">{` ${activeShelves}`}</b>
+        <b className="textGreen">{` ${activeShelves}/15`}</b>
       </Grid.Column>
     </Grid.Row>
   </Grid>

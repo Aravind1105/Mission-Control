@@ -72,15 +72,15 @@ const ModalLoadCell = ({
         return '';
       }
     }
-    const payload = {
+
+    modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
       isQuantityChanged,
       isPositionIdChanged,
       data,
       callback: handleClose,
-    };
-    modifyKioskLoadCell(payload);
+    });
   };
 
   return (
@@ -135,6 +135,7 @@ const ModalLoadCell = ({
                       name="price"
                       type="number"
                       icon="euro"
+                      iconPosition="left"
                       min={0}
                       prettier={prettierNumber}
                       component={FormInput}
