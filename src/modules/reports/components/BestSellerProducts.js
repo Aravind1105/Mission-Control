@@ -2,10 +2,8 @@ import React from 'react';
 import { Segment, Header, Icon } from 'semantic-ui-react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
-import colorGenerator from 'lib/colorGenerator';
+import { colorsArr } from 'lib/colors';
 import CircleChart from 'modules/shared/components/CircleChart';
-
-const colors = Array.from({ length: 5 }).map(() => colorGenerator());
 
 const TopSellers = ({ data }) => (
   <Segment.Group>
@@ -71,7 +69,7 @@ const TopSellers = ({ data }) => (
                 <CircleChart
                   size={54}
                   percent={el.percent}
-                  progressColor={colors[i % 5]}
+                  progressColor={colorsArr[i % (data.list.length - 1)]}
                   textColor="black"
                 />
               </div>

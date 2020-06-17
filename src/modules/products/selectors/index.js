@@ -112,6 +112,10 @@ export const selectorGetProductInitValue = createSelector(
   product => {
     if (!product) return defaultFormInit;
     const { packagingOptions, family, taxHistory, ...rest } = product;
+    rest.priceHistory = rest.priceHistory.map(el => ({
+      ...el,
+      price: el.price.toFixed(2),
+    }));
     const tax = taxHistory ? taxHistory.slice(-1) : null;
     const [packaging] = packagingOptions.slice(-1);
     const priceHistory = rest.priceHistory.find(el => el.default);

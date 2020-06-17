@@ -12,7 +12,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import colorGenerator from 'lib/colorGenerator';
 import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
 
@@ -87,7 +86,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
               dataKey={productName}
               name={productName}
               stackId="a"
-              fill={colorsArr[i] || colorGenerator()}
+              fill={colorsArr[i % (products.length - 1)]}
             />
           ))}
         </BarChart>

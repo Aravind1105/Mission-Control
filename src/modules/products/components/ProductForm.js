@@ -42,31 +42,13 @@ const ProductForm = ({
       {({ dirty, handleSubmit, values }) => (
         <Form onSubmit={handleSubmit}>
           <Grid>
-            <Grid.Row>
-              <Grid.Column width={12}>
+            <Grid.Row columns="equal">
+              <Grid.Column>
                 <Field
                   name="name"
                   label="Name"
                   required
                   component={FormInput}
-                />
-              </Grid.Column>
-              <Grid.Column width={2}>
-                <Field
-                  name="currency"
-                  label="Currency"
-                  disabled
-                  component={FormSelect}
-                  options={currencyOptions}
-                />
-              </Grid.Column>
-              <Grid.Column width={2}>
-                <Field
-                  name="packagingOptions[0].unitCount"
-                  label="Unit"
-                  disabled
-                  component={FormSelect}
-                  options={unitOptions}
                 />
               </Grid.Column>
             </Grid.Row>

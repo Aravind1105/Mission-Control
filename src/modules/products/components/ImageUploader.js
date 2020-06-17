@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Divider } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import './styles.less';
@@ -21,6 +21,8 @@ const ImageUploader = ({ src }) => {
 
   return (
     <Segment>
+      <h3>Product Image</h3>
+      <Divider />
       <div className="img-wrapper">
         <label htmlFor="productImgUpload">
           {img ? <img src={img} alt="product" /> : <NoImageBlock />}
