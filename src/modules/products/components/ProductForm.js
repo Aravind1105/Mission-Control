@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 
+import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
@@ -160,6 +161,7 @@ const ProductForm = ({
                   iconPosition="left"
                   min={0}
                   required
+                  prettier={prettierNumber}
                   component={FormInput}
                 />
               </Grid.Column>

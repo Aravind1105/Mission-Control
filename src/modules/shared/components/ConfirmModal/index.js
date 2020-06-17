@@ -3,14 +3,18 @@ import { Container, Modal, Button } from 'semantic-ui-react';
 
 import './styles.less';
 
-const InnerModal = ({ onApprove, onCancel }) => (
+const InnerModal = ({ onApprove, onCancel, confirmMsg }) => (
   <div className="inner-modal">
     <div className="inner-modal__content">
-      <p>
-        You have unsaved data.
-        <br />
-        Do you want to close the window without saving?
-      </p>
+      {confirmMsg ? (
+        confirmMsg
+      ) : (
+        <p>
+          You have unsaved data.
+          <br />
+          Do you want to close the window without saving?
+        </p>
+      )}
       <div className="inner-modal__actions">
         <Button onClick={onCancel}>Cancel</Button>
         <Button type="submit" color="green" onClick={onApprove}>
@@ -21,7 +25,14 @@ const InnerModal = ({ onApprove, onCancel }) => (
   </div>
 );
 
-const ConfirmModal = ({ isPristine, title, children, onClose, size }) => {
+const ConfirmModal = ({
+  isPristine,
+  title,
+  children,
+  onClose,
+  size,
+  confirmMsg,
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -48,7 +59,13 @@ const ConfirmModal = ({ isPristine, title, children, onClose, size }) => {
         </Container>
       </Modal.Header>
       {children}
-      {open && <InnerModal onApprove={onApprove} onCancel={onCancel} />}
+      {open && (
+        <InnerModal
+          onApprove={onApprove}
+          onCancel={onCancel}
+          confirmMsg={confirmMsg}
+        />
+      )}
     </Modal>
   );
 };

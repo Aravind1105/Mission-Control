@@ -20,10 +20,6 @@ const links = [
     link: '/kiosks',
   },
 ];
-const backLink = {
-  name: 'Back to kiosks',
-  link: '/kiosks',
-};
 
 const KioskEdit = ({
   match: { params },
@@ -34,6 +30,11 @@ const KioskEdit = ({
   getOrganizations,
   getKiosk,
 }) => {
+  const backLink = {
+    name: 'Back to kiosk',
+    link: `/kiosks/detail/${params.id}`,
+  };
+
   useEffect(() => {
     const isEdit = params.id !== 'new';
     const hasData = isEdit ? initialValues.id === params.id : false;
