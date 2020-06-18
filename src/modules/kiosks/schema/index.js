@@ -24,15 +24,11 @@ const FragmentInventory = {
         products {
           _id
         }
+        priceTag
         productLine {
           _id
           name
           images
-          priceHistory {
-            price
-            default
-            validForKiosks
-          }
         }
       }
     }

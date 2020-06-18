@@ -14,8 +14,13 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     availableProducts,
     planogramPosition,
   }) => {
-    const data = pick(productLine, ['_id', 'name']);
-    selectProduct({ ...data, cellId, planogramPosition, availableProducts });
+    const data = pick(productLine, ['_id', 'name', 'price']);
+    selectProduct({
+      ...data,
+      cellId,
+      planogramPosition: planogramPosition || '',
+      availableProducts,
+    });
   };
 
   const handleClose = () => selectProduct(null);

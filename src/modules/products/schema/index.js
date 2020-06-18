@@ -57,7 +57,7 @@ const productOnProductLine = gql`
     priceHistory {
       price
       default
-      validForKiosks
+      validForKiosk
       _id
     }
   }
@@ -71,7 +71,7 @@ export const GET_ALL_PRODUCTS_QUERY = gql`
       priceHistory {
         price
         default
-        validForKiosks
+        validForKiosk
       }
     }
   }
@@ -86,13 +86,9 @@ export const GET_ALL_PRODUCTS_EXTENDED_QUERY = gql`
         name
         category
         manufacturer
+        defaultPrice
         packagingOptions {
           grossWeightGrams
-        }
-        priceHistory {
-          price
-          default
-          validForKiosks
         }
       }
     }

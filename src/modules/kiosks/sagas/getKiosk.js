@@ -22,10 +22,7 @@ function* handler({ payload }) {
       kiosk = {
         ...getKioskById,
         inventory: {
-          loadCells: toFlatLoadCellItem(
-            getKioskById.inventory.loadCells,
-            payload,
-          ),
+          loadCells: toFlatLoadCellItem(getKioskById.inventory.loadCells),
         },
       };
     }
