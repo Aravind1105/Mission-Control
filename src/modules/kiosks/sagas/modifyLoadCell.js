@@ -65,7 +65,7 @@ function* handler({ payload }) {
         data: {
           price: Number(price),
           default: false,
-          validForKiosks: [kioskId],
+          validForKiosk: kioskId,
         },
       };
       yield call(gqlProduct.mutate, {

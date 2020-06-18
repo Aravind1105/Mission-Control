@@ -11,10 +11,9 @@ const ProductPriceHistory = ({ priceHistory, kiosks }) => {
       <Divider />
       <p>{`Default: ${defaultPrice ? defaultPrice.price : 0}€`}</p>
       <div>
-        {filtered.map(({ validForKiosks, updated, price, _id }) => {
+        {filtered.map(({ validForKiosk, updated, price, _id }) => {
           const date = new Date(updated).toLocaleDateString();
-          const [id] = validForKiosks;
-          const kioskName = kiosks[id] || 'noname';
+          const kioskName = kiosks[validForKiosk] || 'noname';
           return <p key={_id}>{`${kioskName}: ${price}€ - ${date}`}</p>;
         })}
       </div>

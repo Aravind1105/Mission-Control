@@ -115,7 +115,7 @@ const ModalLoadCell = ({
                       isSearchable
                       options={options}
                       onChange={handleSelect}
-                      disabled={initVal.quantity}
+                      disabled={Boolean(initVal.quantity)}
                       component={FormAsyncSelect}
                     />
                   </Grid.Column>
@@ -195,11 +195,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
       label: product.name,
     },
     quantity: product.availableProducts,
-    price: getDefaultProductPrice({
-      products: productsHistory,
-      productId: product._id,
-      kioskId: params.id,
-    }),
+    price: product.price,
   };
   return {
     options: getProductsSimpleList()(state),

@@ -28,11 +28,8 @@ const columns = [
   },
   {
     title: 'Price',
-    field: 'price',
-    formatter: ({ priceHistory }) => {
-      const { price = 0 } = priceHistory.find(el => el.default) || {};
-      return `${price} €`;
-    },
+    field: 'defaultPrice',
+    formatter: ({ defaultPrice = 0 }) => `${defaultPrice.toFixed(2)} €`,
   },
 ];
 
