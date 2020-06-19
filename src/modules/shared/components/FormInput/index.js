@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormInput as Input } from 'semantic-ui-react';
 
-const FormInput = ({ form, field, step, prettier, ...props }) => {
+const FormInput = ({ form, field, step, readOnly, prettier, ...props }) => {
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name];
   const errMsg = isTouched && error ? { content: error } : undefined;
