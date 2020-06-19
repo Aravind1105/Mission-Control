@@ -23,6 +23,7 @@ function* handler({ payload: { values, initialValues } }) {
 
     const tax = rest.tax ? taxes.find(el => el.taxValue === rest.tax) : '';
     rest.tax = tax ? tax._id : '';
+    rest.defaultPrice = Number(rest.defaultPrice);
     const variables = {
       data: rest,
     };
