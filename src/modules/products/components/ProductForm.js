@@ -26,10 +26,9 @@ const ProductForm = ({
       enableReinitialize
     >
       {({ dirty, handleSubmit, values }) => {
-        const netPrice =
-          Math.round(
-            ((values.defaultPrice || 0) / (1 + (values.tax || 0) / 100)) * 100,
-          ) / 100;
+        const netPrice = Math.round(
+          ((+(values.defaultPrice.replace(',', '.')) || 0) / (1 + (values.tax || 0) / 100)) * 100,
+        ) / 100;
         return (
           <Form onSubmit={handleSubmit}>
             <Grid>
@@ -96,27 +95,27 @@ const ProductForm = ({
                   <Field
                     name="packagingOptions[0].netWeightGrams"
                     label="Net Quantity (ml/g)"
-                    type="number"
                     min={0}
                     required
                     component={FormInput}
+                    limiting="integerField"
                   />
                 </Grid.Column>
                 <Grid.Column width={7}>
                   <Field
                     name="packagingOptions[0].grossWeightGrams"
                     label="Actual Weight (g)"
-                    type="number"
                     min={0}
                     required
                     component={FormInput}
+                    limiting="integerField"
                   />
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <Field
                     name="packagingOptions[0].shelfLifeDays"
                     label="Shelf life (days)"
-                    type="number"
+                    limiting="integerField"
                     min={0}
                     required
                     component={FormInput}
@@ -128,13 +127,13 @@ const ProductForm = ({
                   <Field
                     name="defaultPrice"
                     label="Price - Selling - Gross"
-                    type="number"
                     icon="euro"
                     iconPosition="left"
                     min={0}
                     required
                     prettier={prettierNumber}
                     component={FormInput}
+                    limiting="floatingField"
                   />
                 </Grid.Column>
                 <Grid.Column width={5}>
@@ -142,6 +141,7 @@ const ProductForm = ({
                     label="Netto - Selling - price"
                     icon="euro"
                     iconPosition="left"
+                    className="not-active-input"
                     value={netPrice.toFixed(2)}
                     component={FormInput}
                   />

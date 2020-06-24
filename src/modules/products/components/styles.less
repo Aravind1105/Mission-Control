@@ -17,3 +17,19 @@
     display: block;
   }
 }
+
+.not-active-input {
+  input {
+    opacity: 0.7 !important;
+    cursor: default;
+    pointer-events: none !important;
+  }
+  input:focus{
+    background-color: none !important;
+    color: rgba(0,0,0,.87) !important;
+    border: 1px solid rgba(34,36,38,.15) !important;
+  }
+  i {
+    opacity: 0.5 !important;
+  }
+}
