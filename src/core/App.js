@@ -60,7 +60,7 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
   initialized: getInitialized(state),
-  isAuthenticated: getAuth(state) && getRoot(state),
+  isAuthenticated: getAuth(state),
 });
 
 const mapDispatchToProps = { initializeApp };

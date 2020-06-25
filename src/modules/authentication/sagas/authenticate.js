@@ -92,7 +92,7 @@ function* processAuthData() {
     yield history.replace(replaceUrl || '/');
     LivelloLS.removeItem(AUTH_ENTRY_STORAGE_KEY);
   } catch (e) {
-    console.log(e);
+    history.replace('/');
     // TODO: Some error notification
   }
 }
