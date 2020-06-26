@@ -53,21 +53,18 @@ const ModalLoadCell = ({
 
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
-    const isPositionIdChanged =
-      initVal.planogramPosition !== data.planogramPosition;
-    const isQuantityChanged =
-      isProductChanged || initVal.quantity !== data.quantity;
-    const isPriceChanged =
-      1 *
-        getDefaultProductPrice({
+    const isPositionIdChanged = initVal.planogramPosition !== data.planogramPosition;
+    const isQuantityChanged = isProductChanged || initVal.quantity !== data.quantity;
+    const isPriceChanged = 1
+        * getDefaultProductPrice({
           products: productsHistory,
           productId: data.product.value,
           kioskId: match.params.id,
-        }) !==
-      +data.price;
+        })
+      !== +data.price;
     if (
-      isPositionIdChanged &&
-      loadedPosition.some(el => el === data.planogramPosition)
+      isPositionIdChanged
+      && loadedPosition.some(el => el === data.planogramPosition)
     ) {
       const isConfirmed = window.confirm(
         `A loadcell is already assigned to this position (${data.planogramPosition})! Do you want to switch positions?`,
@@ -128,7 +125,7 @@ const ModalLoadCell = ({
                   <Grid.Column width={10}>
                     <Field
                       name="quantity"
-                      type="number"
+                      limiting="integerField"
                       min={0}
                       component={FormInput}
                     />
@@ -142,7 +139,7 @@ const ModalLoadCell = ({
                   <Grid.Column width={10}>
                     <Field
                       name="price"
-                      type="number"
+                      limiting="floatingField"
                       icon="euro"
                       iconPosition="left"
                       min={0}
