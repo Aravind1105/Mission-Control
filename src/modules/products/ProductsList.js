@@ -32,8 +32,8 @@ const ProductsList = ({
     };
 
     if (search || category) {
-      const name = search ? { name: { $regex: search } } : {};
-      const cat = category ? { category: { $regex: category } } : {};
+      const name = search ? { name: { $regexI: search } } : {};
+      const cat = category ? { category: { $regexI: category } } : {};
 
       data.search = JSON.stringify({
         ...name,
