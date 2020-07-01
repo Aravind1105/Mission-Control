@@ -17,6 +17,7 @@ const LoginScreen = () => {
     dispatch(handleAuthUserSaga());
     return false;
   }
+
   return (
     <div
       className="login-screen-wrapper"
