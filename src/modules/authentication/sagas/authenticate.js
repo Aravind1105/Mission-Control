@@ -25,13 +25,14 @@ const authConfig = {
   responseType: 'token id_token',
   scope: 'openid profile email admin',
   audience: process.env.AUTH_AUDIENCE,
+  redirect: false,
 };
 
 const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
-  yield auth.authorize({ connection: 'google-oauth2' });
+  yield auth.authorize({ });
 }
 
 function parseHash() {

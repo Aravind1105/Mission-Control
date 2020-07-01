@@ -7,7 +7,7 @@ import { authenticateUserSaga } from 'modules/authentication/actions';
 const LoginButton = ({ authUser, ...props }) => (
   <Button primary onClick={authUser} icon labelPosition="left" {...props}>
     <Icon name="google" />
-    Sign in with Google
+    Log in
   </Button>
 );
 
