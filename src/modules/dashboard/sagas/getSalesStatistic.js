@@ -44,7 +44,7 @@ function* handler({ payload: { kioskId, time } }) {
   const data = {
     dailySales: [
       {
-        amount: 3,
+        amount: 3.1,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -57,7 +57,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 11,
+        amount: 11.2,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -70,7 +70,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 5,
+        amount: 5.1,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -83,7 +83,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 14,
+        amount: 14.2,
         _id: {
           date: '2020-07-02T22:00:00.000Z',
           kiosk: null,
@@ -96,7 +96,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 11,
+        amount: 11.1,
         _id: {
           date: '2020-07-01T12:00:00.000Z',
           kiosk: null,
@@ -109,7 +109,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 1,
+        amount: 1.2,
         _id: {
           date: '2020-07-01T04:00:00.000Z',
           kiosk: null,
@@ -123,7 +123,7 @@ function* handler({ payload: { kioskId, time } }) {
 
       },
       {
-        amount: 7,
+        amount: 7.1,
         _id: {
           date: '2020-07-01T10:30:00.000Z',
           kiosk: null,
@@ -139,7 +139,7 @@ function* handler({ payload: { kioskId, time } }) {
     ],
     dailySalesByKiosk: [
       {
-        amount: 3,
+        amount: 3.2,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -152,7 +152,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 11,
+        amount: 11.1,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -165,7 +165,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 5,
+        amount: 5.2,
         _id: {
           date: '2020-07-02T10:00:00.000Z',
           kiosk: null,
@@ -178,7 +178,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 14,
+        amount: 14.1,
         _id: {
           date: '2020-07-02T22:00:00.000Z',
           kiosk: null,
@@ -191,7 +191,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 11,
+        amount: 11.2,
         _id: {
           date: '2020-07-01T12:00:00.000Z',
           kiosk: null,
@@ -204,7 +204,7 @@ function* handler({ payload: { kioskId, time } }) {
         },
       },
       {
-        amount: 1,
+        amount: 1.1,
         _id: {
           date: '2020-07-01T04:00:00.000Z',
           kiosk: null,
@@ -218,7 +218,7 @@ function* handler({ payload: { kioskId, time } }) {
 
       },
       {
-        amount: 7,
+        amount: 7.2,
         _id: {
           date: '2020-07-01T10:30:00.000Z',
           kiosk: null,
@@ -229,7 +229,6 @@ function* handler({ payload: { kioskId, time } }) {
           type: 'day',
           week: null,
         },
-
       },
     ],
   };
@@ -260,7 +259,7 @@ function* handler({ payload: { kioskId, time } }) {
         if (!products.includes(kiosk)) {
           products.push(kiosk);
         }
-        const total = Math.round(((sum + value) * 100) / 100);
+        const total = (+sum + +value).toFixed(2);
         return {
           ...prev,
           [kiosk]: total,
