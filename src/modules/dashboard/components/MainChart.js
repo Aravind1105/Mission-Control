@@ -16,15 +16,13 @@ import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
 
 const optionsTime = [
-  { label: 'Hourly', value: 'hourly' },
   { label: 'Daily', value: 'daily' },
   { label: 'Weekly', value: 'weekly' },
-  { label: 'Monthly', value: 'monthly' },
 ];
 
 const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
   const [kioskId, setKiosk] = useState('');
-  const [time, setTime] = useState(optionsTime[2].value);
+  const [time, setTime] = useState(optionsTime[1].value);
 
   useEffect(() => {
     getSalesStatistic({ kioskId, time });
@@ -56,7 +54,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
-              defaultValue={optionsTime[2]}
+              defaultValue={optionsTime[1]}
             />
           </Grid.Column>
         </Grid.Row>
@@ -66,11 +64,8 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
         <BarChart data={data} margin={{ left: 10, right: 10 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis
-            dataKey={({ name }) => {
-              // TODO: remove next lines after backend will return name of kiosk
-              if (kioskId) return name.slice(0, 10);
-              const item = kiosksOptions.find(el => el.value === name);
-              return item ? item.label.slice(0, 10) : 'unknown';
+            dataKey={({ date }) => {
+              return date;
             }}
             height={100}
             interval={0}
@@ -80,15 +75,29 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          {products.map((productName, i) => (
+          {!kioskId && products.map((productName, i) => {
+            const name = kiosksOptions.find(el => el.value === productName);
+            return (
+              <Bar
+                key={productName}
+                dataKey={productName}
+                name={name && name.label}
+                stackId="a"
+                fill={colorsArr[i % (products.length - 1)]}
+              />
+            );
+          })}
+          {kioskId
+            && (
             <Bar
-              key={productName}
-              dataKey={productName}
-              name={productName}
+              key={kioskId}
+              dataKey="amount"
+              name={kiosksOptions.find(el => el.value === kioskId).label}
               stackId="a"
-              fill={colorsArr[i % (products.length - 1)]}
+              fill={colorsArr[1]}
             />
-          ))}
+            )
+          }
         </BarChart>
       </ResponsiveContainer>
     </Segment>
