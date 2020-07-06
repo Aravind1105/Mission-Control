@@ -12,6 +12,19 @@ const FragmentStatisticOnSalesByFridgeId = gql`
   }
 `;
 
+const FragmentStatisticOnSalesForAll = gql`
+  fragment FragmentStatistic on SalesByFridgeId {
+    type
+    date
+    week
+    kiosk
+    line {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_HOURLY_SALES_STATISTIC_QUERY = gql`
   query getStatistic($kioskId: String) {
     hourlySalesByKiosk(kioskId: $kioskId) {
@@ -58,4 +71,29 @@ export const GET_MONTHLY_SALES_STATISTIC_QUERY = gql`
     }
   }
   ${FragmentStatisticOnSalesByFridgeId}
+`;
+
+export const GET_DAILY_SALES_BY_KIOSKS = gql`
+  query getStatistic {
+    hourlySales {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesForAll}
+`;
+
+
+export const GET_WEEKLY_SALES_BY_KIOSKS = gql`
+  query getStatistic {
+    dailySales {
+      _id {
+        ...FragmentStatistic
+      }
+      amount
+    }
+  }
+  ${FragmentStatisticOnSalesForAll}
 `;
