@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import get from 'lodash/get';
@@ -48,7 +48,7 @@ const ProductDetail = ({
   const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
   const { priceHistory, ...initialValues } = product;
   const loaded = familyOption.length && isProductLoaded;
-
+  const [uploadedImage, setUploadedImage] = useState(null);
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
@@ -79,10 +79,11 @@ const ProductDetail = ({
                   <Header as="h3">{productName}</Header>
                   <Divider />
                   <ProductForm
-                    initialValues={initialValues}
+                    initialValues={{ ...initialValues, image: '' }}
                     categoryOption={categoryOption}
                     familyOption={familyOption}
                     taxesOption={taxesOption}
+                    uploadedImage={uploadedImage}
                   />
                 </Segment>
               </Grid.Column>
@@ -96,7 +97,7 @@ const ProductDetail = ({
       {isProductLoaded ? (
         <Grid.Column width={5}>
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
-          <ImageUploader src={productImg} />
+          <ImageUploader src={productImg} setUploadedImage={setUploadedImage} />
         </Grid.Column>
       ) : null}
     </Grid>
@@ -106,10 +107,9 @@ const ProductDetail = ({
 const mapStateToProps = (state, { match: { params } }) => {
   const options = selectorGetProductFamilyForm(state);
   const product = selectorGetProductInitValue(state);
-  const isProductLoaded =
-    params.id === 'new'
-      ? !get(product, 'id')
-      : product && product.id === params.id;
+  const isProductLoaded = params.id === 'new'
+    ? !get(product, 'id')
+    : product && product.id === params.id;
 
   return {
     product,

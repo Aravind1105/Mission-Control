@@ -23,6 +23,9 @@ export const defaultOptions = {
     fetchPolicy: 'no-cache',
     errorPolicy: 'all',
   },
+  mutate: {
+    errorPolicy: 'all',
+  },
 };
 
 export default requestInterceptor;

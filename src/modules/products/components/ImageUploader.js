@@ -13,7 +13,7 @@ const NoImageBlock = () => (
   </>
 );
 
-const ImageUploader = ({ src }) => {
+const ImageUploader = ({ src, setUploadedImage }) => {
   const [img, setImg] = useState(src);
   const [imageProp, setSize] = useState(null);
   const [imgName, setImgName] = useState('');
@@ -38,6 +38,7 @@ const ImageUploader = ({ src }) => {
     const newImg = URL.createObjectURL(files[0]);
     setImgName(files[0].name);
     setImg(newImg);
+    setUploadedImage(files[0]);
   };
 
   return (

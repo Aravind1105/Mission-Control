@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
@@ -9,26 +9,46 @@ import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { modifyProductSaga } from '../actions';
 
+let setImg;
+let restVal;
 const ProductForm = ({
   initialValues,
   familyOption,
   categoryOption,
   taxesOption,
+  uploadedImage,
 }) => {
   const dispatch = useDispatch();
+
   const onSubmit = (values, formActions) => {
-    dispatch(modifyProductSaga({ values, formActions, initialValues }));
+    values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0].netWeightGrams;
+    values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0].grossWeightGrams;
+    values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0].shelfLifeDays;
+    delete values.image;
+
+    dispatch(modifyProductSaga({ values, formActions, initialValues, uploadedImage }));
   };
+
+  useEffect(() => {
+    if (uploadedImage) {
+      if (setImg) {
+        setImg({ ...restVal, image: true }, true);
+      }
+    }
+  }, [uploadedImage]);
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({ dirty, handleSubmit, values }) => {
+      {({ dirty, handleSubmit, values, setValues }) => {
         const netPrice = Math.round(
           ((+(values.defaultPrice.replace(',', '.')) || 0) / (1 + (values.tax || 0) / 100)) * 100,
         ) / 100;
+        setImg = setValues;
+        restVal = values;
         return (
           <Form onSubmit={handleSubmit}>
             <Grid>
