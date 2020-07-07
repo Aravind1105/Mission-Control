@@ -14,6 +14,7 @@ import {
 
 import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
+import CustomTooltip from './CustomTooltip';
 
 const optionsTime = [
   { label: 'Daily', value: 'daily' },
@@ -73,7 +74,9 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             tick={<CustomizedAxisTick />}
           />
           <YAxis />
-          <Tooltip />
+          <Tooltip
+            content={<CustomTooltip />}
+          />
           <Legend />
           {!kioskId && products.map((productName, i) => {
             const name = kiosksOptions.find(el => el.value === productName);
@@ -84,6 +87,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
                 name={name && name.label}
                 stackId="a"
                 fill={colorsArr[i % (products.length - 1)]}
+                className="chartTest"
               />
             );
           })}
