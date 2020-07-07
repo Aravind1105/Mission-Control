@@ -15,8 +15,8 @@ import {
   modifyProductSuccess as actionSuccess,
 } from '../actions';
 
-function* handler({ payload: { values, initialValues } }) {
-  const { id, defaultPriceId, ...rest } = values;
+function* handler({ payload: { values, initialValues, uploadedImage } }) {
+  const { id, defaultPriceId, images, ...rest } = values;
   const isPriceUpdate = id && initialValues.defaultPrice !== rest.defaultPrice;
   try {
     const taxes = yield select(selectorGetProductTax);
@@ -27,6 +27,9 @@ function* handler({ payload: { values, initialValues } }) {
     const variables = {
       data: rest,
     };
+    if (uploadedImage) {
+      variables.image = uploadedImage;
+    }
     if (id) {
       variables.id = id;
     }
@@ -39,16 +42,16 @@ function* handler({ payload: { values, initialValues } }) {
       }),
       isPriceUpdate
         ? call(gqlProducts.mutate, {
-            mutation: UPDATE_PRODUCT_LINE_PRICE_MUTATION,
-            variables: {
-              id,
-              data: {
-                priceId: defaultPriceId,
-                price: rest.defaultPrice,
-                default: true,
-              },
+          mutation: UPDATE_PRODUCT_LINE_PRICE_MUTATION,
+          variables: {
+            id,
+            data: {
+              priceId: defaultPriceId,
+              price: rest.defaultPrice,
+              default: true,
             },
-          })
+          },
+        })
         : null,
     ]);
     const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
