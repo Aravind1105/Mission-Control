@@ -51,7 +51,7 @@ function* handler({ payload }) {
       const variables = {
         id: kioskId,
         cellId,
-        data: { amount: quantity },
+        data: { amount: parseInt(quantity) },
       };
       const a = yield call(gqlKiosk.mutate, {
         mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,
