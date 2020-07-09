@@ -48,6 +48,8 @@ increment-build-version:
       when: always
     - if: $CI_COMMIT_BRANCH == "staging-master"
       when: always
+    - if: $CI_COMMIT_BRANCH == "production-master"
+      when: always
   artifacts:
     expire_in: 1 days
     name: "$CI_COMMIT_BRANCH"
