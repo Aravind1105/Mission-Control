@@ -125,7 +125,7 @@ build-push-master:
 build-push-production-master:
   variables:
     app_name: livello-mission-control-prod
-    app_domain_map: $MC_DOMAIN_NAME_PROD
+    app_domain_map: $MC_DOMAIN_NAME_PROD_MASTER
     api_proxy_url: $API_PROXY_URL_PROD_MASTER
   <<: *build-push-template
   rules:
@@ -155,7 +155,7 @@ clound-run-master:
 clound-run-production-master:
   variables:
     app_name: livello-mission-control-prod
-    app_domain_map: $MC_DOMAIN_NAME_PROD
+    app_domain_map: $MC_DOMAIN_NAME_PROD_MASTER
     api_proxy_url: $API_PROXY_URL_PROD_MASTER
   <<: *clound-run-template
   rules:
