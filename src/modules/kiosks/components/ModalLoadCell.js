@@ -53,35 +53,38 @@ const ModalLoadCell = ({
 
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
-    const isPositionIdChanged = initVal.planogramPosition !== data.planogramPosition;
-    const isQuantityChanged = isProductChanged || initVal.quantity !== data.quantity;
-    const isPriceChanged = 1
-        * getDefaultProductPrice({
+    const isPositionIdChanged =
+      initVal.planogramPosition !== data.planogramPosition;
+    const isQuantityChanged =
+      isProductChanged || initVal.quantity !== data.quantity;
+    const isPriceChanged =
+      Number(
+        getDefaultProductPrice({
           products: productsHistory,
           productId: data.product.value,
           kioskId: match.params.id,
-        })
-      !== +data.price;
+        }),
+      ) !== +data.price;
+    let hasApprove = true;
     if (
-      isPositionIdChanged
-      && loadedPosition.some(el => el === data.planogramPosition)
+      isPositionIdChanged &&
+      loadedPosition.some(el => el === data.planogramPosition)
     ) {
-      const isConfirmed = window.confirm(
+      hasApprove = window.confirm(
         `A loadcell is already assigned to this position (${data.planogramPosition})! Do you want to switch positions?`,
       );
-      if (!isConfirmed) {
-        return '';
-      }
     }
 
-    modifyKioskLoadCell({
-      isPriceChanged,
-      isProductChanged,
-      isQuantityChanged,
-      isPositionIdChanged,
-      data,
-      callback: handleClose,
-    });
+    if (hasApprove) {
+      modifyKioskLoadCell({
+        isPriceChanged,
+        isProductChanged,
+        isQuantityChanged,
+        isPositionIdChanged,
+        data,
+        callback: handleClose,
+      });
+    }
   };
 
   return (
