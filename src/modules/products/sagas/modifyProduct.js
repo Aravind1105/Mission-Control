@@ -15,15 +15,17 @@ import {
   modifyProductSuccess as actionSuccess,
 } from '../actions';
 
-function* handler({ payload: { values, initialValues, uploadedImage } }) {
+function* handler({ payload: { values, initialValues, uploadedImage, isImageDeleted } }) {
   const { id, defaultPriceId, images, ...rest } = values;
   const isPriceUpdate = id && initialValues.defaultPrice !== rest.defaultPrice;
+  if (isImageDeleted) rest.images = [];
   try {
     const taxes = yield select(selectorGetProductTax);
 
     const tax = rest.tax ? taxes.find(el => el.taxValue === rest.tax) : '';
     rest.tax = tax ? tax._id : '';
     rest.defaultPrice = Number(rest.defaultPrice);
+    rest.defaultCost = Number(rest.defaultCost);
     const variables = {
       data: rest,
     };

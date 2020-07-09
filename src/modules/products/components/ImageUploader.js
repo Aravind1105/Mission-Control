@@ -8,15 +8,28 @@ const reg = /^.+\//;
 
 const NoImageBlock = () => (
   <>
-    Upload Product image
+    <p className="image-upload-text">
+      Please upload JPG image with
+      <br />
+      max size 800x800px
+    </p>
     <NoImg />
   </>
 );
 
-const ImageUploader = ({ src, setUploadedImage }) => {
+const ImageUploader = ({
+  src,
+  setUploadedImage,
+  setIsImageDeleted,
+  isCancelTriggered,
+  isImageDeleted,
+}) => {
   const [img, setImg] = useState(src);
   const [imageProp, setSize] = useState(null);
   const [imgName, setImgName] = useState('');
+
+  const [initialImageProps, setInitialImageProps] = useState(null);
+  const [initialImageName, setInitialImageName] = useState(null);
 
   useEffect(() => {
     const image = new Image();
@@ -29,9 +42,23 @@ const ImageUploader = ({ src, setUploadedImage }) => {
         height: image.naturalHeight,
         fileName,
       });
+      setInitialImageProps({
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        fileName,
+      });
+      setInitialImageName(fileName);
     };
     image.src = img || '';
   }, [img]);
+
+  useEffect(() => {
+    if (isCancelTriggered) {
+      setImg(src);
+      setSize(isImageDeleted ? null : { ...initialImageProps });
+      setImgName(initialImageName);
+    }
+  }, [isCancelTriggered]);
 
   const handleChange = ({ target }) => {
     const { files } = target;
@@ -39,6 +66,16 @@ const ImageUploader = ({ src, setUploadedImage }) => {
     setImgName(files[0].name);
     setImg(newImg);
     setUploadedImage(files[0]);
+    setIsImageDeleted(false);
+    target.value = '';
+  };
+
+  const handleDelete = () => {
+    setImg(null);
+    setSize(null);
+    setImgName(null);
+    setUploadedImage(null);
+    setIsImageDeleted(true);
   };
 
   return (
@@ -46,8 +83,25 @@ const ImageUploader = ({ src, setUploadedImage }) => {
       <h3>Product Image</h3>
       <Divider />
       <div className="img-wrapper">
-        <label htmlFor="productImgUpload">
-          {img ? <img src={img} alt="product" /> : <NoImageBlock />}
+        {img ? <img src={img} alt="product" /> : <NoImageBlock />}
+
+      </div>
+      {
+        imageProp && img && (
+          <Container textAlign="center">
+            <div className="filename-wrapper">{`Filename: ${imgName || imageProp.fileName}`}</div>
+            <div>{`Size: ${imageProp.width}x${imageProp.height}px`}</div>
+          </Container>
+        ) }
+      <div className="label-wrapper">
+        {
+          img && <button type="button" className="modify-button" onClick={handleDelete}>Delete Image</button>
+      }
+        <label htmlFor="productImgUpload" className="modify-button">
+
+          {img ? 'Change' : 'Upload'}
+          {' '}
+          Image
           <input
             type="file"
             accept="image/*"
@@ -57,12 +111,6 @@ const ImageUploader = ({ src, setUploadedImage }) => {
           />
         </label>
       </div>
-      {imageProp ? (
-        <Container textAlign="center">
-          <div>{`Filename: ${imgName || imageProp.fileName}`}</div>
-          <div>{`Size: ${imageProp.width}x${imageProp.height}px`}</div>
-        </Container>
-      ) : null}
     </Segment>
   );
 };

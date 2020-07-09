@@ -17,41 +17,36 @@ export const getProductsHistory = createSelector(
   products => products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
 );
 
-export const getProductsSimpleList = (id = '') =>
-  createSelector(selectorGetProducts, products =>
-    products
-      .map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-      .filter(el => el.value !== id),
-  );
+export const getProductsSimpleList = (id = '') => createSelector(selectorGetProducts, products => products
+  .map(({ _id, name }) => ({
+    value: _id,
+    label: name,
+  }))
+  .filter(el => el.value !== id));
 
 export const selectorProductTaxOptions = createSelector(
   selectorGetProductTax,
-  taxes =>
-    taxes.map(el => ({
-      text: el.taxId,
-      value: el.taxValue,
-      key: el._id,
-    })),
+  taxes => taxes.map(el => ({
+    text: el.taxId,
+    value: el.taxValue,
+    key: el._id,
+  })),
 );
 
 export const selectorGetProductFamilyForm = createSelector(
   selectorGetProductFamily,
-  family =>
-    family.reduce(
-      (prev, curr) => {
-        const category = curr.category.map(text => ({ text, value: text }));
-        prev.families.push({
-          value: curr._id,
-          text: curr.name,
-        });
-        prev.categories[curr._id] = category;
-        return prev;
-      },
-      { families: [], categories: {} },
-    ),
+  family => family.reduce(
+    (prev, curr) => {
+      const category = curr.category.map(text => ({ text, value: text }));
+      prev.families.push({
+        value: curr._id,
+        text: curr.name,
+      });
+      prev.categories[curr._id] = category;
+      return prev;
+    },
+    { families: [], categories: {} },
+  ),
 );
 
 export const selectorGetProductCategories = createSelector(
@@ -92,6 +87,8 @@ const defaultFormInit = {
   ingredientsList: '',
   salt: '',
   defaultPrice: '',
+  defaultCost: '',
+  orgId: '',
   images: [],
   packagingOptions: [
     {
@@ -136,6 +133,7 @@ export const selectorGetProductInitValue = createSelector(
       'salt',
       'priceHistory',
       'images',
+      'orgId',
     ]);
     return {
       ...defaultFormInit,
@@ -158,6 +156,7 @@ export const selectorGetProductInitValue = createSelector(
       defaultPriceId: get(priceHistory, '_id', ''),
       family: family._id,
       tax: get(tax, '0.taxEntry.taxValue', ''),
+      defaultCost: (+rest.defaultCost).toFixed(2),
     };
   },
 );

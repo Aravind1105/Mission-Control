@@ -17,6 +17,10 @@ const ProductForm = ({
   categoryOption,
   taxesOption,
   uploadedImage,
+  organizations,
+  isImageDeleted,
+  setIsCancelTriggered,
+  setIsImageDeleted,
 }) => {
   const dispatch = useDispatch();
 
@@ -25,17 +29,34 @@ const ProductForm = ({
     values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0].grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0].shelfLifeDays;
     delete values.image;
+    setIsCancelTriggered(false);
+    setIsImageDeleted(false);
+    dispatch(modifyProductSaga({ values,
+      formActions,
+      initialValues,
+      uploadedImage,
+      isImageDeleted }));
+  };
 
-    dispatch(modifyProductSaga({ values, formActions, initialValues, uploadedImage }));
+  const handleCancel = resetForm => {
+    resetForm();
+    setIsCancelTriggered(true);
+    setIsImageDeleted(false);
   };
 
   useEffect(() => {
     if (uploadedImage) {
       if (setImg) {
-        setImg({ ...restVal, image: true }, true);
+        setIsCancelTriggered(false);
+        setImg({ ...restVal, image: restVal.image + 1 }, true);
+      }
+    } else if (isImageDeleted) {
+      if (setImg) {
+        setIsCancelTriggered(false);
+        setImg({ ...restVal, image: restVal.image + 1 }, true);
       }
     }
-  }, [uploadedImage]);
+  }, [uploadedImage, isImageDeleted]);
 
   return (
     <Formik
@@ -43,7 +64,7 @@ const ProductForm = ({
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {({ dirty, handleSubmit, values, setValues }) => {
+      {({ dirty, handleSubmit, values, setValues, resetForm }) => {
         const netPrice = Math.round(
           ((+(values.defaultPrice.replace(',', '.')) || 0) / (1 + (values.tax || 0) / 100)) * 100,
         ) / 100;
@@ -59,6 +80,15 @@ const ProductForm = ({
                     label="Name"
                     required
                     component={FormInput}
+                  />
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <Field
+                    name="orgId"
+                    label="Organization"
+                    required
+                    component={FormSelect}
+                    options={organizations}
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -143,7 +173,7 @@ const ProductForm = ({
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row>
-                <Grid.Column width={5}>
+                <Grid.Column width={4}>
                   <Field
                     name="defaultPrice"
                     label="Price - Selling - Gross"
@@ -156,7 +186,7 @@ const ProductForm = ({
                     limiting="floatingField"
                   />
                 </Grid.Column>
-                <Grid.Column width={5}>
+                <Grid.Column width={4}>
                   <Field
                     label="Netto - Selling - price"
                     icon="euro"
@@ -166,13 +196,26 @@ const ProductForm = ({
                     component={FormInput}
                   />
                 </Grid.Column>
-                <Grid.Column width={6}>
+                <Grid.Column width={4}>
                   <Field
                     name="tax"
                     label="VAT (%)"
                     required
                     component={FormSelect}
                     options={taxesOption}
+                  />
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <Field
+                    name="defaultCost"
+                    label="Cost"
+                    icon="euro"
+                    iconPosition="left"
+                    component={FormInput}
+                    prettier={prettierNumber}
+                    limiting="floatingField"
+                    required
+                    min={0}
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -275,7 +318,7 @@ const ProductForm = ({
 
               <Grid.Row textAlign="center">
                 <Grid.Column>
-                  <Button>Cancel</Button>
+                  <Button disabled={!dirty} onClick={() => handleCancel(resetForm)} type="button">Cancel</Button>
                   <Button color="green" type="submit" disabled={!dirty}>
                     Submit
                   </Button>
