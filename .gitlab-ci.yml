@@ -122,6 +122,16 @@ build-push-master:
     - if: $CI_COMMIT_BRANCH == "master"
       when: always
 
+build-push-production-master:
+  variables:
+    app_name: livello-mission-control-prod
+    app_domain_map: $MC_DOMAIN_NAME_PROD
+    api_proxy_url: $API_PROXY_URL_PROD_MASTER
+  <<: *build-push-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production-master"
+      when: always
+
 clound-run-staging:
   variables:
     app_name: livello-mission-control-stage
@@ -140,4 +150,14 @@ clound-run-master:
   <<: *clound-run-template
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+
+clound-run-production-master:
+  variables:
+    app_name: livello-mission-control-prod
+    app_domain_map: $MC_DOMAIN_NAME_PROD
+    api_proxy_url: $API_PROXY_URL_PROD_MASTER
+  <<: *clound-run-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "production-master"
       when: on_success
