@@ -10,11 +10,13 @@ import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
 import ImageUploader from './components/ImageUploader';
 import { getFullProductData } from './actions';
+import { getOrganizations } from '../organizations/actions';
 import {
   selectorGetProductInitValue,
   selectorGetProductFamilyForm,
   selectorProductTaxOptions,
 } from './selectors';
+import { getOrganizationsAsOptions } from '../organizations/selectors';
 
 const links = [
   {
@@ -42,6 +44,8 @@ const ProductDetail = ({
   isLoading,
   match,
   getFullProductData,
+  organizations,
+  getOrganizations,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -49,10 +53,14 @@ const ProductDetail = ({
   const { priceHistory, ...initialValues } = product;
   const loaded = familyOption.length && isProductLoaded;
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [isImageDeleted, setIsImageDeleted] = useState(false);
+  const [isCancelTriggered, setIsCancelTriggered] = useState(false);
+
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
+      getOrganizations();
     }
   }, []);
 
@@ -79,11 +87,15 @@ const ProductDetail = ({
                   <Header as="h3">{productName}</Header>
                   <Divider />
                   <ProductForm
-                    initialValues={{ ...initialValues, image: '' }}
+                    initialValues={{ ...initialValues, image: 0 }}
                     categoryOption={categoryOption}
                     familyOption={familyOption}
                     taxesOption={taxesOption}
                     uploadedImage={uploadedImage}
+                    organizations={organizations}
+                    isImageDeleted={isImageDeleted}
+                    setIsCancelTriggered={setIsCancelTriggered}
+                    setIsImageDeleted={setIsImageDeleted}
                   />
                 </Segment>
               </Grid.Column>
@@ -97,7 +109,13 @@ const ProductDetail = ({
       {isProductLoaded ? (
         <Grid.Column width={5}>
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
-          <ImageUploader src={productImg} setUploadedImage={setUploadedImage} />
+          <ImageUploader
+            src={productImg}
+            setUploadedImage={setUploadedImage}
+            setIsImageDeleted={setIsImageDeleted}
+            isCancelTriggered={isCancelTriggered}
+            isImageDeleted={isImageDeleted}
+          />
         </Grid.Column>
       ) : null}
     </Grid>
@@ -119,11 +137,13 @@ const mapStateToProps = (state, { match: { params } }) => {
     taxesOption: selectorProductTaxOptions(state),
     categoryOption: options.categories,
     familyOption: options.families,
+    organizations: getOrganizationsAsOptions(state),
   };
 };
 
 const mapDispatchToProps = {
   getFullProductData,
+  getOrganizations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

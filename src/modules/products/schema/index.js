@@ -34,6 +34,8 @@ const productOnProductLine = gql`
     carbo
     carboSugar
     images
+    defaultCost
+    orgId
     taxHistory {
       taxEntry {
         taxId
