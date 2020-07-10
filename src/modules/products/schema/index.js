@@ -168,8 +168,8 @@ export const UPDATE_PRODUCT_LINE_PRICE_MUTATION = gql`
 `;
 
 export const CREATE_PRODUCT_LINE_MUTATION = gql`
-  mutation createProductLine($data: ProductLineInput!) {
-    createProductLine(data: $data) {
+  mutation createProductLine($data: ProductLineInput!, $image: Upload) {
+    createProductLine(data: $data, image: $image) {
       ...product
     }
   }
