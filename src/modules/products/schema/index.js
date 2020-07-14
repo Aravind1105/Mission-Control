@@ -16,7 +16,7 @@ const taxItemOnTax = gql`
   }
 `;
 
-const productOnProductLine = gql`
+export const productOnProductLine = gql`
   fragment product on ProductLine {
     _id
     name
@@ -177,7 +177,11 @@ export const CREATE_PRODUCT_LINE_MUTATION = gql`
 `;
 
 export const UPDATE_PRODUCT_LINE_MUTATION = gql`
-  mutation updateProductLine($id: String!, $data: UpdateProductLineInput!, $image: Upload) {
+  mutation updateProductLine(
+    $id: String!
+    $data: UpdateProductLineInput!
+    $image: Upload
+  ) {
     updateProductLine(id: $id, data: $data, image: $image) {
       ...product
     }

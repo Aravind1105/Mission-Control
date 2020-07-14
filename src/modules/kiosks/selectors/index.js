@@ -125,6 +125,18 @@ export const getKioskOptions = createSelector(getKiosksState, kiosks => [
   })),
 ]);
 
+export const getKioskOptionsForTableDropdown = createSelector(
+  getKiosksState,
+  kiosks => [
+    { key: 'all', value: '', text: 'All Fridges' },
+    ...kiosks.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    })),
+  ],
+);
+
 export const kioskInitialValues = {
   name: '',
   serialNumber: '',
