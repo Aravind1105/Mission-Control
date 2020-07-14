@@ -88,13 +88,14 @@ const CustomTable = ({
         {!headless && (
           <Table.Header>
             <Table.Row>
-              {columns.map(({ title, field }) => {
+              {columns.map(({ title, field, className }) => {
                 const sorted =
                   (sortBy && sortBy === field && direction) || undefined;
 
                 return (
                   <Table.HeaderCell
                     key={field}
+                    className={className || null}
                     sorted={sorted}
                     onClick={sortable ? handlerHCellClick(field) : undefined}
                   >
