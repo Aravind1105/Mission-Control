@@ -16,7 +16,7 @@ const taxItemOnTax = gql`
   }
 `;
 
-const productOnProductLine = gql`
+export const productOnProductLine = gql`
   fragment product on ProductLine {
     _id
     name
@@ -34,6 +34,8 @@ const productOnProductLine = gql`
     carbo
     carboSugar
     images
+    defaultCost
+    orgId
     taxHistory {
       taxEntry {
         taxId
@@ -166,8 +168,8 @@ export const UPDATE_PRODUCT_LINE_PRICE_MUTATION = gql`
 `;
 
 export const CREATE_PRODUCT_LINE_MUTATION = gql`
-  mutation createProductLine($data: ProductLineInput!) {
-    createProductLine(data: $data) {
+  mutation createProductLine($data: ProductLineInput!, $image: Upload) {
+    createProductLine(data: $data, image: $image) {
       ...product
     }
   }
@@ -175,7 +177,11 @@ export const CREATE_PRODUCT_LINE_MUTATION = gql`
 `;
 
 export const UPDATE_PRODUCT_LINE_MUTATION = gql`
-  mutation updateProductLine($id: String!, $data: UpdateProductLineInput!, $image: Upload) {
+  mutation updateProductLine(
+    $id: String!
+    $data: UpdateProductLineInput!
+    $image: Upload
+  ) {
     updateProductLine(id: $id, data: $data, image: $image) {
       ...product
     }

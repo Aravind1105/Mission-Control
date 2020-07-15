@@ -5,8 +5,12 @@ import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {
-    title: 'Date/Time',
+    title: 'Date',
     field: 'date',
+  },
+  {
+    title: 'Time',
+    field: 'time',
   },
   {
     title: 'Status',
@@ -17,39 +21,35 @@ const columns = [
     field: 'kioskName',
   },
   {
-    title: 'Transaction ID',
-    field: 'transactionID',
-  },
-  {
-    title: 'Terminal ID',
-    field: 'terminalID',
-  },
-  {
     title: 'Product Name',
     field: 'productName',
   },
   {
-    title: 'Net',
-    field: 'price',
-    formatter: ({ price }) => `${(+price).toFixed(2) || 0} €`,
+    title: 'Count',
+    field: 'count',
   },
   {
-    title: 'Tax',
-    field: 'tax',
-    formatter: ({ tax }) => `${tax || 0}%`,
+    title: 'Load Cell',
+    field: 'loadCell',
+  },
+  {
+    title: 'Weight in g',
+    field: 'weight',
+  },
+  {
+    title: 'Purchase Price per Item',
+    field: 'price',
+    className: 'purchase-price-header',
+    formatter: ({ price }) => `${price || 0} €`,
   },
   {
     title: 'Total Price',
     field: 'total',
-    formatter: ({ total }) => `${total} €`,
-  },
-  {
-    title: 'Type',
-    field: 'type',
+    formatter: ({ total }) => `${total || 0} €`,
   },
 ];
 
-const TransactionsContent = ({ isLoading, transactions, getData }) => {
+const RefillsContent = ({ isLoading, refills, getData }) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
@@ -57,11 +57,11 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
   return (
     <Segment>
       <CustomTable
-        sortByColumn="created"
+        // sortByColumn="name"
         columns={columns}
-        data={transactions}
+        data={refills}
         getData={getData}
-        sortable
+        // sortable
         selectable
         striped
         isLoading={isLoading}
@@ -70,4 +70,4 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
   );
 };
 
-export default TransactionsContent;
+export default RefillsContent;

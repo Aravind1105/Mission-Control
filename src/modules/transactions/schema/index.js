@@ -1,4 +1,34 @@
 import gql from 'graphql-tag';
+import { productOnProductLine } from '../../products/schema';
+
+const organizationOnRefills = gql`
+  fragment organization on Organization {
+    _id
+    name
+    slug
+    imageUrl
+    description
+    eanPrefix
+    address {
+      type
+      properties {
+        name
+        line1
+        line2
+        postalCode
+        city
+        state
+        country
+      }
+      geometry {
+        type
+        coordinates {
+          type
+        }
+      }
+    }
+  }
+`;
 
 export const GET_TRANSACTIONS_QUERY = gql`
   query($data: GridRequest) {
@@ -24,6 +54,40 @@ export const GET_TRANSACTIONS_QUERY = gql`
       }
     }
   }
+`;
+
+export const GRID_REFILLS_QUERY = gql`
+  query($data: GridRequest) {
+    gridRefills(data: $data) {
+      total
+      data {
+        _id
+        kiosk {
+          _id
+          name
+          organization {
+            ...organization
+          }
+          components {
+            manufacturer
+            type
+            model
+          }
+        }
+        type
+        scale {
+          cellId
+          weight
+          productLine {
+            ...product
+          }
+          count
+        }
+      }
+    }
+  }
+  ${organizationOnRefills}
+  ${productOnProductLine}
 `;
 
 export const CREATE_REFILL_MUTATION = gql`
