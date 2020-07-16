@@ -34,7 +34,7 @@ increment-build-version:
     - git config --global user.name ${GIT_AUTHOR_NAME}
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
   script:
-    - npm version from-git
+    - npm version from-git --allow-same-version 
     - TAG=$(npm version patch -m "${CI_COMMIT_BRANCH}/${CI_PIPELINE_IID}" -f --no-git-tag-version )
     - git push --tags --force
     - VERSION=`git describe --abbrev=0 --tags | cut -c 2-`
