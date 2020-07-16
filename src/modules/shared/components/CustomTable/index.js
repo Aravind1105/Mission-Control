@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
 
 import Loader from 'modules/shared/components/Loader';
+import './styles.less';
 
 const sortTypes = {
   ASC: 'ascending',
@@ -122,7 +123,11 @@ const CustomTable = ({
                     ? formatter(item, j)
                     : get(item, field, '');
 
-                  return <Table.Cell key={cellKey}>{cellValue}</Table.Cell>;
+                  return (
+                    <Table.Cell key={cellKey} className="table-cell-text">
+                      {cellValue}
+                    </Table.Cell>
+                  );
                 })}
               </Table.Row>
             );

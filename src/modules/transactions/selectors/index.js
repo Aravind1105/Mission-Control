@@ -27,26 +27,44 @@ export const getTransactionsTableState = createSelector(
           (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
           'unknown',
       };
-      const arr = itemsPurchased.reduce((prev, { productLine, price, tax }) => {
-        const idx = prev.findIndex(el => el.id === productLine._id);
-        if (~idx) {
-          const total = Math.round((prev[idx].total + price) * 100) / 100;
-          prev[idx].total = total;
-        } else {
-          prev.push({
-            id: productLine._id,
-            productName: (productLine ? productLine.name : '') || 'unknown',
-            total: +price,
-            tax,
-            price,
-          });
+      const productsNames = {};
+      let unknownElements = 0;
+      itemsPurchased.forEach(({ productLine }) => {
+        if (productLine.name && !productsNames[productLine.name]) {
+          productsNames[productLine.name] = 0;
+        } else if (productLine.name && !productsNames[productLine.name]) {
+          productsNames[productLine.name] += 1;
+        } else if (!productLine.name) {
+          unknownElements += 1;
         }
-        return prev;
-      }, []);
+      });
+      if (unknownElements) {
+        productsNames.unknown = unknownElements;
+      }
+      const products = Object.keys(productsNames)
+        .map(elem => `${elem} (${productsNames[elem]})`)
+        .join('\n');
+      // const arr = itemsPurchased.reduce((prev, { productLine, price, tax }) => {
+      //   const idx = prev.findIndex(el => el.id === productLine._id);
+      //   if (~idx) {
+      //     const total = Math.round((prev[idx].total + price) * 100) / 100;
+      //     prev[idx].total = total;
+      //   } else {
+      //     prev.push({
+      //       id: productLine._id,
+      //       productName: (productLine ? productLine.name : '') || 'unknown',
+      //       total: +price,
+      //       tax,
+      //       price,
+      //     });
+      //   }
+      //   return prev;
+      // }, []);
 
-      const product =
-        arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
-      newArr = newArr.concat(product);
+      // const product =
+      //   arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
+      item.productName = products;
+      newArr = newArr.concat(item);
     });
     return newArr;
   },
