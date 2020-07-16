@@ -1,3 +1,9 @@
+#### 0.7.5 (2020-07-16)
+
+##### Bug Fixes
+
+* **LIV-1497:**  use tax instead of taxHistory for productDetails. (598fe0dc)
+
 #### 0.7.4 (2020-07-16)
 
 ##### Other Changes
