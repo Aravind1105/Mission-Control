@@ -1,3 +1,16 @@
+#### 0.7.1 (2020-07-16)
+
+##### Bug Fixes
+
+* **LIV-1466:**  enable kiosk creation from MC. (612bd4a7)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (adfc0b13)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (dbff1891)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (c9e27848)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (13466e79)
+
 ### 0.7.0 (2020-06-26)
 
 ##### New Features

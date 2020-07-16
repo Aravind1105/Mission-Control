@@ -64,11 +64,11 @@ const KioskForm = ({ initialValues, organizations }) => {
             <Grid.Row columns="equal">
               <Grid.Column>
                 <Field
-                  name="ownerOrganization"
-                  label="Owner organization"
+                  name="orgId"
+                  label="Organization"
                   required
-                  options={organizations}
                   component={FormSelect}
+                  options={organizations}
                 />
               </Grid.Column>
               <Grid.Column>
@@ -148,7 +148,7 @@ const KioskForm = ({ initialValues, organizations }) => {
 
             <Grid.Row textAlign="center">
               <Grid.Column>
-                <Button type="button" onClick={resetForm}>
+              <Button type="button" onClick={resetForm}>
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>
