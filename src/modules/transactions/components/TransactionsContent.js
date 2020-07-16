@@ -28,16 +28,16 @@ const columns = [
     title: 'Product Name',
     field: 'productName',
   },
-  {
-    title: 'Net',
-    field: 'price',
-    formatter: ({ price }) => `${(+price).toFixed(2) || 0} €`,
-  },
-  {
-    title: 'Tax',
-    field: 'tax',
-    formatter: ({ tax }) => `${tax || 0}%`,
-  },
+  // {
+  //   title: 'Net',
+  //   field: 'price',
+  //   formatter: ({ price }) => `${(+price).toFixed(2) || 0} €`,
+  // },
+  // {
+  //   title: 'Tax',
+  //   field: 'tax',
+  //   formatter: ({ tax }) => `${tax || 0}%`,
+  // },
   {
     title: 'Total Price',
     field: 'total',
