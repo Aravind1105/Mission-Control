@@ -83,7 +83,7 @@ make deploy-production-service      Deploy production service
 ### Routing
 
 For authed routes there is a configuration file `./src/core/router/routes.js`.
-Your routes and a navigation entry will be generated.
+Your routes and a nav entry will be generated.
 
 ```js
 [
