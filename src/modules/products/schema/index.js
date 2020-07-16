@@ -36,6 +36,7 @@ export const productOnProductLine = gql`
     images
     defaultCost
     orgId
+    tax
     taxHistory {
       taxEntry {
         taxId
