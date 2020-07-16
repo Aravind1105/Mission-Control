@@ -1,3 +1,10 @@
+#### 0.7.2 (2020-07-16)
+
+##### Bug Fixes
+
+* **LIV-1470:**  bug fixed by replacing ownerOrganization by orgId on files. (4c9ca13b)
+* **LIV-1473:**  marked PIN field as required when creating a kiosk. (96493b15)
+
 #### 0.7.1 (2020-07-16)
 
 ##### Bug Fixes
