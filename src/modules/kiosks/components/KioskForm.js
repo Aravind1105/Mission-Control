@@ -141,6 +141,7 @@ const KioskForm = ({ initialValues, organizations }) => {
                   label="Pin"
                   type="number"
                   min={0}
+                  required
                   component={FormInput}
                 />
               </Grid.Column>
@@ -148,7 +149,7 @@ const KioskForm = ({ initialValues, organizations }) => {
 
             <Grid.Row textAlign="center">
               <Grid.Column>
-              <Button type="button" onClick={resetForm}>
+                <Button type="button" onClick={resetForm}>
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>
