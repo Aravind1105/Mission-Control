@@ -37,6 +37,7 @@ const ModalLoadCell = ({
   modifyKioskLoadCell,
   match,
   loadedPosition,
+  cells,
 }) => {
   useEffect(() => {
     getProductListSaga();
@@ -53,20 +54,23 @@ const ModalLoadCell = ({
 
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
-    const isPositionIdChanged = initVal.planogramPosition !== data.planogramPosition;
-    const isQuantityChanged = isProductChanged || initVal.quantity !== +data.quantity;
-    const isPriceChanged = Number(
-      getDefaultProductPrice({
-        products: productsHistory,
-        productId: data.product.value,
-        kioskId: match.params.id,
-      }),
-    ) !== +data.price;
+    const isPositionIdChanged =
+      initVal.planogramPosition !== data.planogramPosition;
+    const isQuantityChanged =
+      isProductChanged || initVal.quantity !== +data.quantity;
+    const isPriceChanged =
+      Number(
+        getDefaultProductPrice({
+          products: productsHistory,
+          productId: data.product.value,
+          kioskId: match.params.id,
+        }),
+      ) !== +data.price;
     let hasApprove = true;
-    if (
-      isPositionIdChanged
-      && loadedPosition.some(el => el === data.planogramPosition)
-    ) {
+    const isReplacementRequired =
+      isPositionIdChanged &&
+      loadedPosition.some(el => el === data.planogramPosition);
+    if (isReplacementRequired) {
       hasApprove = window.confirm(
         `A loadcell is already assigned to this position (${data.planogramPosition})! Do you want to switch positions?`,
       );
@@ -74,12 +78,20 @@ const ModalLoadCell = ({
     data.price = +data.price || 0;
     data.quantity = +data.quantity || 0;
     if (hasApprove) {
+      let oldData;
+      if (isReplacementRequired) {
+        oldData = cells.find(
+          el => el.planogramPosition === data.planogramPosition,
+        );
+        oldData.planogramPosition = initVal.planogramPosition;
+      }
       modifyKioskLoadCell({
         isPriceChanged,
         isProductChanged,
         isQuantityChanged,
         isPositionIdChanged,
         data,
+        oldData,
         callback: handleClose,
       });
     }
