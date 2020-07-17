@@ -95,7 +95,7 @@ const KioskDetails = ({
                   <DetailsInfo
                     session={kiosk.session}
                     location={kiosk.location}
-                    ownerOrganization={get(kiosk, 'ownerOrganization.name', '')}
+                    ownerOrganization={get(kiosk, 'orgId', '')}
                   >
                     <>
                       <Button onClick={handlerOpenDoor}>Open Door</Button>

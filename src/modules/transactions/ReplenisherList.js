@@ -13,10 +13,21 @@ import { getGridRefills } from './actions';
 
 const sort = [
   {
-    column: 'total',
+    column: 'created',
     direction: 'ASC',
   },
 ];
+
+const sortValue = {
+  kioskName: 'kiosk',
+  date: 'created',
+  time: 'created',
+  status: 'status',
+  productName: 'product',
+  count: 'count',
+  loadCell: 'loadCell',
+  weight: 'weight',
+};
 
 const ReplenisherList = ({
   refills,
@@ -49,10 +60,10 @@ const ReplenisherList = ({
       });
     }
 
-    if (sort) {
-      // data.sort = sort;
+    if (sort && sortValue[sort[0].column]) {
+      sort[0].column = sortValue[sort[0].column];
+      data.sort = sort;
     }
-
     getGridRefills({ data });
   };
 

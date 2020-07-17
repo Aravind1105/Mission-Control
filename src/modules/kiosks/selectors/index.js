@@ -171,7 +171,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
     ? {
         id: kiosk._id,
         ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-        ownerOrganization: kiosk.ownerOrganization._id,
+        orgId: kiosk.orgId,
         location: {
           address: {
             ...kioskInitialValues.location.address,

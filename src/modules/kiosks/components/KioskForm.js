@@ -64,11 +64,11 @@ const KioskForm = ({ initialValues, organizations }) => {
             <Grid.Row columns="equal">
               <Grid.Column>
                 <Field
-                  name="ownerOrganization"
-                  label="Owner organization"
+                  name="orgId"
+                  label="Organization"
                   required
-                  options={organizations}
                   component={FormSelect}
+                  options={organizations}
                 />
               </Grid.Column>
               <Grid.Column>
@@ -141,6 +141,7 @@ const KioskForm = ({ initialValues, organizations }) => {
                   label="Pin"
                   type="number"
                   min={0}
+                  required
                   component={FormInput}
                 />
               </Grid.Column>
