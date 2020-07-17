@@ -17,6 +17,17 @@ const sort = [
   },
 ];
 
+const sortValue = {
+  kioskName: 'kiosk',
+  date: 'created',
+  status: 'status',
+  productName: 'product',
+  loadCell: 'loadCell',
+  weight: 'weight',
+  total: 'total',
+  transactionID: '_id',
+};
+
 const ProductsList = ({
   transactions,
   isLoading,
@@ -47,10 +58,10 @@ const ProductsList = ({
       });
     }
 
-    if (sort) {
+    if (sort && sortValue[sort[0].column]) {
+      sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-
     getAllTransactions({ data });
   };
 
