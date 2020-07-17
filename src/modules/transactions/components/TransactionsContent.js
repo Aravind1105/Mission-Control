@@ -58,6 +58,7 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
     <Segment>
       <CustomTable
         sortByColumn="created"
+        excludeSortBy={['status', 'kioskName', 'productName', 'terminalID']}
         columns={columns}
         data={transactions}
         getData={getData}
