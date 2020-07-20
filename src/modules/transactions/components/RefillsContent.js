@@ -57,14 +57,15 @@ const RefillsContent = ({ isLoading, refills, getData }) => {
   return (
     <Segment>
       <CustomTable
-        // sortByColumn="name"
+        sortByColumn="created"
         columns={columns}
         data={refills}
         getData={getData}
-        // sortable
+        sortable
         selectable
         striped
         isLoading={isLoading}
+        excludeSortBy={['total', 'price']}
       />
     </Segment>
   );

@@ -17,6 +17,7 @@ function* handler({ payload }) {
     isQuantityChanged,
     isPositionIdChanged,
     data,
+    oldData,
   } = payload;
   const {
     cellId,
@@ -40,6 +41,13 @@ function* handler({ payload }) {
           ],
         },
       };
+      if (oldData) {
+        variables.data.loadCellConfigs[1] = {
+          productLine: oldData.productLine._id,
+          planogramPosition: oldData.planogramPosition,
+          cellId: oldData.cellId,
+        };
+      }
 
       yield call(gqlKiosk.mutate, {
         mutation: LOAD_CELL_CONFIG_MUTATION,
