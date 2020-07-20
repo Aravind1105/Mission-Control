@@ -41,7 +41,9 @@ const DetailsFridges = ({ kiosks }) => (
       sortByColumn="name"
     />
     <Container textAlign="center">
-      <Button color="green" compact>
+      <Button color="green" compact 
+      disabled={true} //! Disabled temporarily #golive2
+      >
         + Add kiosk
       </Button>
     </Container>

@@ -43,7 +43,9 @@ const OrganizationFiles = ({ filesList }) => (
 
       <Grid.Row>
         <Grid.Column textAlign="center">
-          <Button compact color="green">
+          <Button compact color="green"
+          disabled={true} //! Disabled temporarily #golive2
+          >
             <Icon name="cloud upload" />
             Upload File
           </Button>
