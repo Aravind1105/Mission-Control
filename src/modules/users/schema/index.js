@@ -13,13 +13,6 @@ export const userDetailOnUser = gql`
       line1
       city
     }
-    rolesInOrganizations {
-      organizationId {
-        _id
-        name
-      }
-      role
-    }
   }
 `;
 
