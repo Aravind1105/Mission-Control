@@ -6,7 +6,7 @@ import {
   resetKiosk as action,
   resetKioskSuccess as actionSuccess,
 } from '../actions';
-import { KIOSK_RESET_MUTATION } from '../schema';
+import { KIOSK_RESET_MUTATION, GET_KIOSK_QUERY } from '../schema';
 
 function* handler({ payload }) {
   try {
@@ -19,13 +19,23 @@ function* handler({ payload }) {
       mutation: KIOSK_RESET_MUTATION,
       variables,
     });
+    // TODO: fix null name and img from resetKiosk endpoint. This is a workaround to solve LIV-1310.
+    const {
+      data: { getKioskById },
+    } = yield call(
+      gqlKiosk.query, {
+      query: GET_KIOSK_QUERY,
+      variables,
+    });
     const kiosk = {
-      ...kioskReset,
+      // ...kioskReset,
+      ...getKioskById,
       inventory: {
-        loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
+        // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
+        loadCells: toFlatLoadCellItem(getKioskById.inventory.loadCells, payload),
       },
     };
-
+    
     yield put(actionSuccess(kiosk));
   } catch (error) {
     console.log(error);
