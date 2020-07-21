@@ -28,11 +28,11 @@ const authConfig = {
   redirect: false,
 };
 
-const auth = new auth0.WebAuth(authConfig);
+export const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
-  yield auth.authorize({ });
+  yield auth.authorize({});
 }
 
 function parseHash() {
