@@ -1,3 +1,10 @@
+#### 0.7.10 (2020-07-21)
+
+##### Bug Fixes
+
+* **multiple:**  merge staging into production (d5584497)
+* **pipeline:**  patch for RPC error. (3aa0591c)
+
 #### 0.7.9 (2020-07-21)
 
 ##### Bug Fixes
