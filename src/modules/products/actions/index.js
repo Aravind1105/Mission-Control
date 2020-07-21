@@ -8,6 +8,7 @@ export const getProductLinesWithFilter = createAction(
 export const getProductSaga = createAction('@@saga/GET_PRODUCT');
 export const getFullProductData = createAction('@@saga/GET_FULL_PRODUCT_DATA');
 export const modifyProductSaga = createAction('@@saga/MODIFY_PRODUCT');
+export const deleteProductSaga = createAction('@@saga/DELETE_PRODUCT');
 
 // State Actions
 export const getProductListSuccess = createAction(
@@ -24,4 +25,7 @@ export const getFullProductDataSuccess = createAction(
 );
 export const modifyProductSuccess = createAction(
   '@@state/MODIFY_PRODUCT_SUCCESS',
+);
+export const deleteProductSuccess = createAction(
+  '@@state/DELETE_PRODUCT_SUCCESS',
 );

@@ -5,6 +5,7 @@ import modifyProductSaga from './modifyProduct';
 import getFullProductData from './getFullProductData';
 import getProductsListSaga from './getProductsList';
 import getProductLinesWithFilter from './getProductLinesWithFilter';
+import deleteProductSaga from './deleteProductSaga';
 
 export default function* kiosksSaga() {
   yield all([
@@ -13,5 +14,6 @@ export default function* kiosksSaga() {
     fork(getProductSaga),
     fork(modifyProductSaga),
     fork(getFullProductData),
+    fork(deleteProductSaga),
   ]);
 }
