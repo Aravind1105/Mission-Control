@@ -65,6 +65,7 @@ increment-build-version:
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
+    - git config --global http.postBuffer 524288000
     - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - git describe --abbrev=0 --tags | cut -c 2-
@@ -93,6 +94,7 @@ increment-build-version:
   stage: cloudrun-service-deploy
   image: google/cloud-sdk:alpine
   before_script:
+    - git config --global http.postBuffer 524288000
     - VERSION=$(cat buildTag.txt | sed -n 1p )
     - BUILD_TAG=$(cat buildTag.txt | sed -n 2p )
     - gcloud components install beta --quiet
