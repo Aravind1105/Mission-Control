@@ -28,7 +28,8 @@ const Toolbar = ({ search, setSearch }) => {
               color="green"
               compact
               as={Link}
-              to="/kiosks/edit/new"
+              disabled={true} //! Disabled temporarily #golive2
+              to="/kiosks/edit/new" 
             >
               <Icon name="right arrow" />
               Add Kiosk

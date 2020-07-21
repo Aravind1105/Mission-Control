@@ -52,6 +52,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
           loadedPosition={loadedPosition}
           handleClose={handleClose}
           kioskName={kioskName}
+          cells={cells}
         />
       )}
     </>

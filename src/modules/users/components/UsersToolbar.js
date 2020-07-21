@@ -52,6 +52,7 @@ const UsersToolbar = ({ openModal }) => {
               color="green"
               compact
               // onClick={() => openModal(true)}
+              disabled={true} //! Disabled temporarily #golive2
             >
               <Icon name="right arrow" />
               Add User

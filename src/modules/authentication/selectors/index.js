@@ -7,7 +7,6 @@ export const getAuth = createSelector(
   userState => userState.auth,
 );
 
-export const getRoot = createSelector(
-  getUserState,
-  userState => !!userState.root,
+export const getRoot = createSelector(getUserState, userState =>
+  Boolean(userState.root),
 );

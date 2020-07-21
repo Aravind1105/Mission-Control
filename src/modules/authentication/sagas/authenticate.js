@@ -1,5 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import auth0 from 'auth0-js';
+import get from 'lodash/get';
+
 import history from 'lib/history';
 import LivelloLS from 'lib/localStorage';
 import gqlOrganization from 'lib/https/gqlOrganization';
@@ -28,18 +30,17 @@ const authConfig = {
   redirect: false,
 };
 
-const auth = new auth0.WebAuth(authConfig);
+export const auth = new auth0.WebAuth(authConfig);
 
 function* authenticate() {
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
-  yield auth.authorize({ });
+  yield auth.authorize({});
 }
 
 function parseHash() {
   return new Promise((resolve, reject) => {
     auth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log('fgdgdfg');
         resolve(authResult);
       } else if (err) {
         reject(err);
@@ -72,6 +73,14 @@ function* getUserDetailsFromApi() {
   return data.getSelf;
 }
 
+function* logout() {
+  yield call(updateUserState, { auth: false });
+  yield LivelloLS.removeItem(IS_AUTH_STORAGE_KEY);
+  yield LivelloLS.removeItem(TOKEN_STORAGE_KEY);
+
+  window.location.href = `https://${authConfig.domain}/v2/logout?returnTo=${authConfig.redirectUri}&client_id=${authConfig.clientID}`;
+}
+
 function* processAuthData() {
   try {
     const result = yield call(parseHash);
@@ -81,17 +90,25 @@ function* processAuthData() {
 
     // Get user from api, should use SDK later
     const userDetails = yield call(getUserDetailsFromApi);
+    const hasRule = get(userDetails, 'rolesInOrganizations', []).some(
+      ({ role }) => role === 'admin' || role === 'root',
+    );
+    const isRoot = get(userDetails, 'root', false);
 
-    yield call(updateUserState, {
-      auth: true,
-      ...result.idTokenPayload,
-      ...userDetails,
-    });
+    if (hasRule && isRoot) {
+      yield call(updateUserState, {
+        auth: true,
+        ...result.idTokenPayload,
+        ...userDetails,
+      });
 
-    // LS Cleanup
-    const replaceUrl = LivelloLS.getItem(AUTH_ENTRY_STORAGE_KEY);
-    yield history.replace(replaceUrl || '/');
-    LivelloLS.removeItem(AUTH_ENTRY_STORAGE_KEY);
+      // LS Cleanup
+      const replaceUrl = LivelloLS.getItem(AUTH_ENTRY_STORAGE_KEY);
+      yield history.replace(replaceUrl || '/');
+      LivelloLS.removeItem(AUTH_ENTRY_STORAGE_KEY);
+    } else {
+      yield put(logout());
+    }
   } catch (e) {
     history.replace('/');
     // TODO: Some error notification
@@ -107,27 +124,26 @@ export function* renewSession() {
 
       // Get user from api, should use SDK later
       const userDetails = yield call(getUserDetailsFromApi);
-
-      yield call(updateUserState, {
-        auth: true,
-        ...extractUserData(result),
-        ...userDetails,
-      });
-      yield LivelloLS.setItem(TOKEN_STORAGE_KEY, result.accessToken);
-      window.history.replaceState('', document.title, ' ');
+      const hasRule = get(userDetails, 'rolesInOrganizations', []).some(
+        ({ role }) => role === 'admin' || role === 'root',
+      );
+      const isRoot = get(userDetails, 'root', false);
+      if (hasRule && isRoot) {
+        yield call(updateUserState, {
+          auth: true,
+          ...extractUserData(result),
+          ...userDetails,
+        });
+        yield LivelloLS.setItem(TOKEN_STORAGE_KEY, result.accessToken);
+        window.history.replaceState('', document.title, ' ');
+      } else {
+        yield put(logout());
+      }
     } catch (e) {
       console.log(e);
       // TODO: Some error notification
     }
   }
-}
-
-function* logout() {
-  yield call(updateUserState, { auth: false });
-  yield LivelloLS.removeItem(IS_AUTH_STORAGE_KEY);
-  yield LivelloLS.removeItem(TOKEN_STORAGE_KEY);
-
-  window.location.href = `https://${authConfig.domain}/v2/logout?returnTo=${authConfig.redirectUri}&client_id=${authConfig.clientID}`;
 }
 
 function* handleRenewSession() {
