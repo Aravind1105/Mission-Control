@@ -1,3 +1,9 @@
+#### 0.7.9 (2020-07-21)
+
+##### Bug Fixes
+
+* **LIV-1310:**  workaround to present productLine name and img after kioskReset. (40463281)
+
 #### 0.7.8 (2020-07-21)
 
 ##### Bug Fixes
