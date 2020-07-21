@@ -189,3 +189,12 @@ export const UPDATE_PRODUCT_LINE_MUTATION = gql`
   }
   ${productOnProductLine}
 `;
+
+export const DELETE_PRODUCT_LINE_MUTATION = gql`
+  mutation deleteProductLine($id: String!) {
+    deleteProductLine(id: $id) {
+      _id
+      name
+    }
+  }
+`;
