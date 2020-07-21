@@ -1,3 +1,9 @@
+#### 0.7.8 (2020-07-21)
+
+##### Bug Fixes
+
+* **ci/cd:**  pipe fix, increase buffer size (55ca65cf)
+
 #### 0.7.6 (2020-07-20)
 
 ##### Code Style Changes
