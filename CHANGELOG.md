@@ -1,3 +1,21 @@
+#### 0.7.12 (2020-07-22)
+
+##### Chores
+
+* **liv-1537:**  button to delete productLine. (162590fa)
+
+##### Bug Fixes
+
+* **refills:**  remove coordinates type for refill grid (dad88f05)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (bc1546f1)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (d0279964)
+
 #### 0.7.11 (2020-07-21)
 
 ##### Chores
