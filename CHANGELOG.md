@@ -1,3 +1,9 @@
+#### 0.7.13 (2020-07-22)
+
+##### Bug Fixes
+
+* **git upload protocol verion:**  change git config for runner pipe to use HTTP1 (11237a9e)
+
 #### 0.7.12 (2020-07-22)
 
 ##### Chores
