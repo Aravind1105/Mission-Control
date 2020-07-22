@@ -1,3 +1,47 @@
+#### 0.7.14 (2020-07-22)
+
+##### Bug Fixes
+
+* **update pipe scripts:**  add buffer size conf (48084c66)
+
+#### 0.7.13 (2020-07-22)
+
+##### Bug Fixes
+
+* **git upload protocol verion:**  change git config for runner pipe to use HTTP1 (11237a9e)
+
+#### 0.7.12 (2020-07-22)
+
+##### Chores
+
+* **liv-1537:**  button to delete productLine. (162590fa)
+
+##### Bug Fixes
+
+* **refills:**  remove coordinates type for refill grid (dad88f05)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (bc1546f1)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (d0279964)
+
+#### 0.7.11 (2020-07-21)
+
+##### Chores
+
+* **liv-1537:**  button to delete productLine. (162590fa)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (bc1546f1)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (d0279964)
+
 #### 0.7.10 (2020-07-21)
 
 ##### Bug Fixes

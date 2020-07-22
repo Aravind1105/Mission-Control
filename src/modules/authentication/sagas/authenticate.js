@@ -95,7 +95,7 @@ function* processAuthData() {
     );
     const isRoot = get(userDetails, 'root', false);
 
-    if (hasRule && isRoot) {
+    if (hasRule || isRoot) {
       yield call(updateUserState, {
         auth: true,
         ...result.idTokenPayload,
@@ -128,7 +128,7 @@ export function* renewSession() {
         ({ role }) => role === 'admin' || role === 'root',
       );
       const isRoot = get(userDetails, 'root', false);
-      if (hasRule && isRoot) {
+      if (hasRule || isRoot) {
         yield call(updateUserState, {
           auth: true,
           ...extractUserData(result),

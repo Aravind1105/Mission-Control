@@ -9,7 +9,7 @@ import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
 import ImageUploader from './components/ImageUploader';
-import { getFullProductData } from './actions';
+import { getFullProductData, deleteProductSaga } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
   selectorGetProductInitValue,
@@ -41,6 +41,7 @@ const ProductDetail = ({
   categoryOption,
   familyOption,
   taxesOption,
+  deleteProductSaga,
   isLoading,
   match,
   getFullProductData,
@@ -63,6 +64,16 @@ const ProductDetail = ({
       getOrganizations();
     }
   }, []);
+  
+  const deleteProductLine = () => {
+    if(window.confirm('Willst Du das Product Line löschen?')){
+      const {payload} = deleteProductSaga(id)
+      if(payload == id){
+        window.alert('Product Line erfolgreich gelöscht!')
+        window.location.href = backLink.link
+      }
+    }
+  }
 
   return (
     <Grid stackable>
@@ -108,6 +119,13 @@ const ProductDetail = ({
 
       {isProductLoaded ? (
         <Grid.Column width={5}>
+          <Segment>
+          <h3>Delete Product&nbsp;&nbsp;
+            <i
+            onClick={deleteProductLine} 
+            className="trash icon right" > </i>
+          </h3>
+          </Segment>
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
           <ImageUploader
             src={productImg}
@@ -144,6 +162,7 @@ const mapStateToProps = (state, { match: { params } }) => {
 const mapDispatchToProps = {
   getFullProductData,
   getOrganizations,
+  deleteProductSaga,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
