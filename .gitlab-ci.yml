@@ -29,11 +29,12 @@ increment-build-version:
     GIT_AUTHOR_NAME: "Gitlab-ci-livello"
     GIT_AUTHOR_EMAIL: "gitlab-cicd@livello.com"
   before_script:
+    - git config --global http.version HTTP/1.1
+    - git config --global http.postBuffer 524288000
+    - git gc --aggressive
     - apk --no-cache --virtual build-dependencies add git
     - git config --global user.email ${GIT_AUTHOR_EMAIL}
     - git config --global user.name ${GIT_AUTHOR_NAME}
-    - git config --global http.version HTTP/1.1
-    - git config --global http.postBuffer 524288000
     - sed -i -r 's/(url = .*):(.*)@(.*)/\1:'${GITLAB_TOKEN}'@\3/' .git/config
   script:
     - npm version from-git --allow-same-version 
@@ -66,9 +67,10 @@ increment-build-version:
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
-    - git checkout $CI_COMMIT_BRANCH
     - git config --global http.version HTTP/1.1
     - git config --global http.postBuffer 524288000
+    - git gc --aggressive
+    - git checkout $CI_COMMIT_BRANCH
     - git pull --tags
     - git describe --abbrev=0 --tags | cut -c 2-
     - VERSION=$(cat buildTag.txt | sed -n 1p )
