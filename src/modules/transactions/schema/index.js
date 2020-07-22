@@ -22,9 +22,7 @@ const organizationOnRefills = gql`
       }
       geometry {
         type
-        coordinates {
-          type
-        }
+        coordinates
       }
     }
   }
