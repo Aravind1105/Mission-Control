@@ -1,3 +1,9 @@
+#### 0.7.14 (2020-07-22)
+
+##### Bug Fixes
+
+* **update pipe scripts:**  add buffer size conf (48084c66)
+
 #### 0.7.13 (2020-07-22)
 
 ##### Bug Fixes
