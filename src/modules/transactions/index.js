@@ -10,7 +10,7 @@ import './styles.less';
 const navSwitcherConfig = [
   { name: 'transactions ', goTo: '' },
   { name: 'sales', goTo: '/transactions/sales' },
-  { name: 'replenisher', goTo: '/transactions/replenisher' },
+  { name: 'replenisher', goTo: '/transactions/refills' },
 ];
 
 const Transactions = () => (
@@ -20,7 +20,7 @@ const Transactions = () => (
       <Route exact path="/transactions/sales" component={TransactionsList} />
       <Route
         exact
-        path="/transactions/replenisher"
+        path="/transactions/refills"
         component={ReplenisherList}
       />
       {/* <Route exact path="/transactions/:id" component={TransactionDetail} /> */}

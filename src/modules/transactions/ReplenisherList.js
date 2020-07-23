@@ -21,8 +21,8 @@ const sort = [
 const sortValue = {
   kioskName: 'kiosk',
   date: 'created',
-  time: 'created',
-  status: 'status',
+ // time: 'created',
+ // status: 'status',
   productName: 'product',
   count: 'count',
   loadCell: 'loadCell',
