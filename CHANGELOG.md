@@ -1,3 +1,10 @@
+#### 0.7.15 (2020-07-23)
+
+##### Bug Fixes
+
+* **Transactions:**  fixed transactions screen (056f8b0f)
+* **pipe:**  add git garbage collection (71ede05b)
+
 #### 0.7.14 (2020-07-22)
 
 ##### Bug Fixes
