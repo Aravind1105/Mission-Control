@@ -1,3 +1,20 @@
+#### 0.8.2 (2020-07-23)
+
+##### Reverts
+
+* **LIV-1537:**  revert LIV-1537 until LIV-1556 is solved. (3211166e)
+
+#### 0.8.1 (2020-07-23)
+
+##### Bug Fixes
+
+* **LIV-1537:**  color change and new icon position for DELETE PRODUCT (b225d68d)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (375277fc)
+
+
 ### 0.8.0 (2020-07-23)
 
 ##### Bug Fixes
@@ -5,6 +22,11 @@
 * **LIV-1537:**  color change and new icon position for DELETE PRODUCT (b225d68d)
 * **pipe:**  add git garbage collection (71ede05b)
 
+#### 0.7.15 (2020-07-23)
+
+##### Bug Fixes
+
+* **Transactions:**  fixed transactions screen (056f8b0f)
 #### 0.7.14 (2020-07-22)
 
 ##### Bug Fixes

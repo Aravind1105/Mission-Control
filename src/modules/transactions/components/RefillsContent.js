@@ -5,17 +5,17 @@ import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {
-    title: 'Date',
+    title: 'Date / Time',
     field: 'date',
   },
-  {
-    title: 'Time',
-    field: 'time',
-  },
-  {
-    title: 'Status',
-    field: 'status',
-  },
+  // {
+  //   title: 'Time',
+  //   field: 'time',
+  // },
+  // {
+  //   title: 'Status',
+  //   field: 'status',
+  // },
   {
     title: 'Kiosk',
     field: 'kioskName',
