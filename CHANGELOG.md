@@ -1,3 +1,10 @@
+### 0.8.0 (2020-07-23)
+
+##### Bug Fixes
+
+* **LIV-1537:**  color change and new icon position for DELETE PRODUCT (b225d68d)
+* **pipe:**  add git garbage collection (71ede05b)
+
 #### 0.7.14 (2020-07-22)
 
 ##### Bug Fixes
