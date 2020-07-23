@@ -119,12 +119,14 @@ const ProductDetail = ({
 
       {isProductLoaded ? (
         <Grid.Column width={5}>
-          <Segment>
-          <h3>Delete Product&nbsp;&nbsp;
-            <i
-            onClick={deleteProductLine} 
-            className="trash icon right" > </i>
-          </h3>
+          <Segment 
+            onClick={deleteProductLine}
+            style={{ cursor:'pointer', color:"red" }}>
+            <h3>Delete Product
+              <i 
+                className="trash alternate outline icon" 
+                style={{ float: 'right' }} />
+            </h3>
           </Segment>
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
           <ImageUploader
