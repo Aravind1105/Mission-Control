@@ -5,13 +5,13 @@ import CustomTable from 'modules/shared/components/CustomTable';
 
 const columns = [
   {
-    title: 'Date/Time',
+    title: 'Date / Time',
     field: 'date',
   },
-  {
-    title: 'Status',
-    field: 'status',
-  },
+  // {
+  //   title: 'Status',
+  //   field: 'status',
+  // },
   {
     title: 'Kiosk',
     field: 'kioskName',
@@ -20,10 +20,10 @@ const columns = [
     title: 'Transaction ID',
     field: 'transactionID',
   },
-  {
-    title: 'Terminal ID',
-    field: 'terminalID',
-  },
+  // {
+  //   title: 'Terminal ID',
+  //   field: 'terminalID',
+  // },
   {
     title: 'Product Name',
     field: 'productName',
@@ -43,10 +43,10 @@ const columns = [
     field: 'total',
     formatter: ({ total }) => `${total} €`,
   },
-  {
-    title: 'Type',
-    field: 'type',
-  },
+  // {
+  //   title: 'Type',
+  //   field: 'type',
+  // },
 ];
 
 const TransactionsContent = ({ isLoading, transactions, getData }) => {

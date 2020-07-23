@@ -60,6 +60,7 @@ export const GRID_REFILLS_QUERY = gql`
       total
       data {
         _id
+        created
         kiosk {
           _id
           name
@@ -77,7 +78,7 @@ export const GRID_REFILLS_QUERY = gql`
           cellId
           weight
           productLine {
-            ...product
+              name
           }
           count
         }
@@ -85,7 +86,6 @@ export const GRID_REFILLS_QUERY = gql`
     }
   }
   ${organizationOnRefills}
-  ${productOnProductLine}
 `;
 
 export const CREATE_REFILL_MUTATION = gql`
