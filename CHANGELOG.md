@@ -1,3 +1,13 @@
+#### 0.8.1 (2020-07-23)
+
+##### Bug Fixes
+
+* **LIV-1537:**  color change and new icon position for DELETE PRODUCT (b225d68d)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (375277fc)
+
 
 ### 0.8.0 (2020-07-23)
 
