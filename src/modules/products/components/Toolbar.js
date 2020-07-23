@@ -4,19 +4,23 @@ import { Link } from 'react-router-dom';
 import { Segment, Grid, Dropdown, Button, Icon } from 'semantic-ui-react';
 
 import SearchInput from 'modules/shared/components/SearchInput';
-import { selectorGetProductCategories } from '../selectors';
+import { selectorGetProductCategories, selectorGetSupplier } from '../selectors';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
   { key: 'license', value: 'license', text: 'license' },
 ];
-const Toolbar = ({ changeSearch, changeCategory, categories }) => {
+const Toolbar = ({ changeSearch, changeCategory, categories, supplier }) => {
   const isCategoriesLoading = categories.length <= 1;
 
   const handleChangeCategory = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     changeCategory(text);
   };
+
+  const handleChangeSupplier = () => {
+    console.log('supplier: ', supplier)
+  }
 
   return (
     <Segment className="toolbar">
@@ -41,8 +45,9 @@ const Toolbar = ({ changeSearch, changeCategory, categories }) => {
             <Dropdown
               placeholder="All"
               inline
-              options={stateOptions}
-              disabled
+              options={supplier}
+              onChange={handleChangeSupplier}
+              // disabled
             />
           </Grid.Column>
 
@@ -67,6 +72,7 @@ const Toolbar = ({ changeSearch, changeCategory, categories }) => {
 
 const mapStateToProps = state => ({
   categories: selectorGetProductCategories(state),
+  supplier: selectorGetSupplier(state),
 });
 
 export default connect(mapStateToProps)(Toolbar);

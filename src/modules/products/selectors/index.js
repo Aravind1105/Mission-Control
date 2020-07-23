@@ -33,6 +33,16 @@ export const selectorProductTaxOptions = createSelector(
   })),
 );
 
+export const selectorGetSupplier = createSelector(
+  selectorGetProducts,
+  
+  products => products.map(({ manufacturer, _id }) => ({
+    text: manufacturer,
+    value: manufacturer,
+    key: _id 
+  })),
+);
+
 export const selectorGetProductFamilyForm = createSelector(
   selectorGetProductFamily,
   family => family.reduce(
