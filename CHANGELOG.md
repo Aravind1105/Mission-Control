@@ -1,3 +1,9 @@
+#### 0.8.2 (2020-07-23)
+
+##### Reverts
+
+* **LIV-1537:**  revert LIV-1537 until LIV-1556 is solved. (3211166e)
+
 #### 0.8.1 (2020-07-23)
 
 ##### Bug Fixes
