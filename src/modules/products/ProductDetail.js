@@ -65,6 +65,7 @@ const ProductDetail = ({
     }
   }, []);
   
+  // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
   const deleteProductLine = () => {
     if(window.confirm('Willst Du das Product Line löschen?')){
       const {payload} = deleteProductSaga(id)
@@ -119,7 +120,8 @@ const ProductDetail = ({
 
       {isProductLoaded ? (
         <Grid.Column width={5}>
-          <Segment 
+          {/* "Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.*/}
+          {/* <Segment 
             onClick={deleteProductLine}
             style={{ cursor:'pointer', color:"red" }}>
             <h3>Delete Product
@@ -127,7 +129,7 @@ const ProductDetail = ({
                 className="trash alternate outline icon" 
                 style={{ float: 'right' }} />
             </h3>
-          </Segment>
+          </Segment> */}
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
           <ImageUploader
             src={productImg}
