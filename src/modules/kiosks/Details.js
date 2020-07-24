@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Grid, Segment, Divider, Button, Header } from 'semantic-ui-react';
+import { Grid, Segment, Divider, Header } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
 import { createRefill } from 'modules/transactions/actions';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
+import CustomButton from 'modules/shared/components/CustomButton';
 import DetailsLoadCells from './components/DetailsLoadCells';
 import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
@@ -98,18 +98,31 @@ const KioskDetails = ({
                     ownerOrganization={get(kiosk, 'orgId', '')}
                   >
                     <>
-                      <Button onClick={handlerOpenDoor}>Open Door</Button>
-                      <Button onClick={handlerEdit}>Edit</Button>
-                      <Button onClick={handlerResetKiosk}>
-                        Sync / Restart
-                      </Button>
-                      <Link
-                        className="ui button"
-                        to={`/kiosks/log/${kiosk._id}`}
-                      >
-                        Temp Log.
-                      </Link>
-                      <Button disabled>Activity Log.</Button>
+                      <CustomButton
+                        onClick={handlerOpenDoor}
+                        label="Open Door"
+                        icon="lock open"
+                      />
+                      <CustomButton
+                        onClick={handlerEdit}
+                        label="Edit"
+                        icon="edit"
+                      />
+                      <CustomButton
+                        label="Sync / Restart"
+                        icon="lock"
+                        onClick={handlerResetKiosk}
+                      />
+                      <CustomButton
+                        icon="thermometer quarter"
+                        label="Temp Log."
+                        onClick={() => history.push(`/kiosks/log/${kiosk._id}`)}
+                      />
+                      <CustomButton
+                        label="Activity Log."
+                        icon="thermometer quarter"
+                        disabled
+                      />
                     </>
                   </DetailsInfo>
                 </Segment>
