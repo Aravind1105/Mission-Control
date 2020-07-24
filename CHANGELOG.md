@@ -1,3 +1,10 @@
+### 0.9.0 (2020-07-24)
+
+##### Other Changes
+
+* **LIV-1295:**  enable supplier list on the product list page. (00ff3747)
+* **liv-1295:**  Showing the list  of manufacturers on productList page (not unique). (0286adf4)
+
 #### 0.8.2 (2020-07-23)
 
 ##### Reverts
