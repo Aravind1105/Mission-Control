@@ -91,8 +91,8 @@ const KioskDetails = ({
                     doorStatus={kiosk.doorStatus}
                   />
                   <Divider />
-                  <Header as="h3">{`#${kiosk.serialNumber}`}</Header>
                   <DetailsInfo
+                    serial={`#${kiosk.serialNumber}`}
                     session={kiosk.session}
                     location={kiosk.location}
                     ownerOrganization={get(kiosk, 'orgId', '')}
