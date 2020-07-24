@@ -1,3 +1,9 @@
+### 0.10.0 (2020-07-24)
+
+##### Code Style Changes
+
+* **kiosk detail:**  clean kiosk detail section. (286e7477)
+
 ### 0.9.0 (2020-07-24)
 
 ##### Other Changes
