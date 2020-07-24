@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Segment, Divider, Container } from 'semantic-ui-react';
+import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
+import CustomButton from 'modules/shared/components/CustomButton';
+
 import './styles.less';
 
 const reg = /^.+\//;
@@ -84,24 +86,32 @@ const ImageUploader = ({
       <Divider />
       <div className="img-wrapper">
         {img ? <img src={img} alt="product" /> : <NoImageBlock />}
-
       </div>
-      {
-        imageProp && img && (
-          <Container textAlign="center">
-            <div className="filename-wrapper">{`Filename: ${imgName || imageProp.fileName}`}</div>
-            <div>{`Size: ${imageProp.width}x${imageProp.height}px`}</div>
-          </Container>
-        ) }
+      {imageProp && img && (
+        <Container textAlign="center">
+          <div className="filename-wrapper">{`Filename: ${imgName ||
+            imageProp.fileName}`}</div>
+          <div>{`Size: ${imageProp.width}x${imageProp.height}px`}</div>
+        </Container>
+      )}
       <div className="label-wrapper">
-        {
-          img && <button type="button" className="modify-button" onClick={handleDelete}>Delete Image</button>
-      }
+        {img && (
+          <CustomButton
+            onClick={handleDelete}
+            defaultStyle
+            label="Delete Image"
+            icon="trash alternate outline"
+            className="image-button "
+          />
+        )}
         <label htmlFor="productImgUpload" className="modify-button">
+          <div className="label-content">
+            <div className="icon-side">
+              <Icon name="upload" />
+            </div>
+            <div className="label-side">{img ? 'Change' : 'Upload'} Image</div>
+          </div>
 
-          {img ? 'Change' : 'Upload'}
-          {' '}
-          Image
           <input
             type="file"
             accept="image/*"
