@@ -35,12 +35,26 @@ export const selectorProductTaxOptions = createSelector(
 
 export const selectorGetSupplier = createSelector(
   selectorGetProducts,
-  
-  products => products.map(({ manufacturer, _id }) => ({
-    text: manufacturer,
-    value: manufacturer,
-    key: _id 
-  })),
+  products => {
+    let supplierList = [];
+    products.reduce((prev, curr) => {
+      if(prev.indexOf(curr.manufacturer) === -1){
+        prev.push(curr.manufacturer);
+        supplierList.push({
+          text: curr.manufacturer,
+          value: curr.manufacturer,
+          key: `${supplierList.length}`
+        });
+      };
+      return prev;
+    },[]);
+    supplierList.unshift({
+      value: 'All',
+      text: `All`,
+      key: supplierList.length,
+    });
+    return supplierList;
+  },
 );
 
 export const selectorGetProductFamilyForm = createSelector(

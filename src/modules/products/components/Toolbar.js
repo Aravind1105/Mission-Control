@@ -10,17 +10,19 @@ const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
   { key: 'license', value: 'license', text: 'license' },
 ];
-const Toolbar = ({ changeSearch, changeCategory, categories, supplier }) => {
+const Toolbar = ({ changeSearch, changeCategory, changeSupplier, categories, supplier }) => {
   const isCategoriesLoading = categories.length <= 1;
+  const isSupplierLoading = supplier.length <= 1; 
 
   const handleChangeCategory = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     changeCategory(text);
   };
-
-  const handleChangeSupplier = () => {
-    console.log('supplier: ', supplier)
-  }
+  
+  const handleChangeSupplier = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    changeSupplier(text);
+  };
 
   return (
     <Segment className="toolbar">
@@ -41,13 +43,13 @@ const Toolbar = ({ changeSearch, changeCategory, categories, supplier }) => {
             />
           </Grid.Column>
           <Grid.Column width={3}>
-            <b>Suppliers:&nbsp;</b>
+            <b>Supplier:&nbsp;</b>
             <Dropdown
               placeholder="All"
               inline
               options={supplier}
               onChange={handleChangeSupplier}
-              // disabled
+              disabled={isSupplierLoading}
             />
           </Grid.Column>
 
