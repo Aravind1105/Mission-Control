@@ -33,6 +33,30 @@ export const selectorProductTaxOptions = createSelector(
   })),
 );
 
+export const selectorGetSupplier = createSelector(
+  selectorGetProducts,
+  products => {
+    let supplierList = [];
+    products.reduce((prev, curr) => {
+      if(prev.indexOf(curr.manufacturer) === -1){
+        prev.push(curr.manufacturer);
+        supplierList.push({
+          text: curr.manufacturer,
+          value: curr.manufacturer,
+          key: `${supplierList.length}`
+        });
+      };
+      return prev;
+    },[]);
+    supplierList.unshift({
+      value: 'All',
+      text: `All`,
+      key: supplierList.length,
+    });
+    return supplierList;
+  },
+);
+
 export const selectorGetProductFamilyForm = createSelector(
   selectorGetProductFamily,
   family => family.reduce(
