@@ -8,6 +8,7 @@ import {
   getTransactionsTableState,
   getTotalTransactionsCount,
 } from './selectors';
+import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllTransactions } from './actions';
 
 const sort = [
@@ -33,28 +34,31 @@ const ProductsList = ({
   isLoading,
   total,
   getAllTransactions,
+  kiosks,
 }) => {
   const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
   const [category, changeCategory] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-
+  const [kiosk, changeKiosk] = useState('');
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
       limit: perPage,
     };
 
-    if (search || category || dateRange) {
+    if (search || category || dateRange || kiosk) {
       const name = search ? { product: { $regex: search } } : {};
       const cat = category ? { category: { $regex: category } } : {};
       const date = dateRange ? { created: dateRange } : {};
+      const kio = kiosk ? { kiosk: { $regex: kiosk } } : {};
 
       data.search = JSON.stringify({
         ...name,
         ...cat,
         ...date,
+        ...kio,
       });
     }
 
@@ -67,7 +71,7 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category, dateRange]);
+  }, [page, perPage, search, category, dateRange, kiosk]);
 
   return (
     <>
@@ -76,6 +80,8 @@ const ProductsList = ({
         changeSearch={changeSearch}
         changeCategory={changeCategory}
         changePage={changePage}
+        kiosks={kiosks}
+        changeKiosk={changeKiosk}
       />
       <TransactionsContent
         transactions={transactions}
@@ -98,6 +104,7 @@ const mapStateToProps = state => ({
   transactions: getTransactionsTableState(state),
   total: getTotalTransactionsCount(state),
   isLoading: state.transactions.isLoading,
+  kiosks: getKioskOptionsForTableDropdown(state),
 });
 
 const mapDispatchToProps = {
