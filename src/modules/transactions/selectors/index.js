@@ -31,7 +31,7 @@ export const getTransactionsTableState = createSelector(
       let unknownElements = 0;
       itemsPurchased.forEach(({ productLine }) => {
         if (productLine.name && !productsNames[productLine.name]) {
-          productsNames[productLine.name] = 0;
+          productsNames[productLine.name] = 1;
         } else if (productLine.name && !productsNames[productLine.name]) {
           productsNames[productLine.name] += 1;
         } else if (!productLine.name) {
@@ -76,12 +76,14 @@ export const getGridRefillsTableState = createSelector(
     refills.map(refill => {
       const count = Number(get(refill, 'scale.count', 0));
       const price = Number(
-        get(refill, 'scale.productLine.priceHistory[0].price', 0),
+        get(refill, 'scale.productLine.defaultPrice', 0),
       ).toFixed(2);
       const total = (count * price).toFixed(2);
       return {
-        date: format(new Date(refill.created || new Date()), 'dd-MM-yyyy HH:mm:ss'), //today
-        // time: format(new Date(refill.created || new Date()), 'HH:mm:ss'),
+        date: format(
+          new Date(refill.created || new Date()),
+          'dd-MM-yyyy HH:mm:ss',
+        ),
         status: refill.status || 'undefined',
         kioskName: get(refill, 'kiosk.name', 'unknown'),
         productName: get(refill, 'scale.productLine.name', 'unknown'),

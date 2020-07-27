@@ -21,12 +21,12 @@ const sort = [
 const sortValue = {
   kioskName: 'kiosk',
   date: 'created',
- // time: 'created',
- // status: 'status',
   productName: 'product',
   count: 'count',
   loadCell: 'loadCell',
   weight: 'weight',
+  total: 'totalPrice',
+  price: 'defaultPrice',
 };
 
 const ReplenisherList = ({
@@ -59,7 +59,6 @@ const ReplenisherList = ({
         ...date,
       });
     }
-
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
