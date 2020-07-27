@@ -8,7 +8,7 @@ import history from 'lib/history';
 import { AuthorizedLayout } from 'modules/shared/components';
 import Loader from 'modules/shared/components/Loader';
 import LoginScreen from 'modules/authentication/LoginScreen';
-import { getAuth } from 'modules/authentication/selectors';
+import { getAuth, getRoot } from 'modules/authentication/selectors';
 import { logoutUserSaga } from 'modules/authentication/actions';
 import { initializeApp } from './actions/coreActions';
 import { getInitialized } from './selectors/coreSelectors';
@@ -17,7 +17,7 @@ import routes from './router/routes';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import '../styling/semantic.less';
 
-const App = ({ initialized, isAuthenticated, initializeApp }) => {
+const App = ({ initialized, isAuthenticated, initializeApp, isRoot }) => {
   useEffect(() => {
     initializeApp();
   }, []);
@@ -29,15 +29,21 @@ const App = ({ initialized, isAuthenticated, initializeApp }) => {
         <AuthorizedLayout>
           <Suspense fallback={<Loader />}>
             <Switch>
-              {routes.map(({ Component, name, path, pathOptions }) => (
-                <Route
-                  exact={Boolean(pathOptions && pathOptions.exact)}
-                  path={path}
-                  key={name}
-                >
-                  <Component />
-                </Route>
-              ))}
+              {routes.map(
+                ({ Component, name, path, rootOnly, pathOptions }) => {
+                  let hasAccess = true;
+                  if (rootOnly && !isRoot) hasAccess = false;
+                  return hasAccess ? (
+                    <Route
+                      exact={Boolean(pathOptions && pathOptions.exact)}
+                      path={path}
+                      key={name}
+                    >
+                      <Component />
+                    </Route>
+                  ) : null;
+                },
+              )}
               <Redirect to="/" />
             </Switch>
           </Suspense>
@@ -56,11 +62,13 @@ App.propTypes = {
   initialized: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   initializeApp: PropTypes.func.isRequired,
+  isRoot: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   initialized: getInitialized(state),
   isAuthenticated: getAuth(state),
+  isRoot: getRoot(state),
 });
 
 const mapDispatchToProps = { initializeApp, logoutUserSaga };

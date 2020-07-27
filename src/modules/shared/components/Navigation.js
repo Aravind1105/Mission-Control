@@ -1,19 +1,30 @@
 import React from 'react';
 import routes from 'core/router/routes';
+import { connect } from 'react-redux';
+
+import { getRoot } from 'modules/authentication/selectors';
 import NavigationItem from './NavigationItem';
 
-const Navigation = ({ mobileNavToggle }) => {
+const Navigation = ({ mobileNavToggle, isRoot }) => {
   return (
     <>
-      {routes.map(item => (
-        <NavigationItem
-          {...item}
-          mobileNavToggle={mobileNavToggle}
-          key={item.name}
-        />
-      ))}
+      {routes.map(item => {
+        let hasAccess = true;
+        if (item.rootOnly && !isRoot) hasAccess = false;
+        return hasAccess ? (
+          <NavigationItem
+            {...item}
+            mobileNavToggle={mobileNavToggle}
+            key={item.name}
+          />
+        ) : null;
+      })}
     </>
   );
 };
 
-export default Navigation;
+const mapStateToProps = state => ({
+  isRoot: getRoot(state),
+});
+
+export default connect(mapStateToProps)(Navigation);
