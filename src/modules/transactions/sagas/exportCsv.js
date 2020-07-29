@@ -8,27 +8,28 @@ import {
 } from '../actions';
 
 export function handlerGetProduct() {
-
   const token = ls.getItem(TOKEN_STORAGE_KEY);
 
-  fetch(`/api/v1/transactions/csv/export/1578328700000/1578388700000`, {
-  method: 'GET',
-  // headers: new Headers({
-  //     "Authorization": "Bearer " + token
-  // })
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  },
-})
-.then(response => response.blob())
-.then(blob => {
-  var url = window.URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = "filename.xlsx";
-  document.body.appendChild(a); // we need to append the elem
-})
+  return fetch(`/api/v1/transactions/csv/export/1578328700000/1578388700000`, {
+    method: 'GET',
+    // headers: new Headers({
+    //     "Authorization": "Bearer " + token
+    // })
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(response => response.blob())
+    .then(blob => {
+      console.log(blob);
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = `statistic_${performance.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
 }
 //   const token = ls.getItem(TOKEN_STORAGE_KEY);
 //   console.log('token:', token)
@@ -46,28 +47,27 @@ export function handlerGetProduct() {
 //   });
 // }
 
-
 function* handler({ payload }) {
   try {
     // const response = yield call(handlerGetProduct, payload);
     const response = yield call(handlerGetProduct);
-    console.log('payload: ', payload)
-    console.log('response-1: ', response)
+    console.log('payload: ', payload);
+    console.log('response-1: ', response);
     // if (response.status !== 200) {
     //     throw Error('Error in saga');
     // }
-    
+
     // const data = yield call([response, response.json]);
     // const data = yield call(response, null);
     // console.log('data: ', data)
-    
+
     // yield put(actionSuccess({
     //     smth: response
     // }));
     // console.log('response.body:', response.body)
     // yield put(actionSuccess(response));
   } catch (e) {
-    console.log('Eeeeeeeeeeerror: ',e);
+    console.log('Eeeeeeeeeeerror: ', e);
   }
 }
 
