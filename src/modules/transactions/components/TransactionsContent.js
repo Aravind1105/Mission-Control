@@ -25,7 +25,7 @@ const columns = [
   //   field: 'terminalID',
   // },
   {
-    title: 'Product Name',
+    title: 'Product',
     field: 'productName',
   },
   // {

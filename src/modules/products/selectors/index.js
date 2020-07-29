@@ -27,6 +27,19 @@ export const getProductsSimpleList = (id = '') =>
       .filter(el => el.value !== id),
   );
 
+export const getProductsDropdownList = createSelector(
+  selectorGetProducts,
+  products => {
+    const newProductsList = products.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    newProductsList.unshift({ value: '', text: 'All products', key: 'all' });
+    return newProductsList;
+  },
+);
+
 export const selectorProductTaxOptions = createSelector(
   selectorGetProductTax,
   taxes =>
