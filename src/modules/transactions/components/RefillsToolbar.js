@@ -1,7 +1,9 @@
 import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
-import { Segment, Grid, Dropdown } from 'semantic-ui-react';
+import { Segment, Grid, Dropdown, Button } from 'semantic-ui-react';
 import format from 'date-fns/format';
+import { exportCsv } from '../actions'
+import { connect } from 'react-redux';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 
@@ -11,7 +13,7 @@ const stateOptions = [
   { key: 'Removed', value: 'Removed', text: 'Removed' },
 ];
 
-const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date}) => {
+const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date, exportCsv}) => {
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -33,15 +35,33 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date}) => {
     changeKiosk(value);
   };
 
+  const DownloadCsv = () => {
+    console.log('Downloading file...')
+    // TODO: receive "date" as an argument  on 'exportCsv' and 'DownloadCsv' to export the data requested
+    exportCsv();
+  }
+
   return (
     <Segment className="toolbar">
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
+            <Button 
+              style={{
+                background:"white",
+                border: "1px solid rgba(34,36,38,.15)" 
+                }}
+              onClick={DownloadCsv}>
+              <div>Download CSV
+                <i className="arrow down icon" 
+                // style={{ float: 'right' }}
+                /></div>
+            </Button>
+          </Grid.Column>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -50,7 +70,7 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date}) => {
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Product"
               selection
@@ -58,7 +78,7 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date}) => {
               options={stateOptions}
             />
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Added & Removed"
               selection
@@ -79,4 +99,12 @@ Toolbar.propTypes = {
   kiosks: arrayOf(object),
 };
 
-export default Toolbar;
+// export default Toolbar;
+const mapStateToProps = state => ({
+});
+const mapDispatchToProps = {
+  exportCsv,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+

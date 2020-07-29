@@ -10,7 +10,6 @@ import {
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getGridRefills } from './actions';
-import { exportCsv } from './actions'
 
 const sort = [
   {
@@ -35,7 +34,6 @@ const ReplenisherList = ({
   isLoading,
   total,
   getGridRefills,
-  exportCsv,
   kiosks,
 }) => {
   const [search, changeSearch] = useState('');
@@ -66,20 +64,7 @@ const ReplenisherList = ({
       data.sort = sort;
     }
     getGridRefills({ data });
-    exportCsv();
-    // test
-    // console.log('data: ', data)
   };
-
-
-  // ?BE: where does the year start?
-  // https://api-stage.livello.com/api/v1/transactions/csv/export/1578328700000/1578388700000
-  // ?FE
-  // $gte: "2020-07-14T00:00:00.000Z"
-  // $lte: "2020-08-17T23:59:59.999Z"
-
-  // TODO: (1) create the action
-  // TODO: (2) parse the date as the endpoint is expecting it.
 
   useEffect(() => {
     getData({ sort });
@@ -120,7 +105,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getGridRefills,
-  exportCsv,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReplenisherList);
