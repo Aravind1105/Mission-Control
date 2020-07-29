@@ -11,7 +11,7 @@ const stateOptions = [
   { key: 'Removed', value: 'Removed', text: 'Removed' },
 ];
 
-const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk }) => {
+const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date}) => {
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -25,6 +25,7 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk }) => {
       }, {});
     }
     changePage(0);
+    console.log('date-Toolbar: ', date)
     changeDate(date);
   };
 
