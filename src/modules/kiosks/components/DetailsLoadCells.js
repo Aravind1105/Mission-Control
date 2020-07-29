@@ -31,18 +31,22 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     ? cells.map(({ planogramPosition }) => planogramPosition)
     : [];
 
+  const handleAdd = () => selectProduct({});
+
   return (
     <>
       {isTwoSides && (
         <DetailLoadCellsSide
           cells={sides.B}
           handleEdit={handleEdit}
+          handleAdd={handleAdd}
           title="Planogram - Left Kiosk"
         />
       )}
       <DetailLoadCellsSide
         cells={sides.A}
         handleEdit={handleEdit}
+        handleAdd={handleAdd}
         title={isTwoSides ? 'Planogram - Right Kiosk' : 'Load Cells'}
       />
 
