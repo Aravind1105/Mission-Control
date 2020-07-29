@@ -7,6 +7,7 @@ import ModalLoadCell from './ModalLoadCell';
 
 const DetailsLoadCells = ({ cells, kioskName }) => {
   const [product, selectProduct] = useState(null);
+  const [isAddLoadCell, setIsAddLoadCell] = useState(false);
 
   const handleEdit = ({
     productLine,
@@ -23,7 +24,10 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     });
   };
 
-  const handleClose = () => selectProduct(null);
+  const handleClose = () => {
+    setIsAddLoadCell(false);
+    selectProduct(null);
+  };
 
   const sides = separateToSides(cells);
   const isTwoSides = Boolean(sides.A.length && sides.B.length);
@@ -31,7 +35,10 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     ? cells.map(({ planogramPosition }) => planogramPosition)
     : [];
 
-  const handleAdd = () => selectProduct({});
+  const handleAdd = () => {
+    setIsAddLoadCell(true);
+    selectProduct({});
+  };
 
   return (
     <>
@@ -57,6 +64,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
           handleClose={handleClose}
           kioskName={kioskName}
           cells={cells}
+          isAddLoadCell={isAddLoadCell}
         />
       )}
     </>
