@@ -52,7 +52,7 @@ const ProductsList = ({
       const name = search ? { product: { $regex: search } } : {};
       const cat = category ? { category: { $regex: category } } : {};
       const date = dateRange ? { created: dateRange } : {};
-      const kio = kiosk ? { kiosk: { $regex: kiosk } } : {};
+      const kio = kiosk ? { kiosk } : {};
 
       data.search = JSON.stringify({
         ...name,
