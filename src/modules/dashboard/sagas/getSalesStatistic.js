@@ -10,15 +10,13 @@ import {
 import {
   GET_HOURLY_SALES_STATISTIC_QUERY,
   GET_DAILY_SALES_STATISTIC_QUERY,
-  GET_WEEKLY_SALES_STATISTIC_QUERY,
-  GET_MONTHLY_SALES_STATISTIC_QUERY,
   GET_DAILY_SALES_BY_KIOSKS,
   GET_WEEKLY_SALES_BY_KIOSKS,
 } from '../schema';
 
 const query = {
-  daily: GET_DAILY_SALES_STATISTIC_QUERY,
-  weekly: GET_WEEKLY_SALES_STATISTIC_QUERY,
+  daily: GET_HOURLY_SALES_STATISTIC_QUERY,
+  weekly: GET_DAILY_SALES_STATISTIC_QUERY,
 };
 const queryGlobal = {
   daily: GET_DAILY_SALES_BY_KIOSKS,
@@ -28,233 +26,74 @@ const queryGlobal = {
 // TODO: Change daily: 'dailySales' to daily: 'hourlySales' after mock removed
 
 const queryKey = {
-  daily: 'dailySalesByKiosk',
+  daily: 'hourlySalesByKiosk',
   weekly: 'dailySalesByKiosk',
 };
 
 const queryKeyGlobal = {
   weekly: 'dailySales',
-  daily: 'dailySales',
+  daily: 'hourlySales',
 };
 
+function getLastWeek() {
+  // computing the first day in last 7 days
+  const date = new Date();
+  date.setDate(date.getDate() - 6);
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+
+  // week format computation for the last 7 days
+  let weekFormat = [];
+  for (let i = 0; i < 7; i += 1) {
+    const itrDate = new Date(date);
+    itrDate.setDate(itrDate.getDate() + i);
+    weekFormat.push(days[itrDate.getDay()]);
+  }
+  weekFormat = weekFormat.map(elem => ({ date: elem }));
+  return { lastWeekDate: date, lastWeekFormat: weekFormat };
+}
+
 function* handler({ payload: { kioskId, time } }) {
-  // TODO: Remove this line after mock removed
-  kioskId = kioskId ? '5c17a3d963ca649138ec522c' : null;
-  // const variables = kioskId ? { kioskId } : {};
-  const data = {
-    dailySales: [
-      {
-        amount: 3.1,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Wrap',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 11.2,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'smt',
-            _id: '5d4c2829dd6b51002deb29e9',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 5.1,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Supernature Snack',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 14.2,
-        _id: {
-          date: '2020-07-02T22:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Wrap',
-            _id: '5d4c2829dd6b51002deb29e9',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 11.1,
-        _id: {
-          date: '2020-07-01T12:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5d4c333de826180031d1feef',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 1.2,
-        _id: {
-          date: '2020-07-01T04:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5d6502affaef88002f76347a',
-          },
-          type: 'day',
-          week: null,
-        },
-
-      },
-      {
-        amount: 7.1,
-        _id: {
-          date: '2020-07-01T10:30:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5d6502affaef88002f76347a',
-          },
-          type: 'day',
-          week: null,
-        },
-
-      },
-    ],
-    dailySalesByKiosk: [
-      {
-        amount: 3.2,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Wrap',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 11.1,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'smt',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 5.2,
-        _id: {
-          date: '2020-07-02T10:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Supernature Snack',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 14.1,
-        _id: {
-          date: '2020-07-02T22:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Wrap',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 11.2,
-        _id: {
-          date: '2020-07-01T12:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-      {
-        amount: 1.1,
-        _id: {
-          date: '2020-07-01T04:00:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-
-      },
-      {
-        amount: 7.2,
-        _id: {
-          date: '2020-07-01T10:30:00.000Z',
-          kiosk: null,
-          line: {
-            name: 'Pe.We. Baguette',
-            _id: '5c17a3d963ca649138ec522c',
-          },
-          type: 'day',
-          week: null,
-        },
-      },
-    ],
-  };
-
+  const variables = kioskId ? { kioskId } : {};
   try {
-    // const { data } = yield call(gqlReports.query, {
-    //   query: kioskId ? query[time] : queryGlobal[time],
-    //   variables,
-    // });
+    const { data } = yield call(gqlReports.query, {
+      query: kioskId ? query[time] : queryGlobal[time],
+      variables,
+    });
     const products = [];
     const queryName = kioskId ? queryKey[time] : queryKeyGlobal[time];
     const selector = '_id.date';
     /* eslint-disable */
+
     data[queryName].forEach(elem => {
       if (time === 'daily') {
         elem._id.date = elem._id.date.split('T')[1].split(':')[0];
       } else {
+        elem._id.dateString = elem._id.date;
         elem._id.date = days[new Date(elem._id.date).getDay()];
       }
     });
+
+    let weekFormat;
+    if (time === 'weekly') {
+      const { lastWeekDate, lastWeekFormat } = getLastWeek();
+      // filter last 7 days including current date
+      data[queryName] = data[queryName].filter(elem => lastWeekDate < new Date(elem._id.dateString));
+      // sort the dates
+      data[queryName] = data[queryName].sort((firstDate, secondDate) => new Date(firstDate._id.dateString) - new Date(secondDate._id.dateString));
+      // week day ordering 
+      weekFormat = lastWeekFormat;
+      console.log(lastWeekDate);
+    }
+    console.log(data[queryName]);
+
     /* eslint-enable */
     const formatted = groupBy(data[queryName], selector);
     const res = Object.keys(formatted).map(key => {
       const obj = formatted[key].reduce((prev, { amount, _id }) => {
         const value = Math.round(amount * 100) / 100;
-        const kiosk = (_id.line ? _id.line._id : '') || 'unknown';
+        const kiosk = (_id.kiosk ? _id.kiosk : '') || 'unknown';
         const sum = prev[kiosk] || 0;
         if (!products.includes(kiosk)) {
           products.push(kiosk);
@@ -270,7 +109,8 @@ function* handler({ payload: { kioskId, time } }) {
         ...obj,
       };
     });
-    const dataArray = formatData(res, time, kioskId);
+    const dataArray = formatData(res, time, kioskId, weekFormat);
+    console.log(dataArray);
     yield put(actionSuccess({ statistic: dataArray, products }));
   } catch (e) {
     console.log(e);

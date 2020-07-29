@@ -5,6 +5,7 @@ const FragmentStatisticOnSalesByFridgeId = gql`
     type
     week
     kiosk
+    date
     line {
       _id
       name
