@@ -45,8 +45,10 @@ const Toolbar = ({
       from : Math.round(new Date(exportData.$gte)),
       to : Math.round(new Date(exportData.$lte)),
     }
-    exportCsv(value);
-    window.alert('Datei wird heruntergeladen.')
+    // TODO: update exportCsc function to download refills data.
+    window.alert('Die Redfill-Datei ist nicht verfügbar. Bitte versuchen Sie es später noch einmal.')
+    // exportCsv(value);
+    // window.alert('Datei wird heruntergeladen.')
     changeExportData(false)
   }
   const handleProductChange = (e, { value }) => {
