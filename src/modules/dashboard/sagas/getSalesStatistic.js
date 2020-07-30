@@ -84,9 +84,7 @@ function* handler({ payload: { kioskId, time } }) {
       data[queryName] = data[queryName].sort((firstDate, secondDate) => new Date(firstDate._id.dateString) - new Date(secondDate._id.dateString));
       // week day ordering 
       weekFormat = lastWeekFormat;
-      console.log(lastWeekDate);
     }
-    console.log(data[queryName]);
 
     /* eslint-enable */
     const formatted = groupBy(data[queryName], selector);
@@ -110,7 +108,6 @@ function* handler({ payload: { kioskId, time } }) {
       };
     });
     const dataArray = formatData(res, time, kioskId, weekFormat);
-    console.log(dataArray);
     yield put(actionSuccess({ statistic: dataArray, products }));
   } catch (e) {
     console.log(e);
