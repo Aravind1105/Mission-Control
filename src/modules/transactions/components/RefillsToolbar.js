@@ -7,14 +7,16 @@ import { connect } from 'react-redux';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const stateOptions = [
-  { key: '', value: '', text: 'All' },
-  { key: 'Added', value: 'Added', text: 'Added' },
-  { key: 'Removed', value: 'Removed', text: 'Removed' },
-];
+const Toolbar = ({
+  kiosks,
+  changeDate,
+  changePage,
+  changeKiosk,
+  productsList,
+  changeProduct,
+  exportCsv,
+}) => {
 
-const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date, exportCsv}) => {
-  
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -47,6 +49,9 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date, exportCsv}
     window.alert('Datei wird heruntergeladen.')
     changeExportData(false)
   }
+  const handleProductChange = (e, { value }) => {
+    changeProduct(value);
+  };
 
   return (
     <Segment className="toolbar">
@@ -78,15 +83,8 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk, date, exportCsv}
               placeholder="Product"
               selection
               className="full-width"
-              options={stateOptions}
-            />
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Dropdown
-              placeholder="Added & Removed"
-              selection
-              options={stateOptions}
-              className="full-width"
+              options={productsList}
+              onChange={handleProductChange}
             />
           </Grid.Column>
         </Grid.Row>

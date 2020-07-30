@@ -1,4 +1,4 @@
-export const formatData = (res, time, kioskId) => {
+export const formatData = (res, time, kioskId, weekFormat) => {
   const result = {
     weekly: [
       { date: 'Monday' },
@@ -36,7 +36,10 @@ export const formatData = (res, time, kioskId) => {
       { date: '00' },
     ],
   };
-  const dataArray = result[time];
+  let dataArray = result[time];
+  if (time === 'weekly') {
+    dataArray = weekFormat;
+  }
   res.forEach(elem => {
     const dist = dataArray.find(date => elem.name === date.date);
     if (kioskId) {
