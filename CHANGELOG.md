@@ -1,3 +1,11 @@
+#### 1.0.2 (2020-07-30)
+
+##### Build System / Dependencies
+
+* **LIV-1489:**
+  *  add error handling to exportCsv. (ff2eba22)
+  * add button to sales page. (73dcf59d)
+
 #### 1.0.1 (2020-07-30)
 
 ##### Bug Fixes
