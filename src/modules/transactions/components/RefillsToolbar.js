@@ -5,13 +5,20 @@ import format from 'date-fns/format';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const stateOptions = [
-  { key: '', value: '', text: 'All' },
-  { key: 'Added', value: 'Added', text: 'Added' },
-  { key: 'Removed', value: 'Removed', text: 'Removed' },
-];
+// const stateOptions = [
+//   { key: '', value: '', text: 'All' },
+//   { key: 'Added', value: 'Added', text: 'Added' },
+//   { key: 'Removed', value: 'Removed', text: 'Removed' },
+// ];
 
-const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk }) => {
+const Toolbar = ({
+  kiosks,
+  changeDate,
+  changePage,
+  changeKiosk,
+  productsList,
+  changeProduct,
+}) => {
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -30,6 +37,10 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk }) => {
 
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
+  };
+
+  const handleProductChange = (e, { value }) => {
+    changeProduct(value);
   };
 
   return (
@@ -54,17 +65,18 @@ const Toolbar = ({ kiosks, changeDate, changePage, changeKiosk }) => {
               placeholder="Product"
               selection
               className="full-width"
-              options={stateOptions}
+              options={productsList}
+              onChange={handleProductChange}
             />
           </Grid.Column>
-          <Grid.Column width={4}>
+          {/* <Grid.Column width={4}>
             <Dropdown
               placeholder="Added & Removed"
               selection
               options={stateOptions}
               className="full-width"
             />
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
       </Grid>
     </Segment>

@@ -10,6 +10,8 @@ import {
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getGridRefills } from './actions';
+import { getProductListSaga } from '../products/actions';
+import { getProductsDropdownList } from '../products/selectors';
 
 const sort = [
   {
@@ -21,12 +23,12 @@ const sort = [
 const sortValue = {
   kioskName: 'kiosk',
   date: 'created',
- // time: 'created',
- // status: 'status',
   productName: 'product',
   count: 'count',
   loadCell: 'loadCell',
   weight: 'weight',
+  total: 'totalPrice',
+  price: 'defaultPrice',
 };
 
 const ReplenisherList = ({
@@ -35,12 +37,15 @@ const ReplenisherList = ({
   total,
   getGridRefills,
   kiosks,
+  getProductListSaga,
+  productsList,
 }) => {
   const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
+  const [product, changeProduct] = useState('');
 
   const getData = ({ sort }) => {
     const data = {
@@ -48,18 +53,19 @@ const ReplenisherList = ({
       limit: perPage,
     };
 
-    if (search || kiosk || dateRange) {
+    if (search || kiosk || dateRange || product) {
       const name = search ? { product: { $regex: search } } : {};
       const cat = kiosk ? { kiosk: { $regex: kiosk } } : {};
       const date = dateRange ? { created: dateRange } : {};
+      const prod = product ? { product } : {};
 
       data.search = JSON.stringify({
         ...name,
         ...cat,
         ...date,
+        ...prod,
       });
     }
-
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
@@ -68,8 +74,12 @@ const ReplenisherList = ({
   };
 
   useEffect(() => {
+    getProductListSaga();
+  }, []);
+
+  useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, dateRange]);
+  }, [page, perPage, search, kiosk, dateRange, product]);
 
   return (
     <>
@@ -79,6 +89,8 @@ const ReplenisherList = ({
         changeKiosk={changeKiosk}
         changePage={changePage}
         kiosks={kiosks}
+        productsList={productsList}
+        changeProduct={changeProduct}
       />
       <RefillsContent
         refills={refills}
@@ -102,10 +114,12 @@ const mapStateToProps = state => ({
   total: getTotalGridRefillsCount(state),
   isLoading: state.transactions.isLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
+  productsList: getProductsDropdownList(state),
 });
 
 const mapDispatchToProps = {
   getGridRefills,
+  getProductListSaga,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReplenisherList);

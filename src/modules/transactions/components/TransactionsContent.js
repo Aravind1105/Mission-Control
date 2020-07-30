@@ -25,7 +25,7 @@ const columns = [
   //   field: 'terminalID',
   // },
   {
-    title: 'Product Name',
+    title: 'Product',
     field: 'productName',
   },
   // {
@@ -58,7 +58,7 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
     <Segment>
       <CustomTable
         sortByColumn="created"
-        excludeSortBy={['status', 'kioskName', 'productName', 'terminalID']}
+        // excludeSortBy={['status', 'kioskName', 'productName', 'terminalID']}
         columns={columns}
         data={transactions}
         getData={getData}

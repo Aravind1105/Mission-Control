@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon, Divider, Segment } from 'semantic-ui-react';
+import { Grid, Icon, Divider, Segment, Button } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
@@ -54,35 +54,52 @@ const Card = ({
   );
 };
 
-const DetailLoadCellsSide = ({ title, cells, handleEdit }) => {
+const DetailLoadCellsSide = ({ title, cells, handleEdit, handleAdd }) => {
   const activeShelves = cells.reduce((prev, curr) => {
     return prev + curr.length;
   }, 0);
 
-  return cells.length ? (
+  return (
     <Grid.Column>
       <Segment>
         <LoadCellsHeader title={title} activeShelves={activeShelves} />
         <Divider />
-        <Grid>
-          {cells.map((row, i) => (
-            <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
-              {row.map(props =>
-                props ? (
-                  <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-                ) : (
-                  <Grid.Column
-                    key={performance.now().toString(32)}
-                    className="load-cell"
-                  />
-                ),
-              )}
-            </Grid.Row>
-          ))}
-        </Grid>
+        {cells.length > 0
+          && (
+            <Grid>
+              {cells.map((row, i) => (
+                <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
+                  {row.map(props => props ? (
+                    <Card {...props} key={props.cellId} handleEdit={handleEdit} />
+                  ) : (
+                    <Grid.Column
+                      key={performance.now().toString(32)}
+                      className="load-cell"
+                    />
+                  ))}
+                </Grid.Row>
+              ))}
+            </Grid>
+          )}
+        {
+          handleAdd && (
+          <Grid.Row className="add-scale-button">
+            <Button
+              icon
+              labelPosition="left"
+              color="green"
+              compact
+              onClick={handleAdd}
+            >
+              <Icon name="plus" />
+              Add Scale
+            </Button>
+          </Grid.Row>
+          )
+        }
       </Segment>
     </Grid.Column>
-  ) : null;
+  );
 };
 
 export default DetailLoadCellsSide;

@@ -107,7 +107,7 @@ function* processAuthData() {
       yield history.replace(replaceUrl || '/');
       LivelloLS.removeItem(AUTH_ENTRY_STORAGE_KEY);
     } else {
-      yield put(logout());
+      yield call(logout);
     }
   } catch (e) {
     history.replace('/');
@@ -137,7 +137,7 @@ export function* renewSession() {
         yield LivelloLS.setItem(TOKEN_STORAGE_KEY, result.accessToken);
         window.history.replaceState('', document.title, ' ');
       } else {
-        yield put(logout());
+        yield call(logout);
       }
     } catch (e) {
       console.log(e);

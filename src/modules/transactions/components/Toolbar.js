@@ -6,12 +6,13 @@ import format from 'date-fns/format';
 import SearchInput from 'modules/shared/components/SearchInput';
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const stateOptions = [
-  { key: 'client', value: 'client', text: 'client' },
-  { key: 'license', value: 'license', text: 'license' },
-];
-
-const Toolbar = ({ changeSearch, changeDate, changePage }) => {
+const Toolbar = ({
+  changeSearch,
+  changeDate,
+  changePage,
+  kiosks,
+  changeKiosk,
+}) => {
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -28,6 +29,10 @@ const Toolbar = ({ changeSearch, changeDate, changePage }) => {
     changeDate(date);
   };
 
+  const handleKioskChange = (e, { value }) => {
+    changeKiosk(value);
+  };
+
   return (
     <Segment className="toolbar">
       <Grid>
@@ -37,17 +42,18 @@ const Toolbar = ({ changeSearch, changeDate, changePage }) => {
           </Grid.Column>
 
           <Grid.Column width={4}>
-            <SearchInput onChange={changeSearch} timeout={500} />
-          </Grid.Column>
-
-          <Grid.Column width={4}>
             <Dropdown
-              placeholder="All types"
+              placeholder="Kiosk"
               selection
-              options={stateOptions}
+              options={kiosks}
               className="full-width"
+              onChange={handleKioskChange}
             />
           </Grid.Column>
+
+          {/* <Grid.Column width={4}>
+            <SearchInput onChange={changeSearch} timeout={500} />
+          </Grid.Column> */}
         </Grid.Row>
       </Grid>
     </Segment>
@@ -58,6 +64,7 @@ Toolbar.propTypes = {
   changeSearch: PropTypes.func,
   changeDate: PropTypes.func,
   changePage: PropTypes.func,
+  kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Toolbar;

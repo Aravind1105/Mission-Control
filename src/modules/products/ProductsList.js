@@ -22,6 +22,7 @@ const ProductsList = ({
 }) => {
   const [search, changeSearch] = useState('');
   const [category, changeCategory] = useState('');
+  const [supplier, changeSupplier] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
 
@@ -31,14 +32,18 @@ const ProductsList = ({
       limit: perPage,
     };
 
-    if (search || category) {
+    if (search || category || supplier) {
       const name = search ? { name: { $regexI: search } } : {};
       const cat = category ? { category: { $regexI: category } } : {};
+      const sup = supplier ? { manufacturer: { $regexI: supplier } } : {};
 
       data.search = JSON.stringify({
         ...name,
         ...cat,
+        ...sup,
       });
+      
+      data.skip = 0;
     }
 
     if (sort) {
@@ -49,11 +54,14 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category]);
+  }, [page, perPage, search, category, supplier]);
 
   return (
     <>
-      <Toolbar changeSearch={changeSearch} changeCategory={changeCategory} />
+      <Toolbar 
+      changeSearch={changeSearch}
+      changeCategory={changeCategory} 
+      changeSupplier={changeSupplier}/>
       <ProductsContent
         products={products}
         getData={getData}

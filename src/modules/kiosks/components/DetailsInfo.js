@@ -7,6 +7,7 @@ import InfoRow from 'modules/shared/components/InfoRow';
 const DetailsInfo = ({
   children,
   session,
+  serial,
   location: { address },
   ownerOrganization,
 }) => {
@@ -19,48 +20,15 @@ const DetailsInfo = ({
         <Grid.Column width={12}>
           <Grid>
             <Grid.Row>
-              <InfoRow title="Device version" description="" />
-              <InfoRow title="Connection" description="" />
-              <InfoRow
-                title="Session"
-                description={session ? session.type : 'no session'}
-              />
-            </Grid.Row>
-          </Grid>
-
-          <Divider />
-
-          <Grid>
-            <Grid.Row>
+              <InfoRow title="Serial" description={serial}/>
+              <InfoRow title="Session" description={session ? session.type : 'no session'}/>
               <InfoRow title="Address" description={addressFull} />
               <InfoRow title="Organization" description={ownerOrganization} />
-              <InfoRow title="Logistics Org" description="" />
-              <InfoRow title="Local contact" description="" />
-              <InfoRow title="EMail" description="" />
-              <InfoRow title="Phone Number" description="+7(524)-52-35-845" />
-              <InfoRow title="Admin Card ID(s)" description="" />
-              <InfoRow title="Location Notes" description="" />
             </Grid.Row>
           </Grid>
+
         </Grid.Column>
         <Grid.Column width={4}>{children}</Grid.Column>
-      </Grid>
-
-      <Divider />
-
-      <Grid>
-        <Grid.Row>
-          <InfoRow title="Allowance" description="" />
-          <InfoRow title="Promotions" description="" />
-        </Grid.Row>
-      </Grid>
-
-      <Divider />
-
-      <Grid>
-        <Grid.Row>
-          <InfoRow title="Out of service" description="Date here" />
-        </Grid.Row>
       </Grid>
     </div>
   );

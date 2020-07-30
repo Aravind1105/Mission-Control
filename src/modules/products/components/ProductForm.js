@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 
 import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
@@ -25,17 +26,24 @@ const ProductForm = ({
   const dispatch = useDispatch();
 
   const onSubmit = (values, formActions) => {
-    values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0].netWeightGrams;
-    values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0].grossWeightGrams;
-    values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0].shelfLifeDays;
+    values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
+      .netWeightGrams;
+    values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0]
+      .grossWeightGrams;
+    values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
+      .shelfLifeDays;
     delete values.image;
     setIsCancelTriggered(false);
     setIsImageDeleted(false);
-    dispatch(modifyProductSaga({ values,
-      formActions,
-      initialValues,
-      uploadedImage,
-      isImageDeleted }));
+    dispatch(
+      modifyProductSaga({
+        values,
+        formActions,
+        initialValues,
+        uploadedImage,
+        isImageDeleted,
+      }),
+    );
   };
 
   const handleCancel = resetForm => {
@@ -57,17 +65,25 @@ const ProductForm = ({
       }
     }
   }, [uploadedImage, isImageDeleted]);
-
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
+      validationSchema={Yup.object().shape({
+        family: Yup.string().required('This field is required'),
+        orgId: Yup.string().required('This field is required'),
+        category: Yup.string().required('This field is required'),
+        tax: Yup.string().required('This field is required'),
+      })}
       enableReinitialize
     >
       {({ dirty, handleSubmit, values, setValues, resetForm }) => {
-        const netPrice = Math.round(
-          ((+(values.defaultPrice.replace(',', '.')) || 0) / (1 + (values.tax || 0) / 100)) * 100,
-        ) / 100;
+        const netPrice =
+          Math.round(
+            ((+values.defaultPrice.replace(',', '.') || 0) /
+              (1 + (values.tax || 0) / 100)) *
+              100,
+          ) / 100;
         setImg = setValues;
         restVal = values;
         return (
@@ -318,7 +334,13 @@ const ProductForm = ({
 
               <Grid.Row textAlign="center">
                 <Grid.Column>
-                  <Button disabled={!dirty} onClick={() => handleCancel(resetForm)} type="button">Cancel</Button>
+                  <Button
+                    disabled={!dirty}
+                    onClick={() => handleCancel(resetForm)}
+                    type="button"
+                  >
+                    Cancel
+                  </Button>
                   <Button color="green" type="submit" disabled={!dirty}>
                     Submit
                   </Button>

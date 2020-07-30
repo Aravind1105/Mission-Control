@@ -17,36 +17,78 @@ export const getProductsHistory = createSelector(
   products => products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
 );
 
-export const getProductsSimpleList = (id = '') => createSelector(selectorGetProducts, products => products
-  .map(({ _id, name }) => ({
-    value: _id,
-    label: name,
-  }))
-  .filter(el => el.value !== id));
+export const getProductsSimpleList = (id = '') =>
+  createSelector(selectorGetProducts, products =>
+    products
+      .map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+      .filter(el => el.value !== id),
+  );
+
+export const getProductsDropdownList = createSelector(
+  selectorGetProducts,
+  products => {
+    const newProductsList = products.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    newProductsList.unshift({ value: '', text: 'All products', key: 'all' });
+    return newProductsList;
+  },
+);
 
 export const selectorProductTaxOptions = createSelector(
   selectorGetProductTax,
-  taxes => taxes.map(el => ({
-    text: el.taxId,
-    value: el.taxValue,
-    key: el._id,
-  })),
+  taxes =>
+    taxes.map(el => ({
+      text: el.taxId,
+      value: el.taxValue,
+      key: el._id,
+    })),
+);
+
+export const selectorGetSupplier = createSelector(
+  selectorGetProducts,
+  products => {
+    let supplierList = [];
+    products.reduce((prev, curr) => {
+      if (prev.indexOf(curr.manufacturer) === -1) {
+        prev.push(curr.manufacturer);
+        supplierList.push({
+          text: curr.manufacturer,
+          value: curr.manufacturer,
+          key: `${supplierList.length}`,
+        });
+      }
+      return prev;
+    }, []);
+    supplierList.unshift({
+      value: 'All',
+      text: `All`,
+      key: supplierList.length,
+    });
+    return supplierList;
+  },
 );
 
 export const selectorGetProductFamilyForm = createSelector(
   selectorGetProductFamily,
-  family => family.reduce(
-    (prev, curr) => {
-      const category = curr.category.map(text => ({ text, value: text }));
-      prev.families.push({
-        value: curr._id,
-        text: curr.name,
-      });
-      prev.categories[curr._id] = category;
-      return prev;
-    },
-    { families: [], categories: {} },
-  ),
+  family =>
+    family.reduce(
+      (prev, curr) => {
+        const category = curr.category.map(text => ({ text, value: text }));
+        prev.families.push({
+          value: curr._id,
+          text: curr.name,
+        });
+        prev.categories[curr._id] = category;
+        return prev;
+      },
+      { families: [], categories: {} },
+    ),
 );
 
 export const selectorGetProductCategories = createSelector(
@@ -153,7 +195,7 @@ export const selectorGetProductInitValue = createSelector(
       id: rest._id,
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),
-      family: family._id,
+      family: get(product, 'family._id', ''),
       tax,
       defaultCost: (+rest.defaultCost).toFixed(2),
     };

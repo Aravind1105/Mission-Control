@@ -38,6 +38,7 @@ const ModalLoadCell = ({
   match,
   loadedPosition,
   cells,
+  isAddLoadCell,
 }) => {
   useEffect(() => {
     getProductListSaga();
@@ -108,7 +109,7 @@ const ModalLoadCell = ({
         <ConfirmModal
           onClose={handleClose}
           isPristine={!dirty}
-          title={`${kioskName}  #${initVal.cellId}`}
+          title={initVal.cellId ? `${kioskName}  #${initVal.cellId}` : `${kioskName}`}
         >
           <form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
@@ -175,7 +176,7 @@ const ModalLoadCell = ({
                     <Field
                       name="cellId"
                       label="Cable ID"
-                      disabled
+                      disabled={!isAddLoadCell}
                       component={FormInput}
                     />
                   </Grid.Column>
