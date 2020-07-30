@@ -1,3 +1,17 @@
+#### 1.0.1 (2020-07-30)
+
+##### Bug Fixes
+
+* **transactions:**  fix table styles and merge to prod (d09d9362)
+
+##### Other Changes
+
+* **LIV-1489:**  merge with stagning. (8d101f72)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (ad712c7f)
+
 ## 1.0.0 (2020-07-30)
 
 ##### Chores
@@ -6,6 +20,18 @@
 
 ##### Bug Fixes
 
+* **LIV-1489:**  fix merge conflict. (19d3f694)
+* **Transactions tables fixes:**  Transactions tables fixes (f59db268)
+
+### 0.11.0 (2020-07-30)
+
+##### Build System / Dependencies
+
+* **LIV-1489:**  download CSV button for replenisher page. (2b5b5860)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (53281c61)
 * **transactions:**  fix table styles and merge to prod (d09d9362)
 * **Transactions tables fixes:**  Transactions tables fixes (f59db268)
 

@@ -1,6 +1,7 @@
 let ls = null;
 try {
   ls = window.localStorage;
+  console.log('ls: ', ls)
 } catch (error) {
   ls = null;
 }
