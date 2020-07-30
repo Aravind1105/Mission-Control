@@ -1,3 +1,14 @@
+#### 0.11.1 (2020-07-30)
+
+##### Chores
+
+* **remove mock-ups:**  remove all dummy components (22a00617)
+
+##### Bug Fixes
+
+* **LIV-1489:**  fix merge conflict. (19d3f694)
+* **Transactions tables fixes:**  Transactions tables fixes (f59db268)
+
 ### 0.11.0 (2020-07-30)
 
 ##### Build System / Dependencies
