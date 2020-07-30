@@ -3,7 +3,7 @@ import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent'
 
 
 const CustomTooltip = props => {
-  if (props.payload[0] != null) {
+  if (props.payload && props.payload[0] != null) {
     const totalAmount = props.payload.reduce((acc, elem) => +elem.value + acc,
       0);
     const newPayload = [
