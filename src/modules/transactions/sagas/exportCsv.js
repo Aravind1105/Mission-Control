@@ -8,24 +8,33 @@ import {
 
 export function handlerGetProduct(payload) {
   const token = ls.getItem(TOKEN_STORAGE_KEY);
-  return fetch(`/api/v1/transactions/csv/export/${payload.from}/${payload.to}`, {
+  fetch(`/api/v1/transactions/csv/export/${payload.from}/${payload.to}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then(response => response.blob())
-    .then(blob => {
+  .catch(e => {
+    alert(e);
+    return e;
+  })
+  .then(response => {
+    if(response.status != 200) {
+      alert('Etwas ist schief gelaufen. Versuche Sie es später noch einmal.');
+    }
+    else response.blob().then(blob => {
       let url = window.URL.createObjectURL(blob);
-      let a = document.createElement('a');
-      a.href = url;
-      a.download = `transactions_${Date.now()}.csv`;
+      let element = document.createElement('a');
+      element.href = url;
+      element.download = `transactions_${Date.now()}.csv`;
       // TODO: if document is empty alert the user
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      alert('Datei war erfolgreich heruntergeladen!');
     });
-};
+  });
+}
 
 function* handler({payload}) {
   try {
