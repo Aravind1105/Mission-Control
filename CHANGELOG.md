@@ -1,3 +1,28 @@
+## 1.0.0 (2020-07-30)
+
+##### Chores
+
+* **remove mock-ups:**  remove all dummy components (22a00617)
+
+##### Bug Fixes
+
+* **transactions:**  fix table styles and merge to prod (d09d9362)
+* **Transactions tables fixes:**  Transactions tables fixes (f59db268)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (53281c61)
+* **LIV-1295:**  enable supplier list on the product list page. (00ff3747)
+* **liv-1295:**  Showing the list  of manufacturers on productList page (not unique). (0286adf4)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (ad712c7f)
+
+##### Code Style Changes
+
+* **kiosk detail:**  clean kiosk detail section. (286e7477)
+
 ### 0.10.0 (2020-07-24)
 
 ##### Code Style Changes
