@@ -4,12 +4,11 @@ import ls from 'lib/localStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 import {
   exportCsv as action,
-  exportCsvSuccess as actionSuccess,
 } from '../actions';
 
-export function handlerGetProduct() {
+export function handlerGetProduct(payload) {
   const token = ls.getItem(TOKEN_STORAGE_KEY);
-  return fetch(`/api/v1/transactions/csv/export/1578328700000/1578388700000`, {
+  return fetch(`/api/v1/transactions/csv/export/${payload.from}/${payload.to}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -20,17 +19,17 @@ export function handlerGetProduct() {
       let url = window.URL.createObjectURL(blob);
       let a = document.createElement('a');
       a.href = url;
-      // TODO: update file name.
-      a.download = `statistic_${performance.now()}.csv`;
+      a.download = `transactions_${Date.now()}.csv`;
+      // TODO: if document is empty alert the user
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     });
 };
 
-function* handler() {
+function* handler({payload}) {
   try {
-    yield call(handlerGetProduct);
+    yield call(handlerGetProduct,payload);
   } catch (e) {
     console.log(e);
   }
