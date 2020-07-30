@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Grid, Dropdown } from 'semantic-ui-react';
+import { Segment, Grid, Dropdown, Button } from 'semantic-ui-react';
 import format from 'date-fns/format';
+import { exportCsv } from '../actions';
+import { connect } from 'react-redux';
 
 import SearchInput from 'modules/shared/components/SearchInput';
 import DatePicker from 'modules/shared/components/Datepicker';
@@ -12,7 +14,11 @@ const Toolbar = ({
   changePage,
   kiosks,
   changeKiosk,
+  exportCsv,
 }) => {
+
+  const [exportData, changeExportData] = useState(false);
+
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -27,7 +33,18 @@ const Toolbar = ({
     }
     changePage(0);
     changeDate(date);
+    if (date.$gte && date.$lte) changeExportData(date)
   };
+
+  const DownloadCsv = () => {
+    let value = {
+      from : Math.round(new Date(exportData.$gte)),
+      to : Math.round(new Date(exportData.$lte)),
+    }
+    exportCsv(value);
+    window.alert('Datei wird heruntergeladen.')
+    changeExportData(false)
+  }
 
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
@@ -54,6 +71,15 @@ const Toolbar = ({
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
+          <Grid.Column width={4}>
+            <Button 
+              style={{ background:"white", border: "1px solid rgba(34,36,38,.15)" }}
+              onClick={DownloadCsv}
+              disabled={!Boolean(exportData)}>
+                Download CSV&nbsp;&nbsp;
+                <i className="arrow down icon"/>
+            </Button>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </Segment>
@@ -67,4 +93,11 @@ Toolbar.propTypes = {
   kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default Toolbar;
+// export default Toolbar;
+const mapStateToProps = state => ({
+});
+const mapDispatchToProps = {
+  exportCsv,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
