@@ -1,3 +1,17 @@
+#### 1.0.1 (2020-07-30)
+
+##### Bug Fixes
+
+* **transactions:**  fix table styles and merge to prod (d09d9362)
+
+##### Other Changes
+
+* **LIV-1489:**  merge with stagning. (8d101f72)
+
+##### Reverts
+
+* **pipeline:**  revert previous changes on the pipeline. Problem was solved by using standard service from gCloud. (ad712c7f)
+
 ## 1.0.0 (2020-07-30)
 
 ##### Chores
