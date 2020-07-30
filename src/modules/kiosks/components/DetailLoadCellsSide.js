@@ -66,33 +66,37 @@ const DetailLoadCellsSide = ({ title, cells, handleEdit, handleAdd }) => {
         <Divider />
         {cells.length > 0
           && (
-          <Grid>
-            {cells.map((row, i) => (
-              <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
-                {row.map(props => props ? (
-                  <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-                ) : (
-                  <Grid.Column
-                    key={performance.now().toString(32)}
-                    className="load-cell"
-                  />
-                ))}
-              </Grid.Row>
-            ))}
-          </Grid>
+            <Grid>
+              {cells.map((row, i) => (
+                <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
+                  {row.map(props => props ? (
+                    <Card {...props} key={props.cellId} handleEdit={handleEdit} />
+                  ) : (
+                    <Grid.Column
+                      key={performance.now().toString(32)}
+                      className="load-cell"
+                    />
+                  ))}
+                </Grid.Row>
+              ))}
+            </Grid>
           )}
-        <Grid.Row className="add-scale-button">
-          <Button
-            icon
-            labelPosition="left"
-            color="green"
-            compact
-            onClick={handleAdd}
-          >
-            <Icon name="plus" />
-            Add Scale
-          </Button>
-        </Grid.Row>
+        {
+          handleAdd && (
+          <Grid.Row className="add-scale-button">
+            <Button
+              icon
+              labelPosition="left"
+              color="green"
+              compact
+              onClick={handleAdd}
+            >
+              <Icon name="plus" />
+              Add Scale
+            </Button>
+          </Grid.Row>
+          )
+        }
       </Segment>
     </Grid.Column>
   );

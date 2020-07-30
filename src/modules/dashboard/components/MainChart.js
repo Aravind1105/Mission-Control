@@ -86,7 +86,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
                 dataKey={productName}
                 name={name && name.label}
                 stackId="a"
-                fill={colorsArr[i % (products.length - 1)]}
+                fill={colorsArr[i % (colorsArr.length - 1)]}
                 className="chartTest"
               />
             );

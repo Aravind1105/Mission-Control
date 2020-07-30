@@ -39,21 +39,20 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     setIsAddLoadCell(true);
     selectProduct({});
   };
-
   return (
     <>
       {isTwoSides && (
         <DetailLoadCellsSide
           cells={sides.B}
           handleEdit={handleEdit}
-          handleAdd={handleAdd}
+          handleAdd={[].concat(...sides.B).length < 15 ? handleAdd : undefined}
           title="Planogram - Left Kiosk"
         />
       )}
       <DetailLoadCellsSide
         cells={sides.A}
         handleEdit={handleEdit}
-        handleAdd={handleAdd}
+        handleAdd={[].concat(...sides.A).length < 15 ? handleAdd : undefined}
         title={isTwoSides ? 'Planogram - Right Kiosk' : 'Load Cells'}
       />
 
