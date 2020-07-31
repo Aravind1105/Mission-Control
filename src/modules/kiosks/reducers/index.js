@@ -1,5 +1,6 @@
 import { handleActions, combineActions } from 'redux-actions';
 import { findIndex, propEq, update } from 'ramda';
+import get from 'lodash/get';
 import {
   getAllKiosks,
   updateKiosks,
@@ -9,6 +10,7 @@ import {
   modifyKioskSuccess,
   resetKiosk,
   resetKioskSuccess,
+  getAlertsGridSuccess,
 } from '../actions';
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
+  alerts: [],
+  totalAlerts: 0,
 };
 
 const kiosksReducer = handleActions(
@@ -49,6 +53,13 @@ const kiosksReducer = handleActions(
       kiosk: payload,
       isKioskLoading: false,
     }),
+    [getAlertsGridSuccess]: (state, { payload }) => {
+      return {
+        ...state,
+        alerts: get(payload, 'gridAlerts.data', []),
+        totalAlerts: get(payload, 'gridAlerts.total', null),
+      };
+    },
   },
   initialState,
 );

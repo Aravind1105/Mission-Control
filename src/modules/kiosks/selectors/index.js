@@ -2,10 +2,19 @@ import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
+import format from 'date-fns/format';
+
+const alertMessages = {
+  KioskOffline: 'System Offline',
+};
 
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
+
+export const getKiosksAlertsState = state => state.kiosks.alerts;
+
+export const getTotalAlerts = state => state.kiosks.totalAlerts;
 
 export const getKioskSingle = state => state.kiosks.kiosk;
 
@@ -71,6 +80,19 @@ export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
 
   return [...filteredTempKiosks, ...filteredOfflineKiosks];
 });
+
+export const getKiosksAlertsForTable = createSelector(
+  [getKiosksAlertsState],
+  alerts => {
+    return alerts.map(alert => {
+      return {
+        date: format(new Date(alert.startDate), 'HH:mm:ss, dd-MM-yyyy'),
+        alert: alertMessages[alert.type],
+        kiosk: '',
+      };
+    });
+  },
+);
 
 export const getKiosksAlertsDashboard = createSelector(
   getKiosksState,
