@@ -78,7 +78,7 @@ export const getTransactionsTableState = createSelector(
       const item = {
         transactionID: rest._id,
         type: rest.type,
-        date: format(new Date(created), 'dd-MM-yyyy HH:mm:ss'),
+        date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
         session: rest.session,
         total: rest.total,
         productName: 'Total',
