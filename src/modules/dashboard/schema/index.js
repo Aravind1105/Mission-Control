@@ -86,7 +86,6 @@ export const GET_DAILY_SALES_BY_KIOSKS = gql`
   ${FragmentStatisticOnSalesForAll}
 `;
 
-
 export const GET_WEEKLY_SALES_BY_KIOSKS = gql`
   query getStatistic {
     dailySales {
