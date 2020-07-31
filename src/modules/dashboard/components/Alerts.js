@@ -1,52 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
+import { getAlertsGrid } from '../../kiosks/actions';
+import {
+  getKiosksAlertsForTable,
+  getTotalAlerts,
+} from '../../kiosks/selectors';
 
-const iconType = {
-  Resolved: 'check circle',
-  New: 'attention',
-  'In progress': 'time',
+const sortValue = {
+  // kiosk: 'kiosk',
+  date: 'startDate',
+  alert: 'type',
 };
 
-const Alerts = ({ list }) => {
-  const [rowLimit, setRowLimit] = useState(5);
+const sort = [
+  {
+    column: 'startDate',
+    direction: 'ASC',
+  },
+];
+
+const Alerts = ({ getAlertsGrid, alerts, total }) => {
+  const [rowLimit, setRowLimit] = useState(6);
+
+  useEffect(() => {
+    const data = { limit: 6, sort };
+    getAlertsGrid({ data });
+  }, []);
 
   const { t } = useTranslation();
   const columns = [
     {
-      title: t('message'),
-      field: 'message',
-    },
-    {
-      title: t('Name'),
-      field: 'name',
-    },
-    {
-      title: t('Time'),
+      title: t('Date / Time'),
       field: 'date',
-      formatter: ({ date }) =>
-        date || date === 0 ? `${date} hour${date > 1 ? 's' : ''} ago` : '',
     },
     {
-      title: t('status'),
-      field: 'status',
-      formatter: ({ status }) => {
-        const name = iconType[status];
-        return (
-          <>
-            <Icon name={name} />
-            {status}
-          </>
-        );
-      },
+      title: t('Alert'),
+      field: 'alert',
+    },
+    {
+      title: t('Kiosk'),
+      field: 'kiosk',
     },
   ];
 
   const handlerToggle = () => {
-    setRowLimit(val => (val ? 0 : 5));
+    setRowLimit(val => (val ? 0 : 6));
+    if (rowLimit === 6) {
+      const data = { limit: 0 };
+      getAlertsGrid({ data });
+    }
+  };
+
+  const getData = ({ sort }) => {
+    const data = {
+      limit: rowLimit,
+    };
+    if (sort && sortValue[sort[0].column]) {
+      sort[0].column = sortValue[sort[0].column];
+      data.sort = sort;
+    }
+    getAlertsGrid({ data });
   };
 
   return (
@@ -67,12 +85,22 @@ const Alerts = ({ list }) => {
         sortByColumn="date"
         sortable
         fixed
-        data={list}
+        data={alerts}
         columns={columns}
         rowLimit={rowLimit}
+        getData={getData}
       />
     </Segment>
   );
 };
 
-export default Alerts;
+const mapStateToProps = state => ({
+  alerts: getKiosksAlertsForTable(state),
+  total: getTotalAlerts(state),
+});
+
+const mapDispatchToProps = {
+  getAlertsGrid,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Alerts);

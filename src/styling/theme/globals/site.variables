@@ -19,4 +19,6 @@
 @darkgrey       : #262626;
 @black          : #000000;
 @white          : #FFFFFF;
-@greyExtraTable : #E5E5E5;
+@greyExtraTable : #9C9C9C;
+@grey2          : #828282;
+@grey6          : #f2f2f2;

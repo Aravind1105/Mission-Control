@@ -148,3 +148,21 @@ export const KIOSK_RESET_MUTATION = gql`
   }
   ${FragmentKioskOnKiosk}
 `;
+
+export const GET_ALERTS_GRID = gql`
+  query gridAlerts($data: GridRequest) {
+    gridAlerts(data: $data) {
+      total
+      data {
+        _id
+        orgId
+        type
+        severity
+        status
+        startDate
+        endDate
+        details
+      }
+    }
+  }
+`;
