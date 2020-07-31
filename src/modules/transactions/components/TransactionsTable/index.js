@@ -100,7 +100,7 @@ const TransactionsTable = ({
                 return (
                   <Table.HeaderCell
                     key={field}
-                    className={className || `table-header-cell ${sorted ? 'header-sorted' : ''}`}
+                    className={className || null}
                     sorted={sorted}
                     onClick={sortable ? handlerHCellClick(field) : undefined}
                   >
