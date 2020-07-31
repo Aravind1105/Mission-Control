@@ -45,7 +45,7 @@ const columns = [
   {
     title: 'Total Price',
     field: 'total',
-    formatter: ({ total }) => `${total} €`,
+    formatter: ({ total }) => `€ ${total}`,
   },
   // {
   //   title: 'Type',
