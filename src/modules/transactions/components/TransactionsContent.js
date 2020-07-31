@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
 
-import CustomTable from 'modules/shared/components/CustomTable';
+import TransactionsTable from './TransactionsTable';
 
 const columns = [
   {
@@ -39,6 +39,10 @@ const columns = [
   //   formatter: ({ tax }) => `${tax || 0}%`,
   // },
   {
+    title: 'Quantity',
+    field: 'quantity',
+  },
+  {
     title: 'Total Price',
     field: 'total',
     formatter: ({ total }) => `${total} €`,
@@ -56,7 +60,7 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
 
   return (
     <Segment>
-      <CustomTable
+      <TransactionsTable
         sortByColumn="created"
         // excludeSortBy={['status', 'kioskName', 'productName', 'terminalID']}
         columns={columns}
