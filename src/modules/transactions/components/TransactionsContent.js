@@ -43,6 +43,16 @@ const columns = [
     field: 'quantity',
   },
   {
+    title: 'Price',
+    field: 'price',
+    formatter: ({ price }) => {
+      if (price === 0) {
+        return '';
+      }
+      return `€ ${price}`;
+    },
+  },
+  {
     title: 'Total Price',
     field: 'total',
     formatter: ({ total }) => `€ ${total}`,
