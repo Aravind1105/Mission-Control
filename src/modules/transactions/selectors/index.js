@@ -129,7 +129,7 @@ export const getGridRefillsTableState = createSelector(
       return {
         date: format(
           new Date(refill.created || new Date()),
-          'dd-MM-yyyy HH:mm:ss',
+          'dd-MM-yyyy, HH:mm:ss',
         ),
         status: refill.status || 'undefined',
         kioskName: get(refill, 'kiosk.name', 'unknown'),

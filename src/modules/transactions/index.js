@@ -10,7 +10,7 @@ import './styles.less';
 const navSwitcherConfig = [
   { name: 'transactions ', goTo: '' },
   { name: 'sales', goTo: '/transactions/sales' },
-  { name: 'refill', goTo: '/transactions/refills' },
+  { name: 'refills', goTo: '/transactions/refills' },
 ];
 
 const Transactions = () => (
