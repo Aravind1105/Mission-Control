@@ -95,7 +95,7 @@ const KioskDetails = ({
                     serial={`#${kiosk.serialNumber}`}
                     session={kiosk.session}
                     location={kiosk.location}
-                    ownerOrganization={get(kiosk, 'orgId', '')}
+                    ownerOrganization={get(kiosk, 'ownerOrganization.name', '')}
                   >
                     <>
                       <CustomButton
