@@ -37,7 +37,7 @@ const columns = [
     field: 'weight',
   },
   {
-    title: 'Purchase Price per Item',
+    title: 'Price',
     field: 'price',
     className: 'purchase-price-header',
     formatter: ({ price }) => `€ ${price || 0}`,
