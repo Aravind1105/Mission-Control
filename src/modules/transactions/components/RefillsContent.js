@@ -40,12 +40,12 @@ const columns = [
     title: 'Purchase Price per Item',
     field: 'price',
     className: 'purchase-price-header',
-    formatter: ({ price }) => `${price || 0} €`,
+    formatter: ({ price }) => `€ ${price || 0}`,
   },
   {
     title: 'Total Price',
     field: 'total',
-    formatter: ({ total }) => `${total || 0} €`,
+    formatter: ({ total }) => `€ ${total || 0}`,
   },
 ];
 
