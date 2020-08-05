@@ -81,6 +81,7 @@ export const getTransactionsTableState = createSelector(
         date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
         session: rest.session,
         total: rest.total,
+        price: 0,
         productName: 'Total',
         quantity: itemsPurchased.length,
         kioskName:
@@ -113,6 +114,7 @@ export const getTransactionsTableState = createSelector(
         arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
       newArr = newArr.concat(product);
     });
+    console.log(newArr);
     return newArr;
   },
 );
@@ -129,7 +131,7 @@ export const getGridRefillsTableState = createSelector(
       return {
         date: format(
           new Date(refill.created || new Date()),
-          'dd-MM-yyyy HH:mm:ss',
+          'dd-MM-yyyy, HH:mm:ss',
         ),
         status: refill.status || 'undefined',
         kioskName: get(refill, 'kiosk.name', 'unknown'),
