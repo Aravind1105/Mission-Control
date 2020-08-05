@@ -57,7 +57,7 @@ const ModalLoadCell = ({
   const validateCellId = cellId => {
     let error;
     const filteredCellId = cells.filter(cell => cell.cellId === cellId);
-    if (filteredCellId.length > 0) {
+    if (isAddLoadCell && filteredCellId.length > 0) {
       error = 'Cable ID already exists.';
     }
     return error;
