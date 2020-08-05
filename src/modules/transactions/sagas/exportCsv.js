@@ -6,9 +6,17 @@ import {
   exportCsv as action,
 } from '../actions';
 
+
 export function handlerGetProduct(payload) {
+  let link;
+  if(payload.kiosk){
+    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}?kioskId=${payload.kiosk}`;
+  } else{
+    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
+  }
   const token = ls.getItem(TOKEN_STORAGE_KEY);
-  fetch(`/api/v1/transactions/csv/export/${payload.from}/${payload.to}`, {
+  
+  fetch(link, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -27,7 +35,6 @@ export function handlerGetProduct(payload) {
       let element = document.createElement('a');
       element.href = url;
       element.download = `transactions_${Date.now()}.csv`;
-      // TODO: if document is empty alert the user
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);

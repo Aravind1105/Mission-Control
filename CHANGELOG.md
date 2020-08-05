@@ -1,3 +1,12 @@
+#### 1.0.3 (2020-08-05)
+
+##### Code Style Changes
+
+* **Transactions-Sales:**  Table data styling updated (6ccc8ea6)
+* **Transactions-sales:**
+  *  Transactions - Sales Table updated (f82f60f4)
+  *  Transactions - Sales Table updated (654fc9f7)
+
 #### 1.0.2 (2020-07-30)
 
 ##### Build System / Dependencies
