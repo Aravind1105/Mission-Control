@@ -1,3 +1,11 @@
+#### 1.0.4 (2020-08-05)
+
+##### Bug Fixes
+
+* **LIV-1591:**  enable notification when editing and adding products + redirection. (b44cb9d5)
+* **LIV1587:**  change submit label for save when editing a product. (a7ceb05a)
+* **Kiosk-Details:**  LIV-1598 Resolve organization name (0f42b49b)
+
 #### 1.0.3 (2020-08-05)
 
 ##### Code Style Changes
