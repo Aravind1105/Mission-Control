@@ -17,16 +17,6 @@ export const getProductsHistory = createSelector(
   products => products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
 );
 
-export const getProductsSimpleList = (id = '') =>
-  createSelector(selectorGetProducts, products =>
-    products
-      .map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-      .filter(el => el.value !== id),
-  );
-
 export const getProductsDropdownList = createSelector(
   selectorGetProducts,
   products => {

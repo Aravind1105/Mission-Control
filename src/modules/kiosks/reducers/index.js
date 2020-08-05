@@ -11,6 +11,8 @@ import {
   resetKiosk,
   resetKioskSuccess,
   getAlertsGridSuccess,
+  getProductLinesByOrgId,
+  getProductLinesByOrgIdSuccess,
 } from '../actions';
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   isLoading: false,
   alerts: [],
   totalAlerts: 0,
+  productsByOrgId: [],
 };
 
 const kiosksReducer = handleActions(
@@ -58,6 +61,15 @@ const kiosksReducer = handleActions(
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
         totalAlerts: get(payload, 'gridAlerts.total', null),
+      };
+    },
+    [combineActions(getProductLinesByOrgId, getProductLinesByOrgIdSuccess)]: (
+      state, { payload },
+    ) => {
+      return {
+        ...state,
+        ...payload,
+        isLoading: true,
       };
     },
   },

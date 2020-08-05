@@ -18,19 +18,15 @@ export const getTotalAlerts = state => state.kiosks.totalAlerts;
 
 export const getKioskSingle = state => state.kiosks.kiosk;
 
-export const getKiosksWithSearch = searchText =>
-  createSelector(getKiosksState, kiosks => {
-    const search = searchText.trim().toLowerCase();
+export const getKiosksWithSearch = searchText => createSelector(getKiosksState, kiosks => {
+  const search = searchText.trim().toLowerCase();
 
-    return search
-      ? kiosks.filter(({ name }) => name.toLowerCase().includes(search))
-      : kiosks;
-  });
+  return search
+    ? kiosks.filter(({ name }) => name.toLowerCase().includes(search))
+    : kiosks;
+});
 
-export const getKioskById = id =>
-  createSelector(getKiosksState, kiosksState =>
-    kiosksState.find(kiosk => kiosk._id === id),
-  );
+export const getKioskById = id => createSelector(getKiosksState, kiosksState => kiosksState.find(kiosk => kiosk._id === id));
 
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
@@ -132,12 +128,10 @@ export const getKiosksAlertsDashboard = createSelector(
   },
 );
 
-export const getKioskListName = createSelector(getKiosksState, kiosks =>
-  kiosks.reduce((prev, { _id, name }) => {
-    prev[_id] = name;
-    return prev;
-  }, {}),
-);
+export const getKioskListName = createSelector(getKiosksState, kiosks => kiosks.reduce((prev, { _id, name }) => {
+  prev[_id] = name;
+  return prev;
+}, {}));
 
 export const getKioskOptions = createSelector(getKiosksState, kiosks => [
   { value: '', label: 'All Fridges' },
@@ -191,15 +185,26 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-        id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-        orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
+      id: kiosk._id,
+      ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+      orgId: kiosk.orgId,
+      location: {
+        address: {
+          ...kioskInitialValues.location.address,
+          ...address,
         },
-      }
+      },
+    }
     : kioskInitialValues;
 });
+
+export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk => kiosk.orgId);
+
+export const getProductsByOrdId = state => state.kiosks.productsByOrgId;
+
+export const getProductsDropdownList = (id = '') => createSelector(getProductsByOrdId, products => products
+  .map(({ _id, name }) => ({
+    value: _id,
+    label: name,
+  }))
+  .filter(el => el.value !== id));
