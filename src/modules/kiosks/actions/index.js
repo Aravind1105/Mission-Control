@@ -9,6 +9,7 @@ export const modifyKioskLoadCell = createAction(
 );
 export const getKiosk = createAction('@@saga/GET_KIOSK');
 export const getAlertsGrid = createAction('@@saga/GET_ALERTS_GRID');
+export const getOrganizationById = createAction('@@saga/GET_ORGANIZATION_BY_ID');
 export const getProductLinesByOrgId = createAction(
   '@@saga/GET_PRODUCT_LINES_BY_ORG_ID',
 );
@@ -22,6 +23,7 @@ export const resetKioskSuccess = createAction('@@state/KIOSK_RESET_SUCCESS');
 export const getAlertsGridSuccess = createAction(
   '@@state/GET_ALERTS_GRID_SUCCESS',
 );
+export const getOrganizationByIdSuccess = createAction('@@state/GET_ORGANIZATION_BY_ID_SUCCESS');
 export const getProductLinesByOrgIdSuccess = createAction(
   '@@state/GET_PRODUCT_LINES_BY_ORG_ID_SUCCESS',
 );

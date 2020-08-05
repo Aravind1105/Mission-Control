@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Segment, Divider, Header } from 'semantic-ui-react';
-import get from 'lodash/get';
+import { Grid, Segment, Divider } from 'semantic-ui-react';
 
 import history from 'lib/history';
 import { createRefill } from 'modules/transactions/actions';
@@ -13,8 +12,8 @@ import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
-import { getKioskSingle, getKioskShelves } from './selectors';
-import { resetKiosk, getAllKiosks, getKiosk } from './actions';
+import { getKioskSingle, getKioskShelves, getOrgIdFromKiosk, getOrgName } from './selectors';
+import { resetKiosk, getAllKiosks, getKiosk, getOrganizationById } from './actions';
 
 import './styles.less';
 
@@ -41,6 +40,9 @@ const KioskDetails = ({
   resetKiosk,
   createRefill,
   getKiosk,
+  orgId,
+  getOrganizationById,
+  orgName,
 }) => {
   useEffect(() => {
     const { id } = match.params;
@@ -48,6 +50,12 @@ const KioskDetails = ({
       getKiosk(id);
     }
   }, []);
+
+  useEffect(() => {
+    if (orgId) {
+      getOrganizationById(orgId);
+    }
+  }, [orgId]);
 
   const handlerEdit = () => {
     history.push(`/kiosks/edit/${kiosk._id}`);
@@ -63,7 +71,7 @@ const KioskDetails = ({
       createRefill(kiosk._id);
     }
   };
-  const loaded = kiosk && kiosk._id === match.params.id;
+  const loaded = kiosk && kiosk._id === match.params.id && orgName;
   return loaded ? (
     <>
       <Grid stackable>
@@ -95,7 +103,7 @@ const KioskDetails = ({
                     serial={`#${kiosk.serialNumber}`}
                     session={kiosk.session}
                     location={kiosk.location}
-                    ownerOrganization={get(kiosk, 'ownerOrganization.name', '')}
+                    ownerOrganization={orgName}
                   >
                     <>
                       <CustomButton
@@ -156,6 +164,8 @@ const KioskDetails = ({
 const mapStateToProps = state => ({
   kiosk: getKioskSingle(state),
   loadCells: getKioskShelves(state),
+  orgId: getOrgIdFromKiosk(state),
+  orgName: getOrgName(state),
   isKioskLoading: state.kiosks.isKioskLoading,
 });
 
@@ -164,6 +174,7 @@ const mapDispatchToProps = {
   getAllKiosks,
   createRefill,
   getKiosk,
+  getOrganizationById,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskDetails);

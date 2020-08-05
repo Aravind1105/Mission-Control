@@ -6,6 +6,7 @@ import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
 import getAlertsGrid from './getAlertsGrid';
+import getOrgName from './getOrgName';
 import getProductLinesByOrgId from './getProductLinesByOrgId';
 
 export default function* kiosksSaga() {
@@ -16,6 +17,7 @@ export default function* kiosksSaga() {
     fork(modifyKioskSaga),
     fork(getKioskSaga),
     fork(getAlertsGrid),
+    fork(getOrgName),
     fork(getProductLinesByOrgId),
   ]);
 }

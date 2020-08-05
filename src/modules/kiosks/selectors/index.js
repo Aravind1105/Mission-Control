@@ -198,7 +198,10 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
     : kioskInitialValues;
 });
 
-export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk => kiosk.orgId);
+export const getOrgIdFromKiosk = createSelector(getKioskSingle,
+  kiosk => kiosk ? kiosk.orgId : null);
+
+export const getOrgName = state => state.kiosks.orgName;
 
 export const getProductsByOrdId = state => state.kiosks.productsByOrgId;
 
