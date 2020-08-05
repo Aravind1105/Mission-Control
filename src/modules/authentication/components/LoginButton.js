@@ -6,7 +6,7 @@ import { authenticateUserSaga } from 'modules/authentication/actions';
 
 const LoginButton = ({ authUser, ...props }) => (
   <Button positive onClick={authUser} {...props}>
-    Log in
+    Sign in
   </Button>
 );
 
