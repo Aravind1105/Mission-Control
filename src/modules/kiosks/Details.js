@@ -126,11 +126,6 @@ const KioskDetails = ({
                         label="Temp Log."
                         onClick={() => history.push(`/kiosks/log/${kiosk._id}`)}
                       />
-                      <CustomButton
-                        label="Activity Log."
-                        icon="thermometer quarter"
-                        disabled
-                      />
                     </>
                   </DetailsInfo>
                 </Segment>
