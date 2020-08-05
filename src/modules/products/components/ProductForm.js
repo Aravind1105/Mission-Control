@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
@@ -22,7 +22,9 @@ const ProductForm = ({
   isImageDeleted,
   setIsCancelTriggered,
   setIsImageDeleted,
+  buttonVal,
 }) => {
+
   const dispatch = useDispatch();
 
   const onSubmit = (values, formActions) => {
@@ -329,7 +331,7 @@ const ProductForm = ({
                     Cancel
                   </Button>
                   <Button color="green" type="submit" disabled={!dirty}>
-                    Submit
+                    {buttonVal}
                   </Button>
                 </Grid.Column>
               </Grid.Row>

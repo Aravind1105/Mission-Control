@@ -56,12 +56,14 @@ const ProductDetail = ({
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
+  const [buttonVal, setButtonVal] = useState("Submit");
 
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
       getOrganizations();
+      setButtonVal(id == 'new'? "Submit": "Save")
     }
   }, []);
   
@@ -108,6 +110,7 @@ const ProductDetail = ({
                     isImageDeleted={isImageDeleted}
                     setIsCancelTriggered={setIsCancelTriggered}
                     setIsImageDeleted={setIsImageDeleted}
+                    buttonVal={buttonVal}
                   />
                 </Segment>
               </Grid.Column>
