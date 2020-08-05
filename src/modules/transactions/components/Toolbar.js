@@ -33,21 +33,36 @@ const Toolbar = ({
     }
     changePage(0);
     changeDate(date);
-    if (date.$gte && date.$lte) changeExportData(date)
+    if (date.$gte && date.$lte) {
+      changeExportData({
+        from: date.$gte,
+        to: date.$lte,
+        kiosk: exportData.kiosk? exportData.kiosk: "",
+      });
+    }
   };
 
   const DownloadCsv = () => {
-    let value = {
-      from : Math.round(new Date(exportData.$gte)),
-      to : Math.round(new Date(exportData.$lte)),
+    if(exportData.from == "" && exportData.to == ""){
+      window.alert('Bitte wählen Sie zuerst das Datum.');
+    }else {
+      let value = {
+        from : Math.round(new Date(exportData.from)),
+        to : Math.round(new Date(exportData.to)),
+        kiosk: exportData.kiosk? exportData.kiosk: "",
+      }
+      exportCsv(value);
+      window.alert('Datei wird heruntergeladen.')
     }
-    exportCsv(value);
-    window.alert('Datei wird heruntergeladen.')
-    changeExportData(false)
   }
 
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
+    changeExportData({
+      from : exportData.from? exportData.from:"",
+      to : exportData.to? exportData.to:"",
+      kiosk: value
+    });
   };
 
   return (
@@ -93,7 +108,6 @@ Toolbar.propTypes = {
   kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 
-// export default Toolbar;
 const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
