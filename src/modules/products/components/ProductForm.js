@@ -12,6 +12,7 @@ import { modifyProductSaga } from '../actions';
 
 let setImg;
 let restVal;
+const backLink = '/products';
 const ProductForm = ({
   initialValues,
   familyOption,
@@ -37,21 +38,29 @@ const ProductForm = ({
     delete values.image;
     setIsCancelTriggered(false);
     setIsImageDeleted(false);
-    dispatch(
-      modifyProductSaga({
-        values,
-        formActions,
-        initialValues,
-        uploadedImage,
-        isImageDeleted,
-      }),
-    );
+    let productMod = modifyProductSaga({
+      values,
+      formActions,
+      initialValues,
+      uploadedImage,
+      isImageDeleted,
+    });
+    if (productMod.payload.values){
+      if(values.id){
+        window.alert('Product Line erfolgreich gespeichert!');
+      } else{
+        window.alert('Product Line erfolgreich eingereicht!');
+      }
+    }
+    dispatch(productMod);
+    window.location.href = backLink;
   };
 
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
+    window.location.href = backLink;
   };
 
   useEffect(() => {

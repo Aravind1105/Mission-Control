@@ -70,10 +70,10 @@ const ProductDetail = ({
   // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
   const deleteProductLine = () => {
     if(window.confirm('Willst Du das Product Line löschen?')){
-      const {payload} = deleteProductSaga(id)
+      const {payload} = deleteProductSaga(id);
       if(payload == id){
         window.alert('Product Line erfolgreich gelöscht!')
-        window.location.href = backLink.link
+        window.location.href = backLink.link;
       }
     }
   }
