@@ -38,3 +38,11 @@ export const CREATE_ORGANIZATION_MUTATION = gql`
   }
   ${organizationOnOrganization}
 `;
+
+export const GET_ORGANIZATION_BY_ID = gql`
+  query($id: String!) {
+    getOrganizationById(id: $id) {
+      name
+    }
+  }
+`;

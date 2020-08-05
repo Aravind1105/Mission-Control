@@ -5,11 +5,11 @@ import { compose } from 'redux';
 import { Formik, Field } from 'formik';
 import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
 
-import { getProductListSaga } from 'modules/products/actions';
+import { getProductLinesByOrgId } from 'modules/kiosks/actions';
 import {
-  getProductsSimpleList,
   getProductsHistory,
 } from 'modules/products/selectors';
+import { getOrgIdFromKiosk, getProductsDropdownList } from 'modules/kiosks/selectors';
 import FormAsyncSelect from 'modules/shared/components/FormAsyncSelect';
 import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
@@ -33,15 +33,16 @@ const ModalLoadCell = ({
   kioskName,
   productsHistory,
   isProductLoading,
-  getProductListSaga,
   modifyKioskLoadCell,
   match,
   loadedPosition,
   cells,
   isAddLoadCell,
+  orgId,
+  getProductLinesByOrgId,
 }) => {
   useEffect(() => {
-    getProductListSaga();
+    getProductLinesByOrgId(orgId);
   }, []);
 
   const handleSelect = ({ data, setFieldValue }) => {
@@ -209,7 +210,8 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     price: product.price,
   };
   return {
-    options: getProductsSimpleList()(state),
+    options: getProductsDropdownList()(state),
+    orgId: getOrgIdFromKiosk(state),
     productsHistory,
     isProductLoading: state.products.isLoading,
     initVal,
@@ -217,8 +219,8 @@ const mapStateToProps = (state, { product, match: { params } }) => {
 };
 
 const mapDispatchToProps = {
-  getProductListSaga,
   modifyKioskLoadCell,
+  getProductLinesByOrgId,
 };
 
 export default compose(

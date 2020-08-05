@@ -53,6 +53,7 @@ const FragmentKioskOnKiosk = gql`
     }
     ownerOrganization {
       _id
+      name
       address {
         properties {
           city

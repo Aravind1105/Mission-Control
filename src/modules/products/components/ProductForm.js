@@ -310,19 +310,6 @@ const ProductForm = ({
               </Grid.Row>
               <Grid.Row>
                 <Grid.Column width={16}>
-                  {/* TODO: After Data for this field will provided, remove "disabled" prop */}
-                  <Field
-                    name="tag"
-                    label="Tags"
-                    required
-                    disabled
-                    component={FormSelect}
-                    options={[]}
-                  />
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column width={16}>
                   <Field
                     name="ingredientsList"
                     label="Ingredients"

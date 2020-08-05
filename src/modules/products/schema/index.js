@@ -102,6 +102,15 @@ export const GET_ALL_PRODUCTS_EXTENDED_QUERY = gql`
   }
 `;
 
+export const GET_PRODUCT_LINES_BY_ORG_ID = gql`
+  query($orgId: String!) {
+    getProductLinesByOrgId(orgId: $orgId) {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_PRODUCT_LINE_BY_ID = gql`
   query($id: String!) {
     getProductLineById(id: $id) {
