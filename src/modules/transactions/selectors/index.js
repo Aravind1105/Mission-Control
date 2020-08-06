@@ -74,9 +74,10 @@ export const getTransactionsTableState = createSelector(
   getAllTransactionsState,
   transactions => {
     let newArr = [];
-    transactions.forEach(({ itemsPurchased, created, ...rest }) => {
+    transactions.forEach(({ itemsPurchased, created, paymentMethod, ...rest }) => {
       const item = {
         transactionID: rest._id,
+        membercardId: (paymentMethod.length > 0 ? paymentMethod[0].membercardId : ''),
         type: rest.type,
         date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
         session: rest.session,

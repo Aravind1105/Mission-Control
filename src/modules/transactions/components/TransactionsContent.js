@@ -20,6 +20,10 @@ const columns = [
     title: 'Transaction ID',
     field: 'transactionID',
   },
+  {
+    title: 'Member Card ID',
+    field: 'membercardId',
+  },
   // {
   //   title: 'Terminal ID',
   //   field: 'terminalID',

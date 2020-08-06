@@ -129,14 +129,16 @@ const TransactionsTable = ({
                   const cellValue = formatter
                     ? formatter(item, j)
                     : get(item, field, '');
-                  if (!item.transactionID && (field === 'transactionID' || field === 'kioskName' || field === 'date')) {
+                  const isOnlyRootField = (field === 'transactionID') || (field === 'kioskName') || (field === 'date') || (field === 'membercardId');
+                  if (!item.transactionID && isOnlyRootField) {
                     return;
                   }
                   // eslint-disable-next-line consistent-return
                   return (
                     <Table.Cell
                       key={cellKey}
-                      rowSpan={item.transactionID && (field === 'transactionID' || field === 'kioskName' || field === 'date') ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
+                      // eslint-disable-next-line no-nested-ternary
+                      rowSpan={item.transactionID && isOnlyRootField ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
                       className={`table-cell-text ${item.transactionID ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
                     >
                       {cellValue}
