@@ -56,22 +56,24 @@ const ProductDetail = ({
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
+  const [buttonVal, setButtonVal] = useState("Submit");
 
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
       getOrganizations();
+      setButtonVal(id == 'new'? "Submit": "Save")
     }
   }, []);
   
   // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
   const deleteProductLine = () => {
     if(window.confirm('Willst Du das Product Line löschen?')){
-      const {payload} = deleteProductSaga(id)
+      const {payload} = deleteProductSaga(id);
       if(payload == id){
         window.alert('Product Line erfolgreich gelöscht!')
-        window.location.href = backLink.link
+        window.location.href = backLink.link;
       }
     }
   }
@@ -108,6 +110,7 @@ const ProductDetail = ({
                     isImageDeleted={isImageDeleted}
                     setIsCancelTriggered={setIsCancelTriggered}
                     setIsImageDeleted={setIsImageDeleted}
+                    buttonVal={buttonVal}
                   />
                 </Segment>
               </Grid.Column>
