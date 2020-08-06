@@ -11,12 +11,6 @@ import {
   getTotalAlerts,
 } from '../../kiosks/selectors';
 
-const sortValue = {
-  // kiosk: 'kiosk',
-  date: 'startDate',
-  alert: 'type',
-};
-
 const sort = [
   {
     column: 'startDate',
@@ -24,7 +18,7 @@ const sort = [
   },
 ];
 
-const Alerts = ({ getAlertsGrid, alerts, total }) => {
+const Alerts = ({ getAlertsGrid, alerts }) => {
   const [rowLimit, setRowLimit] = useState(6);
 
   useEffect(() => {
@@ -36,15 +30,15 @@ const Alerts = ({ getAlertsGrid, alerts, total }) => {
   const columns = [
     {
       title: t('Date / Time'),
-      field: 'date',
+      field: 'startDate',
     },
     {
       title: t('Alert'),
-      field: 'alert',
+      field: 'type',
     },
     {
       title: t('Kiosk'),
-      field: 'kiosk',
+      field: 'details.kioskId.name',
     },
   ];
 
@@ -60,8 +54,8 @@ const Alerts = ({ getAlertsGrid, alerts, total }) => {
     const data = {
       limit: rowLimit,
     };
-    if (sort && sortValue[sort[0].column]) {
-      sort[0].column = sortValue[sort[0].column];
+
+    if (sort) {
       data.sort = sort;
     }
     getAlertsGrid({ data });
@@ -82,13 +76,14 @@ const Alerts = ({ getAlertsGrid, alerts, total }) => {
         </div>
       </SegmentHeader>
       <CustomTable
-        sortByColumn="date"
+        sortByColumn="startDate"
         sortable
         fixed
         data={alerts}
         columns={columns}
         rowLimit={rowLimit}
         getData={getData}
+        excludeSortBy={['details.kioskId.name']}
       />
     </Segment>
   );

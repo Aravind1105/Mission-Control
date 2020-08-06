@@ -49,7 +49,6 @@ const ProductsContent = ({ products, getData, isLoading }) => {
         sortable
         selectable
         isLoading={isLoading}
-        excludeSortBy={['price']}
       />
     </Segment>
   );
