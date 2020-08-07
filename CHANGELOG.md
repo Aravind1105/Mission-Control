@@ -1,3 +1,9 @@
+#### 1.0.5 (2020-08-07)
+
+##### Bug Fixes
+
+* **LIV-1593:**  make parameters optional and disable page return after product modification or creation (temporarily). (16789a7a)
+
 #### 1.0.4 (2020-08-05)
 
 ##### Bug Fixes
