@@ -74,6 +74,15 @@ const FragmentKioskOnKiosk = gql`
   ${FragmentInventory.inventory}
 `;
 
+const FragmentKioskOfflineOnKiosk = gql`
+  fragment FragmentKioskOffline on AlertKioskOffline {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_ALL_KIOSKS_QUERY = gql`
   {
     getAllKiosks {
@@ -162,8 +171,11 @@ export const GET_ALERTS_GRID = gql`
         status
         startDate
         endDate
-        details
+        details {
+          ...FragmentKioskOffline
+        }
       }
     }
   }
+  ${FragmentKioskOfflineOnKiosk}
 `;
