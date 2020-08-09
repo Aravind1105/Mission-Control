@@ -27,7 +27,7 @@ const ProductForm = ({
 }) => {
 
   const dispatch = useDispatch();
-
+  
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
       .netWeightGrams;
@@ -51,9 +51,11 @@ const ProductForm = ({
       } else{
         window.alert('Product Line erfolgreich eingereicht!');
       }
+      // !LIV-1564: alert the user when packaging description and EAN are empty.
     }
     dispatch(productMod);
-    window.location.href = backLink;
+    // ! Wait for the dispatch to finish and then go back.
+    // window.location.href = backLink;
   };
 
   const handleCancel = resetForm => {
@@ -81,10 +83,10 @@ const ProductForm = ({
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={Yup.object().shape({
-        family: Yup.string().required('This field is required'),
         orgId: Yup.string().required('This field is required'),
-        category: Yup.string().required('This field is required'),
         tax: Yup.string().required('This field is required'),
+        // family: Yup.string().required('This field is required'),
+        // category: Yup.string().required('This field is required'),
       })}
       enableReinitialize
     >
@@ -125,7 +127,6 @@ const ProductForm = ({
                   <Field
                     name="packagingOptions[0].ean"
                     label="EAN"
-                    required
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -144,12 +145,11 @@ const ProductForm = ({
                   <Field
                     name="description"
                     label="Description"
-                    required
                     rows={5}
                     component={FormTextArea}
                   />
                 </Grid.Column>
-                <Grid.Column>
+                {/* <Grid.Column>
                   <Field
                     name="family"
                     label="Family"
@@ -164,7 +164,7 @@ const ProductForm = ({
                     component={FormSelect}
                     options={categoryOption[values.family] || []}
                   />
-                </Grid.Column>
+                </Grid.Column> */}
               </Grid.Row>
 
               <Grid.Row>
@@ -194,7 +194,6 @@ const ProductForm = ({
                     label="Shelf life (days)"
                     limiting="integerField"
                     min={0}
-                    required
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -252,7 +251,6 @@ const ProductForm = ({
                   <Field
                     name="packagingOptions[0].description"
                     label="Packaging description"
-                    required
                     component={FormInput}
                   />
                 </Grid.Column>

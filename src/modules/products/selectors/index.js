@@ -105,7 +105,7 @@ const defaultFormInit = {
   name: '',
   manufacturer: '',
   description: '',
-  family: '',
+  // family: '',
   category: '',
   tax: '',
   energy: '',
@@ -124,14 +124,14 @@ const defaultFormInit = {
   images: [],
   packagingOptions: [
     {
-      ean: '',
+      ean: ' ',
       unitCount: 1,
       grossWeightGrams: 0,
       packageWeightGrams: 0,
       netWeightGrams: 0,
       shelfLifeDays: 0,
       tolerancePercentage: 0,
-      description: '',
+      description: ' ',
     },
   ],
 };
@@ -185,7 +185,7 @@ export const selectorGetProductInitValue = createSelector(
       id: rest._id,
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),
-      family: get(product, 'family._id', ''),
+      // family: get(product, 'family._id', ''),
       tax,
       defaultCost: (+rest.defaultCost).toFixed(2),
     };
