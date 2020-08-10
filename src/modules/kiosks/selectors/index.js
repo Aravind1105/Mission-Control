@@ -3,6 +3,7 @@ import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
+import sortByText from 'lib/sortByText';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -166,26 +167,18 @@ export const getKioskOptions = createSelector(getKiosksState, kiosks => [
 
 export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,
-  kiosks => [
-    { key: 'all', value: '', text: 'All Fridges' },
-    ...kiosks
-      .map(({ _id, name }) => ({
-        value: _id,
-        text: name,
-        key: _id,
-      }))
-      .sort((a, b) => {
-        const nameA = a.text.toUpperCase();
-        const nameB = b.text.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      }),
-  ],
+  kiosks => {
+    const allKiosks = kiosks.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    const sortedKiosks = sortByText(allKiosks, 'text');
+
+    return [{ key: 'all', value: '', text: 'All Fridges' }].concat(
+      sortedKiosks,
+    );
+  },
 );
 
 export const kioskInitialValues = {
