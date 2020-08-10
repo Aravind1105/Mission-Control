@@ -81,6 +81,7 @@ export const GRID_REFILLS_QUERY = gql`
           cellId
           weight
           productLine {
+            _id
             name
             defaultPrice
           }

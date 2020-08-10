@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
 
-import TransactionsTable from './TransactionsTable';
+import TransactionsTable from './TransactionsTable/Sales';
 
 const columns = [
   {
