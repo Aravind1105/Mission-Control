@@ -127,14 +127,14 @@ const defaultFormInit = {
   images: [],
   packagingOptions: [
     {
-      ean: ' ',
+      ean: '',
       unitCount: 1,
       grossWeightGrams: 0,
       packageWeightGrams: 0,
       netWeightGrams: 0,
       shelfLifeDays: 0,
       tolerancePercentage: 0,
-      description: ' ',
+      description: '',
     },
   ],
 };
