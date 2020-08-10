@@ -50,7 +50,6 @@ const Toolbar = ({
           <Dropdown
             placeholder="All Suppliers"
             selection
-            disabled
             options={supplier}
             className="full-width"
             onChange={handleSupplierChange}

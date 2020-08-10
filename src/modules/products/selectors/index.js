@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
+import sortByText from 'lib/sortByText';
 
 export const selectorGetProducts = state => state.products.list;
 
@@ -20,25 +21,16 @@ export const getProductsHistory = createSelector(
 export const getProductsDropdownList = createSelector(
   selectorGetProducts,
   products => {
-    const newProductsList = products
-      .map(({ _id, name }) => ({
-        value: _id,
-        text: name,
-        key: _id,
-      }))
-      .sort((a, b) => {
-        const nameA = a.text.toUpperCase();
-        const nameB = b.text.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-    newProductsList.unshift({ value: '', text: 'All products', key: 'all' });
-    return newProductsList;
+    const productsList = products.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    const sortedProductList = sortByText(productsList, 'text');
+
+    return [{ value: '', text: 'All products', key: 'all' }].concat(
+      sortedProductList,
+    );
   },
 );
 
@@ -55,24 +47,24 @@ export const selectorProductTaxOptions = createSelector(
 export const selectorGetSupplier = createSelector(
   selectorGetProducts,
   products => {
-    let supplierList = [];
-    products.reduce((prev, curr) => {
-      if (prev.indexOf(curr.manufacturer) === -1) {
-        prev.push(curr.manufacturer);
-        supplierList.push({
+    const supplierList = products.reduce((prev, curr, i) => {
+      if (!prev.length || !prev.some(el => el.value === curr.manufacturer)) {
+        return prev.concat({
           text: curr.manufacturer,
           value: curr.manufacturer,
-          key: `${supplierList.length}`,
+          key: `${i}_${curr.manufacturer}`,
         });
       }
       return prev;
     }, []);
-    supplierList.unshift({
-      value: '',
-      text: 'All',
-      key: supplierList.length,
-    });
-    return supplierList;
+
+    return [
+      {
+        value: '',
+        text: 'All',
+        key: 'all',
+      },
+    ].concat(sortByText(supplierList, 'value'));
   },
 );
 
