@@ -3,11 +3,12 @@ import { Icon, Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 
 const NavigationItem = ({ name, icon, path, mobileNavToggle }) => {
+  const pathTo = Array.isArray(path) ? path[0] : path;
   return (
     <Menu.Item
-      exact={path === '/'}
+      exact={pathTo === '/'}
       as={NavLink}
-      to={path}
+      to={pathTo}
       key={name}
       onClick={mobileNavToggle}
     >

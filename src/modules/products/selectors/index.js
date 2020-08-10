@@ -20,11 +20,23 @@ export const getProductsHistory = createSelector(
 export const getProductsDropdownList = createSelector(
   selectorGetProducts,
   products => {
-    const newProductsList = products.map(({ _id, name }) => ({
-      value: _id,
-      text: name,
-      key: _id,
-    }));
+    const newProductsList = products
+      .map(({ _id, name }) => ({
+        value: _id,
+        text: name,
+        key: _id,
+      }))
+      .sort((a, b) => {
+        const nameA = a.text.toUpperCase();
+        const nameB = b.text.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
     newProductsList.unshift({ value: '', text: 'All products', key: 'all' });
     return newProductsList;
   },
@@ -56,8 +68,8 @@ export const selectorGetSupplier = createSelector(
       return prev;
     }, []);
     supplierList.unshift({
-      value: 'All',
-      text: `All`,
+      value: '',
+      text: 'All',
       key: supplierList.length,
     });
     return supplierList;
@@ -105,7 +117,6 @@ const defaultFormInit = {
   name: '',
   manufacturer: '',
   description: '',
-  // family: '',
   category: '',
   tax: '',
   energy: '',
