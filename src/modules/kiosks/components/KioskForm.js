@@ -81,6 +81,17 @@ const KioskForm = ({ initialValues, organizations }) => {
               </Grid.Column>
             </Grid.Row>
 
+            <Grid.Row columns="equal">
+              <Grid.Column>
+                <Field
+                  name="location.address.name"
+                  label="Address Name"
+                  required
+                  component={FormInput}
+                />
+              </Grid.Column>
+            </Grid.Row>
+
             <Grid.Row>
               <Grid.Column width={6}>
                 <Field

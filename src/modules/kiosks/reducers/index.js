@@ -15,6 +15,7 @@ import {
   getOrganizationByIdSuccess,
   getProductLinesByOrgId,
   getProductLinesByOrgIdSuccess,
+  updateAlmostEmptyKiosks,
 } from '../actions';
 
 const initialState = {
@@ -25,6 +26,8 @@ const initialState = {
   alerts: [],
   totalAlerts: 0,
   productsByOrgId: [],
+  almostEmptyKiosks: [],
+  totalEmptyKiosks: 0,
 };
 
 const kiosksReducer = handleActions(
@@ -62,11 +65,12 @@ const kiosksReducer = handleActions(
       return {
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
-        totalAlerts: get(payload, 'gridAlerts.total', null),
+        totalAlerts: get(payload, 'gridAlerts.total', 0),
       };
     },
     [combineActions(getOrganizationById, getOrganizationByIdSuccess)]: (
-      state, { payload },
+      state,
+      { payload },
     ) => {
       return {
         ...state,
@@ -74,12 +78,20 @@ const kiosksReducer = handleActions(
       };
     },
     [combineActions(getProductLinesByOrgId, getProductLinesByOrgIdSuccess)]: (
-      state, { payload },
+      state,
+      { payload },
     ) => {
       return {
         ...state,
         ...payload,
         isLoading: true,
+      };
+    },
+    [updateAlmostEmptyKiosks]: (state, { payload }) => {
+      return {
+        ...state,
+        almostEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.data', []),
+        totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
       };
     },
   },

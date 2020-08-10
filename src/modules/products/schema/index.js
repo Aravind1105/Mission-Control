@@ -71,6 +71,7 @@ export const GET_ALL_PRODUCTS_QUERY = gql`
     getProductLines {
       _id
       name
+      manufacturer
       priceHistory {
         price
         default
