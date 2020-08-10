@@ -56,17 +56,26 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
         })
         : null,
     ]);
+    
     const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
+    
+    // TODO: response status should reach props to alert the users the following information.
+    if(id){
+      if (responseData) window.alert('Product Line erfolgreich gespeichert!');
+      else window.alert('Product Line nicht gespeichert. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
+    } else{
+      if (responseData) window.alert('Product Line erfolgreich eingereicht!');
+      else window.alert('Product Line nicht eingereicht. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
+    }
+
     const priceHistory = get(
       priceMutation,
       'data.updateProductLinePrice.priceHistory',
       responseData.priceHistory,
     );
-
     if (!id) {
       history.replace(`/products/${responseData._id}`);
     }
-
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
@@ -75,4 +84,5 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
 
 export default function* modifyProductSaga() {
   yield takeLatest(action, handler);
+  return handler;
 }

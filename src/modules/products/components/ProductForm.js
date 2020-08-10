@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
@@ -9,10 +8,11 @@ import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { modifyProductSaga } from '../actions';
+import { connect } from 'react-redux';
 
 let setImg;
 let restVal;
-const backLink = '/products';
+let refVal = 0;
 const ProductForm = ({
   initialValues,
   familyOption,
@@ -24,10 +24,9 @@ const ProductForm = ({
   setIsCancelTriggered,
   setIsImageDeleted,
   buttonVal,
+  modifyProductSaga,
 }) => {
 
-  const dispatch = useDispatch();
-  
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
       .netWeightGrams;
@@ -38,31 +37,26 @@ const ProductForm = ({
     delete values.image;
     setIsCancelTriggered(false);
     setIsImageDeleted(false);
-    let productMod = modifyProductSaga({
+    values.packagingOptions[0].ean == "" ?
+      values.packagingOptions[0].ean = "Optional field not used." : values.packagingOptions[0].ean;
+    values.packagingOptions[0].description == "" ?
+      values.packagingOptions[0].description = "Optional field not used." : values.packagingOptions[0].description;
+    
+    modifyProductSaga({
       values,
       formActions,
       initialValues,
       uploadedImage,
       isImageDeleted,
     });
-    if (productMod.payload.values){
-      if(values.id){
-        window.alert('Product Line erfolgreich gespeichert!');
-      } else{
-        window.alert('Product Line erfolgreich eingereicht!');
-      }
-      // !LIV-1564: alert the user when packaging description and EAN are empty.
-    }
-    dispatch(productMod);
-    // ! Wait for the dispatch to finish and then go back.
-    // window.location.href = backLink;
+
   };
 
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
-    window.location.href = backLink;
+    window.location.href = '/products';
   };
 
   useEffect(() => {
@@ -78,6 +72,7 @@ const ProductForm = ({
       }
     }
   }, [uploadedImage, isImageDeleted]);
+
   return (
     <Formik
       initialValues={initialValues}
@@ -128,6 +123,7 @@ const ProductForm = ({
                     name="packagingOptions[0].ean"
                     label="EAN"
                     component={FormInput}
+                    placeholder="EAN is optional."
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -350,4 +346,23 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+const mapStateToProps = (state) => {
+  if(state.products.product != null){
+    const productPackaging = (state.products.product.packagingOptions).length;
+    if (refVal == 0) refVal = productPackaging;
+    else if (refVal < productPackaging) window.location.href = '/products';
+    return {
+      productPackaging,
+    };
+  } else {
+      refVal = -1;
+      return {
+        refVal,
+      };
+    }
+};
+const mapDispatchToProps = {
+  modifyProductSaga,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);
