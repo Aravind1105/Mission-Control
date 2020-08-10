@@ -40,11 +40,6 @@ const columns = [
       return addr || 'N.A.';
     },
   },
-  {
-    title: 'Sales',
-    field: 'sales',
-    formatter: ({ sales = 'N.A.' }) => `${sales}  €`,
-  },
 ];
 
 const KiosksContent = ({ isLoading, getAllKiosks, kiosks, history }) => {

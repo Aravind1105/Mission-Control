@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
 
-import CustomTable from 'modules/shared/components/CustomTable';
+import RefillsTable from './TransactionsTable/Refills';
 
 const columns = [
   {
@@ -56,7 +56,7 @@ const RefillsContent = ({ isLoading, refills, getData }) => {
 
   return (
     <Segment>
-      <CustomTable
+      <RefillsTable
         sortByColumn="created"
         columns={columns}
         data={refills}

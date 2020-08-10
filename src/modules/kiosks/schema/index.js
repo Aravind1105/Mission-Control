@@ -6,6 +6,7 @@ const FragmentLocation = {
   location: gql`
     fragment LocationForKiosk on Location {
       address {
+        name
         line1
         line2
         postalCode
