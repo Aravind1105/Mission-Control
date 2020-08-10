@@ -18,6 +18,9 @@ const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
 
+export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
+export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
+
 export const getKiosksAlertsState = state => state.kiosks.alerts;
 
 export const getTotalAlerts = state => state.kiosks.totalAlerts;
@@ -97,6 +100,17 @@ export const getKiosksAlertsForTable = createSelector(
     })),
 );
 
+export const getAlmostEmptyKiosksForTable = createSelector(
+  [getAlmostEmptyKiosks],
+  kiosks =>
+    kiosks.map(kiosk => ({
+      product: get(kiosk, 'inventory.loadCells.productLine.name', 'unknown'),
+      scale: get(kiosk, 'inventory.loadCells.cellId', 'unknown'),
+      amount: get(kiosk, 'productsAmount', 0),
+      kiosk: get(kiosk, 'name', 'unknown'),
+    })),
+);
+
 export const getKiosksAlertsDashboard = createSelector(
   getKiosksState,
   kiosks => {
@@ -154,11 +168,23 @@ export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,
   kiosks => [
     { key: 'all', value: '', text: 'All Fridges' },
-    ...kiosks.map(({ _id, name }) => ({
-      value: _id,
-      text: name,
-      key: _id,
-    })),
+    ...kiosks
+      .map(({ _id, name }) => ({
+        value: _id,
+        text: name,
+        key: _id,
+      }))
+      .sort((a, b) => {
+        const nameA = a.text.toUpperCase();
+        const nameB = b.text.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      }),
   ],
 );
 

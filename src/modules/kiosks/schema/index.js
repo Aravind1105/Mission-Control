@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import { productOnProductLine } from '../../products/schema';
+import { userDetailOnUser } from '../../users/schema';
 
 const FragmentLocation = {
   location: gql`
@@ -15,6 +17,12 @@ const FragmentLocation = {
     }
   `,
 };
+
+// const FragmentKioskAlmostEmptyRow = gql`
+//   fragment KioskAlmostEmptyRow on Kiosk {
+
+//   }
+// `;
 
 const FragmentInventory = {
   inventory: gql`
@@ -179,4 +187,31 @@ export const GET_ALERTS_GRID = gql`
     }
   }
   ${FragmentKioskOfflineOnKiosk}
+`;
+
+export const GET_ALMOST_EMPTY_KIOSKS = gql`
+  query getAlmostEmptyKiosks(
+    $skip: Int
+    $limit: Int
+    $filter: KioskAlmostEmptyFilter
+  ) {
+    getAlmostEmptyKiosks(skip: $skip, limit: $limit, filter: $filter) {
+      data {
+        _id
+        name
+        orgId
+        productsAmount
+        inventory {
+          loadCells {
+            cellId
+            productLine {
+              ...product
+            }
+          }
+        }
+      }
+      total
+    }
+  }
+  ${productOnProductLine}
 `;
