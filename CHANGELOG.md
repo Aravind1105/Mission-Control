@@ -1,3 +1,9 @@
+#### 1.0.9 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1567:**  comment category and family from productDetail. (7c5066ba)
+
 #### 1.0.8 (2020-08-11)
 
 ##### Bug Fixes
