@@ -1,3 +1,13 @@
+#### 1.0.8 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1593:**  enhanced return page process after updatig or adding productLine. (285b44a9)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (36ac1bd9)
+
 #### 1.0.7 (2020-08-11)
 
 ##### Chores
