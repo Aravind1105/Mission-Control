@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-
 import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { modifyProductSaga } from '../actions';
-import { connect } from 'react-redux';
 
 let setImg;
 let restVal;
-let refVal = 0;
 const ProductForm = ({
   initialValues,
   familyOption,
@@ -24,9 +22,10 @@ const ProductForm = ({
   setIsCancelTriggered,
   setIsImageDeleted,
   buttonVal,
-  modifyProductSaga,
 }) => {
 
+  const dispatch = useDispatch();
+  
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
       .netWeightGrams;
@@ -42,14 +41,15 @@ const ProductForm = ({
     values.packagingOptions[0].description == "" ?
       values.packagingOptions[0].description = "Optional field not used." : values.packagingOptions[0].description;
     
-    modifyProductSaga({
-      values,
-      formActions,
-      initialValues,
-      uploadedImage,
-      isImageDeleted,
-    });
-
+    dispatch(
+      modifyProductSaga({
+        values,
+        formActions,
+        initialValues,
+        uploadedImage,
+        isImageDeleted,
+      }),
+    );
   };
 
   const handleCancel = resetForm => {
@@ -346,23 +346,4 @@ const ProductForm = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  if(state.products.product != null){
-    const productPackaging = (state.products.product.packagingOptions).length;
-    if (refVal == 0) refVal = productPackaging;
-    else if (refVal < productPackaging) window.location.href = '/products';
-    return {
-      productPackaging,
-    };
-  } else {
-      refVal = -1;
-      return {
-        refVal,
-      };
-    }
-};
-const mapDispatchToProps = {
-  modifyProductSaga,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductForm);
+export default ProductForm;

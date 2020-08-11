@@ -67,15 +67,12 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
       if (responseData) window.alert('Product Line erfolgreich eingereicht!');
       else window.alert('Product Line nicht eingereicht. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
     }
-
     const priceHistory = get(
       priceMutation,
       'data.updateProductLinePrice.priceHistory',
       responseData.priceHistory,
     );
-    if (!id) {
-      history.replace(`/products/${responseData._id}`);
-    }
+    history.replace('/products')
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
