@@ -4,7 +4,6 @@ import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
-import Loader from 'modules/shared/components/Loader';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
@@ -13,7 +12,7 @@ import { getFullProductData, deleteProductSaga } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
   selectorGetProductInitValue,
-  selectorGetProductFamilyForm,
+  // selectorGetProductFamilyForm,
   selectorProductTaxOptions,
 } from './selectors';
 import { getOrganizationsAsOptions } from '../organizations/selectors';
@@ -39,7 +38,7 @@ const ProductDetail = ({
   productImg,
   kiosks,
   categoryOption,
-  familyOption,
+  // familyOption,
   taxesOption,
   deleteProductSaga,
   isLoading,
@@ -52,7 +51,6 @@ const ProductDetail = ({
   const isNewProduct = id === 'new';
   const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
   const { priceHistory, ...initialValues } = product;
-  const loaded = familyOption.length && isProductLoaded;
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
@@ -95,15 +93,14 @@ const ProductDetail = ({
           </Grid.Row>
 
           <Grid.Row>
-            {loaded ? (
               <Grid.Column>
                 <Segment>
                   <Header as="h3">{productName}</Header>
                   <Divider />
                   <ProductForm
                     initialValues={{ ...initialValues, image: 0 }}
-                    categoryOption={categoryOption}
-                    familyOption={familyOption}
+                    // categoryOption={categoryOption}
+                    // familyOption={familyOption}
                     taxesOption={taxesOption}
                     uploadedImage={uploadedImage}
                     organizations={organizations}
@@ -114,9 +111,6 @@ const ProductDetail = ({
                   />
                 </Segment>
               </Grid.Column>
-            ) : (
-              <Loader />
-            )}
           </Grid.Row>
         </Grid>
       </Grid.Column>
@@ -148,7 +142,7 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state, { match: { params } }) => {
-  const options = selectorGetProductFamilyForm(state);
+  // const options = selectorGetProductFamilyForm(state);
   const product = selectorGetProductInitValue(state);
   const isProductLoaded = params.id === 'new'
     ? !get(product, 'id')
@@ -160,8 +154,8 @@ const mapStateToProps = (state, { match: { params } }) => {
     kiosks: getKioskListName(state),
     productImg: get(product, 'images[0]', ''),
     taxesOption: selectorProductTaxOptions(state),
-    categoryOption: options.categories,
-    familyOption: options.families,
+    // categoryOption: options.categories,
+    // familyOption: options.families,
     organizations: getOrganizationsAsOptions(state),
   };
 };
