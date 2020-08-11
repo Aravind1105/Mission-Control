@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
+import sortByText from 'lib/sortByText';
 
 export const selectorGetProducts = state => state.products.list;
 
@@ -20,13 +21,16 @@ export const getProductsHistory = createSelector(
 export const getProductsDropdownList = createSelector(
   selectorGetProducts,
   products => {
-    const newProductsList = products.map(({ _id, name }) => ({
+    const productsList = products.map(({ _id, name }) => ({
       value: _id,
       text: name,
       key: _id,
     }));
-    newProductsList.unshift({ value: '', text: 'All products', key: 'all' });
-    return newProductsList;
+    const sortedProductList = sortByText(productsList, 'text');
+
+    return [{ value: '', text: 'All products', key: 'all' }].concat(
+      sortedProductList,
+    );
   },
 );
 
@@ -43,24 +47,24 @@ export const selectorProductTaxOptions = createSelector(
 export const selectorGetSupplier = createSelector(
   selectorGetProducts,
   products => {
-    let supplierList = [];
-    products.reduce((prev, curr) => {
-      if (prev.indexOf(curr.manufacturer) === -1) {
-        prev.push(curr.manufacturer);
-        supplierList.push({
+    const supplierList = products.reduce((prev, curr, i) => {
+      if (!prev.length || !prev.some(el => el.value === curr.manufacturer)) {
+        return prev.concat({
           text: curr.manufacturer,
           value: curr.manufacturer,
-          key: `${supplierList.length}`,
+          key: `${i}_${curr.manufacturer}`,
         });
       }
       return prev;
     }, []);
-    supplierList.unshift({
-      value: 'All',
-      text: `All`,
-      key: supplierList.length,
-    });
-    return supplierList;
+
+    return [
+      {
+        value: '',
+        text: 'All',
+        key: 'all',
+      },
+    ].concat(sortByText(supplierList, 'value'));
   },
 );
 
@@ -105,7 +109,6 @@ const defaultFormInit = {
   name: '',
   manufacturer: '',
   description: '',
-  family: '',
   category: '',
   tax: '',
   energy: '',
@@ -185,7 +188,7 @@ export const selectorGetProductInitValue = createSelector(
       id: rest._id,
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),
-      family: get(product, 'family._id', ''),
+      // family: get(product, 'family._id', ''),
       tax,
       defaultCost: (+rest.defaultCost).toFixed(2),
     };

@@ -8,7 +8,7 @@ import { getAllKiosks } from 'modules/kiosks/actions';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
 import LanguageSelect from '../LanguageSelect';
-import AlertsList from '../AlertsList';
+// import AlertsList from '../AlertsList';
 import './desktopLayout.less';
 
 const pjson = require('../../../../../package.json');
@@ -47,7 +47,7 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
             <Menu.Item>
-              <AlertsList alerts={alerts} />
+              {/* <AlertsList alerts={alerts} /> */}
             </Menu.Item>
             <Menu.Item>
               <LanguageSelect />

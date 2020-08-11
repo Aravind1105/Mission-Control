@@ -25,9 +25,9 @@ const columns = [
     field: 'temperature.value',
   },
   {
-    title: 'Last HeartBeat',
+    title: 'Status',
     field: 'temperature.updated',
-    formatter: ({ temperature }) => <CellHeartbeat temperature={temperature} />,
+    formatter: ({ temperature }) => <CellHeartbeat temperature={temperature} showTime />,
   },
   {
     title: 'Address',
@@ -39,11 +39,6 @@ const columns = [
         .join(', ');
       return addr || 'N.A.';
     },
-  },
-  {
-    title: 'Sales',
-    field: 'sales',
-    formatter: ({ sales = 'N.A.' }) => `${sales}  €`,
   },
 ];
 

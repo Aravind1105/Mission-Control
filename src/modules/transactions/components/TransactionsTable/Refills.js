@@ -12,7 +12,7 @@ const sortTypes = {
   DESC: 'descending',
 };
 
-const TransactionsTable = ({
+const RefillsTable = ({
   columns,
   data,
   fixed,
@@ -81,7 +81,7 @@ const TransactionsTable = ({
     <>
       {isLoading && <Loader />}
       <Table
-        className="unitable livello-table "
+        className="unitable"
         basic
         celled
         structured
@@ -115,7 +115,7 @@ const TransactionsTable = ({
         <Table.Body>
           {resultData.map((item, i) => {
             const rowKey = `${i}`;
-            if (item.transactionID) {
+            if (item.refillsId) {
               toggleTableCellColor = !toggleTableCellColor;
             }
             return (
@@ -129,15 +129,17 @@ const TransactionsTable = ({
                   const cellValue = formatter
                     ? formatter(item, j)
                     : get(item, field, '');
-                  if (!item.transactionID && (field === 'transactionID' || field === 'kioskName' || field === 'date')) {
+                  const isOnlyRootField = (field === 'kioskName') || (field === 'date');
+                  if (!item.refillsId && isOnlyRootField) {
                     return;
                   }
                   // eslint-disable-next-line consistent-return
                   return (
                     <Table.Cell
                       key={cellKey}
-                      rowSpan={item.transactionID && (field === 'transactionID' || field === 'kioskName' || field === 'date') ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
-                      className={`table-cell-text ${item.transactionID ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
+                      // eslint-disable-next-line no-nested-ternary
+                      rowSpan={item.refillsId && isOnlyRootField ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
+                      className={`table-cell-text ${item.refillsId ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
                     >
                       {cellValue}
                     </Table.Cell>
@@ -152,7 +154,7 @@ const TransactionsTable = ({
   );
 };
 
-TransactionsTable.prototypes = {
+RefillsTable.prototypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
@@ -174,7 +176,7 @@ TransactionsTable.prototypes = {
   excludeSortBy: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-TransactionsTable.defaultProps = {
+RefillsTable.defaultProps = {
   columns: [],
   headless: false,
   selectable: false,
@@ -184,4 +186,4 @@ TransactionsTable.defaultProps = {
   excludeSortBy: [],
 };
 
-export default TransactionsTable;
+export default RefillsTable;
