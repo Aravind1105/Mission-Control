@@ -11,7 +11,7 @@ const Reports = lazy(() => import('modules/reports'));
 export default [
   {
     name: 'Dashboard',
-    path: '/',
+    path: ['/', '/dashboard/almost-empty'],
     pathOptions: {
       exact: true,
     },

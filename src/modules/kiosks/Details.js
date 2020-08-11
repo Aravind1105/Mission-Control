@@ -95,8 +95,8 @@ const KioskDetails = ({
                   <DetailsHeader
                     name={kiosk.name}
                     temp={kiosk.temperature.value}
-                    connection={kiosk.internet.signalStrength}
                     doorStatus={kiosk.doorStatus}
+                    temperature={kiosk.temperature}
                   />
                   <Divider />
                   <DetailsInfo

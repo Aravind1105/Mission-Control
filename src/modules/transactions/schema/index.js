@@ -37,6 +37,9 @@ export const GET_TRANSACTIONS_QUERY = gql`
         created
         total
         type
+        paymentMethod {
+          membercardId
+        }
         itemsPurchased {
           price
           tax
@@ -78,6 +81,7 @@ export const GRID_REFILLS_QUERY = gql`
           cellId
           weight
           productLine {
+            _id
             name
             defaultPrice
           }

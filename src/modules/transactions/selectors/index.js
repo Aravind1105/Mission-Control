@@ -74,9 +74,10 @@ export const getTransactionsTableState = createSelector(
   getAllTransactionsState,
   transactions => {
     let newArr = [];
-    transactions.forEach(({ itemsPurchased, created, ...rest }) => {
+    transactions.forEach(({ itemsPurchased, created, paymentMethod, ...rest }) => {
       const item = {
         transactionID: rest._id,
+        membercardId: (paymentMethod.length > 0 ? paymentMethod[0].membercardId : ''),
         type: rest.type,
         date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
         session: rest.session,
@@ -114,34 +115,45 @@ export const getTransactionsTableState = createSelector(
         arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
       newArr = newArr.concat(product);
     });
-    console.log(newArr);
     return newArr;
   },
 );
 
 export const getGridRefillsTableState = createSelector(
   getGridRefillsState,
-  refills =>
-    refills.map(refill => {
-      const count = Number(get(refill, 'scale.count', 0));
-      const price = Number(
-        get(refill, 'scale.productLine.defaultPrice', 0),
-      ).toFixed(2);
-      const total = (count * price).toFixed(2);
-      return {
+  refills => {
+    let newArr = [];
+    refills.forEach(refill => {
+      const item = {
+        refillsId: refill._id,
         date: format(
           new Date(refill.created || new Date()),
           'dd-MM-yyyy, HH:mm:ss',
         ),
-        status: refill.status || 'undefined',
         kioskName: get(refill, 'kiosk.name', 'unknown'),
-        productName: get(refill, 'scale.productLine.name', 'unknown'),
-        type: refill.type || 'unknown',
-        count,
-        weight: get(refill, 'scale.weight', 0),
-        price,
-        total,
-        loadCell: get(refill, 'scale.cellId', 'unknown'),
       };
-    }),
+
+      const arr = refill.scale.reduce((prev, { productLine, count, weight, cellId }) => {
+        if (productLine) {
+          prev.push({
+            id: productLine._id,
+            productName: (productLine ? productLine.name : '') || 'unknown',
+            total: (count * productLine.defaultPrice).toFixed(2),
+            price: productLine.defaultPrice,
+            count,
+            weight,
+            loadCell: cellId || 'unknown',
+          });
+        }
+        return prev;
+      }, []);
+
+      item.uniqueProducts = arr.length;
+      const product =
+        arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
+      newArr = newArr.concat(product);
+    });
+    return newArr;
+  }
+
 );

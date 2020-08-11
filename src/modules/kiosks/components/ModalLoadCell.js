@@ -54,6 +54,15 @@ const ModalLoadCell = ({
     setFieldValue('price', newPrice);
   };
 
+  const validateCellId = cellId => {
+    let error;
+    const filteredCellId = cells.filter(cell => cell.cellId === cellId);
+    if (isAddLoadCell && filteredCellId.length > 0) {
+      error = 'Cable ID already exists.';
+    }
+    return error;
+  };
+
   const handleSave = data => {
     const isProductChanged = initVal.product.value !== data.product.value;
     const isPositionIdChanged =
@@ -178,6 +187,7 @@ const ModalLoadCell = ({
                       name="cellId"
                       label="Cable ID"
                       disabled={!isAddLoadCell}
+                      validate={validateCellId}
                       component={FormInput}
                     />
                   </Grid.Column>

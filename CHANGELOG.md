@@ -1,3 +1,16 @@
+#### 1.0.6 (2020-08-10)
+
+##### Bug Fixes
+
+* **liv-1593:**  enable page return after editing or submitting a new productLine, and replace initial values for pkg  description and ean. (64c6cd9b)
+* **Kiosk-Details:**  LIV-1598 \ Resolve organization name (1294d8ca)
+
+#### 1.0.5 (2020-08-07)
+
+##### Bug Fixes
+
+* **LIV-1593:**  make parameters optional and disable page return after product modification or creation (temporarily). (16789a7a)
+
 #### 1.0.4 (2020-08-05)
 
 ##### Bug Fixes

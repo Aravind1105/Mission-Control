@@ -2,19 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import get from 'lodash/get';
+import { primaryColor } from '../../../lib/colors';
 
-const CellHeartbeat = ({ temperature }) => {
+const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   const value = get(temperature, 'updated', 0);
   const dif = differenceInMinutes(new Date(), new Date(value));
-  let style = { backgroundColor: '#FF6347' };
-  let text = '> 2 hours';
+  let style = { color: '#DB2828' };
+  let text = 'Offline';
 
-  if (dif <= 5) {
-    style = { backgroundColor: 'lightgreen' };
-    text = '<= 5 minutes';
-  } else if (dif <= 120) {
-    style = { backgroundColor: 'lightyellow' };
-    text = '<= 2 hours';
+  if (dif <= 60) {
+    style = { color: '#7cb122' };
+    text = 'Online';
+  } else if (showTime) {
+    // eslint-disable-next-line radix
+    const time = parseInt(dif / 60);
+    text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+  }
+
+  if (boldFont) {
+    text = (
+      <b>
+        {text}
+      </b>
+    );
   }
 
   return <span style={style}>{text}</span>;

@@ -3,6 +3,7 @@ import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
+import sortByText from 'lib/sortByText';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -17,6 +18,9 @@ const alertMessages = {
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
+
+export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
+export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
 
 export const getKiosksAlertsState = state => state.kiosks.alerts;
 
@@ -97,6 +101,17 @@ export const getKiosksAlertsForTable = createSelector(
     })),
 );
 
+export const getAlmostEmptyKiosksForTable = createSelector(
+  [getAlmostEmptyKiosks],
+  kiosks =>
+    kiosks.map(kiosk => ({
+      product: get(kiosk, 'inventory.loadCells.productLine.name', 'unknown'),
+      scale: get(kiosk, 'inventory.loadCells.cellId', 'unknown'),
+      amount: get(kiosk, 'productsAmount', 0),
+      kiosk: get(kiosk, 'name', 'unknown'),
+    })),
+);
+
 export const getKiosksAlertsDashboard = createSelector(
   getKiosksState,
   kiosks => {
@@ -152,14 +167,18 @@ export const getKioskOptions = createSelector(getKiosksState, kiosks => [
 
 export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,
-  kiosks => [
-    { key: 'all', value: '', text: 'All Fridges' },
-    ...kiosks.map(({ _id, name }) => ({
+  kiosks => {
+    const allKiosks = kiosks.map(({ _id, name }) => ({
       value: _id,
       text: name,
       key: _id,
-    })),
-  ],
+    }));
+    const sortedKiosks = sortByText(allKiosks, 'text');
+
+    return [{ key: 'all', value: '', text: 'All Fridges' }].concat(
+      sortedKiosks,
+    );
+  },
 );
 
 export const kioskInitialValues = {
