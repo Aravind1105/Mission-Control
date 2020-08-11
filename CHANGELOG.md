@@ -1,3 +1,9 @@
+#### 1.0.10 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1586:**  open door fixed, but not updated in the frontend (work in progress). (d363870e)
+
 #### 1.0.9 (2020-08-11)
 
 ##### Bug Fixes
