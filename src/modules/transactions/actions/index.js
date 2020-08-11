@@ -11,7 +11,8 @@ export const getAllTransactionsSuccess = createAction(
 export const getAllTransactionsFailed = createAction(
   '@@state/GET_ALL_TRANSACTIONS_FAILED',
 );
-
+export const createRefillSuccess = createAction(
+  '@@state/CREATE_REFILL_SUCCESS')
 export const getGridRefillsSuccess = createAction(
   '@@state/GRID_REFILLS_SUCCESS',
 );
