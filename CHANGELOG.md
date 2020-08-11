@@ -1,3 +1,47 @@
+#### 1.0.7 (2020-08-11)
+
+##### Chores
+
+* **merge:**  merge latest staging to prod (4bf1dca6)
+
+##### Bug Fixes
+
+* **Language select:**  LIV-1656 Hide language select (815b7eba)
+* **Kiosk-Details:**
+  *  LIV-1598 Resolve organization name (6f5b0290)
+  *  LIV-1598 Resolve organization name (939d07ff)
+* **Kiosk status:**  LIV-1642 space issue fixed (aabe0d7c)
+* **Notifications:**  LX-22 Notification indicator is hidden (ab84161a)
+* **kiosk edit:**  LIV-1651 Address name is added to the kiosk form and is mandatory (74fcbb72)
+* **Add Scale:**
+  *  LIV-1588 Cable ID validation (20c3acd8)
+  *  LIV-1588 Cable ID validation (4af812d4)
+* **LIV-1499:**  Product dropdown list on load cell config - root users to get data based on the organization context (5c704744)
+* **Products-Detail:**  LIV-1594 Remove tags input field (cab5da82)
+
+##### Other Changes
+
+* **Transactions-Refills:**  LIV-1650 Group multiple rows of products into a single transaction row (91ad9368)
+* **Transaction-Sales:**   add a column for membercardId (d8e6f5c7)
+* **Kiosk-Details:**  LIV-1598 Resolve organization name (44ecb215)
+
+##### Refactors
+
+* **Kiosk Details:**  LIV-1592 Remove activity log button (e2f6ab79)
+
+##### Code Style Changes
+
+* **Kiosk status:**  LIV-1642 online/offline (b160fd09)
+* **Kiosks Overview:**  LIV-1641 Remove sales column (b22cf084)
+* **Kiosk details:**  LIV-1583 removed static icon (0431af3a)
+* **Login Button:**
+  *  Renamed to Sign in (da82fd40)
+  *  LIV-1632 Login button icon removed (c893af51)
+* **Transactions-Refills:**
+  *  LIV-1599 Rename column name to price (4dca4195)
+  *  Refills table and tab label corrected (251be210)
+* **Transaction-Sales:**  Added price column to the table (7fda5f3d)
+
 #### 1.0.6 (2020-08-10)
 
 ##### Bug Fixes

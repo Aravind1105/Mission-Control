@@ -7,13 +7,13 @@ import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
-import LanguageSelect from '../LanguageSelect';
+// import LanguageSelect from '../LanguageSelect';
 // import AlertsList from '../AlertsList';
 import './desktopLayout.less';
 
 const pjson = require('../../../../../package.json');
 
-const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
+const DesktopLayout = ({ children, isLoading, /* alerts, */ getAllKiosks }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
 
@@ -46,12 +46,12 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
       <div className="desktop-content">
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
-            <Menu.Item>
-              {/* <AlertsList alerts={alerts} /> */}
-            </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item>
+              <AlertsList alerts={alerts} />
+            </Menu.Item> */}
+            {/* <Menu.Item>
               <LanguageSelect />
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
               <UserProfileBar showName />
             </Menu.Item>
