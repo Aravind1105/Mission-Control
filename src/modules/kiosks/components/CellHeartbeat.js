@@ -22,6 +22,7 @@ const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   if (boldFont) {
     text = (
       <b>
+        &nbsp;
         {text}
       </b>
     );
