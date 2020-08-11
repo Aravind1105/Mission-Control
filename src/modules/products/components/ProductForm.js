@@ -13,8 +13,8 @@ let setImg;
 let restVal;
 const ProductForm = ({
   initialValues,
-  familyOption,
-  categoryOption,
+  // familyOption,
+  // categoryOption,
   taxesOption,
   uploadedImage,
   organizations,
@@ -25,7 +25,7 @@ const ProductForm = ({
 }) => {
 
   const dispatch = useDispatch();
-  
+
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
       .netWeightGrams;
