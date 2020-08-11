@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import get from 'lodash/get';
-import { primaryColor } from '../../../lib/colors';
 
 const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   const value = get(temperature, 'updated', 0);
@@ -22,6 +21,7 @@ const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   if (boldFont) {
     text = (
       <b>
+        &nbsp;
         {text}
       </b>
     );
