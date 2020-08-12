@@ -1,3 +1,17 @@
+#### 1.0.11 (2020-08-12)
+
+##### Bug Fixes
+
+* **createRefill:**
+  *  createSession redux state bug fixed (66dd6674)
+  *  Saga critical fix (35781c19)
+
+##### Other Changes
+
+* **liv-1586:**  cleaning comments. (582f1b98)
+* **LIV-1586:**  debugging session status (248468b2)
+* **Dashboard:**  LX-25 KPI Summary Widgets (80440883)
+
 #### 1.0.10 (2020-08-11)
 
 ##### Bug Fixes
