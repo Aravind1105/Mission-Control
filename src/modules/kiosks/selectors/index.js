@@ -103,13 +103,17 @@ export const getKiosksAlertsForTable = createSelector(
 
 export const getAlmostEmptyKiosksForTable = createSelector(
   [getAlmostEmptyKiosks],
-  kiosks =>
-    kiosks.map(kiosk => ({
-      product: get(kiosk, 'inventory.loadCells.productLine.name', 'unknown'),
-      scale: get(kiosk, 'inventory.loadCells.cellId', 'unknown'),
-      amount: get(kiosk, 'productsAmount', 0),
-      kiosk: get(kiosk, 'name', 'unknown'),
-    })),
+  kiosks => {
+    if (kiosks && kiosks.length > 0) {
+      return kiosks.map(kiosk => ({
+        product: get(kiosk, 'inventory.loadCells.productLine.name', 'unknown'),
+        scale: get(kiosk, 'inventory.loadCells.cellId', 'unknown'),
+        amount: get(kiosk, 'productsAmount', 0),
+        kiosk: get(kiosk, 'name', 'unknown'),
+      }));
+    }
+    return [];
+  }
 );
 
 export const getKiosksAlertsDashboard = createSelector(
@@ -213,16 +217,16 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-        id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-        orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
+      id: kiosk._id,
+      ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+      orgId: kiosk.orgId,
+      location: {
+        address: {
+          ...kioskInitialValues.location.address,
+          ...address,
         },
-      }
+      },
+    }
     : kioskInitialValues;
 });
 
