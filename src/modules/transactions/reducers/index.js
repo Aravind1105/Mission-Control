@@ -7,8 +7,6 @@ import {
   getGridRefillsSuccess,
   getGridRefillsFailed,
   getAllTransactionsFailed,
-  createRefill,
-  createRefillSuccess,
 } from '../actions';
 
 const initialState = {
@@ -44,17 +42,6 @@ const transactionsReducer = handleActions(
       ...state,
       isLoading: false,
     }),
-    [createRefill]: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
-    [createRefillSuccess]: (state, { payload }) => {
-      return {
-        ...state,
-        kiosk: payload,
-        isLoading: false,
-      };
-    },
   },
   initialState,
 );
