@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-
 import gqlTransactions from 'lib/https/gqlTransactions';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import toFlatLoadCellItem from 'lib/toFlatLoadCells';
@@ -19,8 +18,6 @@ function* handler({ payload }) {
       mutation: CREATE_REFILL_MUTATION,
       variables,
     });
-    // !
-
     variables = {
       id: payload,
     };

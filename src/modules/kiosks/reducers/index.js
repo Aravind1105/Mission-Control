@@ -101,7 +101,6 @@ const kiosksReducer = handleActions(
       isLoading: true,
     }),
     [createRefillSuccess]: (state, { payload }) => {
-      console.log(payload);
       return {
         ...state,
         kiosk: payload,
