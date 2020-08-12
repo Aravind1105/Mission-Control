@@ -62,7 +62,7 @@ const Toolbar = ({
           <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column width={3}>
+          {/* <Grid.Column width={3}>
             <Button 
               style={{ background:"white", border: "1px solid rgba(34,36,38,.15)" }}
               onClick={DownloadCsv}
@@ -70,7 +70,7 @@ const Toolbar = ({
                 Download CSV&nbsp;&nbsp;
                 <i className="arrow down icon"/>
             </Button>
-          </Grid.Column>
+          </Grid.Column> */}
           <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
@@ -80,7 +80,7 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={3}>
+          {/* <Grid.Column width={3}>
             <Dropdown
               placeholder="Product"
               selection
@@ -88,7 +88,7 @@ const Toolbar = ({
               options={productsList}
               onChange={handleProductChange}
             />
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
       </Grid>
     </Segment>

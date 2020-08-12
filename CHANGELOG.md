@@ -1,3 +1,9 @@
+#### 1.0.12 (2020-08-12)
+
+##### Other Changes
+
+* **liv-1562:**  hide download button and product filter. (9a919283)
+
 #### 1.0.11 (2020-08-12)
 
 ##### Bug Fixes
