@@ -97,9 +97,10 @@ export const CREATE_REFILL_MUTATION = gql`
   mutation createRefill($kioskId: String!) {
     createRefill(kioskId: $kioskId) {
       _id
-      sessionClosedAt
+      details {
+        sessionClosedAt
+      }
     }
   }
 `;
-
 export default {};

@@ -1,11 +1,11 @@
 .ui.segment.stats-card {
-  margin: 1em 0 !important;
+  // margin: 1em 0 !important;
 
   .stats-card-header {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
     padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
 
     & > * {
       flex: 1 1 49%;
@@ -13,25 +13,37 @@
     }
 
     .content {
-      text-align: center;
+      text-align: left;
     }
 
     .sub.header {
-      text-align: center;
+      text-align: left;
+    }
+
+    .column-left {
+      flex: 2;
+      margin-top: 14px !important;
+    }
+
+    .column-right {
+      flex: 1;
+      flex-direction: row;
+      align-self: flex-end;
+      margin-top: 14px !important;
+      margin-bottom: 20px !important;
     }
   }
 }
 
-.custom-tooltip{
+.custom-tooltip {
   background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(204, 204, 204);
-    white-space: nowrap;
-
+  border: 1px solid rgb(204, 204, 204);
+  white-space: nowrap;
 }
 
-.recharts-tooltip-item-separator{
+.recharts-tooltip-item-separator {
   margin-left: -3px;
 }
-.recharts-tooltip-label{
+.recharts-tooltip-label {
   display: none;
 }
