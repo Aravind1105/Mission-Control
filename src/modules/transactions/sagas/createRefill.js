@@ -3,10 +3,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import gqlTransactions from 'lib/https/gqlTransactions';
 // !LIV-1586 On progress
 // import gqlKiosk from 'lib/https/gqlKiosk';
-// import { 
-//   createRefill as action,
-//   createRefillSuccess as actionSuccess,
-// } from '../actions';
+import { 
+  createRefill as action,
+  createRefillSuccess as actionSuccess,
+} from '../actions';
 // import {
 //   resetKioskSuccess as actionSuccess
 // } from '../../kiosks/actions';
