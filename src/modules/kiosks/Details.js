@@ -107,14 +107,14 @@ const KioskDetails = ({
                   >
                     <>
                       <CustomButton
-                        onClick={handlerOpenDoor}
                         label="Open Door"
                         icon="lock open"
+                        onClick={handlerOpenDoor}
                       />
                       <CustomButton
-                        onClick={handlerEdit}
                         label="Edit"
                         icon="edit"
+                        onClick={handlerEdit}
                       />
                       <CustomButton
                         label="Sync / Restart"

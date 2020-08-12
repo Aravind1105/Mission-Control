@@ -1,3 +1,39 @@
+#### 1.0.11 (2020-08-12)
+
+##### Bug Fixes
+
+* **createRefill:**
+  *  createSession redux state bug fixed (66dd6674)
+  *  Saga critical fix (35781c19)
+
+##### Other Changes
+
+* **liv-1586:**  cleaning comments. (582f1b98)
+* **LIV-1586:**  debugging session status (248468b2)
+* **Dashboard:**  LX-25 KPI Summary Widgets (80440883)
+
+#### 1.0.10 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1586:**  open door fixed, but not updated in the frontend (work in progress). (d363870e)
+
+#### 1.0.9 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1567:**  comment category and family from productDetail. (7c5066ba)
+
+#### 1.0.8 (2020-08-11)
+
+##### Bug Fixes
+
+* **LIV-1593:**  enhanced return page process after updatig or adding productLine. (285b44a9)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (36ac1bd9)
+
 #### 1.0.7 (2020-08-11)
 
 ##### Chores
