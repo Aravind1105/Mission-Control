@@ -97,3 +97,19 @@ export const GET_WEEKLY_SALES_BY_KIOSKS = gql`
   }
   ${FragmentStatisticOnSalesForAll}
 `;
+
+export const GET_WIDGET_TODAY_DATA = gql`
+  query ($period: Period!) {
+    getTotalNumberOfCustomers(period: $period)
+    getTotalNumberOfProductsSold(period: $period)
+    getTotalGrossIncome(period: $period)
+    getTotalNetIncome(period: $period)
+  }
+`;
+
+export const GET_WIDGET_MONTHLY_DATA = gql`
+  query ($period: Period!) {
+    getTotalGrossIncome(period: $period)
+    getTotalNetIncome(period: $period)
+  }
+`;
