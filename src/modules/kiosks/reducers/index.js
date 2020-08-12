@@ -18,6 +18,8 @@ import {
   updateAlmostEmptyKiosks,
 } from '../actions';
 
+import { createRefill, createRefillSuccess} from '../../transactions/actions'
+
 const initialState = {
   list: [],
   kiosk: null,
@@ -94,6 +96,17 @@ const kiosksReducer = handleActions(
         totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
       };
     },
+    // [createRefill]: (state) => ({
+    //   ...state,
+    //   isLoading: true,
+    // }),
+    // [createRefillSuccess]: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     kiosk: payload,
+    //     isLoading: false,
+    //   };
+    // },
   },
   initialState,
 );
