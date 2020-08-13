@@ -85,7 +85,7 @@ const KioskForm = ({ initialValues, organizations }) => {
               <Grid.Column>
                 <Field
                   name="location.address.name"
-                  label="Address Name"
+                  label="Client Name"
                   required
                   component={FormInput}
                 />
