@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
+import history from 'lib/history';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import { getAlertsGrid } from '../../kiosks/actions';
@@ -19,8 +20,6 @@ const sort = [
 ];
 
 const Alerts = ({ getAlertsGrid, alerts }) => {
-  const [rowLimit, setRowLimit] = useState(6);
-
   useEffect(() => {
     const data = { limit: 6, sort };
     getAlertsGrid({ data });
@@ -42,17 +41,13 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
     },
   ];
 
-  const handlerToggle = () => {
-    setRowLimit(val => (val ? 0 : 6));
-    if (rowLimit === 6) {
-      const data = { limit: 0 };
-      getAlertsGrid({ data });
-    }
+  const handleClick = () => {
+    history.push('/dashboard/alerts');
   };
 
   const getData = ({ sort }) => {
     const data = {
-      limit: rowLimit,
+      limit: 6,
     };
 
     if (sort) {
@@ -69,9 +64,9 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
           <Header.Content>Alerts</Header.Content>
         </Header>
         <div>
-          <Button icon labelPosition="right" basic onClick={handlerToggle}>
+          <Button icon labelPosition="right" basic onClick={handleClick}>
             Show all
-            <Icon name={`angle ${rowLimit ? 'right' : 'down'}`} />
+            <Icon name="angle right" />
           </Button>
         </div>
       </SegmentHeader>
@@ -81,7 +76,6 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
         fixed
         data={alerts}
         columns={columns}
-        rowLimit={rowLimit}
         getData={getData}
         excludeSortBy={['details.kioskId.name']}
       />
