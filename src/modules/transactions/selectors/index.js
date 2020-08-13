@@ -112,8 +112,8 @@ export const getTransactionsTableState = createSelector(
 
       item.uniqueProducts = arr.length;
       const product =
-        arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
-      newArr = newArr.concat(product);
+        arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
+      newArr = newArr.concat([product]);
     });
     return newArr;
   },
@@ -167,10 +167,10 @@ export const getGridRefillsTableState = createSelector(
       item.total = refillsTotalPrice.toFixed(2);
 
       const product =
-        arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
-      newArr = newArr.concat(product);
+        arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
+      newArr = newArr.concat([product]);
     });
+    console.log(newArr);
     return newArr;
-  }
-
+  },
 );

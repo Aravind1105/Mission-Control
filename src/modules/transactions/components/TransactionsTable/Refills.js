@@ -33,7 +33,7 @@ const RefillsTable = ({
     sortTypes[sortDirection.toUpperCase()],
   );
   const [sortBy, setSortBy] = useState(sortByColumn);
-  const [activeRow, setActiveRow] = useState(-1);
+  // const [activeRow, setActiveRow] = useState(-1);
 
 
   useEffect(() => {
@@ -68,10 +68,10 @@ const RefillsTable = ({
     setSortBy(key);
   };
 
-  const handlerRowClick = (item, i) => () => {
-    if (selectable) setActiveRow(i);
-    if (onRowClick) onRowClick(item, i);
-  };
+  // const handlerRowClick = (item, i) => () => {
+  //   if (selectable) setActiveRow(i);
+  //   if (onRowClick) onRowClick(item, i);
+  // };
 
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
 
@@ -81,13 +81,12 @@ const RefillsTable = ({
     <>
       {isLoading && <Loader />}
       <Table
-        className="unitable"
+        className="unitable transactions-table"
         basic
         celled
         structured
         fixed={fixed}
         sortable={sortable}
-        selectable={selectable}
         {...rest}
       >
         {!headless && (
@@ -112,43 +111,48 @@ const RefillsTable = ({
           </Table.Header>
         )}
 
-        <Table.Body>
-          {resultData.map((item, i) => {
-            const rowKey = `${i}`;
-            if (item.refillsId) {
-              toggleTableCellColor = !toggleTableCellColor;
-            }
-            return (
-              <Table.Row
-                key={rowKey}
-                active={activeRow === i}
-                onClick={handlerRowClick(item, i)}
-              >
-                {columns.map(({ field, formatter }, j) => {
-                  const cellKey = `${i}-${field}`;
-                  const cellValue = formatter
-                    ? formatter(item, j)
-                    : get(item, field, '');
-                  const isOnlyRootField = (field === 'kioskName') || (field === 'date');
-                  if (!item.refillsId && isOnlyRootField) {
-                    return;
-                  }
-                  // eslint-disable-next-line consistent-return
-                  return (
-                    <Table.Cell
-                      key={cellKey}
-                      // eslint-disable-next-line no-nested-ternary
-                      rowSpan={item.refillsId && isOnlyRootField ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
-                      className={`table-cell-text ${item.refillsId ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
-                    >
-                      {cellValue}
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
+        {
+          resultData.map((resultItem, rowIdx) => (
+            <Table.Body
+              // className={activeRow === rowIdx ? 'active-body' : ''}
+            >
+              {resultItem.map((item, i) => {
+                const rowKey = `${i}`;
+                if (item.refillsId) {
+                  toggleTableCellColor = !toggleTableCellColor;
+                }
+                return (
+                  <Table.Row
+                    key={rowKey}
+                    // onClick={handlerRowClick(item, rowIdx)}
+                  >
+                    {columns.map(({ field, formatter }, j) => {
+                      const cellKey = `${i}-${field}`;
+                      const cellValue = formatter
+                        ? formatter(item, j)
+                        : get(item, field, '');
+                      const isOnlyRootField = (field === 'kioskName') || (field === 'date');
+                      if (!item.refillsId && isOnlyRootField) {
+                        return;
+                      }
+                      // eslint-disable-next-line consistent-return
+                      return (
+                        <Table.Cell
+                          key={cellKey}
+                          // eslint-disable-next-line no-nested-ternary
+                          rowSpan={item.refillsId && isOnlyRootField ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
+                          className={`table-cell-text ${item.refillsId ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
+                        >
+                          {cellValue}
+                        </Table.Cell>
+                      );
+                    })}
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
+          ))
+        }
       </Table>
     </>
   );
