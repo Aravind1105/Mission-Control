@@ -1,8 +1,8 @@
+/* eslint-disable radix */
 import React from 'react';
 import PropTypes from 'prop-types';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import get from 'lodash/get';
-import { primaryColor } from '../../../lib/colors';
 
 const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   const value = get(temperature, 'updated', 0);
@@ -14,9 +14,13 @@ const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
     style = { color: '#7cb122' };
     text = 'Online';
   } else if (showTime) {
-    // eslint-disable-next-line radix
-    const time = parseInt(dif / 60);
-    text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+    let time = parseInt(dif / 60);
+    if (time < 24) {
+      text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+    } else {
+      time = parseInt(time / 24);
+      text += ` > ${time} ${time === 1 ? 'day' : 'days'}`;
+    }
   }
 
   if (boldFont) {
