@@ -21,11 +21,15 @@ const columns = [
     field: 'kioskName',
   },
   {
-    title: 'Product Name',
+    title: 'Status',
+    field: 'status',
+  },
+  {
+    title: 'Product',
     field: 'productName',
   },
   {
-    title: 'Count',
+    title: 'Quantity',
     field: 'count',
   },
   {
@@ -40,7 +44,7 @@ const columns = [
     title: 'Price',
     field: 'price',
     className: 'purchase-price-header',
-    formatter: ({ price }) => `€ ${price || 0}`,
+    formatter: ({ price }) => (price !== '' ? `€ ${price || 0}` : ''),
   },
   {
     title: 'Total Price',
