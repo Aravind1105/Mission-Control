@@ -15,6 +15,14 @@ const alertMessages = {
   UnauthAccess: 'Unauthorized Access',
 };
 
+export const getAlertsOptions = () => [
+  { value: '', text: 'All Alerts' },
+  ...Object.keys(alertMessages).map(alert => ({
+    value: alert,
+    text: alertMessages[alert],
+  })),
+];
+
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
@@ -113,7 +121,7 @@ export const getAlmostEmptyKiosksForTable = createSelector(
       }));
     }
     return [];
-  }
+  },
 );
 
 export const getKiosksAlertsDashboard = createSelector(
@@ -217,16 +225,16 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-      id: kiosk._id,
-      ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-      orgId: kiosk.orgId,
-      location: {
-        address: {
-          ...kioskInitialValues.location.address,
-          ...address,
+        id: kiosk._id,
+        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+        orgId: kiosk.orgId,
+        location: {
+          address: {
+            ...kioskInitialValues.location.address,
+            ...address,
+          },
         },
-      },
-    }
+      }
     : kioskInitialValues;
 });
 
