@@ -133,22 +133,39 @@ export const getGridRefillsTableState = createSelector(
         kioskName: get(refill, 'kiosk.name', 'unknown'),
       };
 
+      if (refill.scale.length > 1) {
+        item.productName = 'Total';
+        item.price = '';
+      }
+
+      let refillsTotalPrice = 0;
       const arr = refill.scale.reduce((prev, { productLine, count, weight, cellId }) => {
         if (productLine) {
+          const total = (count * productLine.defaultPrice).toFixed(2);
+          let status = '';
+          if (count > 0) {
+            status = 'Added';
+          } else if (count < 0) {
+            status = 'Removed';
+          }
           prev.push({
             id: productLine._id,
             productName: (productLine ? productLine.name : '') || 'unknown',
-            total: (count * productLine.defaultPrice).toFixed(2),
+            total,
             price: productLine.defaultPrice,
             count,
             weight,
             loadCell: cellId || 'unknown',
+            status,
           });
+          refillsTotalPrice += parseFloat(total);
         }
         return prev;
       }, []);
 
       item.uniqueProducts = arr.length;
+      item.total = refillsTotalPrice.toFixed(2);
+
       const product =
         arr.length === 1 ? { ...item, ...arr[0] } : [item, ...arr];
       newArr = newArr.concat(product);
