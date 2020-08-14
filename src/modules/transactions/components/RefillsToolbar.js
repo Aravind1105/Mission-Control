@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import { Segment, Grid, Dropdown, Button } from 'semantic-ui-react';
 import format from 'date-fns/format';
-import { exportCsv } from '../actions'
+import { exportCsvRefills } from '../actions'
 import { connect } from 'react-redux';
 
 import DatePicker from 'modules/shared/components/Datepicker';
@@ -14,7 +14,7 @@ const Toolbar = ({
   changeKiosk,
   productsList,
   changeProduct,
-  exportCsv,
+  exportCsvRefills,
 }) => {
 
   const [exportData, changeExportData] = useState(false);
@@ -33,24 +33,38 @@ const Toolbar = ({
     }
     changePage(0);
     changeDate(date);
-    if (date.$gte && date.$lte) changeExportData(date)
+    if (date.$gte && date.$lte) {
+      changeExportData({
+        from: date.$gte,
+        to: date.$lte,
+        kiosk: exportData.kiosk? exportData.kiosk: "",
+      });
+    }
   };
 
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
+    changeExportData({
+      from : exportData.from? exportData.from:"",
+      to : exportData.to? exportData.to:"",
+      kiosk: value
+    });
   };
 
   const DownloadCsv = () => {
-    let value = {
-      from : Math.round(new Date(exportData.$gte)),
-      to : Math.round(new Date(exportData.$lte)),
+    if(exportData.from == "" && exportData.to == ""){
+      window.alert('Bitte wählen Sie zuerst das Datum.');
+    }else {
+      let value = {
+        from : Math.round(new Date(exportData.from)),
+        to : Math.round(new Date(exportData.to)),
+        kiosk: exportData.kiosk? exportData.kiosk: "",
+      }
+      exportCsvRefills(value);
+      window.alert('Datei wird heruntergeladen.');
     }
-    // TODO: update exportCsc function to download refills data.
-    window.alert('Die Redfill-Datei ist nicht verfügbar. Bitte versuchen Sie es später noch einmal.')
-    // exportCsv(value);
-    // window.alert('Datei wird heruntergeladen.')
-    changeExportData(false)
-  }
+  };
+
   const handleProductChange = (e, { value }) => {
     changeProduct(value);
   };
@@ -62,15 +76,6 @@ const Toolbar = ({
           <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          {/* <Grid.Column width={3}>
-            <Button 
-              style={{ background:"white", border: "1px solid rgba(34,36,38,.15)" }}
-              onClick={DownloadCsv}
-              disabled={!Boolean(exportData)}>
-                Download CSV&nbsp;&nbsp;
-                <i className="arrow down icon"/>
-            </Button>
-          </Grid.Column> */}
           <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
@@ -79,6 +84,15 @@ const Toolbar = ({
               className="full-width"
               onChange={handleKioskChange}
             />
+          </Grid.Column>
+          <Grid.Column width={3}>
+            <Button 
+              style={{ background:"white", border: "1px solid rgba(34,36,38,.15)" }}
+              onClick={DownloadCsv}
+              disabled={!Boolean(exportData)}>
+                Download CSV&nbsp;&nbsp;
+                <i className="arrow down icon"/>
+            </Button>
           </Grid.Column>
           {/* <Grid.Column width={3}>
             <Dropdown
@@ -105,7 +119,7 @@ Toolbar.propTypes = {
 const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
-  exportCsv,
+  exportCsvRefills,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

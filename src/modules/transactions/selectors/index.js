@@ -170,7 +170,6 @@ export const getGridRefillsTableState = createSelector(
         arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
       newArr = newArr.concat([product]);
     });
-    console.log(newArr);
     return newArr;
   },
 );
