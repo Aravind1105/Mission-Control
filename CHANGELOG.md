@@ -1,3 +1,26 @@
+### 1.1.0 (2020-08-14)
+
+##### Build System / Dependencies
+
+* **LIV-1667:**  updated exportCSV for Sales vars and added exportCsv for Refills. (75b0203b)
+
+##### Bug Fixes
+
+* **Transactions Grid:**  LIV-1647 sortable columns updated (b3c1f49b)
+* **Kiosk-Address:**  Address Name -> Client Name (f6da00ef)
+* **Kiosk status:**  LIV-1642 hours/days fix (21b76c50)
+* **AlmostEmptyKiosks:**  null check fixed in the selector (85177762)
+
+##### Other Changes
+
+* **liv-1562:**  hide download button and product filter. (9a919283)
+
+##### Code Style Changes
+
+* **Table:** LIV-1665 Table component style update (8ec06fd8)
+* **Table-Cursor:**  Changed the cursor to a pointer on selectable rows (61272a8b)
+* **Transactions-Refills:**  LIV-1650 Refills tabl (e2a46729)
+
 #### 1.0.13 (2020-08-14)
 
 ##### Build System / Dependencies
