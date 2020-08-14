@@ -69,7 +69,7 @@ const RefillsContent = ({ isLoading, refills, getData }) => {
         selectable
         striped
         isLoading={isLoading}
-        // excludeSortBy={['total', 'price']}
+        excludeSortBy={['status', 'productName', 'count', 'loadCell', 'weight', 'price', 'total']}
       />
     </Segment>
   );
