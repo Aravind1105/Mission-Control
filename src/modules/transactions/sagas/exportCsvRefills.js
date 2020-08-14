@@ -1,18 +1,18 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, takeLatest } from 'redux-saga/effects';
 
 import ls from 'lib/localStorage';
 import { TOKEN_STORAGE_KEY } from 'modules/authentication/constants';
 import {
-  exportCsv as action,
+  exportCsvRefills as action,
 } from '../actions';
 
 
 export function handlerGetProduct(payload) {
   let link;
   if(payload.kiosk){
-    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}?kioskId=${payload.kiosk}`;
+    link = `/api/v1/transactions/refills-csv/export/${payload.from}/${payload.to}?kioskId=${payload.kiosk}`;
   } else{
-    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
+    link = `/api/v1/transactions/refills-csv/export/${payload.from}/${payload.to}`;
   }
   const token = ls.getItem(TOKEN_STORAGE_KEY);
   
@@ -34,7 +34,7 @@ export function handlerGetProduct(payload) {
       let url = window.URL.createObjectURL(blob);
       let element = document.createElement('a');
       element.href = url;
-      element.download = `transactions_${Date.now()}.csv`;
+      element.download = `refills_${Date.now()}.csv`;
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);

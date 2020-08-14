@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Grid, Dropdown, Button } from 'semantic-ui-react';
 import format from 'date-fns/format';
-import { exportCsv } from '../actions';
+import { exportCsvSales } from '../actions';
 import { connect } from 'react-redux';
 
 import SearchInput from 'modules/shared/components/SearchInput';
@@ -14,7 +14,7 @@ const Toolbar = ({
   changePage,
   kiosks,
   changeKiosk,
-  exportCsv,
+  exportCsvSales,
 }) => {
 
   const [exportData, changeExportData] = useState(false);
@@ -51,10 +51,10 @@ const Toolbar = ({
         to : Math.round(new Date(exportData.to)),
         kiosk: exportData.kiosk? exportData.kiosk: "",
       }
-      exportCsv(value);
-      window.alert('Datei wird heruntergeladen.')
+      exportCsvSales(value);
+      window.alert('Datei wird heruntergeladen.');
     }
-  }
+  };
 
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
@@ -111,7 +111,7 @@ Toolbar.propTypes = {
 const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
-  exportCsv,
+  exportCsvSales,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
