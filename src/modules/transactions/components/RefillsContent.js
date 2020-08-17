@@ -71,6 +71,7 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         isLoading={isLoading}
         excludeSortBy={['status', 'productName', 'count', 'loadCell', 'weight', 'price', 'total']}
         setSortByInCaller={sort => setSortByInCaller(sort)}
+        sortDirection="DESC"
       />
     </Segment>
   );

@@ -85,6 +85,7 @@ const TransactionsContent = ({ isLoading, transactions, getData, setSortByInCall
         striped
         isLoading={isLoading}
         setSortByInCaller={sort => setSortByInCaller(sort)}
+        sortDirection="DESC"
       />
     </Segment>
   );

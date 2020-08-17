@@ -51,7 +51,7 @@ const Dashboard = ({
           <Alerts list={alertsLog} />
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row stretched className="no-padding">
+      <Grid.Row stretched className="custom-widgets">
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
             icon="users"
