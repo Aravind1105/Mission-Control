@@ -37,7 +37,7 @@ export const getTotalGridRefillsCount = state =>
 //         } else if (!productLine.name) {
 //           unknownElements += 1;
 //         }
-//       });
+//      t
 //       if (unknownElements) {
 //         productsNames.unknown = unknownElements;
 //       }
@@ -74,47 +74,53 @@ export const getTransactionsTableState = createSelector(
   getAllTransactionsState,
   transactions => {
     let newArr = [];
-    transactions.forEach(({ itemsPurchased, created, paymentMethod, ...rest }) => {
-      const item = {
-        transactionID: rest._id,
-        membercardId: (paymentMethod.length > 0 ? paymentMethod[0].membercardId : ''),
-        type: rest.type,
-        date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
-        session: rest.session,
-        total: rest.total,
-        price: 0,
-        productName: 'Total',
-        quantity: itemsPurchased.length,
-        kioskName:
-          (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
-          'unknown',
-      };
-      const arr = itemsPurchased.reduce((prev, { productLine, price, tax }) => {
-        const idx = prev.findIndex(el => el.id === productLine._id);
-        let quantity = 1;
-        if (~idx) {
-          const total = Math.round((prev[idx].total + price) * 100) / 100;
-          prev[idx].total = total;
-          quantity += 1;
-          prev[idx].quantity = quantity;
-        } else {
-          prev.push({
-            id: productLine._id,
-            productName: (productLine ? productLine.name : '') || 'unknown',
-            total: +price,
-            tax,
-            price,
-            quantity,
-          });
-        }
-        return prev;
-      }, []);
+    transactions.forEach(
+      ({ itemsPurchased, created, paymentMethod, ...rest }) => {
+        const item = {
+          transactionID: rest._id,
+          membercardId:
+            paymentMethod.length > 0 ? paymentMethod[0].membercardId : '',
+          type: rest.type,
+          date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
+          session: rest.session,
+          total: rest.total,
+          price: 0,
+          productName: 'Total',
+          quantity: itemsPurchased.length,
+          kioskName:
+            (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
+            'unknown',
+        };
+        const arr = itemsPurchased.reduce(
+          (prev, { productLine, price, tax }) => {
+            const idx = prev.findIndex(el => el.id === productLine._id);
+            let quantity = 1;
+            if (~idx) {
+              const total = Math.round((prev[idx].total + price) * 100) / 100;
+              prev[idx].total = total;
+              quantity += 1;
+              prev[idx].quantity = quantity;
+            } else {
+              prev.push({
+                id: productLine._id,
+                productName: (productLine ? productLine.name : '') || 'unknown',
+                total: +price,
+                tax,
+                price,
+                quantity,
+              });
+            }
+            return prev;
+          },
+          [],
+        );
 
-      item.uniqueProducts = arr.length;
-      const product =
-        arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
-      newArr = newArr.concat([product]);
-    });
+        item.uniqueProducts = arr.length;
+        const product =
+          arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
+        newArr = newArr.concat([product]);
+      },
+    );
     return newArr;
   },
 );
@@ -139,29 +145,32 @@ export const getGridRefillsTableState = createSelector(
       }
 
       let refillsTotalPrice = 0;
-      const arr = refill.scale.reduce((prev, { productLine, count, weight, cellId }) => {
-        if (productLine) {
-          const total = (count * productLine.defaultPrice).toFixed(2);
-          let status = '';
-          if (count > 0) {
-            status = 'Added';
-          } else if (count < 0) {
-            status = 'Removed';
+      const arr = refill.scale.reduce(
+        (prev, { productLine, count, weight, cellId }) => {
+          if (productLine) {
+            const total = (count * productLine.defaultPrice).toFixed(2);
+            let status = '';
+            if (count > 0) {
+              status = 'Added';
+            } else if (count < 0) {
+              status = 'Removed';
+            }
+            prev.push({
+              id: productLine._id,
+              productName: (productLine ? productLine.name : '') || 'unknown',
+              total,
+              price: productLine.defaultPrice,
+              count,
+              weight,
+              loadCell: cellId || 'unknown',
+              status,
+            });
+            refillsTotalPrice += parseFloat(total);
           }
-          prev.push({
-            id: productLine._id,
-            productName: (productLine ? productLine.name : '') || 'unknown',
-            total,
-            price: productLine.defaultPrice,
-            count,
-            weight,
-            loadCell: cellId || 'unknown',
-            status,
-          });
-          refillsTotalPrice += parseFloat(total);
-        }
-        return prev;
-      }, []);
+          return prev;
+        },
+        [],
+      );
 
       item.uniqueProducts = arr.length;
       item.total = refillsTotalPrice.toFixed(2);
@@ -173,3 +182,26 @@ export const getGridRefillsTableState = createSelector(
     return newArr;
   },
 );
+
+export const getWidgetDataState = state => {
+  const {
+    totalNumberOfTransactions,
+    averagePurchaseValue,
+    totalNumberOfProductsSold,
+    totalNetIncome,
+    totalNumberOfProductsAdded,
+    totalGrossValueOfRefills,
+    totalNumberOfProductsRemoved,
+    averageSpoilageRate,
+  } = state.transactions.widgetData;
+  return {
+    totalNumberOfTransactions: totalNumberOfTransactions || 0,
+    totalNumberOfProductsSold: totalNumberOfProductsSold || 0,
+    totalNetIncome: Number(totalNetIncome || 0).toFixed(2),
+    averagePurchaseValue: Number(averagePurchaseValue || 0).toFixed(2),
+    totalNumberOfProductsAdded: totalNumberOfProductsAdded || 0,
+    totalNumberOfProductsRemoved: Math.abs(totalNumberOfProductsRemoved) || 0,
+    averageSpoilageRate: averageSpoilageRate || 0,
+    totalGrossValueOfRefills: Number(totalGrossValueOfRefills || 0).toFixed(2),
+  };
+};

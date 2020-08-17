@@ -75,8 +75,8 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
   return (
     <Segment>
       <TransactionsTable
-        sortByColumn="date"
-        excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
+        sortByColumn="created"
+        // excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
         columns={columns}
         data={transactions}
         getData={getData}

@@ -13,11 +13,11 @@ export const getWidgetDataState = state => {
     totalMonthlyGrossIncome,
   } = state.dashboard.widgetData;
   return {
-    totalNumberOfCustomers,
-    totalNumberOfProducts,
-    totalNetIncome: totalNetIncome.toFixed(2),
-    totalGrossIncome: totalGrossIncome.toFixed(2),
-    totalMonthlyNetIncome: totalMonthlyNetIncome.toFixed(2),
-    totalMonthlyGrossIncome: totalMonthlyGrossIncome.toFixed(2),
+    totalNumberOfCustomers: totalNumberOfCustomers || 0,
+    totalNumberOfProducts: totalNumberOfProducts || 0,
+    totalNetIncome: Number(totalNetIncome || 0).toFixed(2),
+    totalGrossIncome: Number(totalGrossIncome || 0).toFixed(2),
+    totalMonthlyNetIncome: Number(totalMonthlyNetIncome || 0).toFixed(2),
+    totalMonthlyGrossIncome: Number(totalMonthlyGrossIncome || 0).toFixed(2),
   };
 };

@@ -7,6 +7,8 @@ import {
   getGridRefillsSuccess,
   getGridRefillsFailed,
   getAllTransactionsFailed,
+  getTransactionsWidgetsDataSuccess,
+  getRefillsWidgetsDataSuccess,
 } from '../actions';
 
 const initialState = {
@@ -15,6 +17,16 @@ const initialState = {
   totalRefills: 0,
   totalTransactions: 0,
   isLoading: false,
+  widgetData: {
+    totalNumberOfProductsAdded: 0,
+    totalGrossValueOfRefills: 0,
+    totalNumberOfProductsRemoved: 0,
+    averageSpoilageRate: 0,
+    totalNumberOfTransactions: 0,
+    averagePurchaseValue: 0,
+    totalNumberOfProductsSold: 0,
+    totalNetIncome: 0,
+  },
 };
 
 const transactionsReducer = handleActions(
@@ -41,6 +53,13 @@ const transactionsReducer = handleActions(
     )]: state => ({
       ...state,
       isLoading: false,
+    }),
+    [combineActions(
+      getTransactionsWidgetsDataSuccess,
+      getRefillsWidgetsDataSuccess,
+    )]: (state, { payload }) => ({
+      ...state,
+      widgetData: { ...state.widgetData, ...payload },
     }),
   },
   initialState,

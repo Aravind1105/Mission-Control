@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { Segment } from 'semantic-ui-react';
+
 import TransactionsList from './TransactionsList';
 // import TransactionDetail from './TransactionDetail';
 import ReplenisherList from './ReplenisherList';
@@ -15,13 +17,15 @@ const navSwitcherConfig = [
 
 const Transactions = () => (
   <>
-    <NavSwitcher config={navSwitcherConfig} />
-    <Switch>
-      <Route exact path="/transactions/sales" component={TransactionsList} />
-      <Route exact path="/transactions/refills" component={ReplenisherList} />
-      {/* <Route exact path="/transactions/:id" component={TransactionDetail} /> */}
-      <Redirect to="/transactions/sales" />
-    </Switch>
+    <Segment>
+      <NavSwitcher config={navSwitcherConfig} />
+      <Switch>
+        <Route exact path="/transactions/sales" component={TransactionsList} />
+        <Route exact path="/transactions/refills" component={ReplenisherList} />
+        {/* <Route exact path="/transactions/:id" component={TransactionDetail} /> */}
+        <Redirect to="/transactions/sales" />
+      </Switch>
+    </Segment>
   </>
 );
 
