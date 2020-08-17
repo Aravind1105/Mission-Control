@@ -33,7 +33,7 @@ const columns = [
   },
 ];
 
-const ProductsContent = ({ products, getData, isLoading }) => {
+const ProductsContent = ({ products, getData, isLoading, setSortByInCaller }) => {
   const clickRow = ({ _id }) => {
     history.push(`/products/${_id}`);
   };
@@ -49,6 +49,7 @@ const ProductsContent = ({ products, getData, isLoading }) => {
         sortable
         selectable
         isLoading={isLoading}
+        setSortByInCaller={sort => setSortByInCaller(sort)}
       />
     </Segment>
   );
