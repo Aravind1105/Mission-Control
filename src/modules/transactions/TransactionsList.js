@@ -11,7 +11,7 @@ import {
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllTransactions } from './actions';
 
-const sort = [
+const sortDefault = [
   {
     column: 'created',
     direction: 'ASC',
@@ -19,14 +19,13 @@ const sort = [
 ];
 
 const sortValue = {
-  kioskName: 'kiosk',
-  date: 'created',
+  kioskName: 'kioskName',
+  created: 'created',
   status: 'status',
   productName: 'product',
   loadCell: 'loadCell',
   weight: 'weight',
   total: 'total',
-  transactionID: '_id',
 };
 
 const ProductsList = ({
@@ -42,6 +41,8 @@ const ProductsList = ({
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [kiosk, changeKiosk] = useState('');
+  const [sort, setSort] = useState([sortDefault]);
+
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
@@ -87,6 +88,7 @@ const ProductsList = ({
         transactions={transactions}
         isLoading={isLoading}
         getData={getData}
+        setSortByInCaller={sort => setSort([sort])}
       />
       <Pagination
         totalCount={total}

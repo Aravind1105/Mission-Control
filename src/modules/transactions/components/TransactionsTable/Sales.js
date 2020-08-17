@@ -26,6 +26,7 @@ const SalesTable = ({
   getData,
   isLoading,
   excludeSortBy,
+  setSortByInCaller,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -46,6 +47,13 @@ const SalesTable = ({
     }
     setTableData(res);
   }, [data]);
+
+  useEffect(() => {
+    setSortByInCaller({
+      column: sortBy,
+      direction: direction === sortTypes.ASC ? 'ASC' : 'DESC',
+    });
+  }, [sortBy, direction]);
 
   const handlerHCellClick = key => () => {
     if (excludeSortBy.includes(key)) return;
@@ -113,7 +121,7 @@ const SalesTable = ({
         {
           resultData.map((resultItem, rowIdx) => (
             <Table.Body
-              // className={activeRow === rowIdx ? 'active-body' : ''}
+            // className={activeRow === rowIdx ? 'active-body' : ''}
             >
               {resultItem.map((item, i) => {
                 const rowKey = `${i}`;
@@ -123,14 +131,14 @@ const SalesTable = ({
                 return (
                   <Table.Row
                     key={rowKey}
-                    // onClick={handlerRowClick(resultItem, rowIdx)}
+                  // onClick={handlerRowClick(resultItem, rowIdx)}
                   >
                     {columns.map(({ field, formatter }, j) => {
                       const cellKey = `${i}-${field}`;
                       const cellValue = formatter
                         ? formatter(item, j)
                         : get(item, field, '');
-                      const isOnlyRootField = (field === 'transactionID') || (field === 'kioskName') || (field === 'date') || (field === 'membercardId');
+                      const isOnlyRootField = (field === 'transactionID') || (field === 'kioskName') || (field === 'created') || (field === 'membercardId');
                       if (!item.transactionID && isOnlyRootField) {
                         return;
                       }

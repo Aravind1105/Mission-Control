@@ -26,6 +26,7 @@ const RefillsTable = ({
   getData,
   isLoading,
   excludeSortBy,
+  setSortByInCaller,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -46,6 +47,13 @@ const RefillsTable = ({
     }
     setTableData(res);
   }, [data]);
+
+  useEffect(() => {
+    setSortByInCaller({
+      column: sortBy,
+      direction: direction === sortTypes.ASC ? 'ASC' : 'DESC',
+    });
+  }, [sortBy, direction]);
 
   const handlerHCellClick = key => () => {
     if (excludeSortBy.includes(key)) return;
@@ -131,7 +139,7 @@ const RefillsTable = ({
                       const cellValue = formatter
                         ? formatter(item, j)
                         : get(item, field, '');
-                      const isOnlyRootField = (field === 'kioskName') || (field === 'date');
+                      const isOnlyRootField = (field === 'kioskName') || (field === 'created');
                       if (!item.refillsId && isOnlyRootField) {
                         return;
                       }

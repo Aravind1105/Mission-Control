@@ -13,7 +13,7 @@ import { getGridRefills } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
 
-const sort = [
+const sortDefault = [
   {
     column: 'created',
     direction: 'ASC',
@@ -21,8 +21,8 @@ const sort = [
 ];
 
 const sortValue = {
-  kioskName: 'kiosk',
-  date: 'created',
+  kioskName: 'kioskName',
+  created: 'created',
   productName: 'product',
   count: 'count',
   loadCell: 'loadCell',
@@ -46,6 +46,7 @@ const ReplenisherList = ({
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [product, changeProduct] = useState('');
+  const [sort, setSort] = useState([sortDefault]);
 
   const getData = ({ sort }) => {
     const data = {
@@ -96,6 +97,7 @@ const ReplenisherList = ({
         refills={refills}
         isLoading={isLoading}
         getData={getData}
+        setSortByInCaller={sort => setSort([sort])}
       />
       <Pagination
         totalCount={total}

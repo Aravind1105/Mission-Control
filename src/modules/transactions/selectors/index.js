@@ -79,7 +79,7 @@ export const getTransactionsTableState = createSelector(
         transactionID: rest._id,
         membercardId: (paymentMethod.length > 0 ? paymentMethod[0].membercardId : ''),
         type: rest.type,
-        date: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
+        created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
         session: rest.session,
         total: rest.total,
         price: 0,
@@ -126,7 +126,7 @@ export const getGridRefillsTableState = createSelector(
     refills.forEach(refill => {
       const item = {
         refillsId: refill._id,
-        date: format(
+        created: format(
           new Date(refill.created || new Date()),
           'dd-MM-yyyy, HH:mm:ss',
         ),
