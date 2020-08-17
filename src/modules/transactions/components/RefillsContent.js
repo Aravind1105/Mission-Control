@@ -6,7 +6,7 @@ import RefillsTable from './TransactionsTable/Refills';
 const columns = [
   {
     title: 'Date / Time',
-    field: 'date',
+    field: 'created',
   },
   // {
   //   title: 'Time',
@@ -53,7 +53,7 @@ const columns = [
   },
 ];
 
-const RefillsContent = ({ isLoading, refills, getData }) => {
+const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
@@ -69,15 +69,8 @@ const RefillsContent = ({ isLoading, refills, getData }) => {
         selectable
         striped
         isLoading={isLoading}
-        excludeSortBy={[
-          'status',
-          'productName',
-          'count',
-          'loadCell',
-          'weight',
-          'price',
-          'total',
-        ]}
+        excludeSortBy={['status', 'productName', 'count', 'loadCell', 'weight', 'price', 'total']}
+        setSortByInCaller={sort => setSortByInCaller(sort)}
       />
     </Segment>
   );

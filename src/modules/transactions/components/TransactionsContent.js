@@ -6,7 +6,7 @@ import TransactionsTable from './TransactionsTable/Sales';
 const columns = [
   {
     title: 'Date / Time',
-    field: 'date',
+    field: 'created',
   },
   // {
   //   title: 'Status',
@@ -67,7 +67,7 @@ const columns = [
   // },
 ];
 
-const TransactionsContent = ({ isLoading, transactions, getData }) => {
+const TransactionsContent = ({ isLoading, transactions, getData, setSortByInCaller }) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
@@ -76,7 +76,7 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
     <Segment>
       <TransactionsTable
         sortByColumn="created"
-        // excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
+        excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
         columns={columns}
         data={transactions}
         getData={getData}
@@ -84,6 +84,7 @@ const TransactionsContent = ({ isLoading, transactions, getData }) => {
         selectable
         striped
         isLoading={isLoading}
+        setSortByInCaller={sort => setSortByInCaller(sort)}
       />
     </Segment>
   );
