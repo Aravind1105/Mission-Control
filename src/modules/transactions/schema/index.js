@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-import { productOnProductLine } from '../../products/schema';
 
 const organizationOnRefills = gql`
   fragment organization on Organization {
@@ -103,4 +102,23 @@ export const CREATE_REFILL_MUTATION = gql`
     }
   }
 `;
+
+export const GET_REFILLS_WIDGET_DATA = gql`
+  query($period: Period!, $kioskId: ID) {
+    getTotalNumberOfProductsAdded(period: $period, kioskId: $kioskId)
+    getTotalGrossValueOfRefills(period: $period, kioskId: $kioskId)
+    getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
+    getAverageSpoilageRate(period: $period, kioskId: $kioskId)
+  }
+`;
+
+export const GET_TRANSACTIONS_WIDGET_DATA = gql`
+  query($period: Period!, $kioskId: ID) {
+    getTotalNumberOfTransactions(period: $period, kioskId: $kioskId)
+    getAveragePurchaseValue(period: $period, kioskId: $kioskId)
+    getTotalNumberOfProductsSold(period: $period, kioskId: $kioskId)
+    getTotalNetIncome(period: $period, kioskId: $kioskId)
+  }
+`;
+
 export default {};

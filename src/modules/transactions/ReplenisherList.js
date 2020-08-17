@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Grid } from 'semantic-ui-react';
 
 import Pagination from 'modules/shared/components/Pagination';
+import StatsCard from 'modules/shared/components/StatsCard';
 import RefillsToolbar from './components/RefillsToolbar';
 import RefillsContent from './components/RefillsContent';
+
 import {
   getGridRefillsTableState,
   getTotalGridRefillsCount,
+  getWidgetDataState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
-import { getGridRefills } from './actions';
+import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
 
@@ -39,6 +43,8 @@ const ReplenisherList = ({
   kiosks,
   getProductListSaga,
   productsList,
+  getRefillsWidgetsData,
+  widgetsData,
 }) => {
   const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
@@ -53,6 +59,7 @@ const ReplenisherList = ({
       skip: page * perPage,
       limit: perPage,
     };
+    const widgetPayload = {};
 
     if (search || kiosk || dateRange || product) {
       const name = search ? { product: { $regex: search } } : {};
@@ -67,21 +74,26 @@ const ReplenisherList = ({
         ...prod,
       });
     }
+    if (dateRange || kiosk) {
+      widgetPayload.period = dateRange;
+      widgetPayload.kioskId = kiosk;
+    }
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
     getGridRefills({ data });
+    getRefillsWidgetsData({ ...widgetPayload });
   };
 
   useEffect(() => {
     getProductListSaga();
+    getRefillsWidgetsData();
   }, []);
 
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, search, kiosk, dateRange, product]);
-
   return (
     <>
       <RefillsToolbar
@@ -93,6 +105,42 @@ const ReplenisherList = ({
         productsList={productsList}
         changeProduct={changeProduct}
       />
+      <Grid>
+        <Grid.Row stretched className="custom-widgets">
+          <Grid.Column mobile={8} computer={4}>
+            <StatsCard
+              icon="boxes"
+              color="green"
+              text="Total Products Replenished"
+              amount={widgetsData.totalNumberOfProductsAdded}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} computer={4}>
+            <StatsCard
+              icon="tag"
+              color="orange"
+              text="Total Value of Replenished Products"
+              amount={`€ ${widgetsData.totalGrossValueOfRefills}`}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} computer={4}>
+            <StatsCard
+              icon="reply"
+              color="blue"
+              text="Total products Removed"
+              amount={widgetsData.totalNumberOfProductsRemoved}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} computer={4}>
+            <StatsCard
+              icon="trash alternate"
+              color="violet"
+              text="Spoilage rate"
+              amount={`${widgetsData.averageSpoilageRate}%`}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
       <RefillsContent
         refills={refills}
         isLoading={isLoading}
@@ -117,11 +165,13 @@ const mapStateToProps = state => ({
   isLoading: state.transactions.isLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
   productsList: getProductsDropdownList(state),
+  widgetsData: getWidgetDataState(state),
 });
 
 const mapDispatchToProps = {
   getGridRefills,
   getProductListSaga,
+  getRefillsWidgetsData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReplenisherList);

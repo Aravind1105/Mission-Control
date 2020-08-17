@@ -7,18 +7,22 @@ import {
   getAlmostEmptyKiosksForTable,
   getKiosksAlertsDashboard,
 } from 'modules/kiosks/selectors';
+import StatsCard from 'modules/shared/components/StatsCard';
 import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
 import {
   getSalesStatisticState,
   getStatisticProductsListState,
   getWidgetDataState,
 } from './selectors';
-import { getSalesStatistic, getWidgetTodayData, getWidgetMonthlyData } from './actions';
+import {
+  getSalesStatistic,
+  getWidgetTodayData,
+  getWidgetMonthlyData,
+} from './actions';
 import AlmostEmptyTable from './components/AlmostEmptyTable';
 import Alerts from './components/Alerts';
 import MainChart from './components/MainChart';
 import './styles.less';
-import StatsCard from './components/StatsCard';
 
 const Dashboard = ({
   salesStat,
