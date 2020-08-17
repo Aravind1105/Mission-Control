@@ -10,7 +10,7 @@ import {
 import { getAlertsGrid, getAllKiosks } from 'modules/kiosks/actions';
 import AlertsTable from './components/AlertsTable';
 
-const sort = [
+const sortDefault = [
   {
     column: 'startDate',
     direction: 'ASC',
@@ -30,6 +30,7 @@ const AlertsPage = ({ getAllKiosks, total, getAlertsGrid, alerts }) => {
   const [alert, changeAlert] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
+  const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
     const data = {
@@ -74,6 +75,7 @@ const AlertsPage = ({ getAllKiosks, total, getAlertsGrid, alerts }) => {
             changeAlert={changeAlert}
             changePage={changePage}
             getData={getData}
+            setSortByInCaller={sort => setSort([sort])}
           />
         </Grid.Column>
       </Grid.Row>

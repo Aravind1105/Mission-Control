@@ -11,7 +11,7 @@ import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
 import { getProductListSaga } from 'modules/products/actions';
 import AlmostEmptyKiosks from './components/AlmostEmptyKiosks';
 
-const sort = [
+const sortDefault = [
   {
     column: 'product',
     direction: 'ASC',
@@ -37,6 +37,7 @@ const AlmostEmptyKiosksPage = ({
   const [supplier, changeSupplier] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
+  const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
     const data = {
@@ -81,6 +82,7 @@ const AlmostEmptyKiosksPage = ({
             changeProduct={changeProduct}
             changeSupplier={changeSupplier}
             getData={getData}
+            setSortByInCaller={sort => setSort([sort])}
           />
         </Grid.Column>
       </Grid.Row>

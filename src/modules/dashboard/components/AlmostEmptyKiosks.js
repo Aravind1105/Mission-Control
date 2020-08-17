@@ -18,6 +18,7 @@ const AlmostEmptyKiosks = ({
   changeKiosk,
   changeSupplier,
   getData,
+  setSortByInCaller,
 }) => {
   const { t } = useTranslation();
   const columns = [
@@ -58,6 +59,7 @@ const AlmostEmptyKiosks = ({
         data={almostEmptyKiosks}
         columns={columns}
         getData={getData}
+        setSortByInCaller={sort => setSortByInCaller(sort)}
       />
     </Segment>
   );

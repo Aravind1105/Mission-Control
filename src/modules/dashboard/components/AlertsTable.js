@@ -19,6 +19,7 @@ const AlertsTable = ({
   changeAlert,
   changePage,
   getData,
+  setSortByInCaller,
 }) => {
   const { t } = useTranslation();
   const columns = [
@@ -56,11 +57,13 @@ const AlertsTable = ({
       />
       <CustomTable
         sortable
+        sortByColumn="startDate"
         excludeSortBy={['details.kioskId.name']}
         fixed
         data={alerts}
         columns={columns}
         getData={getData}
+        setSortByInCaller={sort => setSortByInCaller(sort)}
       />
     </Segment>
   );
