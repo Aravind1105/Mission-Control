@@ -26,6 +26,7 @@ const CustomTable = ({
   getData,
   isLoading,
   excludeSortBy,
+  setSortByInCaller,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -45,6 +46,15 @@ const CustomTable = ({
     }
     setTableData(res);
   }, [data]);
+
+  useEffect(() => {
+    if (setSortByInCaller) {
+      setSortByInCaller({
+        column: sortBy,
+        direction: direction === sortTypes.ASC ? 'ASC' : 'DESC',
+      });
+    }
+  }, [sortBy, direction]);
 
   const handlerHCellClick = key => () => {
     if (excludeSortBy.includes(key)) return;
