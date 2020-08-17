@@ -20,7 +20,7 @@ import { getProductsDropdownList } from '../products/selectors';
 const sortDefault = [
   {
     column: 'created',
-    direction: 'ASC',
+    direction: 'DESC',
   },
 ];
 
@@ -52,7 +52,7 @@ const ReplenisherList = ({
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [product, changeProduct] = useState('');
-  const [sort, setSort] = useState([sortDefault]);
+  const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
     const data = {
