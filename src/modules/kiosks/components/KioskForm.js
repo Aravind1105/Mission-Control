@@ -150,7 +150,7 @@ const KioskForm = ({ initialValues, organizations }) => {
               <Grid.Column>
                 <Field
                   name="notes"
-                  label="Direction / Notes"
+                  label="Directions / Notes"
                   rows={5}
                   component={FormTextArea}
                 />
