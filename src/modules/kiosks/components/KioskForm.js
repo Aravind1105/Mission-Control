@@ -4,6 +4,7 @@ import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 
 import FormInput from 'modules/shared/components/FormInput';
+import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk } from '../actions';
 
@@ -141,6 +142,17 @@ const KioskForm = ({ initialValues, organizations }) => {
                   label="ZIP Code"
                   required
                   component={FormInput}
+                />
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column>
+                <Field
+                  name="notes"
+                  label="Directions / Notes"
+                  rows={5}
+                  component={FormTextArea}
                 />
               </Grid.Column>
             </Grid.Row>

@@ -104,6 +104,7 @@ const KioskDetails = ({
                     session={kiosk.session}
                     location={kiosk.location}
                     ownerOrganization={orgName}
+                    notes={kiosk.notes}
                   >
                     <>
                       <CustomButton

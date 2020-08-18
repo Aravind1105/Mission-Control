@@ -79,16 +79,18 @@ const kiosksReducer = handleActions(
         ...payload,
       };
     },
-    [combineActions(getProductLinesByOrgId, getProductLinesByOrgIdSuccess)]: (
+    [getProductLinesByOrgId]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [getProductLinesByOrgIdSuccess]: (
       state,
       { payload },
-    ) => {
-      return {
-        ...state,
-        ...payload,
-        isLoading: true,
-      };
-    },
+    ) => ({
+      ...state,
+      ...payload,
+      isLoading: false,
+    }),
     [updateAlmostEmptyKiosks]: (state, { payload }) => {
       return {
         ...state,

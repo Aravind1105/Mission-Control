@@ -10,6 +10,7 @@ const DetailsInfo = ({
   serial,
   location: { address },
   ownerOrganization,
+  notes,
 }) => {
   const addressFull = address
     ? [address.city, address.line1, address.state].filter(el => el).join(', ')
@@ -23,6 +24,7 @@ const DetailsInfo = ({
               <InfoRow title="Serial" description={serial}/>
               <InfoRow title="Session" description={session ? session.type : 'no session'}/>
               <InfoRow title="Address" description={addressFull} />
+              {notes && <InfoRow title="Directions / Notes" description={notes} />}
               <InfoRow title="Organization" description={ownerOrganization} />
             </Grid.Row>
           </Grid>
