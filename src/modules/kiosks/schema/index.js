@@ -52,6 +52,7 @@ const FragmentKioskOnKiosk = gql`
     serialNumber
     qrcode
     pin
+    notes
     orgId
     temperature {
       value
