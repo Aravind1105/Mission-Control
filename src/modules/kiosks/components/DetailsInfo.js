@@ -11,6 +11,7 @@ const DetailsInfo = ({
   location: { address },
   ownerOrganization,
   notes,
+  pin,
 }) => {
   const addressFull = address
     ? [address.city, address.line1, address.state].filter(el => el).join(', ')
@@ -26,6 +27,7 @@ const DetailsInfo = ({
               <InfoRow title="Address" description={addressFull} />
               {notes && <InfoRow title="Directions / Notes" description={notes} />}
               <InfoRow title="Organization" description={ownerOrganization} />
+              <InfoRow title="Pin" description={pin}/>
             </Grid.Row>
           </Grid>
 

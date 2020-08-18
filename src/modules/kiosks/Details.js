@@ -105,6 +105,7 @@ const KioskDetails = ({
                     location={kiosk.location}
                     ownerOrganization={orgName}
                     notes={kiosk.notes}
+                    pin={kiosk.pin}
                   >
                     <>
                       <CustomButton
