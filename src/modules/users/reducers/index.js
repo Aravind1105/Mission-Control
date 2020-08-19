@@ -21,7 +21,8 @@ const usersReducer = handleActions(
     }),
     [getUsersSuccess]: (state, { payload }) => ({
       ...state,
-      list: payload,
+      list: payload.list,
+      total: payload.total,
       isListLoading: false,
     }),
     [setActiveUser]: (state, { payload }) => ({
