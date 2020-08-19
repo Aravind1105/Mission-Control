@@ -71,11 +71,6 @@ const UsersContent = ({
 
   useEffect(() => {
     if (!isUserListLoading) getData({ sort });
-  }, []);
-
-  useEffect(() => {
-    console.log('initial', JSON.stringify(sort));
-    if (!isUserListLoading) getData({ sort });
   }, [page, perPage]);
 
   const handleRowClick = ({ _id }) => {
