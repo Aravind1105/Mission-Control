@@ -15,3 +15,5 @@ export const getUsersListForTable = createSelector(getUsersListState, users =>
     type: el.root ? 'Admin' : 'Consumer',
   })),
 );
+
+export const getTotalUsers = state => state.users.total;

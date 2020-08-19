@@ -73,8 +73,7 @@ const ProductsList = ({
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-    console.log(sort[0].column);
-    console.log('inner', JSON.stringify(sort));
+
     if (dateRange || kiosk) {
       widgetPayload.period = dateRange;
       widgetPayload.kioskId = kiosk;
@@ -88,7 +87,6 @@ const ProductsList = ({
   }, []);
 
   useEffect(() => {
-    console.log(JSON.stringify(sort));
     getData({ sort });
   }, [page, perPage, search, category, dateRange, kiosk]);
 

@@ -24,12 +24,31 @@ export const userDetailOnUser = gql`
 `;
 
 export const GET_USERS_SHORT_INFO_QUERY = gql`
-  {
-    getAllUsers {
-      ...userDetail
+  query($data: GridRequest){
+    getAllUsersGrid(data: $data) {
+      total
+      data {
+        _id
+        firstName
+        lastName
+        root
+        avatarUrl
+        email
+        mobile
+        address {
+          line1
+          city
+        }
+        rolesInOrganizations {
+          organizationId {
+            _id
+            name
+          }
+          role
+        }
+      }
     }
   }
-  ${userDetailOnUser}
 `;
 
 export const USER_ROLE_TOGGLE_MUTATION = gql`
