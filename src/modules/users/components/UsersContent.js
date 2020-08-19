@@ -12,12 +12,13 @@ import { getUsersListForTable, getActiveUserIDState, getTotalUsers } from '../se
 
 const sortDefault = [
   {
-    column: 'name',
+    column: 'firstName',
     direction: 'ASC',
   },
 ];
 
 const sortValue = {
+  firstName: 'firstName',
   name: 'firstName',
 };
 
@@ -61,17 +62,19 @@ const UsersContent = ({
       limit: perPage,
     };
 
-    console.log(sort);
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-    console.log(sort[0].column);
-    console.log('inner', JSON.stringify(sort));
     getUsers({ data });
   };
 
   useEffect(() => {
+    if (!isUserListLoading) getData({ sort });
+  }, []);
+
+  useEffect(() => {
+    console.log('initial', JSON.stringify(sort));
     if (!isUserListLoading) getData({ sort });
   }, [page, perPage]);
 
