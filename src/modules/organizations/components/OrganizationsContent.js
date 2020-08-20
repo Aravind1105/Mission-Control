@@ -6,7 +6,6 @@ import get from 'lodash/get';
 import history from 'lib/history';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
-import TableWithPagination from 'modules/shared/components/TableWithPagination';
 import Pagination from 'modules/shared/components/Pagination';
 import { getOrganizationsState, getOrganizationsTotal } from '../selectors';
 import { getOrganizations } from '../actions';
@@ -85,7 +84,6 @@ const OrganizationsContent = ({
     <>
       {isLoading && <Loader />}
       <Segment>
-        {/* <TableWithPagination list={organizations}> */}
         <CustomTable
           columns={columns}
           data={organizations}
@@ -96,7 +94,6 @@ const OrganizationsContent = ({
           setSortByInCaller={sort => setSort([sort])}
           sortDirection="ASC"
         />
-        {/* </TableWithPagination> */}
         <Pagination
           totalCount={total}
           page={page}

@@ -36,15 +36,6 @@ export const getTotalAlerts = state => state.kiosks.totalAlerts;
 
 export const getKioskSingle = state => state.kiosks.kiosk;
 
-export const getKiosksWithSearch = searchText =>
-  createSelector(getKiosksState, kiosks => {
-    const search = searchText.trim().toLowerCase();
-
-    return search
-      ? kiosks.filter(({ name }) => name.toLowerCase().includes(search))
-      : kiosks;
-  });
-
 export const getKioskById = id =>
   createSelector(getKiosksState, kiosksState =>
     kiosksState.find(kiosk => kiosk._id === id),
@@ -225,16 +216,16 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-        id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin', 'notes']),
-        orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
+      id: kiosk._id,
+      ...pick(kiosk, ['name', 'serialNumber', 'pin', 'notes']),
+      orgId: kiosk.orgId,
+      location: {
+        address: {
+          ...kioskInitialValues.location.address,
+          ...address,
         },
-      }
+      },
+    }
     : kioskInitialValues;
 });
 
@@ -255,3 +246,5 @@ export const getProductsDropdownList = (id = '') =>
       }))
       .filter(el => el.value !== id),
   );
+
+export const getTotalKiosks = state => state.kiosks.total;
