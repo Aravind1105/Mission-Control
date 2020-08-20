@@ -22,12 +22,29 @@ const organizationOnOrganization = gql`
 `;
 
 export const GET_ORGANIZATIONS_LIST_QUERY = gql`
-  {
-    getAllOrganizations {
-      ...organization
+  query($data: GridRequest){
+    getOrganizationsGrid(data: $data) {
+      total
+      data {
+        _id
+        name
+        slug
+        imageUrl
+        description
+        address {
+          type
+          properties {
+            name
+            line1
+            postalCode
+            city
+            state
+            country
+          }
+        }
+      }
     }
   }
-  ${organizationOnOrganization}
 `;
 
 export const CREATE_ORGANIZATION_MUTATION = gql`

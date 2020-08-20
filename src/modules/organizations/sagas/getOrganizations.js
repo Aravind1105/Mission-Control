@@ -7,12 +7,16 @@ import {
   getOrganizationsSuccess as actionSuccess,
 } from '../actions';
 
-function* handler() {
+function* handler({ payload }) {
   try {
-    const { data } = yield call(gqlOrganization.query, {
+    const { data: { getOrganizationsGrid: response } } = yield call(gqlOrganization.query, {
       query: GET_ORGANIZATIONS_LIST_QUERY,
+      variables: payload,
     });
-    yield put(actionSuccess(data.getAllOrganizations));
+    yield put(actionSuccess({
+      list: response.data || [],
+      total: response.total,
+    }));
   } catch (error) {
     console.log(error);
   }

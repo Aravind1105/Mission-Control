@@ -19,7 +19,8 @@ const organizationsReducer = handleActions(
     }),
     [getOrganizationsSuccess]: (state, { payload }) => ({
       ...state,
-      list: payload,
+      list: payload.list,
+      total: payload.total,
       isLoading: false,
     }),
     [modifyOrganizationSuccess]: (state, { payload }) => ({
