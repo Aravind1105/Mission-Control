@@ -60,7 +60,6 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvRefills(value);
-      window.alert('Datei wird heruntergeladen.');
     }
   };
 
