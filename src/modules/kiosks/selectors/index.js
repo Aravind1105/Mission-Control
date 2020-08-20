@@ -60,7 +60,7 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         ...rest,
         productLine: {
           ...productLine,
-          price: productLine.price.toFixed(2),
+          price: productLine.price && productLine.price.toFixed(2),
         },
         totalProducts,
         totalPrice,
