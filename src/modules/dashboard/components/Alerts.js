@@ -78,6 +78,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
         columns={columns}
         getData={getData}
         excludeSortBy={['details.kioskId.name']}
+        sortDirection="DESC"
       />
     </Segment>
   );
