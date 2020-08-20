@@ -12,8 +12,18 @@ import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
-import { getKioskSingle, getKioskShelves, getOrgIdFromKiosk, getOrgName } from './selectors';
-import { resetKiosk, getAllKiosks, getKiosk, getOrganizationById } from './actions';
+import {
+  getKioskSingle,
+  getKioskShelves,
+  getOrgIdFromKiosk,
+  getOrgName,
+} from './selectors';
+import {
+  resetKiosk,
+  getAllKiosks,
+  getKiosk,
+  getOrganizationById,
+} from './actions';
 
 import './styles.less';
 
@@ -88,7 +98,6 @@ const KioskDetails = ({
                 </Segment>
               </Grid.Column>
             </Grid.Row>
-
             <Grid.Row>
               <Grid.Column>
                 <Segment>
@@ -134,7 +143,12 @@ const KioskDetails = ({
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns="equal">
-              <DetailsLoadCells cells={loadCells.list} kioskName={kiosk.name} />
+              <Grid.Column>
+                <DetailsLoadCells
+                  cells={loadCells.list}
+                  kioskName={kiosk.name}
+                />
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Grid.Column>

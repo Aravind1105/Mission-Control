@@ -1,3 +1,27 @@
+#### 1.1.1 (2020-08-20)
+
+##### Bug Fixes
+
+* **Users grid resolver:**
+  *  LIV-1736 bug fix (c8ab4d25)
+  *  LIV-1736 (a15987a9)
+* **Kiosk Detail:**  LIV-1734 add pin to deatils (e91febe4)
+* **Dashboard widgets:**  LIV-1691 style (cd0f944b)
+* **Transaction:**  LIV-1731 Sales Refills sort DESC (4db09921)
+* **Grid sorting persistance:**  LIV-1666 fixed for AlmostEmptyKiosks & Alerts pages (3172b867)
+* **Grid sorting state persistance:**  LIV-1666 products (93837b6e)
+* **Sorting order persistance:**  LIV-1666 fixed for products (3784fc4c)
+* **Grid sort persistance:**  LIV-1666 (84044980)
+
+##### Other Changes
+
+* **Kiosk Details:**  LIV-1721 Notes field (598c8510)
+* **Kiosk Notes Field:**  LIV-1721 field added (e1a9bb1f)
+
+##### Code Style Changes
+
+* **Dashboard widgets style:** LIV-1691 (360a957c)
+
 ### 1.1.0 (2020-08-14)
 
 ##### Build System / Dependencies
