@@ -10,7 +10,7 @@ import NavSwitcher from '../shared/components/NavSwitcher';
 import './styles.less';
 
 const navSwitcherConfig = [
-  { name: 'transactions ', goTo: '' },
+  { name: 'transactions' },
   { name: 'sales', goTo: '/transactions/sales' },
   { name: 'refills', goTo: '/transactions/refills' },
 ];
