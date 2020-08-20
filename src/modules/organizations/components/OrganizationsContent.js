@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 import get from 'lodash/get';
@@ -6,9 +6,20 @@ import get from 'lodash/get';
 import history from 'lib/history';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
-import TableWithPagination from 'modules/shared/components/TableWithPagination';
-import { getOrganizationsState } from '../selectors';
+import Pagination from 'modules/shared/components/Pagination';
+import { getOrganizationsState, getOrganizationsTotal } from '../selectors';
 import { getOrganizations } from '../actions';
+
+const sortDefault = [
+  {
+    column: 'name',
+    direction: 'ASC',
+  },
+];
+
+const sortValue = {
+  name: 'name',
+};
 
 const columns = [
   {
@@ -42,10 +53,28 @@ const OrganizationsContent = ({
   organizations,
   isLoading,
   getOrganizations,
+  total,
 }) => {
+  const [page, changePage] = useState(0);
+  const [perPage, changePerPage] = useState(25);
+  const [sort, setSort] = useState(sortDefault);
+
+  const getData = ({ sort }) => {
+    const data = {
+      skip: page * perPage,
+      limit: perPage,
+    };
+
+    if (sort && sortValue[sort[0].column]) {
+      sort[0].column = sortValue[sort[0].column];
+      data.sort = sort;
+    }
+    getOrganizations({ data });
+  };
+
   useEffect(() => {
-    if (!isLoading) getOrganizations();
-  }, []);
+    if (!isLoading) getData({ sort });
+  }, [page, perPage]);
 
   const clickRow = ({ slug }) => {
     history.push(`detail/${slug}`);
@@ -55,15 +84,24 @@ const OrganizationsContent = ({
     <>
       {isLoading && <Loader />}
       <Segment>
-        <TableWithPagination list={organizations}>
-          <CustomTable
-            columns={columns}
-            onRowClick={clickRow}
-            sortable
-            selectable
-            sortByColumn="name"
-          />
-        </TableWithPagination>
+        <CustomTable
+          columns={columns}
+          data={organizations}
+          onRowClick={clickRow}
+          sortable
+          selectable
+          sortByColumn="name"
+          setSortByInCaller={sort => setSort([sort])}
+          sortDirection="ASC"
+        />
+        <Pagination
+          totalCount={total}
+          page={page}
+          perPage={perPage}
+          changePage={changePage}
+          changePerPage={changePerPage}
+          isLoading={isLoading}
+        />
       </Segment>
     </>
   );
@@ -72,6 +110,7 @@ const OrganizationsContent = ({
 const mapStateToProps = state => ({
   organizations: getOrganizationsState(state),
   isLoading: state.organizations.isLoading,
+  total: getOrganizationsTotal(state),
 });
 
 const mapDispatchToProps = {

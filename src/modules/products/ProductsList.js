@@ -54,7 +54,6 @@ const ProductsList = ({
   };
 
   useEffect(() => {
-    console.log(sort);
     getData({ sort });
   }, [page, perPage, search, category, supplier]);
 

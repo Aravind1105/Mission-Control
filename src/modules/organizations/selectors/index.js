@@ -3,6 +3,8 @@ import get from 'lodash/get';
 
 export const getOrganizationsState = state => state.organizations.list;
 
+export const getOrganizationsTotal = state => state.organizations.total;
+
 export const getOrganizationInitValues = slug =>
   createSelector(getOrganizationsState, organizations => {
     const item = organizations.find(el => el.slug === slug) || {};

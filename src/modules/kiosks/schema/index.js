@@ -93,20 +93,23 @@ const FragmentKioskOfflineOnKiosk = gql`
   }
 `;
 
-export const GET_ALL_KIOSKS_QUERY = gql`
-  {
-    getAllKiosks {
-      _id
-      name
-      doorStatus
-      temperature {
-        value
-        updated
-      }
-      location {
-        address {
-          line1
-          city
+export const GET_ALL_KIOSKS_GRID_QUERY = gql`
+  query($data: GridRequest){
+    getKiosksGrid(data: $data) {
+      total
+      data {
+        _id
+        name
+        doorStatus
+        temperature {
+          value
+          updated
+        }
+        location {
+          address {
+            line1
+            city
+          }
         }
       }
     }
