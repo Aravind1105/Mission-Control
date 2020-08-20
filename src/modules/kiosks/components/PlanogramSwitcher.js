@@ -25,13 +25,13 @@ const PlanogramSwitcher = ({
         {isTwoSides && (
           <>
             <Menu.Item
-              name="Left Kiosk"
+              name="Right Kiosk"
               onClick={handleClick}
               value="A"
               active={currentSide === 'A'}
             />
             <Menu.Item
-              name="Right Kiosk"
+              name="Left Kiosk"
               onClick={handleClick}
               value="B"
               active={currentSide === 'B'}
