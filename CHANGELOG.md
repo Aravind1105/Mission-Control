@@ -1,3 +1,11 @@
+#### 1.1.3 (2020-08-20)
+
+##### Bug Fixes
+
+* **kiosk:**
+  *  double kiosk planogram (8d607fdd)
+  *  tab switch headers titles (3562daeb)
+
 #### 1.1.2 (2020-08-20)
 
 ##### Chores
