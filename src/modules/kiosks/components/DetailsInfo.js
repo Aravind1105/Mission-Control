@@ -13,21 +13,41 @@ const DetailsInfo = ({
   notes,
   pin,
 }) => {
-  const addressFull = address
-    ? [address.city, address.line1, address.state].filter(el => el).join(', ')
-    : '';
+  let addressLine1 = '';
+  let addressLine2 = '';
+  let addressSecondLine = '';
+  let addressThirdLine = '';
+  // address
+  //   ? [address.city, address.line1, address.state].filter(el => el).join(', ')
+  //   : '';
+  if (address.line1 !== null) {
+    addressLine1 += address.name ? `${address.name}, ` : '';
+    addressLine1 += `${address.line1}`;
+    addressLine2 += address.line2 ? `${address.line2}` : '';
+    if (address.line2) {
+      addressLine2 += `, ${address.state}`;
+    } else {
+      addressLine1 += `, ${address.state}`;
+    }
+    addressSecondLine += `${address.postalCode} ${address.city}`;
+    addressThirdLine += `${address.country}`;
+  }
+
   return (
     <div className="kiosk-info">
       <Grid>
         <Grid.Column width={12}>
           <Grid>
             <Grid.Row>
-              <InfoRow title="Serial" description={serial}/>
-              <InfoRow title="Session" description={session ? session.type : 'no session'}/>
-              <InfoRow title="Address" description={addressFull} />
+              <InfoRow title="Serial" description={serial} />
+              <InfoRow title="Session" description={session ? session.type : 'no session'} />
+              {addressLine1 !== '' && <InfoRow title="Address" description={addressLine1} />}
+              {addressLine2 !== '' && <InfoRow description={addressLine2} />}
+              {addressLine1 !== '' && <InfoRow description={addressSecondLine} />}
+              {addressLine1 !== '' && <InfoRow description={addressThirdLine} />}
               {notes && <InfoRow title="Directions / Notes" description={notes} />}
               <InfoRow title="Organization" description={ownerOrganization} />
-              <InfoRow title="Pin" description={pin}/>
+              <InfoRow title="Pin" description={pin} />
             </Grid.Row>
           </Grid>
 

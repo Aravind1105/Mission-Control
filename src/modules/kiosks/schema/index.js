@@ -107,8 +107,13 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
         }
         location {
           address {
+            name
             line1
+            line2
             city
+            state
+            country
+            postalCode
           }
         }
       }

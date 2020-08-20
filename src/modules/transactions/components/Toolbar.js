@@ -49,7 +49,6 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvSales(value);
-      window.alert('Datei wird heruntergeladen.');
     }
   };
 
