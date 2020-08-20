@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import pick from 'lodash/pick';
+import { Segment } from 'semantic-ui-react';
 
 import separateToSides from 'lib/separateToSides';
 import DetailLoadCellsSide from './DetailLoadCellsSide';
 import ModalLoadCell from './ModalLoadCell';
+import PlanogramSwitcher from './PlanogramSwitcher';
 
 const DetailsLoadCells = ({ cells, kioskName }) => {
   const [product, selectProduct] = useState(null);
+  const [currentSide, setCurrentSide] = useState('A');
   const [isAddLoadCell, setIsAddLoadCell] = useState(false);
 
   const handleEdit = ({
@@ -29,7 +32,8 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     selectProduct(null);
   };
 
-  const sides = separateToSides(cells);
+  const sides = useMemo(() => separateToSides(cells), [cells]);
+
   const isTwoSides = Boolean(sides.A.length && sides.B.length);
   const loadedPosition = product
     ? cells.map(({ planogramPosition }) => planogramPosition)
@@ -39,23 +43,24 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     setIsAddLoadCell(true);
     selectProduct({});
   };
-  return (
-    <>
-      {isTwoSides && (
-        <DetailLoadCellsSide
-          cells={sides.B}
-          handleEdit={handleEdit}
-          handleAdd={[].concat(...sides.B).length < 15 ? handleAdd : undefined}
-          title="Planogram - Left Kiosk"
-        />
-      )}
-      <DetailLoadCellsSide
-        cells={sides.A}
-        handleEdit={handleEdit}
-        handleAdd={[].concat(...sides.A).length < 15 ? handleAdd : undefined}
-        title={isTwoSides ? 'Planogram - Right Kiosk' : 'Load Cells'}
-      />
 
+  const activeShelves = useMemo(
+    () => sides[currentSide].reduce((prev, curr) => prev + curr.length, 0),
+    [currentSide, sides],
+  );
+
+  return (
+    <Segment>
+      <PlanogramSwitcher
+        {...{ activeShelves, setCurrentSide, currentSide, isTwoSides }}
+      />
+      <DetailLoadCellsSide
+        cells={sides[currentSide]}
+        handleEdit={handleEdit}
+        handleAdd={
+          [].concat(...sides[currentSide]).length < 15 ? handleAdd : undefined
+        }
+      />
       {product && (
         <ModalLoadCell
           product={product}
@@ -66,7 +71,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
           isAddLoadCell={isAddLoadCell}
         />
       )}
-    </>
+    </Segment>
   );
 };
 
