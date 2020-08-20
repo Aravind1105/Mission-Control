@@ -1,3 +1,18 @@
+#### 1.1.2 (2020-08-20)
+
+##### Chores
+
+* **Organizations Grid Resolver:**  LIV-1746 (584cd4ca)
+
+##### Bug Fixes
+
+* **Kiosk Listing:**  bug fix LIV-1668 address (0f0e54fe)
+* **Kiosk details:**  Addres field refactor LIV-1669 (68b62784)
+* **Transactions-Header Clickable:**  bug LIV-1670 (cc16b06d)
+* **Transactions - Remove Alerts:**  LIV-1749 (d94bd5ff)
+* **Dashboard Alerts:**  Sort arrow icon desc by defaul (8c7b42e2)
+* **Kiosk Grid Resolver and Search:**  LIV-1747 (091573d0)
+
 #### 1.1.1 (2020-08-20)
 
 ##### Bug Fixes
