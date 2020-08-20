@@ -44,7 +44,8 @@ const kiosksReducer = handleActions(
     }),
     [updateKiosks]: (state, { payload }) => ({
       ...state,
-      list: payload,
+      list: payload.list,
+      total: payload.total,
       isLoading: false,
     }),
     [updateKioskById]: (state, { payload }) => {
