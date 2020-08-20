@@ -44,11 +44,11 @@ const columns = [
     title: 'Address',
     field: 'location',
     formatter: ({ location: { address } }) => {
-      const { line1, city } = address;
-      const addr = [city || '', line1 || '']
+      const { name, line1, line2, city, country, postalCode, state } = address;
+      const addr = [name || '', line1, line2 || '', city, state, `${postalCode} ${country}`]
         .filter(el => Boolean(el))
         .join(', ');
-      return addr || 'N.A.';
+      return line1 ? addr : 'N.A.';
     },
   },
 ];
