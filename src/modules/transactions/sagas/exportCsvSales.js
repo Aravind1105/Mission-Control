@@ -9,43 +9,41 @@ import {
 
 export function handlerGetProduct(payload) {
   let link;
-  if(payload.kiosk){
+  if (payload.kiosk) {
     link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}?kioskId=${payload.kiosk}`;
-  } else{
+  } else {
     link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
   }
   const token = ls.getItem(TOKEN_STORAGE_KEY);
-  
+
   fetch(link, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-  .catch(e => {
-    alert(e);
-    return e;
-  })
-  .then(response => {
-    if(response.status != 200) {
-      alert('Etwas ist schief gelaufen. Versuche Sie es später noch einmal.');
-    }
-    else response.blob().then(blob => {
-      let url = window.URL.createObjectURL(blob);
-      let element = document.createElement('a');
-      element.href = url;
-      element.download = `transactions_${Date.now()}.csv`;
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-      alert('Datei war erfolgreich heruntergeladen!');
+    .catch(e => {
+      return e;
+    })
+    .then(response => {
+      if (response.status != 200) {
+        alert('Etwas ist schief gelaufen. Versuche Sie es später noch einmal.');
+      }
+      else response.blob().then(blob => {
+        let url = window.URL.createObjectURL(blob);
+        let element = document.createElement('a');
+        element.href = url;
+        element.download = `transactions_${Date.now()}.csv`;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      });
     });
-  });
 }
 
-function* handler({payload}) {
+function* handler({ payload }) {
   try {
-    yield call(handlerGetProduct,payload);
+    yield call(handlerGetProduct, payload);
   } catch (e) {
     console.log(e);
   }
