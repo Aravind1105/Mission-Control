@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, Icon, Label } from 'semantic-ui-react';
 
+import history from 'lib/history';
 import ColoredBlock from '../ColoredBlock';
+import './styles.less';
 
 const AlertIcon = ({ quantity }) => (
   <div>
@@ -24,27 +26,37 @@ const AlertIcon = ({ quantity }) => (
   </div>
 );
 
-const AlertsList = ({ alerts }) => (
-  <Dropdown
-    trigger={<AlertIcon quantity={alerts.length} />}
-    pointing="top right"
-    scrolling
-    icon={false}
-  >
-    <Dropdown.Menu>
-      <Dropdown.Header icon="tags" content="Notification" />
-      <Dropdown.Divider />
-      {alerts.map(({ id, title, message }) => (
-        <Dropdown.Item key={id}>
-          <ColoredBlock type="b" value={0}>
-            {title}
-          </ColoredBlock>
-          <div>{message}</div>
+const AlertsList = ({ alerts }) => {
+  const tenAlerts = useMemo(() => alerts.slice(0, 10), [alerts]);
+  const handleClick = () => {
+    history.push('/dashboard/alerts');
+  };
+  return (
+    <Dropdown
+      trigger={<AlertIcon quantity={alerts.length} />}
+      pointing="top right"
+      scrolling
+      icon={false}
+    >
+      <Dropdown.Menu>
+        <Dropdown.Header icon="tags" content="Notification" />
+        <Dropdown.Divider />
+        {tenAlerts.map(({ id, title, message }) => (
+          <Dropdown.Item key={id}>
+            <ColoredBlock type="b" value={0}>
+              {title}
+            </ColoredBlock>
+            <div>{message}</div>
+          </Dropdown.Item>
+        ))}
+        <Dropdown.Divider />
+        <Dropdown.Item onClick={handleClick}>
+          <div className="show-all-dropdown-btn">Show All</div>
         </Dropdown.Item>
-      ))}
-    </Dropdown.Menu>
-  </Dropdown>
-);
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
 AlertsList.propTypes = {
   alerts: PropTypes.oneOfType([

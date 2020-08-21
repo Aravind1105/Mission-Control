@@ -56,7 +56,7 @@ const AlertsPage = ({ getAllKiosks, total, getAlertsGrid, alerts }) => {
   };
 
   useEffect(() => {
-    getAllKiosks();
+    getAllKiosks({ data: {} });
   }, []);
 
   useEffect(() => {
