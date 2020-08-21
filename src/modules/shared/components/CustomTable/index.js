@@ -58,8 +58,7 @@ const CustomTable = ({
 
   const handlerHCellClick = key => () => {
     if (excludeSortBy.includes(key)) return;
-    const method =
-      sortBy === key && direction === sortTypes.ASC ? 'desc' : 'asc';
+    const method = sortBy === key && direction === sortTypes.ASC ? 'desc' : 'asc';
 
     if (getData) {
       const sort = [
@@ -100,8 +99,7 @@ const CustomTable = ({
           <Table.Header>
             <Table.Row>
               {columns.map(({ title, field, className }) => {
-                const sorted =
-                  (sortBy && sortBy === field && direction) || undefined;
+                const sorted = (sortBy && sortBy === field && direction) || undefined;
 
                 return (
                   <Table.HeaderCell
@@ -119,7 +117,7 @@ const CustomTable = ({
         )}
 
         <Table.Body>
-          {resultData.map((item, i) => {
+          {resultData.length > 0 && resultData.map((item, i) => {
             const rowKey = `${i}`;
             return (
               <Table.Row
@@ -142,6 +140,13 @@ const CustomTable = ({
               </Table.Row>
             );
           })}
+          {resultData.length === 0 && (
+          <Table.Row>
+            <Table.Cell>
+              Your query returned no results.
+            </Table.Cell>
+          </Table.Row>
+          )}
         </Table.Body>
       </Table>
     </>

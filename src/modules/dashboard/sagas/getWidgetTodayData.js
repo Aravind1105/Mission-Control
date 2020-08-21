@@ -15,7 +15,7 @@ function* handler() {
       query: GET_WIDGET_TODAY_DATA,
       variables: {
         period: {
-          from: new Date(),
+          from: new Date(new Date().setHours(0, 0, 0)),
           to: new Date(),
         },
       },

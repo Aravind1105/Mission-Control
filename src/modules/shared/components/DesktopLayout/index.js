@@ -5,6 +5,7 @@ import { Checkbox, Container, Menu } from 'semantic-ui-react';
 import logoSmall from 'styling/assets/images/logo-small.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
+import { getUserType } from 'modules/authentication/selectors';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar';
 // import LanguageSelect from '../LanguageSelect';
@@ -13,7 +14,7 @@ import './desktopLayout.less';
 
 const pjson = require('../../../../../package.json');
 
-const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
+const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks, userType }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
 
@@ -55,6 +56,11 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
             <Menu.Item>
               <UserProfileBar showName />
             </Menu.Item>
+            <Menu.Item>
+              <span className="user-type">
+                {userType}
+              </span>
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
         <Container>{children}</Container>
@@ -66,6 +72,7 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks }) => {
 const mapStateToProps = state => ({
   isLoading: state.kiosks.isLoading,
   alerts: getKiosksAlerts(state),
+  userType: getUserType(state),
 });
 
 const mapDispatchToProps = {
