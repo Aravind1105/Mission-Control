@@ -54,27 +54,28 @@ const ProductDetail = ({
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
-  const [buttonVal, setButtonVal] = useState("Submit");
+  const [buttonVal, setButtonVal] = useState('Submit');
+  const [disableForm, setDisableForm] = useState(false);
 
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
       getFullProductData(id);
       getOrganizations();
-      setButtonVal(id == 'new'? "Submit": "Save")
+      setButtonVal(id == 'new' ? 'Submit' : 'Save');
     }
   }, []);
-  
+
   // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
   const deleteProductLine = () => {
-    if(window.confirm('Willst Du das Product Line löschen?')){
-      const {payload} = deleteProductSaga(id);
-      if(payload == id){
-        window.alert('Product Line erfolgreich gelöscht!')
+    if (window.confirm('Willst Du das Product Line löschen?')) {
+      const { payload } = deleteProductSaga(id);
+      if (payload == id) {
+        window.alert('Product Line erfolgreich gelöscht!');
         window.location.href = backLink.link;
       }
     }
-  }
+  };
 
   return (
     <Grid stackable>
@@ -93,24 +94,25 @@ const ProductDetail = ({
           </Grid.Row>
 
           <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Header as="h3">{productName}</Header>
-                  <Divider />
-                  <ProductForm
-                    initialValues={{ ...initialValues, image: 0 }}
-                    // categoryOption={categoryOption}
-                    // familyOption={familyOption}
-                    taxesOption={taxesOption}
-                    uploadedImage={uploadedImage}
-                    organizations={organizations}
-                    isImageDeleted={isImageDeleted}
-                    setIsCancelTriggered={setIsCancelTriggered}
-                    setIsImageDeleted={setIsImageDeleted}
-                    buttonVal={buttonVal}
-                  />
-                </Segment>
-              </Grid.Column>
+            <Grid.Column>
+              <Segment>
+                <Header as="h3">{productName}</Header>
+                <Divider />
+                <ProductForm
+                  initialValues={{ ...initialValues, image: 0 }}
+                  // categoryOption={categoryOption}
+                  // familyOption={familyOption}
+                  taxesOption={taxesOption}
+                  uploadedImage={uploadedImage}
+                  organizations={organizations}
+                  isImageDeleted={isImageDeleted}
+                  setIsCancelTriggered={setIsCancelTriggered}
+                  setIsImageDeleted={setIsImageDeleted}
+                  buttonVal={buttonVal}
+                  disableForm={disableForm}
+                />
+              </Segment>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </Grid.Column>
@@ -134,6 +136,7 @@ const ProductDetail = ({
             setIsImageDeleted={setIsImageDeleted}
             isCancelTriggered={isCancelTriggered}
             isImageDeleted={isImageDeleted}
+            setDisableForm={setDisableForm}
           />
         </Grid.Column>
       ) : null}
@@ -144,9 +147,10 @@ const ProductDetail = ({
 const mapStateToProps = (state, { match: { params } }) => {
   // const options = selectorGetProductFamilyForm(state);
   const product = selectorGetProductInitValue(state);
-  const isProductLoaded = params.id === 'new'
-    ? !get(product, 'id')
-    : product && product.id === params.id;
+  const isProductLoaded =
+    params.id === 'new'
+      ? !get(product, 'id')
+      : product && product.id === params.id;
 
   return {
     product,
