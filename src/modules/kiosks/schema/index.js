@@ -224,3 +224,29 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
   }
   ${productOnProductLine}
 `;
+
+export const GET_TEMPERATURE_LOGS = gql`
+  query getTemperatureEventsByKioskWithResolution(
+      $kioskId: String!
+      $from: DateTime!
+      $to: DateTime!
+      $limit: Int!
+      $resolution: month
+    ) {
+    getTemperatureEventsByKioskWithResolution (
+      kioskId: $kioskId
+      from: $from
+      to: $to
+      limit: $limit
+      resolution: $resolution
+    ) {
+      avgTemp
+      year
+      kiosk
+      year
+      month
+      day
+      hour
+    }
+  }
+`;
