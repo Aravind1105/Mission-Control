@@ -1,20 +1,22 @@
 /* eslint-disable import/named */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import gqlKiosk from 'lib/https/gqlKiosk';
+import gqlIot from 'lib/https/gqlIot';
 import { GET_TEMPERATURE_LOGS } from '../schema';
 import { getTemperatureLogs, getTemperatureLogsSuccess } from '../actions';
 
 function* handler({ payload }) {
   try {
-    const { data: { getTemperatureEventsByKioskWithResolution } } = yield call(gqlKiosk.query, {
+    const { data: { getTemperatureEventsByKioskWithResolution } } = yield call(gqlIot.query, {
       query: GET_TEMPERATURE_LOGS,
       variables: {
-        kioskId: '5c17a3d963ca649138ec522c',
-        from: '2020-01-01',
-        to: '2020-08-01',
-        limit: 100,
-        resolution: 'MONTH',
+        data: {
+          kioskId: payload.kioskId,
+          from: payload.from,
+          to: payload.to,
+          limit: 25,
+          resolution: payload.resolution,
+        },
       },
     });
     yield put(getTemperatureLogsSuccess({

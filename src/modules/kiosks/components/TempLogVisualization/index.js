@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
@@ -7,13 +7,39 @@ import { Grid, Segment, Header, Button } from 'semantic-ui-react';
 import DatePicker from 'modules/shared/components/Datepicker';
 import ComplexChart from '../ComplexChart';
 import { getTemperatureLogs } from '../../actions';
+import { getKioskSingle, getTemperatureLogsState } from '../../selectors';
 
 import './styles.less';
 
-const TempLogVisualization = ({ getTemperatureLogs, temperatureLogs }) => {
+
+const dataKeys = {
+  MONTH: 'month',
+  DAY: 'day',
+};
+
+const defaultDateRange = {
+  from: new Date(new Date(new Date().setHours(0, 0, 0)).setDate(1)),
+  to: new Date(),
+};
+
+const optionsResolution = [
+  { label: 'Monthly', value: dataKeys.MONTH },
+  { label: 'Daily', value: dataKeys.DAY },
+];
+
+const TempLogVisualization = ({ kiosk, getTemperatureLogs, temperatureLogs }) => {
+  const [resolution, setResolution] = useState(optionsResolution[1].value);
+  const [dateRange, setDateRange] = useState(defaultDateRange);
+
+  const getData = () => getTemperatureLogs({ kioskId: kiosk._id, resolution, ...dateRange });
+
   useEffect(() => {
-    getTemperatureLogs({});
+    getData();
   }, []);
+
+  useEffect(() => {
+    getData();
+  }, [resolution, dateRange]);
 
   const handleDateChange = value => {
     let date = '';
@@ -26,15 +52,15 @@ const TempLogVisualization = ({ getTemperatureLogs, temperatureLogs }) => {
         return prev;
       }, {});
     }
-    // changePage(0);
-    // changeDate(date);
-    // if (date.$gte && date.$lte) {
-    //   changeExportData({
-    //     from: date.$gte,
-    //     to: date.$lte,
-    //     kiosk: exportData.kiosk ? exportData.kiosk : '',
-    //   });
-    // }
+    if (date.$gte && date.$lte) {
+      setDateRange({ from: date.$gte, to: date.$lte });
+    } else {
+      setDateRange(defaultDateRange);
+    }
+  };
+
+  const handleChangeResolution = ({ value }) => {
+    setResolution(value);
   };
 
   return (
@@ -52,6 +78,13 @@ const TempLogVisualization = ({ getTemperatureLogs, temperatureLogs }) => {
                 <DatePicker type="range" onChange={handleDateChange} />
               </Grid.Column>
               <Grid.Column width={4}>
+                <Select
+                  onChange={handleChangeResolution}
+                  options={optionsResolution}
+                  defaultValue={optionsResolution[1]}
+                />
+              </Grid.Column>
+              {/* <Grid.Column width={4}>
                 <Button
                   style={{
                     background: 'white',
@@ -63,11 +96,11 @@ const TempLogVisualization = ({ getTemperatureLogs, temperatureLogs }) => {
                   Download CSV&nbsp;&nbsp;
                   <i className="arrow down icon" />
                 </Button>
-              </Grid.Column>
+              </Grid.Column> */}
             </Grid.Row>
             <Grid.Row>
               <Grid.Column mobile={16} computer={16}>
-                <ComplexChart data={temperatureLogs} />
+                <ComplexChart data={temperatureLogs} xAxisDataKey={resolution} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -77,12 +110,9 @@ const TempLogVisualization = ({ getTemperatureLogs, temperatureLogs }) => {
   );
 };
 
-TempLogVisualization.propTypes = {
-
-};
-
 const mapStateToProps = state => ({
-  temperatureLogs: [{ month: 'Jan', Name1: 22 }, { month: 'Feb', Name1: 18 }, { month: 'Mar', Name1: 29 }],
+  kiosk: getKioskSingle(state),
+  temperatureLogs: getTemperatureLogsState(state),
 });
 
 const mapDispatchToProps = {

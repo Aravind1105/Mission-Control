@@ -14,7 +14,7 @@ var _schema2 = require("../../users/schema");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _templateObject14() {
-  var data = _taggedTemplateLiteral(["\n  query getTemperatureEventsByKioskWithResolution(\n      $kioskId: String!\n      $from: DateTime!\n      $to: DateTime!\n      $limit: Int!\n      $resolution: month\n    ) {\n    getTemperatureEventsByKioskWithResolution (\n      kioskId: $kioskId\n      from: $from\n      to: $to\n      limit: $limit\n      resolution: $resolution\n    ) {\n      avgTemp\n      year\n      kiosk\n      year\n      month\n      day\n      hour\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query getTemperatureEventsByKioskWithResolution($data: TemperatureEventsByKioskWithResolutionInput) {\n    getTemperatureEventsByKioskWithResolution (data: $data) {\n      avgTemp\n      maxTemp\n      minTemp\n      year\n      kiosk\n      year\n      month\n      day\n      hour\n    }\n  }\n"]);
 
   _templateObject14 = function _templateObject14() {
     return data;
