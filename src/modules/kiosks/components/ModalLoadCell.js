@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -14,6 +14,7 @@ import FormAsyncSelect from 'modules/shared/components/FormAsyncSelect';
 import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ConfirmModal';
+import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
@@ -41,6 +42,10 @@ const ModalLoadCell = ({
   orgId,
   getProductLinesByOrgId,
 }) => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [position, setPosition] = useState() ;
+  const [productInfo, setproductInfo] = useState();
+
   useEffect(() => {
     getProductLinesByOrgId(orgId);
   }, []);
@@ -77,40 +82,36 @@ const ModalLoadCell = ({
           kioskId: match.params.id,
         }),
       ) !== +data.price;
-    let hasApprove = true;
     const isReplacementRequired =
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.planogramPosition);
-    if (isReplacementRequired) {
-      hasApprove = window.confirm(
-        `A loadcell is already assigned to this position (${data.planogramPosition})! Do you want to switch positions?`,
-      );
-    }
     data.price = +data.price || 0;
     data.quantity = +data.quantity || 0;
-    if (hasApprove) {
-      let oldData;
-      if (isReplacementRequired) {
-        oldData = cells.find(
-          el => el.planogramPosition === data.planogramPosition,
-        );
-        oldData.planogramPosition = initVal.planogramPosition;
-      }
-      modifyKioskLoadCell({
-        isPriceChanged,
-        isProductChanged,
-        isQuantityChanged,
-        isPositionIdChanged,
-        data,
-        oldData,
-        callback: handleClose,
-      });
+    let oldData;
+    if (isReplacementRequired) {
+      oldData = cells.find(
+        el => el.planogramPosition === data.planogramPosition,
+      );
+      oldData.planogramPosition = initVal.planogramPosition;
     }
+    modifyKioskLoadCell({
+      isPriceChanged,
+      isProductChanged,
+      isQuantityChanged,
+      isPositionIdChanged,
+      data,
+      oldData,
+      callback: handleClose,
+    });
   };
 
   return (
     <Formik
-      onSubmit={handleSave}
+      onSubmit={ data => {
+        setproductInfo(data);
+        setPosition(data.planogramPosition);
+        }
+      }
       initialValues={initVal}
       key={initVal.price}
       validateOnBlur
@@ -195,10 +196,26 @@ const ModalLoadCell = ({
               </Grid>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="green" type="submit" disabled={!dirty}>
+              <Button color="red" onClick={() => handleClose()}>Cancel</Button>
+              <Button 
+                color="green"
+                type="submit"
+                disabled={!dirty} 
+                onClick={() => setShowAlert(true)}
+              >
                 Update
               </Button>
             </Modal.Actions>
+            <CustomAlert 
+              visible={showAlert}
+              onApprove={() => {
+                handleSave(productInfo);
+                setShowAlert(false);
+                }
+              }
+              onCancel={() => setShowAlert(false)}
+              alertMsg={`A loadcell is already assigned to this position (${position})! Do you want to switch positions?`}
+            /> 
           </form>
         </ConfirmModal>
       )}
