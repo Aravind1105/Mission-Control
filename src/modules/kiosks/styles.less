@@ -18,21 +18,44 @@
   }
 }
 .load-cell {
-  padding: 15px 20px 15px 15px;
+  padding: 0.5rem 0.5rem !important;
   height: 100%;
-  border-right: 1px dashed #d4d4d4;
-  border-bottom: 1px dashed #d4d4d4;
-  overflow: hidden;
-  min-height: 135px;
+  min-height: 100px;
   &:last-child {
     border-right: none;
   }
-  .load-cell-header {
-    position: relative;
-  }
   .load-cell-content {
+    padding: 6px 6px 6px 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    height: 105px;
+    overflow: hidden;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.15);
+  }
+  .load-cell-info {
+    margin: 0 10px 0 0;
+    display: flex;
+  }
+  .load-cell-title {
+    margin: 0 0 5px;
+    display: block;
+    height: 38px;
+    overflow: hidden;
+  }
+  .load-cell-position {
+    margin: auto 8px auto 0;
+    padding: 0 2px;
+    display: block;
+    background: #000;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    height: 20px;
+    min-width: 31px;
+    text-align: center;
   }
   .load-cell-icon {
     margin: 0 10px 0 0;
@@ -52,10 +75,7 @@
     }
   }
   .edit-icon {
-    position: absolute;
-    top: -1px;
-    right: 0;
-    z-index: 10;
+    margin: 0 0 auto;
   }
 }
 .edit-icon {
