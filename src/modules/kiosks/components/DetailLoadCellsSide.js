@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon, Button } from 'semantic-ui-react';
+import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
@@ -22,32 +22,32 @@ const Card = ({
 
   return (
     <Grid.Column className="load-cell">
-      <div className="load-cell-header">
-        <b>{cellId}</b>
+      <div className="load-cell-content">
+        <b className="load-cell-position">{planogramPosition}</b>
+        <div className="load-cell-info">
+          <div className="load-cell-icon">
+            {productLine.image ? (
+              <img src={productLine.image} alt={productLine.name} />
+            ) : (
+              <NoImg />
+            )}
+          </div>
+          <div className="load-cell-body">
+            <b className="load-cell-title">
+              {productLine ? `${productLine.name}` : null}
+            </b>
+            <p>
+              Qty:&nbsp;
+              <ColoredBlock type="b" value={totalProducts ? 100 : 0}>
+                {totalProducts}
+              </ColoredBlock>
+            </p>
+            <p>{`€ ${productLine.price}`}</p>
+          </div>
+        </div>
         <button type="button" className="edit-icon" onClick={handleClick}>
           <Icon name="edit" size="small" />
         </button>
-      </div>
-
-      <div className="load-cell-content">
-        <div className="load-cell-icon">
-          {productLine.image ? (
-            <img src={productLine.image} alt={productLine.name} />
-          ) : (
-            <NoImg />
-          )}
-        </div>
-        <div className="load-cell-body">
-          <p>
-            <b>{productLine ? `${productLine.name}` : null}</b>
-          </p>
-          <p>
-            <ColoredBlock type="b" value={totalProducts ? 100 : 0}>
-              {totalProducts}
-            </ColoredBlock>
-          </p>
-          <p>{`€ ${productLine.price}`}</p>
-        </div>
       </div>
     </Grid.Column>
   );
@@ -57,20 +57,27 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
   <Grid.Column>
     {cells.length > 0 && (
       <Grid>
-        {cells.map((row, i) => (
-          <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
-            {row.map(props =>
-              props ? (
-                <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-              ) : (
-                <Grid.Column
-                  key={performance.now().toString(32)}
-                  className="load-cell"
-                />
-              ),
-            )}
-          </Grid.Row>
-        ))}
+        {cells.map((row, i) => {
+          let fullWidth = false;
+          return (
+            <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
+              {row.map((props, j) => {
+                if (!j) {
+                  fullWidth = Boolean(props);
+                }
+                if ((fullWidth && j) || (!fullWidth && !j)) return null;
+                return props ? (
+                  <Card {...props} key={props.cellId} handleEdit={handleEdit} />
+                ) : (
+                  <Grid.Column
+                    key={performance.now().toString(32)}
+                    className="load-cell"
+                  />
+                );
+              })}
+            </Grid.Row>
+          );
+        })}
       </Grid>
     )}
     {handleAdd && (
