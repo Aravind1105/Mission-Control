@@ -22,8 +22,8 @@ const ProductForm = ({
   setIsCancelTriggered,
   setIsImageDeleted,
   buttonVal,
+  disableForm,
 }) => {
-
   const dispatch = useDispatch();
 
   const onSubmit = (values, formActions) => {
@@ -36,11 +36,13 @@ const ProductForm = ({
     delete values.image;
     setIsCancelTriggered(false);
     setIsImageDeleted(false);
-    values.packagingOptions[0].ean == "" ?
-      values.packagingOptions[0].ean = "Optional field not used." : values.packagingOptions[0].ean;
-    values.packagingOptions[0].description == "" ?
-      values.packagingOptions[0].description = "Optional field not used." : values.packagingOptions[0].description;
-    
+    values.packagingOptions[0].ean == ''
+      ? (values.packagingOptions[0].ean = 'Optional field not used.')
+      : values.packagingOptions[0].ean;
+    values.packagingOptions[0].description == ''
+      ? (values.packagingOptions[0].description = 'Optional field not used.')
+      : values.packagingOptions[0].description;
+
     dispatch(
       modifyProductSaga({
         values,
@@ -333,7 +335,11 @@ const ProductForm = ({
                   >
                     Cancel
                   </Button>
-                  <Button color="green" type="submit" disabled={!dirty}>
+                  <Button
+                    color="green"
+                    type="submit"
+                    disabled={!dirty || disableForm}
+                  >
                     {buttonVal}
                   </Button>
                 </Grid.Column>

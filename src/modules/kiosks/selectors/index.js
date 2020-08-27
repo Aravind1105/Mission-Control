@@ -1,3 +1,6 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable space-infix-ops */
+/* eslint-disable radix */
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import sortBy from 'lodash/sortBy';
@@ -248,3 +251,36 @@ export const getProductsDropdownList = (id = '') =>
   );
 
 export const getTotalKiosks = state => state.kiosks.total;
+
+export const getTemperatureLogsState = state => {
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'November', 'Dec',
+  ];
+  const { temperatureLogs } = state.kiosks;
+  const logs = temperatureLogs.sort((a, b) => {
+    const aDate = new Date();
+    aDate.setMonth(a.month || 1);
+    aDate.setDate(a.day || 1);
+    aDate.setFullYear(a.year);
+
+    const bDate = new Date();
+    bDate.setMonth(b.month || 1);
+    bDate.setDate(b.day || 1);
+    bDate.setFullYear(b.year);
+
+    return (aDate > bDate) ? 1 : -1;
+  });
+
+  let month = -1;
+  if (logs.length > 0) {
+    month = logs[0].month;
+  }
+  const isAllMonthsSame = logs.every(log => log.month === month);
+
+  return logs.map(log => ({
+    avgTemp: parseInt(log.avgTemp),
+    year: log.year,
+    month: monthNames[log.month],
+    day: isAllMonthsSame ? log.day : `${monthNames[log.month]}/${log.day}`,
+  }));
+};

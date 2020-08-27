@@ -120,6 +120,7 @@ const kiosksReducer = handleActions(
     [getTemperatureLogsSuccess]: (state, { payload }) => ({
       ...state,
       temperatureLogs: payload.temperatureLogs,
+      isLoading: false,
     }),
   },
   initialState,

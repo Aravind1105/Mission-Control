@@ -20,14 +20,13 @@ const CustomLabel = ({ value, x, y, color }) => (
   <g x={x} y={y} fill={color} stroke="#FFF" strokeWidth="1">
     <rect x={x - 12} y={y - 13} width="25" height="20" rx="5" ry="5" />
     <text x={x} y={y} strokeWidth="0.6" fontSize={10} textAnchor="middle">
-      {value}
+      {`${value}°C`}
     </text>
   </g>
 );
 
-const ComplexChart = ({ data }) => {
-  const chartData = data ? data : [];
-
+const ComplexChart = ({ data, xAxisDataKey }) => {
+  const chartData = data;
   return (
     <div style={{ height: 400 }}>
       <ResponsiveContainer>
@@ -43,7 +42,7 @@ const ComplexChart = ({ data }) => {
             </linearGradient>
           </defs>
           <CartesianGrid vertical={false} strokeDasharray="5 5" />
-          <XAxis dataKey="month" />
+          <XAxis dataKey={xAxisDataKey} />
           <YAxis axisLine={false} />
           {/* <Area
             type="monotone"
@@ -56,7 +55,7 @@ const ComplexChart = ({ data }) => {
           /> */}
           <Area
             type="monotone"
-            dataKey="Name1"
+            dataKey="avgTemp"
             stroke="#6ed99f"
             fill="url(#colorTwo)"
             fillOpacity={1}

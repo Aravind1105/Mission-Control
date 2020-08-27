@@ -106,7 +106,8 @@ var kiosksReducer = (0, _reduxActions.handleActions)((_handleActions = {}, _defi
 }), _defineProperty(_handleActions, _actions.getTemperatureLogsSuccess, function (state, _ref9) {
   var payload = _ref9.payload;
   return _objectSpread({}, state, {
-    temperatureLogs: payload.temperatureLogs
+    temperatureLogs: payload.temperatureLogs,
+    isLoading: false
   });
 }), _handleActions), initialState);
 var _default = kiosksReducer;

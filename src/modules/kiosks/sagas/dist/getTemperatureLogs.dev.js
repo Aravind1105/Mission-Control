@@ -7,7 +7,7 @@ exports["default"] = saga;
 
 var _effects = require("redux-saga/effects");
 
-var _gqlKiosk = _interopRequireDefault(require("lib/https/gqlKiosk"));
+var _gqlIot = _interopRequireDefault(require("lib/https/gqlIot"));
 
 var _schema = require("../schema");
 
@@ -32,14 +32,16 @@ function handler(_ref) {
           payload = _ref.payload;
           _context.prev = 1;
           _context.next = 4;
-          return (0, _effects.call)(_gqlKiosk["default"].query, {
+          return (0, _effects.call)(_gqlIot["default"].query, {
             query: _schema.GET_TEMPERATURE_LOGS,
             variables: {
-              kioskId: '5c17a3d963ca649138ec522c',
-              from: '2020-01-01',
-              to: '2020-08-01',
-              limit: 100,
-              resolution: 'MONTH'
+              data: {
+                kioskId: payload.kioskId,
+                from: payload.from,
+                to: payload.to,
+                limit: 25,
+                resolution: payload.resolution
+              }
             }
           });
 
