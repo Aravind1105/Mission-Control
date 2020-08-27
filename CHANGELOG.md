@@ -1,3 +1,24 @@
+#### 1.1.5 (2020-08-27)
+
+##### Chores
+
+* **User Type in Menu bar:**  LIV-1596 (c61b63ac)
+
+##### Bug Fixes
+
+* **Dashboard KPI Widgets:** LIV-1761 bug fix (399598aa)
+
+##### Other Changes
+
+* **liv-1638:**  use semantic alert when updating product location on planogram. (a50a5a17)
+* **Tempreature Logs:**  LIV-1769 Temperature log visualization (1c5bd5e6)
+* **Alert:** CustomAlert component (67dca79d)
+* **Temperature Logs:**  LIV-1769 (e1a4942d)
+
+##### Code Style Changes
+
+* **Empty table:**  LIV-1569 (0c94e097)
+
 #### 1.1.4 (2020-08-21)
 
 #### 1.1.3 (2020-08-20)
