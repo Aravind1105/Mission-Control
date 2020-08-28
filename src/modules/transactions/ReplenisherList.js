@@ -63,15 +63,16 @@ const ReplenisherList = ({
 
     if (search || kiosk || dateRange || product) {
       const name = search ? { product: { $regex: search } } : {};
-      const cat = kiosk ? { kiosk: { $regex: kiosk } } : {};
       const date = dateRange ? { created: dateRange } : {};
       const prod = product ? { product } : {};
+      const kio = kiosk ? { kiosk } : {};
 
       data.search = JSON.stringify({
         ...name,
         ...cat,
         ...date,
         ...prod,
+        ...kio,
       });
     }
     if (dateRange || kiosk) {
