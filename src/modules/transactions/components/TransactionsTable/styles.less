@@ -9,6 +9,7 @@
     background-color: @grey2 !important;
     color: #ffffff !important;
     padding: 2px 0.78571429em !important;
+    cursor: default !important;
   }
   th.sorted {
     background-color: @greyExtraTable !important;
@@ -16,6 +17,9 @@
   }
   tr:nth-child(2n) {
     background: @grey6 !important;
+  }
+  .sortable-th {
+    cursor: pointer !important;
   }
 }
 
@@ -34,7 +38,7 @@
 .transactions-table {
   cursor: unset !important;
   tbody:hover tr td {
-    background-color: #F1FCFF !important;
+    background-color: #f1fcff !important;
   }
 }
 
