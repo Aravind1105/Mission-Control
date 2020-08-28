@@ -28,8 +28,11 @@ const AlertIcon = ({ quantity }) => (
 
 const AlertsList = ({ alerts }) => {
   const tenAlerts = useMemo(() => alerts.slice(0, 10), [alerts]);
-  const handleClick = () => {
+  const handleShowAll = () => {
     history.push('/dashboard/alerts');
+  };
+  const handleClick = id => {
+    history.push(`/kiosks/detail/${id}`);
   };
   return (
     <Dropdown
@@ -42,7 +45,7 @@ const AlertsList = ({ alerts }) => {
         <Dropdown.Header icon="tags" content="Notification" />
         <Dropdown.Divider />
         {tenAlerts.map(({ id, title, message }) => (
-          <Dropdown.Item key={id}>
+          <Dropdown.Item key={id} onClick={() => handleClick(id)}>
             <ColoredBlock type="b" value={0}>
               {title}
             </ColoredBlock>
@@ -50,7 +53,7 @@ const AlertsList = ({ alerts }) => {
           </Dropdown.Item>
         ))}
         <Dropdown.Divider />
-        <Dropdown.Item onClick={handleClick}>
+        <Dropdown.Item onClick={handleShowAll}>
           <div className="show-all-dropdown-btn">Show All</div>
         </Dropdown.Item>
       </Dropdown.Menu>

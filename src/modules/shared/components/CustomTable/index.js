@@ -58,7 +58,8 @@ const CustomTable = ({
 
   const handlerHCellClick = key => () => {
     if (excludeSortBy.includes(key)) return;
-    const method = sortBy === key && direction === sortTypes.ASC ? 'desc' : 'asc';
+    const method =
+      sortBy === key && direction === sortTypes.ASC ? 'desc' : 'asc';
 
     if (getData) {
       const sort = [
@@ -82,7 +83,6 @@ const CustomTable = ({
   };
 
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
-
   return (
     <>
       {isLoading && <Loader />}
@@ -99,12 +99,18 @@ const CustomTable = ({
           <Table.Header>
             <Table.Row>
               {columns.map(({ title, field, className }) => {
-                const sorted = (sortBy && sortBy === field && direction) || undefined;
-
+                const sorted =
+                  (sortBy && sortBy === field && direction) || undefined;
+                const sortClass =
+                  Array.isArray(excludeSortBy) &&
+                  sortable &&
+                  !excludeSortBy.find(elem => elem === field)
+                    ? 'sortable-th'
+                    : '';
                 return (
                   <Table.HeaderCell
                     key={field}
-                    className={className || null}
+                    className={`${className || ''} ${sortClass}`}
                     sorted={sorted}
                     onClick={sortable ? handlerHCellClick(field) : undefined}
                   >
@@ -117,35 +123,34 @@ const CustomTable = ({
         )}
 
         <Table.Body>
-          {resultData.length > 0 && resultData.map((item, i) => {
-            const rowKey = `${i}`;
-            return (
-              <Table.Row
-                key={rowKey}
-                active={activeRow === i}
-                onClick={handlerRowClick(item, i)}
-              >
-                {columns.map(({ field, formatter }, j) => {
-                  const cellKey = `${i}-${field}`;
-                  const cellValue = formatter
-                    ? formatter(item, j)
-                    : get(item, field, '');
+          {resultData.length > 0 &&
+            resultData.map((item, i) => {
+              const rowKey = `${i}`;
+              return (
+                <Table.Row
+                  key={rowKey}
+                  active={activeRow === i}
+                  onClick={handlerRowClick(item, i)}
+                >
+                  {columns.map(({ field, formatter }, j) => {
+                    const cellKey = `${i}-${field}`;
+                    const cellValue = formatter
+                      ? formatter(item, j)
+                      : get(item, field, '');
 
-                  return (
-                    <Table.Cell key={cellKey} className="table-cell-text">
-                      {cellValue}
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            );
-          })}
+                    return (
+                      <Table.Cell key={cellKey} className="table-cell-text">
+                        {cellValue}
+                      </Table.Cell>
+                    );
+                  })}
+                </Table.Row>
+              );
+            })}
           {resultData.length === 0 && (
-          <Table.Row>
-            <Table.Cell>
-              Your query returned no results.
-            </Table.Cell>
-          </Table.Row>
+            <Table.Row>
+              <Table.Cell>Your query returned no results.</Table.Cell>
+            </Table.Row>
           )}
         </Table.Body>
       </Table>
