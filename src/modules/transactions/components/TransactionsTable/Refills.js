@@ -36,7 +36,6 @@ const RefillsTable = ({
   const [sortBy, setSortBy] = useState(sortByColumn);
   // const [activeRow, setActiveRow] = useState(-1);
 
-
   useEffect(() => {
     let res = data;
     if (sortBy) {
@@ -103,11 +102,16 @@ const RefillsTable = ({
               {columns.map(({ title, field, className }) => {
                 const sorted =
                   (sortBy && sortBy === field && direction) || undefined;
-
+                const sortClass =
+                  Array.isArray(excludeSortBy) &&
+                  sortable &&
+                  !excludeSortBy.find(elem => elem === field)
+                    ? 'sortable-th'
+                    : '';
                 return (
                   <Table.HeaderCell
                     key={field}
-                    className={className || null}
+                    className={`${className || ''} ${sortClass}`}
                     sorted={sorted}
                     onClick={sortable ? handlerHCellClick(field) : undefined}
                   >
@@ -119,48 +123,59 @@ const RefillsTable = ({
           </Table.Header>
         )}
 
-        {
-          resultData.map((resultItem, rowIdx) => (
-            <Table.Body
-              // className={activeRow === rowIdx ? 'active-body' : ''}
-            >
-              {resultItem.map((item, i) => {
-                const rowKey = `${i}`;
-                if (item.refillsId) {
-                  toggleTableCellColor = !toggleTableCellColor;
-                }
-                return (
-                  <Table.Row
-                    key={rowKey}
-                    // onClick={handlerRowClick(item, rowIdx)}
-                  >
-                    {columns.map(({ field, formatter }, j) => {
-                      const cellKey = `${i}-${field}`;
-                      const cellValue = formatter
-                        ? formatter(item, j)
-                        : get(item, field, '');
-                      const isOnlyRootField = (field === 'kioskName') || (field === 'created');
-                      if (!item.refillsId && isOnlyRootField) {
-                        return;
-                      }
-                      // eslint-disable-next-line consistent-return
-                      return (
-                        <Table.Cell
-                          key={cellKey}
-                          // eslint-disable-next-line no-nested-ternary
-                          rowSpan={item.refillsId && isOnlyRootField ? (item.uniqueProducts === 1 ? 1 : item.uniqueProducts + 1) : '1'}
-                          className={`table-cell-text ${item.refillsId ? 'table-cell-text-transaction' : ''} ${toggleTableCellColor ? 'table-cell-bg-grey' : 'table-cell-bg-white'}`}
-                        >
-                          {cellValue}
-                        </Table.Cell>
-                      );
-                    })}
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
-          ))
-        }
+        {resultData.map((resultItem, rowIdx) => (
+          <Table.Body
+          // className={activeRow === rowIdx ? 'active-body' : ''}
+          >
+            {resultItem.map((item, i) => {
+              const rowKey = `${i}`;
+              if (item.refillsId) {
+                toggleTableCellColor = !toggleTableCellColor;
+              }
+              return (
+                <Table.Row
+                  key={rowKey}
+                  // onClick={handlerRowClick(item, rowIdx)}
+                >
+                  {columns.map(({ field, formatter }, j) => {
+                    const cellKey = `${i}-${field}`;
+                    const cellValue = formatter
+                      ? formatter(item, j)
+                      : get(item, field, '');
+                    const isOnlyRootField =
+                      field === 'kioskName' || field === 'created';
+                    if (!item.refillsId && isOnlyRootField) {
+                      return;
+                    }
+                    // eslint-disable-next-line consistent-return
+                    return (
+                      <Table.Cell
+                        key={cellKey}
+                        // eslint-disable-next-line no-nested-ternary
+                        rowSpan={
+                          item.refillsId && isOnlyRootField
+                            ? item.uniqueProducts === 1
+                              ? 1
+                              : item.uniqueProducts + 1
+                            : '1'
+                        }
+                        className={`table-cell-text ${
+                          item.refillsId ? 'table-cell-text-transaction' : ''
+                        } ${
+                          toggleTableCellColor
+                            ? 'table-cell-bg-grey'
+                            : 'table-cell-bg-white'
+                        }`}
+                      >
+                        {cellValue}
+                      </Table.Cell>
+                    );
+                  })}
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        ))}
       </Table>
     </>
   );
