@@ -69,7 +69,6 @@ const ReplenisherList = ({
 
       data.search = JSON.stringify({
         ...name,
-        ...cat,
         ...date,
         ...prod,
         ...kio,
