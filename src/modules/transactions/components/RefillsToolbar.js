@@ -75,10 +75,10 @@ const Toolbar = ({
     >
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -87,7 +87,7 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <Button
               style={{
                 background: 'white',
@@ -100,7 +100,7 @@ const Toolbar = ({
               <i className="arrow down icon" />
             </Button>
           </Grid.Column>
-          {/* <Grid.Column width={3}>
+          {/* <Grid.Column width={4}>
             <Dropdown
               placeholder="Product"
               selection
