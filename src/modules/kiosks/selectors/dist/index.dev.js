@@ -368,11 +368,18 @@ var getTemperatureLogsState = function getTemperatureLogsState(state) {
     return log.month === month;
   });
   return logs.map(function (log) {
+    var date = new Date();
+    date.setMonth(log.month || 1);
+    date.setDate(log.day || 1);
+    date.setFullYear(log.year);
     return {
       avgTemp: parseInt(log.avgTemp),
+      minTemp: parseInt(log.minTemp),
+      maxTemp: parseInt(log.maxTemp),
       year: log.year,
       month: monthNames[log.month],
-      day: isAllMonthsSame ? log.day : "".concat(monthNames[log.month], "/").concat(log.day)
+      day: isAllMonthsSame ? log.day : "".concat(monthNames[log.month], "/").concat(log.day),
+      date: (0, _format["default"])(date, 'dd-MM-yyyy')
     };
   });
 };

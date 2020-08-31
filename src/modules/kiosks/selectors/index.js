@@ -277,10 +277,19 @@ export const getTemperatureLogsState = state => {
   }
   const isAllMonthsSame = logs.every(log => log.month === month);
 
-  return logs.map(log => ({
-    avgTemp: parseInt(log.avgTemp),
-    year: log.year,
-    month: monthNames[log.month],
-    day: isAllMonthsSame ? log.day : `${monthNames[log.month]}/${log.day}`,
-  }));
+  return logs.map(log => {
+    const date = new Date();
+    date.setMonth(log.month || 1);
+    date.setDate(log.day || 1);
+    date.setFullYear(log.year);
+    return {
+      avgTemp: parseInt(log.avgTemp),
+      minTemp: parseInt(log.minTemp),
+      maxTemp: parseInt(log.maxTemp),
+      year: log.year,
+      month: monthNames[log.month],
+      day: isAllMonthsSame ? log.day : `${monthNames[log.month]}/${log.day}`,
+      date: format(date, 'dd-MM-yyyy'),
+    };
+  });
 };
