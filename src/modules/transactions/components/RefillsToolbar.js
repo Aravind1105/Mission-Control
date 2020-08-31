@@ -88,7 +88,6 @@ const Toolbar = ({
               label= "Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
-              labelPosition="right"
               onClick={DownloadCsv}
               disabled={!Boolean(exportData)}
             />
