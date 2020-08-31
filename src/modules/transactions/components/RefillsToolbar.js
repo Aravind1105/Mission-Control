@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { func, arrayOf, object } from 'prop-types';
-import { Segment, Grid, Dropdown, Button } from 'semantic-ui-react';
+import { Grid, Dropdown } from 'semantic-ui-react';
 import format from 'date-fns/format';
 import { exportCsvRefills } from '../actions';
 import { connect } from 'react-redux';
+import CustomButton from 'modules/shared/components/CustomButton';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 
@@ -12,8 +13,6 @@ const Toolbar = ({
   changeDate,
   changePage,
   changeKiosk,
-  productsList,
-  changeProduct,
   exportCsvRefills,
 }) => {
   const [exportData, changeExportData] = useState(false);
@@ -63,9 +62,6 @@ const Toolbar = ({
     }
   };
 
-  const handleProductChange = (e, { value }) => {
-    changeProduct(value);
-  };
 
   return (
     <div
@@ -75,10 +71,10 @@ const Toolbar = ({
     >
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -87,28 +83,15 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={4}>
-            <Button
-              style={{
-                background: 'white',
-                border: '1px solid rgba(34,36,38,.15)',
-              }}
+          <Grid.Column width={3}>
+            <CustomButton
+              label= "Download CSV&nbsp;"
+              icon="arrow down icon"
+              className="custom-button-default"
               onClick={DownloadCsv}
               disabled={!Boolean(exportData)}
-            >
-              Download CSV&nbsp;&nbsp;
-              <i className="arrow down icon" />
-            </Button>
-          </Grid.Column>
-          {/* <Grid.Column width={4}>
-            <Dropdown
-              placeholder="Product"
-              selection
-              className="full-width"
-              options={productsList}
-              onChange={handleProductChange}
             />
-          </Grid.Column> */}
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </div>
