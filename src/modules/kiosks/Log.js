@@ -7,6 +7,7 @@ import Loader from 'modules/shared/components/Loader';
 import history from 'lib/history';
 import { getKioskSingle } from './selectors';
 import TempLogVisualization from './components/TempLogVisualization';
+import TempLog from './components/TempLog';
 
 const Log = ({ kiosk, isLoading }) => {
   const links = kiosk
@@ -52,6 +53,7 @@ const Log = ({ kiosk, isLoading }) => {
           </Grid.Column>
         </Grid.Row>
         <TempLogVisualization />
+        <TempLog />
       </Grid>
     </>
   );
