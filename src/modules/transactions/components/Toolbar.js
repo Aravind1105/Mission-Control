@@ -4,6 +4,7 @@ import { Grid, Dropdown, Button } from 'semantic-ui-react';
 import format from 'date-fns/format';
 import { exportCsvSales } from '../actions';
 import { connect } from 'react-redux';
+import CustomButton from 'modules/shared/components/CustomButton';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 
@@ -69,11 +70,11 @@ const Toolbar = ({
     >
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -86,18 +87,15 @@ const Toolbar = ({
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column width={4}>
-            <Button
-              style={{
-                background: 'white',
-                border: '1px solid rgba(34,36,38,.15)',
-              }}
-              onClick={DownloadCsv}
-              disabled={!Boolean(exportData)}
-            >
-              Download CSV&nbsp;&nbsp;
-              <i className="arrow down icon" />
-            </Button>
+          <Grid.Column width={3}>
+            <CustomButton
+                label= "Download CSV&nbsp;"
+                icon="arrow down icon"
+                className="custom-button-default"
+                labelPosition="right"
+                onClick={DownloadCsv}
+                disabled={!Boolean(exportData)}
+              />
           </Grid.Column>
         </Grid.Row>
       </Grid>
