@@ -254,7 +254,7 @@ export const getTotalKiosks = state => state.kiosks.total;
 
 export const getTemperatureLogsState = state => {
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'November', 'Dec',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
   ];
   const { temperatureLogs } = state.kiosks;
   const logs = temperatureLogs.sort((a, b) => {

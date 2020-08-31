@@ -345,7 +345,7 @@ var getTotalKiosks = function getTotalKiosks(state) {
 exports.getTotalKiosks = getTotalKiosks;
 
 var getTemperatureLogsState = function getTemperatureLogsState(state) {
-  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'November', 'Dec'];
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var temperatureLogs = state.kiosks.temperatureLogs;
   var logs = temperatureLogs.sort(function (a, b) {
     var aDate = new Date();
