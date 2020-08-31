@@ -1,3 +1,14 @@
+#### 1.1.6 (2020-08-31)
+
+##### Bug Fixes
+
+* **refills:**  fix cat var for refills search. (73f6825e)
+* **reffils:**  improve page layout for toolbar. (db002275)
+
+##### Refactors
+
+* **refills:**  filter kiosk as object instead of string. (3adba97a)
+
 #### 1.1.5 (2020-08-27)
 
 ##### Chores
