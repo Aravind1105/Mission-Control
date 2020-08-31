@@ -1,3 +1,16 @@
+#### 1.1.7 (2020-08-31)
+
+##### Bug Fixes
+
+* **Temperature Log Viz.:** November changed to Nov (9c175cdc)
+
+##### Other Changes
+
+* **button:**
+  *  refill & sales buttons icon fixed. (85ef832c)
+  * use correct button format on download button. (58e43cbd)
+* **Temp. Log Table:** LIV-1779 (ac5cff7c)
+
 #### 1.1.6 (2020-08-31)
 
 ##### Bug Fixes
