@@ -25,7 +25,7 @@ function* handler({ payload: { values, formActions } }) {
     });
     const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
-    history.push(`/kiosks/edit/${responseData._id}`);
+    history.push(`/kiosks/detail/${responseData._id}`);
     yield put(actionSuccess(responseData));
   } catch (error) {
     console.log(error);

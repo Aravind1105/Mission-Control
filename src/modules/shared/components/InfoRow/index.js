@@ -7,11 +7,7 @@ import './styles.less';
 const InfoRow = ({ title, description }) => (
   <>
     <GridColumn width={4} className="info-cell">
-      {
-      title && (
-        <b>{`${title}:`}</b>
-      )
-    }
+      {title && <b>{`${title}:`}</b>}
     </GridColumn>
     <GridColumn width={12} className="info-cell">
       {description}
@@ -20,7 +16,7 @@ const InfoRow = ({ title, description }) => (
 );
 
 InfoRow.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 

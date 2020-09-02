@@ -54,12 +54,12 @@ const KioskDetails = ({
   getOrganizationById,
   orgName,
 }) => {
+  const { id } = match.params;
   useEffect(() => {
-    const { id } = match.params;
     if ((!kiosk || kiosk._id !== id) && !isKioskLoading) {
       getKiosk(id);
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (orgId) {
