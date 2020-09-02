@@ -9,6 +9,7 @@ import getAlertsGrid from './getAlertsGrid';
 import getOrgName from './getOrgName';
 import getProductLinesByOrgId from './getProductLinesByOrgId';
 import getAlmostEmptyKiosks from './getAlmostEmptyKiosks';
+import getTemperatureLogs from './getTemperatureLogs';
 
 export default function* kiosksSaga() {
   yield all([
@@ -21,5 +22,6 @@ export default function* kiosksSaga() {
     fork(getOrgName),
     fork(getProductLinesByOrgId),
     fork(getAlmostEmptyKiosks),
+    fork(getTemperatureLogs),
   ]);
 }

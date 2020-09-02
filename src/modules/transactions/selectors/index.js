@@ -74,47 +74,52 @@ export const getTransactionsTableState = createSelector(
   getAllTransactionsState,
   transactions => {
     let newArr = [];
-    transactions.forEach(({ itemsPurchased, created, paymentMethod, ...rest }) => {
-      const item = {
-        transactionID: rest._id,
-        membercardId: (paymentMethod.length > 0 ? paymentMethod[0].membercardId : ''),
-        type: rest.type,
-        created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
-        session: rest.session,
-        total: rest.total,
-        price: 0,
-        productName: 'Total',
-        quantity: itemsPurchased.length,
-        kioskName:
-          (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
-          'unknown',
-      };
-      const arr = itemsPurchased.reduce((prev, { productLine, price, tax }) => {
-        const idx = prev.findIndex(el => el.id === productLine._id);
-        let quantity = 1;
-        if (~idx) {
-          const total = Math.round((prev[idx].total + price) * 100) / 100;
-          prev[idx].total = total;
-          quantity += 1;
-          prev[idx].quantity = quantity;
-        } else {
-          prev.push({
-            id: productLine._id,
-            productName: (productLine ? productLine.name : '') || 'unknown',
-            total: +price,
-            tax,
-            price,
-            quantity,
-          });
-        }
-        return prev;
-      }, []);
+    transactions.forEach(
+      ({ itemsPurchased, created, paymentMethod, ...rest }) => {
+        const item = {
+          transactionID: rest._id,
+          membercardId:
+            paymentMethod.length > 0 ? paymentMethod[0].membercardId : '',
+          type: rest.type,
+          created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
+          session: rest.session,
+          total: rest.total,
+          price: 0,
+          productName: 'Total',
+          quantity: itemsPurchased.length,
+          kioskName:
+            (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
+            'unknown',
+        };
+        const arr = itemsPurchased.reduce(
+          (prev, { productLine, price, tax }) => {
+            const idx = prev.findIndex(el => el.id === productLine._id);
+            let quantity = 1;
+            if (~idx) {
+              const total = Math.round((prev[idx].total + price) * 100) / 100;
+              prev[idx].total = total;
+              quantity += 1;
+              prev[idx].quantity = quantity;
+            } else {
+              prev.push({
+                id: productLine ? productLine._id : '' || 'unknown',
+                productName: (productLine ? productLine.name : '') || 'unknown',
+                total: +price,
+                tax,
+                price,
+                quantity,
+              });
+            }
+            return prev;
+          },
+          [],
+        );
 
-      item.uniqueProducts = arr.length;
-      const product =
-        arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
-      newArr = newArr.concat([product]);
-    },
+        item.uniqueProducts = arr.length;
+        const product =
+          arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
+        newArr = newArr.concat([product]);
+      },
     );
     return newArr;
   },

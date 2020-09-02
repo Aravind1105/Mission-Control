@@ -1,3 +1,48 @@
+#### 1.1.7 (2020-08-31)
+
+##### Bug Fixes
+
+* **Temperature Log Viz.:** November changed to Nov (9c175cdc)
+
+##### Other Changes
+
+* **button:**
+  *  refill & sales buttons icon fixed. (85ef832c)
+  * use correct button format on download button. (58e43cbd)
+* **Temp. Log Table:** LIV-1779 (ac5cff7c)
+
+#### 1.1.6 (2020-08-31)
+
+##### Bug Fixes
+
+* **refills:**  fix cat var for refills search. (73f6825e)
+* **reffils:**  improve page layout for toolbar. (db002275)
+
+##### Refactors
+
+* **refills:**  filter kiosk as object instead of string. (3adba97a)
+
+#### 1.1.5 (2020-08-27)
+
+##### Chores
+
+* **User Type in Menu bar:**  LIV-1596 (c61b63ac)
+
+##### Bug Fixes
+
+* **Dashboard KPI Widgets:** LIV-1761 bug fix (399598aa)
+
+##### Other Changes
+
+* **liv-1638:**  use semantic alert when updating product location on planogram. (a50a5a17)
+* **Tempreature Logs:**  LIV-1769 Temperature log visualization (1c5bd5e6)
+* **Alert:** CustomAlert component (67dca79d)
+* **Temperature Logs:**  LIV-1769 (e1a4942d)
+
+##### Code Style Changes
+
+* **Empty table:**  LIV-1569 (0c94e097)
+
 #### 1.1.4 (2020-08-21)
 
 #### 1.1.3 (2020-08-20)

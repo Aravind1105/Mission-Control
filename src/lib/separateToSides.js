@@ -30,9 +30,10 @@ const separateToSides = cells => {
     },
     { A: [], B: [] },
   );
+
   return {
-    A: cellArr.A.map(el => el.filter(cell => cell !== undefined)),
-    B: cellArr.B.map(el => el.filter(cell => cell !== undefined)),
+    A: cellArr.A.map(el => (el[0] ? el : el.length > 2 ? el : el.concat(null))),
+    B: cellArr.B.map(el => (el[0] ? el : el.length > 2 ? el : el.concat(null))),
   };
 };
 

@@ -13,7 +13,7 @@ const NoImageBlock = () => (
     <p className="image-upload-text">
       Please upload JPG image with
       <br />
-      max size 800x800px
+      max size 1400x1400px
     </p>
     <NoImg />
   </>
@@ -25,11 +25,13 @@ const ImageUploader = ({
   setIsImageDeleted,
   isCancelTriggered,
   isImageDeleted,
+  setDisableForm,
 }) => {
   const [img, setImg] = useState(src);
-  const [imageProp, setSize] = useState(null);
   const [imgName, setImgName] = useState('');
-
+  const [showWarning, setShowWarning] = useState(false);
+  const [imageProp, setSize] = useState(null);
+  const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
 
@@ -39,6 +41,17 @@ const ImageUploader = ({
       const fileName = img
         ? img.replace(reg, '').replace(/\%20/g, ' ')
         : 'noname';
+      if (
+        image.naturalWidth > 1400 ||
+        image.naturalHeight > 1400 ||
+        imageSize > 500000
+      ) {
+        setShowWarning(true);
+        setDisableForm(true);
+      } else {
+        setDisableForm(false);
+        setShowWarning(false);
+      }
       setSize({
         width: image.naturalWidth,
         height: image.naturalHeight,
@@ -64,6 +77,7 @@ const ImageUploader = ({
 
   const handleChange = ({ target }) => {
     const { files } = target;
+    setImageSize(files[0].size);
     const newImg = URL.createObjectURL(files[0]);
     setImgName(files[0].name);
     setImg(newImg);
@@ -73,6 +87,7 @@ const ImageUploader = ({
   };
 
   const handleDelete = () => {
+    setShowWarning(false);
     setImg(null);
     setSize(null);
     setImgName(null);
@@ -121,6 +136,11 @@ const ImageUploader = ({
           />
         </label>
       </div>
+      {showWarning && (
+        <p className="image-warning">
+          Image size should be equal or less then 1400x1400 and 500kb
+        </p>
+      )}
     </Segment>
   );
 };

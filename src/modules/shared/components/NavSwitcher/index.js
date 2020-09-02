@@ -14,7 +14,7 @@ const NavSwitcher = ({ config }) => {
     <Menu tabular attached="top">
       {config.map(item => (
         <Menu.Item
-          key={item.goTo}
+          key={item.goTo || 'basic'}
           name={item.name}
           className={item.goTo ? '' : 'switcher-text'}
           onClick={handleClick}
