@@ -84,7 +84,7 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
       'data.updateProductLinePrice.priceHistory',
       responseData.priceHistory,
     );
-    // history.replace('/products')
+    history.replace('/products')
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
