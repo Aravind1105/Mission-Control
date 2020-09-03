@@ -34,7 +34,9 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
   const handleClick = () => {
     history.push('/dashboard/almost-empty');
   };
-
+  const handlerClickRow = ({ kioskId }) => {
+    history.push(`/kiosks/detail/${kioskId}`);
+  };
   return (
     <Segment>
       <SegmentHeader>
@@ -50,6 +52,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
       </SegmentHeader>
 
       <CustomTable
+        onRowClick={handlerClickRow}
         sortable
         excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
         fixed
