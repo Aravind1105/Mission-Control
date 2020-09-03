@@ -17,15 +17,27 @@ import {
 
 function* handler({ payload: { values, initialValues, uploadedImage, isImageDeleted } }) {
   const { id, defaultPriceId, images, ...rest } = values;
-  const isPriceUpdate = id && initialValues.defaultPrice !== rest.defaultPrice;
+  let isPriceUpdate = false;
+
   if (isImageDeleted) rest.images = [];
   try {
+    if(!id){
+      rest.defaultPrice = Number(rest.defaultPrice);
+    }else if(id && initialValues.defaultPrice !== rest.defaultPrice){
+      isPriceUpdate = true;
+      rest.defaultPrice = Number(rest.defaultPrice);
+    }else{
+      delete rest.defaultPrice;
+    }
     const taxes = yield select(selectorGetProductTax);
-
-    const tax = rest.tax ? taxes.find(el => el.taxValue === rest.tax) : '';
+    const tax = (initialValues.tax !== rest.tax ) 
+      ? taxes.find(el => el.taxValue === rest.tax) 
+      : '';
     rest.tax = tax ? tax._id : '';
-    rest.defaultPrice = Number(rest.defaultPrice);
-    rest.defaultCost = Number(rest.defaultCost);
+    (initialValues.defaultCost !== rest.defaultCost)
+    ? rest.defaultCost = Number(rest.defaultCost)
+    : delete rest.defaultCost;
+
     const variables = {
       data: rest,
     };
