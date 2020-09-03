@@ -1,3 +1,15 @@
+#### 1.1.8 (2020-09-03)
+
+##### Bug Fixes
+
+* **liv-1799:**
+  *  enable page return when product is updated or created. (6c529b92)
+  *  fix history increment when it is not necessary. (c4c11d9a)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (5e1e63b4)
+
 #### 1.1.7 (2020-08-31)
 
 ##### Bug Fixes
