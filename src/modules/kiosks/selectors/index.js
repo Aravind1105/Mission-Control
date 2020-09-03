@@ -108,6 +108,7 @@ export const getAlmostEmptyKiosksForTable = createSelector(
   kiosks => {
     if (kiosks && kiosks.length > 0) {
       return kiosks.map(kiosk => ({
+        kioskId: get(kiosk, '_id', undefined),
         product: get(kiosk, 'inventory.loadCells.productLine.name', 'unknown'),
         scale: get(kiosk, 'inventory.loadCells.cellId', 'unknown'),
         amount: get(kiosk, 'productsAmount', 0),
@@ -219,16 +220,16 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-      id: kiosk._id,
-      ...pick(kiosk, ['name', 'serialNumber', 'pin', 'notes']),
-      orgId: kiosk.orgId,
-      location: {
-        address: {
-          ...kioskInitialValues.location.address,
-          ...address,
+        id: kiosk._id,
+        ...pick(kiosk, ['name', 'serialNumber', 'pin', 'notes']),
+        orgId: kiosk.orgId,
+        location: {
+          address: {
+            ...kioskInitialValues.location.address,
+            ...address,
+          },
         },
-      },
-    }
+      }
     : kioskInitialValues;
 });
 
@@ -253,8 +254,19 @@ export const getProductsDropdownList = (id = '') =>
 export const getTotalKiosks = state => state.kiosks.total;
 
 export const getTemperatureLogsState = state => {
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   const { temperatureLogs } = state.kiosks;
   const logs = temperatureLogs.sort((a, b) => {
@@ -268,7 +280,7 @@ export const getTemperatureLogsState = state => {
     bDate.setDate(b.day || 1);
     bDate.setFullYear(b.year);
 
-    return (aDate > bDate) ? 1 : -1;
+    return aDate > bDate ? 1 : -1;
   });
 
   let month = -1;
