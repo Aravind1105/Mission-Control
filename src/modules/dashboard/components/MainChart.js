@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Segment, Grid, Header } from 'semantic-ui-react';
 import Select from 'react-select';
 import {
   BarChart,
@@ -42,8 +42,11 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
       <Grid verticalAlign="middle" className="dashboard-header">
         <Grid.Row>
           <Grid.Column width={8}>
-            <h3 className="dashboard-title">Sales by Fridges</h3>
+            <Header as="h4" color="black">
+              <Header.Content>Sales by Fridges</Header.Content>
+            </Header>
           </Grid.Column>
+
           <Grid.Column width={4}>
             <Select
               onChange={handlerChangeKiosk}
@@ -93,13 +96,13 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
           })}
           {kioskId
             && (
-            <Bar
-              key={kioskId}
-              dataKey="amount"
-              name={kiosksOptions.find(el => el.value === kioskId).label}
-              stackId="a"
-              fill={colorsArr[1]}
-            />
+              <Bar
+                key={kioskId}
+                dataKey="amount"
+                name={kiosksOptions.find(el => el.value === kioskId).label}
+                stackId="a"
+                fill={colorsArr[1]}
+              />
             )
           }
         </BarChart>
