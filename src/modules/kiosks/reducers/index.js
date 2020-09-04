@@ -18,6 +18,7 @@ import {
   updateAlmostEmptyKiosks,
   getTemperatureLogs,
   getTemperatureLogsSuccess,
+  modifyKiosk,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -58,6 +59,12 @@ const kiosksReducer = handleActions(
         list: update(index, { ...state.list[index], ...payload }, state),
         isLoading: false,
       };
+    },
+    [modifyKiosk]: state => {
+      return{
+        ...state,
+        isKioskLoading: true,
+      }
     },
     [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
       state,

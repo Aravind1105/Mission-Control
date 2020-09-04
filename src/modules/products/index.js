@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import ProductsList from './ProductsList';
 import ProductDetail from './ProductDetail';
-import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import { SemanticToastContainer } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const ProductsScreen = () => (
