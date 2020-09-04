@@ -80,6 +80,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
         sortByColumn="startDate"
         onRowClick={handlerClickRow}
         sortable
+        selectable
         fixed
         data={alerts}
         columns={columns}

@@ -56,6 +56,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
         sortable
         excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
         fixed
+        selectable
         data={almostEmptyKiosks}
         columns={columns}
         getData={getData}
