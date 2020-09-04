@@ -59,16 +59,7 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvRefills(value);
-      toast({
-        type:'info',
-        title:'Info Message',
-        description:<p>Downloading the requested file.</p>,
-        time: 5000,
-        animation:'fade left',
-        icon:'info',
-        size: 'medium',
-        color: 'blue',
-      });
+      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
     }
   };
 
