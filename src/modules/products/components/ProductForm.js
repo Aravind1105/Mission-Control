@@ -69,17 +69,16 @@ const ProductForm = ({
     if(updatingProduct){
       if(!initialValues.id){
         if(isProductLoading){
-          toast({type:'warning', description:'Product is being created', animation:'fade left'})
+          toast({description:'Product is being created.', animation:'fade left', icon:'exclamation', color: 'orange'});
         }
       }
       else if(initialValues.id){
         if(isProductLoading){
-          toast({
-            type:'warning', description:'Product is being changed.', animation:'fade left'})
+          toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
         }else{
-          toast({type:'success', description:'Your changes were saved successfully.', animation:'fade left'})
+          toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
           updatingProduct = false;
-          history.replace('/products')
+          history.replace('/products');
         }
       }
     }
