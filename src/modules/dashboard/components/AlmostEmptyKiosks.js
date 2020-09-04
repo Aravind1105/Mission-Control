@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
+import history from 'lib/history';
 import Toolbar from './Toolbar';
 
 const backLink = {
@@ -39,6 +40,9 @@ const AlmostEmptyKiosks = ({
       field: 'kiosk',
     },
   ];
+  const handlerClickRow = ({ kioskId }) => {
+    history.push(`/kiosks/detail/${kioskId}`);
+  };
   return (
     <Segment>
       <SegmentHeader>
@@ -54,8 +58,10 @@ const AlmostEmptyKiosks = ({
       />
       <CustomTable
         sortable
+        onRowClick={handlerClickRow}
         excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
         fixed
+        selectable
         data={almostEmptyKiosks}
         columns={columns}
         getData={getData}

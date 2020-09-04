@@ -93,8 +93,18 @@ const FragmentKioskOfflineOnKiosk = gql`
   }
 `;
 
+const FragmentAlertDoorOpenOnKiosk = gql`
+  fragment FragmentAlertDoorOpen on AlertDoorOpen {
+    kioskId {
+      _id
+      name
+      doorStatus
+    }
+  }
+`;
+
 export const GET_ALL_KIOSKS_GRID_QUERY = gql`
-  query($data: GridRequest){
+  query($data: GridRequest) {
     getKiosksGrid(data: $data) {
       total
       data {
@@ -191,11 +201,13 @@ export const GET_ALERTS_GRID = gql`
         endDate
         details {
           ...FragmentKioskOffline
+          ...FragmentAlertDoorOpen
         }
       }
     }
   }
   ${FragmentKioskOfflineOnKiosk}
+  ${FragmentAlertDoorOpenOnKiosk}
 `;
 
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
@@ -226,8 +238,10 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
 `;
 
 export const GET_TEMPERATURE_LOGS = gql`
-  query getTemperatureEventsByKioskWithResolution($data: TemperatureEventsByKioskWithResolutionInput) {
-    getTemperatureEventsByKioskWithResolution (data: $data) {
+  query getTemperatureEventsByKioskWithResolution(
+    $data: TemperatureEventsByKioskWithResolutionInput
+  ) {
+    getTemperatureEventsByKioskWithResolution(data: $data) {
       avgTemp
       maxTemp
       minTemp

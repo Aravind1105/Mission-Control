@@ -10,6 +10,7 @@ import sortByText from 'lib/sortByText';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
+  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   TabletDisconn: 'TabletDisconn',
