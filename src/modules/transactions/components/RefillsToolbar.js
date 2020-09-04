@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import { exportCsvRefills } from '../actions';
 import { connect } from 'react-redux';
 import CustomButton from 'modules/shared/components/CustomButton';
-
+import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
 
 const Toolbar = ({
@@ -59,6 +59,7 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvRefills(value);
+      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
     }
   };
 

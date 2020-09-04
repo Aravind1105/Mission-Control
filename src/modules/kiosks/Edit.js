@@ -90,6 +90,7 @@ const KioskEdit = ({
                     initialValues={initialValues}
                     organizations={organizationsOptions}
                     cancelHandler={cancelHandler}
+                    isKioskLoading={isKioskLoading}
                   />
                 </Segment>
               </Grid.Column>

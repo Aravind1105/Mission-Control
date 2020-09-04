@@ -6,6 +6,8 @@ import TransactionsList from './TransactionsList';
 // import TransactionDetail from './TransactionDetail';
 import ReplenisherList from './ReplenisherList';
 import NavSwitcher from '../shared/components/NavSwitcher';
+import { SemanticToastContainer } from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 import './styles.less';
 
@@ -18,6 +20,7 @@ const navSwitcherConfig = [
 const Transactions = () => (
   <>
     <Segment>
+      <SemanticToastContainer position='top-right'/>
       <NavSwitcher config={navSwitcherConfig} />
       <Switch>
         <Route exact path="/transactions/sales" component={TransactionsList} />

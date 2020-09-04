@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
@@ -7,12 +7,28 @@ import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk } from '../actions';
+import { toast } from 'react-semantic-toasts';
 
-const KioskForm = ({ initialValues, organizations, cancelHandler }) => {
+let updatingKiosk = false;
+const KioskForm = ({ 
+  initialValues, 
+  organizations, 
+  cancelHandler,
+  isKioskLoading,
+ }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
-    dispatch(modifyKiosk({ values, formActions }));
+    updatingKiosk = dispatch(modifyKiosk({ values, formActions }));
   };
+
+  useEffect(() => {
+    if(updatingKiosk){
+      if(isKioskLoading){
+        // toast({description:'Kiosk is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
+        toast({type:'success', description:'Kiosk was saved successfully.', animation:'fade left'});
+      }
+    }
+  });
 
   return (
     <Formik
@@ -179,7 +195,7 @@ const KioskForm = ({ initialValues, organizations, cancelHandler }) => {
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>
-                  Submit
+                  Save
                 </Button>
               </Grid.Column>
             </Grid.Row>

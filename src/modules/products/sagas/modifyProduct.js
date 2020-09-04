@@ -1,7 +1,6 @@
 import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 import get from 'lodash/get';
 
-import history from 'lib/history';
 import gqlProducts from 'lib/https/gqlProducts';
 // import updatePrice from './updatePrice';
 import {
@@ -71,23 +70,15 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
     
     const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
     
-    // TODO: response status should reach props to alert the users the following information.
-    if(id){
-      if (responseData) window.alert('Product Line erfolgreich gespeichert!');
-      else window.alert('Product Line nicht gespeichert. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
-    } else{
-      if (responseData) window.alert('Product Line erfolgreich eingereicht!');
-      else window.alert('Product Line nicht eingereicht. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
-    }
     const priceHistory = get(
       priceMutation,
       'data.updateProductLinePrice.priceHistory',
       responseData.priceHistory,
     );
-    history.replace('/products')
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
+    window.alert('An error has occurred with your action. Please contact the Livello staff.');
   }
 }
 
