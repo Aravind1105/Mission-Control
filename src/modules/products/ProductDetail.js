@@ -46,6 +46,7 @@ const ProductDetail = ({
   getFullProductData,
   organizations,
   getOrganizations,
+  isProductLoading,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -110,6 +111,7 @@ const ProductDetail = ({
                   setIsImageDeleted={setIsImageDeleted}
                   buttonVal={buttonVal}
                   disableForm={disableForm}
+                  isProductLoading={isProductLoading}
                 />
               </Segment>
             </Grid.Column>
@@ -158,6 +160,7 @@ const mapStateToProps = (state, { match: { params } }) => {
     kiosks: getKioskListName(state),
     productImg: get(product, 'images[0]', ''),
     taxesOption: selectorProductTaxOptions(state),
+    isProductLoading: state.products.isLoading,
     // categoryOption: options.categories,
     // familyOption: options.families,
     organizations: getOrganizationsAsOptions(state),

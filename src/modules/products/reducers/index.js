@@ -9,6 +9,7 @@ import {
   getFullProductData,
   getProductSuccess,
   getFullProductDataSuccess,
+  modifyProductSaga,
   modifyProductSuccess,
 } from '../actions';
 
@@ -38,9 +39,9 @@ export default handleActions(
       totalProducts: payload.totalProducts || 0,
       isLoading: false,
     }),
-    [updateSingleProduct]: (state, { payload }) => ({
+    [modifyProductSaga]: state => ({
       ...state,
-      list: state.list.map(el => (el._id === payload._id ? payload : el)),
+      isLoading: true,
     }),
     [updateTax]: (state, { payload }) => ({
       ...state,
@@ -63,6 +64,7 @@ export default handleActions(
     ) => ({
       ...state,
       product: payload,
+      isLoading: false,
     }),
   },
   initialState,

@@ -8,9 +8,12 @@ import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { modifyProductSaga } from '../actions';
+import { toast } from 'react-semantic-toasts';
+import history from 'lib/history';
 
 let setImg;
 let restVal;
+let updatingProduct = false;
 const ProductForm = ({
   initialValues,
   // familyOption,
@@ -23,6 +26,7 @@ const ProductForm = ({
   setIsImageDeleted,
   buttonVal,
   disableForm,
+  isProductLoading,
 }) => {
   const dispatch = useDispatch();
 
@@ -43,7 +47,7 @@ const ProductForm = ({
       ? (values.packagingOptions[0].description = 'Optional field not used.')
       : values.packagingOptions[0].description;
 
-    dispatch(
+    updatingProduct = dispatch(
       modifyProductSaga({
         values,
         formActions,
@@ -58,8 +62,28 @@ const ProductForm = ({
     resetForm();
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
-    window.location.href = '/products';
+    history.replace('/products')
   };
+
+  useEffect(() => {
+    if(updatingProduct){
+      if(!initialValues.id){
+        if(isProductLoading){
+          toast({type:'warning', description:'Product is being created', animation:'fade left'})
+        }
+      }
+      else if(initialValues.id){
+        if(isProductLoading){
+          toast({
+            type:'warning', description:'Product is being changed.', animation:'fade left'})
+        }else{
+          toast({type:'success', description:'Your changes were saved successfully.', animation:'fade left'})
+          updatingProduct = false;
+          history.replace('/products')
+        }
+      }
+    }
+  });
 
   useEffect(() => {
     if (uploadedImage) {
