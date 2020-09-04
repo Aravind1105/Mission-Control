@@ -10,6 +10,7 @@ import sortByText from 'lib/sortByText';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
+  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   TabletDisconn: 'TabletDisconn',
@@ -192,6 +193,7 @@ export const kioskInitialValues = {
   name: '',
   serialNumber: '',
   pin: '',
+  notes: '',
   location: {
     address: {
       line1: '',
@@ -210,7 +212,6 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
     'location.address',
     kioskInitialValues.location.address,
   );
-
   address = Object.keys(address).reduce((prev, key) => {
     if (address[key] !== null) {
       prev[key] = address[key];
@@ -221,7 +222,8 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
   return kiosk
     ? {
         id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin', 'notes']),
+        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+        notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
         location: {
           address: {

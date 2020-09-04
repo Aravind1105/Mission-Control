@@ -8,7 +8,7 @@ import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk } from '../actions';
 
-const KioskForm = ({ initialValues, organizations }) => {
+const KioskForm = ({ initialValues, organizations, cancelHandler }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     dispatch(modifyKiosk({ values, formActions }));
@@ -172,7 +172,10 @@ const KioskForm = ({ initialValues, organizations }) => {
 
             <Grid.Row textAlign="center">
               <Grid.Column>
-                <Button type="button" onClick={resetForm}>
+                <Button
+                  type="button"
+                  onClick={() => cancelHandler({ resetForm, dirty })}
+                >
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>

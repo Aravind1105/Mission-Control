@@ -91,7 +91,7 @@ function* handler({ payload: { kioskId, time } }) {
     const res = Object.keys(formatted).map(key => {
       const obj = formatted[key].reduce((prev, { amount, _id }) => {
         const value = Math.round(amount * 100) / 100;
-        const kiosk = (_id.kiosk ? _id.kiosk : '') || 'unknown';
+        const kiosk = (_id.kiosk ? _id.kiosk : '') || 'All Fridges';
         const sum = prev[kiosk] || 0;
         if (!products.includes(kiosk)) {
           products.push(kiosk);

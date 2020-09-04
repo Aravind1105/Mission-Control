@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
+import history from 'lib/history';
 import Toolbar from './AlertsToolbar';
 
 const backLink = {
@@ -40,6 +41,11 @@ const AlertsTable = ({
       field: 'details.kioskId.name',
     },
   ];
+  const handlerClickRow = ({ details }) => {
+    if (details.kioskId) {
+      history.push(`/kiosks/detail/${details.kioskId._id}`);
+    }
+  };
   return (
     <Segment>
       <SegmentHeader>
@@ -58,6 +64,8 @@ const AlertsTable = ({
       <CustomTable
         sortable
         sortByColumn="startDate"
+        onRowClick={handlerClickRow}
+        selectable
         excludeSortBy={['details.kioskId.name']}
         fixed
         data={alerts}
