@@ -134,7 +134,7 @@ function handler(_ref) {
               var amount = _ref3.amount,
                   _id = _ref3._id;
               var value = Math.round(amount * 100) / 100;
-              var kiosk = (_id.kiosk ? _id.kiosk : '') || 'All Kiosks';
+              var kiosk = (_id.kiosk ? _id.kiosk : '') || 'All Fridges';
               var sum = prev[kiosk] || 0;
 
               if (!products.includes(kiosk)) {
