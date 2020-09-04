@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
+import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
+
 import { getOrganizations } from 'modules/organizations/actions';
 import { getOrganizationsAsOptions } from 'modules/organizations/selectors';
+import history from 'lib/history';
 import KioskForm from './components/KioskForm';
 import { getKiosk } from './actions';
 import { getKioskInitValues } from './selectors';
@@ -30,11 +33,11 @@ const KioskEdit = ({
   getOrganizations,
   getKiosk,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const backLink = {
     name: 'Back to kiosk',
     link: `/kiosks/detail/${params.id}`,
   };
-
   useEffect(() => {
     const isEdit = params.id !== 'new';
     const hasData = isEdit ? initialValues.id === params.id : false;
@@ -44,6 +47,17 @@ const KioskEdit = ({
       getKiosk(params.id);
     }
   }, []);
+
+  const redirectHandler = () => {
+    const redirectTo =
+      params.id === 'new' ? '/kiosks' : `/kiosks/detail/${params.id}`;
+    history.push(redirectTo);
+  };
+
+  const cancelHandler = ({ dirty }) => {
+    if (dirty) setIsModalOpen(true);
+    else redirectHandler();
+  };
 
   const isEdit = params.id !== 'new';
   const hasData = isEdit ? initialValues.id === params.id : true;
@@ -75,6 +89,7 @@ const KioskEdit = ({
                   <KioskForm
                     initialValues={initialValues}
                     organizations={organizationsOptions}
+                    cancelHandler={cancelHandler}
                   />
                 </Segment>
               </Grid.Column>
@@ -84,6 +99,15 @@ const KioskEdit = ({
           )}
         </Grid>
       </Grid.Column>
+      <ConfirmationModal
+        title="Confirm Cancelling"
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        confirmHandler={redirectHandler}
+      >
+        <p>You have unsaved changes.</p>
+        <p>Are you sure you want to leave the page?</p>
+      </ConfirmationModal>
     </Grid>
   );
 };

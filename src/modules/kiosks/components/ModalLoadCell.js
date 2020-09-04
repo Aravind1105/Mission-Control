@@ -6,14 +6,15 @@ import { Formik, Field } from 'formik';
 import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
 
 import { getProductLinesByOrgId } from 'modules/kiosks/actions';
+import { getProductsHistory } from 'modules/products/selectors';
 import {
-  getProductsHistory,
-} from 'modules/products/selectors';
-import { getOrgIdFromKiosk, getProductsDropdownList } from 'modules/kiosks/selectors';
+  getOrgIdFromKiosk,
+  getProductsDropdownList,
+} from 'modules/kiosks/selectors';
 import FormAsyncSelect from 'modules/shared/components/FormAsyncSelect';
 import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
-import ConfirmModal from 'modules/shared/components/ConfirmModal';
+import ConfirmModal from 'modules/shared/components/ModalForm';
 import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
@@ -43,7 +44,7 @@ const ModalLoadCell = ({
   getProductLinesByOrgId,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
-  const [position, setPosition] = useState() ;
+  const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
 
   useEffect(() => {
@@ -107,11 +108,10 @@ const ModalLoadCell = ({
 
   return (
     <Formik
-      onSubmit={ data => {
+      onSubmit={data => {
         setproductInfo(data);
         setPosition(data.planogramPosition);
-        }
-      }
+      }}
       initialValues={initVal}
       key={initVal.price}
       validateOnBlur
@@ -120,7 +120,9 @@ const ModalLoadCell = ({
         <ConfirmModal
           onClose={handleClose}
           isPristine={!dirty}
-          title={initVal.cellId ? `${kioskName}  #${initVal.cellId}` : `${kioskName}`}
+          title={
+            initVal.cellId ? `${kioskName}  #${initVal.cellId}` : `${kioskName}`
+          }
         >
           <form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
@@ -196,26 +198,27 @@ const ModalLoadCell = ({
               </Grid>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="red" onClick={() => handleClose()}>Cancel</Button>
-              <Button 
+              <Button color="red" onClick={() => handleClose()}>
+                Cancel
+              </Button>
+              <Button
                 color="green"
                 type="submit"
-                disabled={!dirty} 
+                disabled={!dirty}
                 onClick={() => setShowAlert(true)}
               >
                 Update
               </Button>
             </Modal.Actions>
-            <CustomAlert 
+            <CustomAlert
               visible={showAlert}
               onApprove={() => {
                 handleSave(productInfo);
                 setShowAlert(false);
-                }
-              }
+              }}
               onCancel={() => setShowAlert(false)}
               alertMsg={`A loadcell is already assigned to this position (${position})! Do you want to switch positions?`}
-            /> 
+            />
           </form>
         </ConfirmModal>
       )}
