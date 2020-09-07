@@ -58,7 +58,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
         cells={sides[currentSide]}
         handleEdit={handleEdit}
         handleAdd={
-          [].concat(...sides[currentSide]).length < 15 ? handleAdd : undefined
+          activeShelves < 15 ? handleAdd : undefined
         }
       />
       {product && (

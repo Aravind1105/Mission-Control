@@ -1,3 +1,13 @@
+#### 1.1.12 (2020-09-07)
+
+##### Bug Fixes
+
+* **add scales:**  fix add scales button behaviour. (4d719ddc)
+
+##### Other Changes
+
+* **add scales:**  add toast alert after editing or adding scale. (5f9d5450)
+
 #### 1.1.11 (2020-09-07)
 
 ##### Bug Fixes
