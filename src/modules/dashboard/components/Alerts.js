@@ -56,6 +56,12 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
     getAlertsGrid({ data });
   };
 
+  const handlerClickRow = ({ details }) => {
+    if (details.kioskId) {
+      history.push(`/kiosks/detail/${details.kioskId._id}`);
+    }
+  };
+
   return (
     <Segment>
       <SegmentHeader>
@@ -72,7 +78,9 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
       </SegmentHeader>
       <CustomTable
         sortByColumn="startDate"
+        onRowClick={handlerClickRow}
         sortable
+        selectable
         fixed
         data={alerts}
         columns={columns}

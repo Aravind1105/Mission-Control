@@ -1,7 +1,6 @@
 import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 import get from 'lodash/get';
 
-import history from 'lib/history';
 import gqlProducts from 'lib/https/gqlProducts';
 // import updatePrice from './updatePrice';
 import {
@@ -17,15 +16,27 @@ import {
 
 function* handler({ payload: { values, initialValues, uploadedImage, isImageDeleted } }) {
   const { id, defaultPriceId, images, ...rest } = values;
-  const isPriceUpdate = id && initialValues.defaultPrice !== rest.defaultPrice;
+  let isPriceUpdate = false;
+
   if (isImageDeleted) rest.images = [];
   try {
+    if(!id){
+      rest.defaultPrice = Number(rest.defaultPrice);
+    }else if(id && initialValues.defaultPrice !== rest.defaultPrice){
+      isPriceUpdate = true;
+      rest.defaultPrice = Number(rest.defaultPrice);
+    }else{
+      delete rest.defaultPrice;
+    }
     const taxes = yield select(selectorGetProductTax);
-
-    const tax = rest.tax ? taxes.find(el => el.taxValue === rest.tax) : '';
+    const tax = (initialValues.tax !== rest.tax ) 
+      ? taxes.find(el => el.taxValue === rest.tax) 
+      : '';
     rest.tax = tax ? tax._id : '';
-    rest.defaultPrice = Number(rest.defaultPrice);
-    rest.defaultCost = Number(rest.defaultCost);
+    (initialValues.defaultCost !== rest.defaultCost)
+    ? rest.defaultCost = Number(rest.defaultCost)
+    : delete rest.defaultCost;
+
     const variables = {
       data: rest,
     };
@@ -59,23 +70,15 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
     
     const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
     
-    // TODO: response status should reach props to alert the users the following information.
-    if(id){
-      if (responseData) window.alert('Product Line erfolgreich gespeichert!');
-      else window.alert('Product Line nicht gespeichert. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
-    } else{
-      if (responseData) window.alert('Product Line erfolgreich eingereicht!');
-      else window.alert('Product Line nicht eingereicht. Bitte wenden Sie sich an die Mitarbeiter von Livello.');
-    }
     const priceHistory = get(
       priceMutation,
       'data.updateProductLinePrice.priceHistory',
       responseData.priceHistory,
     );
-    history.replace('/products')
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
+    window.alert('An error has occurred with your action. Please contact the Livello staff.');
   }
 }
 

@@ -1,3 +1,40 @@
+#### 1.1.10 (2020-09-07)
+
+##### Other Changes
+
+* **loadcell modal:**  correct alert message (b9ab47da)
+
+#### 1.1.9 (2020-09-04)
+
+##### Bug Fixes
+
+* **transaction:**  modify the toast attributes to avoid alerts missunderstandings. (c512555d)
+* **Dashboard Sales Graph:** LIV-1830 bug fix (010551e1)
+* **Dashboard Chart:** Header Style LIV-1830 (defbb066)
+* **Dashboard Satistics:** LIV-1830 (fd496a95)
+
+##### Other Changes
+
+* **kiosk:**  send toast message when kiosk information is updated. (2c71b431)
+* **productLine:**  send a toast message when productes are modified or created. (dfe55039)
+* **transactions:**  send a toast message when files start to download. (d4cb8757)
+
+##### Refactors
+
+* **productLines:**  change toast alert color, icon  and messages. (5a22230b)
+
+#### 1.1.8 (2020-09-03)
+
+##### Bug Fixes
+
+* **liv-1799:**
+  *  enable page return when product is updated or created. (6c529b92)
+  *  fix history increment when it is not necessary. (c4c11d9a)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (5e1e63b4)
+
 #### 1.1.7 (2020-08-31)
 
 ##### Bug Fixes
