@@ -1,3 +1,9 @@
+#### 1.1.11 (2020-09-07)
+
+##### Bug Fixes
+
+* **active scales:**  corrected the amount to active scales to the number of products on the planogram. (82656523)
+
 #### 1.1.10 (2020-09-07)
 
 ##### Other Changes
