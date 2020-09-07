@@ -1,3 +1,9 @@
+#### 1.1.10 (2020-09-07)
+
+##### Other Changes
+
+* **loadcell modal:**  correct alert message (b9ab47da)
+
 #### 1.1.9 (2020-09-04)
 
 ##### Bug Fixes
