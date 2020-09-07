@@ -217,7 +217,11 @@ const ModalLoadCell = ({
                 setShowAlert(false);
               }}
               onCancel={() => setShowAlert(false)}
-              alertMsg={`A loadcell is already assigned to this position (${position})! Do you want to switch positions?`}
+              alertMsg={ 
+                initVal.planogramPosition != position?
+                `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
+                : `Are you sure that you want to update the product?`
+              }
             />
           </form>
         </ConfirmModal>
