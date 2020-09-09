@@ -20,6 +20,7 @@ import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
+import { toast } from 'react-semantic-toasts';
 
 const ToolTip = () => (
   <Popup
@@ -215,6 +216,7 @@ const ModalLoadCell = ({
               onApprove={() => {
                 handleSave(productInfo);
                 setShowAlert(false);
+                toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={ 

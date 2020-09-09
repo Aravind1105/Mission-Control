@@ -42,7 +42,7 @@ const PlanogramSwitcher = ({
           <Menu.Item>
             <Grid.Column width={6} className="text-align-right">
               Active scales:
-              <b className="textGreen">{` ${activeShelves}/15`}</b>
+              <b className="textGreen">{` ${activeShelves}/${activeShelves<=15?15:30}`}</b>
             </Grid.Column>
           </Menu.Item>
         </Menu.Menu>
