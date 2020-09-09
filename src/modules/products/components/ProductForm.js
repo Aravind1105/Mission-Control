@@ -62,7 +62,7 @@ const ProductForm = ({
     resetForm();
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
-    history.replace('/products')
+    history.push('/products')
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const ProductForm = ({
         }else{
           toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
           updatingProduct = false;
-          history.replace('/products');
+          history.push('/products');
         }
       }
     }
