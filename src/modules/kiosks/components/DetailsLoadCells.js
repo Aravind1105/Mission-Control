@@ -45,7 +45,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
   };
 
   const activeShelves = useMemo(
-    () => sides[currentSide].reduce((prev, curr) => prev + curr.length, 0),
+    ()=>(cells.filter((cell) => cell.planogramPosition != null)).length,
     [currentSide, sides],
   );
 
@@ -58,7 +58,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
         cells={sides[currentSide]}
         handleEdit={handleEdit}
         handleAdd={
-          [].concat(...sides[currentSide]).length < 15 ? handleAdd : undefined
+          activeShelves < 15 ? handleAdd : undefined
         }
       />
       {product && (

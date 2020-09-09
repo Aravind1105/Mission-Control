@@ -1,3 +1,32 @@
+#### 1.1.14 (2020-09-09)
+
+#### 1.1.13 (2020-09-09)
+
+##### Bug Fixes
+
+* **kiosk edit:**  add toFlatLoadCellItem to solve issue. (50aae215)
+
+##### Other Changes
+
+* **product toast alerts:**  Removing toast alert for when the user request a product modication or creation. Only notification is when the product was either created or modified successfully. (0e01e7c5)
+* **product form:**  use history.push for product modification. (f121d5e9)
+
+#### 1.1.12 (2020-09-07)
+
+##### Bug Fixes
+
+* **add scales:**  fix add scales button behaviour. (4d719ddc)
+
+##### Other Changes
+
+* **add scales:**  add toast alert after editing or adding scale. (5f9d5450)
+
+#### 1.1.11 (2020-09-07)
+
+##### Bug Fixes
+
+* **active scales:**  corrected the amount to active scales to the number of products on the planogram. (82656523)
+
 #### 1.1.10 (2020-09-07)
 
 ##### Other Changes
