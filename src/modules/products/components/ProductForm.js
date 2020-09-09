@@ -67,20 +67,20 @@ const ProductForm = ({
 
   useEffect(() => {
     if(updatingProduct){
-      if(!initialValues.id){
-        if(isProductLoading){
-          toast({description:'Product is being created.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        }
-      }
-      else if(initialValues.id){
-        if(isProductLoading){
-          toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        }else{
+      // if(!initialValues.id){
+      //   if(isProductLoading){
+      //     toast({description:'Product is being created.', animation:'fade left', icon:'exclamation', color: 'orange'});
+      //   }
+      // }
+      // else if(initialValues.id){
+        // if(isProductLoading){
+        //   toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
+        // }else{
           toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
           updatingProduct = false;
           history.push('/products');
-        }
-      }
+        // }
+      // }
     }
   });
 
