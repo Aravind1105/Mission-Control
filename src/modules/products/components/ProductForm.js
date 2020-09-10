@@ -7,7 +7,7 @@ import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
-import { modifyProductSaga } from '../actions';
+import { modifyProductSaga, modifyProductImage } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 
@@ -58,6 +58,14 @@ const ProductForm = ({
     );
   };
 
+  const independentUpdateImage = uploadedImage => {
+    // !handle product image delete as well
+    dispatch(modifyProductImage({
+      id:initialValues.id,
+      orgId:initialValues.orgId,
+      image: uploadedImage
+    }));
+  }
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
@@ -67,6 +75,7 @@ const ProductForm = ({
 
   useEffect(() => {
     if(updatingProduct){
+      // !Handle error with 'isProductUpdating'
       // if(!initialValues.id){
       //   if(isProductLoading){
       //     toast({description:'Product is being created.', animation:'fade left', icon:'exclamation', color: 'orange'});
@@ -78,7 +87,7 @@ const ProductForm = ({
         // }else{
           toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
           updatingProduct = false;
-          history.push('/products');
+          // history.push('/products');
         // }
       // }
     }
@@ -89,6 +98,7 @@ const ProductForm = ({
       if (setImg) {
         setIsCancelTriggered(false);
         setImg({ ...restVal, image: restVal.image + 1 }, true);
+        independentUpdateImage(uploadedImage);
       }
     } else if (isImageDeleted) {
       if (setImg) {
