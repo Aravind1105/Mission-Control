@@ -10,7 +10,6 @@ import {
 
 function* handler({payload: { id, image, orgId }}) {
   console.log('id: ', id, 'image: ', image, 'orgId: ', orgId)
-//   if (isImageDeleted) rest.images = [];
   try {
     const {
         data: { updateProductLineImage },
@@ -22,10 +21,9 @@ function* handler({payload: { id, image, orgId }}) {
             image,
         }
       })
-    console.log('responseData: ', updateProductLineImage)
-    // const responseData = updateProductLineImage
-   
-    // yield put(actionSuccess(responseData));
+    const responseData = updateProductLineImage
+   console.log('responseData: ',responseData)
+    yield put(actionSuccess(responseData));
   } catch (e) {
     console.log(e);
     window.alert('An error has occurred with your action. Please contact the Livello staff.');

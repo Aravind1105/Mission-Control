@@ -57,10 +57,7 @@ const ProductDetail = ({
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
   const [buttonVal, setButtonVal] = useState('Submit');
   const [disableForm, setDisableForm] = useState(false);
-
   const [showAlert, setShowAlert] = useState(false);
-
-  // console.log('uploadImage: ', uploadedImage, 'isImagedeleted: ', isImageDeleted)
 
   useEffect(() => {
     const { id } = match.params;

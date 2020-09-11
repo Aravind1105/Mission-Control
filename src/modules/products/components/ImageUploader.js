@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
-import { modifyProductSaga, modifyProductImage } from '../actions';
+import { modifyProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
 import CustomAlert from 'modules/shared/components/CustomAlert';
@@ -47,8 +47,6 @@ const ImageUploader = ({
   const [temp, setTemp] = useState(false);
 
   const independentUpdateImage = image => {
-    console.log('initialValues: ', initialValues)
-    console.log('image: ', image)
     dispatch(modifyProductImage({
       id:initialValues.id,
       orgId:initialValues.orgId,
@@ -97,24 +95,12 @@ const ImageUploader = ({
   }, [isCancelTriggered]);
 
   useEffect(() => {
-
-    // console.log('uploadedImage: ', uploadedImage)
     if (temp) {
       if (uploadedImage) {
-        // setShowAlert(true);
-        // if (setImg) {
-          // setIsCancelTriggered(false);
-          // setImg({ ...restVal, image: restVal.image + 1 }, true);
-          independentUpdateImage(uploadedImage);
-        // }
+        independentUpdateImage(uploadedImage);
       } else if (isImageDeleted) {
-        // setShowAlert(true);
-        // if (setImg) {
-          // setIsCancelTriggered(false);
-          // setImg({ ...restVal, image: restVal.image + 1 }, true);
-          // call new endpoint here
-          // independentUpdateImage([]);
-        // }
+        // call new endpoint here
+        // independentUpdateImage([]);
       }
     }
   }, [uploadedImage, isImageDeleted,showAlert]);
@@ -182,21 +168,19 @@ const ImageUploader = ({
         <CustomAlert
               visible={showAlert}
               onApprove={() => {
-                // handleSave();
                 setTemp(true);
                 setShowAlert(false);
                 // toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
               }}
               onCancel={() => {
-                // setImg(false);
                 setIsCancelTriggered(true);
                 setIsImageDeleted(false);
                 setShowAlert(false);
               }}
               alertMsg={ 
                 isImageDeleted
-                  ? `Are you sure that you want to delete the pictures of this product?`
-                  :` Are you sure that you want to update the picture of this product?`
+                  ? `Are you sure that you want to DELETE the pictures of this product?`
+                  :` Are you sure that you want to UPDATE the picture of this product?`
               }
             />
       </div>

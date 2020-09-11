@@ -28,13 +28,9 @@ const ProductForm = ({
   setIsImageDeleted,
   buttonVal,
   disableForm,
-  isProductLoading,
-  showAlert,
   setShowAlert,
 }) => {
   const dispatch = useDispatch();
-
-  // const [showAlert, setShowAlert] = useState(false);
 
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
@@ -64,13 +60,6 @@ const ProductForm = ({
     );
   };
 
-  const independentUpdateImage = image => {
-    dispatch(modifyProductImage({
-      id:initialValues.id,
-      orgId:initialValues.orgId,
-      image,
-    }));
-  }
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
@@ -104,15 +93,12 @@ const ProductForm = ({
         setShowAlert(true);
         setIsCancelTriggered(false);
         setImg({ ...restVal, image: restVal.image + 1 }, true);
-        // independentUpdateImage(uploadedImage);
       }
     } else if (isImageDeleted) {
       if (setImg) {
         setShowAlert(true);
         setIsCancelTriggered(false);
         setImg({ ...restVal, image: restVal.image + 1 }, true);
-        // call new endpoint here
-        // independentUpdateImage([]);
       }
     }
   }, [uploadedImage, isImageDeleted]);
@@ -387,20 +373,6 @@ const ProductForm = ({
                 </Grid.Column>
               </Grid.Row>
             </Grid>
-{/* <CustomAlert
-              visible={showAlert}
-              onApprove={() => {
-                // handleSave();
-                setShowAlert(false);
-                // toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
-              }}
-              onCancel={() => setShowAlert(false)}
-              alertMsg={ 
-                uploadedImage?
-                `Are you sure that you want to update the picture of this product?`
-                : `Are you sure that you want to delete the pictures of this product?`
-              }
-            /> */}
           </Form>
         );
       }}
