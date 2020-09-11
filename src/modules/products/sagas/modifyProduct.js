@@ -21,6 +21,9 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
   const { id, defaultPriceId, images, ...rest } = values;
   let isPriceUpdate = false;
 
+
+  // console.log('uploadedImage:', uploadedImage)
+
   // console.log('values: ', values)
   if (isImageDeleted) rest.images = [];
   try {

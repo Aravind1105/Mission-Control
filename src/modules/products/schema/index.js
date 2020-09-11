@@ -218,4 +218,4 @@ export const UPLOAD_PRODUCT_LINE_IMAGE_MUTATION = gql`
       _id
     }
   }
-`;
+`;  

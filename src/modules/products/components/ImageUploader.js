@@ -3,6 +3,7 @@ import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
+import CustomAlert from 'modules/shared/components/CustomAlert';
 
 import './styles.less';
 
@@ -26,6 +27,11 @@ const ImageUploader = ({
   isCancelTriggered,
   isImageDeleted,
   setDisableForm,
+  showAlert,
+  setShowAlert,
+  setIsCancelTriggered,
+  uploadedImage,
+  initialValues,
 }) => {
   const [img, setImg] = useState(src);
   const [imgName, setImgName] = useState('');
@@ -34,6 +40,17 @@ const ImageUploader = ({
   const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
+  const [temp, setTemp] = useState(false);
+
+  const independentUpdateImage = image => {
+    console.log('initialValues: ', initialValues)
+    console.log('image: ', image)
+    // dispatch(modifyProductImage({
+    //   id:initialValues.id,
+    //   orgId:initialValues.orgId,
+    //   image,
+    // }));
+  }
 
   useEffect(() => {
     const image = new Image();
@@ -74,6 +91,29 @@ const ImageUploader = ({
       setImgName(initialImageName);
     }
   }, [isCancelTriggered]);
+
+  useEffect(() => {
+
+    // console.log('uploadedImage: ', uploadedImage)
+    if (temp) {
+      if (uploadedImage) {
+        // setShowAlert(true);
+        // if (setImg) {
+          // setIsCancelTriggered(false);
+          // setImg({ ...restVal, image: restVal.image + 1 }, true);
+          independentUpdateImage(uploadedImage);
+        // }
+      } else if (isImageDeleted) {
+        // setShowAlert(true);
+        // if (setImg) {
+          // setIsCancelTriggered(false);
+          // setImg({ ...restVal, image: restVal.image + 1 }, true);
+          // call new endpoint here
+          // independentUpdateImage([]);
+        // }
+      }
+    }
+  }, [uploadedImage, isImageDeleted,showAlert]);
 
   const handleChange = ({ target }) => {
     const { files } = target;
@@ -135,6 +175,26 @@ const ImageUploader = ({
             onChange={handleChange}
           />
         </label>
+        <CustomAlert
+              visible={showAlert}
+              onApprove={() => {
+                // handleSave();
+                setTemp(true);
+                setShowAlert(false);
+                // toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
+              }}
+              onCancel={() => {
+                // setImg(false);
+                setIsCancelTriggered(true);
+                setIsImageDeleted(false);
+                setShowAlert(false);
+              }}
+              alertMsg={ 
+                isImageDeleted
+                  ? `Are you sure that you want to delete the pictures of this product?`
+                  :` Are you sure that you want to update the picture of this product?`
+              }
+            />
       </div>
       {showWarning && (
         <p className="image-warning">

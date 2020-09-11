@@ -58,6 +58,10 @@ const ProductDetail = ({
   const [buttonVal, setButtonVal] = useState('Submit');
   const [disableForm, setDisableForm] = useState(false);
 
+  const [showAlert, setShowAlert] = useState(false);
+
+  // console.log('uploadImage: ', uploadedImage, 'isImagedeleted: ', isImageDeleted)
+
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
@@ -112,6 +116,8 @@ const ProductDetail = ({
                   buttonVal={buttonVal}
                   disableForm={disableForm}
                   isProductLoading={isProductLoading}
+                  showAlert={showAlert}
+                  setShowAlert={setShowAlert}
                 />
               </Segment>
             </Grid.Column>
@@ -139,6 +145,12 @@ const ProductDetail = ({
             isCancelTriggered={isCancelTriggered}
             isImageDeleted={isImageDeleted}
             setDisableForm={setDisableForm}
+            showAlert={showAlert}
+            setShowAlert={setShowAlert}
+            setIsCancelTriggered={setIsCancelTriggered}
+            uploadedImage={uploadedImage}
+            isImageDeleted={isImageDeleted}
+            initialValues={{ ...initialValues, image: 0 }}
           />
         </Grid.Column>
       ) : null}

@@ -9,7 +9,7 @@ import {
 } from '../actions';
 
 function* handler({payload: { id, image, orgId }}) {
-  console.log('variables: ', variables)
+  console.log('id: ', id, 'image: ', image, 'orgId: ', orgId)
 //   if (isImageDeleted) rest.images = [];
   try {
     const {
