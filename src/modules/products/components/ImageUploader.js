@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
-
+import { modifyProductSaga, modifyProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
 import CustomAlert from 'modules/shared/components/CustomAlert';
@@ -33,6 +34,9 @@ const ImageUploader = ({
   uploadedImage,
   initialValues,
 }) => {
+  
+  const dispatch = useDispatch();
+
   const [img, setImg] = useState(src);
   const [imgName, setImgName] = useState('');
   const [showWarning, setShowWarning] = useState(false);
@@ -45,11 +49,11 @@ const ImageUploader = ({
   const independentUpdateImage = image => {
     console.log('initialValues: ', initialValues)
     console.log('image: ', image)
-    // dispatch(modifyProductImage({
-    //   id:initialValues.id,
-    //   orgId:initialValues.orgId,
-    //   image,
-    // }));
+    dispatch(modifyProductImage({
+      id:initialValues.id,
+      orgId:initialValues.orgId,
+      image,
+    }));
   }
 
   useEffect(() => {
