@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
-import { modifyProductImage } from '../actions';
+import { modifyProductImage, deleteProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
 import CustomAlert from 'modules/shared/components/CustomAlert';
@@ -34,7 +34,6 @@ const ImageUploader = ({
   uploadedImage,
   initialValues,
 }) => {
-  
   const dispatch = useDispatch();
 
   const [img, setImg] = useState(src);
@@ -51,6 +50,13 @@ const ImageUploader = ({
       id:initialValues.id,
       orgId:initialValues.orgId,
       image,
+    }));
+  };
+
+  const independentDeleteImage = () => {
+    dispatch(deleteProductImage({
+      id:initialValues.id,
+      orgId:initialValues.orgId,
     }));
   }
 
@@ -99,8 +105,7 @@ const ImageUploader = ({
       if (uploadedImage) {
         independentUpdateImage(uploadedImage);
       } else if (isImageDeleted) {
-        // call new endpoint here
-        // independentUpdateImage([]);
+        independentDeleteImage;
       }
     }
   }, [showAlert]);

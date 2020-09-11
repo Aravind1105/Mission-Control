@@ -219,3 +219,13 @@ export const UPLOAD_PRODUCT_LINE_IMAGE_MUTATION = gql`
     }
   }
 `;  
+
+export const DELETE_PRODUCT_LINE_IMAGE_MUTATION = gql`
+  mutation deleteProductLineImage(
+    $id: String!
+  ) {
+    deleteProductLineImage(id: $id){
+      _id
+    }
+  }
+`;  
