@@ -1,3 +1,13 @@
+#### 1.1.16 (2020-09-11)
+
+##### New Features
+
+* **alerts:**  low temp alert (f2ebe8c7)
+
+##### Bug Fixes
+
+* **typo:**  alert high temp (a80f8d71)
+
 #### 1.1.15 (2020-09-11)
 
 ##### New Features
