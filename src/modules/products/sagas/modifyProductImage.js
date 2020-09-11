@@ -9,7 +9,6 @@ import {
 } from '../actions';
 
 function* handler({payload: { id, image, orgId }}) {
-  console.log('id: ', id, 'image: ', image, 'orgId: ', orgId)
   try {
     const {
         data: { updateProductLineImage },
@@ -21,8 +20,8 @@ function* handler({payload: { id, image, orgId }}) {
             image,
         }
       })
-    const responseData = updateProductLineImage
-   console.log('responseData: ',responseData)
+    const responseData = updateProductLineImage;
+    
     yield put(actionSuccess(responseData));
   } catch (e) {
     console.log(e);

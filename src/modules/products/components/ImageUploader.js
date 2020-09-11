@@ -44,7 +44,7 @@ const ImageUploader = ({
   const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
-  const [temp, setTemp] = useState(false);
+  const [customAlertStatus, setcustomAlertStatus] = useState(false);
 
   const independentUpdateImage = image => {
     dispatch(modifyProductImage({
@@ -95,7 +95,7 @@ const ImageUploader = ({
   }, [isCancelTriggered]);
 
   useEffect(() => {
-    if (temp) {
+    if (customAlertStatus) {
       if (uploadedImage) {
         independentUpdateImage(uploadedImage);
       } else if (isImageDeleted) {
@@ -103,7 +103,7 @@ const ImageUploader = ({
         // independentUpdateImage([]);
       }
     }
-  }, [uploadedImage, isImageDeleted,showAlert]);
+  }, [showAlert]);
 
   const handleChange = ({ target }) => {
     const { files } = target;
@@ -168,7 +168,7 @@ const ImageUploader = ({
         <CustomAlert
               visible={showAlert}
               onApprove={() => {
-                setTemp(true);
+                setcustomAlertStatus(true);
                 setShowAlert(false);
                 // toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
               }}
