@@ -99,7 +99,7 @@ const FragmentAlertDoorOpenOnKiosk = gql`
 `;
 
 const FragmentAlertHighTempOnKiosk = gql`
-  fragment AlertHighTemp on AlertHighTemp{
+  fragment FragmentAlertHighTemp on AlertHighTemp{
     kioskId {
       _id
       name
