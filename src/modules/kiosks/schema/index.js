@@ -18,11 +18,6 @@ const FragmentLocation = {
   `,
 };
 
-// const FragmentKioskAlmostEmptyRow = gql`
-//   fragment KioskAlmostEmptyRow on Kiosk {
-
-//   }
-// `;
 
 const FragmentInventory = {
   inventory: gql`
@@ -99,6 +94,24 @@ const FragmentAlertDoorOpenOnKiosk = gql`
       _id
       name
       doorStatus
+    }
+  }
+`;
+
+const FragmentAlertHighTempOnKiosk = gql`
+  fragment FragmentAlertHighTemp on AlertHighTemp{
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+
+const FragmentAlertLowTempOnKiosk = gql`
+  fragment FragmentAlertLowTemp on AlertLowTemp{
+    kioskId {
+      _id
+      name
     }
   }
 `;
@@ -202,12 +215,16 @@ export const GET_ALERTS_GRID = gql`
         details {
           ...FragmentKioskOffline
           ...FragmentAlertDoorOpen
+          ...FragmentAlertHighTemp
+          ...FragmentAlertLowTemp
         }
       }
     }
   }
   ${FragmentKioskOfflineOnKiosk}
   ${FragmentAlertDoorOpenOnKiosk}
+  ${FragmentAlertHighTempOnKiosk}
+  ${FragmentAlertLowTempOnKiosk}
 `;
 
 export const GET_ALMOST_EMPTY_KIOSKS = gql`

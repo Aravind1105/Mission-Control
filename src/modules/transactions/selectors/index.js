@@ -201,7 +201,7 @@ export const getWidgetDataState = state => {
     averagePurchaseValue: Number(averagePurchaseValue || 0).toFixed(2),
     totalNumberOfProductsAdded: totalNumberOfProductsAdded || 0,
     totalNumberOfProductsRemoved: Math.abs(totalNumberOfProductsRemoved) || 0,
-    averageSpoilageRate: averageSpoilageRate || 0,
+    averageSpoilageRate: Number(averageSpoilageRate || 0).toFixed(2),
     totalGrossValueOfRefills: Number(totalGrossValueOfRefills || 0).toFixed(2),
   };
 };

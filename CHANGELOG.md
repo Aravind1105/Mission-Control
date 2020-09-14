@@ -20,6 +20,21 @@
 
 * **image upload:**  clean logs and change var names. (5eef4c40)
 * **image update:** clean comments. (1ca8f18a)
+#### 1.1.16 (2020-09-11)
+
+##### New Features
+
+* **alerts:**  low temp alert (f2ebe8c7)
+
+##### Bug Fixes
+
+* **typo:**  alert high temp (a80f8d71)
+
+#### 1.1.15 (2020-09-11)
+
+##### New Features
+
+* **alerts:**  high temp alert (4ada6392)
 
 #### 1.1.14 (2020-09-09)
 

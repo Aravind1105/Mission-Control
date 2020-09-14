@@ -105,7 +105,7 @@ const ImageUploader = ({
       if (uploadedImage) {
         independentUpdateImage(uploadedImage);
       } else if (isImageDeleted) {
-        independentDeleteImage;
+        independentDeleteImage();
       }
     }
   }, [showAlert]);
