@@ -20,9 +20,8 @@ function* handler({payload: { id, image, orgId }}) {
             image,
         }
       })
-    const responseData = updateProductLineImage;
     
-    yield put(actionSuccess(responseData));
+    yield put(actionSuccess(updateProductLineImage));
   } catch (e) {
     console.log(e);
     window.alert('An error has occurred with your action. Please contact the Livello staff.');

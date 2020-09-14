@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import CustomButton from '../CustomButton'
+
 
 import './styles.less';
 
@@ -19,10 +20,14 @@ const CustomAlert = ({
       <div className="inner-modal__content">
         {alertMsg}
         <div className="inner-modal__actions">
-          <Button onClick={() => onCancel()}>Cancel</Button>
-          <Button type="submit" color="green" onClick={() => onApprove()}>
-            Ok
-          </Button>
+          <CustomButton 
+          label="No"
+          onClick={() => onCancel()}/>
+          
+          <CustomButton 
+          label="Yes"
+          onClick={() => onApprove()}/>
+          
         </div>
       </div>
     </div>
