@@ -2,7 +2,6 @@ import { call, all, put, takeLatest, select } from 'redux-saga/effects';
 import get from 'lodash/get';
 
 import gqlProducts from 'lib/https/gqlProducts';
-// import updatePrice from './updatePrice';
 import {
   CREATE_PRODUCT_LINE_MUTATION,
   UPDATE_PRODUCT_LINE_MUTATION,
@@ -17,7 +16,6 @@ import {
 function* handler({ payload: { values, initialValues, uploadedImage, isImageDeleted } }) {
   const { id, defaultPriceId, images, ...rest } = values;
   let isPriceUpdate = false;
-
   if (isImageDeleted) rest.images = [];
   try {
     if(!id){

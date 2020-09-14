@@ -1,3 +1,45 @@
+#### 1.2.2 (2020-09-14)
+
+##### Bug Fixes
+
+* **toast:**  handle toast messages for porudct modification. (2590d1c5)
+* **image upload:**  fix product image upload from imageuploader.js (2645e4cf)
+* **refills:**  spoilage rate up to 2 decimals (aef76e72)
+
+##### Other Changes
+
+* **delete picture:**  delete product picture with independent endpoint. (d5901355)
+* **modal notification:**  notify user before update or delete picute. (6d2c327f)
+* **product-image:**  product image update using endpoint to update image solely. Code refactory pending. (a625572a)
+
+##### Refactors
+
+* **image uploader:**  clear code and fix confirmation buttons. (8e26251b)
+* **image upload:**  clean logs and change var names. (5eef4c40)
+* **image update:** clean comments. (1ca8f18a)
+
+#### 1.2.1 (2020-09-14)
+
+##### Refactors
+
+* **image uploader:**  clear code and fix confirmation buttons. (8e26251b)
+
+### 1.2.0 (2020-09-11)
+
+##### Bug Fixes
+
+* **image upload:**  fix product image upload from imageuploader.js (2645e4cf)
+
+##### Other Changes
+
+* **delete picture:**  delete product picture with independent endpoint. (d5901355)
+* **modal notification:**  notify user before update or delete picute. (6d2c327f)
+* **product-image:**  product image update using endpoint to update image solely. Code refactory pending. (a625572a)
+
+##### Refactors
+
+* **image upload:**  clean logs and change var names. (5eef4c40)
+* **image update:** clean comments. (1ca8f18a)
 #### 1.1.16 (2020-09-11)
 
 ##### New Features

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
-
+import { modifyProductImage, deleteProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
+import CustomAlert from 'modules/shared/components/CustomAlert';
+import { toast } from 'react-semantic-toasts';
 
 import './styles.less';
 
@@ -26,7 +29,14 @@ const ImageUploader = ({
   isCancelTriggered,
   isImageDeleted,
   setDisableForm,
+  showAlert,
+  setShowAlert,
+  setIsCancelTriggered,
+  uploadedImage,
+  initialValues,
 }) => {
+  const dispatch = useDispatch();
+
   const [img, setImg] = useState(src);
   const [imgName, setImgName] = useState('');
   const [showWarning, setShowWarning] = useState(false);
@@ -34,6 +44,22 @@ const ImageUploader = ({
   const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
+  const [customAlertStatus, setcustomAlertStatus] = useState(false);
+
+  const independentUpdateImage = image => {
+    dispatch(modifyProductImage({
+      id:initialValues.id,
+      orgId:initialValues.orgId,
+      image,
+    }));
+  };
+
+  const independentDeleteImage = () => {
+    dispatch(deleteProductImage({
+      id:initialValues.id,
+      orgId:initialValues.orgId,
+    }));
+  }
 
   useEffect(() => {
     const image = new Image();
@@ -74,6 +100,16 @@ const ImageUploader = ({
       setImgName(initialImageName);
     }
   }, [isCancelTriggered]);
+
+  useEffect(() => {
+    if (customAlertStatus) {
+      if (uploadedImage) {
+        independentUpdateImage(uploadedImage);
+      } else if (isImageDeleted) {
+        independentDeleteImage();
+      }
+    }
+  }, [showAlert]);
 
   const handleChange = ({ target }) => {
     const { files } = target;
@@ -135,6 +171,24 @@ const ImageUploader = ({
             onChange={handleChange}
           />
         </label>
+        <CustomAlert
+              visible={showAlert}
+              onApprove={() => {
+                setcustomAlertStatus(true);
+                setShowAlert(false);
+                toast({type:'success', description:'Product Image updated successfully.', animation:'fade left'});
+              }}
+              onCancel={() => {
+                setIsCancelTriggered(true);
+                setIsImageDeleted(false);
+                setShowAlert(false);
+              }}
+              alertMsg={ 
+                isImageDeleted
+                  ? `Are you sure that you want to DELETE the pictures of this product?`
+                  :` Are you sure that you want to UPDATE the picture of this product?`
+              }
+            />
       </div>
       {showWarning && (
         <p className="image-warning">
