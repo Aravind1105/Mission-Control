@@ -138,16 +138,16 @@ export const getGridRefillsTableState = createSelector(
         ),
         kioskName: get(refill, 'kiosk.name', 'unknown'),
       };
-
-      if (refill.scale.length > 1) {
+      const newScale = refill.scale.filter(elem => elem.count !== 0);
+      if (newScale.length > 1) {
         item.productName = 'Total';
         item.price = '';
       }
 
       let refillsTotalPrice = 0;
-      const arr = refill.scale.reduce(
+      const arr = newScale.reduce(
         (prev, { productLine, count, weight, cellId }) => {
-          if (productLine) {
+          if (productLine && count !== 0) {
             const total = (count * productLine.defaultPrice).toFixed(2);
             let status = '';
             if (count > 0) {
@@ -177,7 +177,9 @@ export const getGridRefillsTableState = createSelector(
 
       const product =
         arr.length === 1 ? [{ ...item, ...arr[0] }] : [item, ...arr];
-      newArr = newArr.concat([product]);
+      if (arr.length) {
+        newArr = newArr.concat([product]);
+      }
     });
     return newArr;
   },
