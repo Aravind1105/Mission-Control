@@ -1,3 +1,9 @@
+#### 1.2.1 (2020-09-14)
+
+##### Refactors
+
+* **image uploader:**  clear code and fix confirmation buttons. (8e26251b)
+
 ### 1.2.0 (2020-09-11)
 
 ##### Bug Fixes
