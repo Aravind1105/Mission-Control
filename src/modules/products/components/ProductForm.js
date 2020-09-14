@@ -11,8 +11,6 @@ import { modifyProductSaga, modifyProductImage } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 
-import CustomAlert from 'modules/shared/components/CustomAlert';
-
 let setImg;
 let restVal;
 let updatingProduct = false;
@@ -29,6 +27,7 @@ const ProductForm = ({
   buttonVal,
   disableForm,
   setShowAlert,
+  isProductLoading,
 }) => {
   const dispatch = useDispatch();
 
@@ -69,22 +68,14 @@ const ProductForm = ({
 
   useEffect(() => {
     if(updatingProduct){
-      // !Handle error with 'isProductUpdating'
-      // if(!initialValues.id){
-      //   if(isProductLoading){
-      //     toast({description:'Product is being created.', animation:'fade left', icon:'exclamation', color: 'orange'});
-      //   }
-      // }
-      // else if(initialValues.id){
-        // if(isProductLoading){
-        //   toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        // }else{
+        if(isProductLoading){
+          // toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
+        }else{
           toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
           updatingProduct = false;
-          // history.push('/products');
-        // }
-      // }
-    }
+          history.push('/products');
+        }
+      }
   });
 
   useEffect(() => {

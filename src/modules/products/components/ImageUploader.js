@@ -5,6 +5,7 @@ import { modifyProductImage, deleteProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
 import CustomAlert from 'modules/shared/components/CustomAlert';
+import { toast } from 'react-semantic-toasts';
 
 import './styles.less';
 
@@ -175,7 +176,7 @@ const ImageUploader = ({
               onApprove={() => {
                 setcustomAlertStatus(true);
                 setShowAlert(false);
-                // toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
+                toast({type:'success', description:'Product Image updated successfully.', animation:'fade left'});
               }}
               onCancel={() => {
                 setIsCancelTriggered(true);
