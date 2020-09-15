@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
 import { GET_ALL_KIOSKS_GRID_QUERY } from '../schema';
-import { updateKiosks, getAllKiosks } from '../actions';
+import { updateKiosksForTable, getAllKiosksForTable } from '../actions';
 
 function* handler({ payload }) {
   try {
@@ -13,7 +13,7 @@ function* handler({ payload }) {
       variables: payload,
     });
     yield put(
-      updateKiosks({
+      updateKiosksForTable({
         list: response.data || [],
         total: response.total,
       }),
@@ -24,5 +24,5 @@ function* handler({ payload }) {
 }
 
 export default function* saga() {
-  yield takeLatest(getAllKiosks, handler);
+  yield takeLatest(getAllKiosksForTable, handler);
 }

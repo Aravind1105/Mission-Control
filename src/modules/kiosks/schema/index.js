@@ -18,7 +18,6 @@ const FragmentLocation = {
   `,
 };
 
-
 const FragmentInventory = {
   inventory: gql`
     fragment InventoryForKiosk on Inventory {
@@ -99,7 +98,7 @@ const FragmentAlertDoorOpenOnKiosk = gql`
 `;
 
 const FragmentAlertHighTempOnKiosk = gql`
-  fragment FragmentAlertHighTemp on AlertHighTemp{
+  fragment FragmentAlertHighTemp on AlertHighTemp {
     kioskId {
       _id
       name
@@ -108,7 +107,7 @@ const FragmentAlertHighTempOnKiosk = gql`
 `;
 
 const FragmentAlertLowTempOnKiosk = gql`
-  fragment FragmentAlertLowTemp on AlertLowTemp{
+  fragment FragmentAlertLowTemp on AlertLowTemp {
     kioskId {
       _id
       name
@@ -124,6 +123,11 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
         _id
         name
         doorStatus
+        session {
+          _id
+          type
+          orgId
+        }
         temperature {
           value
           updated

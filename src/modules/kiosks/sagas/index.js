@@ -2,6 +2,7 @@ import { all, fork } from 'redux-saga/effects';
 
 import resetKiosk from './resetKiosk';
 import getAllKiosks from './getAllKiosks';
+import getAllKiosksForTable from './getAllKiosksForTable';
 import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
@@ -23,5 +24,6 @@ export default function* kiosksSaga() {
     fork(getProductLinesByOrgId),
     fork(getAlmostEmptyKiosks),
     fork(getTemperatureLogs),
+    fork(getAllKiosksForTable),
   ]);
 }
