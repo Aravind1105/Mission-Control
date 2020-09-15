@@ -19,12 +19,15 @@ import {
   getTemperatureLogs,
   getTemperatureLogsSuccess,
   modifyKiosk,
+  updateKiosksForTable,
+  getAllKiosksForTable,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
 
 const initialState = {
   list: [],
+  tableList: [],
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
@@ -38,7 +41,7 @@ const initialState = {
 
 const kiosksReducer = handleActions(
   {
-    [getAllKiosks]: state => ({
+    [combineActions(getAllKiosks, getAllKiosksForTable)]: state => ({
       ...state,
       isLoading: true,
     }),
@@ -52,6 +55,12 @@ const kiosksReducer = handleActions(
       total: payload.total,
       isLoading: false,
     }),
+    [updateKiosksForTable]: (state, { payload }) => ({
+      ...state,
+      tableList: payload.list,
+      total: payload.total,
+      isLoading: false,
+    }),
     [updateKioskById]: (state, { payload }) => {
       const index = findIndex(propEq('_id', payload._id))(state);
       return {
@@ -61,10 +70,10 @@ const kiosksReducer = handleActions(
       };
     },
     [modifyKiosk]: state => {
-      return{
+      return {
         ...state,
         isKioskLoading: true,
-      }
+      };
     },
     [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
       state,
@@ -94,10 +103,7 @@ const kiosksReducer = handleActions(
       ...state,
       isLoading: true,
     }),
-    [getProductLinesByOrgIdSuccess]: (
-      state,
-      { payload },
-    ) => ({
+    [getProductLinesByOrgIdSuccess]: (state, { payload }) => ({
       ...state,
       ...payload,
       isLoading: false,

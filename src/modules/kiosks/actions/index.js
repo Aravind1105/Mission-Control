@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 
 // Saga actions
 export const getAllKiosks = createAction('@@saga/KIOSK_LOAD');
+export const getAllKiosksForTable = createAction('@@saga/KIOSK_FOR_TABLE_LOAD');
 export const getAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_LOAD',
 );
@@ -22,6 +23,9 @@ export const getTemperatureLogs = createAction('@@saga/GET_TEMPERATURE_LOGS');
 
 // State actions
 export const updateKiosks = createAction('@@state/KIOSKS_UPDATE');
+export const updateKiosksForTable = createAction(
+  '@@state/KIOSKS_UPDATE_FOR_TABLE',
+);
 export const updateAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_UPDATE',
 );
@@ -38,4 +42,6 @@ export const getOrganizationByIdSuccess = createAction(
 export const getProductLinesByOrgIdSuccess = createAction(
   '@@state/GET_PRODUCT_LINES_BY_ORG_ID_SUCCESS',
 );
-export const getTemperatureLogsSuccess = createAction('@@state/GET_TEMPERATURE_LOGS_SUCCESS');
+export const getTemperatureLogsSuccess = createAction(
+  '@@state/GET_TEMPERATURE_LOGS_SUCCESS',
+);

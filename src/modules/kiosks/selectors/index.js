@@ -30,6 +30,7 @@ export const getAlertsOptions = () => [
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
+export const getKiosksTableState = state => state.kiosks.tableList;
 
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
 export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
