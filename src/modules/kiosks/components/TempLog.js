@@ -31,7 +31,7 @@ const columns = [
 ];
 
 
-const TempLogVisualization = ({ temperatureLogs }) => {
+const TempLogGrid = ({ temperatureLogs }) => {
 
   return (
     <Grid.Row>
@@ -57,4 +57,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(TempLogVisualization);
+export default connect(mapStateToProps)(TempLogGrid);

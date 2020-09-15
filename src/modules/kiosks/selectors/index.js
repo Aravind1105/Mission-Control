@@ -273,12 +273,12 @@ export const getTemperatureLogsState = state => {
   const { temperatureLogs } = state.kiosks;
   const logs = temperatureLogs.sort((a, b) => {
     const aDate = new Date();
-    aDate.setMonth(a.month || 1);
+    aDate.setMonth(a.month - 1 || 1);
     aDate.setDate(a.day || 1);
     aDate.setFullYear(a.year);
 
     const bDate = new Date();
-    bDate.setMonth(b.month || 1);
+    bDate.setMonth(b.month - 1 || 1);
     bDate.setDate(b.day || 1);
     bDate.setFullYear(b.year);
 
@@ -291,9 +291,9 @@ export const getTemperatureLogsState = state => {
   }
   const isAllMonthsSame = logs.every(log => log.month === month);
 
-  return logs.map(log => {
+  const organizedData = logs.map(log => {
     const date = new Date();
-    date.setMonth(log.month || 1);
+    date.setMonth(log.month - 1 || 1);
     date.setDate(log.day || 1);
     date.setFullYear(log.year);
     return {
@@ -301,9 +301,10 @@ export const getTemperatureLogsState = state => {
       minTemp: parseInt(log.minTemp),
       maxTemp: parseInt(log.maxTemp),
       year: log.year,
-      month: monthNames[log.month],
-      day: isAllMonthsSame ? log.day : `${monthNames[log.month]}/${log.day}`,
+      month: monthNames[log.month - 1],
+      day: isAllMonthsSame ? log.day : `${monthNames[log.month - 1]}/${log.day}`,
       date: format(date, 'dd-MM-yyyy'),
     };
   });
+  return organizedData;
 };
