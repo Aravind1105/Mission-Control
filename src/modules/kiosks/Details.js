@@ -106,6 +106,7 @@ const KioskDetails = ({
                     temp={kiosk.temperature.value}
                     doorStatus={kiosk.doorStatus}
                     temperature={kiosk.temperature}
+                    session={kiosk.session}
                   />
                   <Divider />
                   <DetailsInfo

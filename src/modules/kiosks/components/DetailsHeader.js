@@ -1,27 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Header, Icon } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import CellHeartbeat from './CellHeartbeat';
+import CellTemp from './CellTemp';
+import CellDoorStatus from './CellDoorStatus';
 
-const DetailsHeader = ({ name, temp, doorStatus, temperature }) => {
-  const tempText = Number.isNaN(temp) ? '' : ` ${temp}°C`;
+import '../styles.less';
+
+const DetailsHeader = ({ name, doorStatus, temperature, session }) => {
   return (
     <Grid>
       <Grid.Row relaxed="very" columns={4}>
-        <Grid.Column width={6}>
+        <Grid.Column width={doorStatus === 'open' ? 4 : 6}>
           <Header as="h3">{name}</Header>
         </Grid.Column>
-        <Grid.Column width={3}>
-          Temp:
-          <b className="textRed">{tempText}</b>
+        <Grid.Column width={4} className="flex-end">
+          <b>
+            Temp:&nbsp;
+            <CellTemp temperature={temperature} />
+          </b>
         </Grid.Column>
-        <Grid.Column width={3}>
-          Status:
+        <Grid.Column width={3} className="flex-end">
+          <b>Status:&nbsp;</b>
           <CellHeartbeat temperature={temperature} showTime={false} boldFont />
         </Grid.Column>
-        <Grid.Column>
-          Door:&nbsp;
-          <b className="textGreen text-capitalize">{doorStatus}</b>
+        <Grid.Column className="flex-end" width={doorStatus === 'open' ? 5 : 3}>
+          <b>
+            Door:&nbsp;
+            <CellDoorStatus doorStatus={doorStatus} session={session} />
+          </b>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -36,7 +43,6 @@ DetailsHeader.defaultProps = {
 DetailsHeader.propTypes = {
   name: PropTypes.string,
   temp: PropTypes.number,
-  connection: PropTypes.number,
   doorStatus: PropTypes.string,
 };
 

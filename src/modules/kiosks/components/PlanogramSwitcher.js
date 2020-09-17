@@ -7,6 +7,8 @@ const menuStyle = {
 
 const menuItemStyle = {
   fontWeight: 'bold',
+  fontSize: 18,
+  padding: 5,
 };
 
 const PlanogramSwitcher = ({
@@ -42,7 +44,9 @@ const PlanogramSwitcher = ({
           <Menu.Item>
             <Grid.Column width={6} className="text-align-right">
               Active scales:
-              <b className="textGreen">{` ${activeShelves}/${activeShelves<=15?15:30}`}</b>
+              <b className="textGreen">{` ${activeShelves}/${
+                activeShelves <= 15 ? 15 : 30
+              }`}</b>
             </Grid.Column>
           </Menu.Item>
         </Menu.Menu>
