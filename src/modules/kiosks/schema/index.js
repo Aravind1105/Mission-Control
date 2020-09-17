@@ -48,6 +48,11 @@ const FragmentKioskOnKiosk = gql`
     pin
     notes
     orgId
+    session {
+      _id
+      type
+      orgId
+    }
     temperature {
       value
       updated
