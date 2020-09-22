@@ -103,7 +103,7 @@ const ImageUploader = ({
 
   useEffect(() => {
     if (customAlertStatus) {
-      if (uploadedImage) {
+      if (uploadedImage && initialValues.id !== undefined) {
         independentUpdateImage(uploadedImage);
       } else if (isImageDeleted) {
         independentDeleteImage();
@@ -176,7 +176,7 @@ const ImageUploader = ({
               onApprove={() => {
                 setcustomAlertStatus(true);
                 setShowAlert(false);
-                toast({type:'success', description:'Product Image updated successfully.', animation:'fade left'});
+                if(initialValues.id)toast({type:'success', description:'Product Image updated successfully.', animation:'fade left'});
               }}
               onCancel={() => {
                 setIsCancelTriggered(true);
