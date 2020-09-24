@@ -30,7 +30,11 @@ export const getAlertsOptions = () => [
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
-export const getKiosksTableState = state => state.kiosks.tableList;
+export const getKiosksTableState = state =>
+  state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
+    ...el,
+    dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'} €`,
+  }));
 
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
 export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
@@ -303,7 +307,9 @@ export const getTemperatureLogsState = state => {
       maxTemp: parseInt(log.maxTemp),
       year: log.year,
       month: monthNames[log.month - 1],
-      day: isAllMonthsSame ? log.day : `${monthNames[log.month - 1]}/${log.day}`,
+      day: isAllMonthsSame
+        ? log.day
+        : `${monthNames[log.month - 1]}/${log.day}`,
       date: format(date, 'dd-MM-yyyy'),
     };
   });

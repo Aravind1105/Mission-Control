@@ -127,6 +127,7 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
       data {
         _id
         name
+        dayIncome
         doorStatus
         session {
           _id
