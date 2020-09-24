@@ -67,6 +67,10 @@ const columns = [
       return line1 ? addr : 'N.A.';
     },
   },
+  {
+    title: 'Sales 24h',
+    field: 'dayIncome',
+  },
 ];
 
 const KiosksContent = ({
