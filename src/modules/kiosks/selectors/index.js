@@ -104,7 +104,7 @@ export const getKiosksAlertsForTable = createSelector(
   alerts =>
     alerts.map(alert => ({
       ...alert,
-      startDate: format(new Date(alert.startDate), 'HH:mm:ss, dd-MM-yyyy'),
+      startDate: format(new Date(alert.startDate), 'dd-MM-yyyy HH:mm:ss'),
       type: alertMessages[alert.type],
     })),
 );
