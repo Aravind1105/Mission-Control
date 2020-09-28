@@ -33,7 +33,7 @@ export const getKiosksState = state => state.kiosks.list;
 export const getKiosksTableState = state =>
   state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
     ...el,
-    dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'} €`,
+    dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
   }));
 
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
@@ -104,7 +104,7 @@ export const getKiosksAlertsForTable = createSelector(
   alerts =>
     alerts.map(alert => ({
       ...alert,
-      startDate: format(new Date(alert.startDate), 'HH:mm:ss, dd-MM-yyyy'),
+      startDate: format(new Date(alert.startDate), 'dd-MM-yyyy HH:mm:ss'),
       type: alertMessages[alert.type],
     })),
 );

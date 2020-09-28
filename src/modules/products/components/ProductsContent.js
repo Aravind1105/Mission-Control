@@ -29,7 +29,7 @@ const columns = [
   {
     title: 'Price',
     field: 'defaultPrice',
-    formatter: ({ defaultPrice = 0 }) => `${defaultPrice.toFixed(2)} €`,
+    formatter: ({ defaultPrice = 0 }) => `€ ${defaultPrice.toFixed(2)}`,
   },
 ];
 
