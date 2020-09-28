@@ -1,3 +1,9 @@
+#### 1.2.4 (2020-09-28)
+
+##### Bug Fixes
+
+* **price format:**  fix the format for product and kiosk list view. (946a42ac)
+
 #### 1.2.3 (2020-09-22)
 
 ##### Bug Fixes
