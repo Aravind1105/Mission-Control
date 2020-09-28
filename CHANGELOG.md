@@ -1,3 +1,9 @@
+#### 1.2.6 (2020-09-28)
+
+##### Bug Fixes
+
+* **date format:**  fix date format for alerts table on dashboard. (4c26e3ff)
+
 #### 1.2.5 (2020-09-28)
 
 #### 1.2.4 (2020-09-28)
