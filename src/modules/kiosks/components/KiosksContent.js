@@ -70,6 +70,7 @@ const columns = [
   {
     title: 'Sales 24h',
     field: 'dayIncome',
+    formatter: ({ dayIncome }) => `€ ${dayIncome}`,
   },
 ];
 
