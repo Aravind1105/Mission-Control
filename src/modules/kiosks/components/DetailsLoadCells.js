@@ -58,7 +58,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
         cells={sides[currentSide]}
         handleEdit={handleEdit}
         handleAdd={
-          activeShelves < 15 ? handleAdd : undefined
+          activeShelves < (isTwoSides ? 30 : 15) ? handleAdd : undefined
         }
       />
       {product && (

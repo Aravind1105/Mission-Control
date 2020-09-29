@@ -19,6 +19,7 @@ const PlanogramSwitcher = ({
 }) => {
   const handleClick = (e, { value }) => {
     setCurrentSide(value);
+    console.log('isTwoSides', isTwoSides,'\nactiveShelves: ', activeShelves)
   };
   return (
     <>
@@ -45,7 +46,7 @@ const PlanogramSwitcher = ({
             <Grid.Column width={6} className="text-align-right">
               Active scales:
               <b className="textGreen">{` ${activeShelves}/${
-                activeShelves <= 15 ? 15 : 30
+                isTwoSides ? 30 : 15
               }`}</b>
             </Grid.Column>
           </Menu.Item>

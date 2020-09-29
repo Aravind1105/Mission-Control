@@ -33,7 +33,7 @@ const columns = [
     field: 'count',
   },
   {
-    title: 'Load Cell',
+    title: 'Cable ID',
     field: 'loadCell',
   },
   {
