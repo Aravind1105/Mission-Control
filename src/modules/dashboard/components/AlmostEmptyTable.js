@@ -22,7 +22,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
       field: 'amount',
     },
     {
-      title: t('Scale'),
+      title: t('Cable ID'),
       field: 'scale',
     },
     {
