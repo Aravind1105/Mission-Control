@@ -1,3 +1,19 @@
+#### 1.2.7 (2020-09-29)
+
+#### 1.2.6 (2020-09-28)
+
+##### Bug Fixes
+
+* **date format:**  fix date format for alerts table on dashboard. (4c26e3ff)
+
+#### 1.2.5 (2020-09-28)
+
+#### 1.2.4 (2020-09-28)
+
+##### Bug Fixes
+
+* **price format:**  fix the format for product and kiosk list view. (946a42ac)
+
 #### 1.2.3 (2020-09-22)
 
 ##### Bug Fixes

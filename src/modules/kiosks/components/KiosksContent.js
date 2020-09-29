@@ -67,6 +67,11 @@ const columns = [
       return line1 ? addr : 'N.A.';
     },
   },
+  {
+    title: 'Sales 24h',
+    field: 'dayIncome',
+    formatter: ({ dayIncome }) => `€ ${dayIncome}`,
+  },
 ];
 
 const KiosksContent = ({
