@@ -33,6 +33,11 @@ const DetailsInfo = ({
     addressThirdLine += `${address.country}`;
   }
 
+  let sessionType = session.type;
+  if (sessionType === 'refill') {
+    sessionType = 'Replenishment';
+  }
+
   return (
     <div className="kiosk-info">
       <Grid>
@@ -40,7 +45,7 @@ const DetailsInfo = ({
           <Grid>
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
-              <InfoRow title="Session" description={session ? session.type : 'no session'} />
+              <InfoRow title="Session" description={session ? sessionType : 'no session'} />
               {addressLine1 !== '' && <InfoRow title="Address" description={addressLine1} />}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
               {addressLine1 !== '' && <InfoRow description={addressSecondLine} />}
