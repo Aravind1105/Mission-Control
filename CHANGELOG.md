@@ -1,3 +1,9 @@
+#### 1.2.8 (2020-09-29)
+
+##### Other Changes
+
+* **cableID:**  show cableID on kiosk planogram. (96622c9c)
+
 #### 1.2.7 (2020-09-29)
 
 #### 1.2.6 (2020-09-28)
