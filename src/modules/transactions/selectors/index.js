@@ -98,8 +98,7 @@ export const getTransactionsTableState = createSelector(
             if (~idx) {
               const total = Math.round((prev[idx].total + price) * 100) / 100;
               prev[idx].total = total;
-              quantity += 1;
-              prev[idx].quantity = quantity;
+              prev[idx].quantity += quantity;
             } else {
               prev.push({
                 id: productLine ? productLine._id : '' || 'unknown',
