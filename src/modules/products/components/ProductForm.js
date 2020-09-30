@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
+import { Grid, Form, Button, Header, Divider, Dropdown, Input } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
+import FormInputWithSelector from 'modules/shared/components/FormInputWithSelector';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
-import { modifyProductSaga, modifyProductImage } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
+import { modifyProductSaga, modifyProductImage } from '../actions';
 
 let setImg;
 let restVal;
@@ -63,19 +64,19 @@ const ProductForm = ({
     resetForm();
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
-    history.push('/products')
+    history.push('/products');
   };
 
   useEffect(() => {
-    if(updatingProduct){
-        if(isProductLoading){
-          // toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        }else{
-          toast({type:'success', description:'Product was saved successfully.', animation:'fade left'});
-          updatingProduct = false;
-          history.push('/products');
-        }
+    if (updatingProduct) {
+      if (isProductLoading) {
+        // toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
+      } else {
+        toast({ type: 'success', description: 'Product was saved successfully.', animation: 'fade left' });
+        updatingProduct = false;
+        history.push('/products');
       }
+    }
   });
 
   useEffect(() => {
@@ -107,12 +108,11 @@ const ProductForm = ({
       enableReinitialize
     >
       {({ dirty, handleSubmit, values, setValues, resetForm }) => {
-        const netPrice =
-          Math.round(
-            ((+values.defaultPrice.replace(',', '.') || 0) /
-              (1 + (values.tax || 0) / 100)) *
-              100,
-          ) / 100;
+        const netPrice = Math.round(
+          ((+values.defaultPrice.replace(',', '.') || 0)
+            / (1 + (values.tax || 0) / 100))
+          * 100,
+        ) / 100;
         setImg = setValues;
         restVal = values;
         return (
@@ -191,8 +191,14 @@ const ProductForm = ({
                     label="Net Quantity (ml/g)"
                     min={0}
                     required
-                    component={FormInput}
+                    component={FormInputWithSelector}
                     limiting="integerField"
+                    selectorOptions={[
+                      { key: 'ml', text: 'ml', value: 'ml' },
+                      { key: 'g', text: 'g', value: 'g' },
+                    ]}
+                    selectorDefaultValueIndex={1}
+                    dropdownSelectedValue={values.packagingOptions[0].netWeightGramsUnit || 'g'}
                   />
                 </Grid.Column>
                 <Grid.Column width={7}>
