@@ -23,11 +23,10 @@ const Card = ({
   return (
     <Grid.Column className="load-cell">
       <div className="load-cell-content">
-        {planogramPosition ? (
-          <b className="load-cell-position">{planogramPosition}</b>
-        ) : (
-          <div />
-        )}
+        <div className="load-cell-tags">
+          <b className="load-cell-position">{planogramPosition? planogramPosition: "Error"}</b> 
+          <p className="load-cell-calbeId">ID: {cellId? cellId: "Error"}</p> 
+        </div>
         <div className="load-cell-info">
           <div className="load-cell-icon">
             {productLine.image ? (
