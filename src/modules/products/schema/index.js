@@ -54,6 +54,7 @@ export const productOnProductLine = gql`
       grossWeightGrams
       packageWeightGrams
       netWeightGrams
+      netWeightGramsUnit
       shelfLifeDays
       tolerancePercentage
     }
