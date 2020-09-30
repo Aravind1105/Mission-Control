@@ -17,8 +17,8 @@ import CustomizedAxisTick from './CustomizedAxisTick';
 import CustomTooltip from './CustomTooltip';
 
 const optionsTime = [
-  { label: 'Daily', value: 'daily' },
-  { label: 'Weekly', value: 'weekly' },
+  { label: 'Last 24 hours', value: 'last24Hours' },
+  { label: 'Last 7 Days', value: 'last7Days' },
 ];
 
 const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
