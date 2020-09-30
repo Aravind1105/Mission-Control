@@ -1,6 +1,6 @@
 export const formatData = (res, time, kioskId, weekFormat) => {
   const result = {
-    weekly: [
+    last7Days: [
       { date: 'Monday' },
       { date: 'Tuesday' },
       { date: 'Wednesday' },
@@ -9,7 +9,7 @@ export const formatData = (res, time, kioskId, weekFormat) => {
       { date: 'Saturday' },
       { date: 'Sunday' },
     ],
-    daily: [
+    last24Hours: [
       { date: '01' },
       { date: '02' },
       { date: '03' },
@@ -37,7 +37,7 @@ export const formatData = (res, time, kioskId, weekFormat) => {
     ],
   };
   let dataArray = result[time];
-  if (time === 'weekly') {
+  if (time === 'last7Days') {
     dataArray = weekFormat;
   }
   res.forEach(elem => {
@@ -51,7 +51,7 @@ export const formatData = (res, time, kioskId, weekFormat) => {
       });
     }
   });
-  if (time === 'daily') {
+  if (time === 'last24Hours') {
     /* eslint-disable */
     dataArray.forEach(elem => elem.date = `${Number(elem.date)}:00`);
     /* eslint-enable */

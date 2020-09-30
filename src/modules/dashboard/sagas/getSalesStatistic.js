@@ -15,24 +15,24 @@ import {
 } from '../schema';
 
 const query = {
-  daily: GET_HOURLY_SALES_STATISTIC_QUERY,
-  weekly: GET_DAILY_SALES_STATISTIC_QUERY,
+  last24Hours: GET_HOURLY_SALES_STATISTIC_QUERY,
+  last7Days: GET_DAILY_SALES_STATISTIC_QUERY,
 };
 const queryGlobal = {
-  daily: GET_DAILY_SALES_BY_KIOSKS,
-  weekly: GET_WEEKLY_SALES_BY_KIOSKS,
+  last24Hours: GET_DAILY_SALES_BY_KIOSKS,
+  last7Days: GET_WEEKLY_SALES_BY_KIOSKS,
 };
 
 // TODO: Change daily: 'dailySales' to daily: 'hourlySales' after mock removed
 
 const queryKey = {
-  daily: 'hourlySalesByKiosk',
-  weekly: 'dailySalesByKiosk',
+  last24Hours: 'hourlySalesByKiosk',
+  last7Days: 'dailySalesByKiosk',
 };
 
 const queryKeyGlobal = {
-  weekly: 'dailySales',
-  daily: 'hourlySales',
+  last7Days: 'dailySales',
+  last24Hours: 'hourlySales',
 };
 
 function getLastWeek() {
@@ -67,7 +67,7 @@ function* handler({ payload: { kioskId, time } }) {
     /* eslint-disable */
 
     data[queryName].forEach(elem => {
-      if (time === 'daily') {
+      if (time === 'last24Hours') {
         elem._id.date = elem._id.date.split('T')[1].split(':')[0];
       } else {
         elem._id.dateString = elem._id.date;
@@ -76,7 +76,7 @@ function* handler({ payload: { kioskId, time } }) {
     });
 
     let weekFormat;
-    if (time === 'weekly') {
+    if (time === 'last7Days') {
       const { lastWeekDate, lastWeekFormat } = getLastWeek();
       // filter last 7 days including current date
       data[queryName] = data[queryName].filter(elem => lastWeekDate < new Date(elem._id.dateString));
