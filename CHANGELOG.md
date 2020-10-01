@@ -1,3 +1,9 @@
+#### 1.2.11 (2020-10-01)
+
+##### Bug Fixes
+
+* **imageUpload:**  Closes LIV-2012 (1b683d49)
+
 #### 1.2.10 (2020-10-01)
 
 ##### Continuous Integration
