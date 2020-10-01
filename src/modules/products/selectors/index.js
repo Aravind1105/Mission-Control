@@ -180,6 +180,7 @@ export const selectorGetProductInitValue = createSelector(
             'unitCount',
             'grossWeightGrams',
             'netWeightGrams',
+            'netWeightGramsUnit',
             'shelfLifeDays',
             'description',
           ]),
