@@ -1,3 +1,9 @@
+#### 1.2.12 (2020-10-01)
+
+##### Continuous Integration
+
+* **increment version stage not neeeded:**  Deleted increment version stage (458eda31)
+
 #### 1.2.11 (2020-10-01)
 
 ##### Bug Fixes
