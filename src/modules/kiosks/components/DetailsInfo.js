@@ -32,9 +32,9 @@ const DetailsInfo = ({
     addressSecondLine += `${address.postalCode} ${address.city}`;
     addressThirdLine += `${address.country}`;
   }
-
+  let sessionType = 'no session';
   if (session) {
-    let sessionType = session.type;
+    sessionType = session.type;
     if (sessionType === 'refill') {
       sessionType = 'Replenishment';
     }
@@ -47,10 +47,7 @@ const DetailsInfo = ({
           <Grid>
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
-              <InfoRow
-                title="Session"
-                description={session ? sessionType : 'no session'}
-              />
+              <InfoRow title="Session" description={sessionType} />
               {addressLine1 !== '' && (
                 <InfoRow title="Address" description={addressLine1} />
               )}
