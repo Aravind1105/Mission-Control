@@ -1,3 +1,13 @@
+#### 1.2.10 (2020-10-01)
+
+##### Continuous Integration
+
+* **increment version stage not neeeded:**  Deleted increment version stage (94f3c986)
+
+##### Bug Fixes
+
+* **sessionType rewrite:**  Closes LIV-2011 (0fc5d6b2)
+
 #### 1.2.9 (2020-10-01)
 
 ##### Bug Fixes
