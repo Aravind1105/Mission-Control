@@ -1,3 +1,16 @@
+#### 1.2.9 (2020-10-01)
+
+##### Bug Fixes
+
+* **Kiosks can have NO session:**  Kiosk Can have no session to get a Type from (05045c2a)
+* **TransactionCount:** LIV-1933 bug fix (1dd7f872)
+
+##### Other Changes
+
+* **Dashboard:** liv-1945 sales statistic graph label change (1cf3a256)
+* **NetQuantity:** LIV-1950 (a4439db4)
+* **kiosk details:**  str refil to replenishment (9005420f)
+
 #### 1.2.8 (2020-09-29)
 
 ##### Other Changes
