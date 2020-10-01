@@ -77,7 +77,7 @@ const KioskDetails = ({
   };
 
   const handlerOpenDoor = () => {
-    if (window.confirm('Willst Du das Kiosk wirklich im Refill Mode öffnen?')) {
+    if (window.confirm('Willst Du das Kiosk wirklich im Replenisher Mode öffnen?')) {
       createRefill(kiosk._id);
     }
   };
