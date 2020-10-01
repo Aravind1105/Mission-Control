@@ -33,9 +33,11 @@ const DetailsInfo = ({
     addressThirdLine += `${address.country}`;
   }
 
-  let sessionType = session.type;
-  if (sessionType === 'refill') {
-    sessionType = 'Replenishment';
+  if (session) {
+    let sessionType = session.type;
+    if (sessionType === 'refill') {
+      sessionType = 'Replenishment';
+    }
   }
 
   return (
@@ -45,17 +47,27 @@ const DetailsInfo = ({
           <Grid>
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
-              <InfoRow title="Session" description={session ? sessionType : 'no session'} />
-              {addressLine1 !== '' && <InfoRow title="Address" description={addressLine1} />}
+              <InfoRow
+                title="Session"
+                description={session ? sessionType : 'no session'}
+              />
+              {addressLine1 !== '' && (
+                <InfoRow title="Address" description={addressLine1} />
+              )}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
-              {addressLine1 !== '' && <InfoRow description={addressSecondLine} />}
-              {addressLine1 !== '' && <InfoRow description={addressThirdLine} />}
-              {notes && <InfoRow title="Directions / Notes" description={notes} />}
+              {addressLine1 !== '' && (
+                <InfoRow description={addressSecondLine} />
+              )}
+              {addressLine1 !== '' && (
+                <InfoRow description={addressThirdLine} />
+              )}
+              {notes && (
+                <InfoRow title="Directions / Notes" description={notes} />
+              )}
               <InfoRow title="Organization" description={ownerOrganization} />
               <InfoRow title="Pin" description={pin} />
             </Grid.Row>
           </Grid>
-
         </Grid.Column>
         <Grid.Column width={4}>{children}</Grid.Column>
       </Grid>
