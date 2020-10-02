@@ -86,7 +86,7 @@ const Dashboard = ({
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Row stretched>
+      {/* <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <MainChart
             data={salesStat}
@@ -95,7 +95,7 @@ const Dashboard = ({
             getSalesStatistic={getSalesStatistic}
           />
         </Grid.Column>
-      </Grid.Row>
+      </Grid.Row> */}
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <AlmostEmptyTable />
