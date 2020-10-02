@@ -1,3 +1,32 @@
+#### 1.2.11 (2020-10-01)
+
+##### Bug Fixes
+
+* **imageUpload:**  Closes LIV-2012 (1b683d49)
+
+#### 1.2.10 (2020-10-01)
+
+##### Continuous Integration
+
+* **increment version stage not neeeded:**  Deleted increment version stage (94f3c986)
+
+##### Bug Fixes
+
+* **sessionType rewrite:**  Closes LIV-2011 (0fc5d6b2)
+
+#### 1.2.9 (2020-10-01)
+
+##### Bug Fixes
+
+* **Kiosks can have NO session:**  Kiosk Can have no session to get a Type from (05045c2a)
+* **TransactionCount:** LIV-1933 bug fix (1dd7f872)
+
+##### Other Changes
+
+* **Dashboard:** liv-1945 sales statistic graph label change (1cf3a256)
+* **NetQuantity:** LIV-1950 (a4439db4)
+* **kiosk details:**  str refil to replenishment (9005420f)
+
 #### 1.2.8 (2020-09-29)
 
 ##### Other Changes

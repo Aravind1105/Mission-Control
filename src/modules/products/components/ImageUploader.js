@@ -109,7 +109,7 @@ const ImageUploader = ({
         independentDeleteImage();
       }
     }
-  }, [showAlert]);
+  }, [customAlertStatus]);
 
   const handleChange = ({ target }) => {
     const { files } = target;
