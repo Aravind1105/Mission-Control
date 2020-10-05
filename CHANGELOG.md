@@ -1,3 +1,9 @@
+#### 1.2.12 (2020-10-05)
+
+##### Other Changes
+
+* **Disable sales graph in dashboard:** LIV-2019 (0b146284)
+
 #### 1.2.11 (2020-10-01)
 
 ##### Bug Fixes
