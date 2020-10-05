@@ -1,3 +1,13 @@
+#### 1.2.14 (2020-10-05)
+
+##### Continuous Integration
+
+* **increment version stage not neeeded:**  Deleted increment version stage (458eda31)
+
+##### Other Changes
+
+* **dependencies:**  updated node packages (e8c3f710)
+
 #### 1.2.13 (2020-10-05)
 
 ##### Other Changes
