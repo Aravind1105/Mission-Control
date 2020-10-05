@@ -6,9 +6,9 @@
 
 #### 1.2.12 (2020-10-05)
 
-##### Other Changes
+##### Continuous Integration
 
-* **Disable sales graph in dashboard:** LIV-2019 (0b146284)
+* **increment version stage not neeeded:**  Deleted increment version stage (458eda31)
 
 #### 1.2.11 (2020-10-01)
 
