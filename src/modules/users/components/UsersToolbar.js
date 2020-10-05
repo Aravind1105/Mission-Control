@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
 } from 'semantic-ui-react';
+import history from 'lib/history';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
@@ -16,6 +17,9 @@ const stateOptions = [
 ];
 
 const UsersToolbar = ({ openModal }) => {
+  const addUserHandler = () => {
+    history.push('/users/edit/new');
+  };
   return (
     <Segment className="toolbar">
       <Grid stackable>
@@ -51,8 +55,9 @@ const UsersToolbar = ({ openModal }) => {
               labelPosition="left"
               color="green"
               compact
-              // onClick={() => openModal(true)}
-              disabled={true} //! Disabled temporarily #golive2
+              onClick={addUserHandler}
+              // disabled={true}
+              //! Disabled temporarily #golive2
             >
               <Icon name="right arrow" />
               Add User
