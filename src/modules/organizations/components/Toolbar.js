@@ -53,7 +53,8 @@ const OrganizationsToolbar = () => {
               compact
               as={Link}
               to="/organizations/create"
-              disabled={true} //! Disabled temporarily #golive2
+              // disabled={true}
+              //! Disabled temporarily #golive2
             >
               <Icon name="right arrow" />
               Add organization

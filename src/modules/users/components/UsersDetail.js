@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import get from 'lodash/get';
 
+import history from 'lib/history';
 import { toggleUserRole } from '../actions';
 import { getActiveUserState } from '../selectors';
 
@@ -22,6 +23,10 @@ const UsersDetail = ({ user, toggleUserRole }) => {
       root: !user.root,
     };
     toggleUserRole(payload);
+  };
+
+  const editUserHandler = () => {
+    history.push(`/users/edit/${user._id}`);
   };
 
   const name = `${user.firstName || ''} ${user.lastName || ''}`.trim();
@@ -117,6 +122,9 @@ const UsersDetail = ({ user, toggleUserRole }) => {
             </Button>
             <Button style={{ marginBottom: 5 }} fluid>
               Retrieve Login
+            </Button>
+            <Button style={{ marginBottom: 5 }} fluid onClick={editUserHandler}>
+              Edit
             </Button>
           </Grid.Column>
         </Grid.Row>

@@ -10,22 +10,26 @@ import { modifyKiosk } from '../actions';
 import { toast } from 'react-semantic-toasts';
 
 let updatingKiosk = false;
-const KioskForm = ({ 
-  initialValues, 
-  organizations, 
+const KioskForm = ({
+  initialValues,
+  organizations,
   cancelHandler,
   isKioskLoading,
- }) => {
+}) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     updatingKiosk = dispatch(modifyKiosk({ values, formActions }));
   };
 
   useEffect(() => {
-    if(updatingKiosk){
-      if(isKioskLoading){
+    if (updatingKiosk) {
+      if (isKioskLoading) {
         // toast({description:'Kiosk is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        toast({type:'success', description:'Kiosk was saved successfully.', animation:'fade left'});
+        toast({
+          type: 'success',
+          description: 'Kiosk was saved successfully.',
+          animation: 'fade left',
+        });
       }
     }
   });

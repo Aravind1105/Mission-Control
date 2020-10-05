@@ -9,6 +9,7 @@ export const userDetailOnUser = gql`
     avatarUrl
     email
     mobile
+    membercards
     address {
       line1
       city
@@ -20,11 +21,30 @@ export const userDetailOnUser = gql`
       }
       role
     }
+    paymentMethods {
+      _id
+      provider
+      type
+      stripeCustomerId
+      last4digits
+      default
+      created
+      updated
+    }
   }
 `;
 
+export const GET_ONE_USER_WITH_INFO = gql`
+  query($id: String!) {
+    getOneUserWithInfo(id: $id) {
+      ...userDetail
+    }
+  }
+  ${userDetailOnUser}
+`;
+
 export const GET_USERS_SHORT_INFO_QUERY = gql`
-  query($data: GridRequest){
+  query($data: GridRequest) {
     getAllUsersGrid(data: $data) {
       total
       data {
@@ -54,6 +74,24 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
 export const USER_ROLE_TOGGLE_MUTATION = gql`
   mutation toggleRole($data: GrantRootForUserInput!) {
     grantRootForUser(data: $data) {
+      ...userDetail
+    }
+  }
+  ${userDetailOnUser}
+`;
+
+export const ADD_MEMBER_CARD_ID_FOR_USER_MUTATION = gql`
+  mutation addMembercardIdForUser($data: MembercardIdInput!) {
+    addMembercardIdForUser(data: $data) {
+      ...userDetail
+    }
+  }
+  ${userDetailOnUser}
+`;
+
+export const DELETE_MEMBER_CARD_ID_FOR_USER_MUTATION = gql`
+  mutation deleteMembercardIdForUser($data: MembercardIdInput!) {
+    deleteMembercardIdForUser(data: $data) {
       ...userDetail
     }
   }
