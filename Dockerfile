@@ -12,7 +12,6 @@ RUN apk --no-cache --virtual build-dependencies add \
     git
 RUN npm install
 COPY ./src ./src
-COPY ./public ./public
 COPY ./.env ./.env
 RUN npm run build
 
