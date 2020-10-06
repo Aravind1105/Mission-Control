@@ -1,3 +1,13 @@
+#### 1.2.15 (2020-10-06)
+
+##### Chores
+
+* **docker file:**  remove copy from public (4023fcc6)
+
+##### Other Changes
+
+* **edit button planogram:**  Edit button on the planogram moved to the left and load-cell-content centered. (f4a8207d)
+
 #### 1.2.14 (2020-10-05)
 
 ##### Continuous Integration
