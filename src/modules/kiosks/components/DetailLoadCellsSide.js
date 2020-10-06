@@ -23,18 +23,23 @@ const Card = ({
   return (
     <Grid.Column className="load-cell">
       <div className="load-cell-content">
-        <div className="load-cell-tags">
-          <b className="load-cell-position">{planogramPosition? planogramPosition: "Error"}</b> 
-          <p className="load-cell-calbeId">ID: {cellId? cellId: "Error"}</p> 
+        <div>
+          <button type="button" className="edit-icon" onClick={handleClick}>
+            <Icon name="edit" size="small" />
+          </button>
+          <div className="load-cell-tags">
+            <b className="load-cell-position">{planogramPosition? planogramPosition: "Error"}</b> 
+            <p className="load-cell-calbeId">ID: {cellId? cellId: "Error"}</p> 
+          </div>
+        </div>
+        <div className="load-cell-icon">
+          {productLine.image ? (
+            <img src={productLine.image} alt={productLine.name} />
+          ) : (
+            <NoImg />
+          )}
         </div>
         <div className="load-cell-info">
-          <div className="load-cell-icon">
-            {productLine.image ? (
-              <img src={productLine.image} alt={productLine.name} />
-            ) : (
-              <NoImg />
-            )}
-          </div>
           <div className="load-cell-body">
             <b className="load-cell-title">
               {productLine ? `${productLine.name}` : null}
@@ -48,9 +53,6 @@ const Card = ({
             <p>{`€ ${productLine.price}`}</p>
           </div>
         </div>
-        <button type="button" className="edit-icon" onClick={handleClick}>
-          <Icon name="edit" size="small" />
-        </button>
       </div>
     </Grid.Column>
   );
