@@ -63,6 +63,7 @@ export const productOnProductLine = gql`
       default
       validForKiosk
       _id
+      updated
     }
   }
 `;
