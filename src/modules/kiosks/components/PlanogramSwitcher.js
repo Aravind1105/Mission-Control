@@ -19,6 +19,7 @@ const PlanogramSwitcher = ({
 }) => {
   const handleClick = (e, { value }) => {
     setCurrentSide(value);
+    console.log('isTwoSides', isTwoSides,'\nactiveShelves: ', activeShelves)
   };
   return (
     <>
