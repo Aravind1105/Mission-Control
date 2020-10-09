@@ -118,6 +118,7 @@ export const GET_TRANSACTIONS_WIDGET_DATA = gql`
     getAveragePurchaseValue(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsSold(period: $period, kioskId: $kioskId)
     getTotalNetIncome(period: $period, kioskId: $kioskId)
+    getTotalGrossIncome(period: $period, kioskId: $kioskId)
   }
 `;
 

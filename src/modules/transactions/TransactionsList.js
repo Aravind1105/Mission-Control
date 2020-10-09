@@ -108,6 +108,8 @@ const ProductsList = ({
               color="green"
               text="Total Net Sales"
               amount={`€ ${widgetsData.totalNetIncome} `}
+              secondaryText="Total Gross Sales"
+              secondaryAmount={`€ ${widgetsData.totalGrossIncome} `}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>

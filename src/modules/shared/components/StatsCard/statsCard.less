@@ -33,6 +33,37 @@
       margin-bottom: 20px !important;
     }
   }
+
+  .stats-card-header-double {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1 1 49%;
+    }
+    
+    .lower-deck {
+      margin-top: 5px !important;
+    }
+
+    .content {
+      text-align: left;
+    }
+
+    .sub.header {
+      text-align: left;
+    }
+
+    .column-left {
+      flex: 2;
+    }
+
+    .column-right {
+      flex: 1;
+      flex-direction: row;
+      align-self: center;
+    }
+  }
 }
 
 .custom-tooltip {

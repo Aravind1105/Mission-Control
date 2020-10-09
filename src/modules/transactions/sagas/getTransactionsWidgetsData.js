@@ -16,6 +16,7 @@ function* handler({ payload }) {
         getAveragePurchaseValue,
         getTotalNumberOfProductsSold,
         getTotalNetIncome,
+        getTotalGrossIncome,
       },
     } = yield call(gqlTransactions.query, {
       query: GET_TRANSACTIONS_WIDGET_DATA,
@@ -39,6 +40,7 @@ function* handler({ payload }) {
         averagePurchaseValue: getAveragePurchaseValue,
         totalNumberOfProductsSold: getTotalNumberOfProductsSold,
         totalNetIncome: getTotalNetIncome,
+        totalGrossIncome: getTotalGrossIncome,
       }),
     );
   } catch (error) {
