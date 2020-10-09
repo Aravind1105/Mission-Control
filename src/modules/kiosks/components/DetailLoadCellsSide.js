@@ -24,16 +24,19 @@ const Card = ({
     <Grid.Column className="load-cell">
       <div className="load-cell-content">
         <div className="load-cell-tags">
-          <b className="load-cell-position">{planogramPosition? planogramPosition: "Error"}</b> 
-          <p className="load-cell-calbeId">ID: {cellId? cellId: "Error"}</p> 
+          <button type="button" className="edit-icon" onClick={handleClick}>
+            <Icon name="edit" size="small" />
+          </button>
+          <b className="load-cell-position">{planogramPosition ? planogramPosition : "Error"}</b>
+          <p className="load-cell-calbeId">ID: {cellId ? cellId : "Error"}</p>
         </div>
         <div className="load-cell-info">
           <div className="load-cell-icon">
             {productLine.image ? (
               <img src={productLine.image} alt={productLine.name} />
             ) : (
-              <NoImg />
-            )}
+                <NoImg />
+              )}
           </div>
           <div className="load-cell-body">
             <b className="load-cell-title">
@@ -48,9 +51,7 @@ const Card = ({
             <p>{`€ ${productLine.price}`}</p>
           </div>
         </div>
-        <button type="button" className="edit-icon" onClick={handleClick}>
-          <Icon name="edit" size="small" />
-        </button>
+
       </div>
     </Grid.Column>
   );
@@ -72,11 +73,11 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                 return props ? (
                   <Card {...props} key={props.cellId} handleEdit={handleEdit} />
                 ) : (
-                  <Grid.Column
-                    key={performance.now().toString(32)}
-                    className="load-cell"
-                  />
-                );
+                    <Grid.Column
+                      key={performance.now().toString(32)}
+                      className="load-cell"
+                    />
+                  );
               })}
             </Grid.Row>
           );
