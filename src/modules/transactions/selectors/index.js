@@ -199,7 +199,7 @@ export const getWidgetDataState = state => {
   return {
     totalNumberOfTransactions: totalNumberOfTransactions || 0,
     totalNumberOfProductsSold: totalNumberOfProductsSold || 0,
-    totalNetIncome: Number(totalNetIncome || 0).toFixed(2),
+    totalNetIncome: Number(totalNetIncome || 0),
     totalGrossIncome: Number(totalGrossIncome || 0).toFixed(2),
     averagePurchaseValue: Number(averagePurchaseValue || 0).toFixed(2),
     totalNumberOfProductsAdded: totalNumberOfProductsAdded || 0,
