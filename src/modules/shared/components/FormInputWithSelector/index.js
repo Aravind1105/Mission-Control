@@ -7,22 +7,20 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
     setSelectorValue(dropdownSelectedValue);
   }, [dropdownSelectedValue]);
 
-  const isTouched = form.touched[field.name];
+  const isTouched = form.touched[field.name] || form.touched[`${field.name}Unit`];
   const error = form.errors[field.name];
   const errMsg = isTouched && error ? { content: error } : undefined;
-
-  // do not remove this effect
-  // this is required for the component to refresh its dropdown value
-  React.useEffect(() => {
-  }, [selectorValue]);
 
   const handleBlur = ({ target }) => {
     const price = prettier(target.value);
     form.setFieldValue(field.name, price);
+    form.setFieldValue(`${field.name}Unit`, selectorValue);
   };
 
   const handleChange = (e, { value }) => {
-    if (limiting === 'floatingField') {
+    if (e.target.name === undefined) {
+      form.setFieldValue(`${field.name}Unit`, value);
+    } else if (limiting === 'floatingField') {
       if (/^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) || /^[0-9]{1,20}([,.])?$/.test(value)) {
         if (value.includes('.') || value.includes(',')) {
           form.setFieldValue(field.name, value.replace(',', '.'));
@@ -33,7 +31,6 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
         form.setFieldValue(field.name, value);
       } else if (value === '') form.setFieldValue(field.name, value);
     }
-    form.setFieldValue(`${field.name}Unit`, selectorValue);
   };
 
   return (
@@ -47,7 +44,6 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
       onChange={limiting ? handleChange : field.onChange}
       action={(
         <Dropdown
-          // {...field}
           compact
           button
           selection
@@ -56,6 +52,7 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
           options={selectorOptions}
           onChange={(e, { value }) => {
             setSelectorValue(value);
+            handleChange(e, { value });
           }}
         />
       )}
