@@ -1,3 +1,17 @@
+#### 1.2.16 (2020-10-13)
+
+##### Bug Fixes
+
+* **product net quantiy unit:**  LIV-1950 bug fix (63037b56)
+* **price history date format:**  LIV-1951 (4fd1902e)
+* **Product price history:**  LIV-1951 Invalid date bug fixed (05de00cd)
+* **Planogram:** load cell edit button replacement and alignment (b0f99f59)
+
+##### Other Changes
+
+* **Transactions-Widgets:** LIV-2040 widget for total gross sales (747da292)
+* **edit button planogram:**  Edit button on the planogram moved to the left..." (a8c326ab)
+
 #### 1.2.15 (2020-10-06)
 
 ##### Chores
