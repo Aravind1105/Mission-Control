@@ -20,6 +20,8 @@ export const getProductLinesByOrgId = createAction(
   '@@saga/GET_PRODUCT_LINES_BY_ORG_ID',
 );
 export const getTemperatureLogs = createAction('@@saga/GET_TEMPERATURE_LOGS');
+export const getActivityLogs = createAction('@@saga/GET_ACTIVITY_LOGS');
+
 
 // State actions
 export const updateKiosks = createAction('@@state/KIOSKS_UPDATE');
@@ -44,4 +46,7 @@ export const getProductLinesByOrgIdSuccess = createAction(
 );
 export const getTemperatureLogsSuccess = createAction(
   '@@state/GET_TEMPERATURE_LOGS_SUCCESS',
+);
+export const getActivityLogsSuccess = createAction(
+  '@@state/GET_ACTIVITY_LOGS_SUCCESS',
 );

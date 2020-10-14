@@ -1,3 +1,17 @@
+#### 1.2.17 (2020-10-14)
+
+##### Build System / Dependencies
+
+* **liv-2105:**  Added Activity Log for each Kiosk (8caa08b5)
+
+##### Bug Fixes
+
+* **Total net income:**  LIV-2040 round off removed (02219d52)
+
+##### Other Changes
+
+* **Total net income:**  LIV-2040 round off removed" (7c7a256c)
+
 #### 1.2.16 (2020-10-13)
 
 ##### Bug Fixes

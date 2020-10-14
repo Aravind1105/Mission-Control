@@ -21,6 +21,8 @@ import {
   modifyKiosk,
   updateKiosksForTable,
   getAllKiosksForTable,
+  getActivityLogs,
+  getActivityLogsSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -37,6 +39,7 @@ const initialState = {
   almostEmptyKiosks: [],
   totalEmptyKiosks: 0,
   temperatureLogs: [],
+  activityLogs: []
 };
 
 const kiosksReducer = handleActions(
@@ -133,6 +136,15 @@ const kiosksReducer = handleActions(
     [getTemperatureLogsSuccess]: (state, { payload }) => ({
       ...state,
       temperatureLogs: payload.temperatureLogs,
+      isLoading: false,
+    }),
+    [getActivityLogs]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [getActivityLogsSuccess]: (state, { payload }) => ({
+      ...state,
+      activityLogs: payload.activityLogs,
       isLoading: false,
     }),
   },
