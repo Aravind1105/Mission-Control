@@ -19,6 +19,13 @@ const alertMessages = {
   UnauthAccess: 'Unauthorized Access',
 };
 
+const activityLogMessages = {
+  "open": 'Opened',
+  "closed": 'Closed',
+  "payment_success": 'Payment Success',
+  "valid_card_read": 'Valid Card Read'
+}
+
 export const getAlertsOptions = () => [
   { value: '', text: 'All Alerts' },
   ...Object.keys(alertMessages).map(alert => ({
@@ -226,17 +233,17 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-        id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-        notes: get(kiosk, 'notes', '') || '',
-        orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
+      id: kiosk._id,
+      ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+      notes: get(kiosk, 'notes', '') || '',
+      orgId: kiosk.orgId,
+      location: {
+        address: {
+          ...kioskInitialValues.location.address,
+          ...address,
         },
-      }
+      },
+    }
     : kioskInitialValues;
 });
 
@@ -259,6 +266,27 @@ export const getProductsDropdownList = (id = '') =>
   );
 
 export const getTotalKiosks = state => state.kiosks.total;
+
+export const getTotalActivityLogs = state => state.kiosks.activityLogs.total
+
+export const getActivityLogs = state => state.kiosks.activityLogs.data;
+
+export const getActivityLogsState = createSelector(getActivityLogs, log => {
+  if (log !== undefined) {
+    const logs = log.map((actLog) => {
+      const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
+      return {
+        date: date,
+        event: {
+          doorStatus: activityLogMessages[actLog.payload.message.door_status],
+          touchedScales: actLog.payload.message.touchedScales,
+          paymentTerminal: activityLogMessages[actLog.payload.message.payment_terminal]
+        }
+      }
+    })
+    return logs;
+  }
+})
 
 export const getTemperatureLogsState = state => {
   const monthNames = [
