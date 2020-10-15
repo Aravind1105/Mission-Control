@@ -89,7 +89,7 @@ const ActivityLogGrid = ({ kiosk, total, activityLogs, getActivityLogs }) => {
                 kiosk: kiosk._id ? kiosk._id : '',
             };
             //   exportCsvRefills(value);
-            toast({ description: 'Downloading the requested file.', animation: 'fade left', icon: 'info', color: 'blue' });
+            // toast({ description: 'Downloading the requested file.', animation: 'fade left', icon: 'info', color: 'blue' });
         }
     };
 
