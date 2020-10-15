@@ -1,3 +1,9 @@
+#### 1.2.18 (2020-10-15)
+
+##### Bug Fixes
+
+* **liv-2105:**  added msg for empty touchscale and member card read message (c9179ae7)
+
 #### 1.2.17 (2020-10-14)
 
 ##### Build System / Dependencies
