@@ -24,11 +24,14 @@ const columns = [
         formatter: ({ event }) => {
             if (event.doorStatus !== null && event.doorStatus !== undefined)
                 return `Door Status: ${event.doorStatus}`
-            else if (event.touchedScales !== null && event.touchedScales !== undefined) {
+            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
                 return `Products Touched -` +
                     event.touchedScales.map((scl) => {
                         return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`
                     })
+            }
+            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length === 0) {
+                return `Products Touched - Empty`
             }
             else if (event.paymentTerminal !== null && event.paymentTerminal !== undefined)
                 return `Payment Terminal: ${event.paymentTerminal}`
