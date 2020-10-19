@@ -93,7 +93,10 @@ export const getTransactionsTableState = createSelector(
         };
         const arr = itemsPurchased.reduce(
           (prev, { productLine, price, tax }) => {
-            const idx = prev.findIndex(el => el.id === productLine._id);
+            let idx = -1;
+            if (productLine) {
+              idx = prev.findIndex(el => el.id === productLine._id);
+            }
             let quantity = 1;
             if (~idx) {
               const total = Math.round((prev[idx].total + price) * 100) / 100;
