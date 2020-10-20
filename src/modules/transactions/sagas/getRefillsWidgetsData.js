@@ -8,7 +8,7 @@ import {
 import { GET_REFILLS_WIDGET_DATA } from '../schema';
 
 function* handler({ payload }) {
-  const startDateOfMonth = new Date(new Date().setDate(1));
+  const startDateOfMonth = new Date(new Date(new Date().setHours(0, 0, 0)).setDate(1));
   try {
     const {
       data: {
