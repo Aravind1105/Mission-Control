@@ -24,7 +24,9 @@ const activityLogMessages = {
   "closed": 'Closed',
   "payment_success": 'Payment Success',
   "valid_card_read": 'Valid Card Read',
-  "valid_membercard_read": 'Valid Member Card Read'
+  "valid_membercard_read": 'Valid MemberCard Read',
+  "invalid_card_read": 'Invalid Card Read',
+  "payment_failed": 'Payment Failed'
 }
 
 export const getAlertsOptions = () => [

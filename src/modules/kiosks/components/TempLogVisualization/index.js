@@ -6,7 +6,7 @@ import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import { Grid, Segment, Header, Button } from 'semantic-ui-react';
 import DatePicker from 'modules/shared/components/Datepicker';
 import ComplexChart from '../ComplexChart';
-import { getTemperatureLogs } from '../../actions';
+import { getTemperatureLogs, getKiosk } from '../../actions';
 import { getKioskSingle, getTemperatureLogsState } from '../../selectors';
 
 import './styles.less';
@@ -27,19 +27,15 @@ const optionsResolution = [
   { label: 'Daily', value: dataKeys.DAY },
 ];
 
-const TempLogVisualization = ({ kiosk, getTemperatureLogs, temperatureLogs }) => {
+const TempLogVisualization = ({ match, kiosk, getTemperatureLogs, temperatureLogs, getKiosk }) => {
   const [resolution, setResolution] = useState(optionsResolution[1].value);
   const [dateRange, setDateRange] = useState(defaultDateRange);
+  const { id } = match.params;
 
-  const getData = () => getTemperatureLogs({ kioskId: kiosk._id, resolution, ...dateRange });
-
+  const getData = (id) => getTemperatureLogs({ kioskId: kiosk === null ? id : kiosk._id, resolution, ...dateRange });
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    getData();
-  }, [resolution, dateRange]);
+    getData(id)
+  }, [id, resolution, dateRange]);
 
   const handleDateChange = value => {
     let date = '';
@@ -117,6 +113,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getTemperatureLogs,
+  getKiosk
 };
 
 
