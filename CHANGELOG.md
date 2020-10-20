@@ -1,3 +1,9 @@
+#### 1.2.19 (2020-10-20)
+
+##### Bug Fixes
+
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
 #### 1.2.18 (2020-10-15)
 
 ##### Bug Fixes
