@@ -30,26 +30,28 @@ const columns = [
                         return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`
                     })
             }
-            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length === 0) {
+            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length === 0)
                 return `Products Touched - Empty`
-            }
             else if (event.paymentTerminal !== null && event.paymentTerminal !== undefined)
                 return `Payment Terminal: ${event.paymentTerminal}`
+            else
+                return '-'
         }
     },
 ];
 
 
 
-const ActivityLogGrid = ({ kiosk, total, activityLogs, getActivityLogs }) => {
+const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
     const [exportData, changeExportData] = useState(false);
+    const { id } = match.params;
 
-    const getData = ({ }) => {
+    const getData = (id) => {
         const data = {
-            kioskId: kiosk._id,
+            kioskId: kiosk === null ? id : kiosk._id,
             skip: page * perPage,
             limit: perPage,
             date: dateRange !== '' && dateRange
@@ -94,8 +96,8 @@ const ActivityLogGrid = ({ kiosk, total, activityLogs, getActivityLogs }) => {
     };
 
     useEffect(() => {
-        getData({});
-    }, [page, perPage, dateRange]);
+        getData(id);
+    }, [id, page, perPage, dateRange]);
 
     return (
         <Grid.Row>

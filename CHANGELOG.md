@@ -1,7 +1,14 @@
+#### 1.2.22 (2020-10-20)
+
+#### 1.2.21 (2020-10-20)
+
+#### 1.2.21 (2020-10-20)
+
 #### 1.2.19 (2020-10-20)
 
 ##### Bug Fixes
 
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
 * **transactions widget date range:** LIV-2148 (b163d7cb)
 * **dashboard-customers today:**  LIV-1944 (8be74d21)
 * **Transaction Sales:** LIV-2131 product line null check (703c46d2)

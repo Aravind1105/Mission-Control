@@ -1,41 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment } from 'semantic-ui-react';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
-import history from 'lib/history';
 import { getKioskSingle } from './selectors';
 import ActivityLog from './components/ActivityLog';
+import { getKiosk } from './actions';
 
-const Log = ({ kiosk, isLoading }) => {
-    const links = kiosk
-        ? [
-            {
-                name: 'Home',
-                link: '/dashboard',
-            },
-            {
-                name: 'Kiosks',
-                link: '/kiosks',
-            },
-            {
-                name: kiosk.name,
-                link: `/kiosks/detail/${kiosk._id}`,
-            },
-        ]
-        : [];
-    const backLink = kiosk
-        ? {
-            name: 'Back to kiosk detail',
-            link: `/kiosks/detail/${kiosk._id}`,
-        }
-        : null;
-
-    if (kiosk === null) {
-        history.push('/kiosks');
+const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
+    const links = [
+        {
+            name: 'Home',
+            link: '/dashboard',
+        },
+        {
+            name: 'Kiosks',
+            link: '/kiosks',
+        },
+        {
+            name: kiosk === null ? '' : kiosk.name,
+            link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
+        },
+    ]
+    const backLink = {
+        name: 'Back to kiosk detail',
+        link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
     }
-
+    useEffect(() => {
+        if (kiosk === null) {
+            getKiosk(props.match.params.id);
+        }
+    }, []);
     return (
         <>
             {isLoading && <Loader />}
@@ -51,7 +47,7 @@ const Log = ({ kiosk, isLoading }) => {
                         </Segment>
                     </Grid.Column>
                 </Grid.Row>
-                <ActivityLog />
+                <ActivityLog {...props} />
             </Grid>
         </>
     );
@@ -59,7 +55,10 @@ const Log = ({ kiosk, isLoading }) => {
 
 const mapStateToProps = state => ({
     kiosk: getKioskSingle(state),
-    isLoading: state.kiosks.isLoading,
+    isLoading: state.kiosks.isLoading
 });
+const mapDispatchToProps = {
+    getKiosk
+};
 
-export default connect(mapStateToProps)(Log);
+export default connect(mapStateToProps, mapDispatchToProps)(Log);

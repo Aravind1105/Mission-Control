@@ -96,8 +96,8 @@ const KioskEdit = ({
               </Grid.Column>
             </Grid.Row>
           ) : (
-            <Loader />
-          )}
+              <Loader />
+            )}
         </Grid>
       </Grid.Column>
       <ConfirmationModal

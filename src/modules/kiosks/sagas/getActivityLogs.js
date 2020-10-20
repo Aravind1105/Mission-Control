@@ -6,7 +6,6 @@ import { GET_ACTIVITY_LOGS } from '../schema';
 import { getActivityLogs, getActivityLogsSuccess } from '../actions';
 
 function* handler({ payload }) {
-    console.log(payload.data.date.$gte);
     try {
         const { data: { gridActivities } } = yield call(gqlKiosk.query, {
             query: GET_ACTIVITY_LOGS,
