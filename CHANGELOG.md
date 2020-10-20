@@ -1,3 +1,12 @@
+#### 1.2.19 (2020-10-20)
+
+##### Bug Fixes
+
+* **transactions widget date range:** LIV-2148 (b163d7cb)
+* **dashboard-customers today:**  LIV-1944 (8be74d21)
+* **Transaction Sales:** LIV-2131 product line null check (703c46d2)
+* **KioskDetails:**  LIV-1959 Replenisher Mode string (e0c15f53)
+
 #### 1.2.18 (2020-10-15)
 
 ##### Bug Fixes
