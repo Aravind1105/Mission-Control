@@ -1,3 +1,9 @@
+#### 1.2.27 (2020-10-23)
+
+##### Bug Fixes
+
+* **date format:**  fix date format on dashboard alerts (d2317601)
+
 #### 1.2.26 (2020-10-23)
 
 ##### Bug Fixes
