@@ -120,6 +120,15 @@ const FragmentAlertLowTempOnKiosk = gql`
   }
 `;
 
+const FragmentAlertUnauthorizedAccessOnKiosk = gql`
+  fragment FragmentAlertUnauthorizedAccess on  AlertUnauthAccess {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_ALL_KIOSKS_GRID_QUERY = gql`
   query($data: GridRequest) {
     getKiosksGrid(data: $data) {
@@ -227,6 +236,7 @@ export const GET_ALERTS_GRID = gql`
           ...FragmentAlertDoorOpen
           ...FragmentAlertHighTemp
           ...FragmentAlertLowTemp
+          ...FragmentAlertUnauthorizedAccess
         }
       }
     }
@@ -235,6 +245,7 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertDoorOpenOnKiosk}
   ${FragmentAlertHighTempOnKiosk}
   ${FragmentAlertLowTempOnKiosk}
+  ${FragmentAlertUnauthorizedAccessOnKiosk}
 `;
 
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
