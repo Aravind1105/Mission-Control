@@ -1,3 +1,50 @@
+#### 1.2.26 (2020-10-23)
+
+##### Bug Fixes
+
+* **liv-2123:**  replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+* **kiosk-alerts:**  update grid alerts fetch query (45712e6c)
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.25 (2020-10-23)
+
+##### Bug Fixes
+
+* **liv-2123:**  replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+* **kiosk-alerts:**  update grid alerts fetch query (45712e6c)
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.24 (2020-10-23)
+
+##### Bug Fixes
+
+* **liv-2123:**  replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+* **kiosk-alerts:**  update grid alerts fetch query (45712e6c)
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.24 (2020-10-23)
+
+##### Bug Fixes
+
+* **kiosk-alerts:**  update grid alerts fetch query (45712e6c)
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (c9fe31e8)
+
 #### 1.2.23 (2020-10-23)
 
 ##### Bug Fixes
