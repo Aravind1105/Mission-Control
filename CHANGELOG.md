@@ -1,3 +1,39 @@
+#### 1.2.22 (2020-10-20)
+
+#### 1.2.21 (2020-10-20)
+
+#### 1.2.21 (2020-10-20)
+
+#### 1.2.19 (2020-10-20)
+
+##### Bug Fixes
+
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+* **transactions widget date range:** LIV-2148 (b163d7cb)
+* **dashboard-customers today:**  LIV-1944 (8be74d21)
+* **Transaction Sales:** LIV-2131 product line null check (703c46d2)
+* **KioskDetails:**  LIV-1959 Replenisher Mode string (e0c15f53)
+
+#### 1.2.18 (2020-10-15)
+
+##### Bug Fixes
+
+* **liv-2105:**  added msg for empty touchscale and member card read message (c9179ae7)
+
+#### 1.2.17 (2020-10-14)
+
+##### Build System / Dependencies
+
+* **liv-2105:**  Added Activity Log for each Kiosk (8caa08b5)
+
+##### Bug Fixes
+
+* **Total net income:**  LIV-2040 round off removed (02219d52)
+
+##### Other Changes
+
+* **Total net income:**  LIV-2040 round off removed" (7c7a256c)
+
 #### 1.2.16 (2020-10-13)
 
 ##### Bug Fixes

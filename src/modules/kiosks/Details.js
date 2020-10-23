@@ -135,8 +135,13 @@ const KioskDetails = ({
                       />
                       <CustomButton
                         icon="thermometer quarter"
-                        label="Temp Log."
-                        onClick={() => history.push(`/kiosks/log/${kiosk._id}`)}
+                        label="Temp. Log"
+                        onClick={() => history.push(`/kiosks/log/temp/${kiosk._id}`)}
+                      />
+                      <CustomButton
+                        icon="line graph"
+                        label="Activity Log"
+                        onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
                       />
                     </>
                   </DetailsInfo>
@@ -169,8 +174,8 @@ const KioskDetails = ({
       </Grid>
     </>
   ) : (
-    <Loader />
-  );
+      <Loader />
+    );
 };
 
 const mapStateToProps = state => ({

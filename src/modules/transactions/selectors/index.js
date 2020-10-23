@@ -93,7 +93,10 @@ export const getTransactionsTableState = createSelector(
         };
         const arr = itemsPurchased.reduce(
           (prev, { productLine, price, tax }) => {
-            const idx = prev.findIndex(el => el.id === productLine._id);
+            let idx = -1;
+            if (productLine) {
+              idx = prev.findIndex(el => el.id === productLine._id);
+            }
             let quantity = 1;
             if (~idx) {
               const total = Math.round((prev[idx].total + price) * 100) / 100;
@@ -199,7 +202,7 @@ export const getWidgetDataState = state => {
   return {
     totalNumberOfTransactions: totalNumberOfTransactions || 0,
     totalNumberOfProductsSold: totalNumberOfProductsSold || 0,
-    totalNetIncome: Number(totalNetIncome || 0),
+    totalNetIncome: Number(totalNetIncome || 0).toFixed(2),
     totalGrossIncome: Number(totalGrossIncome || 0).toFixed(2),
     averagePurchaseValue: Number(averagePurchaseValue || 0).toFixed(2),
     totalNumberOfProductsAdded: totalNumberOfProductsAdded || 0,

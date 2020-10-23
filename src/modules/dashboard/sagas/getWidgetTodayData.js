@@ -10,7 +10,7 @@ import { GET_WIDGET_TODAY_DATA } from '../schema';
 function* handler() {
   try {
     const {
-      data: { getTotalNumberOfCustomers, getTotalNumberOfProductsSold, getTotalNetIncome, getTotalGrossIncome },
+      data: { getTotalNumberOfTransactions, getTotalNumberOfProductsSold, getTotalNetIncome, getTotalGrossIncome },
     } = yield call(gqlTransactions.query, {
       query: GET_WIDGET_TODAY_DATA,
       variables: {
@@ -22,7 +22,9 @@ function* handler() {
     });
     yield put(
       actionSuccess({
-        totalNumberOfCustomers: getTotalNumberOfCustomers,
+        // temporarly total number of customers is replaced by total number of transactions
+        // please visit https://livello.atlassian.net/browse/LIV-1944?focusedCommentId=11929 for more details
+        totalNumberOfCustomers: getTotalNumberOfTransactions,
         totalNumberOfProducts: getTotalNumberOfProductsSold,
         totalGrossIncome: getTotalGrossIncome,
         totalNetIncome: getTotalNetIncome,

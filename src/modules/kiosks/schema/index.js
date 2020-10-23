@@ -292,3 +292,31 @@ export const GET_TEMPERATURE_LOGS = gql`
     }
   }
 `;
+
+export const GET_ACTIVITY_LOGS = gql`
+  query gridActivities(
+    $skip:Int!,$limit:Int!,$kiosk:String!,$period:Period
+  ) {
+  gridActivities(skip:$skip,limit:$limit,kiosk:$kiosk,period:$period) {
+    total data{
+      _id
+      kiosk
+      type
+      created
+      payload {
+        fridge_id
+        user_id
+        session_id
+        id
+        message_timestamp
+        type
+        message {
+          door_status
+          touchedScales {weight id}
+          payment_terminal
+        }
+      }
+    }
+  }
+  }
+`;
