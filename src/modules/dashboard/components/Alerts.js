@@ -30,6 +30,10 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
     {
       title: t('Date / Time'),
       field: 'startDate',
+      formatter: ({ startDate }) => {
+        let [date, time] = startDate.split(' ');
+        return `${date}, ${time}`
+      },
     },
     {
       title: t('Alert'),
