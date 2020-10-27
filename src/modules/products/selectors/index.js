@@ -13,8 +13,10 @@ export const selectorGetProductFamily = state => state.products.family;
 
 export const selectorGetProductTax = state => state.products.taxes;
 
+export const selectorGetProductPriceHistory = state => state.kiosks.productsByOrgId;
+
 export const getProductsHistory = createSelector(
-  selectorGetProducts,
+  selectorGetProductPriceHistory,
   products => products.map(({ _id, priceHistory }) => ({ _id, priceHistory })),
 );
 
