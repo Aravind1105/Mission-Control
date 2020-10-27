@@ -110,6 +110,13 @@ export const GET_PRODUCT_LINES_BY_ORG_ID = gql`
     getProductLinesByOrgId(orgId: $orgId) {
       _id
       name
+      priceHistory {
+        price
+        default
+        validForKiosk
+        _id
+        updated
+      }
     }
   }
 `;
