@@ -16,6 +16,7 @@ import FormInput from 'modules/shared/components/FormInput';
 import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ModalForm';
 import CustomAlert from 'modules/shared/components/CustomAlert';
+import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
@@ -52,7 +53,11 @@ const ModalLoadCell = ({
   }, []);
 
   const handleSelect = ({ data, setFieldValue }) => {
-    const newPrice =  data.value
+    const newPrice = getDefaultProductPrice({
+      products: productsHistory,
+      productId: data.value,
+      kioskId: match.params.id,
+    });
     setFieldValue('price', newPrice);
   };
 
@@ -71,7 +76,14 @@ const ModalLoadCell = ({
       initVal.planogramPosition !== data.planogramPosition;
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== +data.quantity;
-    const isPriceChanged = initVal.price !== +data.price;
+    const isPriceChanged =
+      Number(
+        getDefaultProductPrice({
+          products: productsHistory,
+          productId: data.product.value,
+          kioskId: match.params.id,
+        }),
+      ) !== +data.price;
     const isReplacementRequired =
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.planogramPosition);
