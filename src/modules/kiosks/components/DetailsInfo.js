@@ -36,7 +36,7 @@ const DetailsInfo = ({
   if (session) {
     sessionType = session.type;
     if (sessionType === 'refill') {
-      sessionType = 'Replenishment';
+      sessionType = 'Replenisher Mode';
     }
   }
 

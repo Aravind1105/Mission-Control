@@ -56,7 +56,7 @@ const KioskDetails = ({
 }) => {
   const { id } = match.params;
   useEffect(() => {
-    if ((!kiosk || kiosk._id !== id) && !isKioskLoading) {
+    if (!isKioskLoading) {
       getKiosk(id);
     }
   }, [id]);
@@ -81,7 +81,7 @@ const KioskDetails = ({
       createRefill(kiosk._id);
     }
   };
-  const loaded = kiosk && kiosk._id === match.params.id && orgName;
+  const loaded = !isKioskLoading && orgName;
   return loaded ? (
     <>
       <Grid stackable>

@@ -1,3 +1,67 @@
+#### 1.2.27 (2020-10-23)
+
+##### Bug Fixes
+
+- **date format:** fix date format on dashboard alerts (d2317601)
+
+#### 1.2.26 (2020-10-23)
+
+##### Bug Fixes
+
+- **liv-2123:** replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+- **kiosk-alerts:** update grid alerts fetch query (45712e6c)
+- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+- livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.25 (2020-10-23)
+
+##### Bug Fixes
+
+- **liv-2123:** replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+- **kiosk-alerts:** update grid alerts fetch query (45712e6c)
+- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+- livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.24 (2020-10-23)
+
+##### Bug Fixes
+
+- **liv-2123:** replace 'getDefaultProductPrice' for a simple comparation to check wether the price has changed or not. (bad53518)
+- **kiosk-alerts:** update grid alerts fetch query (45712e6c)
+- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+- livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.24 (2020-10-23)
+
+##### Bug Fixes
+
+- **kiosk-alerts:** update grid alerts fetch query (45712e6c)
+- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+- livello-network/livello-mission-control into staging-master (c9fe31e8)
+
+#### 1.2.23 (2020-10-23)
+
+##### Bug Fixes
+
+- **kiosk-alerts:** update grid alerts fetch query (45712e6c)
+- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+##### Other Changes
+
+- livello-network/livello-mission-control into staging-master (c9fe31e8)
+
 #### 1.2.22 (2020-10-20)
 
 #### 1.2.21 (2020-10-20)
@@ -8,7 +72,16 @@
 
 ##### Bug Fixes
 
-- **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+<<<<<<< HEAD
+
+- # **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+
+* **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
+* **transactions widget date range:** LIV-2148 (b163d7cb)
+* **dashboard-customers today:** LIV-1944 (8be74d21)
+* **Transaction Sales:** LIV-2131 product line null check (703c46d2)
+* **KioskDetails:** LIV-1959 Replenisher Mode string (e0c15f53)
+  > > > > > > > def09ff64f62e3897dfb1b3fa570a07f8ce90b68
 
 #### 1.2.18 (2020-10-15)
 
