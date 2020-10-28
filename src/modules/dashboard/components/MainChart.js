@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Segment, Grid, Header } from 'semantic-ui-react';
 import Select from 'react-select';
+import { connect } from 'react-redux';
 import {
   BarChart,
   Bar,
@@ -15,19 +16,34 @@ import {
 import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
 import CustomTooltip from './CustomTooltip';
+import { getSalesStatisticState } from '../selectors';
 
 const optionsTime = [
-  { label: 'Last 24 hours', value: 'last24Hours' },
+  { label: 'Hourly', value: 'hourly' },
+  { label: 'Minutely', value: 'minutely' },
+  { label: 'Last 24 Hours', value: 'last24Hours' },
+  { label: 'Weekly', value: 'weekDays' },
   { label: 'Last 7 Days', value: 'last7Days' },
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
+const computeAndFormatData = data => {
+  return data;
+};
+
+const MainChart = ({ products, kiosksOptions, salesStats }) => {
   const [kioskId, setKiosk] = useState('');
-  const [time, setTime] = useState(optionsTime[1].value);
+  const [time, setTime] = useState(optionsTime[0].value);
+  const [data, setData] = useState(salesStats[time]);
 
   useEffect(() => {
-    getSalesStatistic({ kioskId, time });
+    setData(computeAndFormatData(salesStats[time]));
   }, [kioskId, time]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handlerChangeKiosk = ({ value }) => {
     setKiosk(value);
@@ -58,7 +74,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
-              defaultValue={optionsTime[1]}
+              defaultValue={optionsTime[0]}
             />
           </Grid.Column>
         </Grid.Row>
@@ -81,7 +97,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             content={<CustomTooltip />}
           />
           <Legend />
-          {!kioskId && products.map((productName, i) => {
+          {/*{!kioskId && products.map((productName, i) => {
             const name = kiosksOptions.find(el => el.value === productName);
             return (
               <Bar
@@ -93,7 +109,7 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
                 className="chartTest"
               />
             );
-          })}
+          })}*/}
           {kioskId
             && (
               <Bar
@@ -111,4 +127,8 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
   );
 };
 
-export default MainChart;
+const mapStateToProps = state => ({
+  salesStats: getSalesStatisticState(state),
+});
+
+export default connect(mapStateToProps)(MainChart);

@@ -41,6 +41,7 @@ const Dashboard = ({
       limit: 17,
     };
     getAlmostEmptyKiosks({ ...data });
+    getSalesStatistic();
     getWidgetTodayData();
     getWidgetMonthlyData();
   }, []);
@@ -86,16 +87,14 @@ const Dashboard = ({
         </Grid.Column>
       </Grid.Row>
 
-      {/* <Grid.Row stretched>
+      <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <MainChart
-            data={salesStat}
             products={products}
             kiosksOptions={kiosksOptions}
-            getSalesStatistic={getSalesStatistic}
           />
         </Grid.Column>
-      </Grid.Row> */}
+      </Grid.Row> 
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <AlmostEmptyTable />
