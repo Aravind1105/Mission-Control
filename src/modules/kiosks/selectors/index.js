@@ -46,6 +46,49 @@ export const getKiosksTableState = state =>
     dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
   }));
 
+export const getKioskDoorStatus = createSelector(
+  getKiosksState,
+
+  //  s => s.map(kiosk => console.log(kiosk))
+
+  kiosks => {
+    // const allKiosks = kiosks.map(({ _id, doorStatus }) => ({
+    //   value: _id,
+    //   text: doorStatus,
+    //   key: _id,
+    // }));
+    // const sortedKiosks = sortByText(allKiosks, 'text');
+    // return [{ key: 'all', value: '', text: 'All Fridges' }]
+    // .concat(
+    //   sortedKiosks,
+    // );
+    // console.log('test: ', allKiosks)
+
+    let states = []
+    let temp = []
+    const kiosksStates = kiosks.reduce((prev,{ _id, doorStatus }) => {
+      
+      if(!states.includes(doorStatus)){
+        states.push(doorStatus);
+        temp.push({
+          value: doorStatus,
+          text:doorStatus,
+          key: _id
+        })
+      }
+      prev.push({
+        value: doorStatus,
+        text: doorStatus,
+        // key: [_id]+doorStatus,
+      });
+      console.log('states: ', states);
+      return prev;
+    },[],);
+    return temp;
+
+  },
+  );
+
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
 export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
 
