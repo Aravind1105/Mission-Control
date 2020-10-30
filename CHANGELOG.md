@@ -1,3 +1,15 @@
+#### 1.2.28 (2020-10-29)
+
+##### Bug Fixes
+
+* **planogram load cell:** LIV-2233 product default price load fixed (4bbaf17c)
+* **getKiosk fetch:**  LIV-2163 bug fix (bc825646)
+
+##### Other Changes
+
+* **liv-2123:**  replace 'getDefaultProductPrice' for a simple comparation to..." (f198dcdd)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (ac233065)
+
 #### 1.2.27 (2020-10-23)
 
 ##### Bug Fixes
@@ -72,8 +84,6 @@
 
 ##### Bug Fixes
 
-<<<<<<< HEAD
-
 - # **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
 
 * **kiosk to null:** resolved kisok to null when page reloads (fc9af49e)
@@ -81,7 +91,6 @@
 * **dashboard-customers today:** LIV-1944 (8be74d21)
 * **Transaction Sales:** LIV-2131 product line null check (703c46d2)
 * **KioskDetails:** LIV-1959 Replenisher Mode string (e0c15f53)
-  > > > > > > > def09ff64f62e3897dfb1b3fa570a07f8ce90b68
 
 #### 1.2.18 (2020-10-15)
 
