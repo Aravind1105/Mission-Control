@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Segment, Grid, Input, Button, Icon, Dropdown, Divider} from 'semantic-ui-react';
 
-const Toolbar = ({ search, setSearch, kiosks, changeKiosk,kiosksStatus}) => {
+const Toolbar = ({ search,
+  setSearch,
+  kiosks,
+  changeKiosk,
+  kiosksStatus,
+  kiosksNetworkStatus,
+}) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
   };
@@ -66,7 +72,7 @@ const Toolbar = ({ search, setSearch, kiosks, changeKiosk,kiosksStatus}) => {
               selection
               className="full-width"
               // onChange={handleKioskChange}
-              // options={kiosks}
+              options={kiosksNetworkStatus}
           />
         </Grid.Column>
       </Grid.Row>

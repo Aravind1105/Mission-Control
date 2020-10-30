@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -48,46 +49,69 @@ export const getKiosksTableState = state =>
 
 export const getKioskDoorStatus = createSelector(
   getKiosksState,
-
-  //  s => s.map(kiosk => console.log(kiosk))
-
   kiosks => {
-    // const allKiosks = kiosks.map(({ _id, doorStatus }) => ({
-    //   value: _id,
-    //   text: doorStatus,
-    //   key: _id,
-    // }));
-    // const sortedKiosks = sortByText(allKiosks, 'text');
-    // return [{ key: 'all', value: '', text: 'All Fridges' }]
-    // .concat(
-    //   sortedKiosks,
-    // );
-    // console.log('test: ', allKiosks)
-
-    let states = []
-    let temp = []
-    const kiosksStates = kiosks.reduce((prev,{ _id, doorStatus }) => {
-      
-      if(!states.includes(doorStatus)){
-        states.push(doorStatus);
-        temp.push({
-          value: doorStatus,
-          text:doorStatus,
-          key: _id
+    let states = [], temp = [];
+    const kiosksStates = kiosks.reduce((prev,curr,i) => {
+      if(!temp.includes(curr.doorStatus)){
+        temp.push(curr.doorStatus);
+        return states.push({
+          value: curr.doorStatus,
+          text:curr.doorStatus,
+          key: i
         })
       }
-      prev.push({
-        value: doorStatus,
-        text: doorStatus,
-        // key: [_id]+doorStatus,
-      });
-      console.log('states: ', states);
-      return prev;
-    },[],);
-    return temp;
-
+    return prev;
+    },[]);
+    states.unshift({
+      value: 'All Door States',
+      text: 'All Door States',
+      key: 'states',
+    });
+    return states;
   },
-  );
+);
+
+export const getKiosksNetworkStatus = createSelector(
+  getKiosksState,
+  kiosks => {
+    let networkStates = [], temp = [];
+    // const netStatus = kiosks.reduce((prev,curr,i) => {
+      // let text = 'Offline';
+      // const dif = differenceInMinutes(new Date(), new Date(curr.temperature.updated));
+      // if(dif <= 60){
+      //   text = 'Online';
+      // }
+      // let time = parseInt(dif / 60);
+      // if(time < 24) {
+      //   text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+      // }else {
+      //   time = parseInt(time / 24);
+      //   text += ` > ${time} ${time === 1 ? 'day' : 'days'}`;
+      // }
+      // if(!temp.includes(text)){
+      //   temp.push(text);
+      //   temp.sort();
+        // networkStates.push({
+        //   value: text,
+        //   text: text,
+        //   key: i
+        // });
+      // }
+    //   return prev;
+    // },[]);
+
+    networkStates.push(
+      {value: 'Online', text: 'Online', key: 0},
+      {value: 'Offline', text: 'Offline', key: 1}
+    )
+    networkStates.unshift({
+      value: 'All Network States',
+      text: 'All Network States',
+      key: 'states',
+    });
+    return networkStates;
+  },
+);
 
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
 export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Toolbar from './components/Toolbar';
 import KiosksContent from './components/KiosksContent';
-import { getKioskOptionsForTableDropdown, getKioskDoorStatus } from './selectors'
+import { getKioskOptionsForTableDropdown, getKioskDoorStatus, getKiosksNetworkStatus } from './selectors'
 import { connect } from 'react-redux';
 
 const sortDefault = [
@@ -11,14 +11,13 @@ const sortDefault = [
   },
 ];
 
-const KiosksList = ({kiosks, kiosksStatus, ...props}) => {
+const KiosksList = ({kiosks, kiosksStatus, kiosksNetworkStatus, ...props}) => {
   const [search, setSearch] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [sort, setSort] = useState(sortDefault);
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
 
-  console.log('kiosksStatus:', kiosksStatus);
 
   const getData = ({ sort }) => {
     const data = {
@@ -56,6 +55,7 @@ const KiosksList = ({kiosks, kiosksStatus, ...props}) => {
       setSearch={setSearch}
       kiosks={kiosks}
       kiosksStatus={kiosksStatus}
+      kiosksNetworkStatus={kiosksNetworkStatus}
       changeKiosk={changeKiosk}
       />
       <KiosksContent {...props} search={search} />
@@ -66,6 +66,7 @@ const KiosksList = ({kiosks, kiosksStatus, ...props}) => {
 const mapStateToProps = state => ({
   kiosks: getKioskOptionsForTableDropdown(state),
   kiosksStatus: getKioskDoorStatus(state),
+  kiosksNetworkStatus: getKiosksNetworkStatus(state),
 });
 
 export default connect(mapStateToProps)(KiosksList);
