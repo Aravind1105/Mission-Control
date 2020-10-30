@@ -6,12 +6,26 @@ import { Segment, Grid, Input, Button, Icon, Dropdown, Divider} from 'semantic-u
 const Toolbar = ({ search,
   setSearch,
   kiosks,
-  changeKiosk,
+  setKiosk,
   kiosksStatus,
+  setKioskStatus,
   kiosksNetworkStatus,
+  setKioskNetworkStatus
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
+  };
+  const handleKioskChange = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    setKiosk(text)
+  };
+  const handleKiosksStatus = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    setKioskStatus(text)
+  };
+  const handleKiosksNetworkStatus = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    setKioskNetworkStatus(text)
   };
   return (
     <Segment className="toolbar">
@@ -51,7 +65,7 @@ const Toolbar = ({ search,
               placeholder="All Kiosks"
               selection
               className="full-width"
-              onChange={changeKiosk}
+              onChange={handleKioskChange}
               options={kiosks}
           />
         </Grid.Column>
@@ -61,7 +75,7 @@ const Toolbar = ({ search,
               placeholder="Door Status"
               selection
               className="full-width"
-              // onChange={handleKioskChange}
+              onChange={handleKiosksStatus}
               options={kiosksStatus}
           />
         </Grid.Column>
@@ -71,7 +85,7 @@ const Toolbar = ({ search,
               placeholder="Network Status"
               selection
               className="full-width"
-              // onChange={handleKioskChange}
+              onChange={handleKiosksNetworkStatus}
               options={kiosksNetworkStatus}
           />
         </Grid.Column>

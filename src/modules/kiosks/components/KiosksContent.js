@@ -80,14 +80,16 @@ const KiosksContent = ({
   kiosks,
   history,
   total,
-  search,
+  search, 
+  kiosk,
+  kioskStatus,
+  kioskNetworkStatus,
 }) => {
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
-  const [kiosk, changeKiosk] = useState('');
-  const [doorStatus, changeDoorStatus] = useState('');
-  const [networkStatus, changeNetworkStatus] = useState('');
+
+  console.log(`K. selected\t\t\t: ${kiosk} \nK. Status\t\t\t: ${kioskStatus} \nK. Network Status\t: ${kioskNetworkStatus}`)
 
   const getData = ({ sort }) => {
     const data = {
@@ -106,11 +108,15 @@ const KiosksContent = ({
     //   data.skip = 0;
     // }
 
-    if (search) {
+    if (search || kiosk || kioskStatus) {
       const name = search ? { name: { $regexI: search } } : {};
+      const kio = kiosk ? { kioskId: kiosk } : {};
+      const door = kioskStatus ? { kioskStatus } : {};
 
       data.search = JSON.stringify({
         ...name,
+        ...kio,
+        ...door,
       });
       data.skip = 0;
     }
@@ -124,7 +130,7 @@ const KiosksContent = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search]);
+  }, [page, perPage, search, kiosk, kioskStatus]);
 
   const handlerClickRow = ({ _id }) => {
     history.push(`/kiosks/detail/${_id}`);
