@@ -21,7 +21,7 @@ import { computeAndFormatData } from '../sagas/formatData';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
-  { label: 'Minutely', value: 'minutely' },
+  //{ label: 'Minutely', value: 'minutely' },
   { label: 'Last 24 Hours', value: 'last24Hours' },
   { label: 'Weekly', value: 'weekDays' },
   { label: 'Last 7 Days', value: 'last7Days' },
@@ -31,7 +31,7 @@ const optionsTime = [
 
 const MainChart = ({ products, kiosksOptions, salesStats }) => {
   const [kioskId, setKiosk] = useState('');
-  const [time, setTime] = useState(optionsTime[4].value);
+  const [time, setTime] = useState(optionsTime[3].value);
   const [data, setData] = useState(salesStats[time]);
   const [kiosks, setKiosks] = useState([]);
 
@@ -70,7 +70,7 @@ const MainChart = ({ products, kiosksOptions, salesStats }) => {
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
-              defaultValue={optionsTime[4]}
+              defaultValue={optionsTime[3]}
             />
           </Grid.Column>
         </Grid.Row>
