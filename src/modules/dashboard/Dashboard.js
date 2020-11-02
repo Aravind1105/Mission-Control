@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
+import { isEmpty } from 'lodash';
 
 import {
   getKioskOptions,
@@ -23,10 +24,8 @@ import AlmostEmptyTable from './components/AlmostEmptyTable';
 import Alerts from './components/Alerts';
 import MainChart from './components/MainChart';
 import './styles.less';
-import { isEmpty } from 'lodash';
 
 const Dashboard = ({
-  products,
   alertsLog,
   kiosksOptions,
   getSalesStatistic,
@@ -92,7 +91,6 @@ const Dashboard = ({
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           {!isSalesStatLoading && !isEmpty(salesStatistics) && <MainChart
-            products={products}
             kiosksOptions={kiosksOptions}
           />}
         </Grid.Column>
@@ -108,7 +106,6 @@ const Dashboard = ({
 
 const mapStateToProps = state => ({
   alertsLog: getKiosksAlertsDashboard(state),
-  products: getStatisticProductsListState(state),
   kiosksOptions: getKioskOptions(state),
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   widgetData: getWidgetDataState(state),
