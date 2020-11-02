@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Segment, Grid, Header } from 'semantic-ui-react';
 import Select from 'react-select';
+import { connect } from 'react-redux';
 import {
   BarChart,
   Bar,
@@ -15,18 +16,29 @@ import {
 import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
 import CustomTooltip from './CustomTooltip';
+import { getSalesStatisticState } from '../selectors';
+import { computeAndFormatData } from '../sagas/formatData';
 
 const optionsTime = [
-  { label: 'Last 24 hours', value: 'last24Hours' },
+  { label: 'Hourly', value: 'hourly' },
+  //{ label: 'Minutely', value: 'minutely' },
+  { label: 'Last 24 Hours', value: 'last24Hours' },
+  { label: 'Weekly', value: 'weekDays' },
   { label: 'Last 7 Days', value: 'last7Days' },
+  { label: 'Monthly', value: 'monthly' },
+  { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
+const MainChart = ({ products, kiosksOptions, salesStats }) => {
   const [kioskId, setKiosk] = useState('');
-  const [time, setTime] = useState(optionsTime[1].value);
+  const [time, setTime] = useState(optionsTime[3].value);
+  const [data, setData] = useState(salesStats[time]);
+  const [kiosks, setKiosks] = useState([]);
 
   useEffect(() => {
-    getSalesStatistic({ kioskId, time });
+    const { kioskNames, formattedData } = computeAndFormatData(time, salesStats[time], kioskId);
+    setKiosks(kioskNames);
+    setData(formattedData);
   }, [kioskId, time]);
 
   const handlerChangeKiosk = ({ value }) => {
@@ -58,12 +70,11 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
-              defaultValue={optionsTime[1]}
+              defaultValue={optionsTime[3]}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
       <ResponsiveContainer width="100%" height={500}>
         <BarChart data={data} margin={{ left: 10, right: 10 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -81,29 +92,15 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
             content={<CustomTooltip />}
           />
           <Legend />
-          {!kioskId && products.map((productName, i) => {
-            const name = kiosksOptions.find(el => el.value === productName);
-            return (
-              <Bar
-                key={productName}
-                dataKey={productName}
-                name={name && name.label}
-                stackId="a"
-                fill={colorsArr[i % (colorsArr.length - 1)]}
-                className="chartTest"
-              />
-            );
-          })}
-          {kioskId
-            && (
-              <Bar
-                key={kioskId}
-                dataKey="amount"
-                name={kiosksOptions.find(el => el.value === kioskId).label}
-                stackId="a"
-                fill={colorsArr[1]}
-              />
-            )
+          {
+            kiosks.map((kiosk, i) => <Bar
+              key={kiosk}
+              dataKey={kiosk}
+              name={kiosk}
+              stackId="a"
+              fill={colorsArr[i % (colorsArr.length - 1)]}
+              className="chartTest"
+            />)
           }
         </BarChart>
       </ResponsiveContainer>
@@ -111,4 +108,8 @@ const MainChart = ({ data, products, kiosksOptions, getSalesStatistic }) => {
   );
 };
 
-export default MainChart;
+const mapStateToProps = state => ({
+  salesStats: getSalesStatisticState(state),
+});
+
+export default connect(mapStateToProps)(MainChart);

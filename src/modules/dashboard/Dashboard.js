@@ -23,9 +23,9 @@ import AlmostEmptyTable from './components/AlmostEmptyTable';
 import Alerts from './components/Alerts';
 import MainChart from './components/MainChart';
 import './styles.less';
+import { isEmpty } from 'lodash';
 
 const Dashboard = ({
-  salesStat,
   products,
   alertsLog,
   kiosksOptions,
@@ -34,12 +34,15 @@ const Dashboard = ({
   getWidgetTodayData,
   getWidgetMonthlyData,
   widgetData,
+  salesStatistics,
+  isSalesStatLoading,
 }) => {
   useEffect(() => {
     const data = {
       skip: 0,
       limit: 17,
     };
+    getSalesStatistic();
     getAlmostEmptyKiosks({ ...data });
     getWidgetTodayData();
     getWidgetMonthlyData();
@@ -86,16 +89,14 @@ const Dashboard = ({
         </Grid.Column>
       </Grid.Row>
 
-      {/* <Grid.Row stretched>
+      <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
-          <MainChart
-            data={salesStat}
+          {!isSalesStatLoading && !isEmpty(salesStatistics) && <MainChart
             products={products}
             kiosksOptions={kiosksOptions}
-            getSalesStatistic={getSalesStatistic}
-          />
+          />}
         </Grid.Column>
-      </Grid.Row> */}
+      </Grid.Row>
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <AlmostEmptyTable />
@@ -107,11 +108,12 @@ const Dashboard = ({
 
 const mapStateToProps = state => ({
   alertsLog: getKiosksAlertsDashboard(state),
-  salesStat: getSalesStatisticState(state),
   products: getStatisticProductsListState(state),
   kiosksOptions: getKioskOptions(state),
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   widgetData: getWidgetDataState(state),
+  isSalesStatLoading: state.dashboard.isSalesStatLoading,
+  salesStatistics: getSalesStatisticState(state),
 });
 
 const mapDispatchToProps = {
