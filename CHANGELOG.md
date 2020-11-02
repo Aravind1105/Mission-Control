@@ -1,3 +1,22 @@
+#### 1.2.29 (2020-11-02)
+
+##### Build System / Dependencies
+
+* **Users:** Users Detail and log UI created (19d741c2)
+
+##### Bug Fixes
+
+* **dashboard statistics graph:**  LIV-2039 graph updated for empty data (a1edfef3)
+* **dashboard graph:**
+  *  console log removed (9c8f0968)
+  *  LIV-2039 comment minutely (97b0edb5)
+  * LIV-2039 dahdboard graph updated (a3ba1095)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (b1c1bd40)
+* **dashboard graph reimplementation:**  LIV-2039 in progress (99f49302)
+
 #### 1.2.28 (2020-10-29)
 
 ##### Bug Fixes
