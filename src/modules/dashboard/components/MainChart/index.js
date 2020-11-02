@@ -12,12 +12,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { isEmpty } from 'lodash';
 
 import { colorsArr } from 'lib/colors';
-import CustomizedAxisTick from './CustomizedAxisTick';
-import CustomTooltip from './CustomTooltip';
-import { getSalesStatisticState } from '../selectors';
-import { computeAndFormatData } from '../sagas/formatData';
+import CustomizedAxisTick from '../CustomizedAxisTick';
+import CustomTooltip from '../CustomTooltip';
+import { getSalesStatisticState } from '../../selectors';
+import { computeAndFormatData } from '../../sagas/formatData';
+import './styles.less';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
@@ -29,7 +31,7 @@ const optionsTime = [
   { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ products, kiosksOptions, salesStats }) => {
+const MainChart = ({ kiosksOptions, salesStats }) => {
   const [kioskId, setKiosk] = useState('');
   const [time, setTime] = useState(optionsTime[3].value);
   const [data, setData] = useState(salesStats[time]);
@@ -75,35 +77,43 @@ const MainChart = ({ products, kiosksOptions, salesStats }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <ResponsiveContainer width="100%" height={500}>
-        <BarChart data={data} margin={{ left: 10, right: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis
-            dataKey={({ date }) => {
-              return date;
-            }}
-            height={100}
-            interval={0}
-            tickSize={10}
-            tick={<CustomizedAxisTick />}
-          />
-          <YAxis />
-          <Tooltip
-            content={<CustomTooltip />}
-          />
-          <Legend />
-          {
-            kiosks.map((kiosk, i) => <Bar
-              key={kiosk}
-              dataKey={kiosk}
-              name={kiosk}
-              stackId="a"
-              fill={colorsArr[i % (colorsArr.length - 1)]}
-              className="chartTest"
-            />)
-          }
-        </BarChart>
-      </ResponsiveContainer>
+      {
+        isEmpty(kiosks) &&
+        <div className="chart-empty-data">
+          <p>There's currently no data available for the parameters selected.</p>
+          <p>Please try a different combination.</p>
+        </div>
+      }
+      {!isEmpty(kiosks) &&
+        <ResponsiveContainer width="100%" height={500}>
+          <BarChart data={data} margin={{ left: 10, right: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis
+              dataKey={({ date }) => {
+                return date;
+              }}
+              height={100}
+              interval={0}
+              tickSize={10}
+              tick={<CustomizedAxisTick />}
+            />
+            <YAxis />
+            <Tooltip
+              content={<CustomTooltip />}
+            />
+            <Legend />
+            {
+              kiosks.map((kiosk, i) => <Bar
+                key={kiosk}
+                dataKey={kiosk}
+                name={kiosk}
+                stackId="a"
+                fill={colorsArr[i % (colorsArr.length - 1)]}
+                className="chartTest"
+              />)
+            }
+          </BarChart>
+        </ResponsiveContainer>}
     </Segment>
   );
 };

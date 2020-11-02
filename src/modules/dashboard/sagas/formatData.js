@@ -91,7 +91,6 @@ export const computeAndFormatData = (time, data, kioskId) => {
       }
     }
   }
-  console.log(formattedData);
   return {
     kioskNames,
     formattedData,
