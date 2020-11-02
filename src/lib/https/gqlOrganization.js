@@ -14,6 +14,19 @@ const gqlOrganization = new ApolloClient({
   cache,
   defaultOptions,
   link: concat(requestInterceptor, httpLink),
-});
+
+  onError: (({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error ------>]: Message: ${JSON.stringify(message)}, Location: ${JSON.stringify(locations)}, Path: ${path}`
+        )
+      );
+    }
+    if (networkError) {
+      console.log(`[Network error ------>,]: ${JSON.stringify(networkError)}`);
+    }
+  })
+})
 
 export default gqlOrganization;

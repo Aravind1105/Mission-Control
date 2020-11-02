@@ -51,7 +51,7 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
 
     const getData = (id) => {
         const data = {
-            kioskId: kiosk === null ? id : kiosk._id,
+            kioskId: !kiosk ? id : kiosk._id,
             skip: page * perPage,
             limit: perPage,
             date: dateRange !== '' && dateRange

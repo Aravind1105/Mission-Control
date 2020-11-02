@@ -4,9 +4,12 @@ import {
   getUsers,
   getUsersSuccess,
   setActiveUser,
-  updateUserById,
+  toggleUserRole,
+  toggleUserRoleSuccess,
   setOneUserWithInfo,
+  getUserTransactionsSuccess,
   modifyUserMemberCard,
+  getUserTransactions,
 } from '../actions';
 
 const initialState = {
@@ -20,13 +23,13 @@ const usersReducer = handleActions(
   {
     [getUsers]: state => ({
       ...state,
-      isListLoading: true,
+      isLoading: true,
     }),
     [getUsersSuccess]: (state, { payload }) => ({
       ...state,
       list: payload.list,
       total: payload.total,
-      isListLoading: false,
+      isLoading: false,
     }),
     [setActiveUser]: (state, { payload }) => ({
       ...state,
@@ -36,8 +39,21 @@ const usersReducer = handleActions(
       ...state,
       userWithDetails: payload.user,
     }),
+    [getUserTransactions]: state => ({
+      ...state,
+      isLoading: true
+    }),
+    [getUserTransactionsSuccess]: (state, { payload }) => ({
+      ...state,
+      userTransactions: payload.user,
+      isLoading: false
+    }),
     [modifyUserMemberCard]: (state, { payload }) => ({ ...state, payload }),
-    [updateUserById]: (state, { payload }) => {
+    [toggleUserRole]: state => ({
+      ...state,
+      isLoading: true
+    }),
+    [toggleUserRoleSuccess]: (state, { payload }) => {
       const list = state.list.map(el =>
         el._id === payload._id ? payload : el,
       );
@@ -45,6 +61,8 @@ const usersReducer = handleActions(
         ...state,
         list,
         activeUser: payload,
+        isLoading: false
+
       };
     },
   },
