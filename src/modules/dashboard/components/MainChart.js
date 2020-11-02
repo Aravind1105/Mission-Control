@@ -17,6 +17,7 @@ import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from './CustomizedAxisTick';
 import CustomTooltip from './CustomTooltip';
 import { getSalesStatisticState } from '../selectors';
+import { computeAndFormatData } from '../sagas/formatData';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
@@ -28,22 +29,17 @@ const optionsTime = [
   { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const computeAndFormatData = data => {
-  return data;
-};
-
 const MainChart = ({ products, kiosksOptions, salesStats }) => {
   const [kioskId, setKiosk] = useState('');
-  const [time, setTime] = useState(optionsTime[0].value);
+  const [time, setTime] = useState(optionsTime[4].value);
   const [data, setData] = useState(salesStats[time]);
+  const [kiosks, setKiosks] = useState([]);
 
   useEffect(() => {
-    setData(computeAndFormatData(salesStats[time]));
+    const { kioskNames, formattedData } = computeAndFormatData(time, salesStats[time], kioskId);
+    setKiosks(kioskNames);
+    setData(formattedData);
   }, [kioskId, time]);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handlerChangeKiosk = ({ value }) => {
     setKiosk(value);
@@ -74,12 +70,11 @@ const MainChart = ({ products, kiosksOptions, salesStats }) => {
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
-              defaultValue={optionsTime[0]}
+              defaultValue={optionsTime[4]}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
       <ResponsiveContainer width="100%" height={500}>
         <BarChart data={data} margin={{ left: 10, right: 10 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -97,29 +92,15 @@ const MainChart = ({ products, kiosksOptions, salesStats }) => {
             content={<CustomTooltip />}
           />
           <Legend />
-          {/*{!kioskId && products.map((productName, i) => {
-            const name = kiosksOptions.find(el => el.value === productName);
-            return (
-              <Bar
-                key={productName}
-                dataKey={productName}
-                name={name && name.label}
-                stackId="a"
-                fill={colorsArr[i % (colorsArr.length - 1)]}
-                className="chartTest"
-              />
-            );
-          })}*/}
-          {kioskId
-            && (
-              <Bar
-                key={kioskId}
-                dataKey="amount"
-                name={kiosksOptions.find(el => el.value === kioskId).label}
-                stackId="a"
-                fill={colorsArr[1]}
-              />
-            )
+          {
+            kiosks.map((kiosk, i) => <Bar
+              key={kiosk}
+              dataKey={kiosk}
+              name={kiosk}
+              stackId="a"
+              fill={colorsArr[i % (colorsArr.length - 1)]}
+              className="chartTest"
+            />)
           }
         </BarChart>
       </ResponsiveContainer>
