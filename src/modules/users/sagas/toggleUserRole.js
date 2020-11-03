@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 import gqlOrganization from 'lib/https/gqlOrganization';
-import { toggleUserRole, updateUserById } from '../actions';
+import { toggleUserRole, toggleUserRoleSuccess } from '../actions';
 import { USER_ROLE_TOGGLE_MUTATION } from '../schema';
 
 function* handler({ payload }) {
@@ -12,8 +12,8 @@ function* handler({ payload }) {
     mutation: USER_ROLE_TOGGLE_MUTATION,
     variables,
   });
-
-  yield put(updateUserById(data.grantRootForUser));
+  console.log(data)
+  yield put(toggleUserRoleSuccess(data.grantRootForUser));
 }
 
 export default function* saga() {

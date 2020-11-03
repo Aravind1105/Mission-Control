@@ -5,10 +5,11 @@ import { Segment, Grid } from 'semantic-ui-react';
 
 import { primaryColor, red, orange, teal } from 'lib/colors';
 import CustomTable from 'modules/shared/components/CustomTable';
+import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
 import { getUsers, setActiveUser } from '../actions';
-import { getUsersListForTable, getActiveUserIDState, getTotalUsers } from '../selectors';
+import { getUsersListForTable, getActiveUserState, getTotalUsers } from '../selectors';
 
 const sortDefault = [
   {
@@ -46,7 +47,6 @@ const columns = [
 const UsersContent = ({
   getUsers,
   setActiveUser,
-  isUserListLoading,
   userList,
   activeUserID,
   isLoading,
@@ -70,7 +70,7 @@ const UsersContent = ({
   };
 
   useEffect(() => {
-    if (!isUserListLoading) getData({ sort });
+    getData({ sort });
   }, [page, perPage]);
 
   const handleRowClick = ({ _id }) => {
@@ -78,34 +78,37 @@ const UsersContent = ({
   };
 
   return (
-    <Grid>
-      <Grid.Row columns="equal" stretched>
-        <Grid.Column width={5}>
-          <Segment>
-            <CustomTable
-              sortByColumn="name"
-              columns={columns}
-              onRowClick={handleRowClick}
-              data={userList}
-              getData={getData}
-              sortable
-              selectable
-              setSortByInCaller={sort => setSort([sort])}
-              sortDirection="ASC"
-            />
-            <Pagination
-              totalCount={total}
-              page={page}
-              perPage={perPage}
-              changePage={changePage}
-              changePerPage={changePerPage}
-              isLoading={isLoading}
-            />
-          </Segment>
-        </Grid.Column>
-        <Grid.Column>{activeUserID && <UsersDetail />}</Grid.Column>
-      </Grid.Row>
-    </Grid>
+    <>
+      {isLoading && <Loader />}
+      <Grid>
+        <Grid.Row columns="equal" stretched>
+          <Grid.Column width={5}>
+            <Segment>
+              <CustomTable
+                sortByColumn="name"
+                columns={columns}
+                onRowClick={handleRowClick}
+                data={userList}
+                getData={getData}
+                sortable
+                selectable
+                setSortByInCaller={sort => setSort([sort])}
+                sortDirection="ASC"
+              />
+              <Pagination
+                totalCount={total}
+                page={page}
+                perPage={perPage}
+                changePage={changePage}
+                changePerPage={changePerPage}
+                isLoading={isLoading}
+              />
+            </Segment>
+          </Grid.Column>
+          <Grid.Column>{activeUserID && <UsersDetail />}</Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   );
 };
 
@@ -122,7 +125,7 @@ UsersContent.propTypes = {
 
 const mapStateToProps = state => ({
   userList: getUsersListForTable(state),
-  activeUserID: getActiveUserIDState(state),
+  activeUserID: getActiveUserState(state),
   isLoading: state.users.isLoading,
   total: getTotalUsers(state),
 });
