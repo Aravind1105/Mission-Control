@@ -10,6 +10,7 @@ import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
 import { getUsers, setActiveUser } from '../actions';
 import { getUsersListForTable, getActiveUserState, getTotalUsers } from '../selectors';
+import UsersToolbar from './UsersToolbar'
 
 const sortDefault = [
   {
@@ -52,6 +53,8 @@ const UsersContent = ({
   isLoading,
   total,
 }) => {
+  const [search, changeSearch] = useState('');
+  const [userType, changeUserType] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
@@ -61,6 +64,13 @@ const UsersContent = ({
       skip: page * perPage,
       limit: perPage,
     };
+
+    if (search || userType) {
+      const name = search ? { firstName: { $regexI: search } } : {};
+      data.search = JSON.stringify({
+        ...name,
+      });
+    }
 
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
@@ -79,6 +89,7 @@ const UsersContent = ({
 
   return (
     <>
+      <UsersToolbar changeSearch={changeSearch} />
       {isLoading && <Loader />}
       <Grid>
         <Grid.Row columns="equal" stretched>
