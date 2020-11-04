@@ -7,16 +7,18 @@ import { GET_USER_TRANSACTIONS } from '../schema';
 function* handler({ payload }) {
     try {
         const {
-            data: { findAllTransactions },
+            data: { findUserTransactionsGrid },
         } = yield call(gqlTransactions.query, {
             query: GET_USER_TRANSACTIONS,
             variables: {
-                id: payload.data.id,
+                limit: payload.data.limit,
+                skip: payload.data.skip,
+                search: payload.data.search
             },
         });
         yield put(
             getUserTransactionsSuccess({
-                user: findAllTransactions,
+                userLogs: findUserTransactionsGrid,
             }),
         );
     } catch (e) {

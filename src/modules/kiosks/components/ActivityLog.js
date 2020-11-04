@@ -116,7 +116,7 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                                     onChange={handleDateChange}
                                 />
                             </Grid.Column>
-                            <Grid.Column width={3}>
+                            {/* <Grid.Column width={3}>
                                 <CustomButton
                                     label="Download CSV&nbsp;"
                                     icon="arrow down icon"
@@ -124,7 +124,7 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                                     onClick={DownloadCsv}
                                     disabled={!Boolean(exportData)}
                                 />
-                            </Grid.Column>
+                            </Grid.Column> */}
                         </Grid.Row>
                     </Grid>
                     <Grid.Row className="activity-log-filter-row">
@@ -132,7 +132,6 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                             <CustomTable
                                 sortByColumn="date"
                                 sortable
-                                fixed
                                 data={activityLogs}
                                 columns={columns}
                                 sortDirection="DESC"
