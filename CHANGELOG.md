@@ -1,3 +1,15 @@
+#### 1.2.31 (2020-11-04)
+
+##### Bug Fixes
+
+* **merge-conflict:**  solve merge conflicts. (53123f8c)
+
+##### Other Changes
+
+* **kiosk-filter:**  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (5d056702)
+* **kiosk_filter:**  fill network status and refactor door status. (e9d80a57)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (f36a615e)
+
 #### 1.2.30 (2020-11-04)
 
 ##### Bug Fixes
