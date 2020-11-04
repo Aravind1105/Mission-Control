@@ -116,15 +116,15 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                                     onChange={handleDateChange}
                                 />
                             </Grid.Column>
-                            {/* <Grid.Column width={3}>
+                            <Grid.Column width={3}>
                                 <CustomButton
                                     label="Download CSV&nbsp;"
                                     icon="arrow down icon"
                                     className="custom-button-default"
                                     onClick={DownloadCsv}
-                                    disabled={!Boolean(exportData)}
+                                    disabled={true}
                                 />
-                            </Grid.Column> */}
+                            </Grid.Column>
                         </Grid.Row>
                     </Grid>
                     <Grid.Row className="activity-log-filter-row">

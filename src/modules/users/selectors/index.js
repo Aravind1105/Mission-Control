@@ -5,10 +5,10 @@ import format from 'date-fns/format';
 
 
 const userLogMessages = {
-  'purchase': 'CONSUMER MOBILE',
+  'purchase': 'CONSUMER APP',
   'refill': 'REFILL',
   'terminal_purchase': 'TERMINAL',
-  'member_purchase': 'MEMBERCARD'
+  'member_purchase': 'MEMBER CARD'
 }
 
 export const getUsersListState = state => state.users.list;

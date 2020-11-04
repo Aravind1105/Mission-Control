@@ -9,8 +9,8 @@ import Pagination from 'modules/shared/components/Pagination';
 import DatePicker from 'modules/shared/components/Datepicker';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
-import { getUserLogsState, getTotalUserLogs } from '../selectors';
-import { getUserTransactions } from '../actions';
+import { getUserLogsState, getTotalUserLogs, getActiveUserIDState, getUserInitValues } from '../selectors';
+import { getUserTransactions, getOneUserWithInfo } from '../actions';
 
 
 const columns = [
@@ -44,7 +44,7 @@ const columns = [
             if (event.paymentMethod !== null && event.paymentMethod !== undefined) {
                 paymentDetails = `Payment Details - ` +
                     event.paymentMethod.map(pay => {
-                        return `isPaid: ${pay.isPaid ? "TRUE" : "FALSE"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null && `StripeCustomerId: ${pay.stripeId}`} / Total: ${event.total} `
+                        return `isPaid: ${pay.isPaid ? "TRUE" : "FALSE"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`} / Total: ${event.total} `
                     }) + '\n'
             }
             return kiosk +
@@ -57,7 +57,7 @@ const columns = [
     },
 ];
 
-const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
@@ -69,7 +69,7 @@ const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
             link: '/dashboard',
         },
         {
-            name: !user ? '' : user[0].event.userName,
+            name: userName.firstName !== '' ? userName.firstName : initValue.firstName,
             link: `/users`,
         },
     ];
@@ -81,7 +81,7 @@ const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
 
     const getData = (id) => {
         const data = {
-            search: dateRange !== '' ? `{\"created\":{\"$gte\":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{ \"userId\": \"${id}\" }`,
+            search: dateRange !== '' ? `{"created":{"$gte":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{"userId": \"${id}\"}`,
             skip: page * perPage,
             limit: perPage
         };
@@ -110,6 +110,8 @@ const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
     };
     useEffect(() => {
         getData(id)
+        if (userName.firstName === '')
+            getOneUserWithInfo({ id: params.id });
     }, [id, page, perPage, dateRange]);
     return (
         <>
@@ -142,15 +144,15 @@ const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
                                             onChange={handleDateChange}
                                         />
                                     </Grid.Column>
-                                    {/* <Grid.Column width={3}>
+                                    <Grid.Column width={3}>
                                         <CustomButton
                                             label="Download CSV&nbsp;"
                                             icon="arrow down icon"
                                             className="custom-button-default"
-                                        // onClick={DownloadCsv}
-                                        // disabled={!Boolean(exportData)}
+                                            // onClick={DownloadCsv}
+                                            disabled={true}
                                         />
-                                    </Grid.Column> */}
+                                    </Grid.Column>
                                 </Grid.Row>
                             </Grid>
                             <Grid.Row className="user-log-filter-row">
@@ -185,12 +187,14 @@ const UserLog = ({ getUserTransactions, user, isLoading, match, total }) => {
 
 const mapStateToProps = state => ({
     user: getUserLogsState(state),
+    userName: getActiveUserIDState(state),
+    initValue: getUserInitValues(state),
     isLoading: state.users.isLoading,
     total: getTotalUserLogs(state)
-
 });
 const mapDispatchToProps = {
-    getUserTransactions
+    getUserTransactions,
+    getOneUserWithInfo
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserLog);

@@ -64,10 +64,6 @@ export const GET_USER_TRANSACTIONS = gql`
       _id
     total
     created
-    userId{
-      firstName
-      lastName
-    }
     itemsPurchased{
       loadCell
       productLine{
