@@ -1,5 +1,5 @@
 import { chain, find as lsFind } from 'lodash';
-import { getDay, getDate, getHours, subHours } from 'date-fns';
+import { getDay, getDate, getHours, addHours } from 'date-fns';
 
 export const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -75,19 +75,20 @@ export const computeAndFormatData = (time, data, kioskId) => {
         formattedData = hourlyData;
       } else if (time === 'last24Hours') {
         const hourlyData = [];
-        let count = 0;
-        for (let hrs = getHours(subHours(new Date(), 24)); ; hrs--) {
-          if (count === 24) break;
-          const hour = Math.abs(hrs);
+        //time before 24 hours
+        const yesterday = new Date((Math.round(new Date().getTime() / 1000) - (24 * 3600)) * 1000);
+        let time = yesterday;
+        for (let idx = 0; idx < 24; idx++) {
+          time = addHours(time, 1);
+          const hour = getHours(time);
           let hourObj = { date: ('0' + hour).slice(-2) };
           const foundElements = lsFind(formattedData, ele => ele.date === hour.toString());
           if (foundElements) {
             hourObj = { ...foundElements, ...hourObj };
           }
           hourlyData.push(hourObj);
-          count++;
         }
-        formattedData = hourlyData.reverse();
+        formattedData = hourlyData;
       }
     }
   }
