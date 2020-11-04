@@ -1,3 +1,13 @@
+#### 1.2.32 (2020-11-04)
+
+##### Build System / Dependencies
+
+* **userLog:**  UserLog data with date filter (2450edd7)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (ef6b0e48)
+
 #### 1.2.31 (2020-11-04)
 
 ##### Bug Fixes
