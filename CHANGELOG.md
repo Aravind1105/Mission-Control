@@ -1,3 +1,9 @@
+#### 1.2.34 (2020-11-04)
+
+##### Bug Fixes
+
+* **user log:**  reload of same page to get username (984d752d)
+
 #### 1.2.33 (2020-11-04)
 
 #### 1.2.32 (2020-11-04)
