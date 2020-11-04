@@ -1,3 +1,17 @@
+#### 1.2.30 (2020-11-04)
+
+##### Bug Fixes
+
+* **dashboard statistics chart:**  LIV-2039 last24Hours bug fix (c20aac34)
+
+##### Other Changes
+
+* **kiosk-filter:**
+  *  remove networkStatus from the filter, that should be applied when LIV-2285 is completed and remove logs. (26781ee0)
+  *  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (92a0d8ce)
+* **kiosk_filter:**  fill network status and refactor door status. (ccde0b83)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (a09ebf76)
+
 #### 1.2.29 (2020-11-02)
 
 ##### Build System / Dependencies
