@@ -10,7 +10,7 @@ const Toolbar = ({ search,
   kiosksStatus,
   setKioskStatus,
   kiosksNetworkStatus,
-  setKioskNetworkStatus
+  // setKioskNetworkStatus
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
@@ -23,10 +23,10 @@ const Toolbar = ({ search,
     const text = value === 'All' ? '' : value;
     setKioskStatus(text)
   };
-  const handleKiosksNetworkStatus = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
-    setKioskNetworkStatus(text)
-  };
+  // const handleKiosksNetworkStatus = (e, { value }) => {
+  //   const text = value === 'All' ? '' : value;
+  //   setKioskNetworkStatus(text)
+  // };
   return (
     <Segment className="toolbar">
       <Grid stackable>
@@ -80,7 +80,7 @@ const Toolbar = ({ search,
           />
         </Grid.Column>
 
-        <Grid.Column width={3}>
+        {/* <Grid.Column width={3}>
           <Dropdown
               placeholder="Network Status"
               selection
@@ -88,7 +88,7 @@ const Toolbar = ({ search,
               onChange={handleKiosksNetworkStatus}
               options={kiosksNetworkStatus}
           />
-        </Grid.Column>
+        </Grid.Column> */}
       </Grid.Row>
       
       </Grid>

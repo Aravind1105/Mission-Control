@@ -83,13 +83,11 @@ const KiosksContent = ({
   search, 
   kiosk,
   kioskStatus,
-  kioskNetworkStatus,
+  // kioskNetworkStatus,
 }) => {
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
-
-  console.log(`K. selected\t\t\t: ${kiosk} \nK. Status\t\t\t: ${kioskStatus} \nK. Network Status\t: ${kioskNetworkStatus}`)
 
   const getData = ({ sort }) => {
     const data = {
@@ -110,8 +108,8 @@ const KiosksContent = ({
 
     if (search || kiosk || kioskStatus) {
       const name = search ? { name: { $regexI: search } } : {};
-      const kio = kiosk ? { kioskId: kiosk } : {};
-      const door = kioskStatus ? { kioskStatus } : {};
+      const kio = kiosk ? { _id: kiosk } : {};
+      const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
       data.search = JSON.stringify({
         ...name,
