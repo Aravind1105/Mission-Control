@@ -17,6 +17,7 @@ const initialState = {
   activeUser: null,
   isLoading: false,
   userWithDetails: null,
+  userLogs: {}
 };
 
 const usersReducer = handleActions(
@@ -45,7 +46,7 @@ const usersReducer = handleActions(
     }),
     [getUserTransactionsSuccess]: (state, { payload }) => ({
       ...state,
-      userTransactions: payload.user,
+      userLogs: payload.userLogs,
       isLoading: false
     }),
     [modifyUserMemberCard]: (state, { payload }) => ({ ...state, payload }),

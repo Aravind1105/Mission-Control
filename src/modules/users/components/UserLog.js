@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import format from 'date-fns/format';
 import { Grid, Segment, Header } from 'semantic-ui-react';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
 import CustomButton from 'modules/shared/components/CustomButton';
+import Pagination from 'modules/shared/components/Pagination';
 import DatePicker from 'modules/shared/components/Datepicker';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
-import { getUserLogsState } from '../selectors';
-import { getUserTransactions } from '../actions';
+import { getUserLogsState, getTotalUserLogs, getActiveUserIDState, getUserInitValues } from '../selectors';
+import { getUserTransactions, getOneUserWithInfo } from '../actions';
 
 
 const columns = [
@@ -20,30 +22,34 @@ const columns = [
         title: 'Event',
         field: 'event',
         formatter: ({ event }) => {
-            let session = '', touched = '', touchedEmpty = '', prodTaken = '', paymentDetails = '';
-            if (event.session !== null && event.session !== undefined)
-                session = `Session Started - Kiosk - ${event.session} \n`
+            let kiosk = '', type = '', touched = '', touchedEmpty = '', prodTaken = '', paymentDetails = '';
+            if (event.kiosk !== null && event.kiosk !== undefined)
+                kiosk = `Session Started - Kiosk - ${event.kiosk} \n`
+            if (event.type !== null && event.type !== undefined)
+                type = `Session Type - ${event.type} \n`
             if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
                 touched = `Products Touched -` +
                     event.touchedScales.map((scl) => {
-                        return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`
+                        return ` Name: ${scl.name} / Qty:${scl.qty}`
                     }) + '\n'
             }
-            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length === 0)
+            else if (event.touchedScales === null || event.touchedScales.length === 0)
                 touchedEmpty = `Products Touched - Empty \n`
-            if (event.productsTaken !== null && event.productsTaken !== undefined && event.productsTaken.length > 0)
+            if (event.productsTaken !== null && event.productsTaken !== undefined && event.productsTaken.length > 0) {
                 prodTaken = `Products Taken - ` +
-                    event.productsTaken.map((prod) => {
-                        return ` Name: ${prod.name} / Price:${prod.price}`
+                    event.productsTaken.map(prod => {
+                        return ` Name: ${prod.name} / Price:${prod.price} / LoadCell:${prod.lc}`
                     }) + '\n'
-            if (event.paymentMethod !== null && event.paymentMethod !== undefined)
+            }
+            if (event.paymentMethod !== null && event.paymentMethod !== undefined) {
                 paymentDetails = `Payment Details - ` +
                     event.paymentMethod.map(pay => {
-                        return `isPaid: ${pay.isPaid} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null && `StripeCustomerId: ${pay.stripeId}`} / Total: ${pay.total} `
+                        return `isPaid: ${pay.isPaid ? "TRUE" : "FALSE"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`} / Total: ${event.total} `
                     }) + '\n'
-
-            return session +
-                touched || touchedEmpty +
+            }
+            return kiosk +
+                type +
+                (touched || touchedEmpty) +
                 prodTaken +
                 paymentDetails
 
@@ -51,10 +57,10 @@ const columns = [
     },
 ];
 
-const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
-    // const [dateRange, changeDate] = useState('');
-    // const [page, changePage] = useState(0);
-    // const [perPage, changePerPage] = useState(25);
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
+    const [dateRange, changeDate] = useState('');
+    const [page, changePage] = useState(0);
+    const [perPage, changePerPage] = useState(25);
     // const [exportData, changeExportData] = useState(false);
     const { id } = match.params;
     const links = [
@@ -63,8 +69,8 @@ const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
             link: '/dashboard',
         },
         {
-            name: 'Users',
-            link: '/users',
+            name: userName.firstName !== '' ? userName.firstName : initValue.firstName,
+            link: `/users`,
         },
     ];
 
@@ -75,18 +81,38 @@ const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
 
     const getData = (id) => {
         const data = {
-            id: id,
-            // skip: page * perPage,
-            // limit: perPage,
-            // date: dateRange !== '' && dateRange
+            search: dateRange !== '' ? `{"created":{"$gte":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{"userId": \"${id}\"}`,
+            skip: page * perPage,
+            limit: perPage
         };
         getUserTransactions({ data });
     };
-
+    const handleDateChange = value => {
+        let date = '';
+        if (value) {
+            date = value.reduce((prev, curr, i) => {
+                const key = i % 2 ? '$lte' : '$gte';
+                prev[key] =
+                    i % 2
+                        ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
+                        : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+                return prev;
+            }, {});
+        }
+        changePage(0);
+        changeDate(date);
+        // if (date.$gte && date.$lte) {
+        //     changeExportData({
+        //         from: date.$gte,
+        //         to: date.$lte,
+        //     });
+        // }
+    };
     useEffect(() => {
         getData(id)
-    }, []);
-    console.log(user)
+        if (userName.firstName === '')
+            getOneUserWithInfo({ id: params.id });
+    }, [id, page, perPage, dateRange]);
     return (
         <>
             {isLoading && <Loader />}
@@ -115,7 +141,7 @@ const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
                                     <Grid.Column width={4}>
                                         <DatePicker
                                             type="range"
-                                        // onChange={handleDateChange}
+                                            onChange={handleDateChange}
                                         />
                                     </Grid.Column>
                                     <Grid.Column width={3}>
@@ -123,35 +149,34 @@ const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
                                             label="Download CSV&nbsp;"
                                             icon="arrow down icon"
                                             className="custom-button-default"
-                                        // onClick={DownloadCsv}
-                                        // disabled={!Boolean(exportData)}
+                                            // onClick={DownloadCsv}
+                                            disabled={true}
                                         />
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
-                            <Grid.Row className="activity-log-filter-row">
+                            <Grid.Row className="user-log-filter-row">
                                 <Grid.Column>
                                     <CustomTable
                                         sortByColumn="date"
                                         sortable
-                                        fixed
                                         data={user}
                                         columns={columns}
                                         sortDirection="DESC"
                                     />
                                 </Grid.Column>
                             </Grid.Row>
-                            {/* <Grid.Row>
-                        <Grid.Column>
-                            <Pagination
-                                totalCount={total}
-                                page={page}
-                                perPage={perPage}
-                                changePage={changePage}
-                                changePerPage={changePerPage}
-                            />
-                        </Grid.Column>
-                    </Grid.Row> */}
+                            <Grid.Row>
+                                <Grid.Column>
+                                    <Pagination
+                                        totalCount={total}
+                                        page={page}
+                                        perPage={perPage}
+                                        changePage={changePage}
+                                        changePerPage={changePerPage}
+                                    />
+                                </Grid.Column>
+                            </Grid.Row>
                         </Segment>
                     </Grid.Column>
                 </Grid.Row>
@@ -162,10 +187,14 @@ const UserLog = ({ getUserTransactions, user, isLoading, match }) => {
 
 const mapStateToProps = state => ({
     user: getUserLogsState(state),
-    isLoading: state.users.isLoading
+    userName: getActiveUserIDState(state),
+    initValue: getUserInitValues(state),
+    isLoading: state.users.isLoading,
+    total: getTotalUserLogs(state)
 });
 const mapDispatchToProps = {
-    getUserTransactions
+    getUserTransactions,
+    getOneUserWithInfo
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserLog);

@@ -122,7 +122,7 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                                     icon="arrow down icon"
                                     className="custom-button-default"
                                     onClick={DownloadCsv}
-                                    disabled={!Boolean(exportData)}
+                                    disabled={true}
                                 />
                             </Grid.Column>
                         </Grid.Row>
@@ -132,7 +132,6 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                             <CustomTable
                                 sortByColumn="date"
                                 sortable
-                                fixed
                                 data={activityLogs}
                                 columns={columns}
                                 sortDirection="DESC"

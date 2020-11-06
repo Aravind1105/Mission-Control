@@ -3,13 +3,23 @@ import get from 'lodash/get';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 
+
+const userLogMessages = {
+  'purchase': 'CONSUMER APP',
+  'refill': 'REFILL',
+  'terminal_purchase': 'TERMINAL',
+  'member_purchase': 'MEMBER CARD'
+}
+
 export const getUsersListState = state => state.users.list;
 
 export const getActiveUserState = state => state.users.activeUser;
 
 export const getUserWithDetails = state => state.users.userWithDetails;
 
-export const getUserLogs = state => state.users.userTransactions;
+export const getTotalUserLogs = state => state.users.userLogs.total;
+
+export const getUserLogs = state => state.users.userLogs.data;
 
 
 
@@ -62,26 +72,28 @@ export const getUserLogsState = createSelector(getUserLogs, log => {
       return {
         date: date,
         event: {
-          session: userLog.session && userLog.session.kiosk && userLog.session.kiosk.name,
-          productsTaken: userLog.itemsPurchased && userLog.itemsPurchased.map((items) => {
+          kiosk: userLog.session && userLog.session.kiosk && userLog.session.kiosk.name,
+          type: userLog.session && userLogMessages[userLog.session.type],
+          total: userLog.total && userLog.total,
+          userName: userLog.userId && userLog.userId.firstName,
+          productsTaken: userLog.itemsPurchased && userLog.itemsPurchased.length > 0 && userLog.itemsPurchased.map((items) => {
             return {
               price: items.price && items.price,
-              prodId: items.productLine && items.productLine._id,
-              name: items.productLine && items.productLine.name
+              name: items.productLine && items.productLine.name,
+              lc: items.loadCell && items.loadCell
             }
           }),
-          paymentMethod: userLog.paymentMethod && userLog.paymentMethod.map(payment => {
+          paymentMethod: userLog.paymentMethod && userLog.paymentMethod.length > 0 && userLog.paymentMethod.map(payment => {
             return {
               isPaid: payment.isPaid && payment.isPaid,
               memberId: payment.membercardId && payment.membercardId,
-              stripeId: payment.stripeCustomerId && payment.stripeCustomerId,
-              total: payment.amount && payment.amount
+              stripeId: payment.stripeCustomerId && payment.stripeCustomerId
             }
           }),
-          touchedScales: userLog.session && userLog.session.details && userLog.session.details.touchedArticles.map(scl => {
+          touchedScales: userLog.session && userLog.session.details && userLog.session.details.touchedArticles.length > 0 && userLog.session.details.touchedArticles.map(scl => {
             return {
-              id: scl.id && scl.id,
-              weight: scl.val && scl.val
+              qty: scl.quantity && scl.quantity,
+              name: scl.productLine && scl.productLine.name
             }
           })
         }

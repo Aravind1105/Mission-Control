@@ -55,14 +55,17 @@ export const GET_ONE_USER_WITH_INFO = gql`
 `;
 
 export const GET_USER_TRANSACTIONS = gql`
-  query findAllTransactions($id: String!) {
-    findAllTransactions(userId: $id) {
+  query findUserTransactionsGrid(
+    $skip:Int!,$limit:Int!,$search:String!
+  ) {
+    findUserTransactionsGrid(data:{skip:$skip,limit:$limit,search:$search}) {
+    total 
+    data{
       _id
-    type
     total
     created
     itemsPurchased{
-      _id
+      loadCell
       productLine{
         name
       }
@@ -76,20 +79,22 @@ export const GET_USER_TRANSACTIONS = gql`
       stripeCustomerId
     }
     session{
-       kiosk{
+      type
+      kiosk{
         name
       }
       details{
         touchedArticles{
-          ean
+          quantity
+          productLine{
+            name
+          }
         }
-        paymentCardDetails
-        membercardId
-        sessionClosedAt
       }
     }
   }
 }
+  }
 `;
 
 export const GET_USERS_SHORT_INFO_QUERY = gql`
@@ -122,7 +127,6 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
           role
         }
         paymentMethods{
-        _id
         type
         provider
         last4digits
@@ -130,7 +134,6 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
       kiosks{
         _id
         notes
-        pin
       }
       }
     }

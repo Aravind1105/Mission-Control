@@ -103,8 +103,8 @@ const CustomTable = ({
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
                   Array.isArray(excludeSortBy) &&
-                  sortable &&
-                  !excludeSortBy.find(elem => elem === field)
+                    sortable &&
+                    !excludeSortBy.find(elem => elem === field)
                     ? 'sortable-th'
                     : '';
                 return (

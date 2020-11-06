@@ -1,3 +1,53 @@
+#### 1.2.35 (2020-11-05)
+
+##### Bug Fixes
+
+* **kiosk-filter:**  fix doorStatus filter minor-issue (clean filter did not work), and comment code for LIV-2285. (efdb71f7)
+
+#### 1.2.34 (2020-11-04)
+
+##### Bug Fixes
+
+* **user log:**  reload of same page to get username (984d752d)
+
+#### 1.2.33 (2020-11-04)
+
+#### 1.2.32 (2020-11-04)
+
+##### Build System / Dependencies
+
+* **userLog:**  UserLog data with date filter (2450edd7)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (ef6b0e48)
+
+#### 1.2.31 (2020-11-04)
+
+##### Bug Fixes
+
+* **merge-conflict:**  solve merge conflicts. (53123f8c)
+
+##### Other Changes
+
+* **kiosk-filter:**  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (5d056702)
+* **kiosk_filter:**  fill network status and refactor door status. (e9d80a57)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (f36a615e)
+
+#### 1.2.30 (2020-11-04)
+
+##### Bug Fixes
+
+* **dashboard statistics chart:**  LIV-2039 last24Hours bug fix (c20aac34)
+
+##### Other Changes
+
+* **kiosk-filter:**
+  *  remove networkStatus from the filter, that should be applied when LIV-2285 is completed and remove logs. (26781ee0)
+  *  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (92a0d8ce)
+* **kiosk_filter:**  fill network status and refactor door status. (ccde0b83)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (a09ebf76)
+
 #### 1.2.29 (2020-11-02)
 
 ##### Build System / Dependencies

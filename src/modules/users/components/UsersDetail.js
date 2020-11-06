@@ -115,7 +115,6 @@ const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
                     <UserInfoRow description={user.address.state !== "" && user.address.state} description2={user.address.country !== "" && user.address.country} />
                   )}
                   <UserInfoRow title="Notes" description={user.kiosks && user.kiosks.notes && user.kiosks.notes} />
-                  <UserInfoRow title="Pincode for Kiosks" description={user.kiosks && user.kiosks.pin && user.kiosks.pin} />
                 </Grid.Row>
               </Grid>
             </Grid.Column>
@@ -138,6 +137,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
               <CustomButton
                 icon="key"
                 label="Retrieve Login"
+                disabled={true}
               />
             </Grid.Column>
           </Grid.Row>

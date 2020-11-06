@@ -12,7 +12,6 @@ function* handler({ payload }) {
     mutation: USER_ROLE_TOGGLE_MUTATION,
     variables,
   });
-  console.log(data)
   yield put(toggleUserRoleSuccess(data.grantRootForUser));
 }
 
