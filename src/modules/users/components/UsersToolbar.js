@@ -26,17 +26,17 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
     <Segment className="toolbar">
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
-          <Grid.Column width={7}>
+          <Grid.Column width={5}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column>
-          <Grid.Column>
-            <Dropdown
+          <Grid.Column width={5}>
+            {/* <Dropdown
               placeholder="All types"
               selection
               options={stateOptions}
               className="full-width"
-              onChange={changeUserType}
-            />
+              onChange={(event, data) => changeUserType(data.value)}
+            /> */}
           </Grid.Column>
           <Grid.Column textAlign="right">
             <Button

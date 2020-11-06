@@ -67,8 +67,10 @@ const UsersContent = ({
 
     if (search || userType) {
       const name = search ? { firstName: { $regexI: search } } : {};
+      const role = userType ? { "rolesInOrganizations.role": userType } : {};
       data.search = JSON.stringify({
         ...name,
+        ...role,
       });
     }
 
@@ -81,7 +83,7 @@ const UsersContent = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [search, page, perPage]);
+  }, [search, userType, page, perPage]);
 
   const handleRowClick = ({ _id }) => {
     setActiveUser(_id);
@@ -89,7 +91,7 @@ const UsersContent = ({
 
   return (
     <>
-      <UsersToolbar changeSearch={changeSearch} />
+      <UsersToolbar changeSearch={changeSearch} changeUserType={changeUserType} />
       {isLoading && <Loader />}
       <Grid>
         <Grid.Row columns="equal" stretched>
