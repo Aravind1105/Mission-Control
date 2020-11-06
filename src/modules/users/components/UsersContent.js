@@ -81,7 +81,7 @@ const UsersContent = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage]);
+  }, [search, page, perPage]);
 
   const handleRowClick = ({ _id }) => {
     setActiveUser(_id);
