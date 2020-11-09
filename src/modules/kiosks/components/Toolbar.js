@@ -9,8 +9,8 @@ const Toolbar = ({ search,
   setKiosk,
   kiosksStatus,
   setKioskStatus,
-  kiosksNetworkStatus,
-  // setKioskNetworkStatus
+  // kiosksNetworkStatus, //!LIV-2285
+  // setKioskNetworkStatus //!LIV-2285
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
@@ -23,7 +23,7 @@ const Toolbar = ({ search,
     const text = value === 'All' ? '' : value;
     setKioskStatus(text)
   };
-  // const handleKiosksNetworkStatus = (e, { value }) => {
+  // const handleKiosksNetworkStatus = (e, { value }) => { //!LIV-2285
   //   const text = value === 'All' ? '' : value;
   //   setKioskNetworkStatus(text)
   // };
@@ -80,7 +80,7 @@ const Toolbar = ({ search,
           />
         </Grid.Column>
 
-        {/* <Grid.Column width={3}>
+        {/* <Grid.Column width={3}> //!LIV-2285
           <Dropdown
               placeholder="Network Status"
               selection

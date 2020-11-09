@@ -1,3 +1,9 @@
+#### 1.2.35 (2020-11-05)
+
+##### Bug Fixes
+
+* **kiosk-filter:**  fix doorStatus filter minor-issue (clean filter did not work), and comment code for LIV-2285. (efdb71f7)
+
 #### 1.2.34 (2020-11-04)
 
 ##### Bug Fixes

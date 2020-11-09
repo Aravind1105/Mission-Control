@@ -8,7 +8,7 @@ const KiosksList = ({kiosks, kiosksStatus, kiosksNetworkStatus, ...props}) => {
   const [search, setSearch] = useState('');
   const [kiosk, setKiosk] = useState('');
   const [kioskStatus, setKioskStatus] = useState('');
-  // const [kioskNetworkStatus, setKioskNetworkStatus] = useState('');
+  // const [kioskNetworkStatus, setKioskNetworkStatus] = useState(''); //!LIV-2285
 
 
   return (
@@ -21,14 +21,14 @@ const KiosksList = ({kiosks, kiosksStatus, kiosksNetworkStatus, ...props}) => {
       kiosksStatus={kiosksStatus}
       setKioskStatus={setKioskStatus}
       kiosksNetworkStatus={kiosksNetworkStatus}
-      // setKioskNetworkStatus={setKioskNetworkStatus}
+      // setKioskNetworkStatus={setKioskNetworkStatus} //!LIV-2285
       />
       <KiosksContent 
       {...props} 
       search={search} 
       kiosk={kiosk}
       kioskStatus={kioskStatus}
-      // kioskNetworkStatus={kioskNetworkStatus}
+      // kioskNetworkStatus={kioskNetworkStatus} //!LIV-2285
       />
     </>
   );

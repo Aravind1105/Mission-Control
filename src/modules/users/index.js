@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import UsersToolbar from './components/UsersToolbar';
 import UsersContent from './components/UsersContent';
 import UserEdit from './components/UserEdit';
 import UserLog from './components/UserLog';
@@ -13,12 +12,7 @@ const Users = () => (
     <Route
       exact
       path="/users"
-      render={() => (
-        <>
-          <UsersToolbar />
-          <UsersContent />
-        </>
-      )}
+      render={() => <UsersContent />}
     />
     <Route exact path="/users/edit/:id" component={UserEdit} />
     <Route path="/users/log/:id" exact component={UserLog} />

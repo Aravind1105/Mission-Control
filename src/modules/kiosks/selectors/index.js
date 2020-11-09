@@ -7,7 +7,7 @@ import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
-import differenceInMinutes from 'date-fns/differenceInMinutes';
+// import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -63,15 +63,15 @@ export const getKioskDoorStatus = createSelector(
     return prev;
     },[]);
     states.unshift({
-      value: 'All Door States',
+      value: '',
       text: 'All Door States',
-      key: 'states',
+      key: 'all',
     });
     return states;
   },
 );
 
-export const getKiosksNetworkStatus = createSelector(
+export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
   getKiosksState,
   kiosks => {
     let networkStates = [], temp = [];
