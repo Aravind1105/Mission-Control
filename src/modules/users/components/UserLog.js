@@ -68,11 +68,10 @@ const columns = [
     },
 ];
 
-const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue, sortByColumn, sortDirection }) => {
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
-    //   const [sortBy, setSortBy] = useState(sortByColumn);
     const [sort, setSort] = useState(sortDefault);
     // const [exportData, changeExportData] = useState(false);
     const { id } = match.params;
