@@ -1,3 +1,9 @@
+#### 1.2.37 (2020-11-09)
+
+##### Bug Fixes
+
+* **userlog:** Userlog sort Update (39eab2c9)
+
 #### 1.2.36 (2020-11-09)
 
 ##### Build System / Dependencies
