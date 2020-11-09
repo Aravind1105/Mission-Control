@@ -1,3 +1,17 @@
+#### 1.2.36 (2020-11-09)
+
+##### Build System / Dependencies
+
+* **userLog:**  Date filter created and sorted (ddac7ead)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (1b390fd5)
+* **users search bar:**  LIV-2253 updated (ae632c50)
+* **users search:**
+  *  LIV-2253 user search bar (be784dc7)
+  *  LIV-2253 (0fd80fbc)
+
 #### 1.2.35 (2020-11-05)
 
 ##### Bug Fixes
