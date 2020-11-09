@@ -13,6 +13,19 @@ import { getUserLogsState, getTotalUserLogs, getActiveUserIDState, getUserInitVa
 import { getUserTransactions, getOneUserWithInfo } from '../actions';
 
 
+const sortDefault = [
+    {
+        column: 'created',
+        direction: 'DESC',
+    },
+];
+
+const sortValue = {
+    created: 'created',
+    date: 'created'
+
+};
+
 const columns = [
     {
         title: 'Date/Time',
@@ -57,10 +70,11 @@ const columns = [
     },
 ];
 
-const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue, setSortByInCaller }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
+    const [sort, setSort] = useState(sortDefault);
     // const [exportData, changeExportData] = useState(false);
     const { id } = match.params;
     const links = [
@@ -69,7 +83,7 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
             link: '/dashboard',
         },
         {
-            name: userName.firstName !== '' ? userName.firstName : initValue.firstName,
+            name: 'Users',
             link: `/users`,
         },
     ];
@@ -85,6 +99,13 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
             skip: page * perPage,
             limit: perPage
         };
+        console.log(sort)
+        if (sort && sortValue[sort[0].column]) {
+            sort[0].column = sortValue[sort[0].column];
+            data.sort = sort;
+        }
+        console.log(sort)
+        console.log(data)
         getUserTransactions({ data });
     };
     const handleDateChange = value => {
@@ -112,7 +133,7 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
         getData(id)
         if (userName.firstName === '')
             getOneUserWithInfo({ id: params.id });
-    }, [id, page, perPage, dateRange]);
+    }, [id, page, perPage, dateRange, sort]);
     return (
         <>
             {isLoading && <Loader />}
@@ -123,7 +144,7 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
                             <Breadcrumbs
                                 backLink={backLink}
                                 links={links}
-                                activeLink="User log"
+                                activeLink={`${userName.firstName !== '' ? userName.firstName : initValue.firstName} ${userName.lastName !== '' ? userName.lastName : initValue.lastName}`}
                             />
                         </Segment>
                     </Grid.Column>
@@ -162,7 +183,9 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
                                         sortable
                                         data={user}
                                         columns={columns}
-                                        sortDirection="DESC"
+                                        excludeSortBy={['event']}
+                                        setSortByInCaller={sort => setSort([sort])}
+                                        sortDirection={sort[0].direction}
                                     />
                                 </Grid.Column>
                             </Grid.Row>

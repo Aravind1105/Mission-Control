@@ -13,7 +13,8 @@ function* handler({ payload }) {
             variables: {
                 limit: payload.data.limit,
                 skip: payload.data.skip,
-                search: payload.data.search
+                search: payload.data.search,
+                sort: payload.data.sort
             },
         });
         yield put(

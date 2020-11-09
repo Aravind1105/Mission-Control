@@ -56,9 +56,9 @@ export const GET_ONE_USER_WITH_INFO = gql`
 
 export const GET_USER_TRANSACTIONS = gql`
   query findUserTransactionsGrid(
-    $skip:Int!,$limit:Int!,$search:String!
+    $skip:Int!,$limit:Int!,$search:String!,$sort:[RequestSort]
   ) {
-    findUserTransactionsGrid(data:{skip:$skip,limit:$limit,search:$search}) {
+    findUserTransactionsGrid(data:{skip:$skip,limit:$limit,search:$search,sort:$sort}) {
     total 
     data{
       _id
