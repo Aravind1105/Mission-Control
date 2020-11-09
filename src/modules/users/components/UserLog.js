@@ -91,7 +91,7 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
         link: '/users',
     };
 
-    const getData = () => {
+    const getData = ({ sort }) => {
         const data = {
             search: dateRange !== '' ? `{"userId": \"${id}\","created":{"$gte":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{"userId": \"${id}\"}`,
             skip: page * perPage,
@@ -122,7 +122,7 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
         // }
     };
     useEffect(() => {
-        getData()
+        getData({ sort })
         if (userName.firstName === '')
             getOneUserWithInfo({ id: params.id });
     }, [id, page, perPage, dateRange]);
