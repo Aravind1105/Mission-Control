@@ -70,7 +70,7 @@ export const getUserLogsState = createSelector(getUserLogs, log => {
     const logs = log.map((userLog) => {
       const date = format(new Date(userLog.created), 'dd-MM-yyyy HH:mm:ss')
       return {
-        date: date,
+        created: date,
         event: {
           kiosk: userLog.session && userLog.session.kiosk && userLog.session.kiosk.name,
           type: userLog.session && userLogMessages[userLog.session.type],

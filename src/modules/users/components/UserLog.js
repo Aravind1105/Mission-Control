@@ -21,15 +21,13 @@ const sortDefault = [
 ];
 
 const sortValue = {
-    created: 'created',
-    date: 'created'
-
+    created: 'created'
 };
 
 const columns = [
     {
         title: 'Date/Time',
-        field: 'date',
+        field: 'created',
     },
     {
         title: 'Event',
@@ -70,10 +68,11 @@ const columns = [
     },
 ];
 
-const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue, setSortByInCaller }) => {
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue, sortByColumn, sortDirection }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
+    //   const [sortBy, setSortBy] = useState(sortByColumn);
     const [sort, setSort] = useState(sortDefault);
     // const [exportData, changeExportData] = useState(false);
     const { id } = match.params;
@@ -93,19 +92,13 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
         link: '/users',
     };
 
-    const getData = (id) => {
+    const getData = () => {
         const data = {
-            search: dateRange !== '' ? `{"created":{"$gte":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{"userId": \"${id}\"}`,
+            search: dateRange !== '' ? `{"userId": \"${id}\","created":{"$gte":\"${dateRange.$gte}\"${dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''}}}` : `{"userId": \"${id}\"}`,
             skip: page * perPage,
-            limit: perPage
+            limit: perPage,
+            sort: sort
         };
-        console.log(sort)
-        if (sort && sortValue[sort[0].column]) {
-            sort[0].column = sortValue[sort[0].column];
-            data.sort = sort;
-        }
-        console.log(sort)
-        console.log(data)
         getUserTransactions({ data });
     };
     const handleDateChange = value => {
@@ -130,10 +123,10 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
         // }
     };
     useEffect(() => {
-        getData(id)
+        getData()
         if (userName.firstName === '')
             getOneUserWithInfo({ id: params.id });
-    }, [id, page, perPage, dateRange, sort]);
+    }, [id, page, perPage, dateRange]);
     return (
         <>
             {isLoading && <Loader />}
@@ -179,13 +172,14 @@ const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, matc
                             <Grid.Row className="user-log-filter-row">
                                 <Grid.Column>
                                     <CustomTable
-                                        sortByColumn="date"
+                                        sortByColumn="created"
                                         sortable
-                                        data={user}
+                                        data={user || []}
                                         columns={columns}
+                                        getData={getData}
                                         excludeSortBy={['event']}
                                         setSortByInCaller={sort => setSort([sort])}
-                                        sortDirection={sort[0].direction}
+                                        sortDirection="DESC"
                                     />
                                 </Grid.Column>
                             </Grid.Row>
