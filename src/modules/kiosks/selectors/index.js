@@ -30,6 +30,8 @@ const activityLogMessages = {
   "payment_failed": 'Payment Failed'
 }
 
+const doorStatus = {open:'open', closed:'closed', unknown:'unknown'};
+
 export const getAlertsOptions = () => [
   { value: '', text: 'All Alerts' },
   ...Object.keys(alertMessages).map(alert => ({
@@ -47,29 +49,13 @@ export const getKiosksTableState = state =>
     dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
   }));
 
-export const getKioskDoorStatus = createSelector(
-  getKiosksState,
-  kiosks => {
-    let states = [], temp = [];
-    const kiosksStates = kiosks.reduce((prev,curr,i) => {
-      if(!temp.includes(curr.doorStatus)){
-        temp.push(curr.doorStatus);
-        return states.push({
-          value: curr.doorStatus,
-          text:curr.doorStatus,
-          key: i
-        })
-      }
-    return prev;
-    },[]);
-    states.unshift({
-      value: '',
-      text: 'All Door States',
-      key: 'all',
-    });
-    return states;
-  },
-);
+export const getKioskDoorStatus = () => [{
+   value: '', text: 'All Alerts' },
+  ...Object.keys(doorStatus).map(status => ({
+    value: status,
+    text: doorStatus[status],
+  })),
+];
 
 export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
   getKiosksState,
