@@ -1,6 +1,6 @@
 {
   "name": "livello-mission-control-stage",
-  "version": "1.2.38",
+  "version": "1.2.39",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack/webpack.config.dev.js --mode development",
