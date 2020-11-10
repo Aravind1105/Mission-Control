@@ -27,6 +27,7 @@ const SalesTable = ({
   isLoading,
   excludeSortBy,
   setSortByInCaller,
+  alignCenter,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -91,9 +92,11 @@ const SalesTable = ({
         className="unitable transactions-table"
         basic
         celled
+        padded
         structured
         fixed={fixed}
         sortable={sortable}
+        style={alignCenter && { textAlign: "center" }}
         {...rest}
       >
         {!headless && (
@@ -104,8 +107,8 @@ const SalesTable = ({
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
                   Array.isArray(excludeSortBy) &&
-                  sortable &&
-                  !excludeSortBy.find(elem => elem === field)
+                    sortable &&
+                    !excludeSortBy.find(elem => elem === field)
                     ? 'sortable-th'
                     : '';
 
@@ -135,7 +138,7 @@ const SalesTable = ({
               return (
                 <Table.Row
                   key={rowKey}
-                  // onClick={handlerRowClick(resultItem, rowIdx)}
+                // onClick={handlerRowClick(resultItem, rowIdx)}
                 >
                   {columns.map(({ field, formatter }, j) => {
                     const cellKey = `${i}-${field}`;
@@ -162,15 +165,13 @@ const SalesTable = ({
                               : item.uniqueProducts + 1
                             : '1'
                         }
-                        className={`table-cell-text ${
-                          item.transactionID
-                            ? 'table-cell-text-transaction'
-                            : ''
-                        } ${
-                          toggleTableCellColor
+                        className={`table-cell-text ${item.transactionID
+                          ? 'table-cell-text-transaction'
+                          : ''
+                          } ${toggleTableCellColor
                             ? 'table-cell-bg-grey'
                             : 'table-cell-bg-white'
-                        }`}
+                          }`}
                       >
                         {cellValue}
                       </Table.Cell>
