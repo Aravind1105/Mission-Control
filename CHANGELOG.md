@@ -1,3 +1,9 @@
+#### 1.2.40 (2020-11-10)
+
+##### Bug Fixes
+
+* **UserGrid:**  sort and data type changed (65233c76)
+
 #### 1.2.39 (2020-11-10)
 
 ##### Other Changes
