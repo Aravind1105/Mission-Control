@@ -13,10 +13,17 @@ import { getActivityLogs } from '../actions';
 
 import './styles.less';
 
+const sortDefault = [
+    {
+        column: 'created',
+        direction: 'DESC',
+    },
+];
+
 const columns = [
     {
         title: 'Date/Time',
-        field: 'date',
+        field: 'created',
     },
     {
         title: 'Event',
@@ -46,15 +53,17 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
+    const [sort, setSort] = useState(sortDefault);
     const [exportData, changeExportData] = useState(false);
     const { id } = match.params;
 
-    const getData = (id) => {
+    const getData = ({ sort }) => {
         const data = {
             kioskId: !kiosk ? id : kiosk._id,
             skip: page * perPage,
             limit: perPage,
-            date: dateRange !== '' && dateRange
+            date: dateRange !== '' && dateRange,
+            sort: sort[0].direction === 'ASC' ? 1 : -1
         };
         getActivityLogs({ data });
     };
@@ -96,7 +105,7 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
     };
 
     useEffect(() => {
-        getData(id);
+        getData({ sort });
     }, [id, page, perPage, dateRange]);
 
     return (
@@ -130,10 +139,12 @@ const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs })
                     <Grid.Row className="activity-log-filter-row">
                         <Grid.Column>
                             <CustomTable
-                                sortByColumn="date"
+                                sortByColumn="created"
                                 sortable
-                                data={activityLogs}
+                                data={activityLogs || []}
+                                getData={getData}
                                 columns={columns}
+                                setSortByInCaller={sort => setSort([sort])}
                                 sortDirection="DESC"
                             />
                         </Grid.Column>

@@ -51,17 +51,17 @@ export const getKioskDoorStatus = createSelector(
   getKiosksState,
   kiosks => {
     let states = [], temp = [];
-    const kiosksStates = kiosks.reduce((prev,curr,i) => {
-      if(!temp.includes(curr.doorStatus)){
+    const kiosksStates = kiosks.reduce((prev, curr, i) => {
+      if (!temp.includes(curr.doorStatus)) {
         temp.push(curr.doorStatus);
         return states.push({
           value: curr.doorStatus,
-          text:curr.doorStatus,
+          text: curr.doorStatus,
           key: i
         })
       }
-    return prev;
-    },[]);
+      return prev;
+    }, []);
     states.unshift({
       value: '',
       text: 'All Door States',
@@ -76,33 +76,33 @@ export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
   kiosks => {
     let networkStates = [], temp = [];
     // const netStatus = kiosks.reduce((prev,curr,i) => {
-      // let text = 'Offline';
-      // const dif = differenceInMinutes(new Date(), new Date(curr.temperature.updated));
-      // if(dif <= 60){
-      //   text = 'Online';
-      // }
-      // let time = parseInt(dif / 60);
-      // if(time < 24) {
-      //   text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
-      // }else {
-      //   time = parseInt(time / 24);
-      //   text += ` > ${time} ${time === 1 ? 'day' : 'days'}`;
-      // }
-      // if(!temp.includes(text)){
-      //   temp.push(text);
-      //   temp.sort();
-        // networkStates.push({
-        //   value: text,
-        //   text: text,
-        //   key: i
-        // });
-      // }
+    // let text = 'Offline';
+    // const dif = differenceInMinutes(new Date(), new Date(curr.temperature.updated));
+    // if(dif <= 60){
+    //   text = 'Online';
+    // }
+    // let time = parseInt(dif / 60);
+    // if(time < 24) {
+    //   text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+    // }else {
+    //   time = parseInt(time / 24);
+    //   text += ` > ${time} ${time === 1 ? 'day' : 'days'}`;
+    // }
+    // if(!temp.includes(text)){
+    //   temp.push(text);
+    //   temp.sort();
+    // networkStates.push({
+    //   value: text,
+    //   text: text,
+    //   key: i
+    // });
+    // }
     //   return prev;
     // },[]);
 
     networkStates.push(
-      {value: 'Online', text: 'Online', key: 0},
-      {value: 'Offline', text: 'Offline', key: 1}
+      { value: 'Online', text: 'Online', key: 0 },
+      { value: 'Offline', text: 'Offline', key: 1 }
     )
     networkStates.unshift({
       value: 'All Network States',
@@ -346,7 +346,7 @@ export const getActivityLogsState = createSelector(getActivityLogs, log => {
     const logs = log.map((actLog) => {
       const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
       return {
-        date: date,
+        created: date,
         event: {
           doorStatus: activityLogMessages[actLog.payload.message.door_status],
           touchedScales: actLog.payload.message.touchedScales,
