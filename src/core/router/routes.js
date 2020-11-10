@@ -38,7 +38,7 @@ export default [
     path: '/users',
     icon: 'users',
     Component: Users,
-    rootOnly: true,
+    rootOnly: false,
   },
   {
     name: 'Products',

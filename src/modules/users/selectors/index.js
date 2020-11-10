@@ -93,7 +93,9 @@ export const getUserLogsState = createSelector(getUserLogs, log => {
           touchedScales: userLog.session && userLog.session.details && userLog.session.details.touchedArticles.length > 0 && userLog.session.details.touchedArticles.map(scl => {
             return {
               qty: scl.quantity && scl.quantity,
-              name: scl.productLine && scl.productLine.name
+              name: scl.productLine && scl.productLine.name,
+              price: scl.productLine && scl.productLine.priceHistory && scl.productLine.priceHistory[0].price,
+              // lc: scl.loadCell && scl.loadCell
             }
           })
         }

@@ -27,6 +27,7 @@ const CustomTable = ({
   isLoading,
   excludeSortBy,
   setSortByInCaller,
+  alignCenter,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -90,9 +91,11 @@ const CustomTable = ({
         className="unitable"
         basic
         celled
+        padded
         fixed={fixed}
         sortable={sortable}
         selectable={selectable}
+        style={alignCenter && { textAlign: "center" }}
         {...rest}
       >
         {!headless && (

@@ -41,7 +41,7 @@ const columns = [
             if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
                 touched = `Products Touched -` +
                     event.touchedScales.map((scl) => {
-                        return ` Name: ${scl.name} / Qty: ${scl.qty}`
+                        return ` Name: ${scl.name} / Qty: ${scl.qty} / Price: ${scl.price} `
                     }) + '\n'
             }
             else if (event.touchedScales === null || event.touchedScales.length === 0)
@@ -49,7 +49,7 @@ const columns = [
             if (event.productsTaken !== null && event.productsTaken !== undefined && event.productsTaken.length > 0) {
                 prodTaken = `Products Taken - ` +
                     event.productsTaken.map(prod => {
-                        return ` Name: ${prod.name} / Price: ${prod.price} / LoadCell: ${prod.lc}`
+                        return ` Name: ${prod.name} / Price: ${prod.price} / Cable Id: ${prod.lc}`
                     }) + '\n'
             }
             if (event.paymentMethod !== null && event.paymentMethod !== undefined) {

@@ -88,6 +88,9 @@ export const GET_USER_TRANSACTIONS = gql`
           quantity
           productLine{
             name
+            priceHistory{
+              price
+            }
           }
         }
       }

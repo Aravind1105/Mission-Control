@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import history from 'lib/history';
 import SearchInput from 'modules/shared/components/SearchInput';
+import './styles.less';
 
 const stateOptions = [
   { key: 'allusers', value: '', text: 'All Users' },
@@ -38,7 +39,7 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
               onChange={(event, data) => changeUserType(data.value)}
             /> */}
           </Grid.Column>
-          <Grid.Column textAlign="right">
+          {/* <Grid.Column textAlign="right">
             <Button
               icon
               labelPosition="left"
@@ -51,7 +52,7 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
               <Icon name="right arrow" />
               Add User
             </Button>
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
       </Grid>
       <Link to="/kiosks/add" />

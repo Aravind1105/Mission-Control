@@ -54,19 +54,21 @@ const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
   return (
 
     <div className="user-info">
-      <Segment>
+      <Segment className="usr-detail-style">
         <Grid>
           <Grid.Row columns="equal">
             <Comment.Group size="massive">
               <Comment>
-                <Comment.Avatar as="a" src={user.avatarUrl} style={{ margin: "10px" }} />
+                <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px" }} />
                 <Comment.Content>
                   <Comment.Author as="a">{name}</Comment.Author>
-                  <Comment.Text>
+                  {/* <Comment.Text>
                     {user.root ? 'Admin' : 'Consumer'} - {user.status}
+                  </Comment.Text> */}
+                  <Comment.Text style={{ marginTop: "10px" }}>
+                    <Comment.Actions>Last Activity: 25.03.2019</Comment.Actions>
+                    <Comment.Actions>Last Updated: 25.03.2019</Comment.Actions>
                   </Comment.Text>
-                  <Comment.Actions>Last Activity: 25.03.2019</Comment.Actions>
-                  <Comment.Actions>Last Updated: 25.03.2019</Comment.Actions>
                 </Comment.Content>
               </Comment>
             </Comment.Group>
@@ -129,16 +131,13 @@ const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
                 icon="line graph"
                 onClick={userLogHandler}
               />
-              <CustomButton
-                label={`${user.root ? "Revoke Root" : "Grant Root"}`}
-                icon={`${user.root ? "lock open" : "lock"}`}
-                onClick={handlerRoleToggle}
-              />
-              <CustomButton
-                icon="key"
-                label="Retrieve Login"
-                disabled={true}
-              />
+              {user.root &&
+                <CustomButton
+                  label={`${user.root ? "Revoke Root" : "Grant Root"}`}
+                  icon={`${user.root ? "lock" : "lock open"}`}
+                  onClick={handlerRoleToggle}
+                />
+              }
             </Grid.Column>
           </Grid.Row>
         </Grid>

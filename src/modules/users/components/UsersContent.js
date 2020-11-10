@@ -36,13 +36,13 @@ const columns = [
     title: 'Name',
     field: 'name',
   },
-  {
-    title: 'Type',
-    field: 'type',
-    formatter: ({ type }) => (
-      <span style={{ color: colors[type] }}>{type}</span>
-    ),
-  },
+  // {
+  //   title: 'Type',
+  //   field: 'type',
+  //   formatter: ({ type }) => (
+  //     <span style={{ color: colors[type] }}>{type}</span>
+  //   ),
+  // },
 ];
 
 const UsersContent = ({
@@ -102,6 +102,7 @@ const UsersContent = ({
                 getData={getData}
                 sortable
                 selectable
+                alignCenter={true}
                 setSortByInCaller={sort => setSort([sort])}
                 sortDirection="ASC"
               />
