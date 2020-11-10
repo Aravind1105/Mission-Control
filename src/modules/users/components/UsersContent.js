@@ -63,18 +63,16 @@ const UsersContent = ({
     const data = {
       skip: page * perPage,
       limit: perPage,
-      sort: sort[0].direction === 'ASC' ? 1 : -1
+      sort: sort[0].direction === 'ASC' ? 1 : -1,
     };
 
-    if (search || userType) {
-      const name = search ? { firstName: { $regexI: search } } : {};
-      const role = userType ? { "rolesInOrganizations.role": userType } : {};
-      data.search = JSON.stringify({
-        ...name,
-        ...role,
-      });
+    if (search) {
+      data.name = search;
     }
 
+    if (userType) {
+      data.role = search;
+    }
     getUsers({ data });
   };
 
