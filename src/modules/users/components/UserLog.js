@@ -24,6 +24,10 @@ const columns = [
     {
         title: 'Date/Time',
         field: 'created',
+        formatter: ({ created }) => {
+            let [date, time] = created.split(' ');
+            return `${date}, ${time}`
+        },
     },
     {
         title: 'Event',

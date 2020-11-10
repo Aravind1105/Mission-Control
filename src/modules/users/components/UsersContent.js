@@ -63,6 +63,7 @@ const UsersContent = ({
     const data = {
       skip: page * perPage,
       limit: perPage,
+      sort: sort[0].direction === 'ASC' ? 1 : -1
     };
 
     if (search || userType) {
@@ -74,10 +75,6 @@ const UsersContent = ({
       });
     }
 
-    if (sort && sortValue[sort[0].column]) {
-      sort[0].column = sortValue[sort[0].column];
-      data.sort = sort;
-    }
     getUsers({ data });
   };
 

@@ -98,7 +98,7 @@ export const GET_USER_TRANSACTIONS = gql`
 `;
 
 export const GET_USERS_SHORT_INFO_QUERY = gql`
-  query($data: GridRequest) {
+  query($data: UsersGridInput) {
     getAllUsersGrid(data: $data) {
       total
       data {
