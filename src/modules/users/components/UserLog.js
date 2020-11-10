@@ -41,10 +41,10 @@ const columns = [
             if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
                 touched = `Products Touched -` +
                     event.touchedScales.map((scl) => {
-                        return ` Name: ${scl.name} / Qty: ${scl.qty} / Price: ${scl.price} `
+                        return ` Name: ${scl.name} / Qty: ${scl.qty} / Price: ${scl.price}`
                     }) + '\n'
             }
-            else if (event.touchedScales === null || event.touchedScales.length === 0)
+            else if (event.touchedScales !== null && event.touchedScales.length === 0)
                 touchedEmpty = `Products Touched - Empty \n`
             if (event.productsTaken !== null && event.productsTaken !== undefined && event.productsTaken.length > 0) {
                 prodTaken = `Products Taken - ` +
