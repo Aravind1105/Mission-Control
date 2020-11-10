@@ -1,3 +1,10 @@
+#### 1.2.39 (2020-11-10)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (c76dc0ad)
+* **Act Log:**  sort and datefilter resolved (552d6cb9)
+
 #### 1.2.38 (2020-11-09)
 
 ##### Bug Fixes
