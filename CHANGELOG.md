@@ -1,3 +1,9 @@
+#### 1.2.38 (2020-11-09)
+
+##### Bug Fixes
+
+* **kiosk-filter:**  show fixed options on the door-status kiosk filter, as requested from operations. (87698a41)
+
 #### 1.2.37 (2020-11-09)
 
 ##### Bug Fixes
