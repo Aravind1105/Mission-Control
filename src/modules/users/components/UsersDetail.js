@@ -17,7 +17,7 @@ import { getActiveUserIDState } from '../selectors';
 import './styles.less';
 
 let toggleUserLoading = false;
-const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
+const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
   const handlerRoleToggle = () => {
     const payload = {
       userId: user.id,
@@ -131,7 +131,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading }) => {
                 icon="line graph"
                 onClick={userLogHandler}
               />
-              {user.root &&
+              {rootUser &&
                 <CustomButton
                   label={`${user.root ? "Revoke Root" : "Grant Root"}`}
                   icon={`${user.root ? "lock" : "lock open"}`}
@@ -155,7 +155,8 @@ UsersDetail.propTypes = {
 
 const mapStateToProps = state => ({
   user: getActiveUserIDState(state),
-  isLoading: state.users.isLoading
+  isLoading: state.users.isLoading,
+  rootUser: state.user.root
 });
 
 const mapDispatchToProps = {
