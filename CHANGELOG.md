@@ -1,3 +1,14 @@
+#### 1.2.41 (2020-11-10)
+
+##### Build System / Dependencies
+
+* **liv-2316:**  user view changes (9487ca4d)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (760fc02e)
+* **users search:**  LIV-2253 updated for multuple search params (ace4edb0)
+
 #### 1.2.40 (2020-11-10)
 
 ##### Bug Fixes
