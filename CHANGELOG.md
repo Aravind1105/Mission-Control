@@ -1,3 +1,9 @@
+#### 1.2.44 (2020-11-10)
+
+##### Other Changes
+
+* **userlog:** Root user access to grant/revoke (ec2eb8c0)
+
 #### 1.2.43 (2020-11-10)
 
 #### 1.2.42 (2020-11-10)
