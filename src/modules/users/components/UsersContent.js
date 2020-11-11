@@ -90,7 +90,7 @@ const UsersContent = ({
       {isLoading && <Loader />}
       <Grid>
         <Grid.Row columns="equal" stretched>
-          <Grid.Column width={5}>
+          <Grid.Column width={4}>
             <Segment>
               <CustomTable
                 sortByColumn="name"
@@ -100,7 +100,6 @@ const UsersContent = ({
                 getData={getData}
                 sortable
                 selectable
-                alignCenter={true}
                 setSortByInCaller={sort => setSort([sort])}
                 sortDirection="ASC"
               />

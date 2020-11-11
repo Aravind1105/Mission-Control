@@ -127,7 +127,7 @@ const RefillsTable = ({
         )}
 
         {resultData.map((resultItem, rowIdx) => (
-          <Table.Body
+          <Table.Body className="tb-refills"
           // className={activeRow === rowIdx ? 'active-body' : ''}
           >
             {resultItem.map((item, i) => {

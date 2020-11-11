@@ -66,7 +66,7 @@ const KioskEdit = ({
 
   return (
     <Grid stackable>
-      <Grid.Column width={11}>
+      <Grid.Column width={16}>
         <Grid>
           <Grid.Row>
             <Grid.Column>

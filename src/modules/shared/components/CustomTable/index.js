@@ -125,7 +125,7 @@ const CustomTable = ({
           </Table.Header>
         )}
 
-        <Table.Body>
+        <Table.Body style={{ lineHeight: "normal" }}>
           {resultData.length > 0 &&
             resultData.map((item, i) => {
               const rowKey = `${i}`;

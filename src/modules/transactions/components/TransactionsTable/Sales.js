@@ -127,7 +127,7 @@ const SalesTable = ({
           </Table.Header>
         )}
         {resultData.map((resultItem, rowIdx) => (
-          <Table.Body
+          <Table.Body className="tb-sales"
           // className={activeRow === rowIdx ? 'active-body' : ''}
           >
             {resultItem.map((item, i) => {
