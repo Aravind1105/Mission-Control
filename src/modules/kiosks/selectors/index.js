@@ -50,7 +50,7 @@ export const getKiosksTableState = state =>
   }));
 
 export const getKioskDoorStatus = () => [{
-  value: '', text: 'All Alerts'
+  value: '', text: 'Door Status'
 },
 ...Object.keys(doorStatus).map(status => ({
   value: status,
