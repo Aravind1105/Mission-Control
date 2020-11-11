@@ -114,6 +114,7 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
         email
         mobile
         membercards
+        note
         address {
         name
         line1
