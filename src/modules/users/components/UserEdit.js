@@ -50,9 +50,7 @@ const UserEdit = ({
   }, []);
 
   const redirectHandler = () => {
-    const redirectTo =
-      params.id === 'new' ? '/kiosks' : `/kiosks/detail/${params.id}`;
-    history.push(redirectTo);
+    history.push('/users');
   };
 
   const cancelHandler = ({ dirty }) => {
@@ -67,7 +65,7 @@ const UserEdit = ({
   const isLoaded = true;
   return (
     <Grid stackable>
-      <Grid.Column width={11}>
+      <Grid.Column width={16}>
         <Grid>
           <Grid.Row>
             <Grid.Column>
@@ -98,8 +96,8 @@ const UserEdit = ({
               </Grid.Column>
             </Grid.Row>
           ) : (
-            <Loader />
-          )}
+              <Loader />
+            )}
         </Grid>
       </Grid.Column>
       <ConfirmationModal

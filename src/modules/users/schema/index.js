@@ -11,6 +11,8 @@ export const userDetailOnUser = gql`
     email
     mobile
     membercards
+    note
+    kioskPin
     address {
         name
         line1
@@ -39,8 +41,6 @@ export const userDetailOnUser = gql`
     }
     kiosks{
         _id
-        notes
-        pin
       }
   }
 `;
@@ -164,6 +164,15 @@ export const ADD_MEMBER_CARD_ID_FOR_USER_MUTATION = gql`
 export const DELETE_MEMBER_CARD_ID_FOR_USER_MUTATION = gql`
   mutation deleteMembercardIdForUser($data: MembercardIdInput!) {
     deleteMembercardIdForUser(data: $data) {
+      ...userDetail
+    }
+  }
+  ${userDetailOnUser}
+`;
+
+export const UPDATE_USER = gql`
+  mutation updateUser($id: ID, $data: UserInput!) {
+    updateUser(id: $id, data: $data) {
       ...userDetail
     }
   }
