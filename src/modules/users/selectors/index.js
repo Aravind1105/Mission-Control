@@ -53,7 +53,7 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
   return user ? {
     id: user._id,
     ...pick(user, ['firstName', 'lastName', 'email', 'avatarUrl', 'status', 'address', 'root']),
-    notes: get(user, 'notes', '') || '',
+    note: get(user, 'note', '') || '',
     mobile: get(user, 'mobile', '') || '',
     paymentMethods: user.paymentMethods ? user.paymentMethods.map((pMethod) => {
       return pMethod.provider
@@ -110,11 +110,14 @@ export const getUserInitValues = createSelector(getUserWithDetails, user => {
     ? {
       id: user._id,
       ...pick(user, ['firstName', 'lastName', 'email']),
-      notes: get(user, 'notes', '') || '',
+      note: get(user, 'note', '') || '',
       mobile: get(user, 'mobile', '') || '',
+      address: get(user, 'address'),
+      kioskPin: get(user, 'kioskPin'),
       paymentMethods: user.paymentMethods,
-      userCards: user.membercards ? user.membercards : [],
-      org: [],
+      membercards: user.membercards ? user.membercards : [],
+      rolesInOrganizations: get(user, 'rolesInOrganizations'),
+      orgId: user.rolesInOrganizations.map(ele => ele.organizationId._id),
     }
     : userInitialValues;
 });

@@ -4,7 +4,7 @@ import getUsersSaga from './getUsers';
 import getOneUserWithInfo from './getOneUserWithInfo';
 import getUserTransactions from './getUserTransactions';
 import toggleUserRoleSaga from './toggleUserRole';
-import modifyUserMemberCards from './modifyUserMemberCards';
+import updateUser from './updateUser';
 
 
 export default function* saga() {
@@ -13,6 +13,6 @@ export default function* saga() {
     fork(toggleUserRoleSaga),
     fork(getOneUserWithInfo),
     fork(getUserTransactions),
-    fork(modifyUserMemberCards),
+    fork(updateUser),
   ]);
 }

@@ -116,7 +116,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                   {user.address && (
                     <UserInfoRow description={user.address.state !== "" && user.address.state} description2={user.address.country !== "" && user.address.country} />
                   )}
-                  <UserInfoRow title="Notes" description={user.kiosks && user.kiosks.notes && user.kiosks.notes} />
+                  <UserInfoRow title="Notes" description={user.note} />
                 </Grid.Row>
               </Grid>
             </Grid.Column>

@@ -50,9 +50,7 @@ const UserEdit = ({
   }, []);
 
   const redirectHandler = () => {
-    const redirectTo =
-      params.id === 'new' ? '/kiosks' : `/kiosks/detail/${params.id}`;
-    history.push(redirectTo);
+    history.push('/users');
   };
 
   const cancelHandler = ({ dirty }) => {
