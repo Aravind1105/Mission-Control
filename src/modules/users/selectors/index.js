@@ -53,7 +53,7 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
   return user ? {
     id: user._id,
     ...pick(user, ['firstName', 'lastName', 'email', 'avatarUrl', 'status', 'address', 'root']),
-    notes: get(user, 'notes', '') || '',
+    note: get(user, 'note', '') || '',
     mobile: get(user, 'mobile', '') || '',
     paymentMethods: user.paymentMethods ? user.paymentMethods.map((pMethod) => {
       return pMethod.provider
