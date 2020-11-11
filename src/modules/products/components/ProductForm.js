@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Form, Button, Header, Divider, Dropdown, Input } from 'semantic-ui-react';
+import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
@@ -183,9 +183,44 @@ const ProductForm = ({
                   />
                 </Grid.Column> */}
               </Grid.Row>
-
-              <Grid.Row>
-                <Grid.Column width={5}>
+            </Grid>
+            <Header as="h4">Shelf Max. Capacity</Header>
+            <Divider />
+            <Grid>
+              <Grid.Row columns="equal" stretched>
+                <Grid.Column>
+                  <Field
+                    name=""
+                    label="Full Shelf (L)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Field
+                    name=""
+                    label="1/2 Shelf (M)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Field
+                    name=""
+                    label="1/3 Shelf (S)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns="equal" stretched>
+                <Grid.Column>
                   <Field
                     name="packagingOptions[0].netWeightGrams"
                     label="Net Quantity (ml/g)"
@@ -201,7 +236,7 @@ const ProductForm = ({
                     dropdownSelectedValue={values.packagingOptions[0].netWeightGramsUnit || 'g'}
                   />
                 </Grid.Column>
-                <Grid.Column width={7}>
+                <Grid.Column>
                   <Field
                     name="packagingOptions[0].grossWeightGrams"
                     label="Actual Weight (g)"
@@ -211,7 +246,7 @@ const ProductForm = ({
                     limiting="integerField"
                   />
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column>
                   <Field
                     name="packagingOptions[0].shelfLifeDays"
                     label="Shelf life (days)"
