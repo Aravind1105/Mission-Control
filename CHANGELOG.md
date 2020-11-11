@@ -1,3 +1,13 @@
+#### 1.2.46 (2020-11-11)
+
+##### Bug Fixes
+
+* **logs and table:**  fixed width for edit pages and table view changed for users (152c765c)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (4e0b68f6)
+
 #### 1.2.45 (2020-11-11)
 
 #### 1.2.44 (2020-11-10)
