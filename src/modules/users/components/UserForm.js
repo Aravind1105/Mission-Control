@@ -8,7 +8,7 @@ import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormInputMultiple from 'modules/shared/components/FormInputMultiple';
-import { updateUser } from '../actions';
+import { updateUser, setActiveUser } from '../actions';
 import history from 'lib/history';
 
 const validateForm = data => {
@@ -65,6 +65,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       payload['address'] = pick(values.address, ['name', 'line1', 'line2', 'postalCode', 'city', 'state', 'country']);
     }
     dispatch(updateUser(payload));
+    dispatch(setActiveUser(""));
   };
 
   return (

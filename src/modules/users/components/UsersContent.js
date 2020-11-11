@@ -11,6 +11,7 @@ import UsersDetail from './UsersDetail';
 import { getUsers, setActiveUser } from '../actions';
 import { getUsersListForTable, getActiveUserState, getTotalUsers } from '../selectors';
 import UsersToolbar from './UsersToolbar'
+import UserTemplate from './UserTemplate';
 
 const sortDefault = [
   {
@@ -113,7 +114,8 @@ const UsersContent = ({
               />
             </Segment>
           </Grid.Column>
-          <Grid.Column>{activeUserID && <UsersDetail />}</Grid.Column>
+          {activeUserID && <Grid.Column><UsersDetail /></Grid.Column>}
+          {!activeUserID && <Grid.Column><UserTemplate /></Grid.Column>}
         </Grid.Row>
       </Grid>
     </>
