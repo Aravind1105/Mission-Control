@@ -1,3 +1,19 @@
+#### 1.2.47 (2020-11-12)
+
+##### Bug Fixes
+
+* **User edit:**  LIV-2254 addres save (745ef916)
+* **User detail view:**
+  *  LIV-2254 note field added (068bc212)
+  * LIV-2254 changed note field (8bae5bae)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (d996cb97)
+* **user:**  user detail view changes (91551914)
+* **User empty user detail:** LIV-2323 (05012403)
+* **User edit:** LIV-2254 user edit feature added (1b173d93)
+
 #### 1.2.46 (2020-11-11)
 
 ##### Bug Fixes
