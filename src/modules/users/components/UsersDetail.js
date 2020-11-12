@@ -90,7 +90,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                       </div>
                     )
                   })} />
-                  <UserInfoRow title="Address" description={user.address && user.address.name} />
+                  {/* <UserInfoRow title="Address" description={user.address && user.address.name} /> */}
                   {user.address && user.address.line1 !== "" && (
                     <UserInfoRow description={user.address.line1} />
                   )}

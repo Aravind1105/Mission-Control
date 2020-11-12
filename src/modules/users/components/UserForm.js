@@ -2,13 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
-import { find, pick } from 'lodash';
+import { find, pick, isEmpty } from 'lodash';
 
 import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormInputMultiple from 'modules/shared/components/FormInputMultiple';
-import { updateUser } from '../actions';
+import { updateUser, setActiveUser } from '../actions';
 import history from 'lib/history';
 
 const validateForm = data => {
@@ -56,9 +56,16 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
 
     })
     values.rolesInOrganizations = rolesInOrganizations;
-    values.address = pick(values.address, ['name', 'line1', 'line2', 'postalCode', 'city', 'state', 'country']);
-    const payload = pick(values, ['id', 'firstName', 'lastName', 'email', 'mobile', 'note', 'rolesInOrganizations', 'membercards', 'kioskPin', 'address']);
+    const payload = pick(values, ['id', 'firstName', 'lastName', 'email', 'mobile', 'note', 'rolesInOrganizations', 'membercards', 'kioskPin']);
+    if (!isEmpty(values.address)) {
+      if (!values.address.name) {
+        values.address.name = values.address.line1
+      }
+      values.address.postalCode = values.address.postalCode.toString();
+      payload['address'] = pick(values.address, ['name', 'line1', 'line2', 'postalCode', 'city', 'state', 'country']);
+    }
     dispatch(updateUser(payload));
+    dispatch(setActiveUser(""));
   };
 
   return (
