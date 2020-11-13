@@ -65,6 +65,10 @@ export const productOnProductLine = gql`
       _id
       updated
     }
+    capacities{
+      surfaceSize
+      units
+    }
   }
 `;
 
