@@ -41,10 +41,9 @@ const UserEdit = ({
   };
   useEffect(() => {
     const isEdit = params.id !== 'new';
-    const hasData = isEdit ? initialValues.id === params.id : false;
 
     if (!isOrgLoading) getOrganizations();
-    if (!hasData) {
+    if (isEdit) {
       getOneUserWithInfo({ id: params.id });
     }
   }, []);
