@@ -46,6 +46,7 @@ export const userInitialValues = {
   id: '',
   userCards: [],
   orgId: [],
+  rolesInOrg: [],
   paymentMethods: [],
 };
 
@@ -56,11 +57,11 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
     note: get(user, 'note', '') || '',
     mobile: get(user, 'mobile', '') || '',
     paymentMethods: user.paymentMethods ? user.paymentMethods.map((pMethod) => {
-      return pMethod.provider
+      return `${pMethod.provider[0].toUpperCase() + pMethod.provider.slice(1)}`
     }) : [],
     userCards: user.membercards ? user.membercards : [],
-    org: user.rolesInOrganizations ? user.rolesInOrganizations.map((orgName) => {
-      return orgName.organizationId.name
+    rolesInOrg: user.rolesInOrganizations ? user.rolesInOrganizations.map((org) => {
+      return `${org.role[0].toUpperCase() + org.role.slice(1)}-${org.organizationId.name}`
     }) : [],
   } : userInitialValues
 })

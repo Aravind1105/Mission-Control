@@ -10,20 +10,17 @@ import {
 import get from 'lodash/get';
 import CustomButton from 'modules/shared/components/CustomButton';
 import UserInfoRow from 'modules/shared/components/UserInfoRow';
-import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { toggleUserRole } from '../actions';
 import { getActiveUserIDState } from '../selectors';
 import './styles.less';
 
-let toggleUserLoading = false;
 const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
   const handlerRoleToggle = () => {
     const payload = {
       userId: user.id,
       root: !user.root,
     };
-    toggleUserLoading = true;
     toggleUserRole(payload);
   };
 
@@ -39,18 +36,6 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
   const line1 = get(user, 'address.line1', '');
   const address = `${city ? `${city}, '` : ''} ${line1}`;
 
-  useEffect(() => {
-    if (toggleUserLoading) {
-      if (!isLoading) {
-        toast({
-          type: 'success',
-          description: `${user.root ? `Root access successfully granted` : `Root access successfully revoked`}`,
-          animation: 'fade left',
-        });
-        toggleUserLoading = false;
-      }
-    }
-  }, [toggleUserLoading, isLoading]);
   return (
 
     <div className="user-info">
@@ -83,10 +68,11 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                   <UserInfoRow title="E-mail" description={user.email && user.email} />
                   <UserInfoRow title="Phone Number" description={user.mobile && user.mobile} />
                   <UserInfoRow title="Unique User ID" description={user.id} />
-                  <UserInfoRow title="Organization(s)" description={user.org && user.org.map(orgName => {
+                  <UserInfoRow title="Role / Organization" description={user.rolesInOrg && user.rolesInOrg.map(org => {
+                    let [role, orgs] = org.split('-')
                     return (
                       <div className="multiple-cell">
-                        {orgName}
+                        {role} @ <b>{orgs}</b>
                       </div>
                     )
                   })} />
@@ -104,7 +90,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                       </div>
                     )
                   })} />
-                  <UserInfoRow title="Address" description={user.address && user.address.name} />
+                  {/* <UserInfoRow title="Address" description={user.address && user.address.name} /> */}
                   {user.address && user.address.line1 !== "" && (
                     <UserInfoRow description={user.address.line1} />
                   )}

@@ -126,6 +126,7 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
         }
         rolesInOrganizations {
           organizationId {
+            _id
             name
           }
           role
