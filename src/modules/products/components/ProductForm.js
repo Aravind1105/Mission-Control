@@ -17,8 +17,6 @@ let restVal;
 let updatingProduct = false;
 const ProductForm = ({
   initialValues,
-  // familyOption,
-  // categoryOption,
   taxesOption,
   uploadedImage,
   organizations,
@@ -48,6 +46,14 @@ const ProductForm = ({
     values.packagingOptions[0].description == ''
       ? (values.packagingOptions[0].description = 'Optional field not used.')
       : values.packagingOptions[0].description;
+
+    //convert capacities field to Livello BE expected format
+    const { capacities } = values;
+    const newCapacities = [];
+    newCapacities.push({ surfaceSize: 'N33', units: parseInt(capacities.surfaceSize_33) });
+    newCapacities.push({ surfaceSize: 'N50', units: parseInt(capacities.surfaceSize_50) });
+    newCapacities.push({ surfaceSize: 'N100', units: parseInt(capacities.surfaceSize_100) });
+    values.capacities = newCapacities;
 
     updatingProduct = dispatch(
       modifyProductSaga({
@@ -102,8 +108,6 @@ const ProductForm = ({
       validationSchema={Yup.object().shape({
         orgId: Yup.string().required('This field is required'),
         tax: Yup.string().required('This field is required'),
-        // family: Yup.string().required('This field is required'),
-        // category: Yup.string().required('This field is required'),
       })}
       enableReinitialize
     >
@@ -190,7 +194,7 @@ const ProductForm = ({
               <Grid.Row columns="equal" stretched>
                 <Grid.Column>
                   <Field
-                    name=""
+                    name="capacities.surfaceSize_100"
                     label="Full Shelf (L)"
                     min={0}
                     required
@@ -200,7 +204,7 @@ const ProductForm = ({
                 </Grid.Column>
                 <Grid.Column>
                   <Field
-                    name=""
+                    name="capacities.surfaceSize_50"
                     label="1/2 Shelf (M)"
                     min={0}
                     required
@@ -210,7 +214,7 @@ const ProductForm = ({
                 </Grid.Column>
                 <Grid.Column>
                   <Field
-                    name=""
+                    name="capacities.surfaceSize_33"
                     label="1/3 Shelf (S)"
                     min={0}
                     required
