@@ -109,6 +109,7 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
         status
         firstName
         lastName
+        updated
         root
         avatarUrl
         email

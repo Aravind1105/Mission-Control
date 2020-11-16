@@ -8,8 +8,8 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
-import { getUsers, setActiveUser } from '../actions';
-import { getUsersListForTable, getActiveUserState, getTotalUsers } from '../selectors';
+import { getUsers, setActiveUser, changePage, changePerPage } from '../actions';
+import { getUsersListState, getActiveUserState, getTotalUsers, getUsersListForTable } from '../selectors';
 import UsersToolbar from './UsersToolbar'
 import UserTemplate from './UserTemplate';
 
@@ -19,11 +19,6 @@ const sortDefault = [
     direction: 'ASC',
   },
 ];
-
-const sortValue = {
-  firstName: 'firstName',
-  name: 'firstName',
-};
 
 const colors = {
   Consumer: primaryColor,
@@ -50,23 +45,26 @@ const UsersContent = ({
   getUsers,
   setActiveUser,
   userList,
-  activeUserID,
+  list,
+  activeUser,
   isLoading,
   total,
+  selectedId,
+  page,
+  perPage,
+  changePerPage,
+  changePage,
 }) => {
   const [search, changeSearch] = useState('');
   const [userType, changeUserType] = useState('');
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
     const data = {
-      skip: page * perPage,
+      skip: page,
       limit: perPage,
       sort: sort[0].direction === 'ASC' ? 1 : -1,
     };
-
     if (search) {
       data.name = search;
     }
@@ -85,39 +83,43 @@ const UsersContent = ({
     setActiveUser(_id);
   };
 
+  useEffect(() => {
+    setActiveUser(selectedId)
+  }, [list]);
+
   return (
     <>
       <UsersToolbar changeSearch={changeSearch} changeUserType={changeUserType} />
-      {isLoading && <Loader />}
-      <Grid>
-        <Grid.Row columns="equal" stretched>
-          <Grid.Column width={4}>
-            <Segment>
-              <CustomTable
-                sortByColumn="name"
-                columns={columns}
-                onRowClick={handleRowClick}
-                data={userList}
-                getData={getData}
-                sortable
-                selectable
-                setSortByInCaller={sort => setSort([sort])}
-                sortDirection="ASC"
-              />
-              <Pagination
-                totalCount={total}
-                page={page}
-                perPage={perPage}
-                changePage={changePage}
-                changePerPage={changePerPage}
-                isLoading={isLoading}
-              />
-            </Segment>
-          </Grid.Column>
-          {activeUserID && <Grid.Column><UsersDetail /></Grid.Column>}
-          {!activeUserID && <Grid.Column><UserTemplate /></Grid.Column>}
-        </Grid.Row>
-      </Grid>
+      {!isLoading ?
+        <Grid>
+          <Grid.Row columns="equal" stretched>
+            <Grid.Column width={4}>
+              <Segment>
+                <CustomTable
+                  sortByColumn="name"
+                  columns={columns}
+                  onRowClick={handleRowClick}
+                  data={userList}
+                  getData={getData}
+                  sortable
+                  selectable
+                  setSortByInCaller={sort => setSort([sort])}
+                  sortDirection="ASC"
+                />
+                <Pagination
+                  totalCount={total}
+                  page={page}
+                  perPage={perPage}
+                  changePage={changePage}
+                  changePerPage={changePerPage}
+                  isLoading={isLoading}
+                />
+              </Segment>
+            </Grid.Column>
+            {activeUser && <Grid.Column><UsersDetail /></Grid.Column>}
+            {!activeUser && <Grid.Column><UserTemplate /></Grid.Column>}
+          </Grid.Row>
+        </Grid> : <Loader />}
     </>
   );
 };
@@ -135,14 +137,20 @@ UsersContent.propTypes = {
 
 const mapStateToProps = state => ({
   userList: getUsersListForTable(state),
-  activeUserID: getActiveUserState(state),
+  list: getUsersListState(state),
+  selectedId: state.users.activeUserId,
+  activeUser: getActiveUserState(state),
   isLoading: state.users.isLoading,
   total: getTotalUsers(state),
+  page: state.users.page,
+  perPage: state.users.perPage
 });
 
 const mapDispatchToProps = {
   getUsers,
   setActiveUser,
+  changePage,
+  changePerPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContent);

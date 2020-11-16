@@ -68,7 +68,7 @@ const columns = [
     },
 ];
 
-const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
+const UserLog = ({ getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -12,10 +12,11 @@ import CustomButton from 'modules/shared/components/CustomButton';
 import UserInfoRow from 'modules/shared/components/UserInfoRow';
 import history from 'lib/history';
 import { toggleUserRole } from '../actions';
-import { getActiveUserIDState } from '../selectors';
+import { getActiveUserIDState, getUsersListState } from '../selectors';
 import './styles.less';
 
 const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
+
   const handlerRoleToggle = () => {
     const payload = {
       userId: user.id,
@@ -37,98 +38,100 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
   const address = `${city ? `${city}, '` : ''} ${line1}`;
 
   return (
-
-    <div className="user-info">
-      <Segment className="usr-detail-style">
-        <Grid>
-          <Grid.Row columns="equal">
-            <Comment.Group size="massive">
-              <Comment>
-                <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px" }} />
-                <Comment.Content>
-                  <Comment.Author as="a">{name}</Comment.Author>
-                  {/* <Comment.Text>
+    <>
+      {!isLoading &&
+        <div className="user-info">
+          <Segment className="usr-detail-style">
+            <Grid>
+              <Grid.Row columns="equal">
+                <Comment.Group size="massive">
+                  <Comment>
+                    <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px" }} />
+                    <Comment.Content>
+                      <Comment.Author as="a">{name}</Comment.Author>
+                      {/* <Comment.Text>
                     {user.root ? 'Admin' : 'Consumer'} - {user.status}
                   </Comment.Text> */}
-                  <Comment.Text style={{ marginTop: "10px" }}>
-                    <Comment.Actions>Last Activity: 25.03.2019</Comment.Actions>
-                    <Comment.Actions>Last Updated: 25.03.2019</Comment.Actions>
-                  </Comment.Text>
-                </Comment.Content>
-              </Comment>
-            </Comment.Group>
-          </Grid.Row>
-          <Divider />
-          <Grid.Row>
-            <Grid.Column width={12}>
-              <Grid>
-                <Grid.Row >
-                  <UserInfoRow title="First Name" description={user.firstName} />
-                  <UserInfoRow title="Last Name" description={user.lastName} />
-                  <UserInfoRow title="E-mail" description={user.email && user.email} />
-                  <UserInfoRow title="Phone Number" description={user.mobile && user.mobile} />
-                  <UserInfoRow title="Unique User ID" description={user.id} />
-                  <UserInfoRow title="Role / Organization" description={user.rolesInOrg && user.rolesInOrg.map(org => {
-                    let [role, orgs] = org.split('-')
-                    return (
-                      <div className="multiple-cell">
-                        {role} @ <b>{orgs}</b>
-                      </div>
-                    )
-                  })} />
-                  <UserInfoRow title="Payment Method(s)" description={user.paymentMethods && user.paymentMethods.map(type => {
-                    return (
-                      <div className="multiple-cell">
-                        {type}
-                      </div>
-                    )
-                  })} />
-                  <UserInfoRow title="User Card(s)" description={user.userCards && user.userCards.map(mcard => {
-                    return (
-                      <div className="multiple-cell">
-                        {mcard}
-                      </div>
-                    )
-                  })} />
-                  {/* <UserInfoRow title="Address" description={user.address && user.address.name} /> */}
-                  {user.address && user.address.line1 !== "" && (
-                    <UserInfoRow description={user.address.line1} />
-                  )}
-                  {user.address && user.address.line2 !== "" && (
-                    <UserInfoRow description={user.address.line2} />)}
-                  {user.address && (
-                    <UserInfoRow description={user.address.postalCode !== "" && user.address.postalCode} description2={user.address.city !== "" && user.address.city} />
-                  )}
-                  {user.address && (
-                    <UserInfoRow description={user.address.state !== "" && user.address.state} description2={user.address.country !== "" && user.address.country} />
-                  )}
-                  <UserInfoRow title="Notes" description={user.note} />
-                </Grid.Row>
-              </Grid>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <CustomButton
-                label="Edit"
-                icon="edit"
-                onClick={editUserHandler}
-              />
-              <CustomButton
-                label="User log"
-                icon="line graph"
-                onClick={userLogHandler}
-              />
-              {rootUser &&
-                <CustomButton
-                  label={`${user.root ? "Revoke Root" : "Grant Root"}`}
-                  icon={`${user.root ? "lock" : "lock open"}`}
-                  onClick={handlerRoleToggle}
-                />
-              }
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Segment>
-    </div>
+                      <Comment.Text style={{ marginTop: "10px" }}>
+                        <Comment.Actions>Last Updated: {user.updated}</Comment.Actions>
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                </Comment.Group>
+              </Grid.Row>
+              <Divider />
+              <Grid.Row>
+                <Grid.Column width={12}>
+                  <Grid>
+                    <Grid.Row >
+                      <UserInfoRow title="First Name" description={user.firstName} />
+                      <UserInfoRow title="Last Name" description={user.lastName} />
+                      <UserInfoRow title="E-mail" description={user.email && user.email} />
+                      <UserInfoRow title="Phone Number" description={user.mobile && user.mobile} />
+                      <UserInfoRow title="Unique User ID" description={user.id} />
+                      <UserInfoRow title="Role / Organization" description={user.rolesInOrg && user.rolesInOrg.map(org => {
+                        let [role, orgs] = org.split('-')
+                        return (
+                          <div className="multiple-cell">
+                            {role} @ <b>{orgs}</b>
+                          </div>
+                        )
+                      })} />
+                      <UserInfoRow title="Payment Method(s)" description={user.paymentMethods && user.paymentMethods.map(type => {
+                        return (
+                          <div className="multiple-cell">
+                            {type}
+                          </div>
+                        )
+                      })} />
+                      <UserInfoRow title="User Card(s)" description={user.userCards && user.userCards.map(mcard => {
+                        return (
+                          <div className="multiple-cell">
+                            {mcard}
+                          </div>
+                        )
+                      })} />
+                      {/* <UserInfoRow title="Address" description={user.address && user.address.name} /> */}
+                      {user.address && user.address.line1 !== "" && (
+                        <UserInfoRow description={user.address.line1} />
+                      )}
+                      {user.address && user.address.line2 !== "" && (
+                        <UserInfoRow description={user.address.line2} />)}
+                      {user.address && (
+                        <UserInfoRow description={user.address.postalCode !== "" && user.address.postalCode} description2={user.address.city !== "" && user.address.city} />
+                      )}
+                      {user.address && (
+                        <UserInfoRow description={user.address.state !== "" && user.address.state} description2={user.address.country !== "" && user.address.country} />
+                      )}
+                      <UserInfoRow title="Notes" description={user.note} />
+                    </Grid.Row>
+                  </Grid>
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <CustomButton
+                    label="Edit"
+                    icon="edit"
+                    onClick={editUserHandler}
+                  />
+                  <CustomButton
+                    label="User log"
+                    icon="line graph"
+                    onClick={userLogHandler}
+                  />
+                  {rootUser &&
+                    <CustomButton
+                      label={`${user.root ? "Revoke Root" : "Grant Root"}`}
+                      icon={`${user.root ? "lock" : "lock open"}`}
+                      onClick={handlerRoleToggle}
+                    />
+                  }
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        </div>
+      }
+    </>
   );
 };
 
@@ -141,6 +144,7 @@ UsersDetail.propTypes = {
 
 const mapStateToProps = state => ({
   user: getActiveUserIDState(state),
+  userList: getUsersListState(state),
   isLoading: state.users.isLoading,
   rootUser: state.user.root
 });
