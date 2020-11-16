@@ -22,7 +22,6 @@ export const getTotalUserLogs = state => state.users.userLogs.total;
 export const getUserLogs = state => state.users.userLogs.data;
 
 
-
 export const getUsersListForTable = createSelector(getUsersListState, users =>
   users.map(el => ({
     _id: el._id,
@@ -54,6 +53,7 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
   return user ? {
     id: user._id,
     ...pick(user, ['firstName', 'lastName', 'email', 'avatarUrl', 'status', 'address', 'root']),
+    updated: user.updated && format(new Date(user.updated), 'dd-MM-yyyy'),
     note: get(user, 'note', '') || '',
     mobile: get(user, 'mobile', '') || '',
     paymentMethods: user.paymentMethods ? user.paymentMethods.map((pMethod) => {
