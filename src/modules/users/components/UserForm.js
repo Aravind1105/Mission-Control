@@ -91,7 +91,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                   name="mobile"
                   label="Phone Number"
                   component={FormInput}
-                  type="number"
+                  limiting="integerField"
                 />
               </Grid.Column>
             </Grid.Row>
