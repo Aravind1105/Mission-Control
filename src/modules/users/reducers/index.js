@@ -30,7 +30,7 @@ const usersReducer = handleActions(
   {
     [changePage]: (state, { payload }) => ({
       ...state,
-      page: payload * state.perPage
+      page: payload
     }),
     [changePerPage]: (state, { payload }) => ({
       ...state,
