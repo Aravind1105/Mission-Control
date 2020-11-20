@@ -61,7 +61,7 @@ const UsersContent = ({
 
   const getData = ({ sort }) => {
     const data = {
-      skip: page,
+      skip: page * perPage,
       limit: perPage,
       sort: sort[0].direction === 'ASC' ? 1 : -1,
     };
@@ -113,6 +113,7 @@ const UsersContent = ({
                   changePage={changePage}
                   changePerPage={changePerPage}
                   isLoading={isLoading}
+                  setFontSize
                 />
               </Segment>
             </Grid.Column>
