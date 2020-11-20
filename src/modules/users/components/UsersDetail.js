@@ -77,13 +77,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                           </div>
                         )
                       })} />
-                      <UserInfoRow title="Payment Method(s)" description={user.paymentMethods && user.paymentMethods.map(type => {
-                        return (
-                          <div className="multiple-cell">
-                            {type}
-                          </div>
-                        )
-                      })} />
+                      <UserInfoRow title="Payment Method(s)" description={user.paymentMethods && user.paymentMethods.join(', ')} />
                       <UserInfoRow title="User Card(s)" description={user.userCards && user.userCards.map(mcard => {
                         return (
                           <div className="multiple-cell">
@@ -91,7 +85,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                           </div>
                         )
                       })} />
-                      {/* <UserInfoRow title="Address" description={user.address && user.address.name} /> */}
+                      <UserInfoRow title="Address" description={user.address && user.address.name} />
                       {user.address && user.address.line1 !== "" && (
                         <UserInfoRow description={user.address.line1} />
                       )}

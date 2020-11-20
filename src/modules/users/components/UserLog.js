@@ -55,7 +55,7 @@ const columns = [
             if (event.paymentMethod !== null && event.paymentMethod !== undefined) {
                 paymentDetails = `Payment Details - ` +
                     event.paymentMethod.map(pay => {
-                        return `isPaid: ${pay.isPaid ? "TRUE" : "FALSE"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`} / Total: ${event.total} `
+                        return `${pay.isPaid ? "PAID" : "NOT PAID"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`} / Total: ${event.total} `
                     }) + '\n'
             }
             return kiosk +
@@ -68,7 +68,7 @@ const columns = [
     },
 ];
 
-const UserLog = ({ getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
+const UserLog = ({ match: { params }, getUserTransactions, user, isLoading, match, total, userName, getOneUserWithInfo, initValue }) => {
     const [dateRange, changeDate] = useState('');
     const [page, changePage] = useState(0);
     const [perPage, changePerPage] = useState(25);
