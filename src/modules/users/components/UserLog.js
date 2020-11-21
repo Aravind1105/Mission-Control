@@ -33,37 +33,29 @@ const columns = [
         title: 'Event',
         field: 'event',
         formatter: ({ event }) => {
-            let kiosk = '', type = '', touched = '', touchedEmpty = '', prodTaken = '', paymentDetails = '';
+            let kiosk = '', type = '', touched = '', prodTaken = '', paymentDetails = '';
             if (event.kiosk !== null && event.kiosk !== undefined)
-                kiosk = `Session Started - Kiosk - ${event.kiosk} \n`
+                kiosk = <div id="ev-title">Session Started:<span style={{ paddingLeft: "20px" }}>Kiosk - {event.kiosk}</span></div>
             if (event.type !== null && event.type !== undefined)
-                type = `Session Type - ${event.type} \n`
+                type = <div id="ev-title">Session Type:<span style={{ paddingLeft: "33px" }}>{event.type}</span></div>
             if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
-                touched = `Products Touched -` +
-                    event.touchedScales.map((scl) => {
-                        return ` Name: ${scl.name} / Qty: ${scl.qty} / Price: ${scl.price}`
-                    }) + '\n'
+                touched = <div id="ev-title">Products Touched:{event.touchedScales.map((scl, key) => {
+                    if (key === 0) var displayInline = true;
+                    return <span id="prod-touch" style={displayInline && { display: "inline-block", paddingLeft: "8px" }}>Name: {scl.name}  /  Qty: {scl.qty}  /  Price: {scl.price}</span>
+                })}</div>
             }
-            else if (event.touchedScales !== null && event.touchedScales.length === 0)
-                touchedEmpty = `Products Touched - Empty \n`
             if (event.productsTaken !== null && event.productsTaken !== undefined && event.productsTaken.length > 0) {
-                prodTaken = `Products Taken - ` +
-                    event.productsTaken.map(prod => {
-                        return ` Name: ${prod.name} / Price: ${prod.price} / Cable Id: ${prod.lc}`
-                    }) + '\n'
+                prodTaken = <div id="ev-title">Products Taken:{event.productsTaken.map((prod, key) => {
+                    if (key === 0) var displayInline = true;
+                    return <div id="prod-taken" style={displayInline && { display: "inline-block", paddingLeft: "20px", paddingTop: "0px" }}>Name: {prod.name}  /  Price: {prod.price}  /  Cable Id: {prod.lc}</div>
+                })}</div>
             }
             if (event.paymentMethod !== null && event.paymentMethod !== undefined) {
-                paymentDetails = `Payment Details - ` +
-                    event.paymentMethod.map(pay => {
-                        return `${pay.isPaid ? "PAID" : "NOT PAID"} / ${pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`} / Total: ${event.total} `
-                    }) + '\n'
+                paymentDetails = <div>Payment Details:{event.paymentMethod.map(pay => {
+                    return <span style={{ paddingLeft: "15px" }}>{pay.isPaid ? "PAID" : "NOT PAID"}  /  {pay.memberId !== null ? `MembercardId: ${pay.memberId}` : pay.stripeId !== null ? `StripeCustomerId: ${pay.stripeId}` : `CardId: No Data Provided`}  /  Total: {event.total}</span>
+                })}</div>
             }
-            return kiosk +
-                type +
-                (touched || touchedEmpty) +
-                prodTaken +
-                paymentDetails
-
+            return [kiosk, type, touched, prodTaken, paymentDetails]
         }
     },
 ];
