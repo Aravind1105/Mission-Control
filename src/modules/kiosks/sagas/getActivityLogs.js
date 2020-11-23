@@ -13,6 +13,7 @@ function* handler({ payload }) {
                 kiosk: payload.data.kioskId,
                 limit: payload.data.limit,
                 skip: payload.data.skip,
+                sort: payload.data.sort,
                 period: payload.data.date.$gte !== undefined && payload.data.date.$lte !== undefined ? {
                     from: payload.data.date.$gte,
                     to: payload.data.date.$lte,

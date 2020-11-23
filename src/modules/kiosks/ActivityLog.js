@@ -19,16 +19,16 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
             link: '/kiosks',
         },
         {
-            name: kiosk === null ? '' : kiosk.name,
-            link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
+            name: !kiosk ? '' : kiosk.name,
+            link: `/kiosks/detail/${!kiosk ? props.match.params.id : kiosk._id}`,
         },
     ]
     const backLink = {
         name: 'Back to kiosk detail',
-        link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
+        link: `/kiosks/detail/${!kiosk ? props.match.params.id : kiosk._id}`,
     }
     useEffect(() => {
-        if (kiosk === null) {
+        if (!kiosk) {
             getKiosk(props.match.params.id);
         }
     }, []);

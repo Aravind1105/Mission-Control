@@ -1,3 +1,176 @@
+#### 1.2.48 (2020-11-23)
+
+##### Bug Fixes
+
+* **user log:**  user log view changed (364ce5d1)
+* **user:**  user view and pagination bugs (29bbad09)
+* **user view:**  user detail bug fixes (67f3dfce)
+* **user edit form:**  LIV-2254 mobile number field (bed3324a)
+* **User:**  Changes reflect in users view and pagination setup for user selection accordingly (1274ef04)
+* **user edit validations:**  LIV-2254 pdated validations for user edit (8632116e)
+
+##### Other Changes
+
+* **product edit form:** LIV-2125 shelf capacities (94a1c984)
+* **product detail:** LIV-2125 shelflife (eaa1e331)
+
+#### 1.2.47 (2020-11-12)
+
+##### Bug Fixes
+
+* **User edit:**  LIV-2254 addres save (745ef916)
+* **User detail view:**
+  *  LIV-2254 note field added (068bc212)
+  * LIV-2254 changed note field (8bae5bae)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (d996cb97)
+* **user:**  user detail view changes (91551914)
+* **User empty user detail:** LIV-2323 (05012403)
+* **User edit:** LIV-2254 user edit feature added (1b173d93)
+
+#### 1.2.46 (2020-11-11)
+
+##### Bug Fixes
+
+* **logs and table:**  fixed width for edit pages and table view changed for users (152c765c)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (4e0b68f6)
+
+#### 1.2.45 (2020-11-11)
+
+#### 1.2.44 (2020-11-10)
+
+##### Other Changes
+
+* **userlog:** Root user access to grant/revoke (ec2eb8c0)
+
+#### 1.2.43 (2020-11-10)
+
+#### 1.2.42 (2020-11-10)
+
+#### 1.2.41 (2020-11-10)
+
+##### Build System / Dependencies
+
+* **liv-2316:**  user view changes (9487ca4d)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (760fc02e)
+* **users search:**  LIV-2253 updated for multuple search params (ace4edb0)
+
+#### 1.2.40 (2020-11-10)
+
+##### Bug Fixes
+
+* **UserGrid:**  sort and data type changed (65233c76)
+
+#### 1.2.39 (2020-11-10)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (c76dc0ad)
+* **Act Log:**  sort and datefilter resolved (552d6cb9)
+
+#### 1.2.38 (2020-11-09)
+
+##### Bug Fixes
+
+* **kiosk-filter:**  show fixed options on the door-status kiosk filter, as requested from operations. (87698a41)
+
+#### 1.2.37 (2020-11-09)
+
+##### Bug Fixes
+
+* **userlog:** Userlog sort Update (39eab2c9)
+
+#### 1.2.36 (2020-11-09)
+
+##### Build System / Dependencies
+
+* **userLog:**  Date filter created and sorted (ddac7ead)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (1b390fd5)
+* **users search bar:**  LIV-2253 updated (ae632c50)
+* **users search:**
+  *  LIV-2253 user search bar (be784dc7)
+  *  LIV-2253 (0fd80fbc)
+
+#### 1.2.35 (2020-11-05)
+
+##### Bug Fixes
+
+* **kiosk-filter:**  fix doorStatus filter minor-issue (clean filter did not work), and comment code for LIV-2285. (efdb71f7)
+
+#### 1.2.34 (2020-11-04)
+
+##### Bug Fixes
+
+* **user log:**  reload of same page to get username (984d752d)
+
+#### 1.2.33 (2020-11-04)
+
+#### 1.2.32 (2020-11-04)
+
+##### Build System / Dependencies
+
+* **userLog:**  UserLog data with date filter (2450edd7)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (ef6b0e48)
+
+#### 1.2.31 (2020-11-04)
+
+##### Bug Fixes
+
+* **merge-conflict:**  solve merge conflicts. (53123f8c)
+
+##### Other Changes
+
+* **kiosk-filter:**  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (5d056702)
+* **kiosk_filter:**  fill network status and refactor door status. (e9d80a57)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (f36a615e)
+
+#### 1.2.30 (2020-11-04)
+
+##### Bug Fixes
+
+* **dashboard statistics chart:**  LIV-2039 last24Hours bug fix (c20aac34)
+
+##### Other Changes
+
+* **kiosk-filter:**
+  *  remove networkStatus from the filter, that should be applied when LIV-2285 is completed and remove logs. (26781ee0)
+  *  apply filter for the on the kiosks module. Pending from BE add the parameters requested. (92a0d8ce)
+* **kiosk_filter:**  fill network status and refactor door status. (ccde0b83)
+* **kiosk_filters:**  filter layout with kiosks and door status options. (a09ebf76)
+
+#### 1.2.29 (2020-11-02)
+
+##### Build System / Dependencies
+
+* **Users:** Users Detail and log UI created (19d741c2)
+
+##### Bug Fixes
+
+* **dashboard statistics graph:**  LIV-2039 graph updated for empty data (a1edfef3)
+* **dashboard graph:**
+  *  console log removed (9c8f0968)
+  *  LIV-2039 comment minutely (97b0edb5)
+  * LIV-2039 dahdboard graph updated (a3ba1095)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (b1c1bd40)
+* **dashboard graph reimplementation:**  LIV-2039 in progress (99f49302)
+
 #### 1.2.28 (2020-10-29)
 
 ##### Bug Fixes

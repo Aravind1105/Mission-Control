@@ -295,9 +295,9 @@ export const GET_TEMPERATURE_LOGS = gql`
 
 export const GET_ACTIVITY_LOGS = gql`
   query gridActivities(
-    $skip:Int!,$limit:Int!,$kiosk:String!,$period:Period
+    $skip:Int!,$limit:Int!,$kiosk:String!,$period:Period,$sort:Int
   ) {
-  gridActivities(skip:$skip,limit:$limit,kiosk:$kiosk,period:$period) {
+  gridActivities(skip:$skip,limit:$limit,kiosk:$kiosk,period:$period,sort:$sort) {
     total data{
       _id
       kiosk
