@@ -1,3 +1,19 @@
+#### 1.2.48 (2020-11-23)
+
+##### Bug Fixes
+
+* **user log:**  user log view changed (364ce5d1)
+* **user:**  user view and pagination bugs (29bbad09)
+* **user view:**  user detail bug fixes (67f3dfce)
+* **user edit form:**  LIV-2254 mobile number field (bed3324a)
+* **User:**  Changes reflect in users view and pagination setup for user selection accordingly (1274ef04)
+* **user edit validations:**  LIV-2254 pdated validations for user edit (8632116e)
+
+##### Other Changes
+
+* **product edit form:** LIV-2125 shelf capacities (94a1c984)
+* **product detail:** LIV-2125 shelflife (eaa1e331)
+
 #### 1.2.47 (2020-11-12)
 
 ##### Bug Fixes
