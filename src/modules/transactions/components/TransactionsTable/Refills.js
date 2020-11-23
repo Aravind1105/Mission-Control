@@ -27,6 +27,7 @@ const RefillsTable = ({
   isLoading,
   excludeSortBy,
   setSortByInCaller,
+  alignCenter,
   ...rest
 }) => {
   const [tableData, setTableData] = useState([]);
@@ -91,9 +92,11 @@ const RefillsTable = ({
         className="unitable transactions-table"
         basic
         celled
+        padded
         structured
         fixed={fixed}
         sortable={sortable}
+        style={alignCenter && { textAlign: "center" }}
         {...rest}
       >
         {!headless && (
@@ -104,8 +107,8 @@ const RefillsTable = ({
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
                   Array.isArray(excludeSortBy) &&
-                  sortable &&
-                  !excludeSortBy.find(elem => elem === field)
+                    sortable &&
+                    !excludeSortBy.find(elem => elem === field)
                     ? 'sortable-th'
                     : '';
                 return (
@@ -124,7 +127,7 @@ const RefillsTable = ({
         )}
 
         {resultData.map((resultItem, rowIdx) => (
-          <Table.Body
+          <Table.Body className="tb-refills"
           // className={activeRow === rowIdx ? 'active-body' : ''}
           >
             {resultItem.map((item, i) => {
@@ -135,7 +138,7 @@ const RefillsTable = ({
               return (
                 <Table.Row
                   key={rowKey}
-                  // onClick={handlerRowClick(item, rowIdx)}
+                // onClick={handlerRowClick(item, rowIdx)}
                 >
                   {columns.map(({ field, formatter }, j) => {
                     const cellKey = `${i}-${field}`;
@@ -159,13 +162,11 @@ const RefillsTable = ({
                               : item.uniqueProducts + 1
                             : '1'
                         }
-                        className={`table-cell-text ${
-                          item.refillsId ? 'table-cell-text-transaction' : ''
-                        } ${
-                          toggleTableCellColor
+                        className={`table-cell-text ${item.refillsId ? 'table-cell-text-transaction' : ''
+                          } ${toggleTableCellColor
                             ? 'table-cell-bg-grey'
                             : 'table-cell-bg-white'
-                        }`}
+                          }`}
                       >
                         {cellValue}
                       </Table.Cell>

@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
+// import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -29,6 +30,8 @@ const activityLogMessages = {
   "payment_failed": 'Payment Failed'
 }
 
+const doorStatus = { open: 'open', closed: 'closed', unknown: 'unknown' };
+
 export const getAlertsOptions = () => [
   { value: '', text: 'All Alerts' },
   ...Object.keys(alertMessages).map(alert => ({
@@ -45,6 +48,57 @@ export const getKiosksTableState = state =>
     ...el,
     dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
   }));
+
+export const getKioskDoorStatus = () => [{
+  value: '', text: 'Door Status'
+},
+...Object.keys(doorStatus).map(status => ({
+  value: status,
+  text: doorStatus[status],
+})),
+];
+
+export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
+  getKiosksState,
+  kiosks => {
+    let networkStates = [], temp = [];
+    // const netStatus = kiosks.reduce((prev,curr,i) => {
+    // let text = 'Offline';
+    // const dif = differenceInMinutes(new Date(), new Date(curr.temperature.updated));
+    // if(dif <= 60){
+    //   text = 'Online';
+    // }
+    // let time = parseInt(dif / 60);
+    // if(time < 24) {
+    //   text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
+    // }else {
+    //   time = parseInt(time / 24);
+    //   text += ` > ${time} ${time === 1 ? 'day' : 'days'}`;
+    // }
+    // if(!temp.includes(text)){
+    //   temp.push(text);
+    //   temp.sort();
+    // networkStates.push({
+    //   value: text,
+    //   text: text,
+    //   key: i
+    // });
+    // }
+    //   return prev;
+    // },[]);
+
+    networkStates.push(
+      { value: 'Online', text: 'Online', key: 0 },
+      { value: 'Offline', text: 'Offline', key: 1 }
+    )
+    networkStates.unshift({
+      value: 'All Network States',
+      text: 'All Network States',
+      key: 'states',
+    });
+    return networkStates;
+  },
+);
 
 export const getAlmostEmptyKiosks = state => state.kiosks.almostEmptyKiosks;
 export const getAlmostEmptyKiosksTotal = state => state.kiosks.totalEmptyKiosks;
@@ -279,7 +333,7 @@ export const getActivityLogsState = createSelector(getActivityLogs, log => {
     const logs = log.map((actLog) => {
       const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
       return {
-        date: date,
+        created: date,
         event: {
           doorStatus: activityLogMessages[actLog.payload.message.door_status],
           touchedScales: actLog.payload.message.touchedScales,

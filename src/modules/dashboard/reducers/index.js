@@ -23,7 +23,7 @@ const dashboard = handleActions(
     }),
     [getSalesStatisticSuccess]: (state, { payload }) => ({
       ...state,
-      salesStat: payload.statistic,
+      salesStat: payload.salesByKiosk,
       salesStatProducts: payload.products,
       isSalesStatLoading: false,
     }),

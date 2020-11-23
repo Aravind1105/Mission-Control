@@ -1,234 +1,131 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Button,
   Comment,
   Grid,
-  Header,
-  Icon,
   Segment,
-  Table,
+  Divider
 } from 'semantic-ui-react';
 import get from 'lodash/get';
-
+import CustomButton from 'modules/shared/components/CustomButton';
+import UserInfoRow from 'modules/shared/components/UserInfoRow';
 import history from 'lib/history';
 import { toggleUserRole } from '../actions';
-import { getActiveUserState } from '../selectors';
+import { getActiveUserIDState, getUsersListState } from '../selectors';
+import './styles.less';
 
-const UsersDetail = ({ user, toggleUserRole }) => {
+const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
+
   const handlerRoleToggle = () => {
     const payload = {
-      userId: user._id,
+      userId: user.id,
       root: !user.root,
     };
     toggleUserRole(payload);
   };
 
   const editUserHandler = () => {
-    history.push(`/users/edit/${user._id}`);
+    history.push(`/users/edit/${user.id}`);
+  };
+  const userLogHandler = () => {
+    history.push(`/users/log/${user.id}`);
   };
 
   const name = `${user.firstName || ''} ${user.lastName || ''}`.trim();
   const city = get(user, 'address.city', '');
   const line1 = get(user, 'address.line1', '');
   const address = `${city ? `${city}, '` : ''} ${line1}`;
+
   return (
-    <Segment>
-      <Grid>
-        <Grid.Row columns="equal">
-          <Grid.Column>
-            <Comment.Group size="massive">
-              <Comment>
-                <Comment.Avatar as="a" src={user.avatarUrl} />
-                <Comment.Content>
-                  <Comment.Author as="a">{name}</Comment.Author>
-                  <Comment.Text>
-                    {user.root ? 'Admin' : 'Consumer'}
-                  </Comment.Text>
-                  <Comment.Actions>Last Activity: 25.03.2019</Comment.Actions>
-                </Comment.Content>
-              </Comment>
-            </Comment.Group>
-            <Table compact="very" basic="very">
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Firstname:</Table.Cell>
-                  <Table.Cell>{user.firstName}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Lastname:</Table.Cell>
-                  <Table.Cell>{user.lastName}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Organization:</Table.Cell>
-                  <Table.Cell>{user.organization}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>City/Address:</Table.Cell>
-                  <Table.Cell>{address}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>E-Mail:</Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Phone Number:</Table.Cell>
-                  <Table.Cell>{user.phone}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Livello Card ID(s):</Table.Cell>
-                  <Table.Cell>{user.cardId}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Credit:</Table.Cell>
-                  <Table.Cell>{user.credit}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Allowance:</Table.Cell>
-                  <Table.Cell>{user.allowance}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Loyality Points:</Table.Cell>
-                  <Table.Cell>{user.loyality}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Payment Methods:</Table.Cell>
-                  <Table.Cell>Mastercard, Debitcard</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Notes:</Table.Cell>
-                  <Table.Cell />
-                </Table.Row>
-              </Table.Body>
-            </Table>
-          </Grid.Column>
-          <Grid.Column width={6} className="user-actions">
-            <Button
-              style={{ marginBottom: 5 }}
-              fluid
-              onClick={handlerRoleToggle}
-            >
-              {user.root ? 'Revoke Root' : 'Grant Root'}
-            </Button>
-            <Button style={{ marginBottom: 5 }} fluid>
-              Transactions
-            </Button>
-            <Button style={{ marginBottom: 5 }} fluid>
-              Give Credit
-            </Button>
-            <Button style={{ marginBottom: 5 }} fluid>
-              Charge
-            </Button>
-            <Button style={{ marginBottom: 5 }} fluid>
-              Retrieve Login
-            </Button>
-            <Button style={{ marginBottom: 5 }} fluid onClick={editUserHandler}>
-              Edit
-            </Button>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Header as="h3" dividing>
-              Access Rights
-            </Header>
-            <Table compact="very" basic="very" collapsing>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Functions</Table.HeaderCell>
-                  <Table.HeaderCell>View</Table.HeaderCell>
-                  <Table.HeaderCell>Edit</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>User App</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Replenisher App</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Dashboard</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Fridges</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Users</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Products</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Fulfillment</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Reports</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Transactions</Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Icon color="green" name="checkmark" size="large" />
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
+    <>
+      {!isLoading &&
+        <div className="user-info">
+          <Segment className="usr-detail-style">
+            <Grid>
+              <Grid.Row columns="equal">
+                <Comment.Group size="massive">
+                  <Comment>
+                    <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px" }} />
+                    <Comment.Content>
+                      <Comment.Author as="a">{name}</Comment.Author>
+                      {/* <Comment.Text>
+                    {user.root ? 'Admin' : 'Consumer'} - {user.status}
+                  </Comment.Text> */}
+                      <Comment.Text style={{ marginTop: "10px" }}>
+                        <Comment.Actions>Last Updated: {user.updated}</Comment.Actions>
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                </Comment.Group>
+              </Grid.Row>
+              <Divider />
+              <Grid.Row>
+                <Grid.Column width={12}>
+                  <Grid>
+                    <Grid.Row >
+                      <UserInfoRow title="First Name" description={user.firstName} />
+                      <UserInfoRow title="Last Name" description={user.lastName} />
+                      <UserInfoRow title="E-mail" description={user.email && user.email} />
+                      <UserInfoRow title="Phone Number" description={user.mobile && user.mobile} />
+                      <UserInfoRow title="Unique User ID" description={user.id} />
+                      <UserInfoRow title="Role / Organization" description={user.rolesInOrg && user.rolesInOrg.map(org => {
+                        let [role, orgs] = org.split('-')
+                        return (
+                          <div className="multiple-cell">
+                            {role} @ <b>{orgs}</b>
+                          </div>
+                        )
+                      })} />
+                      <UserInfoRow title="Payment Method(s)" description={user.paymentMethods && user.paymentMethods.join(', ')} />
+                      <UserInfoRow title="User Card(s)" description={user.userCards && user.userCards.map(mcard => {
+                        return (
+                          <div className="multiple-cell">
+                            {mcard}
+                          </div>
+                        )
+                      })} />
+                      <UserInfoRow title="Address" description={user.address && user.address.name} />
+                      {user.address && user.address.line1 !== "" && (
+                        <UserInfoRow description={user.address.line1} />
+                      )}
+                      {user.address && user.address.line2 !== "" && (
+                        <UserInfoRow description={user.address.line2} />)}
+                      {user.address && (
+                        <UserInfoRow description={user.address.postalCode !== "" && user.address.postalCode} description2={user.address.city !== "" && user.address.city} />
+                      )}
+                      {user.address && (
+                        <UserInfoRow description={user.address.state !== "" && user.address.state} description2={user.address.country !== "" && user.address.country} />
+                      )}
+                      <UserInfoRow title="Notes" description={user.note} />
+                    </Grid.Row>
+                  </Grid>
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <CustomButton
+                    label="Edit"
+                    icon="edit"
+                    onClick={editUserHandler}
+                  />
+                  <CustomButton
+                    label="User log"
+                    icon="line graph"
+                    onClick={userLogHandler}
+                  />
+                  {rootUser &&
+                    <CustomButton
+                      label={`${user.root ? "Revoke Root" : "Grant Root"}`}
+                      icon={`${user.root ? "lock" : "lock open"}`}
+                      onClick={handlerRoleToggle}
+                    />
+                  }
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        </div>
+      }
+    </>
   );
 };
 
@@ -240,7 +137,10 @@ UsersDetail.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: getActiveUserState(state),
+  user: getActiveUserIDState(state),
+  userList: getUsersListState(state),
+  isLoading: state.users.isLoading,
+  rootUser: state.user.root
 });
 
 const mapDispatchToProps = {

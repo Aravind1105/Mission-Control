@@ -2,14 +2,17 @@ import { all, fork } from 'redux-saga/effects';
 
 import getUsersSaga from './getUsers';
 import getOneUserWithInfo from './getOneUserWithInfo';
+import getUserTransactions from './getUserTransactions';
 import toggleUserRoleSaga from './toggleUserRole';
-import modifyUserMemberCards from './modifyUserMemberCards';
+import updateUser from './updateUser';
+
 
 export default function* saga() {
   yield all([
     fork(getUsersSaga),
     fork(toggleUserRoleSaga),
     fork(getOneUserWithInfo),
-    fork(modifyUserMemberCards),
+    fork(getUserTransactions),
+    fork(updateUser),
   ]);
 }

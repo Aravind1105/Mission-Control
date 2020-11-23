@@ -30,9 +30,10 @@ const UserEdit = ({
   getOneUserWithInfo,
   initialValues,
   isOrgLoading,
+  isLoading,
   organizationsOptions,
   userMemberCardsOptions,
-  getOrganizations,
+  getOrganizations
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const backLink = {
@@ -41,18 +42,15 @@ const UserEdit = ({
   };
   useEffect(() => {
     const isEdit = params.id !== 'new';
-    const hasData = isEdit ? initialValues.id === params.id : false;
 
     if (!isOrgLoading) getOrganizations();
-    if (!hasData) {
+    if (isEdit) {
       getOneUserWithInfo({ id: params.id });
     }
   }, []);
 
   const redirectHandler = () => {
-    const redirectTo =
-      params.id === 'new' ? '/kiosks' : `/kiosks/detail/${params.id}`;
-    history.push(redirectTo);
+    history.push('/users');
   };
 
   const cancelHandler = ({ dirty }) => {
@@ -64,24 +62,24 @@ const UserEdit = ({
   const userName = isEdit
     ? `${initialValues.firstName} ${initialValues.lastName}`
     : 'New User';
-  const isLoaded = true;
   return (
-    <Grid stackable>
-      <Grid.Column width={11}>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-              <Segment>
-                <Breadcrumbs
-                  links={links}
-                  backLink={backLink}
-                  activeLink={userName}
-                />
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
+    <>
+      {isLoading && <Loader />}
+      <Grid stackable>
+        <Grid.Column width={16}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <Segment>
+                  <Breadcrumbs
+                    links={links}
+                    backLink={backLink}
+                    activeLink={userName}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
 
-          {isLoaded ? (
             <Grid.Row>
               <Grid.Column>
                 <Segment>
@@ -97,21 +95,19 @@ const UserEdit = ({
                 </Segment>
               </Grid.Column>
             </Grid.Row>
-          ) : (
-            <Loader />
-          )}
-        </Grid>
-      </Grid.Column>
-      <ConfirmationModal
-        title="Confirm Cancelling"
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        confirmHandler={redirectHandler}
-      >
-        <p>You have unsaved changes.</p>
-        <p>Are you sure you want to leave the page?</p>
-      </ConfirmationModal>
-    </Grid>
+          </Grid>
+        </Grid.Column>
+        <ConfirmationModal
+          title="Confirm Cancelling"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          confirmHandler={redirectHandler}
+        >
+          <p>You have unsaved changes.</p>
+          <p>Are you sure you want to leave the page?</p>
+        </ConfirmationModal>
+      </Grid>
+    </>
   );
 };
 
@@ -120,6 +116,7 @@ const mapStateToProps = state => ({
   organizationsOptions: getOrganizationsAsOptions(state),
   userMemberCardsOptions: getMemberCardsAsOptions(state),
   isOrgLoading: state.organizations.isOrgLoading,
+  isLoading: state.users.isLoading
 });
 
 const mapDispatchToProps = {

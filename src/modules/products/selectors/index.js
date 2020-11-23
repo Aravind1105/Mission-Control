@@ -170,7 +170,28 @@ export const selectorGetProductInitValue = createSelector(
       'priceHistory',
       'images',
       'orgId',
+      'capacities',
     ]);
+
+    //convert capacities field (array of objects) to Formik expected format
+    const capacities = { "surfaceSize_33": 0, "surfaceSize_50": 0, "surfaceSize_100": 0, };
+    initialValues.capacities.forEach(capacity => {
+      switch (capacity.surfaceSize) {
+        case 33:
+          capacities["surfaceSize_33"] = capacity.units;
+          break;
+        case 50:
+          capacities["surfaceSize_50"] = capacity.units;
+          break;
+        case 100:
+          capacities["surfaceSize_100"] = capacity.units;
+          break;
+        default:
+          break;
+      }
+    });
+    initialValues["capacities"] = capacities;
+
     return {
       ...defaultFormInit,
       ...initialValues,
