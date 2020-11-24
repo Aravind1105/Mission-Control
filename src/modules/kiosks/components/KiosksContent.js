@@ -31,6 +31,16 @@ const columns = [
     field: 'name',
   },
   {
+    title: 'Serial Number',
+    field: 'serialNumber',
+    formatter: ({ serialNumber }) => {
+      if (serialNumber.length > 20) {
+        return serialNumber.substring(0, 15) + '...';
+      }
+      else return serialNumber
+    },
+  },
+  {
     title: 'Door Status',
     field: 'doorStatus',
     formatter: ({ doorStatus, session }) => (
@@ -53,18 +63,14 @@ const columns = [
     title: 'Address',
     field: 'location',
     formatter: ({ location: { address } }) => {
-      const { name, line1, line2, city, country, postalCode, state } = address;
+      const { postalCode, city } = address;
       const addr = [
-        name || '',
-        line1,
-        line2 || '',
-        city,
-        state,
-        `${postalCode} ${country}`,
+        postalCode || 'N.A',
+        city || 'N.A.'
       ]
         .filter(el => Boolean(el))
         .join(', ');
-      return line1 ? addr : 'N.A.';
+      return addr;
     },
   },
   {
@@ -80,7 +86,7 @@ const KiosksContent = ({
   kiosks,
   history,
   total,
-  search, 
+  search,
   kiosk,
   kioskStatus,
   // kioskNetworkStatus,
