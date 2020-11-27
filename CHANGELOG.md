@@ -1,3 +1,14 @@
+#### 1.2.49 (2020-11-27)
+
+##### Build System / Dependencies
+
+* **liv-2399:**  address change and serial num truncate in kiosk grid (f6d09d33)
+
+##### Bug Fixes
+
+* **Product shefl capacities:**  second case of null check added (878282d9)
+* **membercard:** LIV-2380 membercards component validation fixed (500893f8)
+
 #### 1.2.48 (2020-11-23)
 
 ##### Bug Fixes
