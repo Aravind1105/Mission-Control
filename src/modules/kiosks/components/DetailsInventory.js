@@ -23,7 +23,7 @@ const DetailsInventory = ({ list, total }) => (
               </ColoredBlock>
             </Table.Cell>
             <Table.Cell>{productLine ? productLine.name : ''}</Table.Cell>
-            <Table.Cell>{`€ ${productLine.price || 0}`}</Table.Cell>
+            <Table.Cell collapsing>{`€ ${productLine.price || 0}`}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
