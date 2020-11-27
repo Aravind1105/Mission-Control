@@ -138,6 +138,7 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
         name
         dayIncome
         doorStatus
+        serialNumber
         session {
           _id
           type

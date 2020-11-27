@@ -178,13 +178,13 @@ export const selectorGetProductInitValue = createSelector(
     initialValues.capacities.forEach(capacity => {
       switch (capacity.surfaceSize) {
         case 33:
-          capacities["surfaceSize_33"] = capacity.units;
+          capacities["surfaceSize_33"] = capacity.units || 0;
           break;
         case 50:
-          capacities["surfaceSize_50"] = capacity.units;
+          capacities["surfaceSize_50"] = capacity.units || 0;
           break;
         case 100:
-          capacities["surfaceSize_100"] = capacity.units;
+          capacities["surfaceSize_100"] = capacity.units || 0;
           break;
         default:
           break;

@@ -17,7 +17,7 @@ const FormInputMultiple = ({
   }, [options]);
 
   const handleAddition = (e, { value }) => {
-    if (!values.find(el => el.value === value)) {
+    if (!values.find(el => el.value.toLowerCase() === value.trim().toLowerCase())) {
       setValues([...values, { text: value, value }]);
     }
   };
