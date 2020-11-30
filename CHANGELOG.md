@@ -3,6 +3,17 @@
 ##### Bug Fixes
 
 * **kiosk planogram:**
+  * LIV-2408 load cell text ellepsis removed (39247025)
+  *  LIV-2408 load cell text ellipsis (58ff1dd1)
+  *  LIV-2408 no image svg style updated (8f2c0fd9)
+  * LIV-2408 image alignment, inventory text alignment (e924392c)
+* **Kiosk Planogram:** LIV-2408 no image svg style (2edebfca)
+
+#### 1.2.51 (2020-11-30)
+
+##### Bug Fixes
+
+* **kiosk planogram:**
   *  LIV-2408 load cell text ellipsis (58ff1dd1)
   *  LIV-2408 no image svg style updated (8f2c0fd9)
   * LIV-2408 image alignment, inventory text alignment (e924392c)
