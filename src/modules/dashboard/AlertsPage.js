@@ -13,7 +13,7 @@ import AlertsTable from './components/AlertsTable';
 const sortDefault = [
   {
     column: 'startDate',
-    direction: 'ASC',
+    direction: 'DESC',
   },
 ];
 

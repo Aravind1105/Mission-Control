@@ -76,6 +76,7 @@ const AlertsTable = ({
         columns={columns}
         getData={getData}
         setSortByInCaller={sort => setSortByInCaller(sort)}
+        sortDirection="DESC"
       />
     </Segment>
   );

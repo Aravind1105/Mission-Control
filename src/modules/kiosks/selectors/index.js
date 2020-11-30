@@ -18,6 +18,7 @@ const alertMessages = {
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
+  TabletDisconn: 'Tablet Disconnected',
 };
 
 const activityLogMessages = {
