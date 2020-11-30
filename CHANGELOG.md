@@ -1,3 +1,14 @@
+#### 1.2.50 (2020-11-30)
+
+##### Bug Fixes
+
+* **alerts:**  Update Tablet Disconnected Alerts (d53bf34b)
+* **liv-2405:**  Inventory price view collapsed (71dc1035)
+
+##### Other Changes
+
+* **Alerts Grid:**  LIV-2412 grid sorting set to DESC, TabletDisconnected type added. (1d99141d)
+
 #### 1.2.49 (2020-11-27)
 
 ##### Build System / Dependencies
