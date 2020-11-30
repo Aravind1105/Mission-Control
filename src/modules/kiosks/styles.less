@@ -60,17 +60,24 @@
     text-align: center;
   }
   .load-cell-icon {
-    margin: 0 10px 0 0;
+    // margin: 0 35px 0 0;
     width: 50px;
-    flex-shrink: 0;
+    // flex-shrink: 0;
+    flex:1.5;
     align-self: center;
-    overflow: hidden;
+    // overflow: hidden;
     img {
-      width: 100%;
-      height: auto;
+      max-width: 70px;
+      max-height: 70px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      display: block;
+      margin-left: auto;
+      margin-right: 10px;
     }
   }
   .load-cell-body {
+    flex: 2;
     p:not(:last-child) {
       margin: 0 0 4px;
     }
