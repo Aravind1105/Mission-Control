@@ -15,7 +15,7 @@ import {
 const sort = [
   {
     column: 'startDate',
-    direction: 'ASC',
+    direction: 'DESC',
   },
 ];
 
