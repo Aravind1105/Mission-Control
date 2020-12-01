@@ -10,6 +10,7 @@ const FormSelect = ({
 }) => {
   const handlerChange = (e, { value }) => {
     form.setFieldValue(field.name, value);
+    if (props.handleCallback) props.handleCallback(value);
   };
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name];

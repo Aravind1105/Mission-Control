@@ -6,6 +6,7 @@ import KioskDetails from './Details';
 import KioskEdit from './Edit';
 import KioskTempLog from './TempLog';
 import KioskActivityLog from './ActivityLog';
+import KioskCustomizeScreen from './Screen';
 import { SemanticToastContainer } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
@@ -18,6 +19,7 @@ const KiosksScreen = () => (
       <Route path="/kiosks/edit/:id" exact component={KioskEdit} />
       <Route path="/kiosks/log/temp/:id" exact component={KioskTempLog} />
       <Route path="/kiosks/log/activity/:id" exact component={KioskActivityLog} />
+      <Route path="/kiosks/screen/customize/:id" exact component={KioskCustomizeScreen} />
       <Redirect to="/kiosks" />
     </Switch>
   </>

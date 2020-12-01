@@ -8,6 +8,7 @@ export const getAlmostEmptyKiosks = createAction(
 );
 export const resetKiosk = createAction('@@saga/RESET_KIOSK');
 export const modifyKiosk = createAction('@@saga/MODIFY_KIOSK');
+export const updateKioskProps = createAction('@@saga/UPDATE_KIOSK_PROPS');
 export const modifyKioskLoadCell = createAction(
   '@@saga/MODIFY_KIOSK_LOAD_CELL',
 );
@@ -33,6 +34,7 @@ export const updateAlmostEmptyKiosks = createAction(
 );
 export const updateKioskById = createAction('@@state/UPDATE_BY_ID');
 export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
+export const updateKioskPropsSuccess = createAction('@@state/UPDATE_KIOSK_PROPS_SUCCESS');
 export const getKioskSuccess = createAction('@@state/GET_KIOSK_SUCCESS');
 export const resetKioskSuccess = createAction('@@state/KIOSK_RESET_SUCCESS');
 export const getAlertsGridSuccess = createAction(
