@@ -305,6 +305,29 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
     : kioskInitialValues;
 });
 
+export const kioskInitialProperties = {
+  preAuth: 0,
+  supportEmail: '',
+  paymentType: '',
+  tabletLang: '',
+  minimumAge: '',
+  memberCardEnabled: ''
+};
+
+export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
+
+  return kiosk ? {
+    id: kiosk._id,
+    preAuth: kiosk.controller.preAuth.toString(),
+    supportEmail: get(kiosk.controller, 'supportEmail', '') || '',
+    paymentType: get(kiosk.controller, 'paymentType', '') || '',
+    tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
+    minimumAge: get(kiosk.controller, 'minimumAge', '') || '',
+    memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', '') || false,
+  } : kioskInitialProperties;
+}
+)
+
 export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk =>
   kiosk ? kiosk.orgId : null,
 );
@@ -330,7 +353,7 @@ export const getTotalActivityLogs = state => state.kiosks.activityLogs.total
 export const getActivityLogs = state => state.kiosks.activityLogs.data;
 
 export const getActivityLogsState = createSelector(getActivityLogs, log => {
-  if (log !== undefined) {
+  if (!log) {
     const logs = log.map((actLog) => {
       const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
       return {

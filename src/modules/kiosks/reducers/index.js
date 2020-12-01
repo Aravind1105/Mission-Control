@@ -23,6 +23,8 @@ import {
   getAllKiosksForTable,
   getActivityLogs,
   getActivityLogsSuccess,
+  updateKioskProps,
+  updateKioskPropsSuccess
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -72,7 +74,7 @@ const kiosksReducer = handleActions(
         isLoading: false,
       };
     },
-    [modifyKiosk]: state => {
+    [combineActions(modifyKiosk, updateKioskProps)]: state => {
       return {
         ...state,
         isKioskLoading: true,
@@ -86,6 +88,12 @@ const kiosksReducer = handleActions(
       kiosk: payload,
       isKioskLoading: false,
     }),
+    [updateKioskPropsSuccess]: state => {
+      return {
+        ...state,
+        isKioskLoading: false
+      }
+    },
     [getAlertsGridSuccess]: (state, { payload }) => {
       return {
         ...state,
