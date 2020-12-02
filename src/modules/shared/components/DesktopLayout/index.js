@@ -7,7 +7,7 @@ import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
 import Navigation from '../Navigation';
-import UserProfileBar from '../UserProfileBar';
+import UserProfileBar from '../UserProfileBar/';
 // import LanguageSelect from '../LanguageSelect';
 import AlertsList from '../AlertsList';
 import './desktopLayout.less';
