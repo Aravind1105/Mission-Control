@@ -62,22 +62,23 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
     {cells.length > 0 && (
       <Grid>
         {cells.map((row, i) => {
-          let fullWidth = false;
+          // let fullWidth = false;
           return (
             <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
               {row.map((props, j) => {
-                if (!j) {
-                  fullWidth = Boolean(props);
-                }
-                if ((fullWidth && j) || (!fullWidth && !j)) return null;
-                return props ? (
+                // if (!j) {
+                //   fullWidth = Boolean(props);
+                // }
+                // if ((fullWidth && j) || (!fullWidth && !j)) return null;
+                return props && (
                   <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-                ) : (
-                    <Grid.Column
-                      key={performance.now().toString(32)}
-                      className="load-cell"
-                    />
-                  );
+                )
+                //  (
+                //     <Grid.Column
+                //       key={performance.now().toString(32)}
+                //       className="load-cell"
+                //     />
+                //   );
               })}
             </Grid.Row>
           );
