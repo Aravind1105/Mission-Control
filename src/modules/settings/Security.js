@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
-import { Grid, Input, Label } from 'semantic-ui-react';
+import { Grid, Input, Icon } from 'semantic-ui-react';
 import { toast } from 'react-semantic-toasts';
 
 import CustomButton from '../shared/components/CustomButton';
@@ -28,9 +28,12 @@ const Security = ({
     }}>
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={9}>
+          <Grid.Column width={8}>
             <h5>Your Personal API Key</h5>
-            <Input ref={secretKeyInput} action={{ icon: 'copy', onClick: onClickCopy }} style={{ width: '100%' }} value={secret} />
+            <Grid.Row>
+              <Input ref={secretKeyInput} action={{ icon: 'copy', onClick: onClickCopy }} style={{ width: '100%' }} value={secret} />
+              <Icon name="delete" color="red" size="large" className="" onClick={() => alert()} />
+            </Grid.Row>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row verticalAlign="middle">
