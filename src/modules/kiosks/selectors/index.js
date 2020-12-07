@@ -353,7 +353,7 @@ export const getTotalActivityLogs = state => state.kiosks.activityLogs.total
 export const getActivityLogs = state => state.kiosks.activityLogs.data;
 
 export const getActivityLogsState = createSelector(getActivityLogs, log => {
-  if (!log) {
+  if (log) {
     const logs = log.map((actLog) => {
       const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
       return {
