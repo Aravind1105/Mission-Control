@@ -80,11 +80,9 @@ mutation {
 `;
 
 export const REMOVE_API_KEY = gql`
-mutation {
-  removeApiKey($apiKeyId: String) {
-    removeApiKey (apiKeyId: $apiKeyId) {
+mutation removeApiKey($apiKeyId: String!) {
+    removeApiKey(apiKeyId: $apiKeyId) {
       _id
     }
-  }
 }
 `;

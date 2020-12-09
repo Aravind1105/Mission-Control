@@ -7,15 +7,19 @@ import {
 } from '../actions';
 import { CREATE_API_KEY } from '../../organizations/schema';
 
-function* handler({ }) {
+function* handler({}) {
   try {
-    const { data: { addApiKey: response } } = yield call(gqlOrganization.query, {
+    const {
+      data: { addApiKey: response },
+    } = yield call(gqlOrganization.query, {
       query: CREATE_API_KEY,
     });
-    yield put(actionSuccess({
-      id: response[0]._id,
-      secret: response[0].secret,
-    }));
+    yield put(
+      actionSuccess({
+        _id: response[0]._id,
+        secret: response[0].secret,
+      }),
+    );
   } catch (error) {
     console.log(error);
   }

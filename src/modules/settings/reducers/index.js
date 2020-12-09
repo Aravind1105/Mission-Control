@@ -1,11 +1,16 @@
 import { handleActions } from 'redux-actions';
 import {
-  createApiKey, createApiKeySuccess,
+  createApiKey,
+  createApiKeySuccess,
+  deleteApiKey,
+  deleteApiKeySuccess,
+  loadApiKey,
+  loadApiKeySuccess,
 } from '../actions';
 
 const initialState = {
   apiKey: {
-    id: '',
+    _id: '',
     secret: '',
   },
 };
@@ -19,9 +24,27 @@ const settingsReducer = handleActions(
     [createApiKeySuccess]: (state, { payload }) => ({
       ...state,
       apiKey: {
-        id: payload.id,
+        _id: payload._id,
         secret: payload.secret,
       },
+      isLoading: false,
+    }),
+    [loadApiKey]: state => ({
+      ...state,
+    }),
+    [loadApiKeySuccess]: (state, { payload }) => ({
+      ...state,
+      apiKey: {
+        _id: payload._id,
+        secret: payload.secret,
+      },
+    }),
+    [deleteApiKey]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [deleteApiKeySuccess]: state => ({
+      ...state,
       isLoading: false,
     }),
   },

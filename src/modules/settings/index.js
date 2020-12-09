@@ -21,7 +21,7 @@ const Settings = ({ isLoading }) => (
   <>
     {isLoading && <Loader />}
     <Segment>
-      <SemanticToastContainer position='top-right' />
+      <SemanticToastContainer position="top-right" />
       <NavSwitcher config={navSwitcherConfig} />
       <Switch>
         <Route exact path="/settings/general" component={General} />
