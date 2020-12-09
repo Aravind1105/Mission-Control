@@ -7,15 +7,18 @@ import ColoredBlock from 'modules/shared/components/ColoredBlock';
 const DetailsInventory = ({ list, total }) => {
   const groupedByProductLines = groupBy(list, "productLine._id");
   const inventoryItems = [];
+  let totalValue=0;
   Object.values(groupedByProductLines).forEach(ele => {
     let totalQty = 0;
     let productName = '';
     let price = '';
+    
     ele.forEach(ele => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-    });
+      totalValue +=ele.totalProducts*ele.productLine.priceHistory[ele.productLine.priceHistory.length-1].price.toFixed(2);
+       });
     inventoryItems.push({ productName, totalQty, price });
   });
 
@@ -45,7 +48,9 @@ const DetailsInventory = ({ list, total }) => {
         </Table.Body>
       </Table>
       <div>
-        <b>{`Total Value: € ${total}`}</b>
+        <b>{`Total Costs of Goods: € ${total}`}</b>
+        <br></br>
+        <b>{`Total Sales Value: € ${totalValue}`}</b>
       </div>
     </Segment>
   )
