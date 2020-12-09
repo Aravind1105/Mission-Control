@@ -42,6 +42,16 @@ export const userDetailOnUser = gql`
     kiosks{
         _id
       }
+    apiKey {
+      _id
+      secret
+      explanation {
+      requestHeader
+      jwtHeader
+      payloadRule
+      payloadExample
+      }
+    }
   }
 `;
 

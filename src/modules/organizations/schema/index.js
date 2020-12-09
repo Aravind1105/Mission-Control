@@ -79,12 +79,12 @@ mutation {
 }
 `;
 
-// export const REMOVE_API_KEY = gql`
-// mutation {
-//   removeApiKey($apiKeyId: ) {
-//     removeApiKey (apiKeyId: $apiKeyId) {
-//       _id
-//     }
-//   }
-// }
-// `;
+export const REMOVE_API_KEY = gql`
+mutation {
+  removeApiKey($apiKeyId: String) {
+    removeApiKey (apiKeyId: $apiKeyId) {
+      _id
+    }
+  }
+}
+`;
