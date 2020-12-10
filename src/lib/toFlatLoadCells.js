@@ -8,7 +8,9 @@ const toFlatLoadCellItem = loadCells =>
           _id: el.productLine._id,
           name: el.productLine.name,
           image: get(el, 'productLine.images.0', ''),
-          price,
+          defaultCost:el.productLine.defaultCost,
+          priceHistory:el.productLine.priceHistory,
+          price,  
         }
       : {},
   }));

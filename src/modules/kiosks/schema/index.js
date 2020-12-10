@@ -32,6 +32,9 @@ const FragmentInventory = {
           _id
           name
           images
+          defaultCost
+          priceHistory {
+            price}
         }
       }
     }
