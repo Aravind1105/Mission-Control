@@ -6,12 +6,12 @@ import {
 } from '../actions';
 
 function* handler({ payload }) {
-  console.log(payload);
   try {
     yield put(
       actionSuccess({
         _id: payload._id,
         secret: payload.secret,
+        explanation: payload.explanation,
       }),
     );
   } catch (error) {

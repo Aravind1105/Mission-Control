@@ -12,6 +12,7 @@ const initialState = {
   apiKey: {
     _id: '',
     secret: '',
+    explanation: {},
   },
 };
 
@@ -26,6 +27,7 @@ const settingsReducer = handleActions(
       apiKey: {
         _id: payload._id,
         secret: payload.secret,
+        explanation: payload.explanation,
       },
       isLoading: false,
     }),
@@ -37,6 +39,7 @@ const settingsReducer = handleActions(
       apiKey: {
         _id: payload._id,
         secret: payload.secret,
+        explanation: payload.explanation,
       },
     }),
     [deleteApiKey]: state => ({

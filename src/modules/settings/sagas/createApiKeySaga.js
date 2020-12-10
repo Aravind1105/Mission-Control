@@ -18,6 +18,7 @@ function* handler({}) {
       actionSuccess({
         _id: response[0]._id,
         secret: response[0].secret,
+        explanation: response[0].explanation,
       }),
     );
   } catch (error) {
