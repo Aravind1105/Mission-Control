@@ -3,22 +3,26 @@ import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
 import { groupBy } from 'lodash';
 
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
+import './styles.less';
 
 const DetailsInventory = ({ list, total }) => {
-  const groupedByProductLines = groupBy(list, "productLine._id");
+  const groupedByProductLines = groupBy(list, 'productLine._id');
   const inventoryItems = [];
-  let totalValue=0;
+  let totalSalesValue = 0;
   Object.values(groupedByProductLines).forEach(ele => {
     let totalQty = 0;
     let productName = '';
     let price = '';
-    
+
     ele.forEach(ele => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-      totalValue +=ele.totalProducts*ele.productLine.priceHistory[ele.productLine.priceHistory.length-1].price.toFixed(2);
-       });
+      totalSalesValue +=
+        ele.totalProducts *
+        ele.productLine.priceHistory[ele.productLine.priceHistory.length - 1]
+          .price;
+    });
     inventoryItems.push({ productName, totalQty, price });
   });
 
@@ -42,18 +46,36 @@ const DetailsInventory = ({ list, total }) => {
                 </ColoredBlock>
               </Table.Cell>
               <Table.Cell>{productName}</Table.Cell>
-              <Table.Cell style={{ textAlign: "right" }} collapsing>{`€ ${price || 0}`}</Table.Cell>
+              <Table.Cell
+                style={{ textAlign: 'right' }}
+                collapsing
+              >{`€ ${price || 0}`}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table>
-      <div>
-        <b>{`Total Costs of Goods: € ${total}`}</b>
-        <br></br>
-        <b>{`Total Sales Value: € ${totalValue}`}</b>
-      </div>
+      <Table className="kiosk-inventory-total-values">
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell className="kiosk-inventory-total-values-cell">
+              <b>Total Costs of Goods:</b>
+            </Table.Cell>
+            <Table.Cell className="kiosk-inventory-total-values-cell">
+              <b>{`€ ${total}`}</b>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell className="kiosk-inventory-total-values-cell">
+              <b>Total Sales Value:</b>
+            </Table.Cell>
+            <Table.Cell className="kiosk-inventory-total-values-cell">
+              <b>{`€ ${totalSalesValue.toFixed(2)}`}</b>
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     </Segment>
-  )
+  );
 };
 
 export default DetailsInventory;
