@@ -60,7 +60,7 @@ const DetailsInventory = ({ list, total }) => {
             <Table.Cell className="kiosk-inventory-total-values-cell">
               <b>Total Costs of Goods:</b>
             </Table.Cell>
-            <Table.Cell className="kiosk-inventory-total-values-cell">
+            <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
               <b>{`€ ${total}`}</b>
             </Table.Cell>
           </Table.Row>
@@ -68,7 +68,7 @@ const DetailsInventory = ({ list, total }) => {
             <Table.Cell className="kiosk-inventory-total-values-cell">
               <b>Total Sales Value:</b>
             </Table.Cell>
-            <Table.Cell className="kiosk-inventory-total-values-cell">
+            <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
               <b>{`€ ${totalSalesValue.toFixed(2)}`}</b>
             </Table.Cell>
           </Table.Row>
