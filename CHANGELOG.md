@@ -1,3 +1,9 @@
+#### 1.2.52 (2020-12-10)
+
+##### Bug Fixes
+
+* **kiosk-inventory:** LIV-1953 style fixed (503419a3)
+
 #### 1.2.51 (2020-12-10)
 
 ##### Build System / Dependencies
