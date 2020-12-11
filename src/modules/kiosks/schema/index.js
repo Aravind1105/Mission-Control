@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 import { productOnProductLine } from '../../products/schema';
 import { userDetailOnUser } from '../../users/schema';
-
 const FragmentLocation = {
   location: gql`
     fragment LocationForKiosk on Location {
@@ -17,7 +16,6 @@ const FragmentLocation = {
     }
   `,
 };
-
 const FragmentInventory = {
   inventory: gql`
     fragment InventoryForKiosk on Inventory {
@@ -33,14 +31,11 @@ const FragmentInventory = {
           name
           images
           defaultCost
-          priceHistory {
-            price}
         }
       }
     }
   `,
 };
-
 const FragmentKioskOnKiosk = gql`
   fragment FragmentKiosk on Kiosk {
     _id
@@ -98,7 +93,6 @@ const FragmentKioskOnKiosk = gql`
   ${FragmentLocation.location}
   ${FragmentInventory.inventory}
 `;
-
 const FragmentKioskOfflineOnKiosk = gql`
   fragment FragmentKioskOffline on AlertKioskOffline {
     kioskId {
@@ -107,7 +101,6 @@ const FragmentKioskOfflineOnKiosk = gql`
     }
   }
 `;
-
 const FragmentAlertDoorOpenOnKiosk = gql`
   fragment FragmentAlertDoorOpen on AlertDoorOpen {
     kioskId {
@@ -117,7 +110,6 @@ const FragmentAlertDoorOpenOnKiosk = gql`
     }
   }
 `;
-
 const FragmentAlertHighTempOnKiosk = gql`
   fragment FragmentAlertHighTemp on AlertHighTemp {
     kioskId {
@@ -126,7 +118,6 @@ const FragmentAlertHighTempOnKiosk = gql`
     }
   }
 `;
-
 const FragmentAlertLowTempOnKiosk = gql`
   fragment FragmentAlertLowTemp on AlertLowTemp {
     kioskId {
@@ -135,7 +126,6 @@ const FragmentAlertLowTempOnKiosk = gql`
     }
   }
 `;
-
 const FragmentAlertUnauthorizedAccessOnKiosk = gql`
   fragment FragmentAlertUnauthorizedAccess on  AlertUnauthAccess {
     kioskId {
@@ -144,8 +134,6 @@ const FragmentAlertUnauthorizedAccessOnKiosk = gql`
     }
   }
 `;
-
-
 const FragmentAlertTabletDisconnectedOnKiosk = gql`
   fragment FragmentAlertTabletDisconnected on  AlertTabletDisconn {
     kioskId {
@@ -154,8 +142,6 @@ const FragmentAlertTabletDisconnectedOnKiosk = gql`
     }
   }
 `;
-
-
 export const GET_ALL_KIOSKS_GRID_QUERY = gql`
   query($data: GridRequest) {
     getKiosksGrid(data: $data) {
@@ -190,7 +176,6 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
     }
   }
 `;
-
 export const GET_KIOSK_QUERY = gql`
   query kiosk($id: String!) {
     getKioskById(id: $id) {
@@ -199,7 +184,6 @@ export const GET_KIOSK_QUERY = gql`
   }
   ${FragmentKioskOnKiosk}
 `;
-
 export const CREATE_KIOSK_MUTATION = gql`
   mutation kioskCreate($data: KioskInput!) {
     kioskCreate(data: $data) {
@@ -208,7 +192,6 @@ export const CREATE_KIOSK_MUTATION = gql`
   }
   ${FragmentKioskOnKiosk}
 `;
-
 export const UPDATE_KIOSK_MUTATION = gql`
   mutation kioskUpdate($id: String!, $data: KioskInput!) {
     kioskUpdate(id: $id, data: $data) {
@@ -217,7 +200,6 @@ export const UPDATE_KIOSK_MUTATION = gql`
   }
   ${FragmentKioskOnKiosk}
 `;
-
 export const LOAD_CELL_CONFIG_MUTATION = gql`
   mutation modifyLoadCells($data: LoadCellsInput!) {
     configureLoadCells(data: $data) {
@@ -225,7 +207,6 @@ export const LOAD_CELL_CONFIG_MUTATION = gql`
     }
   }
 `;
-
 export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
   mutation resetLoadCell(
     $id: String!
@@ -237,7 +218,6 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
     }
   }
 `;
-
 export const KIOSK_RESET_MUTATION = gql`
   mutation resetKiosk($id: String!) {
     kioskReset(id: $id) {
@@ -246,7 +226,6 @@ export const KIOSK_RESET_MUTATION = gql`
   }
   ${FragmentKioskOnKiosk}
 `;
-
 export const CONFIGURE_KIOSK_PROPS = gql`
   mutation configureKioskProps(
     $data:KioskPropsInput!)
@@ -268,7 +247,6 @@ export const CONFIGURE_KIOSK_PROPS = gql`
     }
   }
 `;
-
 export const GET_ALERTS_GRID = gql`
   query gridAlerts($data: GridRequest) {
     gridAlerts(data: $data) {
@@ -299,7 +277,6 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertUnauthorizedAccessOnKiosk}
   ${FragmentAlertTabletDisconnectedOnKiosk}
 `;
-
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
   query getAlmostEmptyKiosks(
     $skip: Int
@@ -326,7 +303,6 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
   }
   ${productOnProductLine}
 `;
-
 export const GET_TEMPERATURE_LOGS = gql`
   query getTemperatureEventsByKioskWithResolution(
     $data: TemperatureEventsByKioskWithResolutionInput
@@ -344,7 +320,6 @@ export const GET_TEMPERATURE_LOGS = gql`
     }
   }
 `;
-
 export const GET_ACTIVITY_LOGS = gql`
   query gridActivities(
     $skip:Int!,$limit:Int!,$kiosk:String!,$period:Period,$sort:Int

@@ -1,31 +1,26 @@
 import React from 'react';
 import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
 import { groupBy } from 'lodash';
-
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import './styles.less';
-
 const DetailsInventory = ({ list, total }) => {
   const groupedByProductLines = groupBy(list, 'productLine._id');
   const inventoryItems = [];
-  let totalSalesValue = 0;
+  let totalCost = 0;
   Object.values(groupedByProductLines).forEach(ele => {
     let totalQty = 0;
     let productName = '';
     let price = '';
-
     ele.forEach(ele => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-      totalSalesValue +=
+      totalCost +=
         ele.totalProducts *
-        ele.productLine.priceHistory[ele.productLine.priceHistory.length - 1]
-          .price;
+        ele.productLine.defaultCost
     });
     inventoryItems.push({ productName, totalQty, price });
   });
-
   return (
     <Segment>
       <Grid>
@@ -61,7 +56,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Costs of Goods:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${total}`}</b>
+              <b>{`€ ${totalCost.toFixed(2)}`}</b>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -69,7 +64,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${totalSalesValue.toFixed(2)}`}</b>
+              <b><b>{`€ ${total}`}</b></b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
@@ -77,5 +72,4 @@ const DetailsInventory = ({ list, total }) => {
     </Segment>
   );
 };
-
 export default DetailsInventory;
