@@ -1,3 +1,106 @@
+#### 1.3.2 (2020-12-11)
+
+##### Bug Fixes
+
+* **DesktopLayout-Critial!:** package json used for version number removed (b98fb8af)
+
+#### 1.3.1 (2020-12-11)
+
+### 1.4.0 (2020-12-11)
+
+##### Bug Fixes
+
+* **settings-security:** LIV-2337 code sinppet root removed (fbe08025)
+
+### 1.3.0 (2020-12-11)
+
+##### Bug Fixes
+
+* **settings item:** LIV-2420 no image alignment fix (22d8672e)
+
+##### Other Changes
+
+* **settings-security:**
+  * LIV-2337 snippet to show how to use the secret (53c47162)
+  * LIV-2337 delete API KEY COMPLETE (48c02674)
+  * LIV-2337 updates (263cc791)
+  * LIV-2337 create API key generation (250138d2)
+* **security page:** LIV-2421 updates (e17855d4)
+
+#### 1.2.52 (2020-12-10)
+
+##### Bug Fixes
+
+* **kiosk-inventory:** LIV-1953 style fixed (503419a3)
+
+#### 1.2.51 (2020-12-10)
+
+##### Build System / Dependencies
+
+* **liv-2415:**  created manage screen for root users (ee312221)
+
+##### Bug Fixes
+
+* **kiosk-inventory:** LIV-1953 decimal fix, style modified for total values (a5cdd562)
+* **liv-2434:**  unhide all the planograms (a3973a09)
+* **Pricing history:** last 10 prices of products shown on the products page. (455088a4)
+* **kiosk inventory:** LIV-2277 merge same products together (6cfc14b4)
+* **kiosk planogram:**
+  * LIV-2408 load cell text ellepsis removed (39247025)
+  *  LIV-2408 load cell text ellipsis (58ff1dd1)
+  *  LIV-2408 no image svg style updated (8f2c0fd9)
+  * LIV-2408 image alignment, inventory text alignment (e924392c)
+* **Kiosk Planogram:** LIV-2408 no image svg style (2edebfca)
+
+##### Other Changes
+
+* //livello.atlassian.net/browse/LIV-1953)show the total sales value (2ae5a517)
+* **settings screen:** LIV-2419 settings screen created (c0284ab2)
+* **user edit:** LIV-2421 duplicate membercard handling (d01089f9)
+* **toolbar:** LIV-2420 user dropdown menu redesign (b2c8c1b6)
+
+##### Code Style Changes
+
+* **toolbar:** LIV-2420 redesigned user dropdown menu (7c5f12f2)
+
+#### 1.2.51 (2020-12-01)
+
+##### Bug Fixes
+
+* **kiosk inventory:** LIV-2277 merge same products together (6cfc14b4)
+* **kiosk planogram:**
+  * LIV-2408 load cell text ellepsis removed (39247025)
+  *  LIV-2408 load cell text ellipsis (58ff1dd1)
+  *  LIV-2408 no image svg style updated (8f2c0fd9)
+  * LIV-2408 image alignment, inventory text alignment (e924392c)
+* **Kiosk Planogram:** LIV-2408 no image svg style (2edebfca)
+
+#### 1.2.51 (2020-11-30)
+
+##### Bug Fixes
+
+* **kiosk planogram:**
+  * LIV-2408 load cell text ellepsis removed (39247025)
+  *  LIV-2408 load cell text ellipsis (58ff1dd1)
+  *  LIV-2408 no image svg style updated (8f2c0fd9)
+  * LIV-2408 image alignment, inventory text alignment (e924392c)
+* **Kiosk Planogram:** LIV-2408 no image svg style (2edebfca)
+
+#### 1.2.51 (2020-11-30)
+
+##### Bug Fixes
+
+* **kiosk planogram:**
+  *  LIV-2408 load cell text ellipsis (58ff1dd1)
+  *  LIV-2408 no image svg style updated (8f2c0fd9)
+  * LIV-2408 image alignment, inventory text alignment (e924392c)
+* **Kiosk Planogram:** LIV-2408 no image svg style (2edebfca)
+* **liv-2405:**  Inventory price view collapsed (71dc1035)
+
+##### Other Changes
+
+* **Alerts Grid:**  LIV-2412 grid sorting set to DESC, TabletDisconnected type added. (1d99141d)
+
 #### 1.2.50 (2020-11-30)
 
 ##### Bug Fixes

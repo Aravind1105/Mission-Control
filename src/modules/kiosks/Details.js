@@ -53,6 +53,7 @@ const KioskDetails = ({
   orgId,
   getOrganizationById,
   orgName,
+  rootUser
 }) => {
   const { id } = match.params;
   useEffect(() => {
@@ -143,6 +144,13 @@ const KioskDetails = ({
                         label="Activity Log"
                         onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
                       />
+                      {rootUser &&
+                        <CustomButton
+                          icon="mobile alternate"
+                          label="Manage Screen"
+                          onClick={() => history.push(`/kiosks/screen/customize/${kiosk._id}`)}
+                        />
+                      }
                     </>
                   </DetailsInfo>
                 </Segment>
@@ -184,6 +192,7 @@ const mapStateToProps = state => ({
   orgId: getOrgIdFromKiosk(state),
   orgName: getOrgName(state),
   isKioskLoading: state.kiosks.isKioskLoading,
+  rootUser: state.user.root
 });
 
 const mapDispatchToProps = {

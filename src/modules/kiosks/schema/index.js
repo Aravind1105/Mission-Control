@@ -32,6 +32,9 @@ const FragmentInventory = {
           _id
           name
           images
+          defaultCost
+          priceHistory {
+            price}
         }
       }
     }
@@ -77,6 +80,19 @@ const FragmentKioskOnKiosk = gql`
     }
     inventory {
       ...InventoryForKiosk
+    }
+    controller {
+      preAuth
+      supportEmail
+      paymentType
+      tabletLang
+      minimumAge
+      serviceCheck{
+        enabled
+        startTime
+        endTime
+      }
+		memberCardEnabled
     }
   }
   ${FragmentLocation.location}
@@ -229,6 +245,28 @@ export const KIOSK_RESET_MUTATION = gql`
     }
   }
   ${FragmentKioskOnKiosk}
+`;
+
+export const CONFIGURE_KIOSK_PROPS = gql`
+  mutation configureKioskProps(
+    $data:KioskPropsInput!)
+    {
+      configureKioskProps(data:$data) {
+        controller {
+          preAuth
+          supportEmail
+          paymentType
+          tabletLang
+          minimumAge
+          memberCardEnabled
+          serviceCheck{
+            enabled
+            startTime
+            endTime
+          }
+    }
+    }
+  }
 `;
 
 export const GET_ALERTS_GRID = gql`

@@ -7,6 +7,7 @@ const Users = lazy(() => import('modules/users'));
 const Products = lazy(() => import('modules/products'));
 const Transactions = lazy(() => import('modules/transactions'));
 const Reports = lazy(() => import('modules/reports'));
+const Settings = lazy(() => import('modules/settings'));
 
 export default [
   {
@@ -18,6 +19,7 @@ export default [
     icon: 'home',
     Component: Dashboard,
     rootOnly: false,
+    showOnMenu: true,
   },
   {
     name: 'Kiosks',
@@ -25,6 +27,7 @@ export default [
     icon: 'snowflake',
     Component: Kiosks,
     rootOnly: false,
+    showOnMenu: true,
   },
   {
     name: 'Organizations',
@@ -32,6 +35,7 @@ export default [
     icon: 'building',
     Component: Organizations,
     rootOnly: true,
+    showOnMenu: true,
   },
   {
     name: 'Users',
@@ -39,6 +43,7 @@ export default [
     icon: 'users',
     Component: Users,
     rootOnly: false,
+    showOnMenu: true,
   },
   {
     name: 'Products',
@@ -46,6 +51,7 @@ export default [
     icon: 'box',
     Component: Products,
     rootOnly: false,
+    showOnMenu: true,
   },
   {
     name: 'Reports',
@@ -53,6 +59,7 @@ export default [
     icon: 'chart line',
     Component: Reports,
     rootOnly: true,
+    showOnMenu: true,
   },
   {
     name: 'Transactions',
@@ -60,5 +67,15 @@ export default [
     icon: 'shopping cart',
     Component: Transactions,
     rootOnly: false,
+    showOnMenu: true,
+
+  },
+  {
+    name: 'Settings',
+    path: '/settings',
+    icon: 'shopping cart',
+    Component: Settings,
+    rootOnly: false,
+    showOnMenu: false,
   },
 ];

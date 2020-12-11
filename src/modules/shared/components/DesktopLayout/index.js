@@ -7,14 +7,18 @@ import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
 import Navigation from '../Navigation';
-import UserProfileBar from '../UserProfileBar';
+import UserProfileBar from '../UserProfileBar/';
 // import LanguageSelect from '../LanguageSelect';
 import AlertsList from '../AlertsList';
 import './desktopLayout.less';
 
-const pjson = require('../../../../../package.json');
-
-const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks, userType }) => {
+const DesktopLayout = ({
+  children,
+  isLoading,
+  alerts,
+  getAllKiosks,
+  userType,
+}) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
 
@@ -42,7 +46,6 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks, userType }) 
             onClick={handleClick}
           />
         </Menu.Item>
-        <Menu.Item>{`Ver: ${pjson.version || ''}`}</Menu.Item>
       </Menu>
       <div className="desktop-content">
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
@@ -57,9 +60,7 @@ const DesktopLayout = ({ children, isLoading, alerts, getAllKiosks, userType }) 
               <UserProfileBar showName />
             </Menu.Item>
             <Menu.Item>
-              <span className="user-type">
-                {userType}
-              </span>
+              <span className="user-type">{userType}</span>
             </Menu.Item>
           </Menu.Menu>
         </Menu>

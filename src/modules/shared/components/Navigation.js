@@ -11,7 +11,7 @@ const Navigation = ({ mobileNavToggle, isRoot }) => {
       {routes.map(item => {
         let hasAccess = true;
         if (item.rootOnly && !isRoot) hasAccess = false;
-        return hasAccess ? (
+        return hasAccess ? item.showOnMenu && (
           <NavigationItem
             {...item}
             mobileNavToggle={mobileNavToggle}

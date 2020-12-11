@@ -65,8 +65,9 @@ const columns = [
     formatter: ({ location: { address } }) => {
       const { postalCode, city } = address;
       const addr = [
-        postalCode || 'N.A',
-        city || 'N.A.'
+        postalCode,
+        city,
+        !postalCode && !city && 'N.A.'
       ]
         .filter(el => Boolean(el))
         .join(', ');
