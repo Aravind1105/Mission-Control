@@ -13,6 +13,7 @@ export default ({ content, title }) => (
         collapseStringsAfterLength={false}
         collapsed={false}
         enableClipboard={true}
+        name={false}
       />
     </div>
   </>
