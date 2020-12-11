@@ -1,3 +1,9 @@
+### 1.4.0 (2020-12-11)
+
+##### Bug Fixes
+
+* **settings-security:** LIV-2337 code sinppet root removed (fbe08025)
+
 ### 1.3.0 (2020-12-11)
 
 ##### Bug Fixes
