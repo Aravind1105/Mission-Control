@@ -23,7 +23,16 @@ const CustomizeScreen = ({
             minimumAge: parseFloat(age),
             tabletLang: values.tabletLang,
             memberCardEnabled: values.memberCardEnabled,
-            serviceCheck: values.serviceCheck ? values.serviceCheck : null
+            // serviceCheck: values.serviceCheck ? values.serviceCheck : null
+            serviceCheck: values.OutOfServiceTime_start && values.OutOfServiceTime_end 
+                ? {
+                    enabled: true,
+                    startTime: values.OutOfServiceTime_start,
+                    endTime: values.OutOfServiceTime_end
+                } 
+                : {
+                    enabled: false,
+                } 
         }
         dispatch(updateKioskProps({ finalProps }));
     };
@@ -122,6 +131,33 @@ const CustomizeScreen = ({
                                     name="preAuth"
                                     label="Pre-authorization amount"
                                     component={FormInput}
+                                />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Field
+                                    name="OutOfServiceTime"
+                                    label="Out of service time"
+                                    component={FormCheckbox}
+                                />
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row columns="equal">
+                            <Grid.Column>
+                                <Field
+                                    name="OutOfServiceTime_start"
+                                    label="Start of Out of service time"
+                                    component={FormInput}
+                                    // disabled={OutOfServiceTime}
+                                />
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Field
+                                    name="OutOfServiceTime_end"
+                                    label="End of Out of service time"
+                                    component={FormInput}
+                                    // disabled={OutOfServiceTime}
                                 />
                             </Grid.Column>
                         </Grid.Row>
