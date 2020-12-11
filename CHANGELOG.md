@@ -1,3 +1,18 @@
+### 1.3.0 (2020-12-11)
+
+##### Bug Fixes
+
+* **settings item:** LIV-2420 no image alignment fix (22d8672e)
+
+##### Other Changes
+
+* **settings-security:**
+  * LIV-2337 snippet to show how to use the secret (53c47162)
+  * LIV-2337 delete API KEY COMPLETE (48c02674)
+  * LIV-2337 updates (263cc791)
+  * LIV-2337 create API key generation (250138d2)
+* **security page:** LIV-2421 updates (e17855d4)
+
 #### 1.2.52 (2020-12-10)
 
 ##### Bug Fixes

@@ -63,3 +63,26 @@ export const GET_ORGANIZATION_BY_ID = gql`
     }
   }
 `;
+
+export const CREATE_API_KEY = gql`
+mutation {
+  addApiKey {
+    _id
+    secret
+    explanation {
+      requestHeader
+      jwtHeader
+      payloadRule
+      payloadExample
+    }
+  }
+}
+`;
+
+export const REMOVE_API_KEY = gql`
+mutation removeApiKey($apiKeyId: String!) {
+    removeApiKey(apiKeyId: $apiKeyId) {
+      _id
+    }
+}
+`;

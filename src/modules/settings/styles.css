@@ -1,0 +1,32 @@
+.api-key-input {
+  width: 90% !important;
+  margin-top: 17px !important;
+}
+
+.delete-api-key-icon {
+  cursor: pointer !important;
+}
+
+.settings-snippet-window {
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 5px !important;
+  box-sizing: border-box;
+  padding: 10px !important;
+  width: 400px !important;
+  resize: none !important;
+}
+
+.settings-link {
+  color: red;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.settings-custom-h5 {
+  font-size: 14px !important;
+  font-weight: bold;
+  margin: 0 !important;
+  margin-bottom: 10px !important;
+  padding: 0 !important;
+  display: inline !important;
+}

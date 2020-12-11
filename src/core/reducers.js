@@ -10,6 +10,7 @@ import users from 'modules/users/reducers';
 import reports from 'modules/reports/reducers';
 import dashboard from 'modules/dashboard/reducers';
 import core from './reducers/coreReducer';
+import settings from 'modules/settings/reducers'
 
 // Module reducers
 export default combineReducers({
@@ -22,4 +23,5 @@ export default combineReducers({
   transactions,
   user,
   users,
+  settings,
 });

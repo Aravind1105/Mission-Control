@@ -11,6 +11,7 @@ import dashboardSaga from 'modules/dashboard/sagas';
 import coreSaga from './sagas/core';
 import languageSaga from './sagas/i18n';
 import productsSaga from '../modules/products/sagas';
+import settingsSaga from '../modules/settings/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     fork(transactionsSaga),
     fork(reportsSaga),
     fork(dashboardSaga),
+    fork(settingsSaga),
   ]);
 }
