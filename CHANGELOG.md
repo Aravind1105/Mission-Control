@@ -1,3 +1,9 @@
+#### 1.3.2 (2020-12-11)
+
+##### Bug Fixes
+
+* **DesktopLayout-Critial!:** package json used for version number removed (b98fb8af)
+
 #### 1.3.1 (2020-12-11)
 
 ### 1.4.0 (2020-12-11)
