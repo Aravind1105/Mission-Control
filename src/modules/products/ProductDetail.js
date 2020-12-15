@@ -16,6 +16,7 @@ import {
   selectorProductTaxOptions,
 } from './selectors';
 import { getOrganizationsAsOptions } from '../organizations/selectors';
+import PriceHistoryWidget from './components/PriceHistoryWidget';
 
 const links = [
   {
@@ -135,6 +136,8 @@ const ProductDetail = ({
             </h3>
           </Segment> */}
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
+          {/* <PriceHistoryWidget defaultPrice={"3.00"} />
+          <PriceHistoryWidget activePriceHistory /> */}
           <ImageUploader
             src={productImg}
             setUploadedImage={setUploadedImage}
