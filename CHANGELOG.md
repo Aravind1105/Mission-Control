@@ -1,3 +1,15 @@
+#### 1.3.3 (2020-12-16)
+
+##### Bug Fixes
+
+* **security:**  hide security options for API Key Secret. Requested from Operations. (12f2d60d)
+* **products_cost:**  calculate on kiosk detail page the real cost of the products. (Code made by Rana) (775cca2f)
+
+##### Other Changes
+
+* **kiosk-manage:** LIV-2516 updated design - service time fields (d5c62b56)
+* **out_of_service_time:**  add out of service start and end time for test purposes with the Fridge-cc. NOT FINAL DESIGN. (45920c57)
+
 #### 1.3.2 (2020-12-11)
 
 ##### Bug Fixes
