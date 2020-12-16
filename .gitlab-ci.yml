@@ -23,7 +23,7 @@ variables:
 
 .build-push-template: &build-push-template
   stage: docker-build-push
-  image: docker:latest
+  image: docker:19.03
   services:
     - docker:dind
   before_script:
