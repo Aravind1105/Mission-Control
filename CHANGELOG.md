@@ -1,3 +1,9 @@
+#### 1.3.5 (2020-12-16)
+
+##### Bug Fixes
+
+* **package.json:**  update gitlab runner credentials (15ed3a61)
+
 #### 1.3.4 (2020-12-16)
 
 #### 1.3.3 (2020-12-16)
