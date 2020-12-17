@@ -1,17 +1,20 @@
 import React, { useState, useMemo } from 'react';
 import pick from 'lodash/pick';
 import { Segment } from 'semantic-ui-react';
+import { useDispatch } from 'react-redux';
 
 import separateToSides from 'lib/separateToSides';
 import DetailLoadCellsSide from './DetailLoadCellsSide';
 import ModalLoadCell from './ModalLoadCell';
 import PlanogramSwitcher from './PlanogramSwitcher';
+import { setPlanogramSwitchState } from '../actions';
 
-const DetailsLoadCells = ({ cells, kioskName }) => {
+const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
   const [product, selectProduct] = useState(null);
-  const [currentSide, setCurrentSide] = useState('A');
   const [isAddLoadCell, setIsAddLoadCell] = useState(false);
-
+  const [currentSide, setCurrentSide] = useState(currentKioskSide);
+  const dispatch = useDispatch();
+  const setSide=currentSide;
   const handleEdit = ({
     productLine,
     cellId,
@@ -19,17 +22,21 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
     planogramPosition,
   }) => {
     const data = pick(productLine, ['_id', 'name', 'price']);
+    
     selectProduct({
       ...data,
       cellId,
       planogramPosition: planogramPosition || '',
       availableProducts,
+      
     });
+    
   };
 
   const handleClose = () => {
     setIsAddLoadCell(false);
     selectProduct(null);
+    dispatch(setPlanogramSwitchState({setSide}));
   };
 
   const sides = useMemo(() => separateToSides(cells), [cells]);
@@ -54,6 +61,7 @@ const DetailsLoadCells = ({ cells, kioskName }) => {
       <PlanogramSwitcher
         {...{ activeShelves, setCurrentSide, currentSide, isTwoSides }}
       />
+      
       <DetailLoadCellsSide
         cells={sides[currentSide]}
         handleEdit={handleEdit}
