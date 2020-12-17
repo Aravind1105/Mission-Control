@@ -1,3 +1,13 @@
+#### 1.3.6 (2020-12-17)
+
+##### Bug Fixes
+
+* **out_of_service:** Invert logic for start and end time, since it works like so in the tablet and the ZVT payment terminal. (72976462)
+* **ci-cd:** docker base image to v19 (9285afc5)
+* **node:**  base image for docker (72c7a216)
+* **docker:**  base image node:12-alpine (8681de01)
+* **package:**  gitlab runner updatye (e4aa8e9b)
+
 #### 1.3.5 (2020-12-16)
 
 ##### Bug Fixes
