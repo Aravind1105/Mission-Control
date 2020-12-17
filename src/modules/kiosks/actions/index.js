@@ -52,3 +52,8 @@ export const getTemperatureLogsSuccess = createAction(
 export const getActivityLogsSuccess = createAction(
   '@@state/GET_ACTIVITY_LOGS_SUCCESS',
 );
+
+export const setPlanogramSwitchState = createAction(
+  '@@state/SET_PLANOGRAM_SWITCH_STATE',
+);
+

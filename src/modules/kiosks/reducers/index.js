@@ -24,7 +24,8 @@ import {
   getActivityLogs,
   getActivityLogsSuccess,
   updateKioskProps,
-  updateKioskPropsSuccess
+  updateKioskPropsSuccess,
+  setPlanogramSwitchState,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -35,6 +36,7 @@ const initialState = {
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
+  currentKioskSide:'A',
   alerts: [],
   totalAlerts: 0,
   productsByOrgId: [],
@@ -80,10 +82,16 @@ const kiosksReducer = handleActions(
         isKioskLoading: true,
       };
     },
+    [setPlanogramSwitchState]: (state, { payload }) => ({
+      ...state,
+      isKioskLoading: false,
+      currentKioskSide: payload.setSide
+    }),
     [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
       state,
       { payload },
-    ) => ({
+    ) => (
+      {
       ...state,
       kiosk: payload,
       isKioskLoading: false,
@@ -91,6 +99,7 @@ const kiosksReducer = handleActions(
     [updateKioskPropsSuccess]: state => {
       return {
         ...state,
+        // currentKioskSide:state.currentKioskSide,
         isKioskLoading: false
       }
     },
