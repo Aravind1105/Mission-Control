@@ -1,3 +1,33 @@
+#### 1.3.6 (2020-12-17)
+
+##### Bug Fixes
+
+* **out_of_service:** Invert logic for start and end time, since it works like so in the tablet and the ZVT payment terminal. (72976462)
+* **ci-cd:** docker base image to v19 (9285afc5)
+* **node:**  base image for docker (72c7a216)
+* **docker:**  base image node:12-alpine (8681de01)
+* **package:**  gitlab runner updatye (e4aa8e9b)
+
+#### 1.3.5 (2020-12-16)
+
+##### Bug Fixes
+
+* **package.json:**  update gitlab runner credentials (15ed3a61)
+
+#### 1.3.4 (2020-12-16)
+
+#### 1.3.3 (2020-12-16)
+
+##### Bug Fixes
+
+* **security:**  hide security options for API Key Secret. Requested from Operations. (12f2d60d)
+* **products_cost:**  calculate on kiosk detail page the real cost of the products. (Code made by Rana) (775cca2f)
+
+##### Other Changes
+
+* **kiosk-manage:** LIV-2516 updated design - service time fields (d5c62b56)
+* **out_of_service_time:**  add out of service start and end time for test purposes with the Fridge-cc. NOT FINAL DESIGN. (45920c57)
+
 #### 1.3.2 (2020-12-11)
 
 ##### Bug Fixes
