@@ -23,9 +23,9 @@ variables:
 
 .build-push-template: &build-push-template
   stage: docker-build-push
-  image: docker:19.03
+  image: docker:stable-dind
   services:
-    - docker:dind
+    - docker:stable-dind
   before_script:
     - cat $CLOUDRUN_CICD_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
     - apk update && apk add git
