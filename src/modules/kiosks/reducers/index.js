@@ -25,7 +25,7 @@ import {
   getActivityLogsSuccess,
   updateKioskProps,
   updateKioskPropsSuccess,
-  setPlanogramSwitchState,
+  setPlanogramSwitchStateSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -36,14 +36,14 @@ const initialState = {
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
-  currentKioskSide:'A',
+  currentKioskSide: 'A',
   alerts: [],
   totalAlerts: 0,
   productsByOrgId: [],
   almostEmptyKiosks: [],
   totalEmptyKiosks: 0,
   temperatureLogs: [],
-  activityLogs: []
+  activityLogs: [],
 };
 
 const kiosksReducer = handleActions(
@@ -82,16 +82,14 @@ const kiosksReducer = handleActions(
         isKioskLoading: true,
       };
     },
-    [setPlanogramSwitchState]: (state, { payload }) => ({
+    [setPlanogramSwitchStateSuccess]: (state, { payload }) => ({
       ...state,
-      isKioskLoading: false,
-      currentKioskSide: payload.setSide
+      currentKioskSide: payload.setSide,
     }),
     [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
       state,
       { payload },
-    ) => (
-      {
+    ) => ({
       ...state,
       kiosk: payload,
       isKioskLoading: false,
@@ -99,9 +97,8 @@ const kiosksReducer = handleActions(
     [updateKioskPropsSuccess]: state => {
       return {
         ...state,
-        // currentKioskSide:state.currentKioskSide,
-        isKioskLoading: false
-      }
+        isKioskLoading: false,
+      };
     },
     [getAlertsGridSuccess]: (state, { payload }) => {
       return {
