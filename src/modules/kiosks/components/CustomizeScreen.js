@@ -197,7 +197,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                 <Grid.Row style={{ display: 'flex' }} columns="equal">
                   <Grid.Column style={{ width: '100%', marginRight: 5 }}>
                     <Field
-                      name="serviceCheckStartTime"
+                      name="serviceCheckEndTime"  //It works with reverse logic in the tablet and ZVT PT
                       label="From"
                       component={FormSelect}
                       options={TimeOptions()}
@@ -206,7 +206,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   </Grid.Column>
                   <Grid.Column style={{ width: '100%', marginLeft: 5 }}>
                     <Field
-                      name="serviceCheckEndTime"
+                      name="serviceCheckStartTime"  //It works with reverse logic in the tablet and ZVT PT
                       label="Until"
                       component={FormSelect}
                       options={TimeOptions()}
