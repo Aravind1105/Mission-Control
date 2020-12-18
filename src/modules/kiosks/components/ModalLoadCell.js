@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Field } from 'formik';
-import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
+import { Button, Grid, Popup, Icon, Modal , Image} from 'semantic-ui-react';
 
 import { getProductLinesByOrgId } from 'modules/kiosks/actions';
 import { getProductsHistory } from 'modules/products/selectors';
@@ -21,12 +21,23 @@ import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
 import { toast } from 'react-semantic-toasts';
+import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 
 const ToolTip = () => (
-  <Popup
+  <Popup 
     content="There  are products left in the fridge - can’t change the product setup for loadcell"
     trigger={<Icon size="large" color="yellow" name="info circle" />}
   />
+);
+
+const PositionTip = () => (
+  <Popup
+   trigger={<Icon size="large" color="yellow" name="info circle" />
+    }>
+    <Popup.Content>
+      <Image src={planogramExplaination} width="229" height="117"/>
+    </Popup.Content>
+  </Popup>     
 );
 
 const ModalLoadCell = ({
@@ -128,7 +139,7 @@ const ModalLoadCell = ({
           <form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
               {isProductLoading && <Loader />}
-              <Grid>
+               <Grid>
                 <Grid.Row>
                   <Grid.Column width={6}>
                     <b>Product&nbsp;</b>
@@ -178,18 +189,22 @@ const ModalLoadCell = ({
                 </Grid.Row>
                 <Grid.Row columns="equal">
                   <Grid.Column>
+                    <b>Product</b>
+                    {initVal.quantity ? <PositionTip/> : null}
                     <Field
                       name="planogramPosition"
-                      label="Position"
+                      // label="Position"
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
                     />
                   </Grid.Column>
+                  
                   <Grid.Column>
+                    <b>Cable ID</b>
                     <Field
                       name="cellId"
-                      label="Cable ID"
+                      // label="Cable ID"
                       disabled={!isAddLoadCell}
                       validate={validateCellId}
                       component={FormInput}
