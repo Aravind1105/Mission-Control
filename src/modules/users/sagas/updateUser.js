@@ -15,7 +15,6 @@ function* handler({ payload }) {
       variables: { id, data },
     });
     const responseData = response.data['updateUser'];
-    console.log(response.errors);
     if (!response.errors) {
       toast({ description: 'User updated successfully', animation: 'fade left', icon: 'info', color: 'green' });
       history.push('/users');

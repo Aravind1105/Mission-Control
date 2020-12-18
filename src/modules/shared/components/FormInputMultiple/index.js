@@ -17,12 +17,17 @@ const FormInputMultiple = ({
   }, [options]);
 
   const handleAddition = (e, { value }) => {
-    if (!values.find(el => el.value.toLowerCase() === value.trim().toLowerCase())) {
+    if (
+      !values.find(el => el.value.toLowerCase() === value.trim().toLowerCase())
+    ) {
       setValues([...values, { text: value, value }]);
     }
   };
   const handlerChange = (e, { value }) => {
     form.setFieldValue(field.name, value);
+    if (props.handleChangeCallback) {
+      props.handleChangeCallback(value);
+    }
   };
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name];

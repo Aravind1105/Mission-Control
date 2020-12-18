@@ -1,3 +1,19 @@
+#### 1.3.7 (2020-12-18)
+
+##### New Features
+
+* **users-membercard:** LIV-2488 membercard field validation irrespective of submitting (372dcd5d)
+
+##### Bug Fixes
+
+* **ci-cd:**  use docker:stable-dind base image (ed4b7157)
+
+##### Other Changes
+
+* **kiosk-planogram:** LIV-2437 switch state saga and action updated (e869128f)
+* **Maintain Planogram:** Main state after updat (33eccd21)
+* livello-network/livello-mission-control into staging-master (6e7531ee)
+
 #### 1.3.6 (2020-12-17)
 
 ##### Bug Fixes

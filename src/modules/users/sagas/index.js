@@ -5,6 +5,7 @@ import getOneUserWithInfo from './getOneUserWithInfo';
 import getUserTransactions from './getUserTransactions';
 import toggleUserRoleSaga from './toggleUserRole';
 import updateUser from './updateUser';
+import validateMemberCard from './validateMemberCard';
 
 
 export default function* saga() {
@@ -14,5 +15,6 @@ export default function* saga() {
     fork(getOneUserWithInfo),
     fork(getUserTransactions),
     fork(updateUser),
+    fork(validateMemberCard),
   ]);
 }
