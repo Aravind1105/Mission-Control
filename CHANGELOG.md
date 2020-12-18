@@ -1,3 +1,13 @@
+#### 1.3.8 (2020-12-18)
+
+##### New Features
+
+* **product-edit:** LIV-2484 tooltip-shelf capacity (f100f202)
+
+##### Other Changes
+
+* **product-edit:** LIV-2483 move shelf life capacities downwards (20ac11fd)
+
 #### 1.3.7 (2020-12-18)
 
 ##### New Features

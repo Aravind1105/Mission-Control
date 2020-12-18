@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
+import {
+  Grid,
+  Form,
+  Button,
+  Header,
+  Divider,
+  Popup,
+  Icon,
+} from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
@@ -301,7 +309,22 @@ const ProductForm = ({
               </Grid.Row>
             </Grid>
 
-            <Header as="h4">Shelf Max. Capacity</Header>
+            <div style={{ marginTop: 25 }}>
+              <span className="product-field-custom-h5">
+                Shelf Max. Capacity
+              </span>
+              <Popup trigger={<Icon name="info circle" color="yellow" />}>
+                <Popup.Content>
+                  <img
+                    src={require('../../../styling/assets/images/shelf_capacities.png')}
+                    style={{
+                      height: 150,
+                      width: 330
+                    }}
+                  />
+                </Popup.Content>
+              </Popup>
+            </div>
             <Divider />
             <Grid>
               <Grid.Row columns="equal" stretched>
