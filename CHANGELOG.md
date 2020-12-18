@@ -1,3 +1,10 @@
+#### 1.3.9 (2020-12-18)
+
+##### Other Changes
+
+* **planogram-loadcell:** LIV-2485 image style + popup trigger size normal (63eeb42b)
+* **kiosk details:**  LIV-2485 Show Pop Up (1716289e)
+
 #### 1.3.8 (2020-12-18)
 
 ##### New Features
