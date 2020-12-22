@@ -25,7 +25,7 @@ function* handler({ payload: { finalProps } }) {
         if (!res.errors) {
             toast({
                 type: 'success',
-                description: 'Kiosk properties customized successfully',
+                description: 'Kiosk settings customized successfully',
                 animation: 'fade left',
             });
 

@@ -149,7 +149,7 @@ const KioskDetails = ({
                         <CustomButton
                           icon="setting"
                           label="Settings"
-                          onClick={() => history.push(`/kiosks/screen/customize/${kiosk._id}`)}
+                          onClick={() => history.push(`/kiosks/settings/${kiosk._id}`)}
                         />
                       }
                     </>

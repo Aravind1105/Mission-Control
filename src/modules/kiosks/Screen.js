@@ -58,7 +58,7 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
                             <Breadcrumbs
                                 backLink={backLink}
                                 links={links}
-                                activeLink="Customize Screen"
+                                activeLink="Settings"
                             />
                         </Segment>
                     </Grid.Column>
