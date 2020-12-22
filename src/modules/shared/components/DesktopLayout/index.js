@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
-import logoSmall from 'styling/assets/images/logo-small.png';
+import logoSmall from 'styling/assets/images/new_Menu_Logo.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
