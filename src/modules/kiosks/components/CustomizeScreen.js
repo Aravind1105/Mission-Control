@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Grid, Form, Button, FormRadio, Popup, Icon } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
@@ -9,9 +10,16 @@ import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
 
-const ToolTip = () => (
+const PreAuthToolTip = () => (
   <Popup
     content="Pre-authorization amount cannot exceed € 50."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
+const AgeToolTip = () => (
+  <Popup
+    content="Available only for GiroCard payment."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
@@ -101,7 +109,10 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   };
 
   return (
-    <Formik initialValues={kioskProps} onSubmit={onSubmit} enableReinitialize>
+    <Formik initialValues={kioskProps} onSubmit={onSubmit} enableReinitialize
+      validationSchema={Yup.object().shape({
+        preAuth: Yup.number().max(50, 'Amount exceeds € 50.'),
+      })}>
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
         <Form onSubmit={handleSubmit}>
           <Grid>
@@ -136,7 +147,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 
               <Grid.Column>
                 <label className="tool-tip">Pre-authorization amount&nbsp;</label>
-                <ToolTip />
+                <PreAuthToolTip />
                 <Field
                   name="preAuth"
                   icon="euro"
@@ -152,17 +163,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
               <Grid.Column>
                 <Grid.Row>
                   <Grid.Column>
-                    <Field
-                      name="memberCardEnabled"
-                      label="Enable Member Card"
-                      component={FormCheckbox}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Group inline>
-                      <label>Age Restriction</label>
+                    <Form.Group>
+                      <label className="tool-tip" style={{ marginLeft: "1em" }}>Age Restriction&nbsp;</label>
+                      {type === 'CreditOrDebitCard' ? <AgeToolTip /> : null}
                       <Field
                         label="16"
                         name="minimumAge"
@@ -188,6 +191,15 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                         disabled={type === 'CreditOrDebitCard'}
                       />
                     </Form.Group>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Field
+                      name="memberCardEnabled"
+                      label="Enable Member Card"
+                      component={FormCheckbox}
+                    />
                   </Grid.Column>
                 </Grid.Row>
               </Grid.Column>

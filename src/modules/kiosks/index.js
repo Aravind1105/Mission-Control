@@ -19,7 +19,7 @@ const KiosksScreen = () => (
       <Route path="/kiosks/edit/:id" exact component={KioskEdit} />
       <Route path="/kiosks/log/temp/:id" exact component={KioskTempLog} />
       <Route path="/kiosks/log/activity/:id" exact component={KioskActivityLog} />
-      <Route path="/kiosks/screen/customize/:id" exact component={KioskCustomizeScreen} />
+      <Route path="/kiosks/settings/:id" exact component={KioskCustomizeScreen} />
       <Redirect to="/kiosks" />
     </Switch>
   </>
