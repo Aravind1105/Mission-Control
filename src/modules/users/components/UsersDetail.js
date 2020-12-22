@@ -46,16 +46,16 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
               <Grid.Row columns="equal">
                 <Comment.Group size="massive">
                   <Comment>
-                    <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px" }} />
+                    <Comment.Avatar as="a" src={user.avatarUrl} style={{ marginLeft: "12px"}} />
                     <Comment.Content>
-                      <Comment.Author as="a">{name}</Comment.Author>
+                      <Comment.Author as="a" style={{ lineHeight: 2}}>{name}</Comment.Author>
                       {/* <Comment.Text>
                     {user.root ? 'Admin' : 'Consumer'} - {user.status}
                   </Comment.Text> */}
                       <Comment.Text style={{ marginTop: "10px" }}>
                         <Comment.Actions>Last Updated: {user.updated}</Comment.Actions>
                       </Comment.Text>
-                    </Comment.Content>
+                    </Comment.Content> 
                   </Comment>
                 </Comment.Group>
               </Grid.Row>
