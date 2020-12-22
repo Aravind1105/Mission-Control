@@ -147,8 +147,8 @@ const KioskDetails = ({
                       />
                       {rootUser &&
                         <CustomButton
-                          icon="mobile alternate"
-                          label="Manage Screen"
+                          icon="setting"
+                          label="Settings"
                           onClick={() => history.push(`/kiosks/screen/customize/${kiosk._id}`)}
                         />
                       }
@@ -163,7 +163,7 @@ const KioskDetails = ({
                   cells={loadCells.list}
                   kioskName={kiosk.name}
                   currentKioskSide={currentKioskSide}
-                  />
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -194,7 +194,7 @@ const mapStateToProps = state => ({
   orgId: getOrgIdFromKiosk(state),
   orgName: getOrgName(state),
   isKioskLoading: state.kiosks.isKioskLoading,
-  currentKioskSide:state.kiosks.currentKioskSide,
+  currentKioskSide: state.kiosks.currentKioskSide,
   rootUser: state.user.root
 });
 

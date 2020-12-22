@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Grid, Form, Button, FormRadio, GridColumn } from 'semantic-ui-react';
+import { Grid, Form, Button, FormRadio, Popup, Icon } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
-
+import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
-import { padStart } from 'lodash';
-import { time } from 'faker';
+
+const ToolTip = () => (
+  <Popup
+    content="Pre-authorization amount cannot exceed € 50."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
 
 const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const dispatch = useDispatch();
-  const [age, setAge] = useState(kioskProps.minimumAge.toString());
   const onSubmit = (values, formActions) => {
     const finalProps = {
       id: values.id,
@@ -25,22 +29,19 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
       memberCardEnabled: values.memberCardEnabled,
       serviceCheck: values.serviceCheckEnabled
         ? {
-            enabled: true,
-            startTime: values.serviceCheckStartTime,
-            endTime: values.serviceCheckEndTime,
-          }
+          enabled: true,
+          startTime: values.serviceCheckStartTime,
+          endTime: values.serviceCheckEndTime,
+        }
         : {
-            enabled: false,
-          },
+          enabled: false,
+        },
     };
     dispatch(updateKioskProps({ finalProps }));
   };
+  const [age, setAge] = useState(kioskProps.minimumAge.toString());
   const [type, setType] = useState(kioskProps.paymentType);
   const [serviceCheckEnabled, setServiceCheckEnabled] = useState(false);
-
-  useEffect(() => {
-    setServiceCheckEnabled(kioskProps.serviceCheckEnabled);
-  }, [kioskProps]);
 
   const handlePaymentType = value => setType(value);
 
@@ -52,6 +53,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   useEffect(() => {
     setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
+    setServiceCheckEnabled(kioskProps.serviceCheckEnabled);
   }, [kioskProps]);
 
   const languages = [
@@ -131,10 +133,16 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   options={PaymentTypes}
                 />
               </Grid.Column>
+
               <Grid.Column>
+                <label className="tool-tip">Pre-authorization amount&nbsp;</label>
+                <ToolTip />
                 <Field
                   name="preAuth"
-                  label="Pre-authorization amount"
+                  icon="euro"
+                  iconPosition="left"
+                  limiting="floatingField"
+                  prettier={prettierNumber}
                   component={FormInput}
                 />
               </Grid.Column>
@@ -162,7 +170,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                         checked={age === '16'}
                         onChange={(e, { value }) => {
                           setAge(value);
-                          setFieldValue(name, value);
+                          setFieldValue(value);
                         }}
                         component={FormRadio}
                         disabled={type === 'CreditOrDebitCard'}
@@ -174,7 +182,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                         checked={age === '18'}
                         onChange={(e, { value }) => {
                           setAge(value);
-                          setFieldValue(name, value);
+                          setFieldValue(value);
                         }}
                         component={FormRadio}
                         disabled={type === 'CreditOrDebitCard'}
