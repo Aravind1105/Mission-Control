@@ -367,13 +367,21 @@ const ProductForm = ({
             <Grid>
               <Grid.Row columns="equal">
                 <Grid.Column>
-                  <Field name="energy" label="kJ/kcal" component={FormInput} />
+                  <Field 
+                  name="energy" 
+                  label="kJ/kcal" 
+                  component={FormInput}
+                  limiting="floatingField"
+                  min={0} 
+                  />
                 </Grid.Column>
                 <Grid.Column>
                   <Field
                     name="fat"
                     label="Total Fat (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -381,6 +389,8 @@ const ProductForm = ({
                     name="fatSaturated"
                     label="Saturated Fats (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -388,6 +398,8 @@ const ProductForm = ({
                     name="carbo"
                     label="Carbohydrates (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -395,23 +407,39 @@ const ProductForm = ({
                     name="carboSugar"
                     label="Sugar (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Field name="fiber" label="Fiber (g)" component={FormInput} />
+                  <Field 
+                  name="fiber" 
+                  label="Fiber (g)" 
+                  component={FormInput} 
+                  limiting="floatingField"
+                  min={0}
+                  />
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <Field
                     name="protein"
                     label="Protein (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <Field name="salt" label="Salt (g)" component={FormInput} />
+                  <Field 
+                   name="salt" 
+                   label="Salt (g)" 
+                   component={FormInput} 
+                   limiting="floatingField"
+                   min={0}
+                  />
                 </Grid.Column>
                 <Grid.Column width={7}>
                   <Field
