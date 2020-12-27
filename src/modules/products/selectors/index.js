@@ -110,6 +110,7 @@ export const selectorGetProductCategories = createSelector(
 const defaultFormInit = {
   name: '',
   manufacturer: '',
+  articleNumber:'',
   description: '',
   category: '',
   tax: '',
@@ -164,6 +165,7 @@ export const selectorGetProductInitValue = createSelector(
       'fiber',
       'ingredientsList',
       'manufacturer',
+      'articleNumber',
       'name',
       'protein',
       'salt',

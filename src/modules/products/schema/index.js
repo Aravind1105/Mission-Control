@@ -22,6 +22,7 @@ export const productOnProductLine = gql`
     name
     category
     manufacturer
+    articleNumber
     description
     energy
     fat
@@ -95,6 +96,7 @@ export const GET_ALL_PRODUCTS_EXTENDED_QUERY = gql`
         _id
         name
         category
+        articleNumber
         manufacturer
         defaultPrice
         packagingOptions {
