@@ -175,11 +175,29 @@ const ProductForm = ({
                 </Grid.Column>
                 <Grid.Column>
                   <Field
+                    name="articleNumber"
+                    label="Article Number"
+                    component={FormInput}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row columns="equal">
+                <Grid.Column>
+                <Field
                     name="manufacturer"
                     label="Manufacturer"
                     required
                     component={FormInput}
                   />
+                </Grid.Column>
+                <Grid.Column>
+                  {/* <Field
+                    name="manufacturer"
+                    label="Manufacturer"
+                    required
+                    component={FormInput}
+                  /> */}
                 </Grid.Column>
               </Grid.Row>
 
