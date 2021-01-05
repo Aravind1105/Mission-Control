@@ -233,7 +233,6 @@ export const CONFIGURE_KIOSK_PROPS = gql`
       configureKioskProps(data:$data) {
         controller {
           preAuth
-          supportEmail
           paymentType
           tabletLang
           minimumAge

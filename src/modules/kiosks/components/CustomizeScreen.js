@@ -19,7 +19,14 @@ const PreAuthToolTip = () => (
 
 const AgeToolTip = () => (
   <Popup
-    content="Available only for GiroCard payment."
+    content="Available only for Giro card payment."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
+const SupportEmailToolTip = () => (
+  <Popup
+    content="Support email is the same for all kiosks."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
@@ -37,13 +44,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
       memberCardEnabled: values.memberCardEnabled,
       serviceCheck: values.serviceCheckEnabled
         ? {
-          enabled: true,
-          startTime: values.serviceCheckStartTime,
-          endTime: values.serviceCheckEndTime,
-        }
+            enabled: true,
+            startTime: values.serviceCheckStartTime,
+            endTime: values.serviceCheckEndTime,
+          }
         : {
-          enabled: false,
-        },
+            enabled: false,
+          },
     };
     dispatch(updateKioskProps({ finalProps }));
   };
@@ -91,12 +98,12 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
     {
       key: 'CreditOrDebitCard',
       value: 'CreditOrDebitCard',
-      text: 'Credit & Debit Card',
+      text: 'Credit & Debit card (Incl. Giro card)',
     },
     {
       key: 'GiroCard',
       value: 'GiroCard',
-      text: 'Giro Card',
+      text: 'Giro card only',
     },
   ];
 
@@ -109,10 +116,14 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   };
 
   return (
-    <Formik initialValues={kioskProps} onSubmit={onSubmit} enableReinitialize
+    <Formik
+      initialValues={kioskProps}
+      onSubmit={onSubmit}
+      enableReinitialize
       validationSchema={Yup.object().shape({
         preAuth: Yup.number().max(50, 'Amount exceeds € 50.'),
-      })}>
+      })}
+    >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
         <Form onSubmit={handleSubmit}>
           <Grid>
@@ -126,11 +137,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                 />
               </Grid.Column>
               <Grid.Column>
-                <Field
-                  name="supportEmail"
-                  label="Support Email"
-                  component={FormInput}
-                />
+                <label className="tool-tip">Support Email&nbsp;</label>
+                <SupportEmailToolTip />
+                <Field name="supportEmail" component={FormInput} disabled />
               </Grid.Column>
             </Grid.Row>
 
@@ -143,10 +152,21 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   handleCallback={handlePaymentType}
                   options={PaymentTypes}
                 />
+                <Grid.Row>
+                  <Grid.Column>
+                    <Field
+                      name="memberCardEnabled"
+                      label="Enable Member Card"
+                      component={FormCheckbox}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
               </Grid.Column>
 
               <Grid.Column>
-                <label className="tool-tip">Pre-authorization amount&nbsp;</label>
+                <label className="tool-tip">
+                  Pre-authorization amount&nbsp;
+                </label>
                 <PreAuthToolTip />
                 <Field
                   name="preAuth"
@@ -164,10 +184,12 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                 <Grid.Row>
                   <Grid.Column>
                     <Form.Group>
-                      <label className="tool-tip" style={{ marginLeft: "1em" }}>Age Restriction&nbsp;</label>
+                      <label className="tool-tip" style={{ marginLeft: '1em' }}>
+                        Age Restriction&nbsp;
+                      </label>
                       {type === 'CreditOrDebitCard' ? <AgeToolTip /> : null}
                       <Field
-                        label="16"
+                        label="16+"
                         name="minimumAge"
                         value="16"
                         checked={age === '16'}
@@ -179,7 +201,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                         disabled={type === 'CreditOrDebitCard'}
                       />
                       <Field
-                        label="18"
+                        label="18+"
                         name="minimumAge"
                         value="18"
                         checked={age === '18'}
@@ -190,21 +212,24 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                         component={FormRadio}
                         disabled={type === 'CreditOrDebitCard'}
                       />
+                      <Field
+                        label="None"
+                        name="minimumAge"
+                        value="0"
+                        checked={age === '0'}
+                        onChange={(e, { value }) => {
+                          setAge(value);
+                          setFieldValue(value);
+                        }}
+                        component={FormRadio}
+                        disabled={type === 'CreditOrDebitCard'}
+                      />
                     </Form.Group>
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Field
-                      name="memberCardEnabled"
-                      label="Enable Member Card"
-                      component={FormCheckbox}
-                    />
                   </Grid.Column>
                 </Grid.Row>
               </Grid.Column>
               <Grid.Column>
-                <Grid.Row>
+                {/* <Grid.Row>
                   <Grid.Column>
                     <Field
                       name="serviceCheckEnabled"
@@ -233,7 +258,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                       disabled={!serviceCheckEnabled}
                     />
                   </Grid.Column>
-                </Grid.Row>
+                </Grid.Row> */}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row textAlign="center">
