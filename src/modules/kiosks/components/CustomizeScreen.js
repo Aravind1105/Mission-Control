@@ -19,7 +19,7 @@ const PreAuthToolTip = () => (
 
 const AgeToolTip = () => (
   <Popup
-    content="Available only for Giro card payment."
+    content="Available for Giro card payment only."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
@@ -58,15 +58,20 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const [type, setType] = useState(kioskProps.paymentType);
   const [serviceCheckEnabled, setServiceCheckEnabled] = useState(false);
 
-  const handlePaymentType = value => setType(value);
+  const handlePaymentType = value => {
+    setType(value);
+    if (value === 'CreditOrDebitCard') setAge('0');
+  };
 
   useEffect(() => {
-    if (!age || age === '') setAge(kioskProps.minimumAge.toString());
+    if (kioskProps.minimumAge === '') setAge('0');
+    else setAge(kioskProps.minimumAge.toString());
     if (!type || type === '') setType(kioskProps.paymentType);
   }, []);
 
   useEffect(() => {
-    setAge(kioskProps.minimumAge.toString());
+    if (kioskProps.minimumAge === '') setAge('0');
+    else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
     setServiceCheckEnabled(kioskProps.serviceCheckEnabled);
   }, [kioskProps]);
@@ -152,17 +157,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   handleCallback={handlePaymentType}
                   options={PaymentTypes}
                 />
-                <Grid.Row>
-                  <Grid.Column>
-                    <Field
-                      name="memberCardEnabled"
-                      label="Enable Member Card"
-                      component={FormCheckbox}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
               </Grid.Column>
-
               <Grid.Column>
                 <label className="tool-tip">
                   Pre-authorization amount&nbsp;
@@ -181,52 +176,48 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 
             <Grid.Row columns="equal">
               <Grid.Column>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Group>
-                      <label className="tool-tip" style={{ marginLeft: '1em' }}>
-                        Age Restriction&nbsp;
-                      </label>
-                      {type === 'CreditOrDebitCard' ? <AgeToolTip /> : null}
-                      <Field
-                        label="16+"
-                        name="minimumAge"
-                        value="16"
-                        checked={age === '16'}
-                        onChange={(e, { value }) => {
-                          setAge(value);
-                          setFieldValue(value);
-                        }}
-                        component={FormRadio}
-                        disabled={type === 'CreditOrDebitCard'}
-                      />
-                      <Field
-                        label="18+"
-                        name="minimumAge"
-                        value="18"
-                        checked={age === '18'}
-                        onChange={(e, { value }) => {
-                          setAge(value);
-                          setFieldValue(value);
-                        }}
-                        component={FormRadio}
-                        disabled={type === 'CreditOrDebitCard'}
-                      />
-                      <Field
-                        label="None"
-                        name="minimumAge"
-                        value="0"
-                        checked={age === '0'}
-                        onChange={(e, { value }) => {
-                          setAge(value);
-                          setFieldValue(value);
-                        }}
-                        component={FormRadio}
-                        disabled={type === 'CreditOrDebitCard'}
-                      />
-                    </Form.Group>
-                  </Grid.Column>
-                </Grid.Row>
+                <Form.Group>
+                  <label className="tool-tip" style={{ marginLeft: '1em' }}>
+                    Age Restriction&nbsp;
+                  </label>
+                  {type === 'CreditOrDebitCard' ? <AgeToolTip /> : null}
+                  <Field
+                    label="16+"
+                    name="minimumAge"
+                    value="16"
+                    checked={age === '16'}
+                    onChange={(e, { name, value }) => {
+                      setAge(value);
+                      setFieldValue(name, value);
+                    }}
+                    component={FormRadio}
+                    disabled={type === 'CreditOrDebitCard'}
+                  />
+                  <Field
+                    label="18+"
+                    name="minimumAge"
+                    value="18"
+                    checked={age === '18'}
+                    onChange={(e, { name, value }) => {
+                      setAge(value);
+                      setFieldValue(name, value);
+                    }}
+                    component={FormRadio}
+                    disabled={type === 'CreditOrDebitCard'}
+                  />
+                  <Field
+                    label="None"
+                    name="minimumAge"
+                    value="0"
+                    checked={age === '0'}
+                    onChange={(e, { name, value }) => {
+                      setAge(value);
+                      setFieldValue(name, value);
+                    }}
+                    component={FormRadio}
+                    disabled={type === 'CreditOrDebitCard'}
+                  />
+                </Form.Group>
               </Grid.Column>
               <Grid.Column>
                 {/* <Grid.Row>
@@ -261,6 +252,16 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                 </Grid.Row> */}
               </Grid.Column>
             </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Field
+                  name="memberCardEnabled"
+                  label="Enable Member Card"
+                  component={FormCheckbox}
+                />
+              </Grid.Column>
+            </Grid.Row>
+
             <Grid.Row textAlign="center">
               <Grid.Column>
                 <Button
