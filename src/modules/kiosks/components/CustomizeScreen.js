@@ -37,7 +37,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
     const finalProps = {
       id: values.id,
       preAuth: parseFloat(values.preAuth),
-      supportEmail: values.supportEmail,
       paymentType: values.paymentType,
       minimumAge: parseFloat(age),
       tabletLang: values.tabletLang,
