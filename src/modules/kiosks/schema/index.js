@@ -66,6 +66,11 @@ const FragmentKioskOnKiosk = gql`
           city
         }
       }
+      support {
+        email
+        hotline
+        hotlineAvailability
+      }
     }
     internet {
       signalStrength
@@ -78,7 +83,6 @@ const FragmentKioskOnKiosk = gql`
     }
     controller {
       preAuth
-      supportEmail
       paymentType
       tabletLang
       minimumAge
