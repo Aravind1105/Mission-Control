@@ -14,7 +14,7 @@ import { getLoadingState } from './selectors';
 const navSwitcherConfig = [
   { name: 'Settings' },
   { name: 'General', goTo: '/settings/general' },
-  // { name: 'Security', goTo: '/settings/security' }, //! LIV-2337 Do not show this button until this feature is tested.
+  { name: 'Security', goTo: '/settings/security' }, //! LIV-2337 Do not show this button until this feature is tested.
 ];
 
 const Settings = ({ isLoading }) => (
@@ -25,8 +25,8 @@ const Settings = ({ isLoading }) => (
       <NavSwitcher config={navSwitcherConfig} />
       <Switch>
         <Route exact path="/settings/general" component={General} />
-        {/* <Route exact path="/settings/security" component={Security} />
-        <Redirect to="/settings/security" /> */}
+        <Route exact path="/settings/security" component={Security} />
+        <Redirect to="/settings/security" />
       </Switch>
     </Segment>
   </>
