@@ -11,13 +11,19 @@ import { CREATE_KIOSK_MUTATION, UPDATE_KIOSK_MUTATION, GET_KIOSK_QUERY } from '.
 
 function* handler({ payload: { values, formActions } }) {
   try {
-    const { id, ...rest } = values;
+    const { id, orgId, ...rest } = values;
+
     const variables = {
       data: rest,
     };
     if (id) {
       variables.id = id;
     }
+    if (orgId) {
+      variables.data.ownerOrganization = orgId;
+      variables.data.orgId = orgId;
+    }
+
     const { data } = yield call(gqlKiosk.mutate, {
       mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
       variables,
