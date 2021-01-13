@@ -176,7 +176,7 @@ const ProductForm = ({
                 <Grid.Column>
                   <Field
                     name="articleNumber"
-                    label="Article Number"
+                    label="Article Number (SKU)"
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -184,7 +184,7 @@ const ProductForm = ({
 
               <Grid.Row columns="equal">
                 <Grid.Column>
-                <Field
+                  <Field
                     name="manufacturer"
                     label="Manufacturer"
                     required
@@ -337,7 +337,7 @@ const ProductForm = ({
                     src={require('../../../styling/assets/images/shelf_capacities.png')}
                     style={{
                       height: 150,
-                      width: 330
+                      width: 330,
                     }}
                   />
                 </Popup.Content>
@@ -385,12 +385,12 @@ const ProductForm = ({
             <Grid>
               <Grid.Row columns="equal">
                 <Grid.Column>
-                  <Field 
-                  name="energy" 
-                  label="kJ/kcal" 
-                  component={FormInput}
-                  limiting="floatingField"
-                  min={0} 
+                  <Field
+                    name="energy"
+                    label="kJ/kcal"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -433,12 +433,12 @@ const ProductForm = ({
 
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Field 
-                  name="fiber" 
-                  label="Fiber (g)" 
-                  component={FormInput} 
-                  limiting="floatingField"
-                  min={0}
+                  <Field
+                    name="fiber"
+                    label="Fiber (g)"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column width={3}>
@@ -451,12 +451,12 @@ const ProductForm = ({
                   />
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <Field 
-                   name="salt" 
-                   label="Salt (g)" 
-                   component={FormInput} 
-                   limiting="floatingField"
-                   min={0}
+                  <Field
+                    name="salt"
+                    label="Salt (g)"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column width={7}>

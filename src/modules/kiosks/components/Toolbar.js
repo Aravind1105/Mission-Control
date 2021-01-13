@@ -48,7 +48,7 @@ const Toolbar = ({ search,
               color="green"
               compact
               as={Link}
-              disabled={true} //! Disabled temporarily #golive2
+              // disabled={true} //! Disabled temporarily #golive2
               to="/kiosks/edit/new" 
             >
               <Icon name="right arrow" />
