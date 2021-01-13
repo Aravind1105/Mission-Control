@@ -31,6 +31,20 @@ const SupportEmailToolTip = () => (
   />
 );
 
+const MemberCardToolTip = () => (
+  <Popup
+    content="This feature can take a couple of minutes to update on the Kiosk."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
+const PaymentToolTip = () => (
+  <Popup
+    content="This feature can take a couple of minutes to update on the Kiosk."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
 const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
@@ -40,7 +54,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
       paymentType: values.paymentType,
       minimumAge: parseFloat(age),
       tabletLang: values.tabletLang,
-      memberCardEnabled: values.memberCardEnabled,
+      memberCardEnabled: memberCard,
       serviceCheck: values.serviceCheckEnabled
         ? {
             enabled: true,
@@ -56,10 +70,15 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const [age, setAge] = useState(kioskProps.minimumAge.toString());
   const [type, setType] = useState(kioskProps.paymentType);
   const [serviceCheckEnabled, setServiceCheckEnabled] = useState(false);
+  const [memberCard, setMemberCard] = useState(kioskProps.memberCardEnabled);
 
   const handlePaymentType = value => {
     setType(value);
     if (value === 'CreditOrDebitCard') setAge('0');
+    if (value === 'GiroCard') {
+      setMemberCard(true);
+      setAge('18')
+    };
   };
 
   useEffect(() => {
@@ -149,9 +168,12 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 
             <Grid.Row columns="equal">
               <Grid.Column>
+                <label className="tool-tip">
+                  Payment&nbsp;
+                </label>
+                <PaymentToolTip />
                 <Field
                   name="paymentType"
-                  label="Payment"
                   component={FormSelect}
                   handleCallback={handlePaymentType}
                   options={PaymentTypes}
@@ -204,18 +226,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                     component={FormRadio}
                     disabled={type === 'CreditOrDebitCard'}
                   />
-                  <Field
-                    label="None"
-                    name="minimumAge"
-                    value="0"
-                    checked={age === '0'}
-                    onChange={(e, { name, value }) => {
-                      setAge(value);
-                      setFieldValue(name, value);
-                    }}
-                    component={FormRadio}
-                    disabled={type === 'CreditOrDebitCard'}
-                  />
                 </Form.Group>
               </Grid.Column>
               <Grid.Column>
@@ -253,11 +263,36 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
+              <Form.Group>
+                <label className="tool-tip">
+                Member Card&nbsp;
+                </label>
+                <MemberCardToolTip />
                 <Field
+                  label="Enable"
                   name="memberCardEnabled"
-                  label="Enable Member Card"
-                  component={FormCheckbox}
+                  value={true}
+                  checked={memberCard == true}
+                  onChange={(e, { name, value }) => {
+                    setMemberCard(value);
+                    setFieldValue(name, value);
+                  }}
+                  component={FormRadio}
+                  disabled={type === 'GiroCard'}
                 />
+                <Field
+                  label="Disable"
+                  name="memberCardDisabled"
+                  value={false}
+                  checked={memberCard == false}
+                  onChange={(e, { name, value }) => {
+                    setMemberCard(value);
+                    setFieldValue(name, value);
+                  }}
+                  component={FormRadio}
+                  disabled={type === 'GiroCard'}
+                />
+              </Form.Group>
               </Grid.Column>
             </Grid.Row>
 
