@@ -1,3 +1,21 @@
+#### 1.3.11 (2021-01-13)
+
+##### Bug Fixes
+
+* **kiosks-list:**  sales 24h changed to sales today (eb0b8c71)
+* **liv-2549:**
+  *  setting UI changes (ac2fb835)
+  *  setting screen for kiosk (eb75a2b5)
+* **Users Details:**  LIV-2534 User Layout Fix (cba4e4f1)
+* **manage screen:** service check time swapped (d7f30987)
+
+##### Other Changes
+
+* **Product Details:**
+  *  LIV-2472 new field in Forms with Article Number (af9a6f40)
+  *  LIV-2182 Input Field Validation (bbd007c9)
+* **Users Details:**  LIV-2558 Logo Updated (84711385)
+
 #### 1.3.10 (2021-01-06)
 
 ##### Build System / Dependencies
