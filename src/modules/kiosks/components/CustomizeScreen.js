@@ -9,6 +9,7 @@ import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
+import WarningMessage from 'modules/shared/components/Message';
 
 const PreAuthToolTip = () => (
   <Popup
@@ -71,14 +72,19 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const [type, setType] = useState(kioskProps.paymentType);
   const [serviceCheckEnabled, setServiceCheckEnabled] = useState(false);
   const [memberCard, setMemberCard] = useState(kioskProps.memberCardEnabled);
+  const [warning, setWarning] = useState(false);
 
   const handlePaymentType = value => {
     setType(value);
-    if (value === 'CreditOrDebitCard') setAge('0');
+    if (value === 'CreditOrDebitCard') {
+      setAge('0');
+      setWarning(false);
+    }
     if (value === 'GiroCard') {
+      setWarning(true);
       setMemberCard(true);
-      setAge('18')
-    };
+      setAge('18');
+    }
   };
 
   useEffect(() => {
@@ -168,9 +174,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 
             <Grid.Row columns="equal">
               <Grid.Column>
-                <label className="tool-tip">
-                  Payment&nbsp;
-                </label>
+                <label className="tool-tip">Payment&nbsp;</label>
                 <PaymentToolTip />
                 <Field
                   name="paymentType"
@@ -227,6 +231,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                     disabled={type === 'CreditOrDebitCard'}
                   />
                 </Form.Group>
+                <div>{warning ? <WarningMessage></WarningMessage> : <></>}</div>
               </Grid.Column>
               <Grid.Column>
                 {/* <Grid.Row>
@@ -263,36 +268,34 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-              <Form.Group>
-                <label className="tool-tip">
-                Member Card&nbsp;
-                </label>
-                <MemberCardToolTip />
-                <Field
-                  label="Enable"
-                  name="memberCardEnabled"
-                  value={true}
-                  checked={memberCard == true}
-                  onChange={(e, { name, value }) => {
-                    setMemberCard(value);
-                    setFieldValue(name, value);
-                  }}
-                  component={FormRadio}
-                  disabled={type === 'GiroCard'}
-                />
-                <Field
-                  label="Disable"
-                  name="memberCardDisabled"
-                  value={false}
-                  checked={memberCard == false}
-                  onChange={(e, { name, value }) => {
-                    setMemberCard(value);
-                    setFieldValue(name, value);
-                  }}
-                  component={FormRadio}
-                  disabled={type === 'GiroCard'}
-                />
-              </Form.Group>
+                <Form.Group>
+                  <label className="tool-tip">Member Card&nbsp;</label>
+                  <MemberCardToolTip />
+                  <Field
+                    label="Enable"
+                    name="memberCardEnabled"
+                    value={true}
+                    checked={memberCard == true}
+                    onChange={(e, { name, value }) => {
+                      setMemberCard(value);
+                      setFieldValue(name, value);
+                    }}
+                    component={FormRadio}
+                    disabled={type === 'GiroCard'}
+                  />
+                  <Field
+                    label="Disable"
+                    name="memberCardDisabled"
+                    value={false}
+                    checked={memberCard == false}
+                    onChange={(e, { name, value }) => {
+                      setMemberCard(value);
+                      setFieldValue(name, value);
+                    }}
+                    component={FormRadio}
+                    disabled={type === 'GiroCard'}
+                  />
+                </Form.Group>
               </Grid.Column>
             </Grid.Row>
 
