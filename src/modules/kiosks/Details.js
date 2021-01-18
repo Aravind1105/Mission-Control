@@ -145,13 +145,11 @@ const KioskDetails = ({
                         label="Activity Log"
                         onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
                       />
-                      {rootUser &&
-                        <CustomButton
+                      <CustomButton
                           icon="setting"
                           label="Settings"
                           onClick={() => history.push(`/kiosks/settings/${kiosk._id}`)}
-                        />
-                      }
+                      />
                     </>
                   </DetailsInfo>
                 </Segment>
