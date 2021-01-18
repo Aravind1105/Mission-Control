@@ -9,7 +9,7 @@ import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
-import WarningMessage from 'modules/shared/components/Message';
+import { Message } from 'semantic-ui-react';
 
 const PreAuthToolTip = () => (
   <Popup
@@ -46,6 +46,18 @@ const PaymentToolTip = () => (
   />
 );
 
+const AgeRestrictionWarningMessage = () => (
+  <Message negative>
+    <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
+  </Message>
+);
+
+const ServiceOutOfTimeWarningMessage = () => (
+  <Message negative>
+    <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
+  </Message>
+);
+
 const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
@@ -59,8 +71,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
       serviceCheck: values.serviceCheckEnabled
         ? {
             enabled: true,
-            startTime: values.serviceCheckStartTime,
-            endTime: values.serviceCheckEndTime,
           }
         : {
             enabled: false,
@@ -72,18 +82,27 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   const [type, setType] = useState(kioskProps.paymentType);
   const [serviceCheckEnabled, setServiceCheckEnabled] = useState(false);
   const [memberCard, setMemberCard] = useState(kioskProps.memberCardEnabled);
-  const [warning, setWarning] = useState(false);
+  const [ageRestrictionWarning, setAgeRestrictionWarning] = useState(false);
+  const [outOfServicewarning, setOutOfServiceWarning] = useState(false);
 
   const handlePaymentType = value => {
     setType(value);
     if (value === 'CreditOrDebitCard') {
       setAge('0');
-      setWarning(false);
+      setAgeRestrictionWarning(false);
     }
     if (value === 'GiroCard') {
-      setWarning(true);
+      setAgeRestrictionWarning(true);
       setMemberCard(true);
       setAge('18');
+    }
+  };
+
+  const handleServiceCheckEnabled = value => {
+    if(value){
+      setOutOfServiceWarning(true);
+    }else{
+      setOutOfServiceWarning(false);
     }
   };
 
@@ -97,7 +116,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
-    setServiceCheckEnabled(kioskProps.serviceCheckEnabled);
+    setServiceCheckEnabled(serviceCheckEnabled);
   }, [kioskProps]);
 
   const languages = [
@@ -231,20 +250,21 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                     disabled={type === 'CreditOrDebitCard'}
                   />
                 </Form.Group>
-                <div>{warning ? <WarningMessage></WarningMessage> : <></>}</div>
+                <div>{ageRestrictionWarning ? <AgeRestrictionWarningMessage></AgeRestrictionWarningMessage> : <></>}</div>
               </Grid.Column>
               <Grid.Column>
-                {/* <Grid.Row>
+                <Grid.Row>
                   <Grid.Column>
                     <Field
                       name="serviceCheckEnabled"
                       label="Out of Service"
                       component={FormCheckbox}
-                      onChangeCallback={value => setServiceCheckEnabled(value)}
+                      onChangeCallback={handleServiceCheckEnabled}
                     />
                   </Grid.Column>
+                  <div>{outOfServicewarning ? <ServiceOutOfTimeWarningMessage></ServiceOutOfTimeWarningMessage> : <></>}</div>
                 </Grid.Row>
-                <Grid.Row style={{ display: 'flex' }} columns="equal">
+                {/* <Grid.Row style={{ display: 'flex' }} columns="equal">
                   <Grid.Column style={{ width: '100%', marginRight: 5 }}>
                     <Field
                       name="serviceCheckStartTime"
@@ -269,7 +289,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Group>
-                  <label className="tool-tip">Member Card&nbsp;</label>
+                  <label className="tool-tip" style={{ marginLeft: '1em' }}>
+                    Member Card&nbsp;
+                  </label>
                   <MemberCardToolTip />
                   <Field
                     label="Enable"
