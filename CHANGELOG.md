@@ -1,3 +1,16 @@
+#### 1.3.12 (2021-01-19)
+
+##### Bug Fixes
+
+* **kiosk properties:**  allow access to admins to kiosk general settings. (27bee65f)
+* **device settings:**  change logic for member card to make it work properly with ZVT software. (5727f3e5)
+
+##### Other Changes
+
+* **SideMenu:**  Showing Version of Mission Controller (d937245a)
+* **service out of time:**  activate service out of time without time range. Also, refactor for warning messages on kiosk general settings page. (e57ca1c9)
+* **kiosk details:**  LIV-2642 Message on changing paymenttype to GyroCard only (6c51d74f)
+
 #### 1.3.11 (2021-01-13)
 
 ##### Bug Fixes
