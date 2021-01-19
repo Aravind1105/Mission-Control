@@ -13,7 +13,7 @@ import getAlmostEmptyKiosks from './getAlmostEmptyKiosks';
 import getTemperatureLogs from './getTemperatureLogs';
 import getActivityLogs from './getActivityLogs';
 import updateKioskProps from './updateKioskProps';
-
+import setPlanogramSwitchState from './updatePlanogramSwitch';
 export default function* kiosksSaga() {
   yield all([
     fork(getAllKiosks),
@@ -28,6 +28,7 @@ export default function* kiosksSaga() {
     fork(getTemperatureLogs),
     fork(getActivityLogs),
     fork(getAllKiosksForTable),
-    fork(updateKioskProps)
+    fork(updateKioskProps),
+    fork(setPlanogramSwitchState)
   ]);
 }

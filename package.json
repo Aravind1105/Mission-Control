@@ -1,6 +1,6 @@
 {
   "name": "livello-mission-control-stage",
-  "version": "1.3.2",
+  "version": "1.3.12",
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack/webpack.config.dev.js --mode development",
@@ -27,7 +27,7 @@
     "history": "^4.9.0",
     "i": "^0.3.6",
     "i18next": "^19.3.4",
-    "livello-js-sdk": "git+https://gitlab-cicd-build:jz2qxYr7TyRfaKpbjskD@gitlab.com/livello-network/livello-js-sdk.git",
+    "livello-js-sdk": "git+https://gitlab-cicd-build:c68pyMjMKyxRRncxwZz4@gitlab.com/livello-network/livello-js-sdk.git",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",

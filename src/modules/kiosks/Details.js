@@ -47,6 +47,7 @@ const KioskDetails = ({
   kiosk,
   loadCells,
   isKioskLoading,
+  currentKioskSide,
   resetKiosk,
   createRefill,
   getKiosk,
@@ -144,13 +145,11 @@ const KioskDetails = ({
                         label="Activity Log"
                         onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
                       />
-                      {rootUser &&
-                        <CustomButton
-                          icon="mobile alternate"
-                          label="Manage Screen"
-                          onClick={() => history.push(`/kiosks/screen/customize/${kiosk._id}`)}
-                        />
-                      }
+                      <CustomButton
+                          icon="setting"
+                          label="Settings"
+                          onClick={() => history.push(`/kiosks/settings/${kiosk._id}`)}
+                      />
                     </>
                   </DetailsInfo>
                 </Segment>
@@ -161,6 +160,7 @@ const KioskDetails = ({
                 <DetailsLoadCells
                   cells={loadCells.list}
                   kioskName={kiosk.name}
+                  currentKioskSide={currentKioskSide}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -192,6 +192,7 @@ const mapStateToProps = state => ({
   orgId: getOrgIdFromKiosk(state),
   orgName: getOrgName(state),
   isKioskLoading: state.kiosks.isKioskLoading,
+  currentKioskSide: state.kiosks.currentKioskSide,
   rootUser: state.user.root
 });
 

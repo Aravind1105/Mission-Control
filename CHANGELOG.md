@@ -1,3 +1,120 @@
+#### 1.3.12 (2021-01-19)
+
+##### Bug Fixes
+
+* **kiosk properties:**  allow access to admins to kiosk general settings. (27bee65f)
+* **device settings:**  change logic for member card to make it work properly with ZVT software. (5727f3e5)
+
+##### Other Changes
+
+* **SideMenu:**  Showing Version of Mission Controller (d937245a)
+* **service out of time:**  activate service out of time without time range. Also, refactor for warning messages on kiosk general settings page. (e57ca1c9)
+* **kiosk details:**  LIV-2642 Message on changing paymenttype to GyroCard only (6c51d74f)
+
+#### 1.3.11 (2021-01-13)
+
+##### Bug Fixes
+
+* **kiosks-list:**  sales 24h changed to sales today (eb0b8c71)
+* **liv-2549:**
+  *  setting UI changes (ac2fb835)
+  *  setting screen for kiosk (eb75a2b5)
+* **Users Details:**  LIV-2534 User Layout Fix (cba4e4f1)
+* **manage screen:** service check time swapped (d7f30987)
+
+##### Other Changes
+
+* **Product Details:**
+  *  LIV-2472 new field in Forms with Article Number (af9a6f40)
+  *  LIV-2182 Input Field Validation (bbd007c9)
+* **Users Details:**  LIV-2558 Logo Updated (84711385)
+
+#### 1.3.10 (2021-01-06)
+
+##### Build System / Dependencies
+
+* **liv-2585:**  manage age restriction and disable out of service (fc1cae83)
+
+##### Bug Fixes
+
+* **kiosk settings:** LIV-2585 updated GrqphQL schema and submit handler (5ca2c4bf)
+* **liv-2549:**
+  *  setting UI changes (ac2fb835)
+  *  setting screen for kiosk (eb75a2b5)
+* **Users Details:**  LIV-2534 User Layout Fix (cba4e4f1)
+* **manage screen:** service check time swapped (d7f30987)
+
+##### Other Changes
+
+* **kiosk-settings:** LIV-2585 service time commented (04173861)
+* **Product Details:**
+  *  LIV-2472 new field in Forms with Article Number (af9a6f40)
+  *  LIV-2182 Input Field Validation (bbd007c9)
+* **Users Details:**  LIV-2558 Logo Updated (84711385)
+
+#### 1.3.9 (2020-12-18)
+
+##### Other Changes
+
+* **planogram-loadcell:** LIV-2485 image style + popup trigger size normal (63eeb42b)
+* **kiosk details:**  LIV-2485 Show Pop Up (1716289e)
+
+#### 1.3.8 (2020-12-18)
+
+##### New Features
+
+* **product-edit:** LIV-2484 tooltip-shelf capacity (f100f202)
+
+##### Other Changes
+
+* **product-edit:** LIV-2483 move shelf life capacities downwards (20ac11fd)
+
+#### 1.3.7 (2020-12-18)
+
+##### New Features
+
+* **users-membercard:** LIV-2488 membercard field validation irrespective of submitting (372dcd5d)
+
+##### Bug Fixes
+
+* **ci-cd:**  use docker:stable-dind base image (ed4b7157)
+
+##### Other Changes
+
+* **kiosk-planogram:** LIV-2437 switch state saga and action updated (e869128f)
+* **Maintain Planogram:** Main state after updat (33eccd21)
+* livello-network/livello-mission-control into staging-master (6e7531ee)
+
+#### 1.3.6 (2020-12-17)
+
+##### Bug Fixes
+
+* **out_of_service:** Invert logic for start and end time, since it works like so in the tablet and the ZVT payment terminal. (72976462)
+* **ci-cd:** docker base image to v19 (9285afc5)
+* **node:**  base image for docker (72c7a216)
+* **docker:**  base image node:12-alpine (8681de01)
+* **package:**  gitlab runner updatye (e4aa8e9b)
+
+#### 1.3.5 (2020-12-16)
+
+##### Bug Fixes
+
+* **package.json:**  update gitlab runner credentials (15ed3a61)
+
+#### 1.3.4 (2020-12-16)
+
+#### 1.3.3 (2020-12-16)
+
+##### Bug Fixes
+
+* **security:**  hide security options for API Key Secret. Requested from Operations. (12f2d60d)
+* **products_cost:**  calculate on kiosk detail page the real cost of the products. (Code made by Rana) (775cca2f)
+
+##### Other Changes
+
+* **kiosk-manage:** LIV-2516 updated design - service time fields (d5c62b56)
+* **out_of_service_time:**  add out of service start and end time for test purposes with the Fridge-cc. NOT FINAL DESIGN. (45920c57)
+
 #### 1.3.2 (2020-12-11)
 
 ##### Bug Fixes

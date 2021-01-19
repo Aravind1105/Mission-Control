@@ -21,12 +21,21 @@ import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
 import { toast } from 'react-semantic-toasts';
+import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 
 const ToolTip = () => (
   <Popup
     content="There  are products left in the fridge - can’t change the product setup for loadcell"
-    trigger={<Icon size="large" color="yellow" name="info circle" />}
+    trigger={<Icon color="yellow" name="info circle" />}
   />
+);
+
+const PositionTip = () => (
+  <Popup trigger={<Icon color="yellow" name="info circle" />}>
+    <Popup.Content>
+      <img src={planogramExplaination} style={{ width: 330, height: 170 }} />
+    </Popup.Content>
+  </Popup>
 );
 
 const ModalLoadCell = ({
@@ -178,18 +187,22 @@ const ModalLoadCell = ({
                 </Grid.Row>
                 <Grid.Row columns="equal">
                   <Grid.Column>
+                    <b>Product</b>
+                    {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
-                      label="Position"
+                      // label="Position"
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
                     />
                   </Grid.Column>
+
                   <Grid.Column>
+                    <b>Cable ID</b>
                     <Field
                       name="cellId"
-                      label="Cable ID"
+                      // label="Cable ID"
                       disabled={!isAddLoadCell}
                       validate={validateCellId}
                       component={FormInput}
@@ -216,13 +229,17 @@ const ModalLoadCell = ({
               onApprove={() => {
                 handleSave(productInfo);
                 setShowAlert(false);
-                toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
+                toast({
+                  type: 'success',
+                  description: 'Scale was saved successfully.',
+                  animation: 'fade left',
+                });
               }}
               onCancel={() => setShowAlert(false)}
-              alertMsg={ 
-                initVal.planogramPosition != position?
-                `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
-                : `Are you sure that you want to update the product?`
+              alertMsg={
+                initVal.planogramPosition != position
+                  ? `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
+                  : `Are you sure that you want to update the product?`
               }
             />
           </form>

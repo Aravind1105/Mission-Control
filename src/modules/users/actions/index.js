@@ -7,6 +7,7 @@ export const getOneUserWithInfo = createAction('@@saga/GET_ONE_USER_WITH_INFO');
 export const getUserTransactions = createAction('@@saga/GET_USER_TRANSACTIONS');
 export const modifyUserMemberCard = createAction('@@saga/MODIFY_USER_MEMBER_CARD');
 export const updateUser = createAction('@@saga/UPDATE_USER');
+export const validateMemberCard = createAction('@@saga/VALIDATE_MEMBER_CARD');
 
 // State actions
 export const getUsersSuccess = createAction('@@state/GET_USERS_SUCCESS');
