@@ -192,4 +192,10 @@ export const UPDATE_USER = gql`
   ${userDetailOnUser}
 `;
 
+export const VALIDATE_MEMBER_CARD = gql `
+  query($userId: String!, $data: MemberCardValidationInput) {
+    checkMemberCardIfAlreadyAssigned(userId: $userId, data: $data)
+  }
+`;
+
 export default {};

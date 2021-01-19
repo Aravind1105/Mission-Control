@@ -311,7 +311,10 @@ export const kioskInitialProperties = {
   paymentType: '',
   tabletLang: '',
   minimumAge: '',
-  memberCardEnabled: ''
+  memberCardEnabled: '',
+  serviceCheckEnabled: '',
+  serviceCheckStartTime: 0,
+  serviceCheckEndTime: 0,
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
@@ -319,11 +322,14 @@ export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
   return kiosk ? {
     id: kiosk._id,
     preAuth: kiosk.controller.preAuth.toString(),
-    supportEmail: get(kiosk.controller, 'supportEmail', '') || '',
+    supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
     paymentType: get(kiosk.controller, 'paymentType', '') || '',
     tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
-    minimumAge: get(kiosk.controller, 'minimumAge', '') || '',
+    minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
     memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', '') || false,
+    serviceCheckEnabled: get(kiosk.controller.serviceCheck, 'enabled', '') || false,
+    serviceCheckStartTime: get(kiosk.controller.serviceCheck, 'startTime', '') || 21,
+    serviceCheckEndTime: get(kiosk.controller.serviceCheck, 'endTime', '') || 6,
   } : kioskInitialProperties;
 }
 )
