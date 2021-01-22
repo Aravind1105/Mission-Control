@@ -47,13 +47,13 @@ const PaymentToolTip = () => (
 );
 
 const AgeRestrictionWarningMessage = () => (
-  <Message negative>
+  <Message color="orange">
     <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
   </Message>
 );
 
 const ServiceOutOfTimeWarningMessage = () => (
-  <Message negative>
+  <Message color="orange">
     <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
   </Message>
 );
@@ -99,9 +99,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   };
 
   const handleServiceCheckEnabled = value => {
-    if(value){
+    if (value) {
       setOutOfServiceWarning(true);
-    }else{
+    } else {
       setOutOfServiceWarning(false);
     }
   };
@@ -250,7 +250,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                     disabled={type === 'CreditOrDebitCard'}
                   />
                 </Form.Group>
-                <div>{ageRestrictionWarning ? <AgeRestrictionWarningMessage></AgeRestrictionWarningMessage> : <></>}</div>
+                <div>
+                  {ageRestrictionWarning ? (
+                    <AgeRestrictionWarningMessage></AgeRestrictionWarningMessage>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </Grid.Column>
               <Grid.Column>
                 <Grid.Row>
@@ -262,7 +268,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                       onChangeCallback={handleServiceCheckEnabled}
                     />
                   </Grid.Column>
-                  <div>{outOfServicewarning ? <ServiceOutOfTimeWarningMessage></ServiceOutOfTimeWarningMessage> : <></>}</div>
+                  <div>
+                    {outOfServicewarning ? (
+                      <ServiceOutOfTimeWarningMessage></ServiceOutOfTimeWarningMessage>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </Grid.Row>
                 {/* <Grid.Row style={{ display: 'flex' }} columns="equal">
                   <Grid.Column style={{ width: '100%', marginRight: 5 }}>
