@@ -33,7 +33,7 @@ import { createRefill, createRefillSuccess } from '../../transactions/actions';
 const initialState = {
   list: [],
   tableList: [],
-  kiosk: null,
+  kiosk: {},
   isKioskLoading: false,
   isLoading: false,
   currentKioskSide: 'A',
@@ -94,9 +94,10 @@ const kiosksReducer = handleActions(
       kiosk: payload,
       isKioskLoading: false,
     }),
-    [updateKioskPropsSuccess]: state => {
+    [updateKioskPropsSuccess]: (state, { payload }) => {
       return {
         ...state,
+        kiosk: payload,
         isKioskLoading: false,
       };
     },

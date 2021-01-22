@@ -1,3 +1,9 @@
+#### 1.3.13 (2021-01-22)
+
+##### Bug Fixes
+
+* **kiosk-settings:** LIV-2681 memeber card enable/disable consitency issue fixed (302c40c4)
+
 #### 1.3.12 (2021-01-19)
 
 ##### Bug Fixes

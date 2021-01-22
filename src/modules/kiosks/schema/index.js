@@ -233,18 +233,10 @@ export const KIOSK_RESET_MUTATION = gql`
 export const CONFIGURE_KIOSK_PROPS = gql`
   mutation configureKioskProps($data: KioskPropsInput!) {
     configureKioskProps(data: $data) {
-      preAuth
-      paymentType
-      tabletLang
-      minimumAge
-      memberCardEnabled
-      serviceCheck {
-        enabled
-        startTime
-        endTime
-      }
+      ...FragmentKiosk
     }
   }
+  ${FragmentKioskOnKiosk}
 `;
 export const GET_ALERTS_GRID = gql`
   query gridAlerts($data: GridRequest) {
