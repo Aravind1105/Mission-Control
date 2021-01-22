@@ -428,7 +428,6 @@ export const getTemperatureLogsState = state => {
   const isAllMonthsSame = logs.every(log => log.month === month);
 
   const organizedData = logs.map(log => {
-    console.log('Printing Log', log);
     const date = new Date();
     date.setMonth(log.month - 1);
     date.setDate(log.day || 1);

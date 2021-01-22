@@ -31,7 +31,6 @@ const columns = [
 ];
 
 const TempLogGrid = ({ temperatureLogs }) => {
-  console.log('this is TempLog component', temperatureLogs);
   return (
     <Grid.Row>
       <Grid.Column>
