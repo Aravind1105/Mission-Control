@@ -19,6 +19,7 @@ import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { modifyProductSaga, modifyProductImage } from '../actions';
+import get from 'lodash/get';
 
 let setImg;
 let restVal;
@@ -60,15 +61,15 @@ const ProductForm = ({
     const newCapacities = [];
     newCapacities.push({
       surfaceSize: 'N33',
-      units: parseInt(capacities.surfaceSize_33),
+      units: parseInt(get(capacities, 'surfaceSize_33', '0')),
     });
     newCapacities.push({
       surfaceSize: 'N50',
-      units: parseInt(capacities.surfaceSize_50),
+      units: parseInt(get(capacities, 'surfaceSize_50', '0')),
     });
     newCapacities.push({
       surfaceSize: 'N100',
-      units: parseInt(capacities.surfaceSize_100),
+      units: parseInt(get(capacities, 'surfaceSize_100', '0')),
     });
     values.capacities = newCapacities;
 

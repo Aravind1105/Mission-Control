@@ -1,3 +1,13 @@
+#### 1.3.14 (2021-01-22)
+
+##### Bug Fixes
+
+* **create/edit product:** LIV-2678 (1bdfe856)
+
+##### Other Changes
+
+* **kiosks reducer:** kiosk default set to null (d6c1ba69)
+
 #### 1.3.13 (2021-01-22)
 
 ##### Bug Fixes
