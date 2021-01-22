@@ -33,7 +33,7 @@ import { createRefill, createRefillSuccess } from '../../transactions/actions';
 const initialState = {
   list: [],
   tableList: [],
-  kiosk: {},
+  kiosk: null,
   isKioskLoading: false,
   isLoading: false,
   currentKioskSide: 'A',
