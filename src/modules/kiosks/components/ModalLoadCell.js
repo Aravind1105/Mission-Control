@@ -187,7 +187,7 @@ const ModalLoadCell = ({
                 </Grid.Row>
                 <Grid.Row columns="equal">
                   <Grid.Column>
-                    <b>Product</b>
+                    <b>Planogram Position</b>
                     {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
