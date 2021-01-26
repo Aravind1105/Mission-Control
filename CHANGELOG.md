@@ -1,3 +1,16 @@
+#### 1.3.15 (2021-01-26)
+
+##### Bug Fixes
+
+* **Transactions:** LIV-2680 date filters updated to locale based filtering (5a9e5ac2)
+* **kiosk Settings:**  LIV-2672 Confirmation msg on putting Koisk Out of Service (2688d83a)
+* **kiosk Settings Warning Color:**  LIV-2671 Warning Color Changed from Red to Orange (5396d239)
+* **kiosk Settings title:**  LIV-2673 Title Updated from General Settings to Kiosk Settings (83915c08)
+* **kiosk details Temp Log:**
+  *  LIV-2679 Temp Log table modified (b5af4a0d)
+  *  LIV-2679 Temp Log table modified (4af2e43a)
+* **kiosk details:**  LIV-2683 Products Field updated to Planogram Position (b6a9d4ed)
+
 #### 1.3.14 (2021-01-22)
 
 ##### Bug Fixes
