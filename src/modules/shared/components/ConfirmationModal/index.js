@@ -7,6 +7,7 @@ const ConfirmationModal = ({
   confirmHandler,
   title,
   children,
+  justConfirmation,
 }) => {
   return (
     <Modal size="mini" open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -16,9 +17,15 @@ const ConfirmationModal = ({
         <Button negative onClick={() => setIsModalOpen(false)}>
           No
         </Button>
-        <Button positive onClick={confirmHandler}>
-          Yes
-        </Button>
+        {justConfirmation ? (
+          <Button positive onClick={() => setIsModalOpen(false)}>
+            Yes
+          </Button>
+        ) : (
+          <Button positive onClick={confirmHandler}>
+            Yes
+          </Button>
+        )}
       </Modal.Actions>
     </Modal>
   );
