@@ -10,6 +10,8 @@ import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
 import { Message } from 'semantic-ui-react';
+import { getKioskSingle } from '../selectors';
+import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
 
 const PreAuthToolTip = () => (
   <Popup
@@ -47,19 +49,14 @@ const PaymentToolTip = () => (
 );
 
 const AgeRestrictionWarningMessage = () => (
-  <Message color="orange">
+  <Message negative>
     <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
   </Message>
 );
 
-const ServiceOutOfTimeWarningMessage = () => (
-  <Message color="orange">
-    <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
-  </Message>
-);
-
-const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
+const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   const dispatch = useDispatch();
+  console.log('Testing Kiosl', kiosk);
   const onSubmit = (values, formActions) => {
     const finalProps = {
       id: values.id,
@@ -268,13 +265,18 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                       onChangeCallback={handleServiceCheckEnabled}
                     />
                   </Grid.Column>
-                  <div>
-                    {outOfServicewarning ? (
-                      <ServiceOutOfTimeWarningMessage></ServiceOutOfTimeWarningMessage>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+
+                  <ConfirmationModal
+                    title="Put Kiosk Out of Service?"
+                    isModalOpen={outOfServicewarning}
+                    setIsModalOpen={setOutOfServiceWarning}
+                    justConfirmation={true}
+                  >
+                    <p>
+                      Are you sure that you want to put this Kiosk ({kiosk.name}
+                      ) in Out of Service Mode?
+                    </p>
+                  </ConfirmationModal>
                 </Grid.Row>
                 {/* <Grid.Row style={{ display: 'flex' }} columns="equal">
                   <Grid.Column style={{ width: '100%', marginRight: 5 }}>
@@ -354,6 +356,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 };
 
 const mapStateToProps = state => ({
+  kiosk: getKioskSingle(state),
   kioskProps: getKioskProperties(state),
 });
 
