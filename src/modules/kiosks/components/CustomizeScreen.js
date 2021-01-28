@@ -86,6 +86,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     setType(value);
     if (value === 'CreditOrDebitCard') {
       setAge('0');
+      setMemberCard(kioskProps.memberCardEnabled);
       setAgeRestrictionWarning(false);
     }
     if (value === 'GiroCard') {
@@ -107,12 +108,14 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     if (!type || type === '') setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
   }, []);
 
   useEffect(() => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
   }, [kioskProps]);
 
@@ -273,8 +276,8 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                     justConfirmation={true}
                   >
                     <p>
-                      Are you sure that you want to put this Kiosk ({kiosk.name}
-                      ) in Out of Service Mode?
+                      Are you sure that you want to put this Kiosk (
+                      {kiosk && kiosk.name}) in Out of Service Mode?
                     </p>
                   </ConfirmationModal>
                 </Grid.Row>
@@ -309,9 +312,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   <MemberCardToolTip />
                   <Field
                     label="Enable"
-                    name="memberCardEnabled"
+                    name="memberCard"
                     value={true}
-                    checked={memberCard == true}
+                    checked={memberCard === true}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);
@@ -321,9 +324,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   />
                   <Field
                     label="Disable"
-                    name="memberCardDisabled"
+                    name="memberCard"
                     value={false}
-                    checked={memberCard == false}
+                    checked={memberCard === false}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);

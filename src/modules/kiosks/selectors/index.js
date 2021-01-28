@@ -322,23 +322,15 @@ export const kioskInitialProperties = {
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
-  const paymentType = get(kiosk.controller, 'paymentType', '') || '';
-  let memberCardEnabled = get(kiosk.controller, 'memberCardEnabled', false);
-  let memberCardDisabled = false;
-  if (paymentType === 'CreditOrDebitCard' && !memberCardEnabled) {
-    memberCardDisabled = true;
-  }
-
-  return kiosk
+  return kiosk && kiosk.controller
     ? {
         id: kiosk._id,
         preAuth: kiosk.controller.preAuth.toString(),
         supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
-        paymentType: paymentType,
+        paymentType: get(kiosk.controller, 'paymentType', '') || '',
+        memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', false),
         tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
         minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
-        memberCardEnabled,
-        memberCardDisabled,
         serviceCheckEnabled:
           get(kiosk.controller.serviceCheck, 'enabled', '') || false,
         serviceCheckStartTime:
