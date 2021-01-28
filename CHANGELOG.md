@@ -1,3 +1,45 @@
+#### 1.3.15 (2021-01-26)
+
+##### Bug Fixes
+
+* **Transactions:** LIV-2680 date filters updated to locale based filtering (5a9e5ac2)
+* **kiosk Settings:**  LIV-2672 Confirmation msg on putting Koisk Out of Service (2688d83a)
+* **kiosk Settings Warning Color:**  LIV-2671 Warning Color Changed from Red to Orange (5396d239)
+* **kiosk Settings title:**  LIV-2673 Title Updated from General Settings to Kiosk Settings (83915c08)
+* **kiosk details Temp Log:**
+  *  LIV-2679 Temp Log table modified (b5af4a0d)
+  *  LIV-2679 Temp Log table modified (4af2e43a)
+* **kiosk details:**  LIV-2683 Products Field updated to Planogram Position (b6a9d4ed)
+
+#### 1.3.14 (2021-01-22)
+
+##### Bug Fixes
+
+* **create/edit product:** LIV-2678 (1bdfe856)
+
+##### Other Changes
+
+* **kiosks reducer:** kiosk default set to null (d6c1ba69)
+
+#### 1.3.13 (2021-01-22)
+
+##### Bug Fixes
+
+* **kiosk-settings:** LIV-2681 memeber card enable/disable consitency issue fixed (302c40c4)
+
+#### 1.3.12 (2021-01-19)
+
+##### Bug Fixes
+
+* **kiosk properties:**  allow access to admins to kiosk general settings. (27bee65f)
+* **device settings:**  change logic for member card to make it work properly with ZVT software. (5727f3e5)
+
+##### Other Changes
+
+* **SideMenu:**  Showing Version of Mission Controller (d937245a)
+* **service out of time:**  activate service out of time without time range. Also, refactor for warning messages on kiosk general settings page. (e57ca1c9)
+* **kiosk details:**  LIV-2642 Message on changing paymenttype to GyroCard only (6c51d74f)
+
 #### 1.3.11 (2021-01-13)
 
 ##### Bug Fixes

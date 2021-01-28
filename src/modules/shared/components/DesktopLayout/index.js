@@ -11,7 +11,7 @@ import UserProfileBar from '../UserProfileBar/';
 // import LanguageSelect from '../LanguageSelect';
 import AlertsList from '../AlertsList';
 import './desktopLayout.less';
-
+import { version } from '../../../../../package.json';
 const DesktopLayout = ({
   children,
   isLoading,
@@ -45,6 +45,7 @@ const DesktopLayout = ({
             checked={!minimized}
             onClick={handleClick}
           />
+          <h5>Version: {version}</h5>
         </Menu.Item>
       </Menu>
       <div className="desktop-content">

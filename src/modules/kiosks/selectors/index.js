@@ -53,7 +53,7 @@ export const getKiosksTableState = state =>
 export const getKioskDoorStatus = () => [
   {
     value: '',
-    text: 'All Door Status',
+    text: 'Door Status',
   },
   ...Object.keys(doorStatus).map(status => ({
     value: status,
@@ -320,16 +320,23 @@ export const kioskInitialProperties = {
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
+  const paymentType = get(kiosk.controller, 'paymentType', '') || '';
+  let memberCardEnabled = get(kiosk.controller, 'memberCardEnabled', false);
+  let memberCardDisabled = false;
+  if (paymentType === 'CreditOrDebitCard' && !memberCardEnabled) {
+    memberCardDisabled = true;
+  }
+
   return kiosk
     ? {
         id: kiosk._id,
         preAuth: kiosk.controller.preAuth.toString(),
         supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
-        paymentType: get(kiosk.controller, 'paymentType', '') || '',
+        paymentType: paymentType,
         tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
         minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
-        memberCardEnabled:
-          get(kiosk.controller, 'memberCardEnabled', '') || false,
+        memberCardEnabled,
+        memberCardDisabled,
         serviceCheckEnabled:
           get(kiosk.controller.serviceCheck, 'enabled', '') || false,
         serviceCheckStartTime:
@@ -420,7 +427,7 @@ export const getTemperatureLogsState = state => {
 
   const organizedData = logs.map(log => {
     const date = new Date();
-    date.setMonth(log.month - 1 || 1);
+    date.setMonth(log.month - 1);
     date.setDate(log.day || 1);
     date.setFullYear(log.year);
     return {
