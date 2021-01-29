@@ -1,3 +1,14 @@
+#### 1.3.16 (2021-01-29)
+
+##### Bug Fixes
+
+* **kiosk settings:**  warning color, out of service modal no confirmation (49296f3c)
+* **liv-2717:**  membercard issue to revert back when there's no change (2d967165)
+
+##### Other Changes
+
+* **dashboard,kiosk,transactions:**  update the name of kiosks. (d46ee5b4)
+
 #### 1.3.15 (2021-01-26)
 
 ##### Bug Fixes
