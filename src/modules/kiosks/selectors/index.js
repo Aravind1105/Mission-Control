@@ -240,7 +240,7 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
 );
 
 export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Fridges' },
+  { value: '', label: 'All Kiosks' },
   ...kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
@@ -257,9 +257,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Fridges' }].concat(
-      sortedKiosks,
-    );
+    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
   },
 );
 
