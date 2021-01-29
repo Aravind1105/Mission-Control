@@ -50,13 +50,7 @@ const PaymentToolTip = () => (
 
 const AgeRestrictionWarningMessage = () => (
   <Message color="orange">
-    <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
-  </Message>
-);
-
-const ServiceOutOfTimeWarningMessage = () => (
-  <Message color="orange">
-    <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
+    <p>Only works with MSAM dealer card.</p>
   </Message>
 );
 
