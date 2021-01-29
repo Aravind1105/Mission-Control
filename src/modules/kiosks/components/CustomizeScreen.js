@@ -49,14 +49,19 @@ const PaymentToolTip = () => (
 );
 
 const AgeRestrictionWarningMessage = () => (
-  <Message negative>
+  <Message color="orange">
     <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
+  </Message>
+);
+
+const ServiceOutOfTimeWarningMessage = () => (
+  <Message color="orange">
+    <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
   </Message>
 );
 
 const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   const dispatch = useDispatch();
-  console.log('Testing Kiosl', kiosk);
   const onSubmit = (values, formActions) => {
     const finalProps = {
       id: values.id,
@@ -274,6 +279,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                     isModalOpen={outOfServicewarning}
                     setIsModalOpen={setOutOfServiceWarning}
                     justConfirmation={true}
+                    onClickNo={() =>
+                      setFieldValue('serviceCheckEnabled', false)
+                    }
                   >
                     <p>
                       Are you sure that you want to put this Kiosk (
