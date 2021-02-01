@@ -1,3 +1,10 @@
+#### 1.3.17 (2021-02-01)
+
+##### Bug Fixes
+
+* **kioskProps:** LIV-2681 planogram fixed after updating kiosk settings (20635245)
+* **kiosk settings:**  age restirction warning message chaned to german (67004d0f)
+
 #### 1.3.16 (2021-01-29)
 
 ##### Bug Fixes
