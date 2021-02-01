@@ -36,7 +36,7 @@ const SupportEmailToolTip = () => (
 
 const MemberCardToolTip = () => (
   <Popup
-    content="This feature can take a couple of minutes to update on the Kiosk."
+    content="Enabling/disabling the member card might take up to 2 minutes to get updated on the kiosk."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
