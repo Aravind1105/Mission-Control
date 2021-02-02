@@ -273,8 +273,8 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                     justConfirmation={true}
                   >
                     <p>
-                      Are you sure that you want to put this Kiosk ({kiosk.name}
-                      ) in Out of Service Mode?
+                      Are you sure you want to put this Kiosk ({kiosk.name}) in
+                      Out of Service Mode?
                     </p>
                   </ConfirmationModal>
                 </Grid.Row>
