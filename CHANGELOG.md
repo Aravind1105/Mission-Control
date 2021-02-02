@@ -1,3 +1,9 @@
+#### 1.3.18 (2021-02-01)
+
+##### Bug Fixes
+
+* **kiosk settings:**  LIV-2681 member card tool tip updated (48bb727d)
+
 #### 1.3.17 (2021-02-01)
 
 ##### Bug Fixes
