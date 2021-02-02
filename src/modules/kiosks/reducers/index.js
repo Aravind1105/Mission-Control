@@ -94,9 +94,10 @@ const kiosksReducer = handleActions(
       kiosk: payload,
       isKioskLoading: false,
     }),
-    [updateKioskPropsSuccess]: state => {
+    [updateKioskPropsSuccess]: (state, { payload }) => {
       return {
         ...state,
+        kiosk: payload,
         isKioskLoading: false,
       };
     },

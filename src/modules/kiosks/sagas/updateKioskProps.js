@@ -28,7 +28,6 @@ function* handler({ payload: { finalProps } }) {
                 description: 'Kiosk settings customized successfully',
                 animation: 'fade left',
             });
-
         } else {
             toast({
                 type: 'error',
@@ -36,8 +35,8 @@ function* handler({ payload: { finalProps } }) {
                 animation: 'fade left'
             });
         }
+        yield put(actionSuccess(res));
         history.push(`/kiosks/detail/${id}`);
-        yield put(actionSuccess());
     } catch (error) {
         console.log(error);
     }

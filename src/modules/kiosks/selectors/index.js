@@ -22,14 +22,14 @@ const alertMessages = {
 };
 
 const activityLogMessages = {
-  "open": 'Opened',
-  "closed": 'Closed',
-  "payment_success": 'Payment Success',
-  "valid_card_read": 'Valid Card Read',
-  "valid_membercard_read": 'Valid MemberCard Read',
-  "invalid_card_read": 'Invalid Card Read',
-  "payment_failed": 'Payment Failed'
-}
+  open: 'Opened',
+  closed: 'Closed',
+  payment_success: 'Payment Success',
+  valid_card_read: 'Valid Card Read',
+  valid_membercard_read: 'Valid MemberCard Read',
+  invalid_card_read: 'Invalid Card Read',
+  payment_failed: 'Payment Failed',
+};
 
 const doorStatus = { open: 'open', closed: 'closed', unknown: 'unknown' };
 
@@ -50,19 +50,23 @@ export const getKiosksTableState = state =>
     dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
   }));
 
-export const getKioskDoorStatus = () => [{
-  value: '', text: 'Door Status'
-},
-...Object.keys(doorStatus).map(status => ({
-  value: status,
-  text: doorStatus[status],
-})),
+export const getKioskDoorStatus = () => [
+  {
+    value: '',
+    text: 'Door Status',
+  },
+  ...Object.keys(doorStatus).map(status => ({
+    value: status,
+    text: doorStatus[status],
+  })),
 ];
 
-export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
+export const getKiosksNetworkStatus = createSelector(
+  //!LIV-2285
   getKiosksState,
   kiosks => {
-    let networkStates = [], temp = [];
+    let networkStates = [],
+      temp = [];
     // const netStatus = kiosks.reduce((prev,curr,i) => {
     // let text = 'Offline';
     // const dif = differenceInMinutes(new Date(), new Date(curr.temperature.updated));
@@ -90,8 +94,8 @@ export const getKiosksNetworkStatus = createSelector(  //!LIV-2285
 
     networkStates.push(
       { value: 'Online', text: 'Online', key: 0 },
-      { value: 'Offline', text: 'Offline', key: 1 }
-    )
+      { value: 'Offline', text: 'Offline', key: 1 },
+    );
     networkStates.unshift({
       value: 'All Network States',
       text: 'All Network States',
@@ -236,7 +240,7 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
 );
 
 export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Fridges' },
+  { value: '', label: 'All Kiosks' },
   ...kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
@@ -253,9 +257,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Fridges' }].concat(
-      sortedKiosks,
-    );
+    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
   },
 );
 
@@ -291,17 +293,17 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
 
   return kiosk
     ? {
-      id: kiosk._id,
-      ...pick(kiosk, ['name', 'serialNumber', 'pin']),
-      notes: get(kiosk, 'notes', '') || '',
-      orgId: kiosk.orgId,
-      location: {
-        address: {
-          ...kioskInitialValues.location.address,
-          ...address,
+        id: kiosk._id,
+        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+        notes: get(kiosk, 'notes', '') || '',
+        orgId: kiosk.orgId,
+        location: {
+          address: {
+            ...kioskInitialValues.location.address,
+            ...address,
+          },
         },
-      },
-    }
+      }
     : kioskInitialValues;
 });
 
@@ -318,21 +320,24 @@ export const kioskInitialProperties = {
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
-
-  return kiosk ? {
-    id: kiosk._id,
-    preAuth: kiosk.controller.preAuth.toString(),
-    supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
-    paymentType: get(kiosk.controller, 'paymentType', '') || '',
-    tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
-    minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
-    memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', '') || false,
-    serviceCheckEnabled: get(kiosk.controller.serviceCheck, 'enabled', '') || false,
-    serviceCheckStartTime: get(kiosk.controller.serviceCheck, 'startTime', '') || 21,
-    serviceCheckEndTime: get(kiosk.controller.serviceCheck, 'endTime', '') || 6,
-  } : kioskInitialProperties;
-}
-)
+  return kiosk && kiosk.controller
+    ? {
+        id: kiosk._id,
+        preAuth: kiosk.controller.preAuth.toString(),
+        supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
+        paymentType: get(kiosk.controller, 'paymentType', '') || '',
+        memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', false),
+        tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
+        minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
+        serviceCheckEnabled:
+          get(kiosk.controller.serviceCheck, 'enabled', '') || false,
+        serviceCheckStartTime:
+          get(kiosk.controller.serviceCheck, 'startTime', '') || 21,
+        serviceCheckEndTime:
+          get(kiosk.controller.serviceCheck, 'endTime', '') || 6,
+      }
+    : kioskInitialProperties;
+});
 
 export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk =>
   kiosk ? kiosk.orgId : null,
@@ -354,26 +359,27 @@ export const getProductsDropdownList = (id = '') =>
 
 export const getTotalKiosks = state => state.kiosks.total;
 
-export const getTotalActivityLogs = state => state.kiosks.activityLogs.total
+export const getTotalActivityLogs = state => state.kiosks.activityLogs.total;
 
 export const getActivityLogs = state => state.kiosks.activityLogs.data;
 
 export const getActivityLogsState = createSelector(getActivityLogs, log => {
   if (log) {
-    const logs = log.map((actLog) => {
-      const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss')
+    const logs = log.map(actLog => {
+      const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss');
       return {
         created: date,
         event: {
           doorStatus: activityLogMessages[actLog.payload.message.door_status],
           touchedScales: actLog.payload.message.touchedScales,
-          paymentTerminal: activityLogMessages[actLog.payload.message.payment_terminal]
-        }
-      }
-    })
+          paymentTerminal:
+            activityLogMessages[actLog.payload.message.payment_terminal],
+        },
+      };
+    });
     return logs;
   }
-})
+});
 
 export const getTemperatureLogsState = state => {
   const monthNames = [
@@ -413,7 +419,7 @@ export const getTemperatureLogsState = state => {
 
   const organizedData = logs.map(log => {
     const date = new Date();
-    date.setMonth(log.month - 1 || 1);
+    date.setMonth(log.month - 1);
     date.setDate(log.day || 1);
     date.setFullYear(log.year);
     return {

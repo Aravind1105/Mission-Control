@@ -10,6 +10,8 @@ import FormCheckbox from 'modules/shared/components/FormCheckbox';
 import { updateKioskProps } from '../actions';
 import { getKioskProperties } from '../selectors';
 import { Message } from 'semantic-ui-react';
+import { getKioskSingle } from '../selectors';
+import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
 
 const PreAuthToolTip = () => (
   <Popup
@@ -34,7 +36,7 @@ const SupportEmailToolTip = () => (
 
 const MemberCardToolTip = () => (
   <Popup
-    content="This feature can take a couple of minutes to update on the Kiosk."
+    content="Enabling/disabling the member card might take up to 2 minutes to get updated on the kiosk."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
@@ -47,18 +49,12 @@ const PaymentToolTip = () => (
 );
 
 const AgeRestrictionWarningMessage = () => (
-  <Message negative>
-    <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
+  <Message color="orange">
+    <p>Only works with MSAM dealer card.</p>
   </Message>
 );
 
-const ServiceOutOfTimeWarningMessage = () => (
-  <Message negative>
-    <p>Mit dieser Option können die Kunden keine Produkte am Kiosk kaufen.</p>
-  </Message>
-);
-
-const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
+const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     const finalProps = {
@@ -89,6 +85,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
     setType(value);
     if (value === 'CreditOrDebitCard') {
       setAge('0');
+      setMemberCard(kioskProps.memberCardEnabled);
       setAgeRestrictionWarning(false);
     }
     if (value === 'GiroCard') {
@@ -99,9 +96,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
   };
 
   const handleServiceCheckEnabled = value => {
-    if(value){
+    if (value) {
       setOutOfServiceWarning(true);
-    }else{
+    } else {
       setOutOfServiceWarning(false);
     }
   };
@@ -110,12 +107,14 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     if (!type || type === '') setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
   }, []);
 
   useEffect(() => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
   }, [kioskProps]);
 
@@ -250,7 +249,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                     disabled={type === 'CreditOrDebitCard'}
                   />
                 </Form.Group>
-                <div>{ageRestrictionWarning ? <AgeRestrictionWarningMessage></AgeRestrictionWarningMessage> : <></>}</div>
+                <div>
+                  {ageRestrictionWarning ? (
+                    <AgeRestrictionWarningMessage></AgeRestrictionWarningMessage>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </Grid.Column>
               <Grid.Column>
                 <Grid.Row>
@@ -262,7 +267,21 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                       onChangeCallback={handleServiceCheckEnabled}
                     />
                   </Grid.Column>
-                  <div>{outOfServicewarning ? <ServiceOutOfTimeWarningMessage></ServiceOutOfTimeWarningMessage> : <></>}</div>
+
+                  <ConfirmationModal
+                    title="Put Kiosk Out of Service?"
+                    isModalOpen={outOfServicewarning}
+                    setIsModalOpen={setOutOfServiceWarning}
+                    justConfirmation={true}
+                    onClickNo={() =>
+                      setFieldValue('serviceCheckEnabled', false)
+                    }
+                  >
+                    <p>
+                      Are you sure you want to put this Kiosk ({kiosk.name}) in
+                      Out of Service Mode?
+                    </p>
+                  </ConfirmationModal>
                 </Grid.Row>
                 {/* <Grid.Row style={{ display: 'flex' }} columns="equal">
                   <Grid.Column style={{ width: '100%', marginRight: 5 }}>
@@ -295,9 +314,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   <MemberCardToolTip />
                   <Field
                     label="Enable"
-                    name="memberCardEnabled"
+                    name="memberCard"
                     value={true}
-                    checked={memberCard == true}
+                    checked={memberCard === true}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);
@@ -307,9 +326,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
                   />
                   <Field
                     label="Disable"
-                    name="memberCardDisabled"
+                    name="memberCard"
                     value={false}
-                    checked={memberCard == false}
+                    checked={memberCard === false}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);
@@ -342,6 +361,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps }) => {
 };
 
 const mapStateToProps = state => ({
+  kiosk: getKioskSingle(state),
   kioskProps: getKioskProperties(state),
 });
 
