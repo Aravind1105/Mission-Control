@@ -11,7 +11,7 @@ const optionsTime = [
 ];
 
 const optionsFridges = [
-  { key: 1, text: 'All Fridges', value: 'all' },
+  { key: 1, text: 'All Kiosk', value: 'all' },
   { key: 2, text: 'Livello 1', value: 'lv_1' },
   { key: 3, text: 'Docomo', value: 'docomo' },
 ];

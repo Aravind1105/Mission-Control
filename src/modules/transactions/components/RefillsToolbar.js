@@ -22,10 +22,15 @@ const Toolbar = ({
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] =
-          i % 2
-            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        let formattedDate = curr;
+        if (i % 2) {
+          let date = new Date(curr);
+          date.setHours(23);
+          date.setMinutes(59);
+          date.setSeconds(59);
+          formattedDate = date;
+        }
+        prev[key] = formattedDate;
         return prev;
       }, {});
     }
@@ -59,10 +64,14 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvRefills(value);
-      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
+      toast({
+        description: 'Downloading the requested file.',
+        animation: 'fade left',
+        icon: 'info',
+        color: 'blue',
+      });
     }
   };
-
 
   return (
     <div
@@ -86,7 +95,7 @@ const Toolbar = ({
           </Grid.Column>
           <Grid.Column width={3}>
             <CustomButton
-              label= "Download CSV&nbsp;"
+              label="Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadCsv}

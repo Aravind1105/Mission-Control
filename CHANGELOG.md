@@ -1,3 +1,40 @@
+#### 1.3.18 (2021-02-01)
+
+##### Bug Fixes
+
+* **kiosk settings:**  LIV-2681 member card tool tip updated (48bb727d)
+
+#### 1.3.17 (2021-02-01)
+
+##### Bug Fixes
+
+* **kioskProps:** LIV-2681 planogram fixed after updating kiosk settings (20635245)
+* **kiosk settings:**  age restirction warning message chaned to german (67004d0f)
+
+#### 1.3.16 (2021-01-29)
+
+##### Bug Fixes
+
+* **kiosk settings:**  warning color, out of service modal no confirmation (49296f3c)
+* **liv-2717:**  membercard issue to revert back when there's no change (2d967165)
+
+##### Other Changes
+
+* **dashboard,kiosk,transactions:**  update the name of kiosks. (d46ee5b4)
+
+#### 1.3.15 (2021-01-26)
+
+##### Bug Fixes
+
+* **Transactions:** LIV-2680 date filters updated to locale based filtering (5a9e5ac2)
+* **kiosk Settings:**  LIV-2672 Confirmation msg on putting Koisk Out of Service (2688d83a)
+* **kiosk Settings Warning Color:**  LIV-2671 Warning Color Changed from Red to Orange (5396d239)
+* **kiosk Settings title:**  LIV-2673 Title Updated from General Settings to Kiosk Settings (83915c08)
+* **kiosk details Temp Log:**
+  *  LIV-2679 Temp Log table modified (b5af4a0d)
+  *  LIV-2679 Temp Log table modified (4af2e43a)
+* **kiosk details:**  LIV-2683 Products Field updated to Planogram Position (b6a9d4ed)
+
 #### 1.3.14 (2021-01-22)
 
 ##### Bug Fixes
