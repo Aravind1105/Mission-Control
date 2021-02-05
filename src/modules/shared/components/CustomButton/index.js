@@ -52,8 +52,6 @@ const CustomButton = ({
               defaultStyle ? 'custom-button-default' : 'custom-button-blue'
             } ${className}`}
             onClick={onClick}
-            // icon={icon}
-            // labelPosition="left"
             content={label}
             color={color}
             {...props}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Grid, Segment } from 'semantic-ui-react';
+import { Menu, Grid } from 'semantic-ui-react';
 
 const menuStyle = {
   marginBottom: '2rem',

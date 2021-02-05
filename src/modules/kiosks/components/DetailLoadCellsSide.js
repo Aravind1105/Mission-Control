@@ -3,7 +3,6 @@ import { Grid, Icon, Button, Segment, Image, Divider } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
-import './styles.less';
 
 const mystyle = {
   paddingTop: '10px',
