@@ -1,8 +1,9 @@
 import React from 'react';
-import { Menu, Grid } from 'semantic-ui-react';
+import { Menu, Grid, Segment } from 'semantic-ui-react';
 
 const menuStyle = {
   marginBottom: '2rem',
+  justifyContent: 'space-between',
 };
 
 const menuItemStyle = {
@@ -19,11 +20,11 @@ const PlanogramSwitcher = ({
 }) => {
   const handleClick = (e, { value }) => {
     setCurrentSide(value);
-    console.log('isTwoSides', isTwoSides,'\nactiveShelves: ', activeShelves)
+    console.log('isTwoSides', isTwoSides, '\nactiveShelves: ', activeShelves);
   };
   return (
-    <>
-      <Menu tabular attached="top" style={menuStyle}>
+    <div>
+      <Menu stackable tabular attached="top" style={menuStyle}>
         <Menu.Item name="Planogram" value="Planogram" style={menuItemStyle} />
         {isTwoSides && (
           <>
@@ -41,9 +42,9 @@ const PlanogramSwitcher = ({
             />
           </>
         )}
-        <Menu.Menu position="right">
+        <Menu.Menu stackable position="right">
           <Menu.Item>
-            <Grid.Column width={6} className="text-align-right">
+            <Grid.Column width={4} className="text-align-right">
               Active scales:
               <b className="textGreen">{` ${activeShelves}/${
                 isTwoSides ? 30 : 15
@@ -52,7 +53,7 @@ const PlanogramSwitcher = ({
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-    </>
+    </div>
   );
 };
 
