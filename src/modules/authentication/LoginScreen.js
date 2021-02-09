@@ -1,9 +1,6 @@
-import { from } from 'apollo-link';
-import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authenticateUserSaga, handleAuthUserSaga } from './actions';
 import './loginScreen.less';
-import { LoginButton } from './components';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -13,7 +10,7 @@ const LoginScreen = () => {
     return false;
   }
   dispatch(authenticateUserSaga());
-  return null;
+  return false;
 };
 
 export default LoginScreen;
