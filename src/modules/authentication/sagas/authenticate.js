@@ -32,7 +32,10 @@ const authConfig = {
 
 export const auth = new auth0.WebAuth(authConfig);
 
+export const delay = ms => new Promise(res => setTimeout(res, ms));
+
 function* authenticate() {
+  yield call(delay, 500);
   LivelloLS.setItem(AUTH_ENTRY_STORAGE_KEY, window.location.pathname);
   yield auth.authorize({});
 }
