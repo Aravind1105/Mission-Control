@@ -27,7 +27,7 @@ const authConfig = {
   responseType: 'token id_token',
   scope: 'openid profile email admin',
   audience: process.env.AUTH_AUDIENCE,
-  redirect: false,
+  redirect: true,
 };
 
 export const auth = new auth0.WebAuth(authConfig);
