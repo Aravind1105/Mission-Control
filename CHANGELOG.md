@@ -1,3 +1,21 @@
+#### 1.3.19 (2021-02-15)
+
+##### Build System / Dependencies
+
+* **LIV-2795:**  added 3 more columns to alerts table (f1527f90)
+* **liv-2591:**  change landing page (1653ab84)
+
+##### New Features
+
+* **refills:**  update grid refills cost (9550350b)
+
+##### Bug Fixes
+
+* **refills:**  cost - number of signs after comma fixed to 2 (7071cf9b)
+* **LIV-2591:**  logging out renewing the token instantly resolved (a923376d)
+* **kiosk Settings:**  LIV-2672 Model Msg Updated (87b95fd2)
+* **LIV-2751:**  PackageOptions fetch old data bug solved (53ea3181)
+
 #### 1.3.18 (2021-02-01)
 
 ##### Bug Fixes

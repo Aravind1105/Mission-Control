@@ -31,8 +31,8 @@ const sortValue = {
   count: 'count',
   loadCell: 'loadCell',
   weight: 'weight',
-  total: 'totalPrice',
-  price: 'defaultPrice',
+  total: 'totalCost',
+  price: 'defaultCost',
 };
 
 const ReplenisherList = ({
