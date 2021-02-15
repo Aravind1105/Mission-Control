@@ -82,7 +82,7 @@ export const GRID_REFILLS_QUERY = gql`
           productLine {
             _id
             name
-            defaultPrice
+            defaultCost
           }
           count
         }

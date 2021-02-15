@@ -345,6 +345,10 @@ export const GET_ACTIVITY_LOGS = gql`
               weight
               id
             }
+            scales {
+              weight
+              id
+            }
             payment_terminal
           }
         }
