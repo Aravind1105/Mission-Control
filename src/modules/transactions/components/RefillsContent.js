@@ -93,7 +93,7 @@ const columns = [
     },
   },
   {
-    title: 'Total Price',
+    title: 'Total Cost',
     field: 'total',
     formatter: ({ total }) => (
       <div style={{ textAlign: 'right' }}> {total}€ </div>
