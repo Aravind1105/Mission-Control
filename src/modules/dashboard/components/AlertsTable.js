@@ -36,18 +36,18 @@ const AlertsTable = ({
       title: t('Alert'),
       field: 'type',
     },
-    {
-      title: t('Duration'),
-      field: 'duration',
-    },
-    {
-      title: t('Severity'),
-      field: 'severity',
-    },
-    {
-      title: t('Status'),
-      field: 'status',
-    },
+    // {
+    //   title: t('Duration'),
+    //   field: 'duration',
+    // },
+    // {
+    //   title: t('Severity'),
+    //   field: 'severity',
+    // },
+    // {
+    //   title: t('Status'),
+    //   field: 'status',
+    // },
     {
       title: t('Kiosk'),
       field: 'details.kioskId.name',
