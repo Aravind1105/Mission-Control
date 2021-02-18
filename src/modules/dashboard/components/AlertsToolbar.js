@@ -42,14 +42,14 @@ const Toolbar = ({
   return (
     <Grid>
       <Grid.Row verticalAlign="middle">
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <DatePicker
             type="range"
             onChange={handleDateChange}
             className="full-width"
           />
         </Grid.Column>
-        <Grid.Column width={3}>
+        <Grid.Column mobile={16} computer={3}>
           <Dropdown
             placeholder="Kiosks"
             selection
@@ -58,7 +58,7 @@ const Toolbar = ({
             options={kiosks}
           />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="All Alerts"
             selection

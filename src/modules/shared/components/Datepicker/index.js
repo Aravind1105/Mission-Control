@@ -1,6 +1,6 @@
 import React from 'react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
-
+import { Grid } from 'semantic-ui-react';
 import './styles.less';
 
 const DatePicker = ({ type, onChange }) => {
@@ -10,13 +10,19 @@ const DatePicker = ({ type, onChange }) => {
 
   return (
     <div id="datepicker-wrapper">
-      <SemanticDatepicker
-        format="DD.MM.YYYY"
-        className="test"
-        id="datepicker-input"
-        type={type}
-        onChange={handlerChange}
-      />
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
+            <SemanticDatepicker
+              format="DD.MM.YYYY"
+              className="test"
+              id="datepicker-input"
+              type={type}
+              onChange={handlerChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 };
