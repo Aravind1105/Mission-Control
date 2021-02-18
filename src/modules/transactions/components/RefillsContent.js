@@ -41,13 +41,13 @@ const columns = [
     field: 'weight',
   },
   {
-    title: 'Price',
-    field: 'price',
+    title: 'Cost',
+    field: 'cost',
     className: 'purchase-price-header',
-    formatter: ({ price }) => (price !== '' ? `€ ${price || 0}` : ''),
+    formatter: ({ cost }) => (cost !== '' ? `€ ${cost || 0}` : ''),
   },
   {
-    title: 'Total Price',
+    title: 'Total Cost',
     field: 'total',
     formatter: ({ total }) => `€ ${total || 0}`,
   },

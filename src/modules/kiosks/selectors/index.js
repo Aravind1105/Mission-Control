@@ -14,11 +14,16 @@ const alertMessages = {
   DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
-  TabletDisconn: 'TabletDisconn',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
   TabletDisconn: 'Tablet Disconnected',
+};
+
+const alertSeverity = {
+  high: 'High',
+  mid: 'Medium',
+  low: 'Low',
 };
 
 const activityLogMessages = {
@@ -175,6 +180,8 @@ export const getKiosksAlertsForTable = createSelector(
       ...alert,
       startDate: format(new Date(alert.startDate), 'dd-MM-yyyy HH:mm:ss'),
       type: alertMessages[alert.type],
+      severity: alertSeverity[alert.severity],
+      status: alert.status,
     })),
 );
 
