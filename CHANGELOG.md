@@ -1,3 +1,24 @@
+#### 1.3.20 (2021-02-18)
+
+##### Build System / Dependencies
+
+* **LIV-2795:**  added 3 more columns to alerts table (f1527f90)
+* **liv-2591:**  change landing page (1653ab84)
+
+##### New Features
+
+* **refills:**  update grid refills cost (8c9251e8)
+
+##### Bug Fixes
+
+* **Dashboard Alert:**
+  *  LIV-2824: Hide Duration, Severity and Status Column in Show all Table (ea53ee2c)
+  *  LIV-2824: Hide Duration, Severity and Status Column (e844d942)
+* **Kiosk Settings Tooltip:**  LIV-2790: Tooltip added for default support language (f9ede372)
+* **LIV-2591:**  logging out renewing the token instantly resolved (a923376d)
+* **kiosk Settings:**  LIV-2672 Model Msg Updated (87b95fd2)
+* **LIV-2751:**  PackageOptions fetch old data bug solved (53ea3181)
+
 #### 1.3.19 (2021-02-15)
 
 ##### Build System / Dependencies
