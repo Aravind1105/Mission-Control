@@ -13,6 +13,13 @@ import { Message } from 'semantic-ui-react';
 import { getKioskSingle } from '../selectors';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
 
+const DefaultSupportLanguageToolTip = () => (
+  <Popup
+    content="Changes the text displayed on the kiosk screen and the audio messages."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
 const PreAuthToolTip = () => (
   <Popup
     content="Pre-authorization amount cannot exceed € 50."
@@ -176,9 +183,10 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
           <Grid>
             <Grid.Row columns="equal">
               <Grid.Column>
+                <label className="tool-tip">Default Language&nbsp;</label>
+                <DefaultSupportLanguageToolTip />
                 <Field
                   name="tabletLang"
-                  label="Default Language"
                   component={FormSelect}
                   options={languages}
                 />
