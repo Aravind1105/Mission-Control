@@ -1,3 +1,12 @@
+#### 1.3.21 (2021-02-23)
+
+##### Bug Fixes
+
+* **transactions:**  swap column order for 'Article Number' (daf82245)
+* **Transactions:**
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (2a1c27b4)
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (29c030f0)
+
 #### 1.3.20 (2021-02-18)
 
 ##### Build System / Dependencies
