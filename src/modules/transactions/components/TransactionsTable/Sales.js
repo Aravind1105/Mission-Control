@@ -150,7 +150,6 @@ const SalesTable = ({
                       field === 'transactionID' ||
                       field === 'kioskName' ||
                       field === 'created' ||
-                      // field === 'articleNumber' ||
                       field === 'membercardId';
                     if (!item.transactionID && isOnlyRootField) {
                       return;

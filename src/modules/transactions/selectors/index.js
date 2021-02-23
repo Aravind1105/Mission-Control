@@ -98,7 +98,6 @@ export const getTransactionsTableState = createSelector(
             if (productLine) {
               idx = prev.findIndex(el => el.id === productLine._id);
             }
-
             let quantity = 1;
             if (~idx) {
               const total = Math.round((prev[idx].total + price) * 100) / 100;
@@ -137,7 +136,6 @@ export const getGridRefillsTableState = createSelector(
   refills => {
     let newArr = [];
     refills.forEach(refill => {
-      console.log('This is refill', refill);
       const item = {
         refillsId: refill._id,
         created: format(
