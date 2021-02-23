@@ -29,6 +29,10 @@ const columns = [
     field: 'productName',
   },
   {
+    title: 'Article Number',
+    field: 'articleNumber',
+  },
+  {
     title: 'Quantity',
     field: 'count',
   },
@@ -69,7 +73,16 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         selectable
         striped
         isLoading={isLoading}
-        excludeSortBy={['status', 'productName', 'count', 'loadCell', 'weight', 'price', 'total']}
+        excludeSortBy={[
+          'status',
+          'productName',
+          'articleNumber',
+          'count',
+          'loadCell',
+          'weight',
+          'price',
+          'total',
+        ]}
         setSortByInCaller={sort => setSortByInCaller(sort)}
         sortDirection="DESC"
       />
