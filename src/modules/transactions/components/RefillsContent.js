@@ -25,12 +25,12 @@ const columns = [
     field: 'status',
   },
   {
-    title: 'Product',
-    field: 'productName',
-  },
-  {
     title: 'Article Number',
     field: 'articleNumber',
+  },
+  {
+    title: 'Product',
+    field: 'productName',
   },
   {
     title: 'Quantity',
