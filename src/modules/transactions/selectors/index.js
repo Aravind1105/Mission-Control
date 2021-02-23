@@ -83,6 +83,7 @@ export const getTransactionsTableState = createSelector(
           type: rest.type,
           created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
           session: rest.session,
+          articleNumber: '',
           total: rest.total,
           price: 0,
           productName: 'Total',
@@ -97,6 +98,7 @@ export const getTransactionsTableState = createSelector(
             if (productLine) {
               idx = prev.findIndex(el => el.id === productLine._id);
             }
+
             let quantity = 1;
             if (~idx) {
               const total = Math.round((prev[idx].total + price) * 100) / 100;
@@ -107,6 +109,9 @@ export const getTransactionsTableState = createSelector(
                 id: productLine ? productLine._id : '' || 'unknown',
                 productName: (productLine ? productLine.name : '') || 'unknown',
                 total: +price,
+                articleNumber: productLine.articleNumber
+                  ? productLine.articleNumber
+                  : '',
                 tax,
                 price,
                 quantity,
@@ -132,6 +137,7 @@ export const getGridRefillsTableState = createSelector(
   refills => {
     let newArr = [];
     refills.forEach(refill => {
+      console.log('This is refill', refill);
       const item = {
         refillsId: refill._id,
         created: format(
@@ -150,7 +156,9 @@ export const getGridRefillsTableState = createSelector(
       const arr = newScale.reduce(
         (prev, { productLine, count, weight, cellId }) => {
           if (productLine && count !== 0) {
-            const total = (Math.abs(count) * productLine.defaultCost).toFixed(2);
+            const total = (Math.abs(count) * productLine.defaultCost).toFixed(
+              2,
+            );
             let status = '';
             if (count > 0) {
               status = 'Added';
@@ -162,6 +170,9 @@ export const getGridRefillsTableState = createSelector(
               productName: (productLine ? productLine.name : '') || 'unknown',
               total,
               cost: productLine.defaultCost.toFixed(2),
+              articleNumber: productLine.articleNumber
+                ? productLine.articleNumber
+                : '',
               count,
               weight,
               loadCell: cellId || 'unknown',

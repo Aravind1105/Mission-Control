@@ -96,7 +96,7 @@ const SalesTable = ({
         structured
         fixed={fixed}
         sortable={sortable}
-        style={alignCenter && { textAlign: "center" }}
+        style={alignCenter && { textAlign: 'center' }}
         {...rest}
       >
         {!headless && (
@@ -107,8 +107,8 @@ const SalesTable = ({
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
                   Array.isArray(excludeSortBy) &&
-                    sortable &&
-                    !excludeSortBy.find(elem => elem === field)
+                  sortable &&
+                  !excludeSortBy.find(elem => elem === field)
                     ? 'sortable-th'
                     : '';
 
@@ -127,8 +127,9 @@ const SalesTable = ({
           </Table.Header>
         )}
         {resultData.map((resultItem, rowIdx) => (
-          <Table.Body className="tb-sales"
-          // className={activeRow === rowIdx ? 'active-body' : ''}
+          <Table.Body
+            className="tb-sales"
+            // className={activeRow === rowIdx ? 'active-body' : ''}
           >
             {resultItem.map((item, i) => {
               const rowKey = `${i}`;
@@ -138,7 +139,7 @@ const SalesTable = ({
               return (
                 <Table.Row
                   key={rowKey}
-                // onClick={handlerRowClick(resultItem, rowIdx)}
+                  // onClick={handlerRowClick(resultItem, rowIdx)}
                 >
                   {columns.map(({ field, formatter }, j) => {
                     const cellKey = `${i}-${field}`;
@@ -149,6 +150,7 @@ const SalesTable = ({
                       field === 'transactionID' ||
                       field === 'kioskName' ||
                       field === 'created' ||
+                      // field === 'articleNumber' ||
                       field === 'membercardId';
                     if (!item.transactionID && isOnlyRootField) {
                       return;
@@ -165,13 +167,15 @@ const SalesTable = ({
                               : item.uniqueProducts + 1
                             : '1'
                         }
-                        className={`table-cell-text ${item.transactionID
-                          ? 'table-cell-text-transaction'
-                          : ''
-                          } ${toggleTableCellColor
+                        className={`table-cell-text ${
+                          item.transactionID
+                            ? 'table-cell-text-transaction'
+                            : ''
+                        } ${
+                          toggleTableCellColor
                             ? 'table-cell-bg-grey'
                             : 'table-cell-bg-white'
-                          }`}
+                        }`}
                       >
                         {cellValue}
                       </Table.Cell>

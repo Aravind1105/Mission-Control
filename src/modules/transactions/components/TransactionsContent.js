@@ -29,6 +29,10 @@ const columns = [
   //   field: 'terminalID',
   // },
   {
+    title: 'Article Number',
+    field: 'articleNumber',
+  },
+  {
     title: 'Product',
     field: 'productName',
   },
@@ -67,7 +71,12 @@ const columns = [
   // },
 ];
 
-const TransactionsContent = ({ isLoading, transactions, getData, setSortByInCaller }) => {
+const TransactionsContent = ({
+  isLoading,
+  transactions,
+  getData,
+  setSortByInCaller,
+}) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
@@ -76,7 +85,15 @@ const TransactionsContent = ({ isLoading, transactions, getData, setSortByInCall
     <Segment>
       <TransactionsTable
         sortByColumn="created"
-        excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
+        excludeSortBy={[
+          'transactionID',
+          'membercardId',
+          'articleNumber',
+          'productName',
+          'articleNumber',
+          'quantity',
+          'price',
+        ]}
         columns={columns}
         data={transactions}
         getData={getData}
