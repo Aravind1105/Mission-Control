@@ -219,7 +219,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   icon="euro"
                   iconPosition="left"
                   limiting="floatingField"
-                  prettier={prettierNumber}
                   component={FormInput}
                 />
               </Grid.Column>
