@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 
 import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk } from '../actions';
 import { toast } from 'react-semantic-toasts';
+import { otherwise } from 'ramda';
 
 let updatingKiosk = false;
 const KioskForm = ({
@@ -15,6 +17,7 @@ const KioskForm = ({
   organizations,
   cancelHandler,
   isKioskLoading,
+  sNum,
 }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
@@ -39,6 +42,22 @@ const KioskForm = ({
       initialValues={initialValues}
       onSubmit={onSubmit}
       enableReinitialize
+      validationSchema={Yup.object().shape({
+        serialNumber: Yup.string().test({
+          name: 'duplicate-serialNum-check',
+          test: function(val) {
+            const num = sNum.map(function(ele) {
+              return ele.toLowerCase();
+            });
+            return num.indexOf(val && val.toLowerCase()) > -1
+              ? this.createError({
+                  path: 'serialNumber',
+                  message: 'Serial Number already exists.',
+                })
+              : true;
+          },
+        }),
+      })}
     >
       {({ dirty, handleSubmit, resetForm }) => (
         <Form onSubmit={handleSubmit}>
