@@ -36,8 +36,7 @@ const columns = [
     formatter: ({ serialNumber }) => {
       if (serialNumber.length > 20) {
         return serialNumber.substring(0, 15) + '...';
-      }
-      else return serialNumber
+      } else return serialNumber;
     },
   },
   {
@@ -64,11 +63,7 @@ const columns = [
     field: 'location',
     formatter: ({ location: { address } }) => {
       const { postalCode, city } = address;
-      const addr = [
-        postalCode,
-        city,
-        !postalCode && !city && 'N.A.'
-      ]
+      const addr = [postalCode, city, !postalCode && !city && 'N.A.']
         .filter(el => Boolean(el))
         .join(', ');
       return addr;
