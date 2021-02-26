@@ -14,7 +14,6 @@ import { initializeApp } from './actions/coreActions';
 import { getInitialized } from './selectors/coreSelectors';
 import routes from './router/routes';
 
-import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import '../styling/semantic.less';
 
 const App = ({ initialized, isAuthenticated, initializeApp, isRoot }) => {
