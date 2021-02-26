@@ -72,7 +72,13 @@ const columns = [
   {
     title: 'Sales Today',
     field: 'dayIncome',
-    formatter: ({ dayIncome }) => `€ ${dayIncome}`,
+    // formatter: ({ dayIncome }) => `€ ${dayIncome}`,
+    formatter: ({ dayIncome }) => {
+      if (dayIncome === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'right' }}> {dayIncome}€ </div>;
+    },
   },
 ];
 
