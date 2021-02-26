@@ -11,7 +11,6 @@ import { getKioskSingle, getTemperatureLogsState } from '../../selectors';
 
 import './styles.less';
 
-
 const dataKeys = {
   MONTH: 'month',
   DAY: 'day',
@@ -27,14 +26,25 @@ const optionsResolution = [
   { label: 'Daily', value: dataKeys.DAY },
 ];
 
-const TempLogVisualization = ({ match, kiosk, getTemperatureLogs, temperatureLogs, getKiosk }) => {
+const TempLogVisualization = ({
+  match,
+  kiosk,
+  getTemperatureLogs,
+  temperatureLogs,
+  getKiosk,
+}) => {
   const [resolution, setResolution] = useState(optionsResolution[1].value);
   const [dateRange, setDateRange] = useState(defaultDateRange);
   const { id } = match.params;
 
-  const getData = (id) => getTemperatureLogs({ kioskId: kiosk === null ? id : kiosk._id, resolution, ...dateRange });
+  const getData = id =>
+    getTemperatureLogs({
+      kioskId: kiosk === null ? id : kiosk._id,
+      resolution,
+      ...dateRange,
+    });
   useEffect(() => {
-    getData(id)
+    getData(id);
   }, [id, resolution, dateRange]);
 
   const handleDateChange = value => {
@@ -42,9 +52,10 @@ const TempLogVisualization = ({ match, kiosk, getTemperatureLogs, temperatureLog
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] = i % 2
-          ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-          : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        prev[key] =
+          i % 2
+            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
+            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
         return prev;
       }, {});
     }
@@ -70,10 +81,10 @@ const TempLogVisualization = ({ match, kiosk, getTemperatureLogs, temperatureLog
           </SegmentHeader>
           <Grid>
             <Grid.Row className="temp-log-filter-row">
-              <Grid.Column width={4}>
+              <Grid.Column mobile={16} computer={4}>
                 <DatePicker type="range" onChange={handleDateChange} />
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column mobile={16} computer={4}>
                 <Select
                   onChange={handleChangeResolution}
                   options={optionsResolution}
@@ -96,7 +107,10 @@ const TempLogVisualization = ({ match, kiosk, getTemperatureLogs, temperatureLog
             </Grid.Row>
             <Grid.Row>
               <Grid.Column mobile={16} computer={16}>
-                <ComplexChart data={temperatureLogs} xAxisDataKey={resolution} />
+                <ComplexChart
+                  data={temperatureLogs}
+                  xAxisDataKey={resolution}
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -113,8 +127,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getTemperatureLogs,
-  getKiosk
+  getKiosk,
 };
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(TempLogVisualization);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TempLogVisualization);

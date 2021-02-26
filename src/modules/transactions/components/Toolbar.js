@@ -55,7 +55,12 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvSales(value);
-      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
+      toast({
+        description: 'Downloading the requested file.',
+        animation: 'fade left',
+        icon: 'info',
+        color: 'blue',
+      });
     }
   };
 
@@ -76,11 +81,11 @@ const Toolbar = ({
     >
       <Grid>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -93,14 +98,14 @@ const Toolbar = ({
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <CustomButton
-                label= "Download CSV&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default"
-                onClick={DownloadCsv}
-                disabled={!Boolean(exportData)}
-              />
+              label="Download CSV&nbsp;"
+              icon="arrow down icon"
+              className="custom-button-default"
+              onClick={DownloadCsv}
+              disabled={!Boolean(exportData)}
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>
