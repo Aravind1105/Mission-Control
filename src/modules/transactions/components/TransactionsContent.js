@@ -47,6 +47,10 @@ const columns = [
   //   field: 'terminalID',
   // },
   {
+    title: 'Article Number',
+    field: 'articleNumber',
+  },
+  {
     title: 'Product',
     field: 'productName',
     formatter: ({ productName }) => {

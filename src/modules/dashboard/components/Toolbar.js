@@ -28,7 +28,7 @@ const Toolbar = ({
   return (
     <Grid>
       <Grid.Row verticalAlign="middle">
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="Kiosk"
             selection
@@ -37,7 +37,7 @@ const Toolbar = ({
             onChange={handleKioskChange}
           />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="All Products"
             selection
@@ -46,7 +46,7 @@ const Toolbar = ({
             onChange={handleProductChange}
           />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="All Suppliers"
             selection

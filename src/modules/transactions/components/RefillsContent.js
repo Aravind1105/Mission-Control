@@ -43,6 +43,10 @@ const columns = [
     },
   },
   {
+    title: 'Article Number',
+    field: 'articleNumber',
+  },
+  {
     title: 'Product',
     field: 'productName',
     formatter: ({ productName }) => {
@@ -120,6 +124,7 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         excludeSortBy={[
           'status',
           'productName',
+          'articleNumber',
           'count',
           'loadCell',
           'weight',
