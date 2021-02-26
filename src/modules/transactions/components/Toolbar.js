@@ -79,7 +79,7 @@ const Toolbar = ({
         margin: '20px 0',
       }}
     >
-      <Grid>
+      <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
