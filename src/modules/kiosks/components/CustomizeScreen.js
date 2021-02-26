@@ -56,7 +56,6 @@ const AgeRestrictionWarningMessage = () => (
 
 const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   const dispatch = useDispatch();
-  console.log('Testing Kiosl', kiosk);
   const onSubmit = (values, formActions) => {
     const finalProps = {
       id: values.id,
