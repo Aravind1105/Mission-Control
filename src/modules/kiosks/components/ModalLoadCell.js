@@ -19,7 +19,7 @@ import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
-import { modifyKioskLoadCell } from '../actions';
+import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 
@@ -52,8 +52,10 @@ const ModalLoadCell = ({
   isAddLoadCell,
   orgId,
   getProductLinesByOrgId,
+  deleteLoadCell,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
 
@@ -77,6 +79,15 @@ const ModalLoadCell = ({
       error = 'Cable ID already exists.';
     }
     return error;
+  };
+
+  const handleDeleteLoadCell = () => {
+    deleteLoadCell({
+      kioskId: initVal.kioskId,
+      cellId: initVal.cellId,
+      callback: handleClose,
+    });
+    setShowDeleteAlert(false);
   };
 
   const handleSave = data => {
@@ -209,6 +220,15 @@ const ModalLoadCell = ({
                     />
                   </Grid.Column>
                 </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    color="red"
+                    style={{ marginLeft: 15 }}
+                    onClick={() => setShowDeleteAlert(true)}
+                  >
+                    Delete
+                  </Button>
+                </Grid.Row>
               </Grid>
             </Modal.Content>
             <Modal.Actions>
@@ -242,6 +262,12 @@ const ModalLoadCell = ({
                   : `Are you sure that you want to update the product?`
               }
             />
+            <CustomAlert
+              visible={showDeleteAlert}
+              onApprove={() => handleDeleteLoadCell()}
+              onCancel={() => setShowDeleteAlert(false)}
+              alertMsg="Are you sure want to delete this load cell?"
+            />
           </form>
         </ConfirmModal>
       )}
@@ -274,6 +300,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
 const mapDispatchToProps = {
   modifyKioskLoadCell,
   getProductLinesByOrgId,
+  deleteLoadCell,
 };
 
 export default compose(

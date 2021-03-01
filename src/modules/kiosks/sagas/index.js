@@ -14,6 +14,8 @@ import getTemperatureLogs from './getTemperatureLogs';
 import getActivityLogs from './getActivityLogs';
 import updateKioskProps from './updateKioskProps';
 import setPlanogramSwitchState from './updatePlanogramSwitch';
+import deleteLoadCell from './deleteLoadCell';
+
 export default function* kiosksSaga() {
   yield all([
     fork(getAllKiosks),
@@ -29,6 +31,7 @@ export default function* kiosksSaga() {
     fork(getActivityLogs),
     fork(getAllKiosksForTable),
     fork(updateKioskProps),
-    fork(setPlanogramSwitchState)
+    fork(setPlanogramSwitchState),
+    fork(deleteLoadCell),
   ]);
 }
