@@ -1,3 +1,32 @@
+#### 1.3.22 (2021-02-26)
+
+##### Build System / Dependencies
+
+* **LIV-2805:**  hidden the add kiosk btn for admin and validated serialnumber on creation (8390b2c9)
+
+##### New Features
+
+* **datepicker:** LIV-2725 updated date picker component for mobile view (d42dfd5a)
+
+##### Bug Fixes
+
+* **Dashboard:**  LIV-2725: Margin issue resolved (9a3d8161)
+* **deshboard Kiosk Transactions:**  LIV-2725:Searchbox Dropdown and Button Responsiveness feature is added (b66dd3e4)
+* **deshboard Kiosk Products Transactions Refils and Sales:**  LIV-2793 Formate of Table Updated (d5b833b5)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (9fbf6f2a)
+
+#### 1.3.21 (2021-02-23)
+
+##### Bug Fixes
+
+* **transactions:**  swap column order for 'Article Number' (daf82245)
+* **Transactions:**
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (2a1c27b4)
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (29c030f0)
+
 #### 1.3.20 (2021-02-18)
 
 ##### Build System / Dependencies

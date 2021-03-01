@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Segment,
   Grid,
@@ -11,6 +12,8 @@ import {
   Divider,
 } from 'semantic-ui-react';
 
+import { getActiveUserIDState } from '../../users/selectors';
+
 const Toolbar = ({
   search,
   setSearch,
@@ -18,6 +21,7 @@ const Toolbar = ({
   setKiosk,
   kiosksStatus,
   setKioskStatus,
+  rootUser,
   // kiosksNetworkStatus, //!LIV-2285
   // setKioskNetworkStatus //!LIV-2285
 }) => {
@@ -49,21 +53,21 @@ const Toolbar = ({
               className="full-width"
             />
           </Grid.Column>
-
-          <Grid.Column textAlign="right">
-            <Button
-              icon
-              labelPosition="left"
-              color="green"
-              compact
-              as={Link}
-              // disabled={true} //! Disabled temporarily #golive2
-              to="/kiosks/edit/new"
-            >
-              <Icon name="right arrow" />
-              Add Kiosk
-            </Button>
-          </Grid.Column>
+          {rootUser && (
+            <Grid.Column textAlign="right">
+              <Button
+                icon
+                labelPosition="left"
+                color="green"
+                compact
+                as={Link}
+                to="/kiosks/edit/new"
+              >
+                <Icon name="right arrow" />
+                Add Kiosk
+              </Button>
+            </Grid.Column>
+          )}
         </Grid.Row>
 
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
@@ -109,4 +113,8 @@ Toolbar.propTypes = {
   setSearch: PropTypes.func.isRequired,
 };
 
-export default Toolbar;
+const mapStateToProps = state => ({
+  rootUser: state.user.root,
+});
+
+export default connect(mapStateToProps)(Toolbar);
