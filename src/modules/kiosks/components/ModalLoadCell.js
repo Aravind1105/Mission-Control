@@ -22,6 +22,7 @@ import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
+import { getCellIdOptions } from '../selectors';
 
 const ToolTip = () => (
   <Popup
@@ -52,10 +53,13 @@ const ModalLoadCell = ({
   isAddLoadCell,
   orgId,
   getProductLinesByOrgId,
+  cellIdOptions,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
+
+  const handleCableIdSelect = () => {};
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -105,6 +109,8 @@ const ModalLoadCell = ({
       );
       oldData.planogramPosition = initVal.planogramPosition;
     }
+    data.cellId = data.cellId.value;
+    data.isActive = oldData.isActive;
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
@@ -200,12 +206,19 @@ const ModalLoadCell = ({
 
                   <Grid.Column>
                     <b>Cable ID</b>
-                    <Field
+                    {/* <Field
                       name="cellId"
                       // label="Cable ID"
-                      disabled={!isAddLoadCell}
+                      disabled={!isAddLoadCell && Boolean(initVal.quantity)}
                       validate={validateCellId}
                       component={FormInput}
+                    /> */}
+                    <Field
+                      name="cellId"
+                      options={cellIdOptions}
+                      onChange={handleCableIdSelect}
+                      disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      component={FormAsyncSelect}
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -252,7 +265,10 @@ const ModalLoadCell = ({
 const mapStateToProps = (state, { product, match: { params } }) => {
   const productsHistory = getProductsHistory(state);
   const initVal = {
-    cellId: product.cellId,
+    cellId: {
+      value: product.cellId,
+      label: product.cellId
+    },
     planogramPosition: product.planogramPosition,
     kioskId: params.id,
     product: {
@@ -268,6 +284,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     productsHistory,
     isProductLoading: state.products.isLoading,
     initVal,
+    cellIdOptions: getCellIdOptions(state)
   };
 };
 

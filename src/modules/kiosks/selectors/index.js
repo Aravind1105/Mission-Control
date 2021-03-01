@@ -152,6 +152,20 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   return loadCells;
 });
 
+export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
+  const cellIdOptions = shelves.list
+    .filter(loadCell => loadCell.isActive === false)
+    .map(loadCell => ({
+      value: loadCell.cellId,
+      label: loadCell.cellId,
+    }));
+  // cellIdOptions.push({
+  //   value: 'None',
+  //   label: 'None',
+  // });
+  return cellIdOptions;
+});
+
 export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
   const filteredTempKiosks = kiosks
     .filter(({ temperature }) => temperature && temperature.value > 7)
