@@ -43,9 +43,9 @@ const DetailsInfo = ({
 
   return (
     <div className="kiosk-info">
-      <Grid>
-        <Grid.Column width={12}>
-          <Grid>
+      <Grid columns="two">
+        <Grid.Column mobile={10} computer={11}>
+          <Grid textAlign="justified">
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
               <InfoRow title="Session" description={sessionType} />
@@ -68,7 +68,9 @@ const DetailsInfo = ({
             </Grid.Row>
           </Grid>
         </Grid.Column>
-        <Grid.Column width={4}>{children}</Grid.Column>
+        <Grid.Column mobile={6} computer={4}>
+          <Grid.Row>{children}</Grid.Row>
+        </Grid.Column>
       </Grid>
     </div>
   );

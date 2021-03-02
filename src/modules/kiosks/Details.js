@@ -54,7 +54,7 @@ const KioskDetails = ({
   orgId,
   getOrganizationById,
   orgName,
-  rootUser
+  rootUser,
 }) => {
   const { id } = match.params;
   useEffect(() => {
@@ -79,10 +79,13 @@ const KioskDetails = ({
   };
 
   const handlerOpenDoor = () => {
-    if (window.confirm('Willst Du das Kiosk wirklich im Replenisher Mode öffnen?')) {
+    if (
+      window.confirm('Willst Du das Kiosk wirklich im Replenisher Mode öffnen?')
+    ) {
       createRefill(kiosk._id);
     }
   };
+  const width = window.innerWidth;
   const loaded = !isKioskLoading && orgName;
   return loaded ? (
     <>
@@ -123,32 +126,44 @@ const KioskDetails = ({
                       <CustomButton
                         label="Open Door"
                         icon="lock open"
+                        ScreenWidth={width}
                         onClick={handlerOpenDoor}
                       />
                       <CustomButton
                         label="Edit"
                         icon="edit"
+                        ScreenWidth={width}
                         onClick={handlerEdit}
                       />
                       <CustomButton
                         label="Sync / Restart"
                         icon="lock"
+                        ScreenWidth={width}
                         onClick={handlerResetKiosk}
                       />
                       <CustomButton
                         icon="thermometer quarter"
                         label="Temp. Log"
-                        onClick={() => history.push(`/kiosks/log/temp/${kiosk._id}`)}
+                        ScreenWidth={width}
+                        onClick={() =>
+                          history.push(`/kiosks/log/temp/${kiosk._id}`)
+                        }
                       />
                       <CustomButton
                         icon="line graph"
                         label="Activity Log"
-                        onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
+                        ScreenWidth={width}
+                        onClick={() =>
+                          history.push(`/kiosks/log/activity/${kiosk._id}`)
+                        }
                       />
                       <CustomButton
-                          icon="setting"
-                          label="Settings"
-                          onClick={() => history.push(`/kiosks/settings/${kiosk._id}`)}
+                        icon="setting"
+                        label="Settings"
+                        ScreenWidth={width}
+                        onClick={() =>
+                          history.push(`/kiosks/settings/${kiosk._id}`)
+                        }
                       />
                     </>
                   </DetailsInfo>
@@ -182,8 +197,8 @@ const KioskDetails = ({
       </Grid>
     </>
   ) : (
-      <Loader />
-    );
+    <Loader />
+  );
 };
 
 const mapStateToProps = state => ({
@@ -193,7 +208,7 @@ const mapStateToProps = state => ({
   orgName: getOrgName(state),
   isKioskLoading: state.kiosks.isKioskLoading,
   currentKioskSide: state.kiosks.currentKioskSide,
-  rootUser: state.user.root
+  rootUser: state.user.root,
 });
 
 const mapDispatchToProps = {
