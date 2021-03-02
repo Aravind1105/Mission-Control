@@ -10,6 +10,7 @@ import {
   modifyKioskSuccess,
   resetKiosk,
   resetKioskSuccess,
+  getAlertsGrid,
   getAlertsGridSuccess,
   getOrganizationById,
   getOrganizationByIdSuccess,
@@ -101,11 +102,18 @@ const kiosksReducer = handleActions(
         isKioskLoading: false,
       };
     },
+    [getAlertsGrid]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
     [getAlertsGridSuccess]: (state, { payload }) => {
       return {
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
         totalAlerts: get(payload, 'gridAlerts.total', 0),
+        isLoading: false,
       };
     },
     [combineActions(getOrganizationById, getOrganizationByIdSuccess)]: (

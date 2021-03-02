@@ -21,8 +21,7 @@ const sort = [
 
 const Alerts = ({ getAlertsGrid, alerts }) => {
   useEffect(() => {
-    const data = { limit: 6, sort };
-    getAlertsGrid({ data });
+    getData({ sort });
   }, []);
 
   const { t } = useTranslation();
