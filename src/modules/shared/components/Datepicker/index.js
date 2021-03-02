@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DatesRangeInput } from 'semantic-ui-calendar-react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Form } from 'semantic-ui-react';
 
 const DatePicker = ({ type, onChange }) => {
   const [input, setInput] = useState('');
@@ -33,23 +33,25 @@ const DatePicker = ({ type, onChange }) => {
 
   return (
     <div id="datepicker-wrapper">
-      <Grid>
-        <Grid.Row>
-          <Grid.Column>
-            <DatesRangeInput
-              dateFormat="DD.MM.YYYY"
-              iconPosition="right"
-              onChange={handlerChange}
-              animation="glow"
-              placeholder="DD.MM.YYYY"
-              value={input}
-              allowSameEndDate
-              clearable
-              closable
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Form>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <DatesRangeInput
+                dateFormat="DD.MM.YYYY"
+                iconPosition="right"
+                onChange={handlerChange}
+                animation="glow"
+                placeholder="DD.MM.YYYY"
+                value={input}
+                allowSameEndDate
+                clearable
+                closable
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Form>
     </div>
   );
 };
