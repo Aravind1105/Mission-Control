@@ -32,13 +32,25 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
       field: 'startDate',
       formatter: ({ startDate }) => {
         let [date, time] = startDate.split(' ');
-        return `${date}, ${time}`
+        return `${date}, ${time}`;
       },
     },
     {
       title: t('Alert'),
       field: 'type',
     },
+    // {
+    //   title: t('Duration'),
+    //   field: 'duration',
+    // },
+    // {
+    //   title: t('Severity'),
+    //   field: 'severity',
+    // },
+    // {
+    //   title: t('Status'),
+    //   field: 'status',
+    // },
     {
       title: t('Kiosk'),
       field: 'details.kioskId.name',
@@ -89,7 +101,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
         data={alerts}
         columns={columns}
         getData={getData}
-        excludeSortBy={['details.kioskId.name']}
+        excludeSortBy={['status', 'duration', 'type', 'details.kioskId.name']}
         sortDirection="DESC"
       />
     </Segment>

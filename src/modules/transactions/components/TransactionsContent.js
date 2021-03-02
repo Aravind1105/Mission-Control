@@ -7,6 +7,12 @@ const columns = [
   {
     title: 'Date / Time',
     field: 'created',
+    formatter: ({ created }) => {
+      if (created === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'center' }}> {created} </div>;
+    },
   },
   // {
   //   title: 'Status',
@@ -15,10 +21,22 @@ const columns = [
   {
     title: 'Kiosk',
     field: 'kioskName',
+    formatter: ({ kioskName }) => {
+      if (kioskName === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {kioskName} </div>;
+    },
   },
   {
     title: 'Transaction ID',
     field: 'transactionID',
+    formatter: ({ transactionID }) => {
+      if (transactionID === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {transactionID} </div>;
+    },
   },
   {
     title: 'Member Card ID',
@@ -29,8 +47,18 @@ const columns = [
   //   field: 'terminalID',
   // },
   {
+    title: 'Article Number',
+    field: 'articleNumber',
+  },
+  {
     title: 'Product',
     field: 'productName',
+    formatter: ({ productName }) => {
+      if (productName === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {productName} </div>;
+    },
   },
   // {
   //   title: 'Net',
@@ -45,6 +73,12 @@ const columns = [
   {
     title: 'Quantity',
     field: 'quantity',
+    formatter: ({ quantity }) => {
+      if (quantity === 0) {
+        return '';
+      }
+      return <div style={{ textAlign: 'center' }}> {quantity} </div>;
+    },
   },
   {
     title: 'Price',
@@ -53,13 +87,15 @@ const columns = [
       if (price === 0) {
         return '';
       }
-      return `€ ${price}`;
+      return <div style={{ textAlign: 'right' }}> {price}€ </div>;
     },
   },
   {
     title: 'Total Price',
     field: 'total',
-    formatter: ({ total }) => `€ ${total}`,
+    formatter: ({ total }) => (
+      <div style={{ textAlign: 'right' }}> {total}€ </div>
+    ),
   },
   // {
   //   title: 'Type',
@@ -67,16 +103,26 @@ const columns = [
   // },
 ];
 
-const TransactionsContent = ({ isLoading, transactions, getData, setSortByInCaller }) => {
+const TransactionsContent = ({
+  isLoading,
+  transactions,
+  getData,
+  setSortByInCaller,
+}) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
-
   return (
     <Segment>
       <TransactionsTable
         sortByColumn="created"
-        excludeSortBy={['transactionID', 'membercardId', 'productName', 'quantity', 'price']}
+        excludeSortBy={[
+          'transactionID',
+          'membercardId',
+          'productName',
+          'quantity',
+          'price',
+        ]}
         columns={columns}
         data={transactions}
         getData={getData}

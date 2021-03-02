@@ -16,18 +16,42 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
     {
       title: t('Product'),
       field: 'product',
+      formatter: ({ product }) => {
+        if (product === '') {
+          return '';
+        }
+        return <div style={{ textAlign: 'left' }}> {product} </div>;
+      },
     },
     {
       title: t('Current Inventory'),
       field: 'amount',
+      formatter: ({ amount }) => {
+        if (amount === '') {
+          return '';
+        }
+        return <div style={{ textAlign: 'center' }}> {amount} </div>;
+      },
     },
     {
       title: t('Cable ID'),
       field: 'scale',
+      formatter: ({ scale }) => {
+        if (scale === '') {
+          return '';
+        }
+        return <div style={{ textAlign: 'center' }}> {scale} </div>;
+      },
     },
     {
       title: t('Kiosk'),
       field: 'kiosk',
+      formatter: ({ kiosk }) => {
+        if (kiosk === '') {
+          return '';
+        }
+        return <div style={{ textAlign: 'center' }}> {kiosk} </div>;
+      },
     },
   ];
 

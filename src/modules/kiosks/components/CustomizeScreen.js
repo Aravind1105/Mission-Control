@@ -13,6 +13,13 @@ import { Message } from 'semantic-ui-react';
 import { getKioskSingle } from '../selectors';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
 
+const DefaultSupportLanguageToolTip = () => (
+  <Popup
+    content="Changes the text displayed on the kiosk screen and the audio messages."
+    trigger={<Icon color="yellow" name="info circle" />}
+  />
+);
+
 const PreAuthToolTip = () => (
   <Popup
     content="Pre-authorization amount cannot exceed € 50."
@@ -36,7 +43,7 @@ const SupportEmailToolTip = () => (
 
 const MemberCardToolTip = () => (
   <Popup
-    content="This feature can take a couple of minutes to update on the Kiosk."
+    content="Enabling/disabling the member card might take up to 2 minutes to get updated on the kiosk."
     trigger={<Icon color="yellow" name="info circle" />}
   />
 );
@@ -49,8 +56,8 @@ const PaymentToolTip = () => (
 );
 
 const AgeRestrictionWarningMessage = () => (
-  <Message negative>
-    <p>Funktioniert nur in Verbindung mit einer MSAM Händler Karte</p>
+  <Message color="orange">
+    <p>Only works with MSAM dealer card.</p>
   </Message>
 );
 
@@ -85,6 +92,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     setType(value);
     if (value === 'CreditOrDebitCard') {
       setAge('0');
+      setMemberCard(kioskProps.memberCardEnabled);
       setAgeRestrictionWarning(false);
     }
     if (value === 'GiroCard') {
@@ -106,12 +114,14 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     if (!type || type === '') setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
   }, []);
 
   useEffect(() => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
+    setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
   }, [kioskProps]);
 
@@ -173,9 +183,10 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
           <Grid>
             <Grid.Row columns="equal">
               <Grid.Column>
+                <label className="tool-tip">Default Language&nbsp;</label>
+                <DefaultSupportLanguageToolTip />
                 <Field
                   name="tabletLang"
-                  label="Default Language"
                   component={FormSelect}
                   options={languages}
                 />
@@ -208,7 +219,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   icon="euro"
                   iconPosition="left"
                   limiting="floatingField"
-                  prettier={prettierNumber}
                   component={FormInput}
                 />
               </Grid.Column>
@@ -270,10 +280,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                     isModalOpen={outOfServicewarning}
                     setIsModalOpen={setOutOfServiceWarning}
                     justConfirmation={true}
+                    onClickNo={() =>
+                      setFieldValue('serviceCheckEnabled', false)
+                    }
                   >
                     <p>
-                      Are you sure that you want to put this Kiosk ({kiosk.name}
-                      ) in Out of Service Mode?
+                      Are you sure you want to put this kiosk (
+                      {kiosk && kiosk.name}) in Out of Service Mode?
                     </p>
                   </ConfirmationModal>
                 </Grid.Row>
@@ -308,9 +321,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   <MemberCardToolTip />
                   <Field
                     label="Enable"
-                    name="memberCardEnabled"
+                    name="memberCard"
                     value={true}
-                    checked={memberCard == true}
+                    checked={memberCard === true}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);
@@ -320,9 +333,9 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   />
                   <Field
                     label="Disable"
-                    name="memberCardDisabled"
+                    name="memberCard"
                     value={false}
-                    checked={memberCard == false}
+                    checked={memberCard === false}
                     onChange={(e, { name, value }) => {
                       setMemberCard(value);
                       setFieldValue(name, value);

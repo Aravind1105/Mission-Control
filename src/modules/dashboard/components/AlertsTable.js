@@ -29,17 +29,25 @@ const AlertsTable = ({
       field: 'startDate',
       formatter: ({ startDate }) => {
         let [date, time] = startDate.split(' ');
-        return `${date}, ${time}`
+        return `${date}, ${time}`;
       },
     },
     {
       title: t('Alert'),
       field: 'type',
     },
-    {
-      title: t('Duration'),
-      field: 'duration',
-    },
+    // {
+    //   title: t('Duration'),
+    //   field: 'duration',
+    // },
+    // {
+    //   title: t('Severity'),
+    //   field: 'severity',
+    // },
+    // {
+    //   title: t('Status'),
+    //   field: 'status',
+    // },
     {
       title: t('Kiosk'),
       field: 'details.kioskId.name',
@@ -70,7 +78,7 @@ const AlertsTable = ({
         sortByColumn="startDate"
         onRowClick={handlerClickRow}
         selectable
-        excludeSortBy={['details.kioskId.name']}
+        excludeSortBy={['status', 'duration', 'type', 'details.kioskId.name']}
         fixed
         data={alerts}
         columns={columns}

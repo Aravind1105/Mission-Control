@@ -35,8 +35,8 @@ function* handler({ payload: { finalProps } }) {
                 animation: 'fade left'
             });
         }
-        history.push(`/kiosks/detail/${id}`);
         yield put(actionSuccess(res));
+        history.push(`/kiosks/detail/${id}`);
     } catch (error) {
         console.log(error);
     }

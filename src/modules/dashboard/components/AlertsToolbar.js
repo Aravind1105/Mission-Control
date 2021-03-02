@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Dropdown } from 'semantic-ui-react';
+import { Grid, Dropdown, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import format from 'date-fns/format';
 
@@ -40,35 +40,37 @@ const Toolbar = ({
     changeDate(date);
   };
   return (
-    <Grid>
-      <Grid.Row verticalAlign="middle">
-        <Grid.Column width={4}>
-          <DatePicker
-            type="range"
-            onChange={handleDateChange}
-            className="full-width"
-          />
-        </Grid.Column>
-        <Grid.Column width={3}>
-          <Dropdown
-            placeholder="All Kiosks"
-            selection
-            className="full-width"
-            onChange={handleKioskChange}
-            options={kiosks}
-          />
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <Dropdown
-            placeholder="All Alerts"
-            selection
-            options={alertsOptions}
-            className="full-width"
-            onChange={handleAlertsChange}
-          />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+    <Segment className="toolbar">
+      <Grid stackable>
+        <Grid.Row verticalAlign="middle" columns="equal">
+          <Grid.Column mobile={16} computer={4}>
+            <DatePicker
+              type="range"
+              onChange={handleDateChange}
+              className="full-width"
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={3}>
+            <Dropdown
+              placeholder="Kiosks"
+              selection
+              className="full-width"
+              onChange={handleKioskChange}
+              options={kiosks}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={4}>
+            <Dropdown
+              placeholder="All Alerts"
+              selection
+              options={alertsOptions}
+              className="full-width"
+              onChange={handleAlertsChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
   );
 };
 

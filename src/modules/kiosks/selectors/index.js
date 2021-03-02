@@ -14,11 +14,16 @@ const alertMessages = {
   DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
-  TabletDisconn: 'TabletDisconn',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
   TabletDisconn: 'Tablet Disconnected',
+};
+
+const alertSeverity = {
+  high: 'High',
+  mid: 'Medium',
+  low: 'Low',
 };
 
 const activityLogMessages = {
@@ -44,6 +49,10 @@ export const getAlertsOptions = () => [
 const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.list;
+
+export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
+  return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
+});
 export const getKiosksTableState = state =>
   state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
     ...el,
@@ -175,6 +184,8 @@ export const getKiosksAlertsForTable = createSelector(
       ...alert,
       startDate: format(new Date(alert.startDate), 'dd-MM-yyyy HH:mm:ss'),
       type: alertMessages[alert.type],
+      severity: alertSeverity[alert.severity],
+      status: alert.status,
     })),
 );
 
@@ -240,7 +251,7 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
 );
 
 export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Fridges' },
+  { value: '', label: 'All Kiosks' },
   ...kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
@@ -257,9 +268,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Fridges' }].concat(
-      sortedKiosks,
-    );
+    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
   },
 );
 
@@ -322,23 +331,15 @@ export const kioskInitialProperties = {
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
-  const paymentType = get(kiosk.controller, 'paymentType', '') || '';
-  let memberCardEnabled = get(kiosk.controller, 'memberCardEnabled', false);
-  let memberCardDisabled = false;
-  if (paymentType === 'CreditOrDebitCard' && !memberCardEnabled) {
-    memberCardDisabled = true;
-  }
-
-  return kiosk
+  return kiosk && kiosk.controller
     ? {
         id: kiosk._id,
         preAuth: kiosk.controller.preAuth.toString(),
         supportEmail: get(kiosk.ownerOrganization.support, 'email', '') || '',
-        paymentType: paymentType,
+        paymentType: get(kiosk.controller, 'paymentType', '') || '',
+        memberCardEnabled: get(kiosk.controller, 'memberCardEnabled', false),
         tabletLang: get(kiosk.controller, 'tabletLang', '') || '',
         minimumAge: get(kiosk.controller, 'minimumAge', '') || '0',
-        memberCardEnabled,
-        memberCardDisabled,
         serviceCheckEnabled:
           get(kiosk.controller.serviceCheck, 'enabled', '') || false,
         serviceCheckStartTime:
