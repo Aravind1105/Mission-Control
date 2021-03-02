@@ -15,7 +15,9 @@ const DetailsInventory = ({ list, total }) => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-      totalCost += ele.totalProducts * ele.productLine.defaultCost;
+      totalCost +=
+        ele.totalProducts *
+        ele.productLine.defaultCost
     });
     inventoryItems.push({ productName, totalQty, price });
   });
@@ -30,23 +32,19 @@ const DetailsInventory = ({ list, total }) => {
       </Grid>
       <Divider />
       <Table basic="very">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Product</Table.HeaderCell>
-            <Table.HeaderCell>Quantity</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
         <Table.Body>
           {inventoryItems.map(({ productName, totalQty, price }, index) => (
             <Table.Row key={index}>
-              <Table.Cell>{productName}</Table.Cell>
               <Table.Cell>
                 <ColoredBlock type="b" value={totalQty ? 100 : 0}>
                   {totalQty}
                 </ColoredBlock>
               </Table.Cell>
-              <Table.Cell>{`€ ${price || 0}`}</Table.Cell>
+              <Table.Cell>{productName}</Table.Cell>
+              <Table.Cell
+                style={{ textAlign: 'right' }}
+                collapsing
+              >{`€ ${price || 0}`}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -66,9 +64,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>
-                <b>{`€ ${total}`}</b>
-              </b>
+              <b><b>{`€ ${total}`}</b></b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

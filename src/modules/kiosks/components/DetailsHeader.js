@@ -9,8 +9,8 @@ import '../styles.less';
 
 const DetailsHeader = ({ name, doorStatus, temperature, session }) => {
   return (
-    <Grid stackable>
-      <Grid.Row verticalAlign="middle" relaxed="very" columns="equal">
+    <Grid>
+      <Grid.Row relaxed="very" columns={4}>
         <Grid.Column width={doorStatus === 'open' ? 4 : 6}>
           <Header as="h3">{name}</Header>
         </Grid.Column>
