@@ -124,7 +124,6 @@ const KiosksContent = ({
         ...kio,
         ...door,
       });
-      data.skip = 0;
     }
 
     if (sort && sortValue[sort[0].column]) {

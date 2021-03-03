@@ -10,6 +10,7 @@ import {
   modifyKioskSuccess,
   resetKiosk,
   resetKioskSuccess,
+  getAlertsGrid,
   getAlertsGridSuccess,
   getOrganizationById,
   getOrganizationByIdSuccess,
@@ -26,6 +27,8 @@ import {
   updateKioskProps,
   updateKioskPropsSuccess,
   setPlanogramSwitchStateSuccess,
+  deleteLoadCell,
+  deleteLoadCellSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -86,10 +89,12 @@ const kiosksReducer = handleActions(
       ...state,
       currentKioskSide: payload.setSide,
     }),
-    [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
-      state,
-      { payload },
-    ) => ({
+    [combineActions(
+      getKioskSuccess,
+      modifyKioskSuccess,
+      resetKioskSuccess,
+      deleteLoadCellSuccess,
+    )]: (state, { payload }) => ({
       ...state,
       kiosk: payload,
       isKioskLoading: false,
@@ -101,11 +106,18 @@ const kiosksReducer = handleActions(
         isKioskLoading: false,
       };
     },
+    [getAlertsGrid]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    },
     [getAlertsGridSuccess]: (state, { payload }) => {
       return {
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
         totalAlerts: get(payload, 'gridAlerts.total', 0),
+        isLoading: false,
       };
     },
     [combineActions(getOrganizationById, getOrganizationByIdSuccess)]: (
@@ -161,6 +173,10 @@ const kiosksReducer = handleActions(
       ...state,
       activityLogs: payload.activityLogs,
       isLoading: false,
+    }),
+    [deleteLoadCell]: state => ({
+      ...state,
+      isLoading: true,
     }),
   },
   initialState,

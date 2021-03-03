@@ -131,7 +131,7 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'productLine.name').reduce(
-    (prev, { products, productLine, ...rest }) => {
+    (prev, { products, productLine, isActive, ...rest }) => {
       const totalProducts = products.length;
       const totalPrice = totalProducts * productLine.price;
       prev.list.push({
@@ -142,14 +142,30 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         },
         totalProducts,
         totalPrice,
+        isActive,
       });
       prev.total += totalPrice;
+
       return prev;
     },
     { list: [], total: 0 },
   );
   loadCells.total = Number(loadCells.total).toFixed(2);
   return loadCells;
+});
+
+export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
+  const cellIdOptions = shelves.list
+    .filter(loadCell => loadCell.isActive === false)
+    .map(loadCell => ({
+      value: loadCell.cellId,
+      label: loadCell.cellId,
+    }));
+  // cellIdOptions.push({
+  //   value: 'None',
+  //   label: 'None',
+  // });
+  return cellIdOptions;
 });
 
 export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
