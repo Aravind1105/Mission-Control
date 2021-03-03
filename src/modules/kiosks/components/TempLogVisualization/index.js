@@ -14,6 +14,7 @@ import './styles.less';
 const dataKeys = {
   MONTH: 'month',
   DAY: 'day',
+  HOUR: 'hour',
 };
 
 const defaultDateRange = {
@@ -24,6 +25,7 @@ const defaultDateRange = {
 const optionsResolution = [
   { label: 'Monthly', value: dataKeys.MONTH },
   { label: 'Daily', value: dataKeys.DAY },
+  { label: 'Hourly', value: dataKeys.HOUR },
 ];
 
 const TempLogVisualization = ({
