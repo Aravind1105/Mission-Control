@@ -45,13 +45,13 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       'note',
       'rolesInOrganizations',
       'membercards',
-      'kioskPin',
     ]);
     if (!isEmpty(values.address)) {
       if (!values.address.name) {
         values.address.name = values.address.line1;
       }
-      values.address.postalCode = values.address.postalCode.toString();
+      if (!values.address.postalCode) values.address.postalCode = '';
+      else values.address.postalCode = values.address.postalCode.toString();
       payload['address'] = pick(values.address, [
         'name',
         'line1',
