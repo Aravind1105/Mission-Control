@@ -170,6 +170,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.line1"
                   label="Address"
+                  required
                   component={FormInput}
                 />
               </Grid.Column>
@@ -177,6 +178,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.country"
                   label="Country"
+                  required
                   // loadOptions={getCountries(500)}
                   component={FormInput}
                 />
@@ -187,17 +189,24 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.postalCode"
                   label="ZIP"
+                  required
                   limiting="integerField"
                   component={FormInput}
                 />
               </Grid.Column>
               <Grid.Column>
-                <Field name="address.city" label="City" component={FormInput} />
+                <Field
+                  name="address.city"
+                  label="City"
+                  required
+                  component={FormInput}
+                />
               </Grid.Column>
               <Grid.Column>
                 <Field
                   name="address.state"
                   label="State"
+                  required
                   component={FormInput}
                 />
               </Grid.Column>

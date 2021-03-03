@@ -131,7 +131,7 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'productLine.name').reduce(
-    (prev, { products, productLine, ...rest }) => {
+    (prev, { products, productLine, isActive, ...rest }) => {
       const totalProducts = products.length;
       const totalPrice = totalProducts * productLine.price;
       prev.list.push({
@@ -142,8 +142,10 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         },
         totalProducts,
         totalPrice,
+        isActive,
       });
       prev.total += totalPrice;
+
       return prev;
     },
     { list: [], total: 0 },

@@ -52,7 +52,7 @@ const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
   };
 
   const activeShelves = useMemo(
-    ()=>(cells.filter((cell) => cell.planogramPosition != null)).length,
+    ()=>(cells.filter((cell) => cell.planogramPosition != null && cell.isActive !== false)).length,
     [currentSide, sides],
   );
 
