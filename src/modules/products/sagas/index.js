@@ -8,6 +8,8 @@ import getProductLinesWithFilter from './getProductLinesWithFilter';
 import deleteProductSaga from './deleteProductSaga';
 import modifyProductImage from './modifyProductImage';
 import deleteProductImage from './deleteProductImage';
+import getDefaultProductLinePriceHistory from './getDefaultProductLinePriceHistory';
+import getProductLineActivePriceHistory from './getProductLineActivePriceHistory';
 
 export default function* kiosksSaga() {
   yield all([
@@ -19,5 +21,7 @@ export default function* kiosksSaga() {
     fork(deleteProductSaga),
     fork(modifyProductImage),
     fork(deleteProductImage),
+    fork(getDefaultProductLinePriceHistory),
+    fork(getProductLineActivePriceHistory),
   ]);
 }

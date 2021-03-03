@@ -7,8 +7,14 @@ import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
 import ProductPriceHistory from './components/ProductPriceHistory';
+import ProductPricePerKiosk from './components/ProductPricePerKiosk';
 import ImageUploader from './components/ImageUploader';
-import { getFullProductData, deleteProductSaga } from './actions';
+import {
+  getFullProductData,
+  deleteProductSaga,
+  getDefaultProductLinePriceHistory,
+  getProductLineActivePriceHistory,
+} from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
   selectorGetProductInitValue,
@@ -44,6 +50,8 @@ const ProductDetail = ({
   isLoading,
   match,
   getFullProductData,
+  getDefaultProductLinePriceHistory,
+  getProductLineActivePriceHistory,
   organizations,
   getOrganizations,
   isProductLoading,
@@ -62,6 +70,8 @@ const ProductDetail = ({
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
+      getDefaultProductLinePriceHistory(id);
+      getProductLineActivePriceHistory(id);
       getFullProductData(id);
       getOrganizations();
       setButtonVal(id == 'new' ? 'Submit' : 'Save');
@@ -135,6 +145,7 @@ const ProductDetail = ({
             </h3>
           </Segment> */}
           <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
+          {/* <ProductPricePerKiosk pricePerKiosk={} /> */}
           <ImageUploader
             src={productImg}
             setUploadedImage={setUploadedImage}
@@ -180,6 +191,8 @@ const mapDispatchToProps = {
   getFullProductData,
   getOrganizations,
   deleteProductSaga,
+  getDefaultProductLinePriceHistory,
+  getProductLineActivePriceHistory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
