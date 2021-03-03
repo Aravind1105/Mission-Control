@@ -27,6 +27,8 @@ import {
   updateKioskProps,
   updateKioskPropsSuccess,
   setPlanogramSwitchStateSuccess,
+  deleteLoadCell,
+  deleteLoadCellSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -87,10 +89,12 @@ const kiosksReducer = handleActions(
       ...state,
       currentKioskSide: payload.setSide,
     }),
-    [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
-      state,
-      { payload },
-    ) => ({
+    [combineActions(
+      getKioskSuccess,
+      modifyKioskSuccess,
+      resetKioskSuccess,
+      deleteLoadCellSuccess,
+    )]: (state, { payload }) => ({
       ...state,
       kiosk: payload,
       isKioskLoading: false,
@@ -169,6 +173,10 @@ const kiosksReducer = handleActions(
       ...state,
       activityLogs: payload.activityLogs,
       isLoading: false,
+    }),
+    [deleteLoadCell]: state => ({
+      ...state,
+      isLoading: true,
     }),
   },
   initialState,

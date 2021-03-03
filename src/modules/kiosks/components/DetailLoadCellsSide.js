@@ -10,6 +10,7 @@ const Card = ({
   productLine,
   totalProducts,
   handleEdit,
+  isActive,
 }) => {
   const handleClick = () => {
     handleEdit({
@@ -19,6 +20,12 @@ const Card = ({
       availableProducts: totalProducts,
     });
   };
+
+  if(isActive === false) {
+    return (
+      <Grid.Column className="load-cell"></Grid.Column>
+    );
+  }
 
   return (
     <Grid.Column className="load-cell">
