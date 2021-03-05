@@ -25,7 +25,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
   const userLogHandler = () => {
     history.push(`/users/log/${user.id}`);
   };
-  const width = window.innerWidth;
+
   const name = `${user.firstName || ''} ${user.lastName || ''}`.trim();
   const city = get(user, 'address.city', '');
   const line1 = get(user, 'address.line1', '');
@@ -36,7 +36,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
       {!isLoading && (
         <div className="user-info">
           <Segment className="usr-detail-style">
-            <Grid stackable>
+            <Grid>
               <Grid.Row columns="equal">
                 <Comment.Group size="massive">
                   <Comment>
@@ -117,11 +117,12 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                       />
                       <UserInfoRow
                         title="Address"
-                        description={user.address && user.address.name}
+                        description={
+                          user.address &&
+                          user.address.line1 !== '' &&
+                          user.address.line1
+                        }
                       />
-                      {user.address && user.address.line1 !== '' && (
-                        <UserInfoRow description={user.address.line1} />
-                      )}
                       {user.address && user.address.line2 !== '' && (
                         <UserInfoRow description={user.address.line2} />
                       )}
@@ -154,20 +155,17 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                   <CustomButton
                     label="Edit"
                     icon="edit"
-                    ScreenWidth={width}
                     onClick={editUserHandler}
                   />
                   <CustomButton
                     label="User log"
                     icon="line graph"
-                    ScreenWidth={width}
                     onClick={userLogHandler}
                   />
                   {rootUser && (
                     <CustomButton
                       label={`${user.root ? 'Revoke Root' : 'Grant Root'}`}
                       icon={`${user.root ? 'lock' : 'lock open'}`}
-                      ScreenWidth={width}
                       onClick={handlerRoleToggle}
                     />
                   )}
