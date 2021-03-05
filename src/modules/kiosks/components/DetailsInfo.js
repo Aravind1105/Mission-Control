@@ -15,19 +15,20 @@ const DetailsInfo = ({
 }) => {
   let addressLine1 = '';
   let addressLine2 = '';
+  let addressLine3 = '';
   let addressSecondLine = '';
   let addressThirdLine = '';
   // address
   //   ? [address.city, address.line1, address.state].filter(el => el).join(', ')
   //   : '';
   if (address.line1 !== null) {
-    addressLine1 += address.name ? `${address.name}, ` : '';
-    addressLine1 += `${address.line1}`;
-    addressLine2 += address.line2 ? `${address.line2}` : '';
+    addressLine1 += address.name ? `${address.name} \n ` : '';
+    addressLine2 = `${address.line1}`;
+    addressLine3 += address.line2 ? `${address.line2}` : '';
     if (address.line2) {
-      addressLine2 += `, ${address.state}`;
+      addressLine3 += `, ${address.state}`;
     } else {
-      addressLine1 += `, ${address.state}`;
+      // addressLine1 += `, ${address.state}`;
     }
     addressSecondLine += `${address.postalCode} ${address.city}`;
     addressThirdLine += `${address.country}`;
@@ -52,6 +53,7 @@ const DetailsInfo = ({
                 <InfoRow title="Address" description={addressLine1} />
               )}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
+              {addressLine3 !== '' && <InfoRow description={addressLine3} />}
               {addressLine1 !== '' && (
                 <InfoRow description={addressSecondLine} />
               )}
@@ -66,9 +68,7 @@ const DetailsInfo = ({
             </Grid.Row>
           </Grid>
         </Grid.Column>
-        <Grid.Column mobile={6} computer={4}>
-          <Grid.Row>{children}</Grid.Row>
-        </Grid.Column>
+        <Grid.Column width={4}>{children}</Grid.Column>
       </Grid>
     </div>
   );

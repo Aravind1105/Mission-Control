@@ -19,9 +19,10 @@ import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
-import { modifyKioskLoadCell } from '../actions';
+import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import { toast } from 'react-semantic-toasts';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
+import { getCellIdOptions } from '../selectors';
 
 const ToolTip = () => (
   <Popup
@@ -52,10 +53,16 @@ const ModalLoadCell = ({
   isAddLoadCell,
   orgId,
   getProductLinesByOrgId,
+  cellIdOptions,
+  deleteLoadCell,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [quantityState, setQuantityState] = useState(initVal.quantity);
   const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
+
+  const handleCableIdSelect = () => {};
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -70,13 +77,22 @@ const ModalLoadCell = ({
     setFieldValue('price', newPrice);
   };
 
-  const validateCellId = cellId => {
-    let error;
-    const filteredCellId = cells.filter(cell => cell.cellId === cellId);
-    if (isAddLoadCell && filteredCellId.length > 0) {
-      error = 'Cable ID already exists.';
-    }
-    return error;
+  // const validateCellId = cellId => {
+  //   let error;
+  //   const filteredCellId = cells.filter(cell => cell.cellId === cellId);
+  //   if (isAddLoadCell && filteredCellId.length > 0) {
+  //     error = 'Cable ID already exists.';
+  //   }
+  //   return error;
+  // };
+
+  const handleDeleteLoadCell = () => {
+    deleteLoadCell({
+      kioskId: initVal.kioskId,
+      cellId: initVal.cellId.value,
+      callback: handleClose,
+    });
+    setShowDeleteAlert(false);
   };
 
   const handleSave = data => {
@@ -85,6 +101,7 @@ const ModalLoadCell = ({
       initVal.planogramPosition !== data.planogramPosition;
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== +data.quantity;
+    const isCellIdChanged = initVal.cellId.value !== data.cellId.value;
     const isPriceChanged =
       Number(
         getDefaultProductPrice({
@@ -99,17 +116,22 @@ const ModalLoadCell = ({
     data.price = +data.price || 0;
     data.quantity = +data.quantity || 0;
     let oldData;
-    if (isReplacementRequired) {
+    // if not add new load cell
+    if (initVal.cellId.value && (isReplacementRequired || isCellIdChanged)) {
       oldData = cells.find(
         el => el.planogramPosition === data.planogramPosition,
       );
       oldData.planogramPosition = initVal.planogramPosition;
+      oldData.cellId = initVal.cellId.value;
     }
+    data.cellId = data.cellId.value;
+
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
       isQuantityChanged,
       isPositionIdChanged,
+      isCellIdChanged,
       data,
       oldData,
       callback: handleClose,
@@ -131,7 +153,9 @@ const ModalLoadCell = ({
           onClose={handleClose}
           isPristine={!dirty}
           title={
-            initVal.cellId ? `${kioskName}  #${initVal.cellId}` : `${kioskName}`
+            initVal.cellId.value
+              ? `${kioskName}  #${initVal.cellId.value}`
+              : `${kioskName}`
           }
         >
           <form onSubmit={handleSubmit} className="modal-form">
@@ -165,6 +189,9 @@ const ModalLoadCell = ({
                       limiting="integerField"
                       min={0}
                       component={FormInput}
+                      onChange={(e, { value }) => {
+                        setQuantityState(value);
+                      }}
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -202,12 +229,21 @@ const ModalLoadCell = ({
                     <b>Cable ID</b>
                     <Field
                       name="cellId"
-                      // label="Cable ID"
-                      disabled={!isAddLoadCell}
-                      validate={validateCellId}
-                      component={FormInput}
+                      options={cellIdOptions}
+                      onChange={handleCableIdSelect}
+                      disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      component={FormAsyncSelect}
                     />
                   </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    color="red"
+                    style={{ marginLeft: 15 }}
+                    onClick={() => setShowDeleteAlert(true)}
+                  >
+                    Delete
+                  </Button>
                 </Grid.Row>
               </Grid>
             </Modal.Content>
@@ -237,10 +273,27 @@ const ModalLoadCell = ({
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={
-                initVal.planogramPosition != position
+                initVal.cellId.value && initVal.planogramPosition != position
                   ? `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
                   : `Are you sure that you want to update the product?`
               }
+            />
+            <CustomAlert
+              visible={showDeleteAlert}
+              onApprove={() => {
+                if (quantityState === 0) {
+                  handleDeleteLoadCell();
+                } else {
+                  setShowDeleteAlert(false);
+                }
+              }}
+              onCancel={() => setShowDeleteAlert(false)}
+              alertMsg={
+                quantityState === 0
+                  ? 'Are you sure want to delete this load cell?'
+                  : 'Loadcell should be empty before deleting.'
+              }
+              isWarning={quantityState !== 0}
             />
           </form>
         </ConfirmModal>
@@ -252,7 +305,10 @@ const ModalLoadCell = ({
 const mapStateToProps = (state, { product, match: { params } }) => {
   const productsHistory = getProductsHistory(state);
   const initVal = {
-    cellId: product.cellId,
+    cellId: {
+      value: product.cellId,
+      label: product.cellId,
+    },
     planogramPosition: product.planogramPosition,
     kioskId: params.id,
     product: {
@@ -268,12 +324,14 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     productsHistory,
     isProductLoading: state.products.isLoading,
     initVal,
+    cellIdOptions: getCellIdOptions(state),
   };
 };
 
 const mapDispatchToProps = {
   modifyKioskLoadCell,
   getProductLinesByOrgId,
+  deleteLoadCell,
 };
 
 export default compose(

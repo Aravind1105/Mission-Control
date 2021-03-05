@@ -8,8 +8,8 @@ import BackLink from './BackLink';
 const Breadcrumbs = ({ links, backLink, activeLink }) => {
   return (
     <Grid>
-      <Grid.Row verticalAlign="middle" columns="equal">
-        <Grid.Column mobile={10} computer={12}>
+      <Grid.Row verticalAlign="middle">
+        <Grid.Column mobile={16} computer={8}>
           <Breadcrumb size="small">
             {links.map(prop => (
               <BreadcrumbItem key={prop.name} {...prop} />
@@ -17,9 +17,8 @@ const Breadcrumbs = ({ links, backLink, activeLink }) => {
             <BreadcrumbItem name={activeLink} isActive />
           </Breadcrumb>
         </Grid.Column>
-        <Grid.Column mobile={6} computer={4}>
-          {backLink && <BackLink {...backLink} />}
-        </Grid.Column>
+
+        {backLink && <BackLink {...backLink} />}
       </Grid.Row>
     </Grid>
   );

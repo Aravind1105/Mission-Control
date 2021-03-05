@@ -79,13 +79,13 @@ const Toolbar = ({
         margin: '20px 0',
       }}
     >
-      <Grid>
+      <Grid stackable>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -98,7 +98,7 @@ const Toolbar = ({
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
               icon="arrow down icon"

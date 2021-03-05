@@ -16,7 +16,9 @@ const DetailsInventory = ({ list, total }) => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-      totalCost += ele.totalProducts * ele.productLine.defaultCost;
+      totalCost +=
+        ele.totalProducts *
+        ele.productLine.defaultCost
     });
     inventoryItems.push({ productName, totalQty, price });
   });

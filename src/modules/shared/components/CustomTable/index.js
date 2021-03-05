@@ -92,10 +92,11 @@ const CustomTable = ({
         basic
         celled
         padded
+        structured
         fixed={fixed}
         sortable={sortable}
         selectable={selectable}
-        style={alignCenter && { textAlign: "center" }}
+        style={alignCenter && { textAlign: 'center' }}
         {...rest}
       >
         {!headless && (
@@ -106,8 +107,8 @@ const CustomTable = ({
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
                   Array.isArray(excludeSortBy) &&
-                    sortable &&
-                    !excludeSortBy.find(elem => elem === field)
+                  sortable &&
+                  !excludeSortBy.find(elem => elem === field)
                     ? 'sortable-th'
                     : '';
                 return (
@@ -125,7 +126,7 @@ const CustomTable = ({
           </Table.Header>
         )}
 
-        <Table.Body style={{ lineHeight: "normal" }}>
+        <Table.Body style={{ lineHeight: 'normal' }}>
           {resultData.length > 0 &&
             resultData.map((item, i) => {
               const rowKey = `${i}`;

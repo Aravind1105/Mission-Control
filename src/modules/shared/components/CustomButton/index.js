@@ -10,7 +10,6 @@ const CustomButton = ({
   defaultStyle,
   className,
   color,
-  ScreenWidth,
   ...props
 }) => {
   if (ScreenWidth > 700) {

@@ -45,6 +45,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
           productLine {
             _id
             name
+            articleNumber
           }
           kiosk {
             _id
@@ -82,7 +83,8 @@ export const GRID_REFILLS_QUERY = gql`
           productLine {
             _id
             name
-            defaultPrice
+            articleNumber
+            defaultCost
           }
           count
         }

@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { productOnProductLine } from '../../products/schema';
-import { userDetailOnUser } from '../../users/schema';
 const FragmentLocation = {
   location: gql`
     fragment LocationForKiosk on Location {
@@ -21,6 +20,7 @@ const FragmentInventory = {
     fragment InventoryForKiosk on Inventory {
       loadCells {
         cellId
+        isActive
         planogramPosition
         products {
           _id
@@ -345,10 +345,30 @@ export const GET_ACTIVITY_LOGS = gql`
               weight
               id
             }
+            scales {
+              weight
+              id
+            }
             payment_terminal
           }
         }
       }
     }
   }
+`;
+
+
+export const DELETE_LOAD_CELL = gql`
+  mutation deactivateLoadCell(
+    $kioskId: String!
+    $cellId: String!
+  ) {
+    deactivateLoadCell(
+      kioskId: $kioskId
+      cellId: $cellId
+    ) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
 `;
