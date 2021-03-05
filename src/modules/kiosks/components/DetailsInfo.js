@@ -43,9 +43,9 @@ const DetailsInfo = ({
 
   return (
     <div className="kiosk-info">
-      <Grid columns="two">
-        <Grid.Column mobile={9} computer={12}>
-          <Grid textAlign="justified">
+      <Grid>
+        <Grid.Column width={12}>
+          <Grid>
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
               <InfoRow title="Session" description={sessionType} />

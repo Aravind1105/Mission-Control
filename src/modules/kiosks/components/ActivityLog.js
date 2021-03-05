@@ -79,7 +79,7 @@ const ActivityLogGrid = ({
   const [sort, setSort] = useState(sortDefault);
   const [exportData, changeExportData] = useState(false);
   const { id } = match.params;
-  const width = window.innerWidth;
+
   const getData = ({ sort }) => {
     const data = {
       kioskId: !kiosk ? id : kiosk._id,
@@ -142,14 +142,13 @@ const ActivityLogGrid = ({
           </SegmentHeader>
           <Grid>
             <Grid.Row className="activity-log-filter-row">
-              <Grid.Column width={4}>
+              <Grid.Column mobile={16} computer={4}>
                 <DatePicker type="range" onChange={handleDateChange} />
               </Grid.Column>
-              <Grid.Column width={3}>
+              <Grid.Column mobile={16} computer={4}>
                 <CustomButton
                   label="Download CSV&nbsp;"
                   icon="arrow down icon"
-                  ScreenWidth={width}
                   className="custom-button-default"
                   onClick={DownloadCsv}
                   disabled={true}
