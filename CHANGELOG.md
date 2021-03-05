@@ -1,3 +1,10 @@
+#### 1.3.24 (2021-03-05)
+
+##### Bug Fixes
+
+* **Kiosk-loadcell:** delete/edit loadcell complete (45aac5e4)
+* **LIV-2833:**  Street name alone not submitted beacuse of null exists (061db9d3)
+
 #### 1.3.23 (2021-03-03)
 
 ##### Build System / Dependencies
