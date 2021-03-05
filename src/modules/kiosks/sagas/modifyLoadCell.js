@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-semantic-toasts';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
 import gqlProduct from 'lib/https/gqlProducts';
@@ -86,6 +87,11 @@ function* handler({ payload }) {
     }
 
     yield put(getKiosk(kioskId));
+    toast({
+      type: 'success',
+      description: 'Scale was saved successfully.',
+      animation: 'fade left',
+    });
     callback();
   } catch (error) {
     console.log(error);

@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
+import * as R from 'ramda';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
@@ -155,16 +156,31 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
 });
 
 export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
-  const cellIdOptions = shelves.list
-    .filter(loadCell => loadCell.isActive === false)
-    .map(loadCell => ({
-      value: loadCell.cellId,
-      label: loadCell.cellId,
-    }));
-  // cellIdOptions.push({
-  //   value: 'None',
-  //   label: 'None',
-  // });
+  const cells = shelves.list;
+  const filteredCells = cells.filter(
+    cell => cell.planogramPosition.indexOf('A') !== -1,
+  );
+  const isTwoSides = cells.length !== filteredCells.length;
+  console.log(isTwoSides);
+  const cellIdOptions = [];
+  let maxLoadCells = 15;
+  if (isTwoSides) {
+    maxLoadCells = 30;
+  }
+  for (let cellId = 1; cellId <= maxLoadCells; cellId++) {
+    const cellIdStr = cellId.toString();
+    const availIdx = R.findIndex(R.propEq('cellId', cellIdStr))(cells);
+    if (availIdx === -1) {
+      //if the cellId is not available, add it to the options
+      cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
+    } else {
+      //if the cellId is already available, check if the isActive flag is false, then add it to the options
+      const loadCell = cells[availIdx];
+      if (loadCell.isActive === false) {
+        cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
+      }
+    }
+  }
   return cellIdOptions;
 });
 

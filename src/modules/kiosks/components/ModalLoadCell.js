@@ -20,7 +20,6 @@ import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
-import { toast } from 'react-semantic-toasts';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 import { getCellIdOptions } from '../selectors';
 
@@ -61,8 +60,11 @@ const ModalLoadCell = ({
   const [quantityState, setQuantityState] = useState(initVal.quantity);
   const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
-
-  const handleCableIdSelect = () => {};
+  const [isValid, setIsValid] = useState({
+    productLine: false,
+    quantity: false,
+    cableId: false,
+  });
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -75,16 +77,13 @@ const ModalLoadCell = ({
       kioskId: match.params.id,
     });
     setFieldValue('price', newPrice);
+    setIsValid({ ...isValid, productLine: true });
   };
 
-  // const validateCellId = cellId => {
-  //   let error;
-  //   const filteredCellId = cells.filter(cell => cell.cellId === cellId);
-  //   if (isAddLoadCell && filteredCellId.length > 0) {
-  //     error = 'Cable ID already exists.';
-  //   }
-  //   return error;
-  // };
+  const validateCellContents = () => {
+    const { productLine, quantity, cableId } = isValid;
+    return productLine && quantity && cableId;
+  };
 
   const handleDeleteLoadCell = () => {
     deleteLoadCell({
@@ -175,6 +174,7 @@ const ModalLoadCell = ({
                       onChange={handleSelect}
                       disabled={Boolean(initVal.quantity)}
                       component={FormAsyncSelect}
+                      required
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -192,6 +192,10 @@ const ModalLoadCell = ({
                       onChange={(e, { value }) => {
                         setQuantityState(value);
                       }}
+                      callbackOnChange={() =>
+                        setIsValid({ ...isValid, quantity: true })
+                      }
+                      required
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -218,7 +222,6 @@ const ModalLoadCell = ({
                     {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
-                      // label="Position"
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
@@ -230,21 +233,25 @@ const ModalLoadCell = ({
                     <Field
                       name="cellId"
                       options={cellIdOptions}
-                      onChange={handleCableIdSelect}
                       disabled={!isAddLoadCell && Boolean(initVal.quantity)}
                       component={FormAsyncSelect}
+                      onChange={({}) => {
+                        setIsValid({ ...isValid, cableId: true });
+                      }}
                     />
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    color="red"
-                    style={{ marginLeft: 15 }}
-                    onClick={() => setShowDeleteAlert(true)}
-                  >
-                    Delete
-                  </Button>
-                </Grid.Row>
+                {!isAddLoadCell && (
+                  <Grid.Row>
+                    <Button
+                      color="red"
+                      style={{ marginLeft: 15 }}
+                      onClick={() => setShowDeleteAlert(true)}
+                    >
+                      Delete
+                    </Button>
+                  </Grid.Row>
+                )}
               </Grid>
             </Modal.Content>
             <Modal.Actions>
@@ -255,7 +262,15 @@ const ModalLoadCell = ({
                 color="green"
                 type="submit"
                 disabled={!dirty}
-                onClick={() => setShowAlert(true)}
+                onClick={() => {
+                  if (!isAddLoadCell) {
+                    setShowAlert(true);
+                  } else {
+                    if (validateCellContents()) {
+                      setShowAlert(true);
+                    }
+                  }
+                }}
               >
                 Update
               </Button>
@@ -265,11 +280,6 @@ const ModalLoadCell = ({
               onApprove={() => {
                 handleSave(productInfo);
                 setShowAlert(false);
-                toast({
-                  type: 'success',
-                  description: 'Scale was saved successfully.',
-                  animation: 'fade left',
-                });
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={
