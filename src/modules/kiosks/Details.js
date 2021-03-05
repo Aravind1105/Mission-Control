@@ -104,7 +104,7 @@ const KioskDetails = ({
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column>
+              <Grid.Column stretched>
                 <Segment>
                   <DetailsHeader
                     name={kiosk.name}

@@ -43,7 +43,7 @@ const DetailsInfo = ({
   return (
     <div className="kiosk-info">
       <Grid columns="two">
-        <Grid.Column mobile={10} computer={11}>
+        <Grid.Column mobile={9} computer={12}>
           <Grid textAlign="justified">
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />

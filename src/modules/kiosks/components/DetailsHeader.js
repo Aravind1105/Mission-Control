@@ -10,8 +10,8 @@ import '../styles.less';
 const DetailsHeader = ({ name, doorStatus, temperature, session }) => {
   return (
     <Grid stackable>
-      <Grid.Row verticalAlign="middle" relaxed="very" columns="equal">
-        <Grid.Column width={doorStatus === 'open' ? 4 : 6}>
+      <Grid.Row verticalAlign="align-text-top" relaxed="very" columns={4}>
+        <Grid.Column width={doorStatus === 'open' ? 4 : 6} className="flex-end">
           <Header as="h3">{name}</Header>
         </Grid.Column>
         <Grid.Column width={4} className="flex-end">
@@ -21,8 +21,14 @@ const DetailsHeader = ({ name, doorStatus, temperature, session }) => {
           </b>
         </Grid.Column>
         <Grid.Column width={3} className="flex-end">
-          <b>Status:&nbsp;</b>
-          <CellHeartbeat temperature={temperature} showTime={false} boldFont />
+          <b>
+            Status:&nbsp;
+            <CellHeartbeat
+              temperature={temperature}
+              showTime={false}
+              boldFont
+            />
+          </b>
         </Grid.Column>
         <Grid.Column className="flex-end" width={doorStatus === 'open' ? 5 : 3}>
           <b>

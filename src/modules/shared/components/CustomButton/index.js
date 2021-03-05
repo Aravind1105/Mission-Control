@@ -13,7 +13,7 @@ const CustomButton = ({
   ScreenWidth,
   ...props
 }) => {
-  if (ScreenWidth > 600) {
+  if (ScreenWidth > 700) {
     return (
       <>
         {icon ? (
@@ -42,22 +42,44 @@ const CustomButton = ({
         )}
       </>
     );
+  } else if (ScreenWidth < 321) {
+    return (
+      <>
+        <Button
+          className={`${
+            defaultStyle
+              ? 'custom-button-default-mobile'
+              : 'custom-button-blue-mobile'
+          } ${className}`}
+          size="mini"
+          onClick={onClick}
+          content={label}
+          color={color}
+          {...props}
+        />
+      </>
+    );
   } else {
     return (
       <>
         {icon ? (
           <Button
-            size="mini"
             className={`${
-              defaultStyle ? 'custom-button-default' : 'custom-button-blue'
+              defaultStyle
+                ? 'custom-button-default-mobile'
+                : 'custom-button-blue-mobile'
             } ${className}`}
+            size="mini"
             onClick={onClick}
+            icon={icon}
             content={label}
+            labelPosition="left"
             color={color}
             {...props}
           />
         ) : (
           <Button
+            size="mini"
             onClick={onClick}
             className={`${
               defaultStyle ? 'custom-button-default' : 'custom-button-blue'

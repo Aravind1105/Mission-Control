@@ -8,176 +8,192 @@ import Pagination from 'modules/shared/components/Pagination';
 import CustomButton from 'modules/shared/components/CustomButton';
 import DatePicker from 'modules/shared/components/Datepicker';
 import { toast } from 'react-semantic-toasts';
-import { getKioskSingle, getActivityLogsState, getTotalActivityLogs } from '../selectors';
+import {
+  getKioskSingle,
+  getActivityLogsState,
+  getTotalActivityLogs,
+} from '../selectors';
 import { getActivityLogs } from '../actions';
 
 import './styles.less';
 
 const sortDefault = [
-    {
-        column: 'created',
-        direction: 'DESC',
-    },
+  {
+    column: 'created',
+    direction: 'DESC',
+  },
 ];
 
 const columns = [
-    {
-        title: 'Date/Time',
-        field: 'created',
-        formatter: ({ created }) => {
-            let [date, time] = created.split(' ');
-            return `${date}, ${time}`
-        },
+  {
+    title: 'Date/Time',
+    field: 'created',
+    formatter: ({ created }) => {
+      let [date, time] = created.split(' ');
+      return `${date}, ${time}`;
     },
-    {
-        title: 'Event',
-        field: 'event',
-        formatter: ({ event }) => {
-            if (event.doorStatus !== null && event.doorStatus !== undefined)
-                return `Door Status: ${event.doorStatus}`
-            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length > 0) {
-                return `Products Touched -` +
-                    event.touchedScales.map((scl) => {
-                        return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`
-                    })
-            }
-            else if (event.touchedScales !== null && event.touchedScales !== undefined && event.touchedScales.length === 0)
-                return `Products Touched - Empty`
-            else if (event.paymentTerminal !== null && event.paymentTerminal !== undefined)
-                return `Payment Terminal: ${event.paymentTerminal}`
-            else
-                return '-'
-        }
+  },
+  {
+    title: 'Event',
+    field: 'event',
+    formatter: ({ event }) => {
+      if (event.doorStatus !== null && event.doorStatus !== undefined)
+        return `Door Status: ${event.doorStatus}`;
+      else if (
+        event.touchedScales !== null &&
+        event.touchedScales !== undefined &&
+        event.touchedScales.length > 0
+      ) {
+        return (
+          `Products Touched -` +
+          event.touchedScales.map(scl => {
+            return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`;
+          })
+        );
+      } else if (
+        event.touchedScales !== null &&
+        event.touchedScales !== undefined &&
+        event.touchedScales.length === 0
+      )
+        return `Products Touched - Empty`;
+      else if (
+        event.paymentTerminal !== null &&
+        event.paymentTerminal !== undefined
+      )
+        return `Payment Terminal: ${event.paymentTerminal}`;
+      else return '-';
     },
+  },
 ];
 
-
-
-const ActivityLogGrid = ({ match, kiosk, total, activityLogs, getActivityLogs }) => {
-    const [dateRange, changeDate] = useState('');
-    const [page, changePage] = useState(0);
-    const [perPage, changePerPage] = useState(25);
-    const [sort, setSort] = useState(sortDefault);
-    const [exportData, changeExportData] = useState(false);
-    const { id } = match.params;
-
-    const getData = ({ sort }) => {
-        const data = {
-            kioskId: !kiosk ? id : kiosk._id,
-            skip: page * perPage,
-            limit: perPage,
-            date: dateRange !== '' && dateRange,
-            sort: sort[0].direction === 'ASC' ? 1 : -1
-        };
-        getActivityLogs({ data });
+const ActivityLogGrid = ({
+  match,
+  kiosk,
+  total,
+  activityLogs,
+  getActivityLogs,
+}) => {
+  const [dateRange, changeDate] = useState('');
+  const [page, changePage] = useState(0);
+  const [perPage, changePerPage] = useState(25);
+  const [sort, setSort] = useState(sortDefault);
+  const [exportData, changeExportData] = useState(false);
+  const { id } = match.params;
+  const width = window.innerWidth;
+  const getData = ({ sort }) => {
+    const data = {
+      kioskId: !kiosk ? id : kiosk._id,
+      skip: page * perPage,
+      limit: perPage,
+      date: dateRange !== '' && dateRange,
+      sort: sort[0].direction === 'ASC' ? 1 : -1,
     };
+    getActivityLogs({ data });
+  };
 
-    const handleDateChange = value => {
-        let date = '';
-        if (value) {
-            date = value.reduce((prev, curr, i) => {
-                const key = i % 2 ? '$lte' : '$gte';
-                prev[key] =
-                    i % 2
-                        ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-                        : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
-                return prev;
-            }, {});
-        }
-        changePage(0);
-        changeDate(date);
-        if (date.$gte && date.$lte) {
-            changeExportData({
-                from: date.$gte,
-                to: date.$lte,
-            });
-        }
-    };
+  const handleDateChange = value => {
+    let date = '';
+    if (value) {
+      date = value.reduce((prev, curr, i) => {
+        const key = i % 2 ? '$lte' : '$gte';
+        prev[key] =
+          i % 2
+            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
+            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        return prev;
+      }, {});
+    }
+    changePage(0);
+    changeDate(date);
+    if (date.$gte && date.$lte) {
+      changeExportData({
+        from: date.$gte,
+        to: date.$lte,
+      });
+    }
+  };
 
-    const DownloadCsv = () => {
-        if (exportData.from == '' && exportData.to == '') {
-            window.alert('Bitte wählen Sie zuerst das Datum.');
-        } else {
-            let value = {
-                from: Math.round(new Date(exportData.from)),
-                to: Math.round(new Date(exportData.to)),
-                kiosk: kiosk._id ? kiosk._id : '',
-            };
-            //   exportCsvRefills(value);
-            // toast({ description: 'Downloading the requested file.', animation: 'fade left', icon: 'info', color: 'blue' });
-        }
-    };
+  const DownloadCsv = () => {
+    if (exportData.from == '' && exportData.to == '') {
+      window.alert('Bitte wählen Sie zuerst das Datum.');
+    } else {
+      let value = {
+        from: Math.round(new Date(exportData.from)),
+        to: Math.round(new Date(exportData.to)),
+        kiosk: kiosk._id ? kiosk._id : '',
+      };
+      //   exportCsvRefills(value);
+      // toast({ description: 'Downloading the requested file.', animation: 'fade left', icon: 'info', color: 'blue' });
+    }
+  };
 
-    useEffect(() => {
-        getData({ sort });
-    }, [id, page, perPage, dateRange]);
+  useEffect(() => {
+    getData({ sort });
+  }, [id, page, perPage, dateRange]);
 
-    return (
-        <Grid.Row>
+  return (
+    <Grid.Row>
+      <Grid.Column>
+        <Segment>
+          <SegmentHeader>
+            <Header as="h4" color="black">
+              <Header.Content>Activity Log</Header.Content>
+            </Header>
+          </SegmentHeader>
+          <Grid>
+            <Grid.Row className="activity-log-filter-row">
+              <Grid.Column width={4}>
+                <DatePicker type="range" onChange={handleDateChange} />
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <CustomButton
+                  label="Download CSV&nbsp;"
+                  icon="arrow down icon"
+                  ScreenWidth={width}
+                  className="custom-button-default"
+                  onClick={DownloadCsv}
+                  disabled={true}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Grid.Row className="activity-log-filter-row">
             <Grid.Column>
-                <Segment>
-                    <SegmentHeader>
-                        <Header as="h4" color="black">
-                            <Header.Content>Activity Log</Header.Content>
-                        </Header>
-                    </SegmentHeader>
-                    <Grid>
-                        <Grid.Row className="activity-log-filter-row">
-                            <Grid.Column width={4}>
-                                <DatePicker
-                                    type="range"
-                                    onChange={handleDateChange}
-                                />
-                            </Grid.Column>
-                            <Grid.Column width={3}>
-                                <CustomButton
-                                    label="Download CSV&nbsp;"
-                                    icon="arrow down icon"
-                                    className="custom-button-default"
-                                    onClick={DownloadCsv}
-                                    disabled={true}
-                                />
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                    <Grid.Row className="activity-log-filter-row">
-                        <Grid.Column>
-                            <CustomTable
-                                sortByColumn="created"
-                                sortable
-                                data={activityLogs || []}
-                                getData={getData}
-                                columns={columns}
-                                setSortByInCaller={sort => setSort([sort])}
-                                sortDirection="DESC"
-                            />
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Pagination
-                                totalCount={total}
-                                page={page}
-                                perPage={perPage}
-                                changePage={changePage}
-                                changePerPage={changePerPage}
-                            />
-                        </Grid.Column>
-                    </Grid.Row>
-                </Segment>
+              <CustomTable
+                sortByColumn="created"
+                sortable
+                data={activityLogs || []}
+                getData={getData}
+                columns={columns}
+                setSortByInCaller={sort => setSort([sort])}
+                sortDirection="DESC"
+              />
             </Grid.Column>
-        </Grid.Row>
-    );
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Pagination
+                totalCount={total}
+                page={page}
+                perPage={perPage}
+                changePage={changePage}
+                changePerPage={changePerPage}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Segment>
+      </Grid.Column>
+    </Grid.Row>
+  );
 };
 
 const mapStateToProps = state => ({
-    kiosk: getKioskSingle(state),
-    activityLogs: getActivityLogsState(state),
-    total: getTotalActivityLogs(state)
+  kiosk: getKioskSingle(state),
+  activityLogs: getActivityLogsState(state),
+  total: getTotalActivityLogs(state),
 });
 const mapDispatchToProps = {
-    getActivityLogs
+  getActivityLogs,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivityLogGrid);
