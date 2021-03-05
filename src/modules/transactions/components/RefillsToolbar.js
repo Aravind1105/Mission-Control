@@ -16,7 +16,7 @@ const Toolbar = ({
   exportCsvRefills,
 }) => {
   const [exportData, changeExportData] = useState(false);
-
+  const width = window.innerWidth;
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -98,6 +98,7 @@ const Toolbar = ({
               label="Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
+              ScreenWidth={width}
               onClick={DownloadCsv}
               disabled={!Boolean(exportData)}
             />
