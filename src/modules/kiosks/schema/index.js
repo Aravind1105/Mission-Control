@@ -92,6 +92,7 @@ const FragmentKioskOnKiosk = gql`
         endTime
       }
       memberCardEnabled
+      technicianPin
     }
   }
   ${FragmentLocation.location}
@@ -357,16 +358,9 @@ export const GET_ACTIVITY_LOGS = gql`
   }
 `;
 
-
 export const DELETE_LOAD_CELL = gql`
-  mutation deactivateLoadCell(
-    $kioskId: String!
-    $cellId: String!
-  ) {
-    deactivateLoadCell(
-      kioskId: $kioskId
-      cellId: $cellId
-    ) {
+  mutation deactivateLoadCell($kioskId: String!, $cellId: String!) {
+    deactivateLoadCell(kioskId: $kioskId, cellId: $cellId) {
       ...FragmentKiosk
     }
   }
