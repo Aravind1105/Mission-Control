@@ -45,7 +45,7 @@ const AlertsPage = ({
       limit: perPage,
     };
     if (dateRange || kiosk || alert) {
-      const date = dateRange ? { startDate: dateRange } : {};
+      const date = dateRange ? { created: dateRange } : {};
       const kio = kiosk ? { kioskId: kiosk } : {};
       const al = alert ? { type: alert } : {};
       data.search = JSON.stringify({
