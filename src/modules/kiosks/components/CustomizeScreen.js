@@ -362,7 +362,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
               </Grid.Column>
               <Grid.Column>
                 <Field
-                  name="technicianPIN"
+                  name="technicianPin"
                   label="Technician PIN"
                   type="number"
                   placeholder="5678"
