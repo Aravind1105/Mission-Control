@@ -78,6 +78,8 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
         : {
             enabled: false,
           },
+      pin: values.pin,
+      technicianPin: values.technicianPin,
     };
     dispatch(updateKioskProps({ finalProps }));
   };
@@ -227,7 +229,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
             <Grid.Row columns="equal">
               <Grid.Column>
                 <Form.Group>
-                  <label className="tool-tip" style={{ marginLeft: '1em' }}>
+                  <label className="tool-tip" style={{ marginLeft: '0.7em' }}>
                     Age Restriction&nbsp;
                   </label>
                   {type === 'CreditOrDebitCard' ? <AgeToolTip /> : null}
@@ -315,7 +317,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
             <Grid.Row>
               <Grid.Column>
                 <Form.Group>
-                  <label className="tool-tip" style={{ marginLeft: '1em' }}>
+                  <label className="tool-tip" style={{ marginLeft: '0.7em' }}>
                     Member Card&nbsp;
                   </label>
                   <MemberCardToolTip />
@@ -346,7 +348,30 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                 </Form.Group>
               </Grid.Column>
             </Grid.Row>
-
+            <Grid.Row columns="equal">
+              <Grid.Column>
+                <Field
+                  name="pin"
+                  label="Replenishment PIN"
+                  type="number"
+                  placeholder="1234"
+                  min={0}
+                  widthLimit
+                  component={FormInput}
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Field
+                  name="technicianPIN"
+                  label="Technician PIN"
+                  type="number"
+                  placeholder="5678"
+                  min={0}
+                  widthLimit
+                  component={FormInput}
+                />
+              </Grid.Column>
+            </Grid.Row>
             <Grid.Row textAlign="center">
               <Grid.Column>
                 <Button

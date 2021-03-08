@@ -195,20 +195,6 @@ const KioskForm = ({
                 />
               </Grid.Column>
             </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column width={4}>
-                <Field
-                  name="pin"
-                  label="Pin"
-                  type="number"
-                  min={0}
-                  required
-                  component={FormInput}
-                />
-              </Grid.Column>
-            </Grid.Row>
-
             <Grid.Row textAlign="center">
               <Grid.Column>
                 <Button
