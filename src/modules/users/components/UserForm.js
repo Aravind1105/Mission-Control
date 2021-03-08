@@ -45,13 +45,13 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       'note',
       'rolesInOrganizations',
       'membercards',
-      'kioskPin',
     ]);
     if (!isEmpty(values.address)) {
       if (!values.address.name) {
         values.address.name = values.address.line1;
       }
-      values.address.postalCode = values.address.postalCode.toString();
+      if (!values.address.postalCode) values.address.postalCode = '';
+      else values.address.postalCode = values.address.postalCode.toString();
       payload['address'] = pick(values.address, [
         'name',
         'line1',
@@ -170,7 +170,6 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.line1"
                   label="Address"
-                  required
                   component={FormInput}
                 />
               </Grid.Column>
@@ -178,7 +177,6 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.country"
                   label="Country"
-                  required
                   // loadOptions={getCountries(500)}
                   component={FormInput}
                 />
@@ -189,24 +187,17 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 <Field
                   name="address.postalCode"
                   label="ZIP"
-                  required
                   limiting="integerField"
                   component={FormInput}
                 />
               </Grid.Column>
               <Grid.Column>
-                <Field
-                  name="address.city"
-                  label="City"
-                  required
-                  component={FormInput}
-                />
+                <Field name="address.city" label="City" component={FormInput} />
               </Grid.Column>
               <Grid.Column>
                 <Field
                   name="address.state"
                   label="State"
-                  required
                   component={FormInput}
                 />
               </Grid.Column>

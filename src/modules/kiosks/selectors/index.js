@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
+import * as R from 'ramda';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
@@ -131,7 +132,7 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'productLine.name').reduce(
-    (prev, { products, productLine, ...rest }) => {
+    (prev, { products, productLine, isActive, ...rest }) => {
       const totalProducts = products.length;
       const totalPrice = totalProducts * productLine.price;
       prev.list.push({
@@ -142,14 +143,45 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         },
         totalProducts,
         totalPrice,
+        isActive,
       });
       prev.total += totalPrice;
+
       return prev;
     },
     { list: [], total: 0 },
   );
   loadCells.total = Number(loadCells.total).toFixed(2);
   return loadCells;
+});
+
+export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
+  const cells = shelves.list;
+  const filteredCells = cells.filter(
+    cell => cell.planogramPosition.indexOf('A') !== -1,
+  );
+  const isTwoSides = cells.length !== filteredCells.length;
+  console.log(isTwoSides);
+  const cellIdOptions = [];
+  let maxLoadCells = 15;
+  if (isTwoSides) {
+    maxLoadCells = 30;
+  }
+  for (let cellId = 1; cellId <= maxLoadCells; cellId++) {
+    const cellIdStr = cellId.toString();
+    const availIdx = R.findIndex(R.propEq('cellId', cellIdStr))(cells);
+    if (availIdx === -1) {
+      //if the cellId is not available, add it to the options
+      cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
+    } else {
+      //if the cellId is already available, check if the isActive flag is false, then add it to the options
+      const loadCell = cells[availIdx];
+      if (loadCell.isActive === false) {
+        cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
+      }
+    }
+  }
+  return cellIdOptions;
 });
 
 export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {

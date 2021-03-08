@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-semantic-toasts';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
 import gqlProduct from 'lib/https/gqlProducts';
@@ -16,6 +17,7 @@ function* handler({ payload }) {
     isProductChanged,
     isQuantityChanged,
     isPositionIdChanged,
+    isCellIdChanged,
     data,
     oldData,
   } = payload;
@@ -28,7 +30,7 @@ function* handler({ payload }) {
     product: { value: productId },
   } = data;
   try {
-    if (isProductChanged || isPositionIdChanged) {
+    if (isProductChanged || isPositionIdChanged || isCellIdChanged) {
       const variables = {
         data: {
           kioskId,
@@ -37,16 +39,18 @@ function* handler({ payload }) {
               productLine: productId,
               planogramPosition,
               cellId,
+              isActive: true,
             },
           ],
         },
       };
       if (oldData) {
-        variables.data.loadCellConfigs[1] = {
+        variables.data.loadCellConfigs.push({
           productLine: oldData.productLine._id,
-          planogramPosition: oldData.planogramPosition,
+          planogramPosition: oldData.planogramPosition[0],
           cellId: oldData.cellId,
-        };
+          isActive: false,
+        });
       }
 
       yield call(gqlKiosk.mutate, {
@@ -81,7 +85,13 @@ function* handler({ payload }) {
         variables,
       });
     }
+
     yield put(getKiosk(kioskId));
+    toast({
+      type: 'success',
+      description: 'Scale was saved successfully.',
+      animation: 'fade left',
+    });
     callback();
   } catch (error) {
     console.log(error);

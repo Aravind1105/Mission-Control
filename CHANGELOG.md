@@ -1,3 +1,32 @@
+#### 1.3.24 (2021-03-05)
+
+##### Bug Fixes
+
+* **Kiosk-loadcell:** delete/edit loadcell complete (45aac5e4)
+* **LIV-2833:**  Street name alone not submitted beacuse of null exists (061db9d3)
+
+#### 1.3.23 (2021-03-03)
+
+##### Build System / Dependencies
+
+* **LIV-2833:**  remove the mandatory for address field (00a4539f)
+* **LIV-2794:**  resolved pagination and added loading screen (efa026cd)
+
+##### New Features
+
+* **Edit/Delete Loadcell:** Merge into LIV-2327 (b47760a7)
+* **delete loadcell:** LIV-1800 delete load cell (535728de)
+* **Kiosk-LoadCell Modal:**  LIV-2327 Cable ID should be editable (c1cd3194)
+
+##### Bug Fixes
+
+* **LIV-2794:**  Datepicker format is changed (5b5b636f)
+* **Date Picker:**  LIV-2625: Datepicker length updated (f98b24a9)
+* **LIV-2833:**  Make the address field required in user form (3ad06d59)
+* **Kiosk:**  LIV-2647: Kiosk Info Address formate Updated (d4e009d9)
+* **Dashboard:**  LIV-2723: log statements removed (c3ed7e6e)
+* **kiosk details Mobile Responsive:**  LIV-2723  Koisk Detail and sub components (3d72aadf)
+
 #### 1.3.22 (2021-02-26)
 
 ##### Build System / Dependencies

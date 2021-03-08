@@ -25,6 +25,7 @@ export const getActivityLogs = createAction('@@saga/GET_ACTIVITY_LOGS');
 export const setPlanogramSwitchState = createAction(
   '@@saga/SET_PLANOGRAM_SWITCH_STATE',
 );
+export const deleteLoadCell = createAction('@@saga/DELETE_LOAD_CELL');
 
 // State actions
 export const updateKiosks = createAction('@@state/KIOSKS_UPDATE');
@@ -58,4 +59,7 @@ export const getActivityLogsSuccess = createAction(
 );
 export const setPlanogramSwitchStateSuccess = createAction(
   '@@state/SET_PLANOGRAM_SWITCH_STATE',
+);
+export const deleteLoadCellSuccess = createAction(
+  '@@saga/DELETE_LOAD_CELL_SUCCESS',
 );
