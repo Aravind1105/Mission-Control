@@ -43,6 +43,7 @@ const FormInput = ({
     <Input
       fluid
       step={step}
+      style={props.widthLimit && { width: '35%' }}
       {...field}
       onBlur={prettier ? handleBlur : field.onBlur}
       {...props}

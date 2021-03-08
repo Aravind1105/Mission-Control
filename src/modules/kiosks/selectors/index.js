@@ -307,7 +307,6 @@ export const getKioskOptionsForTableDropdown = createSelector(
 export const kioskInitialValues = {
   name: '',
   serialNumber: '',
-  pin: '',
   notes: '',
   location: {
     address: {
@@ -337,7 +336,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
   return kiosk
     ? {
         id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
+        ...pick(kiosk, ['name', 'serialNumber']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
         location: {
@@ -360,6 +359,8 @@ export const kioskInitialProperties = {
   serviceCheckEnabled: '',
   serviceCheckStartTime: 0,
   serviceCheckEndTime: 0,
+  pin: '',
+  technicianPin: '',
 };
 
 export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
@@ -378,6 +379,8 @@ export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
           get(kiosk.controller.serviceCheck, 'startTime', '') || 21,
         serviceCheckEndTime:
           get(kiosk.controller.serviceCheck, 'endTime', '') || 6,
+        technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
+        ...pick(kiosk, 'pin'),
       }
     : kioskInitialProperties;
 });
