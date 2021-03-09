@@ -1,3 +1,21 @@
+#### 1.3.25 (2021-03-09)
+
+##### Build System / Dependencies
+
+* **LIV-2820:** Added pin on the settings page and removed from kiosk page (16005f63)
+
+##### Bug Fixes
+
+* **KioskPlanogram:** LIV-2327 position warning on add scale and switch position bug fix (95488b61)
+* **LIV-2820:**
+  * field name bug (d6489e03)
+  *  added technician pin in the gql (c6237468)
+* **dateField:**
+  *  dateField changed for alerts dateRange (62674bb4)
+  *  Date field is changed to 'startDate' (d6dca33f)
+* **LIV-2794:**  field  for dateRange is changed (a51d16f8)
+* **Kiosk Dedtails:**  LIV-2723: Mobile Responsive Problems Resolved (da5e42d0)
+
 #### 1.3.24 (2021-03-05)
 
 ##### Bug Fixes
