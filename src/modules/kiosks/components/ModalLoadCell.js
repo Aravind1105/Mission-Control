@@ -21,7 +21,7 @@ import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
-import { getCellIdOptions } from '../selectors';
+import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
 
 const ToolTip = () => (
   <Popup
@@ -54,6 +54,7 @@ const ModalLoadCell = ({
   getProductLinesByOrgId,
   cellIdOptions,
   deleteLoadCell,
+  usedPositions,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
@@ -65,6 +66,8 @@ const ModalLoadCell = ({
     quantity: false,
     cableId: false,
   });
+  const [showPositionErrorAlert, setShowPositionErrorAlert] = useState(false);
+  const [isValidPosition, setIsValidPosition] = useState(true);
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -82,7 +85,7 @@ const ModalLoadCell = ({
 
   const validateCellContents = () => {
     const { productLine, quantity, cableId } = isValid;
-    return productLine && quantity && cableId;
+    return productLine && quantity && cableId && isValidPosition;
   };
 
   const handleDeleteLoadCell = () => {
@@ -116,15 +119,16 @@ const ModalLoadCell = ({
     data.quantity = +data.quantity || 0;
     let oldData;
     // if not add new load cell
-    if (initVal.cellId.value && (isReplacementRequired || isCellIdChanged)) {
+    if (!isAddLoadCell && (isReplacementRequired || isCellIdChanged)) {
       oldData = cells.find(
         el => el.planogramPosition === data.planogramPosition,
       );
       oldData.planogramPosition = initVal.planogramPosition;
-      oldData.cellId = initVal.cellId.value;
+      if (isCellIdChanged) {
+        oldData.cellId = initVal.cellId.value;
+      }
     }
     data.cellId = data.cellId.value;
-
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
@@ -225,6 +229,23 @@ const ModalLoadCell = ({
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
+                      onBlur={e => {
+                        //usedPositions will hold a list of planogram positions that has isActive flag set to true
+                        //check if the planogramPosition is already available in the used positions list
+                        //throw error if already available
+                        if (isAddLoadCell) {
+                          // only in add mode
+                          if (usedPositions.indexOf(e.target.value) === -1) {
+                            setShowPositionErrorAlert(false);
+                            setIsValidPosition(true);
+                          } else if (
+                            initVal.planogramPosition !== e.target.value
+                          ) {
+                            setShowPositionErrorAlert(true);
+                            setIsValidPosition(false);
+                          }
+                        }
+                      }}
                     />
                   </Grid.Column>
 
@@ -268,6 +289,8 @@ const ModalLoadCell = ({
                   } else {
                     if (validateCellContents()) {
                       setShowAlert(true);
+                    } else if(!isValidPosition) {
+                      setShowPositionErrorAlert(true);
                     }
                   }
                 }}
@@ -305,6 +328,14 @@ const ModalLoadCell = ({
               }
               isWarning={quantityState !== 0}
             />
+            <CustomAlert
+              visible={showPositionErrorAlert}
+              onApprove={() => {
+                setShowPositionErrorAlert(false);
+              }}
+              alertMsg="Provided planogram position is already in use. Please choose another one."
+              isWarning={true}
+            />
           </form>
         </ConfirmModal>
       )}
@@ -335,6 +366,7 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     isProductLoading: state.products.isLoading,
     initVal,
     cellIdOptions: getCellIdOptions(state),
+    usedPositions: getUsedPlanogramPositions(state),
   };
 };
 

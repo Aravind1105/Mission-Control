@@ -184,6 +184,18 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
   return cellIdOptions;
 });
 
+export const getUsedPlanogramPositions = createSelector(
+  getKioskShelves,
+  shelves => {
+    const cells = shelves.list;
+    return cells.map(cell => {
+      if (cell.isActive !== false) {
+        return cell.planogramPosition;
+      }
+    });
+  },
+);
+
 export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
   const filteredTempKiosks = kiosks
     .filter(({ temperature }) => temperature && temperature.value > 7)
