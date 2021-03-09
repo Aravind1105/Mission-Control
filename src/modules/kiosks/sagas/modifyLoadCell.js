@@ -45,12 +45,21 @@ function* handler({ payload }) {
         },
       };
       if (oldData) {
-        variables.data.loadCellConfigs.push({
-          productLine: oldData.productLine._id,
-          planogramPosition: oldData.planogramPosition[0],
-          cellId: oldData.cellId,
-          isActive: false,
-        });
+        if(isCellIdChanged) {
+          variables.data.loadCellConfigs.push({
+            productLine: oldData.productLine._id,
+            planogramPosition: oldData.planogramPosition[0],
+            cellId: oldData.cellId,
+            isActive: false,
+          });
+        } else if(isPositionIdChanged) {
+          variables.data.loadCellConfigs[1] = {
+            productLine: oldData.productLine._id,
+            planogramPosition: oldData.planogramPosition,
+            cellId: oldData.cellId,
+            isActive: true,
+          };
+        }
       }
 
       yield call(gqlKiosk.mutate, {
