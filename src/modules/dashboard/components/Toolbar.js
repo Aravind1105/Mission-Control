@@ -26,7 +26,7 @@ const Toolbar = ({
     changeSupplier(value);
   };
   return (
-    <Grid>
+    <Grid stackable>
       <Grid.Row verticalAlign="middle">
         <Grid.Column mobile={16} computer={4}>
           <Dropdown
