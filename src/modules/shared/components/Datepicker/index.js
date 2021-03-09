@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { DatesRangeInput } from 'semantic-ui-calendar-react';
 import { Grid, Form } from 'semantic-ui-react';
+import SemanticDatepicker from 'react-semantic-ui-datepickers';
+import './styles.less';
 
 const DatePicker = ({ type, onChange }) => {
   const [input, setInput] = useState('');
-
+  const width = window.innerWidth;
   const handlerChange = (e, { value }) => {
     setInput(value);
   };
-
+  const handlerChangeBigScreen = (e, { value }) => {
+    if (onChange) onChange(value);
+  };
   useEffect(() => {
     //when both from and to dates are selected, the length will be 23
     if (input.length === 23) {
@@ -30,30 +34,43 @@ const DatePicker = ({ type, onChange }) => {
       onChange();
     }
   }, [input]);
-
-  return (
-    <div id="datepicker-wrapper">
-      <Form>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-              <DatesRangeInput
-                dateFormat="DD.MM.YYYY"
-                iconPosition="right"
-                onChange={handlerChange}
-                animation="glow"
-                placeholder="DD.MM.YYYY"
-                value={input}
-                allowSameEndDate
-                clearable
-                closable
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Form>
-    </div>
-  );
+  if (width < 600) {
+    return (
+      <div id="datepicker-wrapper">
+        <Form>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <DatesRangeInput
+                  dateFormat="DD.MM.YYYY"
+                  iconPosition="right"
+                  onChange={handlerChange}
+                  animation="glow"
+                  placeholder="DD.MM.YYYY"
+                  value={input}
+                  allowSameEndDate
+                  clearable
+                  closable
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Form>
+      </div>
+    );
+  } else {
+    return (
+      <div id="datepicker-wrapper">
+        <SemanticDatepicker
+          format="DD.MM.YYYY"
+          className="test"
+          id="datepicker-input"
+          type={type}
+          onChange={handlerChangeBigScreen}
+        />
+      </div>
+    );
+  }
 };
 
 DatePicker.defaultProps = {
