@@ -57,11 +57,11 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
 
   return (
     <Segment>
-      <Grid verticalAlign="middle" className="dashboard-header">
+      <Grid stackable verticalAlign="middle" className="dashboard-header">
         <Grid.Row>
           <Grid.Column width={8}>
             <Header as="h4" color="black">
-              <Header.Content>Sales by Fridges test</Header.Content>
+              <Header.Content>Sales by Fridges</Header.Content>
             </Header>
           </Grid.Column>
 

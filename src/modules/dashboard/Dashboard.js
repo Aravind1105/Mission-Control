@@ -47,7 +47,7 @@ const Dashboard = ({
     getWidgetMonthlyData();
   }, []);
   return (
-    <Grid className="dashboard">
+    <Grid stackable className="dashboard">
       <Grid.Row>
         <Grid.Column>
           <Alerts list={alertsLog} />
@@ -90,9 +90,9 @@ const Dashboard = ({
 
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
-          {!isSalesStatLoading && !isEmpty(salesStatistics) && <MainChart
-            kiosksOptions={kiosksOptions}
-          />}
+          {!isSalesStatLoading && !isEmpty(salesStatistics) && (
+            <MainChart kiosksOptions={kiosksOptions} />
+          )}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row stretched>
