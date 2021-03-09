@@ -63,7 +63,6 @@ const ModalLoadCell = ({
   const [productInfo, setproductInfo] = useState();
   const [isValid, setIsValid] = useState({
     productLine: false,
-    quantity: false,
     cableId: false,
   });
   const [showPositionErrorAlert, setShowPositionErrorAlert] = useState(false);
@@ -84,8 +83,8 @@ const ModalLoadCell = ({
   };
 
   const validateCellContents = () => {
-    const { productLine, quantity, cableId } = isValid;
-    return productLine && quantity && cableId && isValidPosition;
+    const { productLine, cableId } = isValid;
+    return productLine && cableId && isValidPosition;
   };
 
   const handleDeleteLoadCell = () => {
@@ -196,10 +195,6 @@ const ModalLoadCell = ({
                       onChange={(e, { value }) => {
                         setQuantityState(value);
                       }}
-                      callbackOnChange={() =>
-                        setIsValid({ ...isValid, quantity: true })
-                      }
-                      required
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -289,7 +284,7 @@ const ModalLoadCell = ({
                   } else {
                     if (validateCellContents()) {
                       setShowAlert(true);
-                    } else if(!isValidPosition) {
+                    } else if (!isValidPosition) {
                       setShowPositionErrorAlert(true);
                     }
                   }
