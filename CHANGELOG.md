@@ -1,3 +1,12 @@
+#### 1.3.26 (2021-03-09)
+
+##### Bug Fixes
+
+* **addscale modal:** LIV-2327 quantity field not to be mandatory - fixed (5e5ad855)
+* **Dashboard:**
+  *  LIV_2725 mobile responsive datepicker: Different date picker for different Screen size (acd91813)
+  *  LIV-2724 mobile responsive dashboar: Alerts Table, Almost Empty and Sub Components (6c4bce57)
+
 #### 1.3.25 (2021-03-09)
 
 ##### Build System / Dependencies
