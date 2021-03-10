@@ -9,12 +9,12 @@ import ModalLoadCell from './ModalLoadCell';
 import PlanogramSwitcher from './PlanogramSwitcher';
 import { setPlanogramSwitchState } from '../actions';
 
-const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
+const DetailsLoadCells = ({ cells, kioskName, currentKioskSide }) => {
   const [product, selectProduct] = useState(null);
   const [isAddLoadCell, setIsAddLoadCell] = useState(false);
   const [currentSide, setCurrentSide] = useState(currentKioskSide);
   const dispatch = useDispatch();
-  const setSide=currentSide;
+  const setSide = currentSide;
   const handleEdit = ({
     productLine,
     cellId,
@@ -22,21 +22,19 @@ const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
     planogramPosition,
   }) => {
     const data = pick(productLine, ['_id', 'name', 'price']);
-    
+
     selectProduct({
       ...data,
       cellId,
       planogramPosition: planogramPosition || '',
       availableProducts,
-      
     });
-    
   };
 
   const handleClose = () => {
     setIsAddLoadCell(false);
     selectProduct(null);
-    dispatch(setPlanogramSwitchState({setSide}));
+    dispatch(setPlanogramSwitchState({ setSide }));
   };
 
   const sides = useMemo(() => separateToSides(cells), [cells]);
@@ -52,16 +50,19 @@ const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
   };
 
   const activeShelves = useMemo(
-    ()=>(cells.filter((cell) => cell.planogramPosition != null && cell.isActive !== false)).length,
+    () =>
+      cells.filter(
+        cell => cell.planogramPosition != null && cell.isActive !== false,
+      ).length,
     [currentSide, sides],
   );
 
   return (
-    <Segment>
+    <Segment stackable>
       <PlanogramSwitcher
         {...{ activeShelves, setCurrentSide, currentSide, isTwoSides }}
       />
-      
+
       <DetailLoadCellsSide
         cells={sides[currentSide]}
         handleEdit={handleEdit}

@@ -289,7 +289,7 @@ const ModalLoadCell = ({
                   } else {
                     if (validateCellContents()) {
                       setShowAlert(true);
-                    } else if(!isValidPosition) {
+                    } else if (!isValidPosition) {
                       setShowPositionErrorAlert(true);
                     }
                   }
