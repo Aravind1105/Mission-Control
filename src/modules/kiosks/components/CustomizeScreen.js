@@ -79,8 +79,12 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
             enabled: false,
           },
       pin: values.pin,
-      technicianPin: values.technicianPin,
+      technicianPin:
+        values.technicianPin && values.technicianPin !== ''
+          ? values.technicianPin
+          : null,
     };
+
     dispatch(updateKioskProps({ finalProps }));
   };
   const [age, setAge] = useState(kioskProps.minimumAge.toString());
@@ -163,13 +167,13 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     },
   ];
 
-  const TimeOptions = () => {
-    let time = [];
-    for (let i = 0; i <= 23; i++) {
-      time.push({ key: i, value: i, text: `${String(i).padStart(2, '0')}:00` });
-    }
-    return time;
-  };
+  // const TimeOptions = () => {
+  //   let time = [];
+  //   for (let i = 0; i <= 23; i++) {
+  //     time.push({ key: i, value: i, text: `${String(i).padStart(2, '0')}:00` });
+  //   }
+  //   return time;
+  // };
 
   return (
     <Formik
@@ -178,6 +182,14 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
       enableReinitialize
       validationSchema={Yup.object().shape({
         preAuth: Yup.number().max(50, 'Amount exceeds € 50.'),
+        technicianPin: Yup.number().notOneOf(
+          [Yup.ref('pin')],
+          "Replenishment PIN and Technician PIN can't be the same.",
+        ),
+        pin: Yup.number().notOneOf(
+          [Yup.ref('technicianPin')],
+          "Replenishment PIN and Technician PIN can't be the same.",
+        ),
       })}
     >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
@@ -355,7 +367,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   label="Replenishment PIN"
                   type="number"
                   placeholder="1234"
-                  min={0}
                   widthLimit
                   component={FormInput}
                 />
@@ -366,7 +377,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   label="Technician PIN"
                   type="number"
                   placeholder="5678"
-                  min={0}
                   widthLimit
                   component={FormInput}
                 />
