@@ -43,9 +43,9 @@ const DetailsInfo = ({
 
   return (
     <div className="kiosk-info">
-      <Grid>
-        <Grid.Column width={12}>
-          <Grid>
+      <Grid columns="two">
+        <Grid.Column mobile={11} computer={12}>
+          <Grid textAlign="justified">
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
               <InfoRow title="Session" description={sessionType} />
@@ -63,12 +63,17 @@ const DetailsInfo = ({
               {notes && (
                 <InfoRow title="Directions / Notes" description={notes} />
               )}
-              <InfoRow title="Organization" description={ownerOrganization} />
+              {ownerOrganization && (
+                <InfoRow title="Organization" description={ownerOrganization} />
+              )}
+
               <InfoRow title="Pin" description={pin} />
             </Grid.Row>
           </Grid>
         </Grid.Column>
-        <Grid.Column width={4}>{children}</Grid.Column>
+        <Grid.Column mobile={5} computer={4}>
+          {children}
+        </Grid.Column>
       </Grid>
     </div>
   );
