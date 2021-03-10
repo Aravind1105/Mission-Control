@@ -68,7 +68,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
       id: values.id,
       preAuth: parseFloat(values.preAuth),
       paymentType: values.paymentType,
-      minimumAge: parseFloat(age),
+      minimumAge: parseInt(age),
       tabletLang: values.tabletLang,
       memberCardEnabled: memberCard,
       serviceCheck: values.serviceCheckEnabled
@@ -78,11 +78,8 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
         : {
             enabled: false,
           },
-      pin: values.pin,
-      technicianPin:
-        values.technicianPin && values.technicianPin !== ''
-          ? values.technicianPin
-          : null,
+      pin: parseInt(values.pin),
+      technicianPin: parseInt(values.technicianPin),
     };
 
     dispatch(updateKioskProps({ finalProps }));
@@ -129,6 +126,8 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     setType(kioskProps.paymentType);
     setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
+    kioskProps.technicianPin = kioskProps.technicianPin.toString();
+    // kioskProps.pin = kioskProps.pin.toString();
   }, [kioskProps]);
 
   const languages = [
@@ -174,7 +173,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   //   }
   //   return time;
   // };
-
+  console.log(kioskProps);
   return (
     <Formik
       initialValues={kioskProps}
@@ -182,14 +181,30 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
       enableReinitialize
       validationSchema={Yup.object().shape({
         preAuth: Yup.number().max(50, 'Amount exceeds € 50.'),
-        technicianPin: Yup.number().notOneOf(
-          [Yup.ref('pin')],
-          "Replenishment PIN and Technician PIN can't be the same.",
-        ),
-        pin: Yup.number().notOneOf(
-          [Yup.ref('technicianPin')],
-          "Replenishment PIN and Technician PIN can't be the same.",
-        ),
+        technicianPin: Yup.number()
+          .notOneOf(
+            [Yup.ref('pin')],
+            "Replenishment PIN and Technician PIN can't be the same.",
+          )
+          .test(
+            'len',
+            'Must be exactly 4 digits',
+            val => val.toString().length === 4,
+          )
+          .positive('Must be greater than zero')
+          .typeError('Invalid Input: Numbers please'),
+        pin: Yup.number()
+          .notOneOf(
+            [Yup.ref('technicianPin')],
+            "Replenishment PIN and Technician PIN can't be the same.",
+          )
+          .test(
+            'len',
+            'Must be exactly 4 digits',
+            val => val.toString().length === 4,
+          )
+          .positive('Must be greater than zero')
+          .typeError('Invalid Input: Numbers please'),
       })}
     >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
@@ -365,7 +380,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                 <Field
                   name="pin"
                   label="Replenishment PIN"
-                  type="number"
+                  required
                   placeholder="1234"
                   widthLimit
                   component={FormInput}
@@ -375,7 +390,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                 <Field
                   name="technicianPin"
                   label="Technician PIN"
-                  type="number"
+                  required
                   placeholder="5678"
                   widthLimit
                   component={FormInput}
