@@ -12,7 +12,6 @@ import {
 function* handler({ payload: { values, formActions } }) {
   try {
     const { id, ...rest } = values;
-    console.log('saga', values);
     const variables = {
       data: rest,
     };

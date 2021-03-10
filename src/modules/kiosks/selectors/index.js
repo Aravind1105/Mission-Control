@@ -161,7 +161,6 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
     cell => cell.planogramPosition.indexOf('A') !== -1,
   );
   const isTwoSides = cells.length !== filteredCells.length;
-  console.log(isTwoSides);
   const cellIdOptions = [];
   let maxLoadCells = 15;
   if (isTwoSides) {
