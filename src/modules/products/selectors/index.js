@@ -129,6 +129,11 @@ const defaultFormInit = {
   defaultCost: '',
   orgId: '',
   images: [],
+  capacities: {
+    surfaceSize_33: 0,
+    surfaceSize_50: 0,
+    surfaceSize_100: 0,
+  },
   packagingOptions: [
     {
       ean: '',

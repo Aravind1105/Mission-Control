@@ -42,6 +42,7 @@ const FormInput = ({
   return (
     <Input
       fluid
+      form="novalidateform"
       step={step}
       style={props.widthLimit && { width: '35%' }}
       {...field}

@@ -319,8 +319,10 @@ export const kioskInitialValues = {
   name: '',
   serialNumber: '',
   notes: '',
+  orgId: '',
   location: {
     address: {
+      name: '',
       line1: '',
       line2: '',
       postalCode: '',
@@ -328,6 +330,7 @@ export const kioskInitialValues = {
       state: '',
       country: '',
     },
+    pin: '',
   },
 };
 
@@ -356,6 +359,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
             ...address,
           },
         },
+        pin: kiosk.pin,
       }
     : kioskInitialValues;
 });

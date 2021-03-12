@@ -126,8 +126,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
     setType(kioskProps.paymentType);
     setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
-    kioskProps.technicianPin = kioskProps.technicianPin.toString();
-    // kioskProps.pin = kioskProps.pin.toString();
   }, [kioskProps]);
 
   const languages = [
@@ -173,38 +171,57 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   //   }
   //   return time;
   // };
-  console.log(kioskProps);
+
   return (
     <Formik
       initialValues={kioskProps}
       onSubmit={onSubmit}
       enableReinitialize
+      validateOnChange
       validationSchema={Yup.object().shape({
         preAuth: Yup.number().max(50, 'Amount exceeds € 50.'),
-        technicianPin: Yup.number()
-          .notOneOf(
-            [Yup.ref('pin')],
-            "Replenishment PIN and Technician PIN can't be the same.",
-          )
-          .test(
-            'len',
-            'Must be exactly 4 digits',
-            val => val.toString().length === 4,
-          )
-          .positive('Must be greater than zero')
-          .typeError('Invalid Input: Numbers please'),
         pin: Yup.number()
-          .notOneOf(
-            [Yup.ref('technicianPin')],
-            "Replenishment PIN and Technician PIN can't be the same.",
-          )
+          .required('This field is required')
+          .test({
+            name: 'check-same-pin',
+            test: function(val) {
+              if (val && val === this.parent.technicianPin) {
+                return this.createError({
+                  path: 'pin',
+                  message:
+                    "Replenishment PIN and Technician PIN can't be the same",
+                });
+              } else return true;
+            },
+          })
+          .typeError('Invalid Input: Numbers please')
+          .positive('Must be greater than zero')
           .test(
             'len',
             'Must be exactly 4 digits',
-            val => val.toString().length === 4,
-          )
+            val => val && val.toString().length === 4,
+          ),
+        technicianPin: Yup.number()
+          .required('This field is required')
+          .test({
+            name: 'check-same-pin',
+            test: function(val) {
+              if (val && val === this.parent.pin) {
+                return this.createError({
+                  path: 'technicianPin',
+                  message:
+                    "Replenishment PIN and Technician PIN can't be the same",
+                });
+              } else return true;
+            },
+          })
+          .typeError('Invalid Input: Numbers please')
           .positive('Must be greater than zero')
-          .typeError('Invalid Input: Numbers please'),
+          .test(
+            'len',
+            'Must be exactly 4 digits',
+            val => val && val.toString().length === 4,
+          ),
       })}
     >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
@@ -381,7 +398,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   name="pin"
                   label="Replenishment PIN"
                   required
-                  placeholder="1234"
                   widthLimit
                   component={FormInput}
                 />
@@ -391,7 +407,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   name="technicianPin"
                   label="Technician PIN"
                   required
-                  placeholder="5678"
                   widthLimit
                   component={FormInput}
                 />

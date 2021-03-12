@@ -1,13 +1,27 @@
 import React from 'react';
 import { FormInput as Input, Dropdown } from 'semantic-ui-react';
 
-const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOptions, selectorDefaultValueIndex, dropdownSelectedValue, ...props }) => {
-  const [selectorValue, setSelectorValue] = React.useState(selectorOptions[selectorDefaultValueIndex].value);
+const FormInput = ({
+  form,
+  field,
+  step,
+  readOnly,
+  prettier,
+  limiting,
+  selectorOptions,
+  selectorDefaultValueIndex,
+  dropdownSelectedValue,
+  ...props
+}) => {
+  const [selectorValue, setSelectorValue] = React.useState(
+    selectorOptions[selectorDefaultValueIndex].value,
+  );
   React.useEffect(() => {
     setSelectorValue(dropdownSelectedValue);
   }, [dropdownSelectedValue]);
 
-  const isTouched = form.touched[field.name] || form.touched[`${field.name}Unit`];
+  const isTouched =
+    form.touched[field.name] || form.touched[`${field.name}Unit`];
   const error = form.errors[field.name];
   const errMsg = isTouched && error ? { content: error } : undefined;
 
@@ -21,7 +35,10 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
     if (e.target.name === undefined) {
       form.setFieldValue(`${field.name}Unit`, value);
     } else if (limiting === 'floatingField') {
-      if (/^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) || /^[0-9]{1,20}([,.])?$/.test(value)) {
+      if (
+        /^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) ||
+        /^[0-9]{1,20}([,.])?$/.test(value)
+      ) {
         if (value.includes('.') || value.includes(',')) {
           form.setFieldValue(field.name, value.replace(',', '.'));
         } else form.setFieldValue(field.name, value.replace('.', ','));
@@ -36,13 +53,14 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
   return (
     <Input
       fluid
+      form="novalidateform"
       step={step}
       {...field}
       onBlur={prettier ? handleBlur : field.onBlur}
       {...props}
       error={errMsg}
       onChange={limiting ? handleChange : field.onChange}
-      action={(
+      action={
         <Dropdown
           compact
           button
@@ -55,7 +73,7 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, selectorOp
             handleChange(e, { value });
           }}
         />
-      )}
+      }
     />
   );
 };

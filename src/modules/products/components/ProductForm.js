@@ -127,9 +127,26 @@ const ProductForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
+      enableReinitialize
+      validateOnChange
       validationSchema={Yup.object().shape({
+        name: Yup.string().required('This field is required'),
         orgId: Yup.string().required('This field is required'),
         tax: Yup.string().required('This field is required'),
+        manufacturer: Yup.string().required('This field is required'),
+        packagingOptions: Yup.array().of(
+          Yup.object().shape({
+            netWeightGrams: Yup.number().required('This field is required'),
+            grossWeightGrams: Yup.number().required('This field is required'),
+          }),
+        ),
+        defaultPrice: Yup.string().required('This field is required'),
+        defaultCost: Yup.string().required('This field is required'),
+        capacities: Yup.object().shape({
+          surfaceSize_100: Yup.number().required('This field is required'),
+          surfaceSize_50: Yup.number().required('This field is required'),
+          surfaceSize_33: Yup.number().required('This field is required'),
+        }),
       })}
       enableReinitialize
     >
@@ -192,14 +209,7 @@ const ProductForm = ({
                     component={FormInput}
                   />
                 </Grid.Column>
-                <Grid.Column>
-                  {/* <Field
-                    name="manufacturer"
-                    label="Manufacturer"
-                    required
-                    component={FormInput}
-                  /> */}
-                </Grid.Column>
+                <Grid.Column></Grid.Column>
               </Grid.Row>
 
               <Grid.Row columns="equal" stretched>

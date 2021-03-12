@@ -148,7 +148,6 @@ const ModalLoadCell = ({
       }}
       initialValues={initVal}
       key={initVal.price}
-      validateOnBlur
     >
       {({ dirty, handleSubmit }) => (
         <ConfirmModal
