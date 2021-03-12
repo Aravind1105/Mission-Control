@@ -16,9 +16,9 @@ const FormCheckbox = ({
       <label className="checkbox">
         <input
           type="checkbox"
+          form="novalidateform"
           {...field}
           {...props}
-          required={required}
           checked={value}
           onClick={handleChange}
         />

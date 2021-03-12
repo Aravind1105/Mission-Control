@@ -97,7 +97,7 @@ const KioskDetails = ({
                   <Breadcrumbs
                     backLink={backLink}
                     links={links}
-                    activeLink={kiosk.name}
+                    activeLink={kiosk && kiosk.name}
                   />
                 </Segment>
               </Grid.Column>
@@ -106,20 +106,20 @@ const KioskDetails = ({
               <Grid.Column stretched>
                 <Segment>
                   <DetailsHeader
-                    name={kiosk.name}
-                    temp={kiosk.temperature.value}
-                    doorStatus={kiosk.doorStatus}
-                    temperature={kiosk.temperature}
-                    session={kiosk.session}
+                    name={kiosk && kiosk.name}
+                    temp={kiosk && kiosk.temperature.value}
+                    doorStatus={kiosk && kiosk.doorStatus}
+                    temperature={kiosk && kiosk.temperature}
+                    session={kiosk && kiosk.session}
                   />
                   <Divider />
                   <DetailsInfo
-                    serial={`#${kiosk.serialNumber}`}
-                    session={kiosk.session}
-                    location={kiosk.location}
+                    serial={`#${kiosk && kiosk.serialNumber}`}
+                    session={kiosk && kiosk.session}
+                    location={kiosk && kiosk.location}
                     ownerOrganization={orgName}
-                    notes={kiosk.notes}
-                    pin={kiosk.pin}
+                    notes={kiosk && kiosk.notes}
+                    pin={kiosk && kiosk.pin}
                   >
                     <>
                       <CustomButton
@@ -141,21 +141,23 @@ const KioskDetails = ({
                         icon="thermometer quarter"
                         label="Temp. Log"
                         onClick={() =>
-                          history.push(`/kiosks/log/temp/${kiosk._id}`)
+                          history.push(`/kiosks/log/temp/${kiosk && kiosk._id}`)
                         }
                       />
                       <CustomButton
                         icon="line graph"
                         label="Activity Log"
                         onClick={() =>
-                          history.push(`/kiosks/log/activity/${kiosk._id}`)
+                          history.push(
+                            `/kiosks/log/activity/${kiosk && kiosk._id}`,
+                          )
                         }
                       />
                       <CustomButton
                         icon="setting"
                         label="Settings"
                         onClick={() =>
-                          history.push(`/kiosks/settings/${kiosk._id}`)
+                          history.push(`/kiosks/settings/${kiosk && kiosk._id}`)
                         }
                       />
                     </>
@@ -167,7 +169,7 @@ const KioskDetails = ({
               <Grid.Column>
                 <DetailsLoadCells
                   cells={loadCells.list}
-                  kioskName={kiosk.name}
+                  kioskName={kiosk && kiosk.name}
                   currentKioskSide={currentKioskSide}
                 />
               </Grid.Column>
@@ -178,7 +180,8 @@ const KioskDetails = ({
         <Grid.Column width={5}>
           <Grid>
             <DetailQRCode
-              qrCode={`http://qrdeeplink.livello.com?id=${kiosk.qrcode}`}
+              qrCode={`http://qrdeeplink.livello.com?id=${kiosk &&
+                kiosk.qrcode}`}
             />
             <Grid.Row>
               <Grid.Column>

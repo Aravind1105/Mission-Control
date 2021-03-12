@@ -73,6 +73,9 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       validationSchema={Yup.object().shape({
         mobile: Yup.number().positive('Phone number shoule be positive.'),
         membercards: Yup.array().of(Yup.string().matches(/^[a-zA-Z0-9]+$/)),
+        firstName: Yup.string().required('This field is required'),
+        lastName: Yup.string().required('This field is required'),
+        email: Yup.string().required('This field is required'),
       })}
     >
       {({ dirty, handleSubmit, handleReset }) => (

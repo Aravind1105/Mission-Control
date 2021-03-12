@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field, FieldArray } from 'formik';
+import * as Yup from 'yup';
 
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
@@ -23,7 +24,21 @@ const OrganizationForm = ({ initialValues, orgOptions }) => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validateOnChange
+      validationSchema={Yup.object().shape({
+        name: Yup.string().required('This field is required'),
+        address: Yup.object().shape({
+          line1: Yup.string().required('This field is required'),
+          postalCode: Yup.string().required('This field is required'),
+          city: Yup.string().required('This field is required'),
+          country: Yup.string().required('This field is required'),
+        }),
+        connectedOrg: Yup.string().required('This field is required'),
+      })}
+    >
       {({ dirty, handleSubmit, resetForm }) => (
         <Form onSubmit={handleSubmit}>
           <Grid className="form">
@@ -47,7 +62,7 @@ const OrganizationForm = ({ initialValues, orgOptions }) => {
                   </Grid.Row>
                 </Grid>
               </Grid.Column>
-              <Grid.Column width={4}>Img</Grid.Column>
+              {/* <Grid.Column width={4}>Img</Grid.Column> */}
             </Grid.Row>
 
             <FormGroupTitle title="Address" />
