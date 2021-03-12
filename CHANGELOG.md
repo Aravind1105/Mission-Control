@@ -1,3 +1,17 @@
+#### 1.3.27 (2021-03-12)
+
+##### New Features
+
+* **delete load cell:** LIV-2327 isActive field is used to display loadcell on the planogram (175b3048)
+
+##### Bug Fixes
+
+* **validation:**  PIN validationa and complete Yup validation and some bug fixes (ae9ea9f7)
+* **PIN:**  Validated for max 4digits, numeric, positive (86a695b5)
+* **log:**  rm logs (15659a68)
+* **settings:**  Pin validation and both the pins can'be the same (c1a3c897)
+* **kiosk details:**  LIV-2726 Kiosk Details (89fb4af2)
+
 #### 1.3.26 (2021-03-09)
 
 ##### Bug Fixes
