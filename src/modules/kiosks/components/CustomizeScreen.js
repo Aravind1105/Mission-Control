@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Grid, Form, Button, FormRadio, Popup, Icon } from 'semantic-ui-react';
+import {
+  Grid,
+  Form,
+  Button,
+  FormRadio,
+  Popup,
+  Icon,
+  Header,
+  Divider,
+} from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
@@ -12,6 +21,7 @@ import { getKioskProperties } from '../selectors';
 import { Message } from 'semantic-ui-react';
 import { getKioskSingle } from '../selectors';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
+import ContentPlaylist from './ContentPlaylist';
 
 const DefaultSupportLanguageToolTip = () => (
   <Popup
@@ -61,7 +71,7 @@ const AgeRestrictionWarningMessage = () => (
   </Message>
 );
 
-const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
+const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     const finalProps = {
@@ -410,6 +420,11 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
                   widthLimit
                   component={FormInput}
                 />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <ContentPlaylist {...props} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row textAlign="center">

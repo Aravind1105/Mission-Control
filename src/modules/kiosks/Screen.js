@@ -71,6 +71,7 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
               <CustomizeScreen
                 cancelHandler={cancelHandler}
                 isKioskLoading={isKioskLoading}
+                {...props}
               />
             </Segment>
           </Grid.Column>

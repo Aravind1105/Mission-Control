@@ -1,0 +1,49 @@
+{
+  "playListData": [
+    {
+      "_id": "<OBJECT_ID>1",
+      "name": "MainScreen.png",
+      "uri": "<PUBLIC_URL>",
+      "duration": 5,
+      "type": "main_screen",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "_id": "<OBJECT_ID>2",
+      "name": "Explainer.png",
+      "uri": "<PUBLIC_URL>",
+      "duration": 5,
+      "type": "explainer",
+      "enabled": false,
+      "order": 3
+    },
+    {
+      "_id": "<OBJECT_ID>3",
+      "name": "ImageContent1.png",
+      "uri": "<PUBLIC_URL>",
+      "duration": 3,
+      "type": "content",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "_id": "<OBJECT_ID>4",
+      "name": "ImageContent2.png",
+      "uri": "<PUBLIC_URL>",
+      "duration": 3,
+      "type": "content",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "_id": "<OBJECT_ID>5",
+      "name": "ImageContent3.png",
+      "uri": "<PUBLIC_URL>",
+      "duration": 3,
+      "type": "content",
+      "enabled": false,
+      "order": 5
+    }
+  ]
+}

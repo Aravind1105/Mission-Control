@@ -93,6 +93,15 @@ const FragmentKioskOnKiosk = gql`
       }
       memberCardEnabled
       technicianPin
+      playList {
+        _id
+        name
+        uri
+        duration
+        type
+        enabled
+        order
+      }
     }
   }
   ${FragmentLocation.location}

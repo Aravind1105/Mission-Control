@@ -8,6 +8,7 @@ import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
+import data from '../components/testData.json';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
@@ -35,6 +36,12 @@ const activityLogMessages = {
   valid_membercard_read: 'Valid MemberCard Read',
   invalid_card_read: 'Invalid Card Read',
   payment_failed: 'Payment Failed',
+};
+
+const playlistTypes = {
+  main_screen: 'Main Screen',
+  explainer: 'Explainer Animation',
+  content: 'Image Content',
 };
 
 const doorStatus = { open: 'open', closed: 'closed', unknown: 'unknown' };
@@ -180,6 +187,7 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
       }
     }
   }
+  console.log(cellIdOptions, 'ASAS');
   return cellIdOptions;
 });
 
@@ -451,7 +459,6 @@ export const getTemperatureLogsState = state => {
     'May',
     'Jun',
     'Jul',
-    'Aug',
     'Sep',
     'Oct',
     'Nov',
@@ -497,3 +504,39 @@ export const getTemperatureLogsState = state => {
   });
   return organizedData;
 };
+
+export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
+  const playListData = data.playListData.map((data, index) => {
+    return {
+      id: data._id,
+      type:
+        data.type === 'content'
+          ? playlistTypes[data.type] + ` ${data.order}`
+          : playlistTypes[data.type],
+      imgData: {
+        uri: data.uri,
+        name: data.name,
+      },
+      order: data.order,
+      duration: data.duration,
+      isEditable: data.type.indexOf('main_screen') === -1 ? true : false,
+      isDeletable:
+        data.type.indexOf('main_screen') === -1 &&
+        data.type.indexOf('explainer') === -1
+          ? true
+          : false,
+      isEnabled: data.enabled,
+    };
+  });
+  return playListData;
+});
+
+export const getPlaylistOrders = createSelector(getContentPlaylist, state => {
+  const totalOrders = [1, 2, 3, 4, 5];
+  const finalOrders = [];
+  totalOrders.map(order => {
+    if (R.findIndex(R.propEq('order', order))(state) === -1)
+      finalOrders.push({ key: order, value: order, text: order });
+  });
+  return finalOrders;
+});
