@@ -7,7 +7,7 @@ import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
 import getAlertsGrid from './getAlertsGrid';
-import getOrgName from './getOrgName';
+import getOrgData from './getOrgData';
 import getProductLinesByOrgId from './getProductLinesByOrgId';
 import getAlmostEmptyKiosks from './getAlmostEmptyKiosks';
 import getTemperatureLogs from './getTemperatureLogs';
@@ -24,7 +24,7 @@ export default function* kiosksSaga() {
     fork(modifyKioskSaga),
     fork(getKioskSaga),
     fork(getAlertsGrid),
-    fork(getOrgName),
+    fork(getOrgData),
     fork(getProductLinesByOrgId),
     fork(getAlmostEmptyKiosks),
     fork(getTemperatureLogs),

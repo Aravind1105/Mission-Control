@@ -399,12 +399,25 @@ export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
       }
     : kioskInitialProperties;
 });
+export const orgInitialProperties = {
+  name: '',
+  slug: '',
+  appleId: '',
+};
 
 export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk =>
   kiosk ? kiosk.orgId : null,
 );
 
-export const getOrgName = state => state.kiosks.orgName;
+export const getOrgData = state => {
+  return state.kiosks.org
+    ? {
+        name: get(state.kiosks.org, 'name', '') || '',
+        slug: get(state.kiosks.org, 'slug', '') || '',
+        appleId: get(state.kiosks.org, 'appleId', '') || '',
+      }
+    : orgInitialProperties;
+};
 
 export const getProductsByOrdId = state => state.kiosks.productsByOrgId;
 
