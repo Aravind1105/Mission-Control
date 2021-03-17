@@ -15,8 +15,8 @@ import getActivityLogs from './getActivityLogs';
 import updateKioskProps from './updateKioskProps';
 import setPlanogramSwitchState from './updatePlanogramSwitch';
 import deleteLoadCell from './deleteLoadCell';
-import updatePlayList from './updatePlayList';
-import deletePlayList from './deletePlayList';
+import updatePlayList from './updatePlaylist';
+import deletePlayList from './deletePlaylist';
 
 export default function* kiosksSaga() {
   yield all([
