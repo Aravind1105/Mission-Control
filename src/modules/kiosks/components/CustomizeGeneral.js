@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Grid, Form, Button, FormRadio, Popup, Icon } from 'semantic-ui-react';
+import {
+  Grid,
+  Form,
+  Button,
+  FormRadio,
+  Popup,
+  Icon,
+  Header,
+  Divider,
+} from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
@@ -116,13 +124,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   useEffect(() => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
-    if (!type || type === '') setType(kioskProps.paymentType);
-    setMemberCard(kioskProps.memberCardEnabled);
-  }, []);
-
-  useEffect(() => {
-    if (kioskProps.minimumAge === '') setAge('0');
-    else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
     setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
@@ -163,14 +164,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
       text: 'Giro card only',
     },
   ];
-
-  // const TimeOptions = () => {
-  //   let time = [];
-  //   for (let i = 0; i <= 23; i++) {
-  //     time.push({ key: i, value: i, text: `${String(i).padStart(2, '0')}:00` });
-  //   }
-  //   return time;
-  // };
 
   return (
     <Formik
@@ -225,7 +218,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
       })}
     >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
           <Grid>
             <Grid.Row columns="equal">
               <Grid.Column>

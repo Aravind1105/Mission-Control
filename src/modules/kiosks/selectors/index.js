@@ -37,6 +37,12 @@ const activityLogMessages = {
   payment_failed: 'Payment Failed',
 };
 
+const playlistTypes = {
+  main_screen: 'Main Screen',
+  explainer: 'Explainer Animation',
+  content: 'Image Content',
+};
+
 const doorStatus = { open: 'open', closed: 'closed', unknown: 'unknown' };
 
 export const getAlertsOptions = () => [
@@ -180,6 +186,7 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
       }
     }
   }
+  console.log(cellIdOptions, 'ASAS');
   return cellIdOptions;
 });
 
@@ -471,7 +478,6 @@ export const getTemperatureLogsState = state => {
     'May',
     'Jun',
     'Jul',
-    'Aug',
     'Sep',
     'Oct',
     'Nov',
@@ -517,3 +523,31 @@ export const getTemperatureLogsState = state => {
   });
   return organizedData;
 };
+
+export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
+  const playListData =
+    kiosk &&
+    kiosk.controller.playList.map((data, index) => {
+      return {
+        id: data._id,
+        type:
+          data.type === 'content'
+            ? playlistTypes[data.type] + ` ${index - 1}`
+            : playlistTypes[data.type],
+        imgData: {
+          uri: data.uri,
+          name: data.name,
+        },
+        order: data.order,
+        duration: data.duration,
+        isEditable: data.type.indexOf('main_screen') === -1 ? true : false,
+        isDeletable:
+          data.type.indexOf('main_screen') === -1 &&
+          data.type.indexOf('explainer') === -1
+            ? true
+            : false,
+        isEnabled: data.enabled,
+      };
+    });
+  return playListData;
+});

@@ -93,6 +93,15 @@ const FragmentKioskOnKiosk = gql`
       }
       memberCardEnabled
       technicianPin
+      playList {
+        _id
+        name
+        uri
+        duration
+        type
+        enabled
+        order
+      }
     }
   }
   ${FragmentLocation.location}
@@ -365,4 +374,32 @@ export const DELETE_LOAD_CELL = gql`
     }
   }
   ${FragmentKioskOnKiosk}
+`;
+
+export const UPDATE_PLAYLIST = gql`
+  mutation updatePlayList($kioskId: String!, $data: [PlayListInput]!) {
+    updatePlayList(kioskId: $kioskId, data: $data) {
+      _id
+      name
+      uri
+      duration
+      type
+      enabled
+      order
+    }
+  }
+`;
+
+export const DELETE_PLAYLIST = gql`
+  mutation deletePlayListContent($kioskId: String!, $contentId: String!) {
+    deletePlayListContent(kioskId: $kioskId, contentId: $contentId) {
+      _id
+      name
+      uri
+      duration
+      type
+      enabled
+      order
+    }
+  }
 `;
