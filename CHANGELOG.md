@@ -1,3 +1,16 @@
+#### 1.3.30 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2865:**
+  *  added gql for update and delete playlist (ad494029)
+  * Add Image in Playlist screen (8738b094)
+  *  content playlist screen update (8c34c529)
+
+##### Bug Fixes
+
+* **LIV-2948:** error in OrgGrid resolved (f850a6ea)
+
 #### 1.3.29 (2021-03-17)
 
 #### 1.3.28 (2021-03-17)
