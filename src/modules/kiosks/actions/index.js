@@ -40,6 +40,14 @@ export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
 export const updateKioskPropsSuccess = createAction(
   '@@state/UPDATE_KIOSK_PROPS_SUCCESS',
 );
+export const updatePlayList = createAction('@@state/UPDATE_PLAYLIST');
+export const updatePlayListSuccess = createAction(
+  '@@state/update_PLAYLIST_SUCCESS',
+);
+export const deletePlayList = createAction('@@state/DELETE_PLAYLIST');
+export const deletePlayListSuccess = createAction(
+  '@@state/DELETE_PLAYLIST_SUCCESS',
+);
 export const getKioskSuccess = createAction('@@state/GET_KIOSK_SUCCESS');
 export const resetKioskSuccess = createAction('@@state/KIOSK_RESET_SUCCESS');
 export const getAlertsGridSuccess = createAction(

@@ -506,37 +506,29 @@ export const getTemperatureLogsState = state => {
 };
 
 export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
-  const playListData = data.playListData.map((data, index) => {
-    return {
-      id: data._id,
-      type:
-        data.type === 'content'
-          ? playlistTypes[data.type] + ` ${index}`
-          : playlistTypes[data.type],
-      imgData: {
-        uri: data.uri,
-        name: data.name,
-      },
-      order: data.order,
-      duration: data.duration,
-      isEditable: data.type.indexOf('main_screen') === -1 ? true : false,
-      isDeletable:
-        data.type.indexOf('main_screen') === -1 &&
-        data.type.indexOf('explainer') === -1
-          ? true
-          : false,
-      isEnabled: data.enabled,
-    };
-  });
+  const playListData =
+    kiosk &&
+    kiosk.controller.playList.map((data, index) => {
+      return {
+        id: data._id,
+        type:
+          data.type === 'content'
+            ? playlistTypes[data.type] + ` ${index - 1}`
+            : playlistTypes[data.type],
+        imgData: {
+          uri: data.uri,
+          name: data.name,
+        },
+        order: data.order,
+        duration: data.duration,
+        isEditable: data.type.indexOf('main_screen') === -1 ? true : false,
+        isDeletable:
+          data.type.indexOf('main_screen') === -1 &&
+          data.type.indexOf('explainer') === -1
+            ? true
+            : false,
+        isEnabled: data.enabled,
+      };
+    });
   return playListData;
-});
-
-export const getPlaylistOrders = createSelector(getContentPlaylist, state => {
-  const totalOrders = [1, 2, 3, 4, 5];
-  const finalOrders = [];
-  totalOrders.map(order => {
-    if (R.findIndex(R.propEq('order', order))(state) === -1)
-      finalOrders.push({ key: order, value: order, text: order });
-  });
-  return finalOrders;
 });

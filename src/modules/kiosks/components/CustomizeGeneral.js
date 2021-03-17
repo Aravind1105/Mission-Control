@@ -69,7 +69,7 @@ const AgeRestrictionWarningMessage = () => (
   </Message>
 );
 
-const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
+const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     const finalProps = {
@@ -124,13 +124,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
   useEffect(() => {
     if (kioskProps.minimumAge === '') setAge('0');
     else setAge(kioskProps.minimumAge.toString());
-    if (!type || type === '') setType(kioskProps.paymentType);
-    setMemberCard(kioskProps.memberCardEnabled);
-  }, []);
-
-  useEffect(() => {
-    if (kioskProps.minimumAge === '') setAge('0');
-    else setAge(kioskProps.minimumAge.toString());
     setType(kioskProps.paymentType);
     setMemberCard(kioskProps.memberCardEnabled);
     setServiceCheckEnabled(serviceCheckEnabled);
@@ -171,14 +164,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
       text: 'Giro card only',
     },
   ];
-
-  // const TimeOptions = () => {
-  //   let time = [];
-  //   for (let i = 0; i <= 23; i++) {
-  //     time.push({ key: i, value: i, text: `${String(i).padStart(2, '0')}:00` });
-  //   }
-  //   return time;
-  // };
 
   return (
     <Formik

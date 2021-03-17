@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
-import { Grid, Segment, Divider } from 'semantic-ui-react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import ContentPlaylist from './components/ScreenPlaylist';
+import { getKiosk } from './actions';
 import { getKioskSingle } from './selectors';
+import history from 'lib/history';
 import NavSwitcher from '../shared/components/NavSwitcher';
 
-const Playlist = ({ kiosk, isKioskLoading, ...props }) => {
+const Playlist = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   const links = [
     {
       name: 'Home',
@@ -41,6 +42,17 @@ const Playlist = ({ kiosk, isKioskLoading, ...props }) => {
       }/playlist`,
     },
   ];
+  const redirectHandler = () => {
+    const redirectTo =
+      props.match.params.id === 'new'
+        ? '/kiosks'
+        : `/kiosks/detail/${props.match.params.id}`;
+    history.push(redirectTo);
+  };
+
+  useEffect(() => {
+    getKiosk(props.match.params.id);
+  }, []);
   return (
     <>
       <Grid>
@@ -59,7 +71,7 @@ const Playlist = ({ kiosk, isKioskLoading, ...props }) => {
           <Grid.Column>
             <Segment>
               <NavSwitcher config={navSwitcherConfig} />
-              <ContentPlaylist {...props} />
+              <ContentPlaylist redirectHandler={redirectHandler} {...props} />
             </Segment>
           </Grid.Column>
         </Grid.Row>
@@ -72,5 +84,8 @@ const mapStateToProps = state => ({
   kiosk: getKioskSingle(state),
   isKioskLoading: state.kiosks.isKioskLoading,
 });
+const mapDispatchToProps = {
+  getKiosk,
+};
 
-export default connect(mapStateToProps)(Playlist);
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);

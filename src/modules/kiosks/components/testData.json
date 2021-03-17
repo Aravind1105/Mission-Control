@@ -1,25 +1,25 @@
 {
   "playListData": [
     {
-      "_id": "<OBJECT_ID>1",
+      "_id": "6024f974d5ab06aa9ba55893",
       "name": "MainScreen.png",
       "uri": "<PUBLIC_URL>",
-      "duration": 5,
+      "duration": 10,
       "type": "main_screen",
       "enabled": true,
       "order": 1
     },
     {
-      "_id": "<OBJECT_ID>2",
+      "_id": "6024f974d5ab06aa9ba55892",
       "name": "Explainer.png",
       "uri": "<PUBLIC_URL>",
-      "duration": 5,
+      "duration": 25,
       "type": "explainer",
       "enabled": false,
       "order": 2
     },
     {
-      "_id": "<OBJECT_ID>4",
+      "_id": "6024f974d5ab06aa9ba55891",
       "name": "ImageContent2.png",
       "uri": "<PUBLIC_URL>",
       "duration": 3,
@@ -28,7 +28,7 @@
       "order": 4
     },
     {
-      "_id": "<OBJECT_ID>5",
+      "_id": "6024f974d5ab06aa9ba55894",
       "name": "ImageContent3.png",
       "uri": "<PUBLIC_URL>",
       "duration": 3,
