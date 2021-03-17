@@ -85,7 +85,6 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   useEffect(() => {
     const image = new Image();
     image.src = img || '';
-    setImg('');
     image.onload = () => {
       if (
         image.naturalWidth > 800 ||
@@ -197,7 +196,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                   </Grid.Column>
                   <Grid.Column style={{ width: '23%' }}>
                     <img
-                      src={require('../../../styling/assets/images/shelf_capacities.png')}
+                      src={img}
                       style={{
                         height: 100,
                         width: 70,
