@@ -85,6 +85,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   useEffect(() => {
     const image = new Image();
     image.src = img || '';
+    setImg('');
     image.onload = () => {
       if (
         image.naturalWidth > 800 ||
@@ -104,6 +105,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
           type: 'Image Content ' + `${newState.length + 1}`,
           imgData: {
             uri: DataURL,
+            path: image.src,
             name: 'Image Content ' + `${newState.length + 1}.${imgExt}`,
           },
           duration: 10,
@@ -196,7 +198,9 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                   </Grid.Column>
                   <Grid.Column style={{ width: '23%' }}>
                     <img
-                      src={img}
+                      src={
+                        list.imgData.path ? list.imgData.path : list.imgData.uri
+                      }
                       style={{
                         height: 100,
                         width: 70,
