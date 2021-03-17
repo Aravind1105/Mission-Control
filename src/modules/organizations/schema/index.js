@@ -60,6 +60,8 @@ export const GET_ORGANIZATION_BY_ID = gql`
   query($id: String!) {
     getOrganizationById(id: $id) {
       name
+      slug
+      appleId
     }
   }
 `;

@@ -301,13 +301,20 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Kiosks' },
-  ...kiosks.map(({ _id, name }) => ({
+export const getKioskOptions = createSelector(getKiosksState, kiosks => {
+  const options = kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
-  })),
-]);
+  }));
+  // sort options based on the alphabetical order of the kiosk names
+  const sortByKioskNameCaseInsensitive = R.sortBy(
+    R.compose(R.toLower, R.prop('label')),
+  );
+  return [
+    { value: '', label: 'All Kiosks' },
+    ...sortByKioskNameCaseInsensitive(options),
+  ];
+});
 
 export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,
@@ -407,12 +414,25 @@ export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
       }
     : kioskInitialProperties;
 });
+export const orgInitialProperties = {
+  name: '',
+  slug: '',
+  appleId: '',
+};
 
 export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk =>
   kiosk ? kiosk.orgId : null,
 );
 
-export const getOrgName = state => state.kiosks.orgName;
+export const getOrgData = state => {
+  return state.kiosks.org
+    ? {
+        name: get(state.kiosks.org, 'name', '') || '',
+        slug: get(state.kiosks.org, 'slug', '') || '',
+        appleId: get(state.kiosks.org, 'appleId', '') || '',
+      }
+    : orgInitialProperties;
+};
 
 export const getProductsByOrdId = state => state.kiosks.productsByOrgId;
 
