@@ -12,7 +12,6 @@ import {
 } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
@@ -21,7 +20,6 @@ import { getKioskProperties } from '../selectors';
 import { Message } from 'semantic-ui-react';
 import { getKioskSingle } from '../selectors';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
-import ContentPlaylist from './ContentPlaylist';
 
 const DefaultSupportLanguageToolTip = () => (
   <Popup
@@ -235,7 +233,7 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
       })}
     >
       {({ dirty, handleSubmit, resetForm, setFieldValue }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
           <Grid>
             <Grid.Row columns="equal">
               <Grid.Column>
@@ -420,11 +418,6 @@ const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk, ...props }) => {
                   widthLimit
                   component={FormInput}
                 />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <ContentPlaylist {...props} />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row textAlign="center">

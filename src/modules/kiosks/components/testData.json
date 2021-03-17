@@ -16,16 +16,7 @@
       "duration": 5,
       "type": "explainer",
       "enabled": false,
-      "order": 3
-    },
-    {
-      "_id": "<OBJECT_ID>3",
-      "name": "ImageContent1.png",
-      "uri": "<PUBLIC_URL>",
-      "duration": 3,
-      "type": "content",
-      "enabled": true,
-      "order": 3
+      "order": 2
     },
     {
       "_id": "<OBJECT_ID>4",

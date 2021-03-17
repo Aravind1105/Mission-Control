@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Grid, Segment, Divider } from 'semantic-ui-react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
-
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
-import Loader from 'modules/shared/components/Loader';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
-import CustomizeScreen from './components/CustomizeScreen';
+import CustomizeScreen from './components/CustomizeGeneral';
 import history from 'lib/history';
 import { getKiosk } from './actions';
 import { getKioskSingle } from './selectors';
+import NavSwitcher from '../shared/components/NavSwitcher';
 
-const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
+const Settings = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const links = [
     {
       name: 'Home',
@@ -31,6 +30,21 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
     name: 'Back to kiosk detail',
     link: `/kiosks/detail/${!kiosk ? props.match.params.id : kiosk._id}`,
   };
+  const navSwitcherConfig = [
+    { name: 'Kiosk Settings' },
+    {
+      name: 'General',
+      goTo: `/kiosks/settings/${
+        !kiosk ? props.match.params.id : kiosk._id
+      }/general`,
+    },
+    {
+      name: 'Screen Playlist',
+      goTo: `/kiosks/settings/${
+        !kiosk ? props.match.params.id : kiosk._id
+      }/playlist`,
+    },
+  ];
 
   const redirectHandler = () => {
     const redirectTo =
@@ -44,13 +58,12 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
     if (dirty) setIsModalOpen(true);
     else redirectHandler();
   };
-
   useEffect(() => {
     getKiosk(props.match.params.id);
   }, []);
+
   return (
     <>
-      {isKioskLoading && <Loader />}
       <Grid>
         <Grid.Row stretched>
           <Grid.Column>
@@ -66,8 +79,7 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
         <Grid.Row>
           <Grid.Column>
             <Segment>
-              <Header as="h3">Kiosk Settings</Header>
-              <Divider />
+              <NavSwitcher config={navSwitcherConfig} />
               <CustomizeScreen
                 cancelHandler={cancelHandler}
                 isKioskLoading={isKioskLoading}
@@ -98,4 +110,4 @@ const mapDispatchToProps = {
   getKiosk,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screen);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

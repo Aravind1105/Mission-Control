@@ -511,7 +511,7 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
       id: data._id,
       type:
         data.type === 'content'
-          ? playlistTypes[data.type] + ` ${data.order}`
+          ? playlistTypes[data.type] + ` ${index}`
           : playlistTypes[data.type],
       imgData: {
         uri: data.uri,
