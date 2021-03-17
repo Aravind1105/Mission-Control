@@ -5,7 +5,6 @@ const organizationOnOrganization = gql`
     _id
     name
     slug
-    appleId
     imageUrl
     description
     address {
@@ -30,7 +29,6 @@ export const GET_ORGANIZATIONS_LIST_QUERY = gql`
         _id
         name
         slug
-        appleId
         imageUrl
         description
         address {
