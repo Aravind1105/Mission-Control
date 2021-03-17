@@ -8,7 +8,6 @@ import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
-import data from '../components/testData.json';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
