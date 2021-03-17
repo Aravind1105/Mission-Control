@@ -293,13 +293,20 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Kiosks' },
-  ...kiosks.map(({ _id, name }) => ({
+export const getKioskOptions = createSelector(getKiosksState, kiosks => {
+  const options = kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
-  })),
-]);
+  }));
+  // sort options based on the alphabetical order of the kiosk names
+  const sortByKioskNameCaseInsensitive = R.sortBy(
+    R.compose(R.toLower, R.prop('label')),
+  );
+  return [
+    { value: '', label: 'All Kiosks' },
+    ...sortByKioskNameCaseInsensitive(options),
+  ];
+});
 
 export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,

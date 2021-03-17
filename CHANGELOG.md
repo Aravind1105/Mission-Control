@@ -1,3 +1,15 @@
+#### 1.3.29 (2021-03-17)
+
+#### 1.3.28 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2923:** updated the qrcode link to accomodate the slug and appleId (52b3f56c)
+
+##### New Features
+
+* **dashboard graph:** LIV-2911 kiosk options in the graph should be in ascending order (2a3ad66e)
+
 #### 1.3.27 (2021-03-12)
 
 ##### New Features
