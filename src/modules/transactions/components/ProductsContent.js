@@ -49,20 +49,18 @@ const ProductsContent = ({
   setSortByInCaller,
 }) => {
   return (
-    <Segment>
-      <ProductsTable
-        sortByColumn="ProductName"
-        columns={columns}
-        data={products}
-        getData={getData}
-        sortable
-        selectable
-        striped
-        isLoading={isLoading}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
-    </Segment>
+    <ProductsTable
+      sortByColumn="ProductName"
+      columns={columns}
+      data={products}
+      getData={getData}
+      sortable
+      selectable
+      striped
+      isLoading={isLoading}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+      sortDirection="DESC"
+    />
   );
 };
 

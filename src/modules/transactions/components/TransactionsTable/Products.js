@@ -155,9 +155,11 @@ const ProductsTable = ({
                 >
                   <Table.Cell>{product.productName}</Table.Cell>
                   <Table.Cell>
-                    {`${Number(product.sold || 0).toFixed(0)}€`}
+                    {`${Number(product.sold || 0).toFixed(0)}`}
                   </Table.Cell>
-                  <Table.Cell>{product.totalGrossSales || 0}</Table.Cell>
+                  <Table.Cell>{`${Number(product.totalGrossSales || 0).toFixed(
+                    2,
+                  )}€`}</Table.Cell>
                   <Table.Cell>{product.refilled || 0}</Table.Cell>
                   <Table.Cell>
                     {`${Number(
