@@ -24,13 +24,13 @@ const sortDefault = [
 ];
 
 const sortValue = {
+  productLine: 'productLine',
   productName: 'productName',
-  soldProductQuanitiy: 'Quantity',
-  status: 'status',
-  productName: 'product',
-  loadCell: 'loadCell',
-  weight: 'weight',
-  total: 'total',
+  totalCost: 'totalCost',
+  totalGrossSales: 'totalGrossSales',
+  refilled: 'refilled',
+  sold: 'sold',
+  removed: 'removed',
 };
 
 const ProductList = ({
@@ -63,7 +63,6 @@ const ProductList = ({
       const cat = category ? { category: { $regex: category } } : {};
       const date = dateRange;
       const kio = kiosk ? { kioskId: kiosk } : {};
-      // const kio = kiosk ? { kiosk } : {};
 
       data.search = JSON.stringify({
         ...name,
@@ -78,7 +77,7 @@ const ProductList = ({
     }
     if (dateRange || kiosk) {
       widgetPayload.period = dateRange;
-      widgetPayload.kiosk = kiosk;
+      widgetPayload.kioskId = kiosk;
     }
     getAllProducts({ data });
     getProductsWidgetsData({ ...widgetPayload });

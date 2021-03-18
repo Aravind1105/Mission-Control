@@ -113,9 +113,7 @@ export const getTransactionsTableState = createSelector(
                 id: productLine ? productLine._id : '' || 'unknown',
                 productName: (productLine ? productLine.name : '') || 'unknown',
                 total: +price,
-                articleNumber: productLine.articleNumber
-                  ? productLine.articleNumber
-                  : '',
+                articleNumber: productLine ? productLine.articleNumber : '',
                 tax,
                 price,
                 quantity,

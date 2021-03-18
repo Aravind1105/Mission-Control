@@ -31,7 +31,7 @@ const sortValue = {
   total: 'total',
 };
 
-const ProductsList = ({
+const TransactionsList = ({
   transactions,
   isLoading,
   total,
@@ -169,4 +169,4 @@ const mapDispatchToProps = {
   getTransactionsWidgetsData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);

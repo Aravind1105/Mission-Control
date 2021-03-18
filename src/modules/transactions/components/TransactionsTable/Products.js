@@ -102,7 +102,7 @@ const ProductsTable = ({
       >
         {!headless && (
           <Table.Header>
-            <Table.Row>
+            {/* <Table.Row>
               {columns.map(({ title, field, className }) => {
                 const sorted =
                   (sortBy && sortBy === field && direction) || undefined;
@@ -123,6 +123,23 @@ const ProductsTable = ({
                   </Table.HeaderCell>
                 );
               })}
+            </Table.Row> */}
+
+            <Table.Row negative>
+              <Table.HeaderCell rowSpan="2">Product Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">Sold Products</Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">
+                Replenished Products
+              </Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">Removed Products</Table.HeaderCell>
+            </Table.Row>
+            <Table.Row>
+              <Table.HeaderCell>Quantity</Table.HeaderCell>
+              <Table.HeaderCell>Value</Table.HeaderCell>
+              <Table.HeaderCell>Quantity</Table.HeaderCell>
+              <Table.HeaderCell>Value</Table.HeaderCell>
+              <Table.HeaderCell>Quantity</Table.HeaderCell>
+              <Table.HeaderCell>Value</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
         )}
@@ -138,20 +155,20 @@ const ProductsTable = ({
                 >
                   <Table.Cell>{product.productName}</Table.Cell>
                   <Table.Cell>
-                    {Number(product.sold || 0).toFixed(0)}
+                    {`${Number(product.sold || 0).toFixed(0)}€`}
                   </Table.Cell>
                   <Table.Cell>{product.totalGrossSales || 0}</Table.Cell>
                   <Table.Cell>{product.refilled || 0}</Table.Cell>
                   <Table.Cell>
-                    {Number(
+                    {`${Number(
                       product.refilled * product.defaultPrice || 0,
-                    ).toFixed(2)}
+                    ).toFixed(2)} €`}
                   </Table.Cell>
                   <Table.Cell>{product.removed || 0}</Table.Cell>
                   <Table.Cell>
-                    {Number(
+                    {`${Number(
                       product.removed * product.defaultPrice || 0,
-                    ).toFixed(2)}
+                    ).toFixed(2)}€`}
                   </Table.Cell>
                 </Table.Row>
               );
