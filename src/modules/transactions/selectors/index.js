@@ -105,12 +105,10 @@ export const getTransactionsTableState = createSelector(
               prev[idx].quantity += quantity;
             } else {
               prev.push({
-                id: productLine ? productLine._id : '' || 'unknown',
-                productName: (productLine ? productLine.name : '') || 'unknown',
+                id: get(productLine, '_id', '') || 'unknown',
+                productName: get(productLine, 'name', '') || 'unknown',
                 total: +price,
-                articleNumber: productLine.articleNumber
-                  ? productLine.articleNumber
-                  : '',
+                articleNumber: get(productLine, 'articleNumber', ''),
                 tax,
                 price,
                 quantity,
