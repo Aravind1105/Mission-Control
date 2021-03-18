@@ -172,15 +172,17 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
 
   return (
     <div style={{ marginTop: '30px' }}>
-      <Grid columns={5} className="header-col">
-        <Grid.Row className="header-row">
-          <Grid.Column style={{ width: '17%' }}>Type</Grid.Column>
-          <Grid.Column style={{ width: '23% ' }}>Name</Grid.Column>
-          <Grid.Column style={{ width: '12% ' }}>Order</Grid.Column>
-          <Grid.Column style={{ width: '15% ' }}>Duration</Grid.Column>
-          <Grid.Column></Grid.Column>
-        </Grid.Row>
-      </Grid>
+      {finalPlaylist && finalPlaylist.length > 0 && (
+        <Grid columns={5} className="header-col">
+          <Grid.Row className="header-row">
+            <Grid.Column style={{ width: '17%' }}>Type</Grid.Column>
+            <Grid.Column style={{ width: '23% ' }}>Name</Grid.Column>
+            <Grid.Column style={{ width: '12% ' }}>Order</Grid.Column>
+            <Grid.Column style={{ width: '15% ' }}>Duration</Grid.Column>
+            <Grid.Column></Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
       <Grid columns={5} className="cell-col">
         {finalPlaylist &&
           finalPlaylist.map(list => {
