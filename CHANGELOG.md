@@ -1,3 +1,13 @@
+#### 1.3.31 (2021-03-19)
+
+##### Bug Fixes
+
+* **Transactions-Sales:** LIV-2949 fixed the null handling in a proper manner (af0d317c)
+* **img:**
+  *  img path fixed to reset it (a3b2013d)
+  *  retrieves uploaded image (6db3b55c)
+* **fileName:**  name case sensitive fixed (411b47d9)
+
 #### 1.3.30 (2021-03-17)
 
 ##### Build System / Dependencies
