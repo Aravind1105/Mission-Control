@@ -2,6 +2,7 @@
 
 ##### Bug Fixes
 
+* **Transactions-Sales:** LIV-2949 fixed the null handling in a proper manner (af0d317c)
 * **Transactions-Refills:** LIV-2957 resolver name changed to getDefaultTotalCostValueOfRefills (2da2fee6)
 * **img:**
   *  img path fixed to reset it (a3b2013d)
