@@ -27,6 +27,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   const [DataURL, setDataURL] = useState('');
   const [imageSize, setImageSize] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNumValid, setNumValid] = useState({ id: '', val: true });
   const [deleteImg, setDeleteImg] = useState({});
 
   const onSubmit = () => {
@@ -101,7 +102,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
         let newState = [];
         if (finalPlaylist) newState = [...finalPlaylist];
         let newArray = {
-          id: 'ObjectID',
+          id: 'ObjectID-' + `${newState.length}`,
           type: 'Image Content ' + `${newState.length + 1}`,
           imgData: {
             uri: DataURL,
@@ -173,17 +174,25 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   return (
     <div style={{ marginTop: '30px' }}>
       {finalPlaylist && finalPlaylist.length > 0 && (
-        <Grid columns={5} className="header-col">
+        <Grid columns={5} className="header-col" stackable>
           <Grid.Row className="header-row">
-            <Grid.Column style={{ width: '17%' }}>Type</Grid.Column>
-            <Grid.Column style={{ width: '23% ' }}>Name</Grid.Column>
-            <Grid.Column style={{ width: '12% ' }}>Order</Grid.Column>
-            <Grid.Column style={{ width: '15% ' }}>Duration</Grid.Column>
-            <Grid.Column></Grid.Column>
+            <Grid.Column style={{ width: '17%' }} mobile={2} largeScreen={3}>
+              Type
+            </Grid.Column>
+            <Grid.Column style={{ width: '23% ' }} mobile={4} largeScreen={4}>
+              Name
+            </Grid.Column>
+            <Grid.Column style={{ width: '12% ' }} mobile={2}>
+              Order
+            </Grid.Column>
+            <Grid.Column style={{ width: '15% ' }} mobile={2}>
+              Duration
+            </Grid.Column>
+            <Grid.Column mobile={2}></Grid.Column>
           </Grid.Row>
         </Grid>
       )}
-      <Grid columns={5} className="cell-col">
+      <Grid columns={5} className="cell-col" stackable>
         {finalPlaylist &&
           finalPlaylist.map(list => {
             return (
@@ -195,10 +204,16 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                       fontWeight: '700',
                       width: '17%',
                     }}
+                    mobile={2}
+                    largeScreen={3}
                   >
                     {list.type}
                   </Grid.Column>
-                  <Grid.Column style={{ width: '23%' }}>
+                  <Grid.Column
+                    style={{ width: '23%' }}
+                    mobile={4}
+                    largeScreen={4}
+                  >
                     <img
                       src={
                         list.imgData.path ? list.imgData.path : list.imgData.uri
@@ -218,7 +233,11 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                       {list.imgData && list.imgData.name}
                     </span>
                   </Grid.Column>
-                  <Grid.Column style={{ width: '12%' }}>
+                  <Grid.Column
+                    style={{ width: '12%' }}
+                    mobile={2}
+                    largeScreen={2}
+                  >
                     <Dropdown
                       compact
                       value={list.order}
@@ -229,37 +248,55 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                       }
                     />
                   </Grid.Column>
-                  <Grid.Column style={{ color: '#828282', width: '15%' }}>
+                  <Grid.Column
+                    style={{ color: '#828282', width: '15%' }}
+                    mobile={2}
+                    largeScreen={2}
+                  >
                     <Input
                       size="mini"
-                      style={{ width: '15px' }}
+                      style={{ width: '20px' }}
                       defaultValue={list.duration}
                       disabled={!Boolean(list.isDeletable)}
                       label={{ basic: true, content: 'sec' }}
                       labelPosition="right"
-                      onChange={(e, { value }) =>
-                        updatePlaylistProps(
-                          parseInt(value),
-                          list.id,
-                          'duration',
-                        )
-                      }
-                      validations={{
-                        matchRegexp: /^(\d*\.)?\d+$/,
-                      }}
-                      validationErrors={{
-                        matchRegexp: 'Name can only be numeric',
+                      onChange={(e, { value }) => {
+                        if (
+                          parseInt(value) >= 3 &&
+                          parseInt(value) <= 60 &&
+                          !isNaN(parseInt(value))
+                        ) {
+                          setNumValid({ id: list.id, val: true });
+                          updatePlaylistProps(
+                            parseInt(value),
+                            list.id,
+                            'duration',
+                          );
+                        } else setNumValid({ id: list.id, val: false });
                       }}
                     />
+                    {isNumValid.id === list.id && !isNumValid.val && (
+                      <div style={{ color: 'red', fontSize: '12px' }}>
+                        Allowed between 3 - 60
+                      </div>
+                    )}
                   </Grid.Column>
-                  <Grid.Column>
+                  <Grid.Column
+                    mobile={4}
+                    largeScreen={2}
+                    style={{ marginLeft: '50px' }}
+                  >
                     {list.isEditable && list.isDeletable ? (
                       <span style={{ float: 'right' }}>
                         <Checkbox
                           toggle
                           fitted
                           checked={list.isEnabled}
-                          style={{ top: '7px', paddingRight: '10px' }}
+                          style={{
+                            top: '6px',
+                            paddingRight: '5px',
+                            transform: 'scale(0.8)',
+                          }}
                           onChange={() =>
                             updatePlaylistProps(
                               !list.isEnabled,
@@ -271,7 +308,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                         <Icon
                           link
                           name="close"
-                          style={{ color: 'red', fontSize: '1.5em' }}
+                          style={{ color: 'red', fontSize: '1.3em' }}
                           onClick={() => handleDeleteImage(list)}
                         />
                       </span>
@@ -300,8 +337,12 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
             );
           })}
         {finalPlaylist && finalPlaylist.length > 5 ? null : (
-          <Grid.Row>
-            <Grid.Column style={{ width: '19%', paddingRight: '0px' }}>
+          <Grid.Row stackable>
+            <Grid.Column
+              style={{ width: '19%', paddingRight: '0px' }}
+              mobile={7}
+              largeScreen={3}
+            >
               <div className="label-playlist-wrapper">
                 <label
                   htmlFor="playlistImgUpload"
@@ -324,7 +365,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                 </label>
               </div>
             </Grid.Column>
-            <Grid.Column className="img-note">
+            <Grid.Column className="img-note" mobile={7} largeScreen={6}>
               Please upload a JPG/PNG image with max size 800 x 1280px. Max File
               Size: 500kb
               <a
@@ -347,7 +388,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
         )}
         {finalPlaylist && finalPlaylist.length > 0 && (
           <Grid.Row textAlign="center" style={{ justifyContent: 'center' }}>
-            <Grid.Column>
+            <Grid.Column mobile={5}>
               <Button type="button" onClick={redirectHandler}>
                 Cancel
               </Button>
