@@ -5,6 +5,7 @@ const organizationOnOrganization = gql`
     _id
     name
     slug
+    appleId
     imageUrl
     description
     address {
