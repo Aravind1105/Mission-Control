@@ -45,7 +45,6 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       'note',
       'rolesInOrganizations',
       'membercards',
-      'kioskPin',
     ]);
     if (!isEmpty(values.address)) {
       if (!values.address.name) {

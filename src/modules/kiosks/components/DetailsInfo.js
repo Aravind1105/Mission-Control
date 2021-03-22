@@ -8,7 +8,7 @@ const DetailsInfo = ({
   children,
   session,
   serial,
-  location: { address },
+  location,
   ownerOrganization,
   notes,
   pin,
@@ -17,10 +17,10 @@ const DetailsInfo = ({
   let addressLine2 = '';
   let addressSecondLine = '';
   let addressThirdLine = '';
-  // address
-  //   ? [address.city, address.line1, address.state].filter(el => el).join(', ')
-  //   : '';
-  if (address.line1 !== null) {
+
+  let address = location && location.address;
+
+  if (address && address.line1 !== null) {
     addressLine1 += address.name ? `${address.name}, ` : '';
     addressLine1 += `${address.line1}`;
     addressLine2 += address.line2 ? `${address.line2}` : '';
