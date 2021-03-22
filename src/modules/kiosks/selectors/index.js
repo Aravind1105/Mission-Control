@@ -344,8 +344,9 @@ export const kioskInitialValues = {
       state: '',
       country: '',
     },
-    pin: '',
   },
+  pin: '',
+  technicianPin: '',
 };
 
 export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
@@ -364,7 +365,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
   return kiosk
     ? {
         id: kiosk._id,
-        ...pick(kiosk, ['name', 'serialNumber']),
+        ...pick(kiosk, ['name', 'serialNumber', 'pin']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
         location: {
@@ -373,7 +374,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
             ...address,
           },
         },
-        pin: kiosk.pin,
+        technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
       }
     : kioskInitialValues;
 });
