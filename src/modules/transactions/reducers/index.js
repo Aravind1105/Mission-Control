@@ -3,19 +3,25 @@ import { handleActions, combineActions } from 'redux-actions';
 import {
   getAllTransactions,
   getAllTransactionsSuccess,
+  getAllTransactionsFailed,
+  getAllProducts,
+  getAllProductsSuccess,
+  getAllProductsFailed,
   getGridRefills,
   getGridRefillsSuccess,
   getGridRefillsFailed,
-  getAllTransactionsFailed,
   getTransactionsWidgetsDataSuccess,
   getRefillsWidgetsDataSuccess,
+  getProductsWidgetsDataSuccess,
 } from '../actions';
 
 const initialState = {
   list: [],
   refillsList: [],
+  productList: [],
   totalRefills: 0,
   totalTransactions: 0,
+  totalProducts: 0,
   isLoading: false,
   widgetData: {
     totalNumberOfProductsAdded: 0,
@@ -26,12 +32,24 @@ const initialState = {
     averagePurchaseValue: 0,
     totalNumberOfProductsSold: 0,
     totalNetIncome: 0,
+    mostSoldProductName: '',
+    mostSoldProductValue: 0,
+    leastSoldProductName: '',
+    leastSoldProductValue: 0,
+    mostRefilledProductName: '',
+    mostRefilledProductValue: 0,
+    mostRemovedProductName: '',
+    mostRemovedProductValue: 0,
   },
 };
 
 const transactionsReducer = handleActions(
   {
-    [combineActions(getAllTransactions, getGridRefills)]: state => ({
+    [combineActions(
+      getAllTransactions,
+      getGridRefills,
+      getAllProducts,
+    )]: state => ({
       ...state,
       isLoading: true,
     }),
@@ -39,6 +57,12 @@ const transactionsReducer = handleActions(
       ...state,
       refillsList: payload.refillsList,
       totalRefills: payload.totalRefills || 0,
+      isLoading: false,
+    }),
+    [getAllProductsSuccess]: (state, { payload }) => ({
+      ...state,
+      productList: payload.productList,
+      totalProducts: payload.totalProducts || 0,
       isLoading: false,
     }),
     [getAllTransactionsSuccess]: (state, { payload }) => ({
@@ -50,6 +74,7 @@ const transactionsReducer = handleActions(
     [combineActions(
       getGridRefillsFailed,
       getAllTransactionsFailed,
+      getAllProductsFailed,
     )]: state => ({
       ...state,
       isLoading: false,
@@ -57,9 +82,17 @@ const transactionsReducer = handleActions(
     [combineActions(
       getTransactionsWidgetsDataSuccess,
       getRefillsWidgetsDataSuccess,
+      getProductsWidgetsDataSuccess,
     )]: (state, { payload }) => ({
       ...state,
-      widgetData: { ...state.widgetData, ...payload },
+      widgetData: {
+        ...state.widgetData,
+        // mostRefilledProduct: payload.mostRefilledProduct,
+        // totalNumberOfTransactions: payload.totalNumberOfTransactions
+        // leastSoldProduct: payload.leastSoldProduct,
+        // mostRemovedProduct: payload.mostRemovedProduct.name,
+        ...payload,
+      },
     }),
   },
   initialState,
