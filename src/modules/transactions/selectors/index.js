@@ -83,8 +83,7 @@ export const getTransactionsTableState = createSelector(
       ({ itemsPurchased, created, paymentMethod, ...rest }) => {
         const item = {
           transactionID: rest._id,
-          membercardId:
-            paymentMethod.length > 0 ? paymentMethod[0].membercardId : '',
+          membercardId: get(paymentMethod[0], 'membercardId', '') || '',
           type: rest.type,
           created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
           session: rest.session,
@@ -93,8 +92,7 @@ export const getTransactionsTableState = createSelector(
           price: 0,
           productName: 'Total',
           quantity: itemsPurchased.length,
-          kioskName:
-            get(itemsPurchased[0].kiosk.name, 'kiosk.name', '') || 'unknown',
+          kioskName: get(itemsPurchased[0].kiosk, 'name', '') || 'unknown',
         };
         const arr = itemsPurchased.reduce(
           (prev, { productLine, price, tax }) => {
