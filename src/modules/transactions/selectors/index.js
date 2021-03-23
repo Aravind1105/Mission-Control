@@ -94,8 +94,7 @@ export const getTransactionsTableState = createSelector(
           productName: 'Total',
           quantity: itemsPurchased.length,
           kioskName:
-            (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
-            'unknown',
+            get(itemsPurchased[0].kiosk.name, 'kiosk.name', '') || 'unknown',
         };
         const arr = itemsPurchased.reduce(
           (prev, { productLine, price, tax }) => {
