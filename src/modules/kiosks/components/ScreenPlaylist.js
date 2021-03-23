@@ -31,25 +31,27 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   const [deleteImg, setDeleteImg] = useState({});
 
   const onSubmit = () => {
-    const data = [];
-    finalPlaylist.map(list => {
-      const props = {
-        _id: list.id,
-        name: list.imgData.name,
-        image: list.imgData.uri,
-        duration: list.duration,
-        type:
-          list.type === 'Main Screen'
-            ? 'main_screen'
-            : list.type === 'Explainer Animation'
-            ? 'explainer'
-            : 'content',
-        enabled: list.isEnabled,
-        order: list.order,
-      };
-      data.push(props);
-    });
-    dispatch(updatePlayList({ kioskId, data }));
+    if (isNumValid.val) {
+      const data = [];
+      finalPlaylist.map(list => {
+        const props = {
+          _id: list.id,
+          name: list.imgData.name,
+          image: list.imgData.uri,
+          duration: list.duration,
+          type:
+            list.type === 'Main Screen'
+              ? 'main_screen'
+              : list.type === 'Explainer Animation'
+              ? 'explainer'
+              : 'content',
+          enabled: list.isEnabled,
+          order: list.order,
+        };
+        data.push(props);
+      });
+      dispatch(updatePlayList({ kioskId, data }));
+    }
   };
 
   const onDelete = () => {
@@ -283,6 +285,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                   </Grid.Column>
                   <Grid.Column
                     mobile={4}
+                    computer={2}
                     largeScreen={2}
                     style={{ marginLeft: '50px' }}
                   >
@@ -341,6 +344,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
             <Grid.Column
               style={{ width: '19%', paddingRight: '0px' }}
               mobile={7}
+              computer={3}
               largeScreen={3}
             >
               <div className="label-playlist-wrapper">
