@@ -33,7 +33,7 @@ const MobileLayout = ({ children }) => {
           vertical
           visible={visible}
           width="wide"
-          direction="right"
+          direction="top"
         >
           <Navigation mobileNavToggle={() => setVisible(false)} />
         </Sidebar>
