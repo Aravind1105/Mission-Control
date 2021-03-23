@@ -1,3 +1,53 @@
+#### 1.3.31 (2021-03-19)
+
+##### Bug Fixes
+
+* **Transactions-Sales:** LIV-2949 fixed the null handling in a proper manner (af0d317c)
+* **Transactions-Refills:** LIV-2957 resolver name changed to getDefaultTotalCostValueOfRefills (2da2fee6)
+* **img:**
+  *  img path fixed to reset it (a3b2013d)
+  *  retrieves uploaded image (6db3b55c)
+* **fileName:**  name case sensitive fixed (411b47d9)
+
+#### 1.3.30 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2865:**
+  *  added gql for update and delete playlist (ad494029)
+  * Add Image in Playlist screen (8738b094)
+  *  content playlist screen update (8c34c529)
+
+##### Bug Fixes
+
+* **LIV-2948:** error in OrgGrid resolved (f850a6ea)
+
+#### 1.3.29 (2021-03-17)
+
+#### 1.3.28 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2923:** updated the qrcode link to accomodate the slug and appleId (52b3f56c)
+
+##### New Features
+
+* **dashboard graph:** LIV-2911 kiosk options in the graph should be in ascending order (2a3ad66e)
+
+#### 1.3.27 (2021-03-12)
+
+##### New Features
+
+* **delete load cell:** LIV-2327 isActive field is used to display loadcell on the planogram (175b3048)
+
+##### Bug Fixes
+
+* **validation:**  PIN validationa and complete Yup validation and some bug fixes (ae9ea9f7)
+* **PIN:**  Validated for max 4digits, numeric, positive (86a695b5)
+* **log:**  rm logs (15659a68)
+* **settings:**  Pin validation and both the pins can'be the same (c1a3c897)
+* **kiosk details:**  LIV-2726 Kiosk Details (89fb4af2)
+
 #### 1.3.26 (2021-03-09)
 
 ##### Bug Fixes

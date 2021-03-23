@@ -7,7 +7,7 @@ import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
 import getKioskSaga from './getKiosk';
 import getAlertsGrid from './getAlertsGrid';
-import getOrgName from './getOrgName';
+import getOrgData from './getOrgData';
 import getProductLinesByOrgId from './getProductLinesByOrgId';
 import getAlmostEmptyKiosks from './getAlmostEmptyKiosks';
 import getTemperatureLogs from './getTemperatureLogs';
@@ -15,6 +15,8 @@ import getActivityLogs from './getActivityLogs';
 import updateKioskProps from './updateKioskProps';
 import setPlanogramSwitchState from './updatePlanogramSwitch';
 import deleteLoadCell from './deleteLoadCell';
+import updatePlayList from './updatePlaylist';
+import deletePlayList from './deletePlaylist';
 
 export default function* kiosksSaga() {
   yield all([
@@ -24,7 +26,7 @@ export default function* kiosksSaga() {
     fork(modifyKioskSaga),
     fork(getKioskSaga),
     fork(getAlertsGrid),
-    fork(getOrgName),
+    fork(getOrgData),
     fork(getProductLinesByOrgId),
     fork(getAlmostEmptyKiosks),
     fork(getTemperatureLogs),
@@ -33,5 +35,7 @@ export default function* kiosksSaga() {
     fork(updateKioskProps),
     fork(setPlanogramSwitchState),
     fork(deleteLoadCell),
+    fork(updatePlayList),
+    fork(deletePlayList),
   ]);
 }

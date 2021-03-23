@@ -37,6 +37,12 @@ const activityLogMessages = {
   payment_failed: 'Payment Failed',
 };
 
+const playlistTypes = {
+  main_screen: 'Main Screen',
+  explainer: 'Explainer Animation',
+  content: 'Image Content',
+};
+
 const doorStatus = { open: 'open', closed: 'closed', unknown: 'unknown' };
 
 export const getAlertsOptions = () => [
@@ -63,7 +69,7 @@ export const getKiosksTableState = state =>
 export const getKioskDoorStatus = () => [
   {
     value: '',
-    text: 'Door Status',
+    text: 'All Door Status',
   },
   ...Object.keys(doorStatus).map(status => ({
     value: status,
@@ -180,6 +186,7 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
       }
     }
   }
+  console.log(cellIdOptions, 'ASAS');
   return cellIdOptions;
 });
 
@@ -293,13 +300,20 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => [
-  { value: '', label: 'All Kiosks' },
-  ...kiosks.map(({ _id, name }) => ({
+export const getKioskOptions = createSelector(getKiosksState, kiosks => {
+  const options = kiosks.map(({ _id, name }) => ({
     value: _id,
     label: name,
-  })),
-]);
+  }));
+  // sort options based on the alphabetical order of the kiosk names
+  const sortByKioskNameCaseInsensitive = R.sortBy(
+    R.compose(R.toLower, R.prop('label')),
+  );
+  return [
+    { value: '', label: 'All Kiosks' },
+    ...sortByKioskNameCaseInsensitive(options),
+  ];
+});
 
 export const getKioskOptionsForTableDropdown = createSelector(
   getKiosksState,
@@ -311,7 +325,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
+    return [{ key: 'all', value: '', text: 'All Kiosk' }].concat(sortedKiosks);
   },
 );
 
@@ -319,8 +333,10 @@ export const kioskInitialValues = {
   name: '',
   serialNumber: '',
   notes: '',
+  orgId: '',
   location: {
     address: {
+      name: '',
       line1: '',
       line2: '',
       postalCode: '',
@@ -328,6 +344,7 @@ export const kioskInitialValues = {
       state: '',
       country: '',
     },
+    pin: '',
   },
 };
 
@@ -356,6 +373,7 @@ export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
             ...address,
           },
         },
+        pin: kiosk.pin,
       }
     : kioskInitialValues;
 });
@@ -395,12 +413,25 @@ export const getKioskProperties = createSelector(getKioskSingle, kiosk => {
       }
     : kioskInitialProperties;
 });
+export const orgInitialProperties = {
+  name: '',
+  slug: '',
+  appleId: '',
+};
 
 export const getOrgIdFromKiosk = createSelector(getKioskSingle, kiosk =>
   kiosk ? kiosk.orgId : null,
 );
 
-export const getOrgName = state => state.kiosks.orgName;
+export const getOrgData = state => {
+  return state.kiosks.org
+    ? {
+        name: get(state.kiosks.org, 'name', '') || '',
+        slug: get(state.kiosks.org, 'slug', '') || '',
+        appleId: get(state.kiosks.org, 'appleId', '') || '',
+      }
+    : orgInitialProperties;
+};
 
 export const getProductsByOrdId = state => state.kiosks.productsByOrgId;
 
@@ -447,7 +478,6 @@ export const getTemperatureLogsState = state => {
     'May',
     'Jun',
     'Jul',
-    'Aug',
     'Sep',
     'Oct',
     'Nov',
@@ -493,3 +523,31 @@ export const getTemperatureLogsState = state => {
   });
   return organizedData;
 };
+
+export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
+  const playListData =
+    kiosk &&
+    kiosk.controller.playList.map((data, index) => {
+      return {
+        id: data._id,
+        type:
+          data.type === 'content'
+            ? playlistTypes[data.type] + ` ${index - 1}`
+            : playlistTypes[data.type],
+        imgData: {
+          uri: data.uri,
+          name: data.name,
+        },
+        order: data.order,
+        duration: data.duration,
+        isEditable: data.type.indexOf('main_screen') === -1 ? true : false,
+        isDeletable:
+          data.type.indexOf('main_screen') === -1 &&
+          data.type.indexOf('explainer') === -1
+            ? true
+            : false,
+        isEnabled: data.enabled,
+      };
+    });
+  return playListData;
+});

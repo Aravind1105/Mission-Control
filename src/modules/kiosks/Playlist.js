@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
-
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
-import Loader from 'modules/shared/components/Loader';
-import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
-import CustomizeScreen from './components/CustomizeScreen';
-import history from 'lib/history';
+import ContentPlaylist from './components/ScreenPlaylist';
 import { getKiosk } from './actions';
 import { getKioskSingle } from './selectors';
+import history from 'lib/history';
+import NavSwitcher from '../shared/components/NavSwitcher';
 
-const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+const Playlist = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   const links = [
     {
       name: 'Home',
@@ -31,7 +27,21 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
     name: 'Back to kiosk detail',
     link: `/kiosks/detail/${!kiosk ? props.match.params.id : kiosk._id}`,
   };
-
+  const navSwitcherConfig = [
+    { name: 'Kiosk Settings' },
+    {
+      name: 'General',
+      goTo: `/kiosks/settings/${
+        !kiosk ? props.match.params.id : kiosk._id
+      }/general`,
+    },
+    {
+      name: 'Screen Playlist',
+      goTo: `/kiosks/settings/${
+        !kiosk ? props.match.params.id : kiosk._id
+      }/playlist`,
+    },
+  ];
   const redirectHandler = () => {
     const redirectTo =
       props.match.params.id === 'new'
@@ -40,17 +50,11 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
     history.push(redirectTo);
   };
 
-  const cancelHandler = ({ dirty }) => {
-    if (dirty) setIsModalOpen(true);
-    else redirectHandler();
-  };
-
   useEffect(() => {
     getKiosk(props.match.params.id);
   }, []);
   return (
     <>
-      {isKioskLoading && <Loader />}
       <Grid>
         <Grid.Row stretched>
           <Grid.Column>
@@ -66,24 +70,11 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
         <Grid.Row>
           <Grid.Column>
             <Segment>
-              <Header as="h3">Kiosk Settings</Header>
-              <Divider />
-              <CustomizeScreen
-                cancelHandler={cancelHandler}
-                isKioskLoading={isKioskLoading}
-              />
+              <NavSwitcher config={navSwitcherConfig} />
+              <ContentPlaylist redirectHandler={redirectHandler} {...props} />
             </Segment>
           </Grid.Column>
         </Grid.Row>
-        <ConfirmationModal
-          title="Confirm Cancelling"
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          confirmHandler={redirectHandler}
-        >
-          <p>You have unsaved changes.</p>
-          <p>Are you sure you want to leave the page?</p>
-        </ConfirmationModal>
       </Grid>
     </>
   );
@@ -97,4 +88,4 @@ const mapDispatchToProps = {
   getKiosk,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screen);
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);

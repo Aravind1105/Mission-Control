@@ -110,10 +110,10 @@ export const getTransactionsTableState = createSelector(
               prev[idx].quantity += quantity;
             } else {
               prev.push({
-                id: productLine ? productLine._id : '' || 'unknown',
-                productName: (productLine ? productLine.name : '') || 'unknown',
+                id: get(productLine, '_id', '') || 'unknown',
+                productName: get(productLine, 'name', '') || 'unknown',
                 total: +price,
-                articleNumber: productLine ? productLine.articleNumber : '',
+                articleNumber: get(productLine, 'articleNumber', '') || '',
                 tax,
                 price,
                 quantity,
@@ -145,7 +145,7 @@ export const getGridRefillsTableState = createSelector(
           new Date(refill.created || new Date()),
           'dd-MM-yyyy, HH:mm:ss',
         ),
-        kioskName: get(refill, 'kiosk.name', 'unknown'),
+        kioskName: get(refill, 'kiosk.name', '') || 'unknown',
       };
       const newScale = refill.scale.filter(elem => elem.count !== 0);
       if (newScale.length > 1) {
@@ -168,15 +168,13 @@ export const getGridRefillsTableState = createSelector(
             }
             prev.push({
               id: productLine._id,
-              productName: (productLine ? productLine.name : '') || 'unknown',
+              productName: get(productLine, 'name', '') || 'unknown',
               total,
               cost: productLine.defaultCost.toFixed(2),
-              articleNumber: productLine.articleNumber
-                ? productLine.articleNumber
-                : '',
+              articleNumber: get(productLine, 'articleNumber', '') || '',
               count,
               weight,
-              loadCell: cellId || 'unknown',
+              loadCell: cellId || '',
               status,
             });
             refillsTotalCost += parseFloat(total);

@@ -23,6 +23,7 @@ const sortDefault = [
 
 const sortValue = {
   name: 'name',
+  doorStatus: 'doorStatus',
 };
 
 const columns = [

@@ -36,26 +36,42 @@ const KioskForm = ({
       }
     }
   });
-
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       enableReinitialize
+      validateOnChange
       validationSchema={Yup.object().shape({
-        serialNumber: Yup.string().test({
-          name: 'duplicate-serialNum-check',
-          test: function(val) {
-            const num = sNum.map(function(ele) {
-              return ele.toLowerCase();
-            });
-            return num.indexOf(val && val.toLowerCase()) > -1
-              ? this.createError({
-                  path: 'serialNumber',
-                  message: 'Serial Number already exists.',
-                })
-              : true;
-          },
+        name: Yup.string().required('This field is required'),
+        serialNumber: Yup.string()
+          .required('This field is required')
+          .test({
+            name: 'duplicate-serialNum-check',
+            test: function(val) {
+              if (Boolean(!initialValues.id)) {
+                const num = sNum.map(function(ele) {
+                  return ele.toLowerCase();
+                });
+                return num.indexOf(val && val.toLowerCase()) > -1
+                  ? this.createError({
+                      path: 'serialNumber',
+                      message: 'Serial Number already exists.',
+                    })
+                  : true;
+              } else return true;
+            },
+          }),
+        orgId: Yup.string().required('This field is required'),
+        location: Yup.object().shape({
+          address: Yup.object().shape({
+            name: Yup.string().required('This field is required'),
+            country: Yup.string().required('This field is required'),
+            city: Yup.string().required('This field is required'),
+            state: Yup.string().required('This field is required'),
+            line1: Yup.string().required('This field is required'),
+            postalCode: Yup.string().required('This field is required'),
+          }),
         }),
       })}
     >
@@ -192,6 +208,18 @@ const KioskForm = ({
                   label="Directions / Notes"
                   rows={5}
                   component={FormTextArea}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <Field
+                  name="pin"
+                  label="PIN"
+                  min={0}
+                  required
+                  disabled={Boolean(initialValues.pin)}
+                  component={FormInput}
                 />
               </Grid.Column>
             </Grid.Row>

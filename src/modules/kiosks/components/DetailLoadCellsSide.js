@@ -17,6 +17,7 @@ const Card = ({
   productLine,
   totalProducts,
   handleEdit,
+  isActive,
 }) => {
   const width = window.innerWidth;
   const handleClick = () => {
@@ -27,6 +28,11 @@ const Card = ({
       availableProducts: totalProducts,
     });
   };
+  if (isActive === false) {
+    // return <Grid.Column style={mystyle}></Grid.Column>;
+    return <></>;
+  }
+
   if (width < 600) {
     return (
       <>
@@ -149,6 +155,7 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                       {...props}
                       key={props.cellId}
                       handleEdit={handleEdit}
+                      isActive={props.isActive}
                     />
                   )
                 );

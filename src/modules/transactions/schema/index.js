@@ -129,7 +129,7 @@ export const CREATE_REFILL_MUTATION = gql`
 export const GET_REFILLS_WIDGET_DATA = gql`
   query($period: Period!, $kioskId: ID) {
     getTotalNumberOfProductsAdded(period: $period, kioskId: $kioskId)
-    getTotalGrossValueOfRefills(period: $period, kioskId: $kioskId)
+    getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
     getAverageSpoilageRate(period: $period, kioskId: $kioskId)
   }
