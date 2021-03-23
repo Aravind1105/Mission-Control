@@ -9,9 +9,11 @@ import DatePicker from 'modules/shared/components/Datepicker';
 
 const Toolbar = ({
   kiosks,
+  productsListValue,
   changeDate,
   changePage,
   changeKiosk,
+  changeProduct,
   exportCsvProducts,
 }) => {
   const [exportData, changeExportData] = useState(false);
@@ -45,6 +47,10 @@ const Toolbar = ({
       kiosk: value,
     });
   };
+  const handleProductChange = (e, { value }) => {
+    console.log('Product Changed have value', value);
+    changeProduct(value);
+  };
 
   const DownloadCsv = () => {
     if (exportData.from == '' && exportData.to == '') {
@@ -72,11 +78,11 @@ const Toolbar = ({
       }}
     >
       <Grid stackable>
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column mobile={16} computer={3}>
+        <Grid.Row verticalAlign="middle" columns={5}>
+          <Grid.Column width={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column width={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -85,9 +91,18 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
+          <Grid.Column width={3}>
+            <Dropdown
+              placeholder="All Products"
+              selection
+              options={productsListValue}
+              className="full-width"
+              onChange={handleProductChange}
+            />
+          </Grid.Column>
 
-          {/* <Grid.Column width={3}></Grid.Column> */}
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column width={3}></Grid.Column>
+          <Grid.Column width={3}>
             <CustomButton
               label="Download CSV&nbsp;"
               icon="arrow down icon"
@@ -102,16 +117,11 @@ const Toolbar = ({
   );
 };
 
-// Toolbar.propTypes = {
-//   changeSearch: PropTypes.func,
-//   changeDate: PropTypes.func,
-//   changePage: PropTypes.func,
-//   kiosks: PropTypes.arrayOf(PropTypes.object),
-// };
 Toolbar.propTypes = {
   changeDate: func,
   changePage: func,
   changeKiosk: func,
+  changeProduct: func,
   kiosks: arrayOf(object),
 };
 

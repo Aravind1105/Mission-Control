@@ -25,12 +25,11 @@ const sortDefault = [
 
 const sortValue = {
   productLine: 'productLine',
-  productName: 'productName',
+  refilled: 'refilled',
+  removed: 'removed',
+  sold: 'sold',
   totalCost: 'totalCost',
   totalGrossSales: 'totalGrossSales',
-  refilled: 'refilled',
-  sold: 'sold',
-  removed: 'removed',
 };
 
 const ProductList = ({
@@ -39,6 +38,7 @@ const ProductList = ({
   total,
   getAllProducts,
   kiosks,
+  productsListValue,
   getProductsWidgetsData,
   widgetsData,
 }) => {
@@ -58,26 +58,26 @@ const ProductList = ({
     };
     const widgetPayload = {};
 
-    if (search || category || dateRange || kiosk) {
-      const name = product ? { productLineId: product } : {};
+    if (search || category || dateRange || kiosk || product) {
       const cat = category ? { category: { $regex: category } } : {};
       const date = dateRange;
       const kio = kiosk ? { kioskId: kiosk } : {};
-
+      const prod = product ? { productLineId: product } : {};
       data.search = JSON.stringify({
-        ...name,
         ...cat,
         ...date,
         ...kio,
+        ...prod,
       });
     }
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-    if (dateRange || kiosk) {
+    if (product || dateRange || kiosk) {
       widgetPayload.period = dateRange;
       widgetPayload.kioskId = kiosk;
+      widgetPayload.productLine = product;
     }
     getAllProducts({ data });
     getProductsWidgetsData({ ...widgetPayload });
@@ -85,10 +85,10 @@ const ProductList = ({
   useEffect(() => {
     getProductsWidgetsData();
   }, []);
-
+  console.log('this is test products', productsListValue);
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, dateRange]);
+  }, [page, perPage, search, kiosk, dateRange, product]);
 
   return (
     <>
@@ -99,7 +99,7 @@ const ProductList = ({
         changeKiosk={changeKiosk}
         changePage={changePage}
         kiosks={kiosks}
-        // productsList={productsList}
+        productsListValue={productsListValue}
         changeProduct={changeProduct}
         getData={getData}
       />
@@ -167,7 +167,7 @@ const mapStateToProps = state => ({
   total: getTotalGridProductsCount(state),
   isLoading: state.transactions.isLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
-  productsList: getProductsDropdownList(state),
+  productsListValue: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
 });
 
