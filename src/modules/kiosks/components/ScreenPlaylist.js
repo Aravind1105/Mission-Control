@@ -27,7 +27,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   const [DataURL, setDataURL] = useState('');
   const [imageSize, setImageSize] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isNumValid, setNumValid] = useState({ id: '', val: true });
+  const [isNumValid, setNumValid] = useState({});
   const [deleteImg, setDeleteImg] = useState({});
 
   const onSubmit = () => {
@@ -257,29 +257,53 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                   >
                     <Input
                       size="mini"
+                      id="myDIV"
+                      type="number"
                       style={{ width: '20px' }}
                       defaultValue={list.duration}
                       disabled={!Boolean(list.isDeletable)}
                       label={{ basic: true, content: 'sec' }}
                       labelPosition="right"
                       onChange={(e, { value }) => {
-                        if (
-                          parseInt(value) >= 3 &&
-                          parseInt(value) <= 60 &&
-                          !isNaN(parseInt(value))
-                        ) {
+                        if (parseInt(value) >= 5 && parseInt(value) <= 60) {
                           setNumValid({ id: list.id, val: true });
-                          updatePlaylistProps(
-                            parseInt(value),
-                            list.id,
-                            'duration',
-                          );
+                          // if (isNumValid.length > 0) {
+                          //   let newArr = [...isNumValid];
+                          //   newArr.map(
+                          //     ele =>
+                          //       ele.id === list.id && { ...ele, [val]: true },
+                          //   );
+                          //   setNumValid(newArr);
+                          // }
+                          // console.log(isNumValid, 'ACCEPT');
+                          // updatePlaylistProps(
+                          //   parseInt(value),
+                          //   list.id,
+                          //   'duration',
+                          // );
                         } else setNumValid({ id: list.id, val: false });
+                        // else {
+                        //   if (isNumValid.length > 0) {
+                        //     let newArr = [...isNumValid];
+                        //     newArr.map(
+                        //       ele =>
+                        //         ele.id === list.id && { ...ele, val: false },
+                        //     );
+                        //     setNumValid(newArr);
+                        //   } else {
+                        //     setNumValid({ id: list.id, val: false });
+                        //     console.log(isNumValid, 'REEJCT');
+                        //   }
+                        // }
                       }}
                     />
                     {isNumValid.id === list.id && !isNumValid.val && (
-                      <div style={{ color: 'red', fontSize: '12px' }}>
-                        Allowed between 3 - 60
+                      <div
+                        className="ui pointing above prompt label duration-error"
+                        role="alert"
+                        aria-atomic="true"
+                      >
+                        Duration must be between 5 - 60 s
                       </div>
                     )}
                   </Grid.Column>
@@ -361,7 +385,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
 
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/x-png,image/jpg,image/jpeg"
                     id="playlistImgUpload"
                     className="img-playlist-button"
                     onChange={handleImageUpload}
