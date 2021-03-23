@@ -48,7 +48,6 @@ const Toolbar = ({
     });
   };
   const handleProductChange = (e, { value }) => {
-    console.log('Product Changed have value', value);
     changeProduct(value);
   };
 

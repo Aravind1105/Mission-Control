@@ -85,7 +85,6 @@ const ProductList = ({
   useEffect(() => {
     getProductsWidgetsData();
   }, []);
-  console.log('this is test products', productsListValue);
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, search, kiosk, dateRange, product]);
