@@ -62,7 +62,11 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                 </Comment.Group>
               </Grid.Row>
               <Divider />
-              <Grid.Row>
+              <Grid.Row
+                style={{
+                  paddingTop: '0px',
+                }}
+              >
                 <Grid.Column width={12}>
                   <Grid>
                     <Grid.Row>
