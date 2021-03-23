@@ -37,7 +37,12 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
         <div className="user-info">
           <Segment className="usr-detail-style">
             <Grid>
-              <Grid.Row columns="equal">
+              <Grid.Row
+                columns="equal"
+                style={{
+                  paddingBottom: '0px',
+                }}
+              >
                 <Comment.Group size="massive">
                   <Comment>
                     <Comment.Avatar
