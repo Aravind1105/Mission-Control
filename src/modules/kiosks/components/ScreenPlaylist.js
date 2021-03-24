@@ -275,7 +275,6 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                           //   );
                           //   setNumValid(newArr);
                           // }
-                          // console.log(isNumValid, 'ACCEPT');
                           // updatePlaylistProps(
                           //   parseInt(value),
                           //   list.id,
@@ -292,7 +291,6 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                         //     setNumValid(newArr);
                         //   } else {
                         //     setNumValid({ id: list.id, val: false });
-                        //     console.log(isNumValid, 'REEJCT');
                         //   }
                         // }
                       }}

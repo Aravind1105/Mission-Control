@@ -30,7 +30,6 @@ export function handlerGetProduct(payload) {
           let url = window.URL.createObjectURL(blob);
           let element = document.createElement('a');
           element.href = url;
-          console.log('This is CSV Transactions products', element);
           element.download = `products_${Date.now()}.csv`;
           document.body.appendChild(element);
           element.click();
