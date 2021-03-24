@@ -16,7 +16,7 @@ import { toast } from 'react-semantic-toasts';
 
 function* handler({ payload: { values, formActions } }) {
   try {
-    const { id, orgId, technicianPin, ...rest } = values;
+    const { id, orgId, pin, technicianPin, ...rest } = values;
     const variables = {
       data: {
         ...rest,
@@ -32,7 +32,7 @@ function* handler({ payload: { values, formActions } }) {
       variables.data.ownerOrganization = orgId;
       variables.data.orgId = orgId;
     }
-    variables.data.pin = parseInt(variables.data.pin);
+    variables.data.pin = parseInt(pin);
 
     const { data } = yield call(gqlKiosk.mutate, {
       mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
