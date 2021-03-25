@@ -71,3 +71,6 @@ export const setPlanogramSwitchStateSuccess = createAction(
 export const deleteLoadCellSuccess = createAction(
   '@@saga/DELETE_LOAD_CELL_SUCCESS',
 );
+
+export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');
+export const exportCsvPackList = createAction('@@saga/GET_PackList_CSV');

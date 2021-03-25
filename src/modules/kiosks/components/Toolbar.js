@@ -11,8 +11,11 @@ import {
   Dropdown,
   Divider,
 } from 'semantic-ui-react';
-
+import CustomButton from 'modules/shared/components/CustomButton';
 import { getActiveUserIDState } from '../../users/selectors';
+import { toast } from 'react-semantic-toasts';
+import { exportCsvOrderList } from '../actions';
+import { exportCsvPackList } from '../actions';
 
 const Toolbar = ({
   search,
@@ -22,6 +25,8 @@ const Toolbar = ({
   kiosksStatus,
   setKioskStatus,
   rootUser,
+  exportCsvOrderList,
+  exportCsvPackList,
   // kiosksNetworkStatus, //!LIV-2285
   // setKioskNetworkStatus //!LIV-2285
 }) => {
@@ -36,6 +41,26 @@ const Toolbar = ({
     const text = value === 'All' ? '' : value;
     setKioskStatus(text);
   };
+
+  const DownloadOrderListCsv = () => {
+    exportCsvOrderList();
+    toast({
+      description: 'Downloading the requested file.',
+      animation: 'fade left',
+      icon: 'info',
+      color: 'blue',
+    });
+  };
+  const DownloadPackListCsv = () => {
+    exportCsvPackList();
+    toast({
+      description: 'Downloading the requested file.',
+      animation: 'fade left',
+      icon: 'info',
+      color: 'blue',
+    });
+  };
+
   // const handleKiosksNetworkStatus = (e, { value }) => { //!LIV-2285
   //   const text = value === 'All' ? '' : value;
   //   setKioskNetworkStatus(text)
@@ -72,8 +97,8 @@ const Toolbar = ({
 
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
 
-        <Grid.Row verticalAlign="middle" columns="equal">
-          <Grid.Column width={3}>
+        <Grid.Row verticalAlign="middle" columns={4}>
+          <Grid.Column>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -83,7 +108,7 @@ const Toolbar = ({
             />
           </Grid.Column>
 
-          <Grid.Column width={3}>
+          <Grid.Column>
             <Dropdown
               placeholder="Door Status"
               selection
@@ -101,7 +126,25 @@ const Toolbar = ({
               onChange={handleKiosksNetworkStatus}
               options={kiosksNetworkStatus}
           />
-        </Grid.Column> */}
+           </Grid.Column> */}
+
+          <Grid.Column>
+            <CustomButton
+              label="Download Order List&nbsp;"
+              icon="arrow down icon"
+              className="custom-button-default"
+              onClick={DownloadOrderListCsv}
+            />
+          </Grid.Column>
+
+          <Grid.Column>
+            <CustomButton
+              label="Download Pack List&nbsp;"
+              icon="arrow down icon"
+              className="custom-button-default"
+              onClick={DownloadPackListCsv}
+            />
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </Segment>
@@ -116,5 +159,9 @@ Toolbar.propTypes = {
 const mapStateToProps = state => ({
   rootUser: state.user.root,
 });
+const mapDispatchToProps = {
+  exportCsvOrderList,
+  exportCsvPackList,
+};
 
-export default connect(mapStateToProps)(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

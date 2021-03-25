@@ -17,7 +17,8 @@ import setPlanogramSwitchState from './updatePlanogramSwitch';
 import deleteLoadCell from './deleteLoadCell';
 import updatePlayList from './updatePlaylist';
 import deletePlayList from './deletePlaylist';
-
+import exportCsvOrderList from './exportCsvOrders';
+import exportCsvPackList from './exportCsvPacks';
 export default function* kiosksSaga() {
   yield all([
     fork(getAllKiosks),
@@ -37,5 +38,7 @@ export default function* kiosksSaga() {
     fork(deleteLoadCell),
     fork(updatePlayList),
     fork(deletePlayList),
+    fork(exportCsvOrderList),
+    fork(exportCsvPackList),
   ]);
 }
