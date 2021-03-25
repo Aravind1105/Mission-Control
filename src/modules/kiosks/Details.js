@@ -93,7 +93,7 @@ const KioskDetails = ({
           <Grid>
             <Grid.Row>
               <Grid.Column>
-                <Segment stackable>
+                <Segment>
                   <Breadcrumbs
                     backLink={backLink}
                     links={links}
@@ -103,7 +103,7 @@ const KioskDetails = ({
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column stretched>
+              <Grid.Column>
                 <Segment>
                   <DetailsHeader
                     name={kiosk && kiosk.name}

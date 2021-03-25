@@ -4,48 +4,51 @@ import { Grid } from 'semantic-ui-react';
 
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
-import Toolbar from './components/Toolbar';
-import TransactionsContent from './components/TransactionsContent';
+import ProductsToolbar from './components/ProductsToolbar';
+import ProductsContent from './components/ProductsContent';
+
 import {
-  getTransactionsTableState,
-  getTotalTransactionsCount,
+  getGridProductsTableState,
+  getTotalGridProductsCount,
   getWidgetDataState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
-import { getAllTransactions, getTransactionsWidgetsData } from './actions';
+import { getAllProducts, getProductsWidgetsData } from './actions';
+import { getProductsDropdownList } from '../products/selectors';
 
 const sortDefault = [
   {
-    column: 'created',
+    column: 'productLine',
     direction: 'DESC',
   },
 ];
 
 const sortValue = {
-  kioskName: 'kioskName',
-  created: 'created',
-  status: 'status',
-  productName: 'product',
-  loadCell: 'loadCell',
-  weight: 'weight',
-  total: 'total',
+  productLine: 'productLine',
+  refilled: 'refilled',
+  removed: 'removed',
+  sold: 'sold',
+  totalCost: 'totalCost',
+  totalGrossSales: 'totalGrossSales',
 };
 
-const TransactionsList = ({
-  transactions,
+const ProductList = ({
+  products,
   isLoading,
   total,
-  getAllTransactions,
+  getAllProducts,
   kiosks,
-  getTransactionsWidgetsData,
+  productsListValue,
+  getProductsWidgetsData,
   widgetsData,
 }) => {
   const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
-  const [category, changeCategory] = useState('');
+  const [product, changeProduct] = useState('');
+  const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-  const [kiosk, changeKiosk] = useState('');
+  const [category, changeCategory] = useState('');
   const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
@@ -55,94 +58,96 @@ const TransactionsList = ({
     };
     const widgetPayload = {};
 
-    if (search || category || dateRange || kiosk) {
-      const name = search ? { product: { $regex: search } } : {};
+    if (search || category || dateRange || kiosk || product) {
       const cat = category ? { category: { $regex: category } } : {};
-      const date = dateRange ? { created: dateRange } : {};
-      const kio = kiosk ? { kiosk } : {};
-
+      const date = dateRange;
+      const kio = kiosk ? { kioskId: kiosk } : {};
+      const prod = product ? { productLineId: product } : {};
       data.search = JSON.stringify({
-        ...name,
         ...cat,
         ...date,
         ...kio,
+        ...prod,
       });
     }
-
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-
-    if (dateRange || kiosk) {
+    if (product || dateRange || kiosk) {
       widgetPayload.period = dateRange;
       widgetPayload.kioskId = kiosk;
+      widgetPayload.productLine = product;
     }
-    getAllTransactions({ data });
-    getTransactionsWidgetsData({ ...widgetPayload });
+    getAllProducts({ data });
+    getProductsWidgetsData({ ...widgetPayload });
   };
-
   useEffect(() => {
-    getTransactionsWidgetsData();
+    getProductsWidgetsData();
   }, []);
-
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category, dateRange, kiosk]);
+  }, [page, perPage, search, kiosk, dateRange, product]);
 
   return (
     <>
-      <Toolbar
+      <ProductsToolbar
         changeDate={changeDate}
         changeSearch={changeSearch}
         changeCategory={changeCategory}
+        changeKiosk={changeKiosk}
         changePage={changePage}
         kiosks={kiosks}
-        changeKiosk={changeKiosk}
+        productsListValue={productsListValue}
+        changeProduct={changeProduct}
+        getData={getData}
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+          <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="money"
+              icon="star"
               color="green"
-              text="Total Net Sales"
-              amount={`€ ${widgetsData.totalNetIncome} `}
-              secondaryText="Total Gross Sales"
-              secondaryAmount={`€ ${widgetsData.totalGrossIncome} `}
+              text="Most Sold Product"
+              amount={`${widgetsData.mostRefilledProductName} `}
+              secondaryText={`${widgetsData.mostRefilledProductValue}  Sold`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="boxes"
+              icon="long arrow alternate down"
               color="orange"
-              text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold}
+              text="Least Sold product"
+              amount={`${widgetsData.leastSoldProductName} `}
+              secondaryText={`${widgetsData.leastSoldProductValue}  Sold`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="credit card"
+              icon="dolly flatbed"
               color="blue"
-              text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions}
+              text="Most Refilled Product"
+              amount={`${widgetsData.mostRefilledProductName} `}
+              secondaryText={`${widgetsData.mostRefilledProductValue}  Refilled`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="tag"
-              color="purple"
-              text="Average Purchase Value"
-              amount={`€ ${widgetsData.averagePurchaseValue}`}
+              icon="reply"
+              color="violet"
+              text="Most Removed Products"
+              amount={`${widgetsData.mostRemovedProductName} `}
+              secondaryText={`${widgetsData.mostRemovedProductValue}  Removed`}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <TransactionsContent
-        transactions={transactions}
+      <ProductsContent
+        products={products}
         isLoading={isLoading}
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
+        // sortDirection="DESC"
       />
       <Pagination
         totalCount={total}
@@ -157,16 +162,17 @@ const TransactionsList = ({
 };
 
 const mapStateToProps = state => ({
-  transactions: getTransactionsTableState(state),
-  total: getTotalTransactionsCount(state),
+  products: getGridProductsTableState(state),
+  total: getTotalGridProductsCount(state),
   isLoading: state.transactions.isLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
+  productsListValue: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
 });
 
 const mapDispatchToProps = {
-  getAllTransactions,
-  getTransactionsWidgetsData,
+  getAllProducts,
+  getProductsWidgetsData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

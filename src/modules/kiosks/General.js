@@ -38,12 +38,12 @@ const Settings = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
         !kiosk ? props.match.params.id : kiosk._id
       }/general`,
     },
-    {
-      name: 'Screen Playlist',
-      goTo: `/kiosks/settings/${
-        !kiosk ? props.match.params.id : kiosk._id
-      }/playlist`,
-    },
+    // {
+    //   name: 'Screen Playlist',
+    //   goTo: `/kiosks/settings/${
+    //     !kiosk ? props.match.params.id : kiosk._id
+    //   }/playlist`,
+    // },
   ];
 
   const redirectHandler = () => {

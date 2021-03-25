@@ -69,7 +69,7 @@ export const getKiosksTableState = state =>
 export const getKioskDoorStatus = () => [
   {
     value: '',
-    text: 'Door Status',
+    text: 'All Door Status',
   },
   ...Object.keys(doorStatus).map(status => ({
     value: status,
@@ -186,7 +186,6 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
       }
     }
   }
-  console.log(cellIdOptions, 'ASAS');
   return cellIdOptions;
 });
 
@@ -325,7 +324,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
+    return [{ key: 'all', value: '', text: 'All Kiosk' }].concat(sortedKiosks);
   },
 );
 

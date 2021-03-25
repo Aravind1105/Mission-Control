@@ -6,11 +6,16 @@ export const getAllTransactionsState = state => state.transactions.list;
 
 export const getGridRefillsState = state => state.transactions.refillsList;
 
+export const getGridProductsState = state => state.transactions.productList;
+
 export const getTotalTransactionsCount = state =>
   state.transactions.totalTransactions;
 
 export const getTotalGridRefillsCount = state =>
   state.transactions.totalRefills;
+
+export const getTotalGridProductsCount = state =>
+  state.transactions.totalProducts;
 
 // export const getTransactionsTableState = createSelector(
 //   getAllTransactionsState,
@@ -78,8 +83,7 @@ export const getTransactionsTableState = createSelector(
       ({ itemsPurchased, created, paymentMethod, ...rest }) => {
         const item = {
           transactionID: rest._id,
-          membercardId:
-            paymentMethod.length > 0 ? paymentMethod[0].membercardId : '',
+          membercardId: get(paymentMethod[0], 'membercardId', '') || '',
           type: rest.type,
           created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
           session: rest.session,
@@ -88,9 +92,7 @@ export const getTransactionsTableState = createSelector(
           price: 0,
           productName: 'Total',
           quantity: itemsPurchased.length,
-          kioskName:
-            (itemsPurchased[0].kiosk ? itemsPurchased[0].kiosk.name : '') ||
-            'unknown',
+          kioskName: get(itemsPurchased[0].kiosk, 'name', '') || 'unknown',
         };
         const arr = itemsPurchased.reduce(
           (prev, { productLine, price, tax }) => {
@@ -105,12 +107,10 @@ export const getTransactionsTableState = createSelector(
               prev[idx].quantity += quantity;
             } else {
               prev.push({
-                id: productLine ? productLine._id : '' || 'unknown',
-                productName: (productLine ? productLine.name : '') || 'unknown',
+                id: get(productLine, '_id', '') || 'unknown',
+                productName: get(productLine, 'name', '') || 'unknown',
                 total: +price,
-                articleNumber: productLine.articleNumber
-                  ? productLine.articleNumber
-                  : '',
+                articleNumber: get(productLine, 'articleNumber', '') || '',
                 tax,
                 price,
                 quantity,
@@ -142,7 +142,7 @@ export const getGridRefillsTableState = createSelector(
           new Date(refill.created || new Date()),
           'dd-MM-yyyy, HH:mm:ss',
         ),
-        kioskName: get(refill, 'kiosk.name', 'unknown'),
+        kioskName: get(refill, 'kiosk.name', '') || 'unknown',
       };
       const newScale = refill.scale.filter(elem => elem.count !== 0);
       if (newScale.length > 1) {
@@ -165,15 +165,13 @@ export const getGridRefillsTableState = createSelector(
             }
             prev.push({
               id: productLine._id,
-              productName: (productLine ? productLine.name : '') || 'unknown',
+              productName: get(productLine, 'name', '') || 'unknown',
               total,
               cost: productLine.defaultCost.toFixed(2),
-              articleNumber: productLine.articleNumber
-                ? productLine.articleNumber
-                : '',
+              articleNumber: get(productLine, 'articleNumber', '') || '',
               count,
               weight,
-              loadCell: cellId || 'unknown',
+              loadCell: cellId || '',
               status,
             });
             refillsTotalCost += parseFloat(total);
@@ -196,6 +194,37 @@ export const getGridRefillsTableState = createSelector(
   },
 );
 
+export const getGridProductsTableState = createSelector(
+  getGridProductsState,
+  products => {
+    let newArr = [];
+    products.forEach(
+      ({
+        productLine,
+        totalCost,
+        totalGrossSales,
+        refilled,
+        sold,
+        removed,
+      }) => {
+        const item = {
+          productId: productLine._id,
+          productName: productLine.name,
+          defaultPrice: Number(productLine.defaultPrice || 0).toFixed(2),
+          defaultCost: Number(productLine.defaultCost || 0).toFixed(2),
+          totalCost: Number(totalCost || 0).toFixed(2),
+          totalGrossSales: Number(totalGrossSales || 0).toFixed(2),
+          refilled: refilled,
+          sold: sold,
+          removed: removed,
+        };
+        newArr.push(item);
+      },
+    );
+    return newArr;
+  },
+);
+
 export const getWidgetDataState = state => {
   const {
     totalNumberOfTransactions,
@@ -207,6 +236,14 @@ export const getWidgetDataState = state => {
     totalGrossValueOfRefills,
     totalNumberOfProductsRemoved,
     averageSpoilageRate,
+    leastSoldProductName,
+    leastSoldProductValue,
+    mostSoldProductName,
+    mostSoldProductValue,
+    mostRefilledProductName,
+    mostRefilledProductValue,
+    mostRemovedProductName,
+    mostRemovedProductValue,
   } = state.transactions.widgetData;
   return {
     totalNumberOfTransactions: totalNumberOfTransactions || 0,
@@ -217,6 +254,14 @@ export const getWidgetDataState = state => {
     totalNumberOfProductsAdded: totalNumberOfProductsAdded || 0,
     totalNumberOfProductsRemoved: Math.abs(totalNumberOfProductsRemoved) || 0,
     averageSpoilageRate: Number(averageSpoilageRate || 0).toFixed(2),
+    leastSoldProductName: leastSoldProductName || ' ',
+    leastSoldProductValue: leastSoldProductValue || 0,
+    mostSoldProductName: mostSoldProductName || '',
+    mostSoldProductValue: mostSoldProductValue || 0,
+    mostRefilledProductName: mostRefilledProductName || ' ',
+    mostRefilledProductValue: mostRefilledProductValue || 0,
+    mostRemovedProductName: mostRemovedProductName || ' ',
+    mostRemovedProductValue: mostRemovedProductValue || 0,
     totalGrossValueOfRefills: Number(totalGrossValueOfRefills || 0).toFixed(2),
   };
 };

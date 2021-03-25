@@ -31,7 +31,7 @@ const KiosksScreen = () => (
         component={KioskCustomizeScreen}
       />
       <Route exact path="/kiosks/settings/:id/general" component={Settings} />
-      <Route exact path="/kiosks/settings/:id/playlist" component={Playlist} />
+      {/* <Route exact path="/kiosks/settings/:id/playlist" component={Playlist} /> */}
       <Redirect to="/kiosks" />
     </Switch>
   </>
