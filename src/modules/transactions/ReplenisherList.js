@@ -115,12 +115,14 @@ const ReplenisherList = ({
               amount={widgetsData.totalNumberOfProductsAdded}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={8} computer={4} tablet={8}>
             <StatsCard
               icon="tag"
               color="orange"
-              text="Total Value of Replenished Products"
-              amount={`€ ${widgetsData.totalGrossValueOfRefills}`}
+              text="Replenished Products Total Cost"
+              amount={`€ ${widgetsData.totalCostValueOfReplenishedProducts} `}
+              secondaryText="Replenished Products Sales Value"
+              secondaryAmount={`€ ${widgetsData.totalSaleValueOfReplenishedProducts} `}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>

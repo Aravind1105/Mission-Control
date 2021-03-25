@@ -244,6 +244,8 @@ export const getWidgetDataState = state => {
     mostRefilledProductValue,
     mostRemovedProductName,
     mostRemovedProductValue,
+    totalCostValueOfReplenishedProducts,
+    totalSaleValueOfReplenishedProducts,
   } = state.transactions.widgetData;
   return {
     totalNumberOfTransactions: totalNumberOfTransactions || 0,
@@ -263,5 +265,9 @@ export const getWidgetDataState = state => {
     mostRemovedProductName: mostRemovedProductName || ' ',
     mostRemovedProductValue: mostRemovedProductValue || 0,
     totalGrossValueOfRefills: Number(totalGrossValueOfRefills || 0).toFixed(2),
+    totalCostValueOfReplenishedProducts:
+      totalCostValueOfReplenishedProducts || 0,
+    totalSaleValueOfReplenishedProducts:
+      totalSaleValueOfReplenishedProducts || 0,
   };
 };
