@@ -19,7 +19,7 @@ export function handlerGetProduct() {
     })
     .then(response => {
       if (response.status != 200) {
-        alert('Etwas ist schief gelaufen. Versuche Sie es später noch einmal.');
+        alert('Something went wrong. Please try again later!');
       } else
         response.blob().then(blob => {
           let url = window.URL.createObjectURL(blob);
