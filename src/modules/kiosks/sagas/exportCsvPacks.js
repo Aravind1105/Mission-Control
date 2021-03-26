@@ -25,7 +25,7 @@ export function handlerGetProduct() {
           let url = window.URL.createObjectURL(blob);
           let element = document.createElement('a');
           element.href = url;
-          element.download = `PackList.csv`;
+          element.download = `PackList_${Date.now()}.csv`;
           document.body.appendChild(element);
           element.click();
           document.body.removeChild(element);
