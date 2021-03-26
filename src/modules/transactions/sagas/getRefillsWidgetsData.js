@@ -8,7 +8,9 @@ import {
 import { GET_REFILLS_WIDGET_DATA } from '../schema';
 
 function* handler({ payload }) {
-  const startDateOfMonth = new Date(new Date(new Date().setHours(0, 0, 0)).setDate(1));
+  const startDateOfMonth = new Date(
+    new Date(new Date().setHours(0, 0, 0)).setDate(1),
+  );
   try {
     const {
       data: {
@@ -16,6 +18,8 @@ function* handler({ payload }) {
         getTotalGrossValueOfRefills,
         getTotalNumberOfProductsRemoved,
         getAverageSpoilageRate,
+        getDefaultTotalSalesValueOfRefills,
+        getDefaultTotalCostValueOfRefills,
       },
     } = yield call(gqlTransactions.query, {
       query: GET_REFILLS_WIDGET_DATA,
@@ -39,6 +43,8 @@ function* handler({ payload }) {
         totalGrossValueOfRefills: getTotalGrossValueOfRefills,
         totalNumberOfProductsRemoved: getTotalNumberOfProductsRemoved,
         averageSpoilageRate: getAverageSpoilageRate,
+        totalCostValueOfReplenishedProducts: getDefaultTotalCostValueOfRefills,
+        totalSaleValueOfReplenishedProducts: getDefaultTotalSalesValueOfRefills,
       }),
     );
   } catch (error) {

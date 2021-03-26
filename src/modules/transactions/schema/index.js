@@ -132,6 +132,8 @@ export const GET_REFILLS_WIDGET_DATA = gql`
     getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
     getAverageSpoilageRate(period: $period, kioskId: $kioskId)
+    getDefaultTotalSalesValueOfRefills(period: $period, kioskId: $kioskId)
+    getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
   }
 `;
 
