@@ -4,54 +4,51 @@ import { Grid } from 'semantic-ui-react';
 
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
-import RefillsToolbar from './components/RefillsToolbar';
-import RefillsContent from './components/RefillsContent';
+import ProductsToolbar from './components/ProductsToolbar';
+import ProductsContent from './components/ProductsContent';
 
 import {
-  getGridRefillsTableState,
-  getTotalGridRefillsCount,
+  getGridProductsTableState,
+  getTotalGridProductsCount,
   getWidgetDataState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
-import { getGridRefills, getRefillsWidgetsData } from './actions';
-import { getProductListSaga } from '../products/actions';
+import { getAllProducts, getProductsWidgetsData } from './actions';
 import { getProductsDropdownList } from '../products/selectors';
 
 const sortDefault = [
   {
-    column: 'created',
+    column: 'productLine',
     direction: 'DESC',
   },
 ];
 
 const sortValue = {
-  kioskName: 'kioskName',
-  created: 'created',
-  productName: 'product',
-  count: 'count',
-  loadCell: 'loadCell',
-  weight: 'weight',
-  total: 'totalCost',
-  price: 'defaultCost',
+  productLine: 'productLine',
+  refilled: 'refilled',
+  removed: 'removed',
+  sold: 'sold',
+  totalCost: 'totalCost',
+  totalGrossSales: 'totalGrossSales',
 };
 
-const ReplenisherList = ({
-  refills,
+const ProductList = ({
+  products,
   isLoading,
   total,
-  getGridRefills,
+  getAllProducts,
   kiosks,
-  getProductListSaga,
-  productsList,
-  getRefillsWidgetsData,
+  productsListValue,
+  getProductsWidgetsData,
   widgetsData,
 }) => {
   const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
+  const [product, changeProduct] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-  const [product, changeProduct] = useState('');
+  const [category, changeCategory] = useState('');
   const [sort, setSort] = useState(sortDefault);
 
   const getData = ({ sort }) => {
@@ -61,93 +58,96 @@ const ReplenisherList = ({
     };
     const widgetPayload = {};
 
-    if (search || kiosk || dateRange || product) {
-      const name = search ? { product: { $regex: search } } : {};
-      const date = dateRange ? { created: dateRange } : {};
-      const prod = product ? { product } : {};
-      const kio = kiosk ? { kiosk } : {};
-
+    if (search || category || dateRange || kiosk || product) {
+      const cat = category ? { category: { $regex: category } } : {};
+      const date = dateRange;
+      const kio = kiosk ? { kioskId: kiosk } : {};
+      const prod = product ? { productLineId: product } : {};
       data.search = JSON.stringify({
-        ...name,
+        ...cat,
         ...date,
-        ...prod,
         ...kio,
+        ...prod,
       });
-    }
-    if (dateRange || kiosk) {
-      widgetPayload.period = dateRange;
-      widgetPayload.kioskId = kiosk;
     }
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
     }
-    getGridRefills({ data });
-    getRefillsWidgetsData({ ...widgetPayload });
+    if (product || dateRange || kiosk) {
+      widgetPayload.period = dateRange;
+      widgetPayload.kioskId = kiosk;
+      widgetPayload.productLine = product;
+    }
+    getAllProducts({ data });
+    getProductsWidgetsData({ ...widgetPayload });
   };
-
   useEffect(() => {
-    getProductListSaga();
-    getRefillsWidgetsData();
+    getProductsWidgetsData();
   }, []);
-
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, search, kiosk, dateRange, product]);
+
   return (
     <>
-      <RefillsToolbar
+      <ProductsToolbar
         changeDate={changeDate}
         changeSearch={changeSearch}
+        changeCategory={changeCategory}
         changeKiosk={changeKiosk}
         changePage={changePage}
         kiosks={kiosks}
-        productsList={productsList}
+        productsListValue={productsListValue}
         changeProduct={changeProduct}
+        getData={getData}
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="boxes"
+              icon="star"
               color="green"
-              text="Total Products Replenished"
-              amount={widgetsData.totalNumberOfProductsAdded}
+              text="Most Sold Product"
+              amount={`${widgetsData.mostRefilledProductName} `}
+              secondaryText={`${widgetsData.mostRefilledProductValue}  Sold`}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+          <Grid.Column mobile={8} computer={4}>
             <StatsCard
-              icon="tag"
+              icon="long arrow alternate down"
               color="orange"
-              text="Replenished Products Total Cost"
-              amount={`€ ${widgetsData.totalCostValueOfReplenishedProducts} `}
-              secondaryText="Replenished Products Sales Value"
-              secondaryAmount={`€ ${widgetsData.totalSaleValueOfReplenishedProducts} `}
+              text="Least Sold product"
+              amount={`${widgetsData.leastSoldProductName} `}
+              secondaryText={`${widgetsData.leastSoldProductValue}  Sold`}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={8} computer={4}>
+            <StatsCard
+              icon="dolly flatbed"
+              color="blue"
+              text="Most Refilled Product"
+              amount={`${widgetsData.mostRefilledProductName} `}
+              secondaryText={`${widgetsData.mostRefilledProductValue}  Refilled`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
               icon="reply"
-              color="blue"
-              text="Total products Removed"
-              amount={widgetsData.totalNumberOfProductsRemoved}
-            />
-          </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
-            <StatsCard
-              icon="trash alternate"
               color="violet"
-              text="Spoilage rate"
-              amount={`${widgetsData.averageSpoilageRate}%`}
+              text="Most Removed Products"
+              amount={`${widgetsData.mostRemovedProductName} `}
+              secondaryText={`${widgetsData.mostRemovedProductValue}  Removed`}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <RefillsContent
-        refills={refills}
+      <ProductsContent
+        products={products}
         isLoading={isLoading}
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
+        // sortDirection="DESC"
       />
       <Pagination
         totalCount={total}
@@ -162,18 +162,17 @@ const ReplenisherList = ({
 };
 
 const mapStateToProps = state => ({
-  refills: getGridRefillsTableState(state),
-  total: getTotalGridRefillsCount(state),
+  products: getGridProductsTableState(state),
+  total: getTotalGridProductsCount(state),
   isLoading: state.transactions.isLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
-  productsList: getProductsDropdownList(state),
+  productsListValue: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
 });
 
 const mapDispatchToProps = {
-  getGridRefills,
-  getProductListSaga,
-  getRefillsWidgetsData,
+  getAllProducts,
+  getProductsWidgetsData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReplenisherList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

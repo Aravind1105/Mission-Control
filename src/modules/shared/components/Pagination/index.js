@@ -21,10 +21,12 @@ const Pagination = ({
   totalCount,
   page,
   perPage,
+  boundaryRange,
+  siblingRange,
   isLoading,
   changePage,
   changePerPage,
-  setFontSize
+  setFontSize,
 }) => {
   const totalPages = Math.ceil(totalCount / perPage);
   const handlerPageChange = (e, { activePage }) => {
@@ -41,10 +43,8 @@ const Pagination = ({
     }
   };
   let size;
-  if (perPage === 25)
-    size = "0.67rem"
-  else if (perPage === 10)
-    size = "0.57rem"
+  if (perPage === 25) size = '0.67rem';
+  else if (perPage === 10) size = '0.57rem';
 
   return totalCount ? (
     <Container textAlign="center">
@@ -52,13 +52,14 @@ const Pagination = ({
         size="mini"
         activePage={1 + page}
         totalPages={totalPages}
+        boundaryRange={boundaryRange}
+        siblingRange={siblingRange}
         firstItem={null}
         lastItem={null}
         prevItem={prevItem}
         nextItem={nextItem}
         onPageChange={handlerPageChange}
         style={setFontSize && { fontSize: size }}
-
       />
       <div className="perpage-container">
         <Select

@@ -27,29 +27,31 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
   const [DataURL, setDataURL] = useState('');
   const [imageSize, setImageSize] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isNumValid, setNumValid] = useState({ id: '', val: true });
+  const [isNumValid, setNumValid] = useState({});
   const [deleteImg, setDeleteImg] = useState({});
 
   const onSubmit = () => {
-    const data = [];
-    finalPlaylist.map(list => {
-      const props = {
-        _id: list.id,
-        name: list.imgData.name,
-        image: list.imgData.uri,
-        duration: list.duration,
-        type:
-          list.type === 'Main Screen'
-            ? 'main_screen'
-            : list.type === 'Explainer Animation'
-            ? 'explainer'
-            : 'content',
-        enabled: list.isEnabled,
-        order: list.order,
-      };
-      data.push(props);
-    });
-    dispatch(updatePlayList({ kioskId, data }));
+    if (isNumValid.val) {
+      const data = [];
+      finalPlaylist.map(list => {
+        const props = {
+          _id: list.id,
+          name: list.imgData.name,
+          image: list.imgData.uri,
+          duration: list.duration,
+          type:
+            list.type === 'Main Screen'
+              ? 'main_screen'
+              : list.type === 'Explainer Animation'
+              ? 'explainer'
+              : 'content',
+          enabled: list.isEnabled,
+          order: list.order,
+        };
+        data.push(props);
+      });
+      dispatch(updatePlayList({ kioskId, data }));
+    }
   };
 
   const onDelete = () => {
@@ -255,34 +257,57 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
                   >
                     <Input
                       size="mini"
+                      id="myDIV"
+                      type="number"
                       style={{ width: '20px' }}
                       defaultValue={list.duration}
                       disabled={!Boolean(list.isDeletable)}
                       label={{ basic: true, content: 'sec' }}
                       labelPosition="right"
                       onChange={(e, { value }) => {
-                        if (
-                          parseInt(value) >= 3 &&
-                          parseInt(value) <= 60 &&
-                          !isNaN(parseInt(value))
-                        ) {
+                        if (parseInt(value) >= 5 && parseInt(value) <= 60) {
                           setNumValid({ id: list.id, val: true });
-                          updatePlaylistProps(
-                            parseInt(value),
-                            list.id,
-                            'duration',
-                          );
+                          // if (isNumValid.length > 0) {
+                          //   let newArr = [...isNumValid];
+                          //   newArr.map(
+                          //     ele =>
+                          //       ele.id === list.id && { ...ele, [val]: true },
+                          //   );
+                          //   setNumValid(newArr);
+                          // }
+                          // updatePlaylistProps(
+                          //   parseInt(value),
+                          //   list.id,
+                          //   'duration',
+                          // );
                         } else setNumValid({ id: list.id, val: false });
+                        // else {
+                        //   if (isNumValid.length > 0) {
+                        //     let newArr = [...isNumValid];
+                        //     newArr.map(
+                        //       ele =>
+                        //         ele.id === list.id && { ...ele, val: false },
+                        //     );
+                        //     setNumValid(newArr);
+                        //   } else {
+                        //     setNumValid({ id: list.id, val: false });
+                        //   }
+                        // }
                       }}
                     />
                     {isNumValid.id === list.id && !isNumValid.val && (
-                      <div style={{ color: 'red', fontSize: '12px' }}>
-                        Allowed between 3 - 60
+                      <div
+                        className="ui pointing above prompt label duration-error"
+                        role="alert"
+                        aria-atomic="true"
+                      >
+                        Duration must be between 5 - 60 s
                       </div>
                     )}
                   </Grid.Column>
                   <Grid.Column
                     mobile={4}
+                    computer={2}
                     largeScreen={2}
                     style={{ marginLeft: '50px' }}
                   >
@@ -341,6 +366,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
             <Grid.Column
               style={{ width: '19%', paddingRight: '0px' }}
               mobile={7}
+              computer={3}
               largeScreen={3}
             >
               <div className="label-playlist-wrapper">
@@ -357,7 +383,7 @@ const ContentPlaylist = ({ playlist, redirectHandler, ...props }) => {
 
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/x-png,image/jpg,image/jpeg"
                     id="playlistImgUpload"
                     className="img-playlist-button"
                     onChange={handleImageUpload}

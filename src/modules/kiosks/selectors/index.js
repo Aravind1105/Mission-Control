@@ -186,7 +186,6 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
       }
     }
   }
-  console.log(cellIdOptions, 'ASAS');
   return cellIdOptions;
 });
 

@@ -1,13 +1,19 @@
 import { createAction } from 'redux-actions';
 
 export const getAllTransactions = createAction('@@saga/GET_ALL_TRANSACTIONS');
+export const getAllProducts = createAction('@@saga/GET_ALL_PRODUCTS');
 export const getGridRefills = createAction('@@saga/GRID_REFILLS');
 export const createRefill = createAction('@@saga/CREATE_REFILL');
 export const exportCsvSales = createAction('@@saga/GET_SALES_CSV');
 export const exportCsvRefills = createAction('@@saga/GET_REFILLS_CSV');
+export const exportCsvProducts = createAction('@@saga/GET_PRODUCTS_CSV');
 export const exportCsv = createAction('@@saga/GET_CSV');
 export const getTransactionsWidgetsData = createAction(
   '@@saga/GET_TRANSACTIONS_WIDGETS_DATA',
+);
+
+export const getProductsWidgetsData = createAction(
+  '@@saga/GET_PRODUCTS_WIDGET_DATA',
 );
 export const getRefillsWidgetsData = createAction(
   '@@saga/GET_REFILLS_WIDGETS_DATA',
@@ -16,8 +22,16 @@ export const getRefillsWidgetsData = createAction(
 export const getAllTransactionsSuccess = createAction(
   '@@state/GET_ALL_TRANSACTIONS_SUCCESS',
 );
+
+export const getAllProductsSuccess = createAction(
+  '@@state/GET_ALL_PRODUCTS_SUCCESS',
+);
 export const getAllTransactionsFailed = createAction(
   '@@state/GET_ALL_TRANSACTIONS_FAILED',
+);
+
+export const getAllProductsFailed = createAction(
+  '@@state/GET_ALL_PRODUCTS_FAILED',
 );
 export const createRefillSuccess = createAction(
   '@@state/CREATE_REFILL_SUCCESS',
@@ -32,8 +46,15 @@ export const exportCsvSalesSuccess = createAction(
 export const exportCsvRefillsSuccess = createAction(
   '@@state/GRID_REFILLS_CSV_SUCCESS',
 );
+export const exportCsvProductsSuccess = createAction(
+  '@@state/GRID_PRODUCTS_CSV_SUCCESS',
+);
 export const getTransactionsWidgetsDataSuccess = createAction(
   '@@saga/GET_TRANSACTIONS_WIDGETS_DATA_SUCCESS',
+);
+
+export const getProductsWidgetsDataSuccess = createAction(
+  '@@saga/GET_PRODUCTS_WIDGETS_DATA_SUCCESS',
 );
 
 export const getRefillsWidgetsDataSuccess = createAction(

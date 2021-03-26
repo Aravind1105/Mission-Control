@@ -2,10 +2,10 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import gqlTransactions from 'lib/https/gqlTransactions';
 import {
-  getRefillsWidgetsData as action,
-  getRefillsWidgetsDataSuccess as actionSuccess,
+  getProductsWidgetsData as action,
+  getProductsWidgetsDataSuccess as actionSuccess,
 } from '../actions';
-import { GET_REFILLS_WIDGET_DATA } from '../schema';
+import { GET_PRODUCTS_WIDGET_DATA } from '../schema';
 
 function* handler({ payload }) {
   const startDateOfMonth = new Date(
@@ -14,15 +14,12 @@ function* handler({ payload }) {
   try {
     const {
       data: {
-        getTotalNumberOfProductsAdded,
-        getTotalGrossValueOfRefills,
-        getTotalNumberOfProductsRemoved,
-        getAverageSpoilageRate,
-        getDefaultTotalSalesValueOfRefills,
-        getDefaultTotalCostValueOfRefills,
+        getLeastSoldProduct,
+        getMostRefilledProduct,
+        getMostRemovedProduct,
       },
     } = yield call(gqlTransactions.query, {
-      query: GET_REFILLS_WIDGET_DATA,
+      query: GET_PRODUCTS_WIDGET_DATA,
       variables: {
         period:
           payload && payload.period
@@ -39,12 +36,12 @@ function* handler({ payload }) {
     });
     yield put(
       actionSuccess({
-        totalNumberOfProductsAdded: getTotalNumberOfProductsAdded,
-        totalGrossValueOfRefills: getTotalGrossValueOfRefills,
-        totalNumberOfProductsRemoved: getTotalNumberOfProductsRemoved,
-        averageSpoilageRate: getAverageSpoilageRate,
-        totalCostValueOfReplenishedProducts: getDefaultTotalCostValueOfRefills,
-        totalSaleValueOfReplenishedProducts: getDefaultTotalSalesValueOfRefills,
+        leastSoldProductName: getLeastSoldProduct.productLine.name || ' ',
+        leastSoldProductValue: getLeastSoldProduct.sum || 0,
+        mostRefilledProductName: getMostRefilledProduct.productLine.name || '',
+        mostRefilledProductValue: getMostRefilledProduct.sum || 0,
+        mostRemovedProductName: getMostRemovedProduct.productLine.name || '',
+        mostRemovedProductValue: getMostRemovedProduct.sum || 0,
       }),
     );
   } catch (error) {

@@ -37,12 +37,12 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
         !kiosk ? props.match.params.id : kiosk._id
       }/general`,
     },
-    {
-      name: 'Screen Playlist',
-      goTo: `/kiosks/settings/${
-        !kiosk ? props.match.params.id : kiosk._id
-      }/playlist`,
-    },
+    // {
+    //   name: 'Screen Playlist',
+    //   goTo: `/kiosks/settings/${
+    //     !kiosk ? props.match.params.id : kiosk._id
+    //   }/playlist`,
+    // },
   ];
 
   useEffect(() => {
@@ -75,13 +75,13 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
                   }/general`}
                   component={Settings}
                 />
-                <Route
+                {/* <Route
                   exact
                   path={`/kiosks/settings/${
                     !kiosk ? props.match.params.id : kiosk._id
                   }/playlist`}
                   component={Playlist}
-                />
+                /> */}
                 <Redirect
                   to={`/kiosks/settings/${
                     !kiosk ? props.match.params.id : kiosk._id

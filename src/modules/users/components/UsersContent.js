@@ -9,8 +9,13 @@ import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
 import { getUsers, setActiveUser, changePage, changePerPage } from '../actions';
-import { getUsersListState, getActiveUserState, getTotalUsers, getUsersListForTable } from '../selectors';
-import UsersToolbar from './UsersToolbar'
+import {
+  getUsersListState,
+  getActiveUserState,
+  getTotalUsers,
+  getUsersListForTable,
+} from '../selectors';
+import UsersToolbar from './UsersToolbar';
 import UserTemplate from './UserTemplate';
 
 const sortDefault = [
@@ -84,43 +89,69 @@ const UsersContent = ({
   };
 
   useEffect(() => {
-    setActiveUser(selectedId)
+    setActiveUser(selectedId);
   }, [list]);
 
   return (
     <>
-      <UsersToolbar changeSearch={changeSearch} changeUserType={changeUserType} />
-      {!isLoading ?
+      <UsersToolbar
+        changeSearch={changeSearch}
+        changeUserType={changeUserType}
+      />
+      {!isLoading ? (
         <Grid>
-          <Grid.Row columns="equal" stretched>
+          <Grid.Row columns={2} stretched>
             <Grid.Column width={4}>
               <Segment>
-                <CustomTable
-                  sortByColumn="name"
-                  columns={columns}
-                  onRowClick={handleRowClick}
-                  data={userList}
-                  getData={getData}
-                  sortable
-                  selectable
-                  setSortByInCaller={sort => setSort([sort])}
-                  sortDirection="ASC"
-                />
-                <Pagination
-                  totalCount={total}
-                  page={page}
-                  perPage={perPage}
-                  changePage={changePage}
-                  changePerPage={changePerPage}
-                  isLoading={isLoading}
-                  setFontSize
-                />
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <CustomTable
+                        sortByColumn="name"
+                        columns={columns}
+                        onRowClick={handleRowClick}
+                        data={userList}
+                        getData={getData}
+                        sortable
+                        selectable
+                        setSortByInCaller={sort => setSort([sort])}
+                        sortDirection="ASC"
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Pagination
+                        totalCount={total}
+                        page={page}
+                        perPage={perPage}
+                        boundaryRange={1}
+                        siblingRange={0}
+                        changePage={changePage}
+                        changePerPage={changePerPage}
+                        isLoading={isLoading}
+                        setFontSize
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
               </Segment>
             </Grid.Column>
-            {activeUser && <Grid.Column><UsersDetail /></Grid.Column>}
-            {!activeUser && <Grid.Column><UserTemplate /></Grid.Column>}
+            {activeUser && (
+              <Grid.Column width={12}>
+                <UsersDetail />
+              </Grid.Column>
+            )}
+            {!activeUser && (
+              <Grid.Column width={12}>
+                <UserTemplate />
+              </Grid.Column>
+            )}
           </Grid.Row>
-        </Grid> : <Loader />}
+        </Grid>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
@@ -144,14 +175,14 @@ const mapStateToProps = state => ({
   isLoading: state.users.isLoading,
   total: getTotalUsers(state),
   page: state.users.page,
-  perPage: state.users.perPage
+  perPage: state.users.perPage,
 });
 
 const mapDispatchToProps = {
   getUsers,
   setActiveUser,
   changePage,
-  changePerPage
+  changePerPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContent);
