@@ -7,14 +7,23 @@ import {
   modifyKiosk as action,
   modifyKioskSuccess as actionSuccess,
 } from '../actions';
-import { CREATE_KIOSK_MUTATION, UPDATE_KIOSK_MUTATION, GET_KIOSK_QUERY } from '../schema';
+import {
+  CREATE_KIOSK_MUTATION,
+  UPDATE_KIOSK_MUTATION,
+  GET_KIOSK_QUERY,
+} from '../schema';
+import { toast } from 'react-semantic-toasts';
 
 function* handler({ payload: { values, formActions } }) {
   try {
-    const { id, orgId, ...rest } = values;
-
+    const { id, orgId, pin, technicianPin, ...rest } = values;
     const variables = {
-      data: rest,
+      data: {
+        ...rest,
+        controller: {
+          technicianPin: parseInt(technicianPin),
+        },
+      },
     };
     if (id) {
       variables.id = id;
@@ -23,6 +32,7 @@ function* handler({ payload: { values, formActions } }) {
       variables.data.ownerOrganization = orgId;
       variables.data.orgId = orgId;
     }
+    variables.data.pin = parseInt(pin);
 
     const { data } = yield call(gqlKiosk.mutate, {
       mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
@@ -37,6 +47,20 @@ function* handler({ payload: { values, formActions } }) {
         loadCells: toFlatLoadCellItem(responseData.inventory.loadCells),
       },
     };
+
+    if (!responseData.errors) {
+      toast({
+        type: 'success',
+        description: 'Kiosk was saved successfully',
+        animation: 'fade left',
+      });
+    } else {
+      toast({
+        type: 'error',
+        description: 'Error! Something went wrong',
+        animation: 'fade left',
+      });
+    }
     yield put(actionSuccess(kiosk));
   } catch (error) {
     console.log(error);

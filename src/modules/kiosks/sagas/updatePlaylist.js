@@ -22,7 +22,7 @@ function* handler({ payload: { kioskId, data } }) {
     if (res && !res.errors) {
       toast({
         type: 'success',
-        description: 'Content Playlist created successfully',
+        description: 'Playlist saved successfully',
         animation: 'fade left',
       });
     } else {
