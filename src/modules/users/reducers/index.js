@@ -11,8 +11,6 @@ import {
   modifyUserMemberCard,
   getUserTransactions,
   getOneUserWithInfo,
-  changePage,
-  changePerPage
 } from '../actions';
 
 const initialState = {
@@ -22,20 +20,10 @@ const initialState = {
   isLoading: false,
   userWithDetails: null,
   userLogs: {},
-  page: 0,
-  perPage: 25
 };
 
 const usersReducer = handleActions(
   {
-    [changePage]: (state, { payload }) => ({
-      ...state,
-      page: payload
-    }),
-    [changePerPage]: (state, { payload }) => ({
-      ...state,
-      perPage: payload
-    }),
     [getUsers]: state => ({
       ...state,
       isLoading: true,
@@ -58,21 +46,21 @@ const usersReducer = handleActions(
     [setOneUserWithInfo]: (state, { payload }) => ({
       ...state,
       userWithDetails: payload.user,
-      isLoading: false
+      isLoading: false,
     }),
     [getUserTransactions]: state => ({
       ...state,
-      isLoading: true
+      isLoading: true,
     }),
     [getUserTransactionsSuccess]: (state, { payload }) => ({
       ...state,
       userLogs: payload.userLogs,
-      isLoading: false
+      isLoading: false,
     }),
     [modifyUserMemberCard]: (state, { payload }) => ({ ...state, payload }),
     [toggleUserRole]: state => ({
       ...state,
-      isLoading: true
+      isLoading: true,
     }),
     [toggleUserRoleSuccess]: (state, { payload }) => {
       const list = state.list.map(el =>
@@ -82,8 +70,7 @@ const usersReducer = handleActions(
         ...state,
         list,
         activeUser: payload,
-        isLoading: false
-
+        isLoading: false,
       };
     },
   },

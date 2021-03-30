@@ -16,6 +16,7 @@ import {
   getOrganizationByIdSuccess,
   getProductLinesByOrgId,
   getProductLinesByOrgIdSuccess,
+  getAlmostEmptyKiosks,
   updateAlmostEmptyKiosks,
   getTemperatureLogs,
   getTemperatureLogsSuccess,
@@ -138,9 +139,14 @@ const kiosksReducer = handleActions(
       ...payload,
       isLoading: false,
     }),
+    [getAlmostEmptyKiosks]: state => ({
+      ...state,
+      isLoading: true,
+    }),
     [updateAlmostEmptyKiosks]: (state, { payload }) => {
       return {
         ...state,
+        isLoading: false,
         almostEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.data', []),
         totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
       };

@@ -15,6 +15,7 @@ import {
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllProducts, getProductsWidgetsData } from './actions';
 import { getProductsDropdownList } from '../products/selectors';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -22,6 +23,8 @@ const sortDefault = [
     direction: 'DESC',
   },
 ];
+
+const defaultFilterValues = { dateRange: '', kiosk: '', product: '' };
 
 const sortValue = {
   productLine: 'productLine',
@@ -42,14 +45,13 @@ const ProductList = ({
   getProductsWidgetsData,
   widgetsData,
 }) => {
-  const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
   const [product, changeProduct] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-  const [category, changeCategory] = useState('');
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -58,26 +60,37 @@ const ProductList = ({
     };
     const widgetPayload = {};
 
-    if (search || category || dateRange || kiosk || product) {
-      const cat = category ? { category: { $regex: category } } : {};
+    if (dateRange || kiosk || product) {
       const date = dateRange;
       const kio = kiosk ? { kioskId: kiosk } : {};
       const prod = product ? { productLineId: product } : {};
       data.search = JSON.stringify({
-        ...cat,
         ...date,
         ...kio,
         ...prod,
       });
+      const dateRangeIndex = isEqual(dateRange, filter.dateRange);
+      const kioskIndex = isEqual(kiosk, filter.kiosk);
+      const productIndex = isEqual(product, filter.product);
+
+      widgetPayload.period = dateRange;
+      widgetPayload.kioskId = kiosk;
+      widgetPayload.productLine = product;
+
+      if (!dateRangeIndex || !kioskIndex || !productIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          dateRange,
+          kiosk,
+          product,
+        });
+      }
     }
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
-    }
-    if (product || dateRange || kiosk) {
-      widgetPayload.period = dateRange;
-      widgetPayload.kioskId = kiosk;
-      widgetPayload.productLine = product;
     }
     getAllProducts({ data });
     getProductsWidgetsData({ ...widgetPayload });
@@ -87,16 +100,13 @@ const ProductList = ({
   }, []);
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, dateRange, product]);
+  }, [page, perPage, kiosk, dateRange, product]);
 
   return (
     <>
       <ProductsToolbar
         changeDate={changeDate}
-        changeSearch={changeSearch}
-        changeCategory={changeCategory}
         changeKiosk={changeKiosk}
-        changePage={changePage}
         kiosks={kiosks}
         productsListValue={productsListValue}
         changeProduct={changeProduct}

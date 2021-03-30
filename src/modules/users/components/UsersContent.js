@@ -8,7 +8,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
-import { getUsers, setActiveUser, changePage, changePerPage } from '../actions';
+import { getUsers, setActiveUser } from '../actions';
 import {
   getUsersListState,
   getActiveUserState,
@@ -17,6 +17,7 @@ import {
 } from '../selectors';
 import UsersToolbar from './UsersToolbar';
 import UserTemplate from './UserTemplate';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -24,6 +25,8 @@ const sortDefault = [
     direction: 'ASC',
   },
 ];
+
+const defaultFilterValues = { search: '' };
 
 const colors = {
   Consumer: primaryColor,
@@ -55,14 +58,12 @@ const UsersContent = ({
   isLoading,
   total,
   selectedId,
-  page,
-  perPage,
-  changePerPage,
-  changePage,
 }) => {
   const [search, changeSearch] = useState('');
-  const [userType, changeUserType] = useState('');
+  const [page, changePage] = useState(0);
+  const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -72,17 +73,22 @@ const UsersContent = ({
     };
     if (search) {
       data.name = search;
-    }
-
-    if (userType) {
-      data.role = search;
+      const searchIndex = isEqual(search, filter.search);
+      if (!searchIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          search,
+        });
+      }
     }
     getUsers({ data });
   };
 
   useEffect(() => {
     getData({ sort });
-  }, [search, userType, page, perPage]);
+  }, [page, perPage, search]);
 
   const handleRowClick = ({ _id }) => {
     setActiveUser(_id);
@@ -96,7 +102,7 @@ const UsersContent = ({
     <>
       <UsersToolbar
         changeSearch={changeSearch}
-        changeUserType={changeUserType}
+        // changeUserType={changeUserType}
       />
       {!isLoading ? (
         <Grid>
@@ -174,15 +180,11 @@ const mapStateToProps = state => ({
   activeUser: getActiveUserState(state),
   isLoading: state.users.isLoading,
   total: getTotalUsers(state),
-  page: state.users.page,
-  perPage: state.users.perPage,
 });
 
 const mapDispatchToProps = {
   getUsers,
   setActiveUser,
-  changePage,
-  changePerPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContent);
