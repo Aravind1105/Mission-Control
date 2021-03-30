@@ -11,7 +11,6 @@ const Toolbar = ({
   kiosks,
   productsListValue,
   changeDate,
-  changePage,
   changeKiosk,
   changeProduct,
   exportCsvProducts,
@@ -35,7 +34,6 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    changePage(0);
     changeDate(date);
   };
 

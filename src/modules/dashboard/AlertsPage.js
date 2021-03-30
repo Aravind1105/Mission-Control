@@ -10,6 +10,7 @@ import {
 import { getAlertsGrid, getAllKiosks } from 'modules/kiosks/actions';
 import AlertsTable from './components/AlertsTable';
 import Loader from 'modules/shared/components/Loader';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -17,6 +18,8 @@ const sortDefault = [
     direction: 'DESC',
   },
 ];
+
+const defaultFilterValues = { dateRange: '', kiosk: '', alert: '' };
 
 const sortValue = {
   startDate: 'startDate',
@@ -38,6 +41,7 @@ const AlertsPage = ({
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -53,6 +57,20 @@ const AlertsPage = ({
         ...kio,
         ...al,
       });
+      const dateIndex = isEqual(dateRange, filter.dateRange);
+      const kioskIndex = isEqual(kiosk, filter.kiosk);
+      const alertIndex = isEqual(alert, filter.alert);
+
+      if (!dateIndex || !kioskIndex || !alertIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          dateRange,
+          kiosk,
+          alert,
+        });
+      }
     }
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
@@ -93,7 +111,9 @@ const AlertsPage = ({
               totalCount={total}
               page={page}
               perPage={perPage}
+              // searchValue={dateRange || kiosk || alert}
               changePage={changePage}
+              // changeSearchPage={changeSearchPage}
               changePerPage={changePerPage}
             />
           </Grid.Column>

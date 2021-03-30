@@ -8,13 +8,7 @@ import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const Toolbar = ({
-  kiosks,
-  changeDate,
-  changePage,
-  changeKiosk,
-  exportCsvRefills,
-}) => {
+const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -34,7 +28,6 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    changePage(0);
     changeDate(date);
     if (date.$gte && date.$lte) {
       changeExportData({
@@ -110,7 +103,6 @@ const Toolbar = ({
 
 Toolbar.propTypes = {
   changeDate: func,
-  changePage: func,
   changeKiosk: func,
   kiosks: arrayOf(object),
 };

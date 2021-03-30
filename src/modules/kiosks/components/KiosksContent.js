@@ -13,6 +13,7 @@ import CellTemp from './CellTemp';
 import AllKiosksTableToolbar from './AllKiosksTableToolbar';
 import { getTotalKiosks, getKiosksTableState } from '../selectors';
 import { getAllKiosksForTable } from '../actions';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -25,6 +26,8 @@ const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
 };
+
+const defaultFilterValues = { search: '', kiosk: '', kioskStatus: '' };
 
 const columns = [
   {
@@ -92,28 +95,17 @@ const KiosksContent = ({
   search,
   kiosk,
   kioskStatus,
-  // kioskNetworkStatus,
 }) => {
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
       limit: perPage,
     };
-    // if (doorStatus || kiosk || networkStatus) {
-    //   const net = networkStatus ? { networkStatus } : {};
-    //   const kio = kiosk ? { kioskId: kiosk } : {};
-    //   const door = doorStatus ? { doorStatus } : {};
-    //   data.filter = {
-    //     ...net,
-    //     ...kio,
-    //     ...door,
-    //   };
-    //   data.skip = 0;
-    // }
 
     if (search || kiosk || kioskStatus) {
       const name = search ? { name: { $regexI: search } } : {};
@@ -125,6 +117,20 @@ const KiosksContent = ({
         ...kio,
         ...door,
       });
+      const searchIndex = isEqual(search, filter.search);
+      const kioskIndex = isEqual(kiosk, filter.kiosk);
+      const kioskStatusIndex = isEqual(kioskStatus, filter.kioskStatus);
+
+      if (!searchIndex || !kioskIndex || !kioskStatusIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          search,
+          kiosk,
+          kioskStatus,
+        });
+      }
     }
 
     if (sort && sortValue[sort[0].column]) {
@@ -173,7 +179,7 @@ const KiosksContent = ({
   );
 };
 
-const mapStateToProps = (state, { search }) => ({
+const mapStateToProps = state => ({
   kiosks: getKiosksTableState(state),
   isLoading: state.kiosks.isLoading,
   total: getTotalKiosks(state),
