@@ -6,6 +6,7 @@ import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
 import { getProductLinesWithFilter } from './actions';
 import { selectorGetProducts, getTotalProductsCount } from './selectors';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
