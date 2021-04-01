@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment } from 'semantic-ui-react';
 import CustomTable from 'modules/shared/components/CustomTable';
@@ -30,7 +30,6 @@ const columns = [
   },
 ];
 
-
 const TempLogGrid = ({ temperatureLogs }) => {
   return (
     <Grid.Row>
@@ -54,6 +53,5 @@ const TempLogGrid = ({ temperatureLogs }) => {
 const mapStateToProps = state => ({
   temperatureLogs: getTemperatureLogsState(state),
 });
-
 
 export default connect(mapStateToProps)(TempLogGrid);

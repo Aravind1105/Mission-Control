@@ -16,7 +16,7 @@ import {
   getKioskSingle,
   getKioskShelves,
   getOrgIdFromKiosk,
-  getOrgName,
+  getOrgData,
 } from './selectors';
 import {
   resetKiosk,
@@ -47,13 +47,14 @@ const KioskDetails = ({
   kiosk,
   loadCells,
   isKioskLoading,
+  currentKioskSide,
   resetKiosk,
   createRefill,
   getKiosk,
   orgId,
   getOrganizationById,
-  orgName,
-  rootUser
+  orgData,
+  rootUser,
 }) => {
   const { id } = match.params;
   useEffect(() => {
@@ -78,11 +79,13 @@ const KioskDetails = ({
   };
 
   const handlerOpenDoor = () => {
-    if (window.confirm('Willst Du das Kiosk wirklich im Replenisher Mode öffnen?')) {
+    if (
+      window.confirm('Willst Du das Kiosk wirklich im Replenisher Mode öffnen?')
+    ) {
       createRefill(kiosk._id);
     }
   };
-  const loaded = !isKioskLoading && orgName;
+  const loaded = !isKioskLoading && orgData;
   return loaded ? (
     <>
       <Grid stackable>
@@ -94,7 +97,7 @@ const KioskDetails = ({
                   <Breadcrumbs
                     backLink={backLink}
                     links={links}
-                    activeLink={kiosk.name}
+                    activeLink={kiosk && kiosk.name}
                   />
                 </Segment>
               </Grid.Column>
@@ -103,20 +106,20 @@ const KioskDetails = ({
               <Grid.Column>
                 <Segment>
                   <DetailsHeader
-                    name={kiosk.name}
-                    temp={kiosk.temperature.value}
-                    doorStatus={kiosk.doorStatus}
-                    temperature={kiosk.temperature}
-                    session={kiosk.session}
+                    name={kiosk && kiosk.name}
+                    temp={kiosk && kiosk.temperature.value}
+                    doorStatus={kiosk && kiosk.doorStatus}
+                    temperature={kiosk && kiosk.temperature}
+                    session={kiosk && kiosk.session}
                   />
                   <Divider />
                   <DetailsInfo
-                    serial={`#${kiosk.serialNumber}`}
-                    session={kiosk.session}
-                    location={kiosk.location}
-                    ownerOrganization={orgName}
-                    notes={kiosk.notes}
-                    pin={kiosk.pin}
+                    serial={`#${kiosk && kiosk.serialNumber}`}
+                    session={kiosk && kiosk.session}
+                    location={kiosk && kiosk.location}
+                    ownerOrganization={orgData.name}
+                    notes={kiosk && kiosk.notes}
+                    pin={kiosk && kiosk.pin}
                   >
                     <>
                       <CustomButton
@@ -137,20 +140,26 @@ const KioskDetails = ({
                       <CustomButton
                         icon="thermometer quarter"
                         label="Temp. Log"
-                        onClick={() => history.push(`/kiosks/log/temp/${kiosk._id}`)}
+                        onClick={() =>
+                          history.push(`/kiosks/log/temp/${kiosk && kiosk._id}`)
+                        }
                       />
                       <CustomButton
                         icon="line graph"
                         label="Activity Log"
-                        onClick={() => history.push(`/kiosks/log/activity/${kiosk._id}`)}
+                        onClick={() =>
+                          history.push(
+                            `/kiosks/log/activity/${kiosk && kiosk._id}`,
+                          )
+                        }
                       />
-                      {rootUser &&
-                        <CustomButton
-                          icon="mobile alternate"
-                          label="Manage Screen"
-                          onClick={() => history.push(`/kiosks/screen/customize/${kiosk._id}`)}
-                        />
-                      }
+                      <CustomButton
+                        icon="setting"
+                        label="Settings"
+                        onClick={() =>
+                          history.push(`/kiosks/settings/${kiosk && kiosk._id}`)
+                        }
+                      />
                     </>
                   </DetailsInfo>
                 </Segment>
@@ -160,7 +169,8 @@ const KioskDetails = ({
               <Grid.Column>
                 <DetailsLoadCells
                   cells={loadCells.list}
-                  kioskName={kiosk.name}
+                  kioskName={kiosk && kiosk.name}
+                  currentKioskSide={currentKioskSide}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -170,7 +180,9 @@ const KioskDetails = ({
         <Grid.Column width={5}>
           <Grid>
             <DetailQRCode
-              qrCode={`http://qrdeeplink.livello.com?id=${kiosk.qrcode}`}
+              qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk &&
+                kiosk.qrcode}&slug=${orgData &&
+                orgData.slug}&appleId=${orgData && orgData.appleId}`}
             />
             <Grid.Row>
               <Grid.Column>
@@ -182,17 +194,18 @@ const KioskDetails = ({
       </Grid>
     </>
   ) : (
-      <Loader />
-    );
+    <Loader />
+  );
 };
 
 const mapStateToProps = state => ({
   kiosk: getKioskSingle(state),
   loadCells: getKioskShelves(state),
   orgId: getOrgIdFromKiosk(state),
-  orgName: getOrgName(state),
+  orgData: getOrgData(state),
   isKioskLoading: state.kiosks.isKioskLoading,
-  rootUser: state.user.root
+  currentKioskSide: state.kiosks.currentKioskSide,
+  rootUser: state.user.root,
 });
 
 const mapDispatchToProps = {

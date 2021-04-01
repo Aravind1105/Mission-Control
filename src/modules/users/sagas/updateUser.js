@@ -15,13 +15,12 @@ function* handler({ payload }) {
       variables: { id, data },
     });
     const responseData = response.data['updateUser'];
-    console.log(response.errors);
     if (!response.errors) {
       toast({ description: 'User updated successfully', animation: 'fade left', icon: 'info', color: 'green' });
-      history.push('/users');
       yield put(setOneUserWithInfo({
         user: responseData,
       }));
+      history.push('/users');
     } else {
       toast({ description: response.errors[0].message, animation: 'fade left', icon: 'info', color: 'red', time: 5000 });
     }

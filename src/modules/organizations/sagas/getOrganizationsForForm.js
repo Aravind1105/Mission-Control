@@ -2,7 +2,6 @@
 // will be able to return single organization by name
 
 const loadOptions = organizations => (inputValue, callback) => {
-  console.log(inputValue);
   callback(
     organizations.filter(el =>
       el.label.toLowerCase().includes(inputValue.toLowerCase()),

@@ -22,22 +22,53 @@ const AlmostEmptyKiosks = ({
   setSortByInCaller,
 }) => {
   const { t } = useTranslation();
+  const screenWidth = window.innerWidth;
   const columns = [
     {
       title: t('Product'),
       field: 'product',
+      formatter: ({ product }) => {
+        if (product === '') {
+          return '';
+        }
+        return <div style={{ textAlign: 'left' }}> {product} </div>;
+      },
     },
     {
       title: t('Current Inventory'),
       field: 'amount',
+      formatter: ({ amount }) => {
+        if (amount === '') {
+          return '';
+        } else if (screenWidth < 750) {
+          return <div style={{ textAlign: 'left' }}> {amount} </div>;
+        }
+        return <div style={{ textAlign: 'center' }}> {amount} </div>;
+      },
     },
     {
-      title: t('Scale'),
+      title: t('Cable ID'),
       field: 'scale',
+      formatter: ({ scale }) => {
+        if (scale === '') {
+          return '';
+        } else if (screenWidth < 750) {
+          return <div style={{ textAlign: 'left' }}> {scale} </div>;
+        }
+        return <div style={{ textAlign: 'center' }}> {scale} </div>;
+      },
     },
     {
       title: t('Kiosk'),
       field: 'kiosk',
+      formatter: ({ kiosk }) => {
+        if (kiosk === '') {
+          return '';
+        } else if (screenWidth < 750) {
+          return <div style={{ textAlign: 'left' }}> {kiosk} </div>;
+        }
+        return <div style={{ textAlign: 'center' }}> {kiosk} </div>;
+      },
     },
   ];
   const handlerClickRow = ({ kioskId }) => {

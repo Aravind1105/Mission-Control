@@ -13,6 +13,7 @@ import {
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllTransactions, getTransactionsWidgetsData } from './actions';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -20,6 +21,7 @@ const sortDefault = [
     direction: 'DESC',
   },
 ];
+const defaultFilterValues = { dateRange: '', kiosk: '' };
 
 const sortValue = {
   kioskName: 'kioskName',
@@ -31,7 +33,7 @@ const sortValue = {
   total: 'total',
 };
 
-const ProductsList = ({
+const TransactionsList = ({
   transactions,
   isLoading,
   total,
@@ -40,13 +42,12 @@ const ProductsList = ({
   getTransactionsWidgetsData,
   widgetsData,
 }) => {
-  const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
-  const [category, changeCategory] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [kiosk, changeKiosk] = useState('');
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -55,18 +56,29 @@ const ProductsList = ({
     };
     const widgetPayload = {};
 
-    if (search || category || dateRange || kiosk) {
-      const name = search ? { product: { $regex: search } } : {};
-      const cat = category ? { category: { $regex: category } } : {};
+    if (dateRange || kiosk) {
       const date = dateRange ? { created: dateRange } : {};
       const kio = kiosk ? { kiosk } : {};
 
       data.search = JSON.stringify({
-        ...name,
-        ...cat,
         ...date,
         ...kio,
       });
+      const dateRangeIndex = isEqual(dateRange, filter.dateRange);
+      const kioskIndex = isEqual(kiosk, filter.kiosk);
+
+      widgetPayload.period = dateRange;
+      widgetPayload.kioskId = kiosk;
+
+      if (!dateRangeIndex || !kioskIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          dateRange,
+          kiosk,
+        });
+      }
     }
 
     if (sort && sortValue[sort[0].column]) {
@@ -74,10 +86,6 @@ const ProductsList = ({
       data.sort = sort;
     }
 
-    if (dateRange || kiosk) {
-      widgetPayload.period = dateRange;
-      widgetPayload.kioskId = kiosk;
-    }
     getAllTransactions({ data });
     getTransactionsWidgetsData({ ...widgetPayload });
   };
@@ -88,15 +96,12 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category, dateRange, kiosk]);
+  }, [page, perPage, dateRange, kiosk]);
 
   return (
     <>
       <Toolbar
         changeDate={changeDate}
-        changeSearch={changeSearch}
-        changeCategory={changeCategory}
-        changePage={changePage}
         kiosks={kiosks}
         changeKiosk={changeKiosk}
       />
@@ -169,4 +174,4 @@ const mapDispatchToProps = {
   getTransactionsWidgetsData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);

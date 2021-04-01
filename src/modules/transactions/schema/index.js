@@ -45,6 +45,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
           productLine {
             _id
             name
+            articleNumber
           }
           kiosk {
             _id
@@ -52,6 +53,27 @@ export const GET_TRANSACTIONS_QUERY = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_QUERY = gql`
+  query($data: GridRequest) {
+    getProductLinesStatisticsGrid(data: $data) {
+      data {
+        productLine {
+          _id
+          name
+          defaultPrice
+          defaultCost
+        }
+        totalCost
+        totalGrossSales
+        refilled
+        sold
+        removed
+      }
+      total
     }
   }
 `;
@@ -82,7 +104,8 @@ export const GRID_REFILLS_QUERY = gql`
           productLine {
             _id
             name
-            defaultPrice
+            articleNumber
+            defaultCost
           }
           count
         }
@@ -106,9 +129,37 @@ export const CREATE_REFILL_MUTATION = gql`
 export const GET_REFILLS_WIDGET_DATA = gql`
   query($period: Period!, $kioskId: ID) {
     getTotalNumberOfProductsAdded(period: $period, kioskId: $kioskId)
-    getTotalGrossValueOfRefills(period: $period, kioskId: $kioskId)
+    getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
     getAverageSpoilageRate(period: $period, kioskId: $kioskId)
+    getDefaultTotalSalesValueOfRefills(period: $period, kioskId: $kioskId)
+    getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
+  }
+`;
+
+export const GET_PRODUCTS_WIDGET_DATA = gql`
+  query($period: Period!, $kioskId: ID) {
+    getLeastSoldProduct(period: $period, kioskId: $kioskId) {
+      productLine {
+        _id
+        name
+      }
+      sum
+    }
+    getMostRefilledProduct(period: $period, kioskId: $kioskId) {
+      productLine {
+        _id
+        name
+      }
+      sum
+    }
+    getMostRemovedProduct(period: $period, kioskId: $kioskId) {
+      productLine {
+        _id
+        name
+      }
+      sum
+    }
   }
 `;
 

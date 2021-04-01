@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Divider } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import InfoRow from 'modules/shared/components/InfoRow';
 
@@ -8,26 +8,27 @@ const DetailsInfo = ({
   children,
   session,
   serial,
-  location: { address },
+  location,
   ownerOrganization,
   notes,
   pin,
 }) => {
   let addressLine1 = '';
   let addressLine2 = '';
+  let addressLine3 = '';
   let addressSecondLine = '';
   let addressThirdLine = '';
-  // address
-  //   ? [address.city, address.line1, address.state].filter(el => el).join(', ')
-  //   : '';
-  if (address.line1 !== null) {
-    addressLine1 += address.name ? `${address.name}, ` : '';
-    addressLine1 += `${address.line1}`;
-    addressLine2 += address.line2 ? `${address.line2}` : '';
+
+  let address = location && location.address;
+
+  if (address && address.line1 !== null) {
+    addressLine1 += address.name ? `${address.name} \n ` : '';
+    addressLine2 = `${address.line1}`;
+    addressLine3 += address.line2 ? `${address.line2}` : '';
     if (address.line2) {
-      addressLine2 += `, ${address.state}`;
+      addressLine3 += `, ${address.state}`;
     } else {
-      addressLine1 += `, ${address.state}`;
+      // addressLine1 += `, ${address.state}`;
     }
     addressSecondLine += `${address.postalCode} ${address.city}`;
     addressThirdLine += `${address.country}`;
@@ -52,6 +53,7 @@ const DetailsInfo = ({
                 <InfoRow title="Address" description={addressLine1} />
               )}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
+              {addressLine3 !== '' && <InfoRow description={addressLine3} />}
               {addressLine1 !== '' && (
                 <InfoRow description={addressSecondLine} />
               )}

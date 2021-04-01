@@ -13,7 +13,8 @@ export const selectorGetProductFamily = state => state.products.family;
 
 export const selectorGetProductTax = state => state.products.taxes;
 
-export const selectorGetProductPriceHistory = state => state.kiosks.productsByOrgId;
+export const selectorGetProductPriceHistory = state =>
+  state.kiosks.productsByOrgId;
 
 export const getProductsHistory = createSelector(
   selectorGetProductPriceHistory,
@@ -110,6 +111,7 @@ export const selectorGetProductCategories = createSelector(
 const defaultFormInit = {
   name: '',
   manufacturer: '',
+  articleNumber: '',
   description: '',
   category: '',
   tax: '',
@@ -127,6 +129,11 @@ const defaultFormInit = {
   defaultCost: '',
   orgId: '',
   images: [],
+  capacities: {
+    surfaceSize_33: 0,
+    surfaceSize_50: 0,
+    surfaceSize_100: 0,
+  },
   packagingOptions: [
     {
       ean: '',
@@ -150,7 +157,7 @@ export const selectorGetProductInitValue = createSelector(
       ...el,
       price: el.price.toFixed(2),
     }));
-    const [packaging] = packagingOptions.slice(-1);
+    const packaging = packagingOptions[0];
     const priceHistory = rest.priceHistory.find(el => el.default);
     const initialValues = pick(rest, [
       'allergens',
@@ -164,6 +171,7 @@ export const selectorGetProductInitValue = createSelector(
       'fiber',
       'ingredientsList',
       'manufacturer',
+      'articleNumber',
       'name',
       'protein',
       'salt',
@@ -174,23 +182,27 @@ export const selectorGetProductInitValue = createSelector(
     ]);
 
     //convert capacities field (array of objects) to Formik expected format
-    const capacities = { "surfaceSize_33": 0, "surfaceSize_50": 0, "surfaceSize_100": 0, };
+    const capacities = {
+      surfaceSize_33: 0,
+      surfaceSize_50: 0,
+      surfaceSize_100: 0,
+    };
     initialValues.capacities.forEach(capacity => {
       switch (capacity.surfaceSize) {
         case 33:
-          capacities["surfaceSize_33"] = capacity.units || 0;
+          capacities['surfaceSize_33'] = capacity.units || 0;
           break;
         case 50:
-          capacities["surfaceSize_50"] = capacity.units || 0;
+          capacities['surfaceSize_50'] = capacity.units || 0;
           break;
         case 100:
-          capacities["surfaceSize_100"] = capacity.units || 0;
+          capacities['surfaceSize_100'] = capacity.units || 0;
           break;
         default:
           break;
       }
     });
-    initialValues["capacities"] = capacities;
+    initialValues['capacities'] = capacities;
 
     return {
       ...defaultFormInit,

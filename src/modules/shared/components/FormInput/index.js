@@ -1,7 +1,15 @@
 import React from 'react';
 import { FormInput as Input } from 'semantic-ui-react';
 
-const FormInput = ({ form, field, step, readOnly, prettier, limiting, ...props }) => {
+const FormInput = ({
+  form,
+  field,
+  step,
+  readOnly,
+  prettier,
+  limiting,
+  ...props
+}) => {
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name];
   const errMsg = isTouched && error ? { content: error } : undefined;
@@ -13,7 +21,10 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, ...props }
 
   const handleChange = (e, { value }) => {
     if (limiting === 'floatingField') {
-      if (/^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) || /^[0-9]{1,20}([,.])?$/.test(value)) {
+      if (
+        /^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) ||
+        /^[0-9]{1,20}([,.])?$/.test(value)
+      ) {
         if (value.includes('.') || value.includes(',')) {
           form.setFieldValue(field.name, value.replace(',', '.'));
         } else form.setFieldValue(field.name, value.replace('.', ','));
@@ -23,12 +34,17 @@ const FormInput = ({ form, field, step, readOnly, prettier, limiting, ...props }
         form.setFieldValue(field.name, value);
       } else if (value === '') form.setFieldValue(field.name, value);
     }
+    if (props.callbackOnChange) {
+      props.callbackOnChange();
+    }
   };
 
   return (
     <Input
       fluid
+      form="novalidateform"
       step={step}
+      style={props.widthLimit && { width: '35%' }}
       {...field}
       onBlur={prettier ? handleBlur : field.onBlur}
       {...props}

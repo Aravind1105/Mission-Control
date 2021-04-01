@@ -26,18 +26,18 @@ const Toolbar = ({
     changeSupplier(value);
   };
   return (
-    <Grid>
+    <Grid stackable>
       <Grid.Row verticalAlign="middle">
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
-            placeholder="All Kiosks"
+            placeholder="Kiosk"
             selection
             options={kiosks}
             className="full-width"
             onChange={handleKioskChange}
           />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="All Products"
             selection
@@ -46,7 +46,7 @@ const Toolbar = ({
             onChange={handleProductChange}
           />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} computer={4}>
           <Dropdown
             placeholder="All Suppliers"
             selection

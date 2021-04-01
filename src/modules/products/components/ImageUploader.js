@@ -47,19 +47,23 @@ const ImageUploader = ({
   const [customAlertStatus, setcustomAlertStatus] = useState(false);
 
   const independentUpdateImage = image => {
-    dispatch(modifyProductImage({
-      id:initialValues.id,
-      orgId:initialValues.orgId,
-      image,
-    }));
+    dispatch(
+      modifyProductImage({
+        id: initialValues.id,
+        orgId: initialValues.orgId,
+        image,
+      }),
+    );
   };
 
   const independentDeleteImage = () => {
-    dispatch(deleteProductImage({
-      id:initialValues.id,
-      orgId:initialValues.orgId,
-    }));
-  }
+    dispatch(
+      deleteProductImage({
+        id: initialValues.id,
+        orgId: initialValues.orgId,
+      }),
+    );
+  };
 
   useEffect(() => {
     const image = new Image();
@@ -172,23 +176,28 @@ const ImageUploader = ({
           />
         </label>
         <CustomAlert
-              visible={showAlert}
-              onApprove={() => {
-                setcustomAlertStatus(true);
-                setShowAlert(false);
-                if(initialValues.id)toast({type:'success', description:'Product Image updated successfully.', animation:'fade left'});
-              }}
-              onCancel={() => {
-                setIsCancelTriggered(true);
-                setIsImageDeleted(false);
-                setShowAlert(false);
-              }}
-              alertMsg={ 
-                isImageDeleted
-                  ? `Are you sure that you want to DELETE the pictures of this product?`
-                  :` Are you sure that you want to UPDATE the picture of this product?`
-              }
-            />
+          visible={showAlert}
+          onApprove={() => {
+            setcustomAlertStatus(true);
+            setShowAlert(false);
+            if (initialValues.id)
+              toast({
+                type: 'success',
+                description: 'Product Image updated successfully.',
+                animation: 'fade left',
+              });
+          }}
+          onCancel={() => {
+            setIsCancelTriggered(true);
+            setIsImageDeleted(false);
+            setShowAlert(false);
+          }}
+          alertMsg={
+            isImageDeleted
+              ? `Are you sure that you want to DELETE the pictures of this product?`
+              : ` Are you sure that you want to UPDATE the picture of this product?`
+          }
+        />
       </div>
       {showWarning && (
         <p className="image-warning">

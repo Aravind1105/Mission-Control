@@ -8,13 +8,7 @@ import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const Toolbar = ({
-  kiosks,
-  changeDate,
-  changePage,
-  changeKiosk,
-  exportCsvRefills,
-}) => {
+const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -22,14 +16,18 @@ const Toolbar = ({
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] =
-          i % 2
-            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        let formattedDate = curr;
+        if (i % 2) {
+          let date = new Date(curr);
+          date.setHours(23);
+          date.setMinutes(59);
+          date.setSeconds(59);
+          formattedDate = date;
+        }
+        prev[key] = formattedDate;
         return prev;
       }, {});
     }
-    changePage(0);
     changeDate(date);
     if (date.$gte && date.$lte) {
       changeExportData({
@@ -59,10 +57,14 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvRefills(value);
-      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
+      toast({
+        description: 'Downloading the requested file.',
+        animation: 'fade left',
+        icon: 'info',
+        color: 'blue',
+      });
     }
   };
-
 
   return (
     <div
@@ -70,12 +72,12 @@ const Toolbar = ({
         margin: '20px 0',
       }}
     >
-      <Grid>
+      <Grid stackable>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -84,9 +86,9 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <CustomButton
-              label= "Download CSV&nbsp;"
+              label="Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadCsv}
@@ -101,7 +103,6 @@ const Toolbar = ({
 
 Toolbar.propTypes = {
   changeDate: func,
-  changePage: func,
   changeKiosk: func,
   kiosks: arrayOf(object),
 };

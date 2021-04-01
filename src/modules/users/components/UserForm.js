@@ -9,38 +9,58 @@ import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormInputMultiple from 'modules/shared/components/FormInputMultiple';
-import { updateUser, setActiveUser } from '../actions';
+import { updateUser, validateMemberCard } from '../actions';
 import history from 'lib/history';
 
 const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     const rolesInOrganizations = values.orgId.map(organizationId => {
-      const org = find(initialValues.rolesInOrganizations, ele => (ele.organizationId._id === organizationId));
+      const org = find(
+        initialValues.rolesInOrganizations,
+        ele => ele.organizationId._id === organizationId,
+      );
       if (org) {
         return {
           organizationId,
           role: org.role,
-          status: "ACTIVE",
-        }
+          status: 'ACTIVE',
+        };
       } else {
         // role set to consumer by default
         return {
           organizationId,
-          role: "consumer",
-          status: "ACTIVE",
-        }
+          role: 'consumer',
+          status: 'ACTIVE',
+        };
       }
-
-    })
+    });
     values.rolesInOrganizations = rolesInOrganizations;
-    const payload = pick(values, ['id', 'firstName', 'lastName', 'email', 'mobile', 'note', 'rolesInOrganizations', 'membercards', 'kioskPin']);
+    const payload = pick(values, [
+      'id',
+      'firstName',
+      'lastName',
+      'email',
+      'mobile',
+      'note',
+      'rolesInOrganizations',
+      'membercards',
+    ]);
     if (!isEmpty(values.address)) {
       if (!values.address.name) {
-        values.address.name = values.address.line1
+        values.address.name = values.address.line1;
       }
-      values.address.postalCode = values.address.postalCode.toString();
-      payload['address'] = pick(values.address, ['name', 'line1', 'line2', 'postalCode', 'city', 'state', 'country']);
+      if (!values.address.postalCode) values.address.postalCode = '';
+      else values.address.postalCode = values.address.postalCode.toString();
+      payload['address'] = pick(values.address, [
+        'name',
+        'line1',
+        'line2',
+        'postalCode',
+        'city',
+        'state',
+        'country',
+      ]);
     }
     dispatch(updateUser(payload));
   };
@@ -53,6 +73,9 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
       validationSchema={Yup.object().shape({
         mobile: Yup.number().positive('Phone number shoule be positive.'),
         membercards: Yup.array().of(Yup.string().matches(/^[a-zA-Z0-9]+$/)),
+        firstName: Yup.string().required('This field is required'),
+        lastName: Yup.string().required('This field is required'),
+        email: Yup.string().required('This field is required'),
       })}
     >
       {({ dirty, handleSubmit, handleReset }) => (
@@ -134,12 +157,24 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                   component={FormInputMultiple}
                   allowAdditions
                   options={userMemberCardsOptions}
+                  handleChangeCallback={membercards => {
+                    dispatch(
+                      validateMemberCard({
+                        userId: initialValues.id,
+                        membercards,
+                      }),
+                    );
+                  }}
                 />
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns="equal">
               <Grid.Column>
-                <Field name="address.line1" label="Address" component={FormInput} />
+                <Field
+                  name="address.line1"
+                  label="Address"
+                  component={FormInput}
+                />
               </Grid.Column>
               <Grid.Column>
                 <Field
@@ -160,11 +195,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
                 />
               </Grid.Column>
               <Grid.Column>
-                <Field
-                  name="address.city"
-                  label="City"
-                  component={FormInput}
-                />
+                <Field name="address.city" label="City" component={FormInput} />
               </Grid.Column>
               <Grid.Column>
                 <Field
@@ -195,7 +226,7 @@ const UserForm = ({ initialValues, organizations, userMemberCardsOptions }) => {
             </Grid.Row> */}
             <Grid.Row textAlign="center">
               <Grid.Column>
-                <Button type="button" onClick={() => history.push("/users")}>
+                <Button type="button" onClick={() => history.push('/users')}>
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>

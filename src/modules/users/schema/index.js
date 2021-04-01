@@ -12,16 +12,15 @@ export const userDetailOnUser = gql`
     mobile
     membercards
     note
-    kioskPin
     address {
-        name
-        line1
-        line2
-        postalCode
-        city
-        state
-        country
-        }
+      name
+      line1
+      line2
+      postalCode
+      city
+      state
+      country
+    }
     rolesInOrganizations {
       organizationId {
         _id
@@ -39,17 +38,17 @@ export const userDetailOnUser = gql`
       created
       updated
     }
-    kiosks{
-        _id
-      }
+    kiosks {
+      _id
+    }
     apiKey {
       _id
       secret
       explanation {
-      requestHeader
-      jwtHeader
-      payloadRule
-      payloadExample
+        requestHeader
+        jwtHeader
+        payloadRule
+        payloadExample
       }
     }
   }
@@ -66,47 +65,52 @@ export const GET_ONE_USER_WITH_INFO = gql`
 
 export const GET_USER_TRANSACTIONS = gql`
   query findUserTransactionsGrid(
-    $skip:Int!,$limit:Int!,$search:String!,$sort:[RequestSort]
+    $skip: Int!
+    $limit: Int!
+    $search: String!
+    $sort: [RequestSort]
   ) {
-    findUserTransactionsGrid(data:{skip:$skip,limit:$limit,search:$search,sort:$sort}) {
-    total 
-    data{
-      _id
-    total
-    created
-    itemsPurchased{
-      loadCell
-      productLine{
-        name
-      }
-      price
-      loadCell
-    }
-    paymentMethod{
-      isPaid
-      membercardId
-      amount
-      stripeCustomerId
-    }
-    session{
-      type
-      kiosk{
-        name
-      }
-      details{
-        touchedArticles{
-          quantity
-          productLine{
+    findUserTransactionsGrid(
+      data: { skip: $skip, limit: $limit, search: $search, sort: $sort }
+    ) {
+      total
+      data {
+        _id
+        total
+        created
+        itemsPurchased {
+          loadCell
+          productLine {
             name
-            priceHistory{
-              price
+          }
+          price
+          loadCell
+        }
+        paymentMethod {
+          isPaid
+          membercardId
+          amount
+          stripeCustomerId
+        }
+        session {
+          type
+          kiosk {
+            name
+          }
+          details {
+            touchedArticles {
+              quantity
+              productLine {
+                name
+                priceHistory {
+                  price
+                }
+              }
             }
           }
         }
       }
     }
-  }
-}
   }
 `;
 
@@ -127,13 +131,13 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
         membercards
         note
         address {
-        name
-        line1
-        line2
-        postalCode
-        city
-        state
-        country
+          name
+          line1
+          line2
+          postalCode
+          city
+          state
+          country
         }
         rolesInOrganizations {
           organizationId {
@@ -142,15 +146,15 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
           }
           role
         }
-        paymentMethods{
-        type
-        provider
-        last4digits
-      }
-      kiosks{
-        _id
-        notes
-      }
+        paymentMethods {
+          type
+          provider
+          last4digits
+        }
+        kiosks {
+          _id
+          notes
+        }
       }
     }
   }
@@ -190,6 +194,12 @@ export const UPDATE_USER = gql`
     }
   }
   ${userDetailOnUser}
+`;
+
+export const VALIDATE_MEMBER_CARD = gql`
+  query($userId: String!, $data: MemberCardValidationInput) {
+    checkMemberCardIfAlreadyAssigned(userId: $userId, data: $data)
+  }
 `;
 
 export default {};

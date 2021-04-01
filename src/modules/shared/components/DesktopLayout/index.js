@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
-import logoSmall from 'styling/assets/images/logo-small.png';
+import logoSmall from 'styling/assets/images/new_Menu_Logo.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
 import { getAllKiosks } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
@@ -11,7 +11,7 @@ import UserProfileBar from '../UserProfileBar/';
 // import LanguageSelect from '../LanguageSelect';
 import AlertsList from '../AlertsList';
 import './desktopLayout.less';
-
+import { version } from '../../../../../package.json';
 const DesktopLayout = ({
   children,
   isLoading,
@@ -45,6 +45,7 @@ const DesktopLayout = ({
             checked={!minimized}
             onClick={handleClick}
           />
+          <h5>Version: {version}</h5>
         </Menu.Item>
       </Menu>
       <div className="desktop-content">

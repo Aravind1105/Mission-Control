@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, Form, Button, Header, Divider } from 'semantic-ui-react';
+import {
+  Grid,
+  Form,
+  Button,
+  Header,
+  Divider,
+  Popup,
+  Icon,
+} from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
@@ -11,6 +19,7 @@ import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { modifyProductSaga, modifyProductImage } from '../actions';
+import get from 'lodash/get';
 
 let setImg;
 let restVal;
@@ -50,9 +59,18 @@ const ProductForm = ({
     //convert capacities field to Livello BE expected format
     const { capacities } = values;
     const newCapacities = [];
-    newCapacities.push({ surfaceSize: 'N33', units: parseInt(capacities.surfaceSize_33) });
-    newCapacities.push({ surfaceSize: 'N50', units: parseInt(capacities.surfaceSize_50) });
-    newCapacities.push({ surfaceSize: 'N100', units: parseInt(capacities.surfaceSize_100) });
+    newCapacities.push({
+      surfaceSize: 'N33',
+      units: parseInt(get(capacities, 'surfaceSize_33', '0')),
+    });
+    newCapacities.push({
+      surfaceSize: 'N50',
+      units: parseInt(get(capacities, 'surfaceSize_50', '0')),
+    });
+    newCapacities.push({
+      surfaceSize: 'N100',
+      units: parseInt(get(capacities, 'surfaceSize_100', '0')),
+    });
     values.capacities = newCapacities;
 
     updatingProduct = dispatch(
@@ -78,7 +96,11 @@ const ProductForm = ({
       if (isProductLoading) {
         // toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
       } else {
-        toast({ type: 'success', description: 'Product was saved successfully.', animation: 'fade left' });
+        toast({
+          type: 'success',
+          description: 'Product was saved successfully.',
+          animation: 'fade left',
+        });
         updatingProduct = false;
         history.push('/products');
       }
@@ -105,18 +127,36 @@ const ProductForm = ({
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
+      enableReinitialize
+      validateOnChange
       validationSchema={Yup.object().shape({
+        name: Yup.string().required('This field is required'),
         orgId: Yup.string().required('This field is required'),
         tax: Yup.string().required('This field is required'),
+        manufacturer: Yup.string().required('This field is required'),
+        packagingOptions: Yup.array().of(
+          Yup.object().shape({
+            netWeightGrams: Yup.number().required('This field is required'),
+            grossWeightGrams: Yup.number().required('This field is required'),
+          }),
+        ),
+        defaultPrice: Yup.string().required('This field is required'),
+        defaultCost: Yup.string().required('This field is required'),
+        capacities: Yup.object().shape({
+          surfaceSize_100: Yup.number().required('This field is required'),
+          surfaceSize_50: Yup.number().required('This field is required'),
+          surfaceSize_33: Yup.number().required('This field is required'),
+        }),
       })}
       enableReinitialize
     >
       {({ dirty, handleSubmit, values, setValues, resetForm }) => {
-        const netPrice = Math.round(
-          ((+values.defaultPrice.replace(',', '.') || 0)
-            / (1 + (values.tax || 0) / 100))
-          * 100,
-        ) / 100;
+        const netPrice =
+          Math.round(
+            ((+values.defaultPrice.replace(',', '.') || 0) /
+              (1 + (values.tax || 0) / 100)) *
+              100,
+          ) / 100;
         setImg = setValues;
         restVal = values;
         return (
@@ -153,12 +193,23 @@ const ProductForm = ({
                 </Grid.Column>
                 <Grid.Column>
                   <Field
+                    name="articleNumber"
+                    label="Article Number (SKU)"
+                    component={FormInput}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row columns="equal">
+                <Grid.Column>
+                  <Field
                     name="manufacturer"
                     label="Manufacturer"
                     required
                     component={FormInput}
                   />
                 </Grid.Column>
+                <Grid.Column></Grid.Column>
               </Grid.Row>
 
               <Grid.Row columns="equal" stretched>
@@ -188,41 +239,7 @@ const ProductForm = ({
                 </Grid.Column> */}
               </Grid.Row>
             </Grid>
-            <Header as="h4">Shelf Max. Capacity</Header>
-            <Divider />
             <Grid>
-              <Grid.Row columns="equal" stretched>
-                <Grid.Column>
-                  <Field
-                    name="capacities.surfaceSize_100"
-                    label="Full Shelf (L)"
-                    min={0}
-                    required
-                    component={FormInput}
-                    limiting="integerField"
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  <Field
-                    name="capacities.surfaceSize_50"
-                    label="1/2 Shelf (M)"
-                    min={0}
-                    required
-                    component={FormInput}
-                    limiting="integerField"
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  <Field
-                    name="capacities.surfaceSize_33"
-                    label="1/3 Shelf (S)"
-                    min={0}
-                    required
-                    component={FormInput}
-                    limiting="integerField"
-                  />
-                </Grid.Column>
-              </Grid.Row>
               <Grid.Row columns="equal" stretched>
                 <Grid.Column>
                   <Field
@@ -237,7 +254,9 @@ const ProductForm = ({
                       { key: 'g', text: 'g', value: 'g' },
                     ]}
                     selectorDefaultValueIndex={1}
-                    dropdownSelectedValue={values.packagingOptions[0].netWeightGramsUnit || 'g'}
+                    dropdownSelectedValue={
+                      values.packagingOptions[0].netWeightGramsUnit || 'g'
+                    }
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -319,19 +338,79 @@ const ProductForm = ({
               </Grid.Row>
             </Grid>
 
+            <div style={{ marginTop: 25 }}>
+              <span className="product-field-custom-h5">
+                Shelf Max. Capacity
+              </span>
+              <Popup trigger={<Icon name="info circle" color="yellow" />}>
+                <Popup.Content>
+                  <img
+                    src={require('../../../styling/assets/images/shelf_capacities.png')}
+                    style={{
+                      height: 150,
+                      width: 330,
+                    }}
+                  />
+                </Popup.Content>
+              </Popup>
+            </div>
+            <Divider />
+            <Grid>
+              <Grid.Row columns="equal" stretched>
+                <Grid.Column>
+                  <Field
+                    name="capacities.surfaceSize_100"
+                    label="Full Shelf (L)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Field
+                    name="capacities.surfaceSize_50"
+                    label="1/2 Shelf (M)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <Field
+                    name="capacities.surfaceSize_33"
+                    label="1/3 Shelf (S)"
+                    min={0}
+                    required
+                    component={FormInput}
+                    limiting="integerField"
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+
             <Header as="h4">Nutrition Facts (per 100g)</Header>
             <Divider />
 
             <Grid>
               <Grid.Row columns="equal">
                 <Grid.Column>
-                  <Field name="energy" label="kJ/kcal" component={FormInput} />
+                  <Field
+                    name="energy"
+                    label="kJ/kcal"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
+                  />
                 </Grid.Column>
                 <Grid.Column>
                   <Field
                     name="fat"
                     label="Total Fat (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -339,6 +418,8 @@ const ProductForm = ({
                     name="fatSaturated"
                     label="Saturated Fats (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -346,6 +427,8 @@ const ProductForm = ({
                     name="carbo"
                     label="Carbohydrates (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -353,23 +436,39 @@ const ProductForm = ({
                     name="carboSugar"
                     label="Sugar (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Field name="fiber" label="Fiber (g)" component={FormInput} />
+                  <Field
+                    name="fiber"
+                    label="Fiber (g)"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
+                  />
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <Field
                     name="protein"
                     label="Protein (g)"
                     component={FormInput}
+                    limiting="floatingField"
+                    min={0}
                   />
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <Field name="salt" label="Salt (g)" component={FormInput} />
+                  <Field
+                    name="salt"
+                    label="Salt (g)"
+                    component={FormInput}
+                    limiting="floatingField"
+                    min={0}
+                  />
                 </Grid.Column>
                 <Grid.Column width={7}>
                   <Field

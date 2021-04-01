@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Icon, Menu, Sidebar } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import UserProfileBar from './UserProfileBar';
-import logoSmall from '../../../styling/assets/images/logo-small.png';
+import logoSmall from '../../../styling/assets/images/new_Menu_Logo.png';
 
 import './mobileLayout.less';
 

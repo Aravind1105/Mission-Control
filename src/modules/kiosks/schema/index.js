@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { productOnProductLine } from '../../products/schema';
-import { userDetailOnUser } from '../../users/schema';
 const FragmentLocation = {
   location: gql`
     fragment LocationForKiosk on Location {
@@ -21,6 +20,7 @@ const FragmentInventory = {
     fragment InventoryForKiosk on Inventory {
       loadCells {
         cellId
+        isActive
         planogramPosition
         products {
           _id
@@ -66,6 +66,11 @@ const FragmentKioskOnKiosk = gql`
           city
         }
       }
+      support {
+        email
+        hotline
+        hotlineAvailability
+      }
     }
     internet {
       signalStrength
@@ -78,16 +83,25 @@ const FragmentKioskOnKiosk = gql`
     }
     controller {
       preAuth
-      supportEmail
       paymentType
       tabletLang
       minimumAge
-      serviceCheck{
+      serviceCheck {
         enabled
         startTime
         endTime
       }
-		memberCardEnabled
+      memberCardEnabled
+      technicianPin
+      playList {
+        _id
+        name
+        uri
+        duration
+        type
+        enabled
+        order
+      }
     }
   }
   ${FragmentLocation.location}
@@ -127,7 +141,7 @@ const FragmentAlertLowTempOnKiosk = gql`
   }
 `;
 const FragmentAlertUnauthorizedAccessOnKiosk = gql`
-  fragment FragmentAlertUnauthorizedAccess on  AlertUnauthAccess {
+  fragment FragmentAlertUnauthorizedAccess on AlertUnauthAccess {
     kioskId {
       _id
       name
@@ -135,7 +149,7 @@ const FragmentAlertUnauthorizedAccessOnKiosk = gql`
   }
 `;
 const FragmentAlertTabletDisconnectedOnKiosk = gql`
-  fragment FragmentAlertTabletDisconnected on  AlertTabletDisconn {
+  fragment FragmentAlertTabletDisconnected on AlertTabletDisconn {
     kioskId {
       _id
       name
@@ -227,25 +241,12 @@ export const KIOSK_RESET_MUTATION = gql`
   ${FragmentKioskOnKiosk}
 `;
 export const CONFIGURE_KIOSK_PROPS = gql`
-  mutation configureKioskProps(
-    $data:KioskPropsInput!)
-    {
-      configureKioskProps(data:$data) {
-        controller {
-          preAuth
-          supportEmail
-          paymentType
-          tabletLang
-          minimumAge
-          memberCardEnabled
-          serviceCheck{
-            enabled
-            startTime
-            endTime
-          }
-    }
+  mutation configureKioskProps($data: KioskPropsInput!) {
+    configureKioskProps(data: $data) {
+      ...FragmentKiosk
     }
   }
+  ${FragmentKioskOnKiosk}
 `;
 export const GET_ALERTS_GRID = gql`
   query gridAlerts($data: GridRequest) {
@@ -322,28 +323,83 @@ export const GET_TEMPERATURE_LOGS = gql`
 `;
 export const GET_ACTIVITY_LOGS = gql`
   query gridActivities(
-    $skip:Int!,$limit:Int!,$kiosk:String!,$period:Period,$sort:Int
+    $skip: Int!
+    $limit: Int!
+    $kiosk: String!
+    $period: Period
+    $sort: Int
   ) {
-  gridActivities(skip:$skip,limit:$limit,kiosk:$kiosk,period:$period,sort:$sort) {
-    total data{
-      _id
-      kiosk
-      type
-      created
-      payload {
-        fridge_id
-        user_id
-        session_id
-        id
-        message_timestamp
+    gridActivities(
+      skip: $skip
+      limit: $limit
+      kiosk: $kiosk
+      period: $period
+      sort: $sort
+    ) {
+      total
+      data {
+        _id
+        kiosk
         type
-        message {
-          door_status
-          touchedScales {weight id}
-          payment_terminal
+        created
+        payload {
+          fridge_id
+          user_id
+          session_id
+          id
+          message_timestamp
+          type
+          message {
+            door_status
+            touchedScales {
+              weight
+              id
+            }
+            scales {
+              weight
+              id
+            }
+            payment_terminal
+          }
         }
       }
     }
   }
+`;
+
+export const DELETE_LOAD_CELL = gql`
+  mutation deactivateLoadCell($kioskId: String!, $cellId: String!) {
+    deactivateLoadCell(kioskId: $kioskId, cellId: $cellId) {
+      ...FragmentKiosk
+    }
+  }
+  ${FragmentKioskOnKiosk}
+`;
+
+export const UPDATE_PLAYLIST = gql`
+  mutation updatePlayList($kioskId: String!, $data: [PlayListInput]!) {
+    updatePlayList(kioskId: $kioskId, data: $data) {
+      _id
+      name
+      uri
+      duration
+      type
+      enabled
+      order
+    }
+  }
+`;
+
+export const DELETE_PLAYLIST = gql`
+  mutation deletePlayListContent($kioskId: String!, $contentId: String!) {
+    deletePlayListContent(kioskId: $kioskId, contentId: $contentId) {
+      _id
+      name
+      uri
+      duration
+      type
+      enabled
+      order
+    }
   }
 `;

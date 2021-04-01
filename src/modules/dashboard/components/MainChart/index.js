@@ -38,7 +38,11 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
   const [kiosks, setKiosks] = useState([]);
 
   useEffect(() => {
-    const { kioskNames, formattedData } = computeAndFormatData(time, salesStats[time], kioskId);
+    const { kioskNames, formattedData } = computeAndFormatData(
+      time,
+      salesStats[time],
+      kioskId,
+    );
     setKiosks(kioskNames);
     setData(formattedData);
   }, [kioskId, time]);
@@ -53,7 +57,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
 
   return (
     <Segment>
-      <Grid verticalAlign="middle" className="dashboard-header">
+      <Grid stackable verticalAlign="middle" className="dashboard-header">
         <Grid.Row>
           <Grid.Column width={8}>
             <Header as="h4" color="black">
@@ -61,14 +65,14 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
             </Header>
           </Grid.Column>
 
-          <Grid.Column width={4}>
+          <Grid.Column mobile={16} computer={4}>
             <Select
               onChange={handlerChangeKiosk}
               options={kiosksOptions}
               defaultValue={kiosksOptions[0]}
             />
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column mobile={16} computer={4}>
             <Select
               onChange={handleChangeTime}
               options={optionsTime}
@@ -77,14 +81,15 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      {
-        isEmpty(kiosks) &&
+      {isEmpty(kiosks) && (
         <div className="chart-empty-data">
-          <p>There's currently no data available for the parameters selected.</p>
+          <p>
+            There's currently no data available for the parameters selected.
+          </p>
           <p>Please try a different combination.</p>
         </div>
-      }
-      {!isEmpty(kiosks) &&
+      )}
+      {!isEmpty(kiosks) && (
         <ResponsiveContainer width="100%" height={500}>
           <BarChart data={data} margin={{ left: 10, right: 10 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -98,22 +103,21 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
               tick={<CustomizedAxisTick />}
             />
             <YAxis />
-            <Tooltip
-              content={<CustomTooltip />}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
-            {
-              kiosks.map((kiosk, i) => <Bar
+            {kiosks.map((kiosk, i) => (
+              <Bar
                 key={kiosk}
                 dataKey={kiosk}
                 name={kiosk}
                 stackId="a"
                 fill={colorsArr[i % (colorsArr.length - 1)]}
                 className="chartTest"
-              />)
-            }
+              />
+            ))}
           </BarChart>
-        </ResponsiveContainer>}
+        </ResponsiveContainer>
+      )}
     </Segment>
   );
 };

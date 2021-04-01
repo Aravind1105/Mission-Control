@@ -19,14 +19,23 @@ import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
 import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
-import { modifyKioskLoadCell } from '../actions';
-import { toast } from 'react-semantic-toasts';
+import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
+import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
+import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
 
 const ToolTip = () => (
   <Popup
     content="There  are products left in the fridge - can’t change the product setup for loadcell"
-    trigger={<Icon size="large" color="yellow" name="info circle" />}
+    trigger={<Icon color="yellow" name="info circle" />}
   />
+);
+
+const PositionTip = () => (
+  <Popup trigger={<Icon color="yellow" name="info circle" />}>
+    <Popup.Content>
+      <img src={planogramExplaination} style={{ width: 330, height: 170 }} />
+    </Popup.Content>
+  </Popup>
 );
 
 const ModalLoadCell = ({
@@ -43,10 +52,21 @@ const ModalLoadCell = ({
   isAddLoadCell,
   orgId,
   getProductLinesByOrgId,
+  cellIdOptions,
+  deleteLoadCell,
+  usedPositions,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [quantityState, setQuantityState] = useState(initVal.quantity);
   const [position, setPosition] = useState();
   const [productInfo, setproductInfo] = useState();
+  const [isValid, setIsValid] = useState({
+    productLine: false,
+    cableId: false,
+  });
+  const [showPositionErrorAlert, setShowPositionErrorAlert] = useState(false);
+  const [isValidPosition, setIsValidPosition] = useState(true);
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -59,15 +79,21 @@ const ModalLoadCell = ({
       kioskId: match.params.id,
     });
     setFieldValue('price', newPrice);
+    setIsValid({ ...isValid, productLine: true });
   };
 
-  const validateCellId = cellId => {
-    let error;
-    const filteredCellId = cells.filter(cell => cell.cellId === cellId);
-    if (isAddLoadCell && filteredCellId.length > 0) {
-      error = 'Cable ID already exists.';
-    }
-    return error;
+  const validateCellContents = () => {
+    const { productLine, cableId } = isValid;
+    return productLine && cableId && isValidPosition;
+  };
+
+  const handleDeleteLoadCell = () => {
+    deleteLoadCell({
+      kioskId: initVal.kioskId,
+      cellId: initVal.cellId.value,
+      callback: handleClose,
+    });
+    setShowDeleteAlert(false);
   };
 
   const handleSave = data => {
@@ -76,6 +102,7 @@ const ModalLoadCell = ({
       initVal.planogramPosition !== data.planogramPosition;
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== +data.quantity;
+    const isCellIdChanged = initVal.cellId.value !== data.cellId.value;
     const isPriceChanged =
       Number(
         getDefaultProductPrice({
@@ -90,17 +117,23 @@ const ModalLoadCell = ({
     data.price = +data.price || 0;
     data.quantity = +data.quantity || 0;
     let oldData;
-    if (isReplacementRequired) {
+    // if not add new load cell
+    if (!isAddLoadCell && (isReplacementRequired || isCellIdChanged)) {
       oldData = cells.find(
         el => el.planogramPosition === data.planogramPosition,
       );
       oldData.planogramPosition = initVal.planogramPosition;
+      if (isCellIdChanged) {
+        oldData.cellId = initVal.cellId.value;
+      }
     }
+    data.cellId = data.cellId.value;
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
       isQuantityChanged,
       isPositionIdChanged,
+      isCellIdChanged,
       data,
       oldData,
       callback: handleClose,
@@ -115,14 +148,15 @@ const ModalLoadCell = ({
       }}
       initialValues={initVal}
       key={initVal.price}
-      validateOnBlur
     >
       {({ dirty, handleSubmit }) => (
         <ConfirmModal
           onClose={handleClose}
           isPristine={!dirty}
           title={
-            initVal.cellId ? `${kioskName}  #${initVal.cellId}` : `${kioskName}`
+            initVal.cellId.value
+              ? `${kioskName}  #${initVal.cellId.value}`
+              : `${kioskName}`
           }
         >
           <form onSubmit={handleSubmit} className="modal-form">
@@ -142,6 +176,7 @@ const ModalLoadCell = ({
                       onChange={handleSelect}
                       disabled={Boolean(initVal.quantity)}
                       component={FormAsyncSelect}
+                      required
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -156,6 +191,9 @@ const ModalLoadCell = ({
                       limiting="integerField"
                       min={0}
                       component={FormInput}
+                      onChange={(e, { value }) => {
+                        setQuantityState(value);
+                      }}
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -178,24 +216,57 @@ const ModalLoadCell = ({
                 </Grid.Row>
                 <Grid.Row columns="equal">
                   <Grid.Column>
+                    <b>Planogram Position</b>
+                    {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
-                      label="Position"
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
+                      onBlur={e => {
+                        //usedPositions will hold a list of planogram positions that has isActive flag set to true
+                        //check if the planogramPosition is already available in the used positions list
+                        //throw error if already available
+                        if (isAddLoadCell) {
+                          // only in add mode
+                          if (usedPositions.indexOf(e.target.value) === -1) {
+                            setShowPositionErrorAlert(false);
+                            setIsValidPosition(true);
+                          } else if (
+                            initVal.planogramPosition !== e.target.value
+                          ) {
+                            setShowPositionErrorAlert(true);
+                            setIsValidPosition(false);
+                          }
+                        }
+                      }}
                     />
                   </Grid.Column>
+
                   <Grid.Column>
+                    <b>Cable ID</b>
                     <Field
                       name="cellId"
-                      label="Cable ID"
-                      disabled={!isAddLoadCell}
-                      validate={validateCellId}
-                      component={FormInput}
+                      options={cellIdOptions}
+                      disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      component={FormAsyncSelect}
+                      onChange={({}) => {
+                        setIsValid({ ...isValid, cableId: true });
+                      }}
                     />
                   </Grid.Column>
                 </Grid.Row>
+                {!isAddLoadCell && (
+                  <Grid.Row>
+                    <Button
+                      color="red"
+                      style={{ marginLeft: 15 }}
+                      onClick={() => setShowDeleteAlert(true)}
+                    >
+                      Delete
+                    </Button>
+                  </Grid.Row>
+                )}
               </Grid>
             </Modal.Content>
             <Modal.Actions>
@@ -206,7 +277,17 @@ const ModalLoadCell = ({
                 color="green"
                 type="submit"
                 disabled={!dirty}
-                onClick={() => setShowAlert(true)}
+                onClick={() => {
+                  if (!isAddLoadCell) {
+                    setShowAlert(true);
+                  } else {
+                    if (validateCellContents()) {
+                      setShowAlert(true);
+                    } else if(!isValidPosition) {
+                      setShowPositionErrorAlert(true);
+                    }
+                  }
+                }}
               >
                 Update
               </Button>
@@ -216,14 +297,38 @@ const ModalLoadCell = ({
               onApprove={() => {
                 handleSave(productInfo);
                 setShowAlert(false);
-                toast({type:'success', description:'Scale was saved successfully.', animation:'fade left'});
               }}
               onCancel={() => setShowAlert(false)}
-              alertMsg={ 
-                initVal.planogramPosition != position?
-                `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
-                : `Are you sure that you want to update the product?`
+              alertMsg={
+                initVal.cellId.value && initVal.planogramPosition != position
+                  ? `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
+                  : `Are you sure that you want to update the product?`
               }
+            />
+            <CustomAlert
+              visible={showDeleteAlert}
+              onApprove={() => {
+                if (quantityState === 0) {
+                  handleDeleteLoadCell();
+                } else {
+                  setShowDeleteAlert(false);
+                }
+              }}
+              onCancel={() => setShowDeleteAlert(false)}
+              alertMsg={
+                quantityState === 0
+                  ? 'Are you sure want to delete this load cell?'
+                  : 'Loadcell should be empty before deleting.'
+              }
+              isWarning={quantityState !== 0}
+            />
+            <CustomAlert
+              visible={showPositionErrorAlert}
+              onApprove={() => {
+                setShowPositionErrorAlert(false);
+              }}
+              alertMsg="Provided planogram position is already in use. Please choose another one."
+              isWarning={true}
             />
           </form>
         </ConfirmModal>
@@ -235,7 +340,10 @@ const ModalLoadCell = ({
 const mapStateToProps = (state, { product, match: { params } }) => {
   const productsHistory = getProductsHistory(state);
   const initVal = {
-    cellId: product.cellId,
+    cellId: {
+      value: product.cellId,
+      label: product.cellId,
+    },
     planogramPosition: product.planogramPosition,
     kioskId: params.id,
     product: {
@@ -251,12 +359,15 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     productsHistory,
     isProductLoading: state.products.isLoading,
     initVal,
+    cellIdOptions: getCellIdOptions(state),
+    usedPositions: getUsedPlanogramPositions(state),
   };
 };
 
 const mapDispatchToProps = {
   modifyKioskLoadCell,
   getProductLinesByOrgId,
+  deleteLoadCell,
 };
 
 export default compose(

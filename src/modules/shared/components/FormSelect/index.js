@@ -19,6 +19,7 @@ const FormSelect = ({
   return (
     <Form.Select
       fluid
+      form="novalidateform"
       options={options}
       {...field}
       {...props}

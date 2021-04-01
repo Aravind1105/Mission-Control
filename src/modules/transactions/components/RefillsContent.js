@@ -7,6 +7,12 @@ const columns = [
   {
     title: 'Date / Time',
     field: 'created',
+    formatter: ({ created }) => {
+      if (created === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {created} </div>;
+    },
   },
   // {
   //   title: 'Time',
@@ -19,37 +25,83 @@ const columns = [
   {
     title: 'Kiosk',
     field: 'kioskName',
+    ormatter: ({ kioskName }) => {
+      if (kioskName === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {kioskName} </div>;
+    },
   },
   {
     title: 'Status',
     field: 'status',
+    formatter: ({ status }) => {
+      if (status === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {status} </div>;
+    },
+  },
+  {
+    title: 'Article Number',
+    field: 'articleNumber',
   },
   {
     title: 'Product',
     field: 'productName',
+    formatter: ({ productName }) => {
+      if (productName === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'left' }}> {productName} </div>;
+    },
   },
   {
     title: 'Quantity',
     field: 'count',
+    formatter: ({ count }) => {
+      if (count === 0) {
+        return '';
+      }
+      return <div style={{ textAlign: 'center' }}> {count} </div>;
+    },
   },
   {
     title: 'Cable ID',
     field: 'loadCell',
+    formatter: ({ loadCell }) => {
+      if (loadCell === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
+    },
   },
   {
     title: 'Weight in g',
     field: 'weight',
+    formatter: ({ weight }) => {
+      if (weight === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'right' }}> {weight} </div>;
+    },
   },
   {
     title: 'Price',
     field: 'price',
-    className: 'purchase-price-header',
-    formatter: ({ price }) => (price !== '' ? `€ ${price || 0}` : ''),
+    formatter: ({ price }) => {
+      if (price === '') {
+        return '';
+      }
+      return <div style={{ textAlign: 'right' }}> {price}€ </div>;
+    },
   },
   {
-    title: 'Total Price',
+    title: 'Total Cost',
     field: 'total',
-    formatter: ({ total }) => `€ ${total || 0}`,
+    formatter: ({ total }) => (
+      <div style={{ textAlign: 'right' }}> {total}€ </div>
+    ),
   },
 ];
 
@@ -69,7 +121,16 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         selectable
         striped
         isLoading={isLoading}
-        excludeSortBy={['status', 'productName', 'count', 'loadCell', 'weight', 'price', 'total']}
+        excludeSortBy={[
+          'status',
+          'productName',
+          'articleNumber',
+          'count',
+          'loadCell',
+          'weight',
+          'price',
+          'total',
+        ]}
         setSortByInCaller={sort => setSortByInCaller(sort)}
         sortDirection="DESC"
       />

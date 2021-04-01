@@ -8,13 +8,7 @@ import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
 
-const Toolbar = ({
-  changeDate,
-  changePage,
-  kiosks,
-  changeKiosk,
-  exportCsvSales,
-}) => {
+const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -22,14 +16,18 @@ const Toolbar = ({
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] =
-          i % 2
-            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        let formattedDate = curr;
+        if (i % 2) {
+          let date = new Date(curr);
+          date.setHours(23);
+          date.setMinutes(59);
+          date.setSeconds(59);
+          formattedDate = date;
+        }
+        prev[key] = formattedDate;
         return prev;
       }, {});
     }
-    changePage(0);
     changeDate(date);
     if (date.$gte && date.$lte) {
       changeExportData({
@@ -50,7 +48,12 @@ const Toolbar = ({
         kiosk: exportData.kiosk ? exportData.kiosk : '',
       };
       exportCsvSales(value);
-      toast({description:'Downloading the requested file.', animation:'fade left', icon:'info', color: 'blue'});
+      toast({
+        description: 'Downloading the requested file.',
+        animation: 'fade left',
+        icon: 'info',
+        color: 'blue',
+      });
     }
   };
 
@@ -69,13 +72,13 @@ const Toolbar = ({
         margin: '20px 0',
       }}
     >
-      <Grid>
+      <Grid stackable>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -88,14 +91,14 @@ const Toolbar = ({
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <CustomButton
-                label= "Download CSV&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default"
-                onClick={DownloadCsv}
-                disabled={!Boolean(exportData)}
-              />
+              label="Download CSV&nbsp;"
+              icon="arrow down icon"
+              className="custom-button-default"
+              onClick={DownloadCsv}
+              disabled={!Boolean(exportData)}
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -104,9 +107,7 @@ const Toolbar = ({
 };
 
 Toolbar.propTypes = {
-  changeSearch: PropTypes.func,
   changeDate: PropTypes.func,
-  changePage: PropTypes.func,
   kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 

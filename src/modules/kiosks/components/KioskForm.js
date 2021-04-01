@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 
 import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk } from '../actions';
 import { toast } from 'react-semantic-toasts';
+import { otherwise } from 'ramda';
 
 let updatingKiosk = false;
 const KioskForm = ({
@@ -15,30 +17,93 @@ const KioskForm = ({
   organizations,
   cancelHandler,
   isKioskLoading,
+  sNum,
 }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     updatingKiosk = dispatch(modifyKiosk({ values, formActions }));
   };
 
-  useEffect(() => {
-    if (updatingKiosk) {
-      if (isKioskLoading) {
-        // toast({description:'Kiosk is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-        toast({
-          type: 'success',
-          description: 'Kiosk was saved successfully.',
-          animation: 'fade left',
-        });
-      }
-    }
-  });
-
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       enableReinitialize
+      validateOnChange
+      validationSchema={Yup.object().shape({
+        name: Yup.string().required('This field is required'),
+        serialNumber: Yup.string()
+          .required('This field is required')
+          .test({
+            name: 'duplicate-serialNum-check',
+            test: function(val) {
+              if (Boolean(!initialValues.id)) {
+                const num = sNum.map(function(ele) {
+                  return ele.toLowerCase();
+                });
+                return num.indexOf(val && val.toLowerCase()) > -1
+                  ? this.createError({
+                      path: 'serialNumber',
+                      message: 'Serial Number already exists.',
+                    })
+                  : true;
+              } else return true;
+            },
+          }),
+        orgId: Yup.string().required('This field is required'),
+        location: Yup.object().shape({
+          address: Yup.object().shape({
+            name: Yup.string().required('This field is required'),
+            country: Yup.string().required('This field is required'),
+            city: Yup.string().required('This field is required'),
+            state: Yup.string().required('This field is required'),
+            line1: Yup.string().required('This field is required'),
+            postalCode: Yup.string().required('This field is required'),
+          }),
+        }),
+        pin: Yup.number()
+          .required('This field is required')
+          .test({
+            name: 'check-same-pin',
+            test: function(val) {
+              if (val && val === this.parent.technicianPin) {
+                return this.createError({
+                  path: 'pin',
+                  message:
+                    "Replenishment PIN and Technician PIN can't be the same",
+                });
+              } else return true;
+            },
+          })
+          .typeError('Invalid Input: Numbers please')
+          .positive('Must be greater than zero')
+          .test(
+            'len',
+            'Must be exactly 4 digits',
+            val => val && val.toString().length === 4,
+          ),
+        technicianPin: Yup.number()
+          .required('This field is required')
+          .test({
+            name: 'check-same-pin',
+            test: function(val) {
+              if (val && val === this.parent.pin) {
+                return this.createError({
+                  path: 'technicianPin',
+                  message:
+                    "Replenishment PIN and Technician PIN can't be the same",
+                });
+              } else return true;
+            },
+          })
+          .typeError('Invalid Input: Numbers please')
+          .positive('Must be greater than zero')
+          .test(
+            'len',
+            'Must be exactly 4 digits',
+            val => val && val.toString().length === 4,
+          ),
+      })}
     >
       {({ dirty, handleSubmit, resetForm }) => (
         <Form onSubmit={handleSubmit}>
@@ -176,20 +241,28 @@ const KioskForm = ({
                 />
               </Grid.Column>
             </Grid.Row>
-
             <Grid.Row>
-              <Grid.Column width={4}>
-                <Field
-                  name="pin"
-                  label="Pin"
-                  type="number"
-                  min={0}
-                  required
-                  component={FormInput}
-                />
-              </Grid.Column>
+              {!Boolean(initialValues.pin) && (
+                <Grid.Column width={4}>
+                  <Field
+                    name="pin"
+                    label="Replenishment PIN"
+                    required
+                    component={FormInput}
+                  />
+                </Grid.Column>
+              )}
+              {!Boolean(initialValues.technicianPin) && (
+                <Grid.Column width={4}>
+                  <Field
+                    name="technicianPin"
+                    label="Technician PIN"
+                    required
+                    component={FormInput}
+                  />
+                </Grid.Column>
+              )}
             </Grid.Row>
-
             <Grid.Row textAlign="center">
               <Grid.Column>
                 <Button

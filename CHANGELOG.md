@@ -1,3 +1,347 @@
+#### 1.3.31 (2021-03-19)
+
+##### Bug Fixes
+
+* **Transactions-Sales:** LIV-2949 fixed the null handling in a proper manner (af0d317c)
+* **Transactions-Refills:** LIV-2957 resolver name changed to getDefaultTotalCostValueOfRefills (2da2fee6)
+* **img:**
+  *  img path fixed to reset it (a3b2013d)
+  *  retrieves uploaded image (6db3b55c)
+* **fileName:**  name case sensitive fixed (411b47d9)
+
+#### 1.3.30 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2865:**
+  *  added gql for update and delete playlist (ad494029)
+  * Add Image in Playlist screen (8738b094)
+  *  content playlist screen update (8c34c529)
+
+##### Bug Fixes
+
+* **LIV-2948:** error in OrgGrid resolved (f850a6ea)
+
+#### 1.3.29 (2021-03-17)
+
+#### 1.3.28 (2021-03-17)
+
+##### Build System / Dependencies
+
+* **LIV-2923:** updated the qrcode link to accomodate the slug and appleId (52b3f56c)
+
+##### New Features
+
+* **dashboard graph:** LIV-2911 kiosk options in the graph should be in ascending order (2a3ad66e)
+
+#### 1.3.27 (2021-03-12)
+
+##### New Features
+
+* **delete load cell:** LIV-2327 isActive field is used to display loadcell on the planogram (175b3048)
+
+##### Bug Fixes
+
+* **validation:**  PIN validationa and complete Yup validation and some bug fixes (ae9ea9f7)
+* **PIN:**  Validated for max 4digits, numeric, positive (86a695b5)
+* **log:**  rm logs (15659a68)
+* **settings:**  Pin validation and both the pins can'be the same (c1a3c897)
+* **kiosk details:**  LIV-2726 Kiosk Details (89fb4af2)
+
+#### 1.3.26 (2021-03-09)
+
+##### Bug Fixes
+
+* **addscale modal:** LIV-2327 quantity field not to be mandatory - fixed (5e5ad855)
+* **Dashboard:**
+  *  LIV_2725 mobile responsive datepicker: Different date picker for different Screen size (acd91813)
+  *  LIV-2724 mobile responsive dashboar: Alerts Table, Almost Empty and Sub Components (6c4bce57)
+
+#### 1.3.25 (2021-03-09)
+
+##### Build System / Dependencies
+
+* **LIV-2820:** Added pin on the settings page and removed from kiosk page (16005f63)
+
+##### Bug Fixes
+
+* **KioskPlanogram:** LIV-2327 position warning on add scale and switch position bug fix (95488b61)
+* **LIV-2820:**
+  * field name bug (d6489e03)
+  *  added technician pin in the gql (c6237468)
+* **dateField:**
+  *  dateField changed for alerts dateRange (62674bb4)
+  *  Date field is changed to 'startDate' (d6dca33f)
+* **LIV-2794:**  field  for dateRange is changed (a51d16f8)
+* **Kiosk Dedtails:**  LIV-2723: Mobile Responsive Problems Resolved (da5e42d0)
+
+#### 1.3.24 (2021-03-05)
+
+##### Bug Fixes
+
+* **Kiosk-loadcell:** delete/edit loadcell complete (45aac5e4)
+* **LIV-2833:**  Street name alone not submitted beacuse of null exists (061db9d3)
+
+#### 1.3.23 (2021-03-03)
+
+##### Build System / Dependencies
+
+* **LIV-2833:**  remove the mandatory for address field (00a4539f)
+* **LIV-2794:**  resolved pagination and added loading screen (efa026cd)
+
+##### New Features
+
+* **Edit/Delete Loadcell:** Merge into LIV-2327 (b47760a7)
+* **delete loadcell:** LIV-1800 delete load cell (535728de)
+* **Kiosk-LoadCell Modal:**  LIV-2327 Cable ID should be editable (c1cd3194)
+
+##### Bug Fixes
+
+* **LIV-2794:**  Datepicker format is changed (5b5b636f)
+* **Date Picker:**  LIV-2625: Datepicker length updated (f98b24a9)
+* **LIV-2833:**  Make the address field required in user form (3ad06d59)
+* **Kiosk:**  LIV-2647: Kiosk Info Address formate Updated (d4e009d9)
+* **Dashboard:**  LIV-2723: log statements removed (c3ed7e6e)
+* **kiosk details Mobile Responsive:**  LIV-2723  Koisk Detail and sub components (3d72aadf)
+
+#### 1.3.22 (2021-02-26)
+
+##### Build System / Dependencies
+
+* **LIV-2805:**  hidden the add kiosk btn for admin and validated serialnumber on creation (8390b2c9)
+
+##### New Features
+
+* **datepicker:** LIV-2725 updated date picker component for mobile view (d42dfd5a)
+
+##### Bug Fixes
+
+* **Dashboard:**  LIV-2725: Margin issue resolved (9a3d8161)
+* **deshboard Kiosk Transactions:**  LIV-2725:Searchbox Dropdown and Button Responsiveness feature is added (b66dd3e4)
+* **deshboard Kiosk Products Transactions Refils and Sales:**  LIV-2793 Formate of Table Updated (d5b833b5)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into staging-master (9fbf6f2a)
+
+#### 1.3.21 (2021-02-23)
+
+##### Bug Fixes
+
+* **transactions:**  swap column order for 'Article Number' (daf82245)
+* **Transactions:**
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (2a1c27b4)
+  *  LIV-2827: Article Number Column is added in Sales and Refills Table (29c030f0)
+
+#### 1.3.20 (2021-02-18)
+
+##### Build System / Dependencies
+
+* **LIV-2795:**  added 3 more columns to alerts table (f1527f90)
+* **liv-2591:**  change landing page (1653ab84)
+
+##### New Features
+
+* **refills:**  update grid refills cost (8c9251e8)
+
+##### Bug Fixes
+
+* **Dashboard Alert:**
+  *  LIV-2824: Hide Duration, Severity and Status Column in Show all Table (ea53ee2c)
+  *  LIV-2824: Hide Duration, Severity and Status Column (e844d942)
+* **Kiosk Settings Tooltip:**  LIV-2790: Tooltip added for default support language (f9ede372)
+* **LIV-2591:**  logging out renewing the token instantly resolved (a923376d)
+* **kiosk Settings:**  LIV-2672 Model Msg Updated (87b95fd2)
+* **LIV-2751:**  PackageOptions fetch old data bug solved (53ea3181)
+
+#### 1.3.19 (2021-02-15)
+
+##### Build System / Dependencies
+
+* **LIV-2795:**  added 3 more columns to alerts table (f1527f90)
+* **liv-2591:**  change landing page (1653ab84)
+
+##### New Features
+
+* **refills:**  update grid refills cost (9550350b)
+
+##### Bug Fixes
+
+* **refills:**  cost - number of signs after comma fixed to 2 (7071cf9b)
+* **LIV-2591:**  logging out renewing the token instantly resolved (a923376d)
+* **kiosk Settings:**  LIV-2672 Model Msg Updated (87b95fd2)
+* **LIV-2751:**  PackageOptions fetch old data bug solved (53ea3181)
+
+#### 1.3.18 (2021-02-01)
+
+##### Bug Fixes
+
+* **kiosk settings:**  LIV-2681 member card tool tip updated (48bb727d)
+
+#### 1.3.17 (2021-02-01)
+
+##### Bug Fixes
+
+* **kioskProps:** LIV-2681 planogram fixed after updating kiosk settings (20635245)
+* **kiosk settings:**  age restirction warning message chaned to german (67004d0f)
+
+#### 1.3.16 (2021-01-29)
+
+##### Bug Fixes
+
+* **kiosk settings:**  warning color, out of service modal no confirmation (49296f3c)
+* **liv-2717:**  membercard issue to revert back when there's no change (2d967165)
+
+##### Other Changes
+
+* **dashboard,kiosk,transactions:**  update the name of kiosks. (d46ee5b4)
+
+#### 1.3.15 (2021-01-26)
+
+##### Bug Fixes
+
+* **Transactions:** LIV-2680 date filters updated to locale based filtering (5a9e5ac2)
+* **kiosk Settings:**  LIV-2672 Confirmation msg on putting Koisk Out of Service (2688d83a)
+* **kiosk Settings Warning Color:**  LIV-2671 Warning Color Changed from Red to Orange (5396d239)
+* **kiosk Settings title:**  LIV-2673 Title Updated from General Settings to Kiosk Settings (83915c08)
+* **kiosk details Temp Log:**
+  *  LIV-2679 Temp Log table modified (b5af4a0d)
+  *  LIV-2679 Temp Log table modified (4af2e43a)
+* **kiosk details:**  LIV-2683 Products Field updated to Planogram Position (b6a9d4ed)
+
+#### 1.3.14 (2021-01-22)
+
+##### Bug Fixes
+
+* **create/edit product:** LIV-2678 (1bdfe856)
+
+##### Other Changes
+
+* **kiosks reducer:** kiosk default set to null (d6c1ba69)
+
+#### 1.3.13 (2021-01-22)
+
+##### Bug Fixes
+
+* **kiosk-settings:** LIV-2681 memeber card enable/disable consitency issue fixed (302c40c4)
+
+#### 1.3.12 (2021-01-19)
+
+##### Bug Fixes
+
+* **kiosk properties:**  allow access to admins to kiosk general settings. (27bee65f)
+* **device settings:**  change logic for member card to make it work properly with ZVT software. (5727f3e5)
+
+##### Other Changes
+
+* **SideMenu:**  Showing Version of Mission Controller (d937245a)
+* **service out of time:**  activate service out of time without time range. Also, refactor for warning messages on kiosk general settings page. (e57ca1c9)
+* **kiosk details:**  LIV-2642 Message on changing paymenttype to GyroCard only (6c51d74f)
+
+#### 1.3.11 (2021-01-13)
+
+##### Bug Fixes
+
+* **kiosks-list:**  sales 24h changed to sales today (eb0b8c71)
+* **liv-2549:**
+  *  setting UI changes (ac2fb835)
+  *  setting screen for kiosk (eb75a2b5)
+* **Users Details:**  LIV-2534 User Layout Fix (cba4e4f1)
+* **manage screen:** service check time swapped (d7f30987)
+
+##### Other Changes
+
+* **Product Details:**
+  *  LIV-2472 new field in Forms with Article Number (af9a6f40)
+  *  LIV-2182 Input Field Validation (bbd007c9)
+* **Users Details:**  LIV-2558 Logo Updated (84711385)
+
+#### 1.3.10 (2021-01-06)
+
+##### Build System / Dependencies
+
+* **liv-2585:**  manage age restriction and disable out of service (fc1cae83)
+
+##### Bug Fixes
+
+* **kiosk settings:** LIV-2585 updated GrqphQL schema and submit handler (5ca2c4bf)
+* **liv-2549:**
+  *  setting UI changes (ac2fb835)
+  *  setting screen for kiosk (eb75a2b5)
+* **Users Details:**  LIV-2534 User Layout Fix (cba4e4f1)
+* **manage screen:** service check time swapped (d7f30987)
+
+##### Other Changes
+
+* **kiosk-settings:** LIV-2585 service time commented (04173861)
+* **Product Details:**
+  *  LIV-2472 new field in Forms with Article Number (af9a6f40)
+  *  LIV-2182 Input Field Validation (bbd007c9)
+* **Users Details:**  LIV-2558 Logo Updated (84711385)
+
+#### 1.3.9 (2020-12-18)
+
+##### Other Changes
+
+* **planogram-loadcell:** LIV-2485 image style + popup trigger size normal (63eeb42b)
+* **kiosk details:**  LIV-2485 Show Pop Up (1716289e)
+
+#### 1.3.8 (2020-12-18)
+
+##### New Features
+
+* **product-edit:** LIV-2484 tooltip-shelf capacity (f100f202)
+
+##### Other Changes
+
+* **product-edit:** LIV-2483 move shelf life capacities downwards (20ac11fd)
+
+#### 1.3.7 (2020-12-18)
+
+##### New Features
+
+* **users-membercard:** LIV-2488 membercard field validation irrespective of submitting (372dcd5d)
+
+##### Bug Fixes
+
+* **ci-cd:**  use docker:stable-dind base image (ed4b7157)
+
+##### Other Changes
+
+* **kiosk-planogram:** LIV-2437 switch state saga and action updated (e869128f)
+* **Maintain Planogram:** Main state after updat (33eccd21)
+* livello-network/livello-mission-control into staging-master (6e7531ee)
+
+#### 1.3.6 (2020-12-17)
+
+##### Bug Fixes
+
+* **out_of_service:** Invert logic for start and end time, since it works like so in the tablet and the ZVT payment terminal. (72976462)
+* **ci-cd:** docker base image to v19 (9285afc5)
+* **node:**  base image for docker (72c7a216)
+* **docker:**  base image node:12-alpine (8681de01)
+* **package:**  gitlab runner updatye (e4aa8e9b)
+
+#### 1.3.5 (2020-12-16)
+
+##### Bug Fixes
+
+* **package.json:**  update gitlab runner credentials (15ed3a61)
+
+#### 1.3.4 (2020-12-16)
+
+#### 1.3.3 (2020-12-16)
+
+##### Bug Fixes
+
+* **security:**  hide security options for API Key Secret. Requested from Operations. (12f2d60d)
+* **products_cost:**  calculate on kiosk detail page the real cost of the products. (Code made by Rana) (775cca2f)
+
+##### Other Changes
+
+* **kiosk-manage:** LIV-2516 updated design - service time fields (d5c62b56)
+* **out_of_service_time:**  add out of service start and end time for test purposes with the Fridge-cc. NOT FINAL DESIGN. (45920c57)
+
 #### 1.3.2 (2020-12-11)
 
 ##### Bug Fixes

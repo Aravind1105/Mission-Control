@@ -13,6 +13,7 @@ const sortDefault = [
     direction: 'ASC',
   },
 ];
+const defaulFilterValues = { search: '', category: '', supplier: '' };
 
 const ProductsList = ({
   products,
@@ -26,6 +27,7 @@ const ProductsList = ({
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaulFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -44,7 +46,19 @@ const ProductsList = ({
         ...sup,
       });
 
-      data.skip = 0;
+      const searchIndex = isEqual(search, filter.search);
+      const categoryIndex = isEqual(category, filter.category);
+      const supplierIndex = isEqual(supplier, filter.supplier);
+
+      if (!searchIndex || !categoryIndex || !supplierIndex) {
+        data.skip = 0;
+        setFilters({
+          ...filter,
+          search,
+          category,
+          supplier,
+        });
+      }
     }
 
     if (sort) {

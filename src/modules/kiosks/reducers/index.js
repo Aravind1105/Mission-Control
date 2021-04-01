@@ -10,11 +10,13 @@ import {
   modifyKioskSuccess,
   resetKiosk,
   resetKioskSuccess,
+  getAlertsGrid,
   getAlertsGridSuccess,
   getOrganizationById,
   getOrganizationByIdSuccess,
   getProductLinesByOrgId,
   getProductLinesByOrgIdSuccess,
+  getAlmostEmptyKiosks,
   updateAlmostEmptyKiosks,
   getTemperatureLogs,
   getTemperatureLogsSuccess,
@@ -24,7 +26,10 @@ import {
   getActivityLogs,
   getActivityLogsSuccess,
   updateKioskProps,
-  updateKioskPropsSuccess
+  updateKioskPropsSuccess,
+  setPlanogramSwitchStateSuccess,
+  deleteLoadCell,
+  deleteLoadCellSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -35,13 +40,14 @@ const initialState = {
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
+  currentKioskSide: 'A',
   alerts: [],
   totalAlerts: 0,
   productsByOrgId: [],
   almostEmptyKiosks: [],
   totalEmptyKiosks: 0,
   temperatureLogs: [],
-  activityLogs: []
+  activityLogs: [],
 };
 
 const kiosksReducer = handleActions(
@@ -80,25 +86,39 @@ const kiosksReducer = handleActions(
         isKioskLoading: true,
       };
     },
-    [combineActions(getKioskSuccess, modifyKioskSuccess, resetKioskSuccess)]: (
-      state,
-      { payload },
-    ) => ({
+    [setPlanogramSwitchStateSuccess]: (state, { payload }) => ({
+      ...state,
+      currentKioskSide: payload.setSide,
+    }),
+    [combineActions(
+      getKioskSuccess,
+      modifyKioskSuccess,
+      resetKioskSuccess,
+      deleteLoadCellSuccess,
+    )]: (state, { payload }) => ({
       ...state,
       kiosk: payload,
       isKioskLoading: false,
     }),
-    [updateKioskPropsSuccess]: state => {
+    [updateKioskPropsSuccess]: (state, { payload }) => {
       return {
         ...state,
-        isKioskLoading: false
-      }
+        kiosk: payload,
+        isKioskLoading: false,
+      };
+    },
+    [getAlertsGrid]: state => {
+      return {
+        ...state,
+        isLoading: true,
+      };
     },
     [getAlertsGridSuccess]: (state, { payload }) => {
       return {
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
         totalAlerts: get(payload, 'gridAlerts.total', 0),
+        isLoading: false,
       };
     },
     [combineActions(getOrganizationById, getOrganizationByIdSuccess)]: (
@@ -119,9 +139,14 @@ const kiosksReducer = handleActions(
       ...payload,
       isLoading: false,
     }),
+    [getAlmostEmptyKiosks]: state => ({
+      ...state,
+      isLoading: true,
+    }),
     [updateAlmostEmptyKiosks]: (state, { payload }) => {
       return {
         ...state,
+        isLoading: false,
         almostEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.data', []),
         totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
       };
@@ -154,6 +179,10 @@ const kiosksReducer = handleActions(
       ...state,
       activityLogs: payload.activityLogs,
       isLoading: false,
+    }),
+    [deleteLoadCell]: state => ({
+      ...state,
+      isLoading: true,
     }),
   },
   initialState,

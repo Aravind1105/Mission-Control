@@ -10,6 +10,7 @@ const Card = ({
   productLine,
   totalProducts,
   handleEdit,
+  isActive,
 }) => {
   const handleClick = () => {
     handleEdit({
@@ -20,6 +21,11 @@ const Card = ({
     });
   };
 
+  if (isActive === false) {
+    // <Grid.Column className="load-cell"></Grid.Column>
+    return <></>;
+  }
+
   return (
     <Grid.Column className="load-cell">
       <div className="load-cell-content">
@@ -27,16 +33,18 @@ const Card = ({
           <button type="button" className="edit-icon" onClick={handleClick}>
             <Icon name="edit" size="small" />
           </button>
-          <b className="load-cell-position">{planogramPosition ? planogramPosition : "Error"}</b>
-          <p className="load-cell-calbeId">ID: {cellId ? cellId : "Error"}</p>
+          <b className="load-cell-position">
+            {planogramPosition ? planogramPosition : 'Error'}
+          </b>
+          <p className="load-cell-calbeId">ID: {cellId ? cellId : 'Error'}</p>
         </div>
         <div className="load-cell-info">
           <div className="load-cell-icon">
             {productLine.image ? (
               <img src={productLine.image} alt={productLine.name} />
             ) : (
-                <NoImg />
-              )}
+              <NoImg />
+            )}
           </div>
           <div className="load-cell-body">
             <b className="load-cell-title">
@@ -51,7 +59,6 @@ const Card = ({
             <p>{`€ ${productLine.price}`}</p>
           </div>
         </div>
-
       </div>
     </Grid.Column>
   );
@@ -70,9 +77,16 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                 //   fullWidth = Boolean(props);
                 // }
                 // if ((fullWidth && j) || (!fullWidth && !j)) return null;
-                return props && (
-                  <Card {...props} key={props.cellId} handleEdit={handleEdit} />
-                )
+                return (
+                  props && (
+                    <Card
+                      {...props}
+                      key={props.cellId}
+                      handleEdit={handleEdit}
+                      isActive={props.isActive}
+                    />
+                  )
+                );
                 //  (
                 //     <Grid.Column
                 //       key={performance.now().toString(32)}

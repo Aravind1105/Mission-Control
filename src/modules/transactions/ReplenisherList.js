@@ -16,6 +16,7 @@ import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
+import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -23,6 +24,7 @@ const sortDefault = [
     direction: 'DESC',
   },
 ];
+const defaultFilterValues = { dateRange: '', kiosk: '' };
 
 const sortValue = {
   kioskName: 'kioskName',
@@ -31,8 +33,8 @@ const sortValue = {
   count: 'count',
   loadCell: 'loadCell',
   weight: 'weight',
-  total: 'totalPrice',
-  price: 'defaultPrice',
+  total: 'totalCost',
+  price: 'defaultCost',
 };
 
 const ReplenisherList = ({
@@ -42,17 +44,15 @@ const ReplenisherList = ({
   getGridRefills,
   kiosks,
   getProductListSaga,
-  productsList,
   getRefillsWidgetsData,
   widgetsData,
 }) => {
-  const [search, changeSearch] = useState('');
   const [dateRange, changeDate] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-  const [product, changeProduct] = useState('');
   const [sort, setSort] = useState(sortDefault);
+  const [filter, setFilters] = useState(defaultFilterValues);
 
   const getData = ({ sort }) => {
     const data = {
@@ -61,23 +61,31 @@ const ReplenisherList = ({
     };
     const widgetPayload = {};
 
-    if (search || kiosk || dateRange || product) {
-      const name = search ? { product: { $regex: search } } : {};
+    if (kiosk || dateRange) {
       const date = dateRange ? { created: dateRange } : {};
-      const prod = product ? { product } : {};
       const kio = kiosk ? { kiosk } : {};
 
       data.search = JSON.stringify({
-        ...name,
         ...date,
-        ...prod,
         ...kio,
       });
-    }
-    if (dateRange || kiosk) {
+      const dateRangeIndex = isEqual(dateRange, filter.dateRange);
+      const kioskIndex = isEqual(kiosk, filter.kiosk);
+
       widgetPayload.period = dateRange;
       widgetPayload.kioskId = kiosk;
+
+      if (!dateRangeIndex || !kioskIndex) {
+        data.skip = 0;
+        changePage(0);
+        setFilters({
+          ...filter,
+          dateRange,
+          kiosk,
+        });
+      }
     }
+
     if (sort && sortValue[sort[0].column]) {
       sort[0].column = sortValue[sort[0].column];
       data.sort = sort;
@@ -93,17 +101,13 @@ const ReplenisherList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, dateRange, product]);
+  }, [page, perPage, kiosk, dateRange]);
   return (
     <>
       <RefillsToolbar
         changeDate={changeDate}
-        changeSearch={changeSearch}
         changeKiosk={changeKiosk}
-        changePage={changePage}
         kiosks={kiosks}
-        productsList={productsList}
-        changeProduct={changeProduct}
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
@@ -115,12 +119,14 @@ const ReplenisherList = ({
               amount={widgetsData.totalNumberOfProductsAdded}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={8} computer={4} tablet={8}>
             <StatsCard
               icon="tag"
               color="orange"
-              text="Total Value of Replenished Products"
-              amount={`€ ${widgetsData.totalGrossValueOfRefills}`}
+              text="Replenished Products Total Cost"
+              amount={`€ ${widgetsData.totalCostValueOfReplenishedProducts} `}
+              secondaryText="Replenished Products Sales Value"
+              secondaryAmount={`€ ${widgetsData.totalSaleValueOfReplenishedProducts} `}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
