@@ -11,6 +11,7 @@ import {
   getFullProductDataSuccess,
   modifyProductSaga,
   modifyProductSuccess,
+  getPriceHistorySuccess,
 } from '../actions';
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
   isLoading: false,
   family: [],
   taxes: [],
+  defaultPriceHistory: [],
+  activePriceHistory: [],
 };
 
 export default handleActions(
@@ -65,6 +68,11 @@ export default handleActions(
       ...state,
       product: payload,
       isLoading: false,
+    }),
+    [getPriceHistorySuccess]: (state, { payload }) => ({
+      ...state,
+      defaultPriceHistory: payload.defaultPriceHistory,
+      activePriceHistory: payload.activePriceHistory,
     }),
   },
   initialState,

@@ -1,3 +1,56 @@
+#### 1.3.32 (2021-04-06)
+
+##### Build System / Dependencies
+
+* **LIV-2963:**  Updated both the PINs in the form page (805189be)
+
+##### New Features
+
+* **product detail:** LIV-1952 price history widgets (cbbcb43f)
+* **kiosk:**  add download pack and order list buttons (9188b2d2)
+
+##### Bug Fixes
+
+* **products:**  products list screen search filter lodash import (686d116c)
+* **LIV-2981:**  filter issue for all tables solved except orgTable (02ff9106)
+* **Kiosks:**
+  *  LIV-2950 Download Order list and Download Pack list Date has been added (014556d6)
+  *  LIV-2950 Download Order list and Download Pack list (35dc774c)
+  *  LIV-2950 Download Buttons for OrderList and PackList (d0958243)
+  *  LIV-2950 Download Buttons for OrderList and PackList (07e54fed)
+  *  LIV-2382 Dropdown Options updated (d902adfe)
+* **pin:**  pin request to create/update the kiosk (84a77037)
+* **logs:**  removed logs (8aa0a6d6)
+* **playlist:**
+  * commented out the playlist URL (143dc927)
+  *  show header when the array exists (3fa67aa0)
+* **Users Pagination, User Content:**
+  *  LIV-2534 Pagination and top , bottom margin updated (9834e6ef)
+  *  LIV-2534 (63536fc0)
+* **LIV-2865:**
+  * duration validation fixed (11ced78e)
+  *  layout fix and submit only on validation (8574f6bd)
+  *  duration validation  and responsive fixes (f6e75055)
+* **Mobile View Sidebar Position:**  LIV-2761 (28a856d5)
+* **Transactions:**
+  *  LIV-2096 (f6851af0)
+  *  LIV-2096 (96390549)
+  *  LIV-2096 Products with options to change date, Kiosk Id and poductline (c7eb07ff)
+  *  LIV-2096 Products with options to change date, Kiosk Id and poductline (6cda6b8e)
+  *  LIV-2096 Transaction=> Product Table header (80889cd5)
+  *  LIV-2096 Transaction=> Product Table header (32017fea)
+  *  LIV-2096 Transaction=> Product Table (cf20b8ee)
+* **ID:**  Id update and playlist fixes (8397732d)
+* **Transactions-Sales:** LIV-2949 fixed the null handling in a proper manner (af0d317c)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into LIV-2950 (e9b658e1)
+*  Refilss): LIV-2836 total cost value and total sales value added (6ee81f7a)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (cbffac74)
+* **kiosk details:**  LIV-2726 Kiosk Details" (065c0765)
+* **product:** LIV-1952 product price histroy widget (93d40daf)
+
 #### 1.3.31 (2021-03-19)
 
 ##### Bug Fixes

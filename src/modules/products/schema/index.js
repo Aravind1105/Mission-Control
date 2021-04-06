@@ -66,7 +66,7 @@ export const productOnProductLine = gql`
       _id
       updated
     }
-    capacities{
+    capacities {
       surfaceSize
       units
     }
@@ -225,22 +225,44 @@ export const DELETE_PRODUCT_LINE_MUTATION = gql`
 `;
 
 export const UPLOAD_PRODUCT_LINE_IMAGE_MUTATION = gql`
-  mutation updateProductLineImage(
-    $id: String!
-    $image: Upload!
-  ) {
-    updateProductLineImage(id: $id, image: $image){
+  mutation updateProductLineImage($id: String!, $image: Upload!) {
+    updateProductLineImage(id: $id, image: $image) {
       _id
     }
   }
-`;  
+`;
 
 export const DELETE_PRODUCT_LINE_IMAGE_MUTATION = gql`
-  mutation deleteProductLineImage(
-    $id: String!
-  ) {
-    deleteProductLineImage(id: $id){
+  mutation deleteProductLineImage($id: String!) {
+    deleteProductLineImage(id: $id) {
       _id
     }
   }
-`;  
+`;
+
+export const GET_PRODUCT_PRICE_HISTORY = gql`
+  query($productLineId: String!) {
+    getDefaultProductLinePriceHistory(productLineId: $productLineId) {
+      _id
+      price
+      validForKiosk {
+        id
+        name
+      }
+      validFrom
+      validTo
+      default
+    }
+    getProductLineActivePriceHistory(productLineId: $productLineId) {
+      _id
+      price
+      validForKiosk {
+        id
+        name
+      }
+      validFrom
+      validTo
+      default
+    }
+  }
+`;
