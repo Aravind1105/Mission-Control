@@ -6,11 +6,16 @@ import get from 'lodash/get';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
-import ProductPriceHistory from './components/ProductPriceHistory';
 import ImageUploader from './components/ImageUploader';
-import { getFullProductData, deleteProductSaga } from './actions';
+import {
+  getFullProductData,
+  deleteProductSaga,
+  getPriceHistory,
+} from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
+  getActivePriceHistoryState,
+  getDefaultPriceHistoryState,
   selectorGetProductInitValue,
   // selectorGetProductFamilyForm,
   selectorProductTaxOptions,
@@ -48,6 +53,9 @@ const ProductDetail = ({
   organizations,
   getOrganizations,
   isProductLoading,
+  getPriceHistory,
+  defaultPriceHistory,
+  activePriceHistory,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -66,6 +74,9 @@ const ProductDetail = ({
       getFullProductData(id);
       getOrganizations();
       setButtonVal(id == 'new' ? 'Submit' : 'Save');
+    }
+    if (id) {
+      getPriceHistory({ productLineId: id });
     }
   }, []);
 
@@ -135,9 +146,15 @@ const ProductDetail = ({
                 style={{ float: 'right' }} />
             </h3>
           </Segment> */}
-          <ProductPriceHistory priceHistory={priceHistory} kiosks={kiosks} />
-          {/* <PriceHistoryWidget defaultPrice={"3.00"} />
-          <PriceHistoryWidget activePriceHistory /> */}
+          {defaultPriceHistory.length > 0 && (
+            <PriceHistoryWidget priceHistory={defaultPriceHistory} />
+          )}
+          {activePriceHistory.length > 0 && (
+            <PriceHistoryWidget
+              priceHistory={activePriceHistory}
+              activePriceHistory
+            />
+          )}
           <ImageUploader
             src={productImg}
             setUploadedImage={setUploadedImage}
@@ -159,7 +176,6 @@ const ProductDetail = ({
 };
 
 const mapStateToProps = (state, { match: { params } }) => {
-  // const options = selectorGetProductFamilyForm(state);
   const product = selectorGetProductInitValue(state);
   const isProductLoaded =
     params.id === 'new'
@@ -173,9 +189,9 @@ const mapStateToProps = (state, { match: { params } }) => {
     productImg: get(product, 'images[0]', ''),
     taxesOption: selectorProductTaxOptions(state),
     isProductLoading: state.products.isLoading,
-    // categoryOption: options.categories,
-    // familyOption: options.families,
     organizations: getOrganizationsAsOptions(state),
+    defaultPriceHistory: getDefaultPriceHistoryState(state),
+    activePriceHistory: getActivePriceHistoryState(state),
   };
 };
 
@@ -183,6 +199,7 @@ const mapDispatchToProps = {
   getFullProductData,
   getOrganizations,
   deleteProductSaga,
+  getPriceHistory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

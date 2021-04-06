@@ -230,3 +230,9 @@ export const selectorGetProductInitValue = createSelector(
     };
   },
 );
+
+export const getDefaultPriceHistoryState = state =>
+  state.products.defaultPriceHistory;
+
+export const getActivePriceHistoryState = state =>
+  state.products.activePriceHistory;
