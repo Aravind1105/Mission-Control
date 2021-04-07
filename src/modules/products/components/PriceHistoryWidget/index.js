@@ -10,7 +10,9 @@ import {
 } from 'semantic-ui-react';
 import format from 'date-fns/format';
 import { get, isEmpty } from 'lodash';
+import { useParams } from 'react-router-dom';
 
+import history from 'lib/history';
 import './styles.less';
 import WidgetItem from './WidgetItem';
 import ConfirmationModal from '../../../shared/components/ConfirmationModal';
@@ -19,16 +21,16 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState();
 
+  // product line id 
+  const { id } = useParams();
+
   const defaultPriceObj = priceHistory.find(el => el.default);
   const defaultPrice = get(defaultPriceObj, 'price', '');
   let filteredPriceHistory = priceHistory;
 
-  // TODO: use show all to display all price history in a different way
-  // if (!activePriceHistory) {
-  //   filteredPriceHistory = priceHistory.slice(0, 10);
-  // }
-
-  // TODO: uncomment show all button if needed
+  if (!activePriceHistory) {
+    filteredPriceHistory = priceHistory.slice(0, 10);
+  }
 
   // TODO: uncomment delete button for active price history after delete feature for price history is confirmed
 
@@ -42,20 +44,20 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
                 {activePriceHistory ? 'Active Kiosk Prices' : 'Price History'}
               </Header>
             </Grid.Column>
-            {/* <Grid.Column width="7" textAlign="right">
+            <Grid.Column width="7" textAlign="right">
               {!activePriceHistory && (
                 <Button
                   icon
                   labelPosition="right"
                   basic
-                  onClick={() => {}}
+                  onClick={() => history.push(`/products/${id}/priceHistory`)}
                   className="price-widget-show-all-btn"
                 >
                   <span className="price-widget-show-all">Show all</span>
                   <Icon name="angle right" />
                 </Button>
               )}
-            </Grid.Column> */}
+            </Grid.Column>
           </Grid.Row>
         </Grid>
 
@@ -74,12 +76,6 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
               const { _id, price, validFrom, validForKiosk } = priceObj;
               const kioskName = get(validForKiosk, 'name', 'Default');
               const id = get(validForKiosk, 'id', '');
-              const priceDisplay =
-                price === defaultPrice
-                  ? kioskName === 'Default'
-                    ? price
-                    : 'Default'
-                  : price;
               const dateDisplay = format(
                 new Date(validFrom),
                 'dd-MM-yyyy, HH:mm:ss',
@@ -88,7 +84,7 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
                 <WidgetItem
                   priceHistoryId={_id}
                   dateTime={dateDisplay}
-                  price={priceDisplay}
+                  price={price}
                   kioskUrl={!isEmpty(id) ? `/kiosks/detail/${id}` : undefined}
                   kioskName={kioskName}
                   // showDelete={activePriceHistory}
