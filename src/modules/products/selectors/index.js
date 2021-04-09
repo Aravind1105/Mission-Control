@@ -64,7 +64,7 @@ export const selectorGetSupplier = createSelector(
     return [
       {
         value: '',
-        text: 'All',
+        text: 'All Suppliers',
         key: 'all',
       },
     ].concat(sortByText(supplierList, 'value'));
@@ -101,7 +101,7 @@ export const selectorGetProductCategories = createSelector(
     }, []);
     categories.unshift({
       value: 'All',
-      text: `All (${categories.length})`,
+      text: `All Categories(${categories.length})`,
       key: 'length',
     });
     return categories;

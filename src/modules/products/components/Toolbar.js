@@ -1,26 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Grid, Dropdown, Button, Icon } from 'semantic-ui-react';
+import {
+  Segment,
+  Grid,
+  Dropdown,
+  Button,
+  Icon,
+  Divider,
+  Input,
+} from 'semantic-ui-react';
 
 import SearchInput from 'modules/shared/components/SearchInput';
-import { selectorGetProductCategories, selectorGetSupplier } from '../selectors';
+import {
+  selectorGetProductCategories,
+  selectorGetSupplier,
+} from '../selectors';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
   { key: 'license', value: 'license', text: 'license' },
 ];
-const Toolbar = ({ changeSearch, changeCategory, changeSupplier, categories, supplier }) => {
+const Toolbar = ({
+  search,
+  setSearch,
+  changeSearch,
+  changeCategory,
+  changeSupplier,
+  categories,
+  supplier,
+}) => {
   const isCategoriesLoading = categories.length <= 1;
-  const isSupplierLoading = supplier.length <= 1; 
+  const isSupplierLoading = supplier.length <= 1;
 
+  const handleSearchChange = ({ target }) => {
+    changeSearch(target.value);
+  };
   const handleChangeCategory = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     changeCategory(text);
   };
-  
+
   const handleChangeSupplier = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
+    const text = value === 'All Suppliers' ? '' : value;
     changeSupplier(text);
   };
 
@@ -28,28 +50,13 @@ const Toolbar = ({ changeSearch, changeCategory, changeSupplier, categories, sup
     <Segment className="toolbar">
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
-          <Grid.Column width={7}>
-            <SearchInput onChange={changeSearch} timeout={500} />
-          </Grid.Column>
-
-          <Grid.Column width={3}>
-            <b>Category:&nbsp;</b>
-            <Dropdown
-              defaultValue="All"
-              inline
-              options={categories}
-              disabled={isCategoriesLoading}
-              onChange={handleChangeCategory}
-            />
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <b>Supplier:&nbsp;</b>
-            <Dropdown
-              placeholder="All"
-              inline
-              options={supplier}
-              onChange={handleChangeSupplier}
-              disabled={isSupplierLoading}
+          <Grid.Column width={6}>
+            <Input
+              icon="search"
+              value={search}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="full-width"
             />
           </Grid.Column>
 
@@ -65,6 +72,27 @@ const Toolbar = ({ changeSearch, changeCategory, changeSupplier, categories, sup
               <Icon name="right arrow" />
               Add Products
             </Button>
+          </Grid.Column>
+        </Grid.Row>
+        <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+        <Grid.Row verticalAlign="middle" columns={2}>
+          <Grid.Column mobile={16} computer={4}>
+            <Dropdown
+              placeholder="All Categories"
+              selection
+              className="full-width"
+              onChange={handleChangeCategory}
+              options={categories}
+            ></Dropdown>
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={4}>
+            <Dropdown
+              placeholder="All Suppliers"
+              selection
+              className="full-width"
+              onChange={handleChangeSupplier}
+              options={supplier}
+            ></Dropdown>
           </Grid.Column>
         </Grid.Row>
       </Grid>
