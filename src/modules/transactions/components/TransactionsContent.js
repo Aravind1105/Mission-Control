@@ -94,7 +94,7 @@ const columns = [
     title: 'Total Price',
     field: 'total',
     formatter: ({ total }) => (
-      <div style={{ textAlign: 'right' }}> {total}€ </div>
+      <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>
     ),
   },
   // {
