@@ -2,7 +2,7 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react';
 
 import RefillsTable from './TransactionsTable/Refills';
-
+const screenWidth = window.innerWidth;
 const columns = [
   {
     title: 'Date / Time',
@@ -82,18 +82,24 @@ const columns = [
     formatter: ({ weight }) => {
       if (weight === '') {
         return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}> {weight} </div>;
+      } else {
+        return <div style={{ textAlign: 'center' }}> {weight} </div>;
       }
-      return <div style={{ textAlign: 'right' }}> {weight} </div>;
     },
   },
   {
-    title: 'Price',
-    field: 'price',
-    formatter: ({ price }) => {
-      if (price === '') {
+    title: 'Cost',
+    field: 'cost',
+    formatter: ({ cost }) => {
+      if (cost === '') {
         return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}> {cost}€ </div>;
+      } else {
+        return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
       }
-      return <div style={{ textAlign: 'right' }}> {price}€ </div>;
     },
   },
   {
@@ -109,7 +115,6 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
-
   return (
     <Segment>
       <RefillsTable
