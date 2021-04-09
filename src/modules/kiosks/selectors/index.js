@@ -325,7 +325,7 @@ export const getKioskOptionsForTableDropdown = createSelector(
     }));
     const sortedKiosks = sortByText(allKiosks, 'text');
 
-    return [{ key: 'all', value: '', text: 'All Kiosk' }].concat(sortedKiosks);
+    return [{ key: 'all', value: '', text: 'All Kiosks' }].concat(sortedKiosks);
   },
 );
 
