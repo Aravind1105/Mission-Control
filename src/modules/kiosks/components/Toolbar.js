@@ -100,7 +100,7 @@ const Toolbar = ({
         <Grid.Row verticalAlign="middle" columns={4}>
           <Grid.Column>
             <Dropdown
-              placeholder="Kiosk"
+              placeholder="All Kiosks"
               selection
               className="full-width"
               onChange={handleKioskChange}
@@ -110,7 +110,7 @@ const Toolbar = ({
 
           <Grid.Column>
             <Dropdown
-              placeholder="Door Status"
+              placeholder="All Door Status"
               selection
               className="full-width"
               onChange={handleKiosksStatus}
