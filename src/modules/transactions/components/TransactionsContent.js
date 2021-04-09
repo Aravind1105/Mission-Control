@@ -87,7 +87,7 @@ const columns = [
       if (price === 0) {
         return '';
       }
-      return <div style={{ textAlign: 'right' }}> {price}€ </div>;
+      return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
     },
   },
   {
