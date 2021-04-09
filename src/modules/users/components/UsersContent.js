@@ -136,7 +136,7 @@ const UsersContent = ({
                         changePage={changePage}
                         changePerPage={changePerPage}
                         isLoading={isLoading}
-                        setFontSize
+                        // setFontSize
                       />
                     </Grid.Column>
                   </Grid.Row>
