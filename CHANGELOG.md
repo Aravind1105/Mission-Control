@@ -1,3 +1,15 @@
+#### 1.3.33 (2021-04-12)
+
+##### New Features
+
+* **product detail:** LIV-1952 price history show all page (dabd8c70)
+
+##### Bug Fixes
+
+* **products list:** LIV-2951 toolbar unsed code causing white screen fixed (e51dbf71)
+* **Products Dropdown:**  LIV-2951 Dropdown option fixed for Categories (5ca78e1f)
+* **Product:**  LIV-2951 Scrolling bar is fixed (f640a053)
+
 #### 1.3.32 (2021-04-06)
 
 ##### Build System / Dependencies
