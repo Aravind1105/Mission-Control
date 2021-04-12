@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Grid, Segment, Header } from 'semantic-ui-react';
-import get from 'lodash/get';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import { getFullProductData, getPriceHistory } from './actions';
@@ -12,7 +11,6 @@ import {
   getDefaultPriceHistoryState,
 } from './selectors';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
-import format from 'date-fns/format';
 import PriceHistoryTable from './components/PriceHistoryTable';
 
 const PriceHistory = ({
@@ -57,19 +55,10 @@ const PriceHistory = ({
     {
       title: 'Date / Time Changed',
       field: 'validFrom',
-      formatter: ({ validFrom }) => {
-        return format(new Date(validFrom), 'dd-MM-yyyy, HH:mm:ss');
-      },
     },
     {
       title: 'Price',
       field: 'price',
-      formatter: ({ price }) => {
-        if (price === 0) {
-          return '';
-        }
-        return <div style={{ textAlign: 'left' }}> {price} € </div>;
-      },
     },
     {
       title: 'Kiosk',

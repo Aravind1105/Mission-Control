@@ -64,10 +64,9 @@ const AlmostEmptyKiosks = ({
       formatter: ({ kiosk }) => {
         if (kiosk === '') {
           return '';
-        } else if (screenWidth < 750) {
+        } else {
           return <div style={{ textAlign: 'left' }}> {kiosk} </div>;
         }
-        return <div style={{ textAlign: 'center' }}> {kiosk} </div>;
       },
     },
   ];

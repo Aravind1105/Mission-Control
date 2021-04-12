@@ -8,6 +8,7 @@ import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 import { isNull } from 'lodash';
 import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
 
 const sortTypes = {
   ASC: 'ascending',
@@ -152,6 +153,13 @@ const PriceHistoryTable = ({
                       isNull(item.validForKiosk)
                     ) {
                       cellValue = 'Default';
+                    } else if (field === 'price') {
+                      cellValue = get(item, field, '').toFixed(2) + ' €';
+                    } else if (field === 'validFrom') {
+                      cellValue = format(
+                        new Date(get(item, field, '')),
+                        'dd-MM-yyyy, HH:mm:ss',
+                      );
                     } else {
                       cellValue = get(item, field, '');
                     }

@@ -28,7 +28,7 @@ const sortValue = {
 };
 
 const defaultFilterValues = { search: '', kiosk: '', kioskStatus: '' };
-
+const screenWidth = window.innerWidth;
 const columns = [
   {
     title: 'Name',
@@ -53,7 +53,21 @@ const columns = [
   {
     title: 'Temperature',
     field: 'temperature.value',
-    formatter: ({ temperature }) => <CellTemp temperature={temperature} />,
+    formatter: ({ temperature }) => {
+      if (screenWidth < 750) {
+        return (
+          <div style={{ textAlign: 'left' }}>
+            <CellTemp temperature={temperature} />{' '}
+          </div>
+        );
+      } else {
+        return (
+          <div style={{ textAlign: 'center' }}>
+            <CellTemp temperature={temperature} />{' '}
+          </div>
+        );
+      }
+    },
   },
   {
     title: 'Network Status',
@@ -80,8 +94,10 @@ const columns = [
     formatter: ({ dayIncome }) => {
       if (dayIncome === '') {
         return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
       }
-      return <div style={{ textAlign: 'right' }}> {dayIncome}€ </div>;
+      return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
     },
   },
 ];
