@@ -84,7 +84,7 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
                 <WidgetItem
                   priceHistoryId={_id}
                   dateTime={dateDisplay}
-                  price={price}
+                  price={price.toFixed(2)}
                   kioskUrl={!isEmpty(id) ? `/kiosks/detail/${id}` : undefined}
                   kioskName={kioskName}
                   // showDelete={activePriceHistory}
