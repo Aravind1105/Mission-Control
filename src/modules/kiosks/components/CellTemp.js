@@ -4,7 +4,7 @@ import React from 'react';
 const CellTemp = ({ temperature }) => {
   const tempText = Number.isNaN(temperature && temperature.value)
     ? ''
-    : ` ${temperature && temperature.value} °C`;
+    : ` ${temperature && temperature.value} `;
   let style = {};
   if (temperature && temperature.value > 7) {
     style = { color: '#DB2828' };
@@ -13,8 +13,10 @@ const CellTemp = ({ temperature }) => {
   } else {
     style = { color: '#7cb122' };
   }
-
-  return <span style={style}>{tempText}</span>;
+  {
+    console.log('this is temp', temperature);
+  }
+  return <span style={style}>{parseFloat(tempText).toFixed(1)} °C</span>;
 };
 
 export default CellTemp;
