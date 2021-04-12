@@ -73,6 +73,7 @@ export const selectorGetSupplier = createSelector(
 
 export const selectorGetProductFamilyForm = createSelector(
   selectorGetProductFamily,
+
   family =>
     family.reduce(
       (prev, curr) => {
@@ -91,20 +92,20 @@ export const selectorGetProductFamilyForm = createSelector(
 export const selectorGetProductCategories = createSelector(
   selectorGetProductFamily,
   family => {
-    const categories = family.reduce((prev, curr) => {
-      const category = curr.category.map(text => ({
+    if (typeof family[0] !== 'undefined') {
+      const cat = get(family[0], 'category', '');
+      const categories = cat.map(text => ({
         text,
         value: text,
-        key: `${curr.name}_${text}`,
+        key: `${family[0].name}_${text}`,
       }));
-      return [...prev, ...category];
-    }, []);
-    categories.unshift({
-      value: 'All',
-      text: `All Categories(${categories.length})`,
-      key: 'length',
-    });
-    return categories;
+      categories.unshift({
+        value: 'All',
+        text: `All Categories(${categories.length})`,
+        key: 'length',
+      });
+      return categories;
+    }
   },
 );
 
