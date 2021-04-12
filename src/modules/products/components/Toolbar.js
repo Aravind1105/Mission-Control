@@ -30,8 +30,6 @@ const Toolbar = ({
   categories,
   supplier,
 }) => {
-  const isCategoriesLoading = categories.length <= 1;
-  const isSupplierLoading = supplier.length <= 1;
 
   const handleSearchChange = ({ target }) => {
     changeSearch(target.value);
