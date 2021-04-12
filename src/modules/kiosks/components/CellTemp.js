@@ -13,9 +13,7 @@ const CellTemp = ({ temperature }) => {
   } else {
     style = { color: '#7cb122' };
   }
-  {
-    console.log('this is temp', temperature);
-  }
+
   return <span style={style}>{parseFloat(tempText).toFixed(1)} °C</span>;
 };
 
