@@ -21,7 +21,7 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState();
 
-  // product line id 
+  // product line id
   const { id } = useParams();
 
   const defaultPriceObj = priceHistory.find(el => el.default);
@@ -45,7 +45,7 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
               </Header>
             </Grid.Column>
             <Grid.Column width="7" textAlign="right">
-              {!activePriceHistory && (
+              {!activePriceHistory && priceHistory.length > 10 && (
                 <Button
                   icon
                   labelPosition="right"

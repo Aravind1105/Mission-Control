@@ -152,6 +152,8 @@ const PriceHistoryTable = ({
                       isNull(item.validForKiosk)
                     ) {
                       cellValue = 'Default';
+                    } else if (field === 'price') {
+                      cellValue = get(item, field, '') + ' €';
                     } else {
                       cellValue = get(item, field, '');
                     }

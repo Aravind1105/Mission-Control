@@ -1,3 +1,21 @@
+#### 1.3.33 (2021-04-12)
+
+##### New Features
+
+* **product detail:**
+  * LIV-1952 € symbol fixed for price field in price history table (ea1190c4)
+  * LIV-1952 price history no show all button if less than 10. (8f4b7596)
+  * LIV-1952 price history show all page (dabd8c70)
+
+##### Bug Fixes
+
+* **Product:**  LIV-2951 Scrolling bar is fixed (f640a053)
+* **User Layout Fix:**  LIV-2534 pagination fontsize fixed (a47694b7)
+* **Standardised Format:**
+  *  LIV-2793 Updated Alignment of table (d655445d)
+  *  LIV-2793 Updated Alignment of table (f93461a4)
+* **Kiosk Page Filter Options:**  LIV-2382 Update placeholder (7d8517a4)
+
 #### 1.3.32 (2021-04-06)
 
 ##### Build System / Dependencies
