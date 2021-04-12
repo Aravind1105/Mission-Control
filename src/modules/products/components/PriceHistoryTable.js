@@ -154,7 +154,7 @@ const PriceHistoryTable = ({
                     ) {
                       cellValue = 'Default';
                     } else if (field === 'price') {
-                      cellValue = get(item, field, '') + ' €';
+                      cellValue = get(item, field, '').toFixed(2) + ' €';
                     } else if (field === 'validFrom') {
                       cellValue = format(
                         new Date(get(item, field, '')),
