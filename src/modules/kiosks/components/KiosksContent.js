@@ -97,7 +97,7 @@ const columns = [
       } else if (screenWidth < 750) {
         return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
       }
-      return <div style={{ textAlign: 'center' }}>{dayIncome}€ </div>;
+      return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
     },
   },
 ];
