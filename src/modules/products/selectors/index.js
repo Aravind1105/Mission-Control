@@ -101,7 +101,7 @@ export const selectorGetProductCategories = createSelector(
       }));
       categories.unshift({
         value: 'All',
-        text: `All Categories(${categories.length})`,
+        text: `All Categories  ` + `(${categories.length})`,
         key: 'length',
       });
       return categories;
