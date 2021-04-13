@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { Button, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Button,
+  Header,
+  Icon,
+  Segment,
+  Popup,
+  Grid,
+  Divider,
+} from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
@@ -18,6 +26,57 @@ const sort = [
     direction: 'DESC',
   },
 ];
+
+const ToolTip = () => (
+  <Popup
+    trigger={<Icon color="yellow" name="info circle" />}
+    position="bottom center"
+    wide
+  >
+    <Grid>
+      <Grid.Row>
+        <Grid.Column>
+          <b>Alerts Description</b>
+          <Divider></Divider>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={7}>
+                <b>High Temperature:</b>
+              </Grid.Column>
+              <Grid.Column width={9}>
+                Above 7 °C for more than 10 min.
+              </Grid.Column>
+              <Grid.Column width={7}>
+                <b>Low Temperature:</b>
+              </Grid.Column>
+              <Grid.Column width={9}>
+                Below 2 °C for more than 15 min.
+              </Grid.Column>
+              <Grid.Column width={7}>
+                <b>Tablet disconnected:</b>
+              </Grid.Column>
+              <Grid.Column width={9}>
+                Tablet has not been updated for over 10 min.
+              </Grid.Column>
+              <Grid.Column width={7}>
+                <b>Unauthorized Access:</b>
+              </Grid.Column>
+              <Grid.Column width={9}>
+                Kiosk door is open, but without active session.
+              </Grid.Column>
+              <Grid.Column width={7}>
+                <b>System Offline:</b>
+              </Grid.Column>
+              <Grid.Column width={9}>
+                No event has been updated from Kiosk for more than 10 min.
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+  </Popup>
+);
 
 const Alerts = ({ getAlertsGrid, alerts }) => {
   useEffect(() => {
@@ -82,7 +141,10 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
       <SegmentHeader>
         <Header as="h4" color="red">
           <Icon name="exclamation triangle" size="small" />
-          <Header.Content>Alerts</Header.Content>
+          <Header.Content>
+            Alerts &nbsp;
+            <ToolTip />
+          </Header.Content>
         </Header>
         <div>
           <Button icon labelPosition="right" basic onClick={handleClick}>
