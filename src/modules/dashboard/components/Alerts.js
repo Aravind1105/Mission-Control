@@ -38,36 +38,32 @@ const ToolTip = () => (
         <Grid.Column>
           <b>Alerts Description</b>
           <Divider></Divider>
-          <Grid>
+          <Grid columns={2}>
             <Grid.Row>
-              <Grid.Column width={7}>
+              <Grid.Column>
                 <b>High Temperature:</b>
               </Grid.Column>
-              <Grid.Column width={9}>
-                Above 7 °C for more than 10 min.
-              </Grid.Column>
-              <Grid.Column width={7}>
+              <Grid.Column>Above 7 °C for more than 10 min.</Grid.Column>
+              <Grid.Column>
                 <b>Low Temperature:</b>
               </Grid.Column>
-              <Grid.Column width={9}>
-                Below 2 °C for more than 15 min.
-              </Grid.Column>
-              <Grid.Column width={7}>
+              <Grid.Column>Below 2 °C for more than 15 min.</Grid.Column>
+              <Grid.Column>
                 <b>Tablet disconnected:</b>
               </Grid.Column>
-              <Grid.Column width={9}>
+              <Grid.Column>
                 Tablet has not been updated for over 10 min.
               </Grid.Column>
-              <Grid.Column width={7}>
+              <Grid.Column>
                 <b>Unauthorized Access:</b>
               </Grid.Column>
-              <Grid.Column width={9}>
+              <Grid.Column>
                 Kiosk door is open, but without active session.
               </Grid.Column>
-              <Grid.Column width={7}>
+              <Grid.Column>
                 <b>System Offline:</b>
               </Grid.Column>
-              <Grid.Column width={9}>
+              <Grid.Column>
                 No event has been updated from Kiosk for more than 10 min.
               </Grid.Column>
             </Grid.Row>
