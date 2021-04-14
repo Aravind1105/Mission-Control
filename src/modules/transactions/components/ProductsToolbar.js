@@ -35,6 +35,13 @@ const Toolbar = ({
       }, {});
     }
     changeDate(date);
+    if (date.$dateFrom && date.$dateTo) {
+      changeExportData({
+        from: date.$dateFrom,
+        to: date.$dateTo,
+        kiosk: exportData.kiosk ? exportData.kiosk : '',
+      });
+    }
   };
 
   const handleKioskChange = (e, { value }) => {
@@ -75,11 +82,11 @@ const Toolbar = ({
       }}
     >
       <Grid stackable>
-        <Grid.Row verticalAlign="middle" columns={5}>
-          <Grid.Column width={3}>
+        <Grid.Row verticalAlign="middle">
+          <Grid.Column mobile={16} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="Kiosk"
               selection
@@ -88,7 +95,7 @@ const Toolbar = ({
               onChange={handleKioskChange}
             />
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column mobile={16} computer={3}>
             <Dropdown
               placeholder="All Products"
               selection
@@ -98,15 +105,15 @@ const Toolbar = ({
             />
           </Grid.Column>
 
-          <Grid.Column width={3}></Grid.Column>
-          <Grid.Column width={3}>
-            <CustomButton
+          <Grid.Column computer={3}></Grid.Column>
+          <Grid.Column mobile={16} computer={3}>
+            {/* <CustomButton
               label="Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadCsv}
               disabled={!Boolean(exportData)}
-            />
+            /> */}
           </Grid.Column>
         </Grid.Row>
       </Grid>

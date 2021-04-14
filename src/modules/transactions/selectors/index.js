@@ -208,15 +208,17 @@ export const getGridProductsTableState = createSelector(
         removed,
       }) => {
         const item = {
-          productId: productLine._id,
-          productName: productLine.name,
-          defaultPrice: Number(productLine.defaultPrice || 0).toFixed(2),
-          defaultCost: Number(productLine.defaultCost || 0).toFixed(2),
+          productId: get(productLine, '_id', '') || 'unknown',
+          productName: get(productLine, 'name', '') || 'unknown',
+          defaultPrice:
+            get(productLine, 'defaultPrice', 0) || 'price not availabel',
+          defaultCost:
+            get(productLine, 'defaultCost', 0) || 'default not availabel',
           totalCost: Number(totalCost || 0).toFixed(2),
           totalGrossSales: Number(totalGrossSales || 0).toFixed(2),
-          refilled: refilled,
-          sold: sold,
-          removed: removed,
+          refilled: refilled || 0,
+          sold: sold || 0,
+          removed: removed || 0,
         };
         newArr.push(item);
       },

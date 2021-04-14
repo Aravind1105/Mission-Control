@@ -11,7 +11,7 @@ import { GET_PRODUCTS_QUERY } from '../schema';
 function* handler({ payload }) {
   try {
     const {
-      data: { getProductLinesStatisticsGrid: response },
+      data: { getProductLinesStatisticsGrid },
     } = yield call(gqlTransactions.query, {
       query: GET_PRODUCTS_QUERY,
       variables: payload,
@@ -19,8 +19,8 @@ function* handler({ payload }) {
 
     yield put(
       actionSuccess({
-        productList: response.data || [],
-        totalProducts: response.total || 0,
+        productList: getProductLinesStatisticsGrid.data || [],
+        totalProducts: getProductLinesStatisticsGrid.total || 0,
       }),
     );
   } catch (error) {

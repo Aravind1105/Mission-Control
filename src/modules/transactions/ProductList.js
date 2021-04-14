@@ -19,7 +19,7 @@ import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
-    column: 'productLine',
+    column: 'sold',
     direction: 'DESC',
   },
 ];
@@ -64,6 +64,7 @@ const ProductList = ({
       const date = dateRange;
       const kio = kiosk ? { kioskId: kiosk } : {};
       const prod = product ? { productLineId: product } : {};
+
       data.search = JSON.stringify({
         ...date,
         ...kio,
