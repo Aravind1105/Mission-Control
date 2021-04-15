@@ -59,9 +59,8 @@ const ProductList = ({
       limit: perPage,
     };
     const widgetPayload = {};
-
     if (dateRange || kiosk || product) {
-      const date = dateRange;
+      const date = dateRange ? { created: dateRange } : {};
       const kio = kiosk ? { kioskId: kiosk } : {};
       const prod = product ? { productLineId: product } : {};
 
@@ -111,7 +110,6 @@ const ProductList = ({
         kiosks={kiosks}
         productsListValue={productsListValue}
         changeProduct={changeProduct}
-        getData={getData}
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
@@ -121,7 +119,7 @@ const ProductList = ({
               color="green"
               text="Most Sold Product"
               amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue}  Sold`}
+              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
@@ -130,7 +128,7 @@ const ProductList = ({
               color="orange"
               text="Least Sold product"
               amount={`${widgetsData.leastSoldProductName} `}
-              secondaryText={`${widgetsData.leastSoldProductValue}  Sold`}
+              secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
@@ -139,7 +137,7 @@ const ProductList = ({
               color="blue"
               text="Most Refilled Product"
               amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue}  Refilled`}
+              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
@@ -148,7 +146,7 @@ const ProductList = ({
               color="violet"
               text="Most Removed Products"
               amount={`${widgetsData.mostRemovedProductName} `}
-              secondaryText={`${widgetsData.mostRemovedProductValue}  Removed`}
+              secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
             />
           </Grid.Column>
         </Grid.Row>

@@ -9,7 +9,7 @@ import DatePicker from 'modules/shared/components/Datepicker';
 
 const Toolbar = ({
   kiosks,
-  productsListValue,
+  // productsListValue,
   changeDate,
   changeKiosk,
   changeProduct,
@@ -96,13 +96,13 @@ const Toolbar = ({
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3}>
-            <Dropdown
+            {/* <Dropdown
               placeholder="All Products"
               selection
               options={productsListValue}
               className="full-width"
               onChange={handleProductChange}
-            />
+            /> */}
           </Grid.Column>
 
           <Grid.Column computer={3}></Grid.Column>
