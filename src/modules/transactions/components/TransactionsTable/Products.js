@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
-
+import uniqueId from 'lodash';
 import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 
@@ -126,7 +126,14 @@ const ProductsTable = ({
             </Table.Row> */}
 
             <Table.Row negative>
-              <Table.HeaderCell rowSpan="2">Product Name</Table.HeaderCell>
+              <Table.HeaderCell
+                onClick={
+                  sortable ? handlerHCellClick('productName') : undefined
+                }
+                rowSpan="2"
+              >
+                Product Name
+              </Table.HeaderCell>
               <Table.HeaderCell colSpan="2">Sold Products</Table.HeaderCell>
               <Table.HeaderCell colSpan="2">
                 Replenished Products
@@ -146,10 +153,10 @@ const ProductsTable = ({
         <Table.Body className="tb-products">
           {resultData.length > 0 &&
             resultData.map(product => {
-              const rowKey = product.productID;
+              // const rowKey = product.productId;
               return (
                 <Table.Row
-                  key={rowKey}
+                  key={_.uniqueId()}
                   active={activeRow === product.productID}
                   // onClick={handlerRowClick(item, i)}
                 >

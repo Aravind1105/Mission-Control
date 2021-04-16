@@ -20,12 +20,13 @@ function* handler({ payload }) {
       },
     } = yield call(gqlTransactions.query, {
       query: GET_PRODUCTS_WIDGET_DATA,
+
       variables: {
         period:
           payload && payload.period
             ? {
-                from: payload.period.$gte,
-                to: payload.period.$lte,
+                from: payload.period.dateFrom,
+                to: payload.period.dateTo,
               }
             : {
                 from: startDateOfMonth,
@@ -36,12 +37,12 @@ function* handler({ payload }) {
     });
     yield put(
       actionSuccess({
-        leastSoldProductName: getLeastSoldProduct.productLine.name || ' ',
-        leastSoldProductValue: getLeastSoldProduct.sum || 0,
-        mostRefilledProductName: getMostRefilledProduct.productLine.name || '',
-        mostRefilledProductValue: getMostRefilledProduct.sum || 0,
-        mostRemovedProductName: getMostRemovedProduct.productLine.name || '',
-        mostRemovedProductValue: getMostRemovedProduct.sum || 0,
+        leastSoldProductName: getLeastSoldProduct.productLine.name,
+        leastSoldProductValue: getLeastSoldProduct,
+        mostRefilledProductName: getMostRefilledProduct.productLine.name,
+        mostRefilledProductValue: getMostRefilledProduct,
+        mostRemovedProductName: getMostRemovedProduct.productLine.name,
+        mostRemovedProductValue: getMostRemovedProduct,
       }),
     );
   } catch (error) {
