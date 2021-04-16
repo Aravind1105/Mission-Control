@@ -22,9 +22,9 @@ const DetailsInfo = ({
   let address = location && location.address;
 
   if (address && address.line1 !== null) {
-    addressLine1 += address.name ? `${address.name} \n ` : '';
-    addressLine2 = `${address.line1}`;
-    addressLine3 += address.line2 ? `${address.line2}` : '';
+    addressLine1 += address.name ? `${address.name}, ` : '';
+    addressLine1 += `${address.line1}`;
+    addressLine2 += address.line2 ? `${address.line2}` : '';
     if (address.line2) {
       addressLine3 += `, ${address.state}`;
     } else {

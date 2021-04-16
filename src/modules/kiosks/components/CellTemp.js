@@ -4,7 +4,7 @@ import React from 'react';
 const CellTemp = ({ temperature }) => {
   const tempText = Number.isNaN(temperature && temperature.value)
     ? ''
-    : ` ${temperature && temperature.value} `;
+    : ` ${temperature && temperature.value} °C`;
   let style = {};
   if (temperature && temperature.value > 7) {
     style = { color: '#DB2828' };

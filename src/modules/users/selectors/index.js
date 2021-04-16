@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
-import { number } from 'prop-types';
 
 const userLogMessages = {
   purchase: 'CONSUMER APP',
@@ -145,7 +144,7 @@ export const getUserInitValues = createSelector(getUserWithDetails, user => {
         ...pick(user, ['firstName', 'lastName', 'email']),
         note: get(user, 'note', '') || '',
         mobile: get(user, 'mobile', '') || '',
-        address: get(user, 'address') || '',
+        address: get(user, 'address'),
         paymentMethods: user.paymentMethods,
         membercards: user.membercards ? user.membercards : [],
         rolesInOrganizations: get(user, 'rolesInOrganizations'),
