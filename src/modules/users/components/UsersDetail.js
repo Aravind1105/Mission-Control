@@ -116,7 +116,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                         }
                       />
                       <UserInfoRow
-                        title="User Card(s)"
+                        title="Member Cards"
                         description={
                           user.userCards &&
                           user.userCards.map(mcard => {
