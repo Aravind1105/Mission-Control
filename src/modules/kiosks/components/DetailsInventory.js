@@ -1,10 +1,15 @@
 import React from 'react';
 import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
-import { groupBy } from 'lodash';
+import { groupBy, orderBy } from 'lodash';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import './styles.less';
 const DetailsInventory = ({ list, total }) => {
-  const groupedByProductLines = groupBy(list, 'productLine._id');
+  const sortedByProductName = orderBy(
+    list,
+    [list => list.productLine.name.toLowerCase()],
+    ['asc'],
+  );
+  const groupedByProductLines = groupBy(sortedByProductName, 'productLine._id');
   const inventoryItems = [];
   let totalCost = 0;
   Object.values(groupedByProductLines).forEach(ele => {
@@ -15,9 +20,7 @@ const DetailsInventory = ({ list, total }) => {
       totalQty += ele.totalProducts;
       productName = ele.productLine.name;
       price = ele.productLine.price;
-      totalCost +=
-        ele.totalProducts *
-        ele.productLine.defaultCost
+      totalCost += ele.totalProducts * ele.productLine.defaultCost;
     });
     inventoryItems.push({ productName, totalQty, price });
   });
@@ -64,7 +67,9 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b><b>{`€ ${total}`}</b></b>
+              <b>
+                <b>{`€ ${total}`}</b>
+              </b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
