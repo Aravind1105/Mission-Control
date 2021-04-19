@@ -25,11 +25,8 @@ const DetailsInfo = ({
     addressLine1 += address.name ? `${address.name}, ` : '';
     addressLine1 += `${address.line1}`;
     addressLine2 += address.line2 ? `${address.line2}` : '';
-    if (address.line2) {
-      addressLine3 += `, ${address.state}`;
-    } else {
-      // addressLine1 += `, ${address.state}`;
-    }
+    if (address.line2) addressLine2 += `, ${address.state}`;
+    else addressLine3 += address.state;
     addressSecondLine += `${address.postalCode} ${address.city}`;
     addressThirdLine += `${address.country}`;
   }
