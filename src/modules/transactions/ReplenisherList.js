@@ -96,7 +96,6 @@ const ReplenisherList = ({
 
   useEffect(() => {
     getProductListSaga();
-    getRefillsWidgetsData();
   }, []);
 
   useEffect(() => {
