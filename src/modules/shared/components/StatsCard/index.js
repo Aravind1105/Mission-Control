@@ -1,5 +1,6 @@
-import React from 'react';
-import { Header, Icon, Segment, Grid } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
+import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 
 import './statsCard.less';
 
@@ -10,10 +11,16 @@ const StatsCard = ({
   amount,
   text,
   padding,
+  popup,
   secondaryText,
   secondaryAmount,
 }) => {
   const isDoubleDeck = secondaryText || secondaryAmount;
+  const [largeTxt, isLargeTxt] = useState(false);
+
+  useEffect(() => {
+    if (amount.length > 13) isLargeTxt(true);
+  }, [amount]);
   return (
     <Segment
       className="stats-card"
@@ -33,20 +40,49 @@ const StatsCard = ({
       >
         <Grid.Column className="column-left">
           <Grid.Row>
-            <Header.Subheader>{text}</Header.Subheader>
+            <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
           <Grid.Row style={padding && { paddingTop: '30px' }}>
-            <Header.Content>{amount}</Header.Content>
+            {popup && largeTxt ? (
+              <Popup
+                trigger={
+                  <Header.Content
+                    style={{
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      width: '130px',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {amount}
+                  </Header.Content>
+                }
+                position="top left"
+                wide
+                hoverable
+              >
+                {amount}
+              </Popup>
+            ) : (
+              <Header.Content
+                style={{
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  width: '130px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {amount}
+              </Header.Content>
+            )}
           </Grid.Row>
-          {isDoubleDeck && (
-            <>
-              <Grid.Row className="lower-deck">
-                <Header.Subheader>{secondaryText}</Header.Subheader>
-              </Grid.Row>
-              <Grid.Row>
-                <Header.Content>{secondaryAmount}</Header.Content>
-              </Grid.Row>
-            </>
+          {secondaryText && (
+            <Header.Subheader className="sub-header">
+              {secondaryText}
+            </Header.Subheader>
+          )}
+          {secondaryAmount && (
+            <Header.Content>{secondaryAmount}</Header.Content>
           )}
         </Grid.Column>
         <Grid.Column

@@ -78,7 +78,7 @@ const Toolbar = ({
   return (
     <div
       style={{
-        margin: '20px 0',
+        marginTop: '20px',
       }}
     >
       <Grid stackable>

@@ -69,7 +69,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
   return (
     <div
       style={{
-        margin: '20px 0',
+        marginTop: '20px',
       }}
     >
       <Grid stackable>
