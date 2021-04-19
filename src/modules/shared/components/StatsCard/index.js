@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Icon, Segment, Grid } from 'semantic-ui-react';
+import { Header, Icon, Segment, Grid, Divider, Card } from 'semantic-ui-react';
 
 import './statsCard.less';
 
@@ -13,8 +13,18 @@ const StatsCard = ({
 }) => {
   const isDoubleDeck = secondaryText || secondaryAmount;
   return (
-    <Segment className="stats-card">
-      <Header
+    <>
+      <Card
+        // className="stats-card"
+        style={{
+          color: color,
+          // minWidth: 205,
+          borderBottom: '3px solid  ',
+          // marginLeft: 5,
+          // marginRight: 20,
+        }}
+      >
+        {/* <Header
         as="h1"
         color={color}
         className={
@@ -39,11 +49,54 @@ const StatsCard = ({
             </>
           )}
         </Grid.Column>
-        <Grid.Column className="column-right">
-          <Icon name={icon} size="large" />
-        </Grid.Column>
-      </Header>
-    </Segment>
+      </Header> */}
+
+        <Card.Content>
+          <Card.Meta>{text}</Card.Meta>
+          <br></br>
+
+          {!icon ? (
+            <Grid.Column>
+              {/* <Grid.Row></Grid.Row> */}
+              <h2>{amount}</h2>
+            </Grid.Column>
+          ) : (
+            <Grid>
+              {/* <Grid.Row></Grid.Row> */}
+              <Grid.Row columns={2}>
+                <Grid.Column width={10}>
+                  {/* <Header as="h2" color={color}>
+                    {amount}
+                  </Header> */}
+                  <h2>{amount}</h2>
+                </Grid.Column>
+                <Grid.Column width={6}>
+                  {/* <Header as="h3" color={color}>
+                    <Icon name={icon} size="small" />
+                  </Header> */}
+                  <Icon name={icon} size="large" />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          )}
+          {/* <Grid>
+            <Grid.Row></Grid.Row>
+            <Grid.Row columns={1}>
+              <Grid.Column>
+                <Header as="h2" color={color}>
+                  {amount}
+                </Header>
+              </Grid.Column>
+              <Grid.Column>
+                <Header as="h3" color={color}>
+                  <Icon name={icon} size="small" />
+                </Header>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid> */}
+        </Card.Content>
+      </Card>
+    </>
   );
 };
 

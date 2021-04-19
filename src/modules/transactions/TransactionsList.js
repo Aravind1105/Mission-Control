@@ -105,19 +105,23 @@ const TransactionsList = ({
         kiosks={kiosks}
         changeKiosk={changeKiosk}
       />
-      <Grid>
-        <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+      <Grid doubling columns={5}>
+        <Grid.Row>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
-              icon="money"
               color="green"
               text="Total Net Sales"
-              amount={`€ ${widgetsData.totalNetIncome} `}
-              secondaryText="Total Gross Sales"
-              secondaryAmount={`€ ${widgetsData.totalGrossIncome} `}
+              amount={` ${widgetsData.totalNetIncome} €`}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3}>
+            <StatsCard
+              color="green"
+              text="Total Gross Sales"
+              amount={` ${widgetsData.totalGrossIncome} €`}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="boxes"
               color="orange"
@@ -125,7 +129,8 @@ const TransactionsList = ({
               amount={widgetsData.totalNumberOfProductsSold}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="credit card"
               color="blue"
@@ -133,12 +138,12 @@ const TransactionsList = ({
               amount={widgetsData.totalNumberOfTransactions}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="tag"
               color="purple"
               text="Average Purchase Value"
-              amount={`€ ${widgetsData.averagePurchaseValue}`}
+              amount={`${widgetsData.averagePurchaseValue} €`}
             />
           </Grid.Column>
         </Grid.Row>
