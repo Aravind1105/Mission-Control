@@ -78,7 +78,7 @@ const Dashboard = ({
             customColor="#219653"
             text="Revenue Today"
             padding
-            amount={`€ ${widgetData.totalGrossIncome}`}
+            amount={`${widgetData.totalGrossIncome} €`}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
@@ -87,7 +87,7 @@ const Dashboard = ({
             customColor="#9B51E0"
             text="Monthly Revenue"
             padding
-            amount={`€ ${widgetData.totalMonthlyGrossIncome}`}
+            amount={`${widgetData.totalMonthlyGrossIncome} €`}
           />
         </Grid.Column>
       </Grid.Row>
