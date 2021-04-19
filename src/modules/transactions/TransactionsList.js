@@ -144,11 +144,11 @@ const TransactionsList = ({
               multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={4}>
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="tag"
               customColor="#9B51E0"
-              text="Average Purchase Value"
+              text="Average Purchase"
               amount={`${widgetsData.averagePurchaseValue} €`}
               padding
               multipleWidgets
