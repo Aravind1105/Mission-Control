@@ -95,9 +95,7 @@ const ProductList = ({
     getAllProducts({ data });
     getProductsWidgetsData({ ...widgetPayload });
   };
-  useEffect(() => {
-    getProductsWidgetsData();
-  }, []);
+
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, kiosk, dateRange, product]);
