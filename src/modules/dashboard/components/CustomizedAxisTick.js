@@ -4,11 +4,11 @@ const CustomizedAxisTick = ({ x, y, payload }) => (
   <g transform={`translate(${x},${y})`}>
     <text
       x={0}
-      y={0}
+      y={10}
       dy={4}
-      textAnchor="end"
+      textAnchor="middle"
       fill="#333"
-      transform="rotate(-90)"
+      // transform="rotate(360)"
     >
       {payload.value}
     </text>
