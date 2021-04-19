@@ -57,32 +57,36 @@ const Dashboard = ({
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
             icon="users"
-            color="blue"
+            customColor="#2D9CDB"
             text="Customers Today"
+            padding
             amount={widgetData.totalNumberOfCustomers}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
             icon="boxes"
-            color="orange"
+            customColor="#F2994A"
             text="Products Sold Today"
+            padding
             amount={widgetData.totalNumberOfProducts}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
             icon="credit card"
-            color="teal"
+            customColor="#219653"
             text="Revenue Today"
+            padding
             amount={`€ ${widgetData.totalGrossIncome}`}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
             icon="tag"
-            color="pink"
+            customColor="#9B51E0"
             text="Monthly Revenue"
+            padding
             amount={`€ ${widgetData.totalMonthlyGrossIncome}`}
           />
         </Grid.Column>
