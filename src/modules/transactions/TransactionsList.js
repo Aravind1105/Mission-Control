@@ -101,40 +101,57 @@ const TransactionsList = ({
         kiosks={kiosks}
         changeKiosk={changeKiosk}
       />
-      <Grid>
-        <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+      <Grid doubling columns={5}>
+        <Grid.Row>
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="money"
-              color="green"
+              customColor="#219653"
               text="Total Net Sales"
-              amount={`€ ${widgetsData.totalNetIncome} `}
-              secondaryText="Total Gross Sales"
-              secondaryAmount={`€ ${widgetsData.totalGrossIncome} `}
+              amount={`${widgetsData.totalNetIncome} €`}
+              padding
+              multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="boxes"
-              color="orange"
+              customColor="#219653"
+              text="Total Gross Sales"
+              amount={`${widgetsData.totalGrossIncome} €`}
+              padding
+              multipleWidgets
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={3}>
+            <StatsCard
+              icon="boxes"
+              customColor="#F2994A"
               text="Total Products sold"
               amount={widgetsData.totalNumberOfProductsSold}
+              padding
+              multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+
+          <Grid.Column mobile={16} computer={3}>
             <StatsCard
               icon="credit card"
-              color="blue"
+              customColor="#2F80ED"
               text="Total Transactions"
               amount={widgetsData.totalNumberOfTransactions}
+              padding
+              multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4}>
             <StatsCard
               icon="tag"
-              color="purple"
+              customColor="#9B51E0"
               text="Average Purchase Value"
-              amount={`€ ${widgetsData.averagePurchaseValue}`}
+              amount={`${widgetsData.averagePurchaseValue} €`}
+              padding
+              multipleWidgets
             />
           </Grid.Column>
         </Grid.Row>
