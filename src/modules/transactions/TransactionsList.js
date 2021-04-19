@@ -105,7 +105,6 @@ const TransactionsList = ({
         <Grid.Row>
           <Grid.Column mobile={16} computer={3}>
             <StatsCard
-              icon="money"
               customColor="#219653"
               text="Total Net Sales"
               amount={`${widgetsData.totalNetIncome} €`}
@@ -115,7 +114,6 @@ const TransactionsList = ({
           </Grid.Column>
           <Grid.Column mobile={16} computer={3}>
             <StatsCard
-              icon="boxes"
               customColor="#219653"
               text="Total Gross Sales"
               amount={`${widgetsData.totalGrossIncome} €`}
