@@ -91,7 +91,11 @@ const StatsCard = ({
           className="column-right"
           style={padding && { paddingTop: '30px' }}
         >
-          <Icon name={icon} size="large" />
+          <Icon
+            name={icon}
+            size="large"
+            style={multipleWidgets && { fontSize: '1.2em' }}
+          />
         </Grid.Column>
       </Header>
     </Segment>
