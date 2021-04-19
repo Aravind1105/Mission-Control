@@ -6,17 +6,27 @@ import './statsCard.less';
 const StatsCard = ({
   color,
   icon,
+  customColor,
   amount,
   text,
+  padding,
   secondaryText,
   secondaryAmount,
 }) => {
   const isDoubleDeck = secondaryText || secondaryAmount;
   return (
-    <Segment className="stats-card">
+    <Segment
+      className="stats-card"
+      style={customColor && { borderBottom: `3px solid ${customColor}` }}
+    >
       <Header
         as="h1"
-        color={color}
+        style={
+          customColor && {
+            color: customColor,
+          }
+        }
+        color={color && color}
         className={
           isDoubleDeck ? 'stats-card-header-double' : 'stats-card-header'
         }
@@ -25,7 +35,7 @@ const StatsCard = ({
           <Grid.Row>
             <Header.Subheader>{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row>
+          <Grid.Row style={padding && { paddingTop: '30px' }}>
             <Header.Content>{amount}</Header.Content>
           </Grid.Row>
           {isDoubleDeck && (
@@ -39,7 +49,10 @@ const StatsCard = ({
             </>
           )}
         </Grid.Column>
-        <Grid.Column className="column-right">
+        <Grid.Column
+          className="column-right"
+          style={padding && { paddingTop: '30px' }}
+        >
           <Icon name={icon} size="large" />
         </Grid.Column>
       </Header>
