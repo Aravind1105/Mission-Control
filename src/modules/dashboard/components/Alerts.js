@@ -27,7 +27,7 @@ const sort = [
   },
 ];
 
-const ToolTip = () => (
+export const ToolTip = () => (
   <Popup
     trigger={<Icon color="yellow" name="info circle" />}
     position="bottom center"

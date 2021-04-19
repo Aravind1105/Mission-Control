@@ -7,7 +7,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
 import history from 'lib/history';
 import Toolbar from './AlertsToolbar';
-
+import { ToolTip } from './Alerts';
 const backLink = {
   name: 'Back to Dashboard',
   link: '/',
@@ -63,7 +63,10 @@ const AlertsTable = ({
       <SegmentHeader>
         <Header as="h4" color="red">
           <Icon name="exclamation triangle" size="small" />
-          <Header.Content>Alerts</Header.Content>
+          <Header.Content>
+            Alerts &nbsp;
+            <ToolTip />
+          </Header.Content>
         </Header>
         <BackLink {...{ ...backLink }} />
       </SegmentHeader>
