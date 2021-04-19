@@ -28,7 +28,7 @@ const UserProfileBar = ({
         <Dropdown.Item
           icon="setting"
           text="Settings"
-          onClick={() => history.push("/settings/security")}
+          onClick={() => history.push('/settings/security')}
         />
         <Dropdown.Item
           icon="sign-out"
