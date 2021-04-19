@@ -35,7 +35,7 @@ const StatsCard = ({
           <Grid.Row>
             <Header.Subheader>{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row style={padding && { paddingTop: '30px' }}>
+          <Grid.Row style={padding && { paddingTop: '20px' }}>
             <Header.Content>{amount}</Header.Content>
           </Grid.Row>
           {isDoubleDeck && (
