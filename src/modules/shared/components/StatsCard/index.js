@@ -71,7 +71,7 @@ const StatsCard = ({
                   overflow: 'hidden',
                   width: '100px',
                   whiteSpace: 'nowrap',
-                  fontSize: multipleWidgets ? '19px' : '22px',
+                  fontSize: '22px',
                 }}
               >
                 {amount}
