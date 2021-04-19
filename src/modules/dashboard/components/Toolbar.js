@@ -30,7 +30,7 @@ const Toolbar = ({
       <Grid.Row verticalAlign="middle">
         <Grid.Column mobile={16} computer={4}>
           <Dropdown
-            placeholder="Kiosk"
+            placeholder="All Kiosks"
             selection
             options={kiosks}
             className="full-width"
