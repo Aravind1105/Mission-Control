@@ -6,10 +6,10 @@ import './styles.less';
 
 const InfoRow = ({ title, description }) => (
   <>
-    <GridColumn width={4} className="info-cell">
+    <GridColumn width={5} className="info-cell">
       {title && <b>{`${title}:`}</b>}
     </GridColumn>
-    <GridColumn width={12} className="info-cell">
+    <GridColumn width={11} className="info-cell">
       {description}
     </GridColumn>
   </>
