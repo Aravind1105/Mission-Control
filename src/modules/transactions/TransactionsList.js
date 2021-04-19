@@ -101,7 +101,7 @@ const TransactionsList = ({
         kiosks={kiosks}
         changeKiosk={changeKiosk}
       />
-      <Grid doubling columns={5}>
+      <Grid>
         <Grid.Row>
           <Grid.Column mobile={16} computer={3}>
             <StatsCard
