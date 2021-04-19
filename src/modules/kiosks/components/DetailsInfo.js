@@ -52,10 +52,10 @@ const DetailsInfo = ({
               {addressLine1 !== '' && <InfoRow description={addressLine1} />}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
               {addressLine3 !== '' && <InfoRow description={addressLine3} />}
-              {addressLine1 !== '' && (
+              {addressSecondLine !== '' && (
                 <InfoRow description={addressSecondLine} />
               )}
-              {addressLine1 !== '' && (
+              {addressThirdLine !== '' && (
                 <InfoRow description={addressThirdLine} />
               )}
               {notes && (
