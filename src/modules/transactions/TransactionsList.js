@@ -91,10 +91,6 @@ const TransactionsList = ({
   };
 
   useEffect(() => {
-    getTransactionsWidgetsData();
-  }, []);
-
-  useEffect(() => {
     getData({ sort });
   }, [page, perPage, dateRange, kiosk]);
 
