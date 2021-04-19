@@ -1,3 +1,41 @@
+#### 1.3.35 (2021-04-19)
+
+##### Build System / Dependencies
+
+* **QRcode:**  updated QRcode link (db4fc718)
+
+##### New Features
+
+* **LIV-3100:**  Changed the format of address column (cfbcc3c9)
+
+##### Bug Fixes
+
+* **Transactions-refills:** LIV-3133 refils KPI resolver called for the second time is removed as it is not necessary (804cb6a7)
+* **transaction-sales:** LIV-3133 KPI data called for the second time is removed as it it not necessary (bbcfa14d)
+* **LIV-3095:**  Alert info icon visible (db7f241c)
+* **LIV-3105:**  inventory sorted in asc (95823c09)
+* **LIV-3104:** default price fixed to 2 decimal places (4505a057)
+* **LIV-3102:**  directions/notes format changed (b5756be4)
+* **LIV-3103:**  notes and address lines bug (1aab87bb)
+* **Users:**  LIV-2869:User Cards to Member Cards (236ecc64)
+* **Transactions:**
+  *  LIV-2661 : Products Products Filter Hide (827cf6ec)
+  *  LIV-2661 : Products Fileters (475b62f4)
+* **Dashboard:**  LIV-2799 : Tooltip fixed (7de53b9b)
+* **Products:**  LIV-2951 : dropdown category space added (5ae8d99b)
+* **Dashboard Alert:**  LIV-2799 : tooltip added on Alert Button (5f212702)
+* **Products Dropdown:**
+  *  LIV-2951 Dropdown option fixed for Categories (f86ed720)
+  *  LIV-2951 Dropdown option fixed for Categories (5ca78e1f)
+* **products list:** LIV-2951 toolbar unsed code causing white screen fixed (e51dbf71)
+* **product detail:**
+  * LIV-1952 price history widget price format fixed (2a02a55c)
+  * LIV-1952 price format fixed (7d1df5f9)
+  * LIV-1952 date format fixed in the component (7ddb81b0)
+* **Standardised Format:**
+  *  LIV-2793 Temp formate updated (c55190e2)
+  *  LIV-2793 Temp formate updated (f78ef1af)
+
 #### 1.3.34 (2021-04-12)
 
 ##### New Features
