@@ -63,7 +63,9 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
 
         <Divider className="price-widget-divider" />
         {!activePriceHistory && (
-          <span className="default-price-text">{`Default Price: ${defaultPrice} €`}</span>
+          <span className="default-price-text">{`Default Price: ${defaultPrice.toFixed(
+            2,
+          )} €`}</span>
         )}
         <Table
           basic="very"
