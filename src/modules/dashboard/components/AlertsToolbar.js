@@ -56,7 +56,7 @@ const Toolbar = ({
         </Grid.Column>
         <Grid.Column mobile={16} computer={4}>
           <Dropdown
-            placeholder="Kiosks"
+            placeholder="All Kiosks"
             selection
             className="full-width"
             onChange={handleKioskChange}

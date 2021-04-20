@@ -80,7 +80,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
 
           <Grid.Column mobile={16} computer={3}>
             <Dropdown
-              placeholder="Kiosk"
+              placeholder="All Kiosks"
               selection
               options={kiosks}
               className="full-width"
