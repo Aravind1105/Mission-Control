@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { useState, useEffect } from 'react';
 import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 
 import './statsCard.less';
@@ -14,6 +13,7 @@ const StatsCard = ({
   popup,
   secondaryText,
   secondaryAmount,
+  multipleWidgets,
 }) => {
   const isDoubleDeck = secondaryText || secondaryAmount;
   const [largeTxt, isLargeTxt] = useState(false);
@@ -52,6 +52,7 @@ const StatsCard = ({
                       overflow: 'hidden',
                       width: '130px',
                       whiteSpace: 'nowrap',
+                      fontSize: '22px',
                     }}
                   >
                     {amount}
@@ -68,8 +69,9 @@ const StatsCard = ({
                 style={{
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
-                  width: '130px',
+                  width: '100px',
                   whiteSpace: 'nowrap',
+                  fontSize: '22px',
                 }}
               >
                 {amount}
@@ -89,7 +91,11 @@ const StatsCard = ({
           className="column-right"
           style={padding && { paddingTop: '30px' }}
         >
-          <Icon name={icon} size="large" />
+          <Icon
+            name={icon}
+            size="large"
+            style={multipleWidgets && { fontSize: '1.2em' }}
+          />
         </Grid.Column>
       </Header>
     </Segment>
