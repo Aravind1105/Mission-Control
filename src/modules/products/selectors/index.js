@@ -31,7 +31,7 @@ export const getProductsDropdownList = createSelector(
     }));
     const sortedProductList = sortByText(productsList, 'text');
 
-    return [{ value: '', text: 'All products', key: 'all' }].concat(
+    return [{ value: '', text: 'All Products', key: 'all' }].concat(
       sortedProductList,
     );
   },

@@ -20,11 +20,17 @@ const StatsCard = ({
 
   useEffect(() => {
     if (amount.length > 13) isLargeTxt(true);
+    else isLargeTxt(false);
   }, [amount]);
+
   return (
     <Segment
       className="stats-card"
-      style={customColor && { borderBottom: `3px solid ${customColor}` }}
+      style={
+        customColor && {
+          borderBottom: `3px solid ${customColor}`,
+        }
+      }
     >
       <Header
         as="h1"

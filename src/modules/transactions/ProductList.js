@@ -126,7 +126,7 @@ const ProductList = ({
             <StatsCard
               icon="long arrow alternate down"
               customColor="#F2994A"
-              text="Least Sold product"
+              text="Least Sold Product"
               amount={`${widgetsData.leastSoldProductName} `}
               secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
               padding
@@ -148,7 +148,7 @@ const ProductList = ({
             <StatsCard
               icon="reply"
               customColor="#9B51E0"
-              text="Most Removed Products"
+              text="Most Removed Product"
               amount={`${widgetsData.mostRemovedProductName} `}
               secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
               popup
