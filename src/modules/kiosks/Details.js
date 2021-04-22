@@ -111,6 +111,7 @@ const KioskDetails = ({
                     doorStatus={kiosk && kiosk.doorStatus}
                     temperature={kiosk && kiosk.temperature}
                     session={kiosk && kiosk.session}
+                    service={kiosk && kiosk.controller.serviceCheck.enabled}
                   />
                   <Divider />
                   <DetailsInfo

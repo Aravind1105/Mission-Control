@@ -45,9 +45,9 @@ const columns = [
         event.touchedScales.length > 0
       ) {
         return (
-          `Products Touched -` +
+          `Products Taken -` +
           event.touchedScales.map(scl => {
-            return ` Weight: ${scl.weight}g / Cable Id: ${scl.id}`;
+            return ` Weight: ${scl.weight}g / Cable ID: ${scl.id}`;
           })
         );
       } else if (
@@ -55,7 +55,7 @@ const columns = [
         event.touchedScales !== undefined &&
         event.touchedScales.length === 0
       )
-        return `Products Touched - Empty`;
+        return `Products Taken - Empty`;
       else if (
         event.paymentTerminal !== null &&
         event.paymentTerminal !== undefined

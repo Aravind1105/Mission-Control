@@ -114,37 +114,45 @@ const ProductList = ({
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
               icon="star"
-              color="green"
+              customColor="#219653"
               text="Most Sold Product"
               amount={`${widgetsData.mostRefilledProductName} `}
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
+              padding
+              popup
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
               icon="long arrow alternate down"
-              color="orange"
-              text="Least Sold product"
+              customColor="#F2994A"
+              text="Least Sold Product"
               amount={`${widgetsData.leastSoldProductName} `}
               secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
+              padding
+              popup
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
               icon="dolly flatbed"
-              color="blue"
+              customColor="#2D9CDB"
               text="Most Refilled Product"
               amount={`${widgetsData.mostRefilledProductName} `}
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
+              popup
+              padding
             />
           </Grid.Column>
           <Grid.Column mobile={8} computer={4}>
             <StatsCard
               icon="reply"
-              color="violet"
-              text="Most Removed Products"
+              customColor="#9B51E0"
+              text="Most Removed Product"
               amount={`${widgetsData.mostRemovedProductName} `}
               secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
+              popup
+              padding
             />
           </Grid.Column>
         </Grid.Row>

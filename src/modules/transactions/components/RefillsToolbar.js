@@ -69,7 +69,7 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
   return (
     <div
       style={{
-        margin: '20px 0',
+        marginTop: '20px',
       }}
     >
       <Grid stackable>
@@ -79,7 +79,7 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
           </Grid.Column>
           <Grid.Column mobile={16} computer={3}>
             <Dropdown
-              placeholder="Kiosk"
+              placeholder="All Kiosks"
               selection
               options={kiosks}
               className="full-width"

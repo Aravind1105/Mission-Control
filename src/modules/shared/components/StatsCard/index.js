@@ -1,5 +1,5 @@
-import React from 'react';
-import { Header, Icon, Segment, Grid } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 
 import './statsCard.less';
 
@@ -10,14 +10,27 @@ const StatsCard = ({
   amount,
   text,
   padding,
+  popup,
   secondaryText,
   secondaryAmount,
+  multipleWidgets,
 }) => {
   const isDoubleDeck = secondaryText || secondaryAmount;
+  const [largeTxt, isLargeTxt] = useState(false);
+
+  useEffect(() => {
+    if (amount.length > 13) isLargeTxt(true);
+    else isLargeTxt(false);
+  }, [amount]);
+
   return (
     <Segment
       className="stats-card"
-      style={customColor && { borderBottom: `3px solid ${customColor}` }}
+      style={
+        customColor && {
+          borderBottom: `3px solid ${customColor}`,
+        }
+      }
     >
       <Header
         as="h1"
@@ -33,27 +46,62 @@ const StatsCard = ({
       >
         <Grid.Column className="column-left">
           <Grid.Row>
-            <Header.Subheader>{text}</Header.Subheader>
+            <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
           <Grid.Row style={padding && { paddingTop: '30px' }}>
-            <Header.Content>{amount}</Header.Content>
+            {popup && largeTxt ? (
+              <Popup
+                trigger={
+                  <Header.Content
+                    style={{
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      width: '130px',
+                      whiteSpace: 'nowrap',
+                      fontSize: '22px',
+                    }}
+                  >
+                    {amount}
+                  </Header.Content>
+                }
+                position="top left"
+                wide
+                hoverable
+              >
+                {amount}
+              </Popup>
+            ) : (
+              <Header.Content
+                style={{
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  width: '100px',
+                  whiteSpace: 'nowrap',
+                  fontSize: '22px',
+                }}
+              >
+                {amount}
+              </Header.Content>
+            )}
           </Grid.Row>
-          {isDoubleDeck && (
-            <>
-              <Grid.Row className="lower-deck">
-                <Header.Subheader>{secondaryText}</Header.Subheader>
-              </Grid.Row>
-              <Grid.Row>
-                <Header.Content>{secondaryAmount}</Header.Content>
-              </Grid.Row>
-            </>
+          {secondaryText && (
+            <Header.Subheader className="sub-header">
+              {secondaryText}
+            </Header.Subheader>
+          )}
+          {secondaryAmount && (
+            <Header.Content>{secondaryAmount}</Header.Content>
           )}
         </Grid.Column>
         <Grid.Column
           className="column-right"
           style={padding && { paddingTop: '30px' }}
         >
-          <Icon name={icon} size="large" />
+          <Icon
+            name={icon}
+            size="large"
+            style={multipleWidgets && { fontSize: '1.2em' }}
+          />
         </Grid.Column>
       </Header>
     </Segment>
