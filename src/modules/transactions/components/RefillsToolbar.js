@@ -48,22 +48,18 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
   };
 
   const DownloadCsv = () => {
-    if (exportData.from == '' && exportData.to == '') {
-      window.alert('Bitte wählen Sie zuerst das Datum.');
-    } else {
-      let value = {
-        from: Math.round(new Date(exportData.from)),
-        to: Math.round(new Date(exportData.to)),
-        kiosk: exportData.kiosk ? exportData.kiosk : '',
-      };
-      exportCsvRefills(value);
-      toast({
-        description: 'Downloading the requested file.',
-        animation: 'fade left',
-        icon: 'info',
-        color: 'blue',
-      });
-    }
+    let value = {
+      from: Math.round(new Date(exportData.from)),
+      to: Math.round(new Date(exportData.to)),
+      kiosk: exportData.kiosk ? exportData.kiosk : '',
+    };
+    exportCsvRefills(value);
+    toast({
+      description: 'Downloading the requested file.',
+      animation: 'fade left',
+      icon: 'info',
+      color: 'blue',
+    });
   };
 
   return (
@@ -92,7 +88,6 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadCsv}
-              disabled={!Boolean(exportData)}
             />
           </Grid.Column>
         </Grid.Row>
