@@ -137,7 +137,7 @@ const x = {
   unit: 'Unit',
   ean: 'EAN',
   manufacturer: 'Manufacturer',
-  articleNumber:'Artcle Number',
+  articleNumber: 'Article Number (SKU)',
   description: 'Description',
   family: 'Family',
   weightNet: 'Weight Net',
