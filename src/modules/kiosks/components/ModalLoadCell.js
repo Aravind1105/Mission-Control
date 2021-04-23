@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Field } from 'formik';
 import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
+import * as R from 'ramda';
 
 import { getProductLinesByOrgId } from 'modules/kiosks/actions';
 import { getProductsHistory } from 'modules/products/selectors';
@@ -37,6 +38,12 @@ const PositionTip = () => (
     </Popup.Content>
   </Popup>
 );
+
+const shelfSizeOptions = [
+  { label: '1/3 Shelf (S)', value: 33 },
+  { label: '1/2 Shelf (M)', value: 50 },
+  { label: 'Full Shelf (L)', value: 100 },
+];
 
 const ModalLoadCell = ({
   initVal,
@@ -126,8 +133,10 @@ const ModalLoadCell = ({
       if (isCellIdChanged) {
         oldData.cellId = initVal.cellId.value;
       }
+      oldData.surfaceSize = initVal.surfaceSize.value;
     }
     data.cellId = data.cellId.value;
+    data.surfaceSize = data.surfaceSize.value;
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
@@ -163,12 +172,10 @@ const ModalLoadCell = ({
             <Modal.Content>
               {isProductLoading && <Loader />}
               <Grid>
-                <Grid.Row>
-                  <Grid.Column width={6}>
+                <Grid.Row columns="equal">
+                  <Grid.Column>
                     <b>Product&nbsp;</b>
                     {initVal.quantity ? <ToolTip /> : null}
-                  </Grid.Column>
-                  <Grid.Column width={10}>
                     <Field
                       name="product"
                       isSearchable
@@ -179,13 +186,8 @@ const ModalLoadCell = ({
                       required
                     />
                   </Grid.Column>
-                </Grid.Row>
-
-                <Grid.Row>
-                  <Grid.Column width={6}>
+                  <Grid.Column>
                     <b>Product Quantity&nbsp;</b>
-                  </Grid.Column>
-                  <Grid.Column width={10}>
                     <Field
                       name="quantity"
                       limiting="integerField"
@@ -198,22 +200,6 @@ const ModalLoadCell = ({
                   </Grid.Column>
                 </Grid.Row>
 
-                <Grid.Row>
-                  <Grid.Column width={6}>
-                    <b>Price</b>
-                  </Grid.Column>
-                  <Grid.Column width={10}>
-                    <Field
-                      name="price"
-                      limiting="floatingField"
-                      icon="euro"
-                      iconPosition="left"
-                      min={0}
-                      prettier={prettierNumber}
-                      component={FormInput}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
                 <Grid.Row columns="equal">
                   <Grid.Column>
                     <b>Planogram Position</b>
@@ -256,6 +242,33 @@ const ModalLoadCell = ({
                     />
                   </Grid.Column>
                 </Grid.Row>
+
+                <Grid.Row columns="equal">
+                  <Grid.Column>
+                    <b>Price</b>
+                    <Field
+                      name="price"
+                      limiting="floatingField"
+                      icon="euro"
+                      iconPosition="left"
+                      min={0}
+                      prettier={prettierNumber}
+                      component={FormInput}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <b>Shelf Size</b>
+                    <Field
+                      name="surfaceSize"
+                      options={shelfSizeOptions}
+                      component={FormAsyncSelect}
+                      onChange={({}) => {
+                        // setIsValid({ ...isValid, cableId: true });
+                      }}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+
                 {!isAddLoadCell && (
                   <Grid.Row>
                     <Button
@@ -283,7 +296,7 @@ const ModalLoadCell = ({
                   } else {
                     if (validateCellContents()) {
                       setShowAlert(true);
-                    } else if(!isValidPosition) {
+                    } else if (!isValidPosition) {
                       setShowPositionErrorAlert(true);
                     }
                   }
@@ -352,6 +365,10 @@ const mapStateToProps = (state, { product, match: { params } }) => {
     },
     quantity: product.availableProducts,
     price: product.price,
+    surfaceSize: R.find(
+      R.propEq('value', product.surfaceSize),
+      shelfSizeOptions,
+    ),
   };
   return {
     options: getProductsDropdownList()(state),

@@ -11,6 +11,7 @@ const Card = ({
   totalProducts,
   handleEdit,
   isActive,
+  surfaceSize,
 }) => {
   const handleClick = () => {
     handleEdit({
@@ -18,6 +19,7 @@ const Card = ({
       planogramPosition,
       cellId,
       availableProducts: totalProducts,
+      surfaceSize,
     });
   };
 
@@ -73,10 +75,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
           return (
             <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
               {row.map((props, j) => {
-                // if (!j) {
-                //   fullWidth = Boolean(props);
-                // }
-                // if ((fullWidth && j) || (!fullWidth && !j)) return null;
                 return (
                   props && (
                     <Card
@@ -87,12 +85,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                     />
                   )
                 );
-                //  (
-                //     <Grid.Column
-                //       key={performance.now().toString(32)}
-                //       className="load-cell"
-                //     />
-                //   );
               })}
             </Grid.Row>
           );

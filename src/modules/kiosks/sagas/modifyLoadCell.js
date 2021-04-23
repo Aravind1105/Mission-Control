@@ -27,8 +27,10 @@ function* handler({ payload }) {
     price,
     quantity,
     planogramPosition,
+    surfaceSize,
     product: { value: productId },
   } = data;
+  alert(surfaceSize);
   try {
     if (isProductChanged || isPositionIdChanged || isCellIdChanged) {
       const variables = {
@@ -40,24 +42,27 @@ function* handler({ payload }) {
               planogramPosition,
               cellId,
               isActive: true,
+              surfaceSize: `N${surfaceSize}`,
             },
           ],
         },
       };
       if (oldData) {
-        if(isCellIdChanged) {
+        if (isCellIdChanged) {
           variables.data.loadCellConfigs.push({
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition[0],
             cellId: oldData.cellId,
             isActive: false,
+            surfaceSize: `N${oldData.surfaceSize}`,
           });
-        } else if(isPositionIdChanged) {
+        } else if (isPositionIdChanged) {
           variables.data.loadCellConfigs[1] = {
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition,
             cellId: oldData.cellId,
             isActive: true,
+            surfaceSize: `N${oldData.surfaceSize}`,
           };
         }
       }
