@@ -70,11 +70,11 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
     >
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <Dropdown
               placeholder="All Kiosks"
               selection
@@ -87,7 +87,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
               icon="arrow down icon"
