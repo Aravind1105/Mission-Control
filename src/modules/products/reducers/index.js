@@ -12,6 +12,7 @@ import {
   modifyProductSaga,
   modifyProductSuccess,
   getPriceHistorySuccess,
+  resetPriceHistory,
 } from '../actions';
 
 const initialState = {
@@ -73,6 +74,11 @@ export default handleActions(
       ...state,
       defaultPriceHistory: payload.defaultPriceHistory,
       activePriceHistory: payload.activePriceHistory,
+    }),
+    [resetPriceHistory]: state => ({
+      ...state,
+      defaultPriceHistory: [],
+      activePriceHistory: [],
     }),
   },
   initialState,
