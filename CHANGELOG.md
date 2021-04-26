@@ -1,3 +1,14 @@
+#### 1.3.37 (2021-04-26)
+
+##### New Features
+
+* **modify load cell:** LIV-3122 surface size changing (7792111e)
+
+##### Bug Fixes
+
+* **Mobile-Transaction-Product:**  LIV-3087:Product Transaction Mobile View Optimized (f2d89e0b)
+* **kiosks:** sagas fixed (ee317d5b)
+
 #### 1.3.36 (2021-04-23)
 
 ##### Bug Fixes
