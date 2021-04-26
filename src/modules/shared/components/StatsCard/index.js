@@ -26,20 +26,11 @@ const StatsCard = ({
   return (
     <Segment
       className="stats-card"
-      style={
-        customColor && {
-          borderBottom: `3px solid ${customColor}`,
-        }
-      }
+      style={{ borderBottom: `3px solid ${customColor}` }}
     >
       <Header
         as="h1"
-        style={
-          customColor && {
-            color: customColor,
-          }
-        }
-        color={color && color}
+        style={{ color: customColor }}
         className={
           isDoubleDeck ? 'stats-card-header-double' : 'stats-card-header'
         }
@@ -75,7 +66,7 @@ const StatsCard = ({
                 style={{
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
-                  width: '100px',
+                  width: '115px',
                   whiteSpace: 'nowrap',
                   fontSize: '22px',
                 }}

@@ -103,7 +103,7 @@ const TransactionsList = ({
       />
       <Grid>
         <Grid.Row>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
               text="Total Net Sales"
@@ -112,7 +112,7 @@ const TransactionsList = ({
               multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
               text="Total Gross Sales"
@@ -121,7 +121,7 @@ const TransactionsList = ({
               multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="boxes"
               customColor="#F2994A"
@@ -132,7 +132,7 @@ const TransactionsList = ({
             />
           </Grid.Column>
 
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="credit card"
               customColor="#2F80ED"
@@ -142,7 +142,7 @@ const TransactionsList = ({
               multipleWidgets
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={16}>
             <StatsCard
               icon="tag"
               customColor="#9B51E0"

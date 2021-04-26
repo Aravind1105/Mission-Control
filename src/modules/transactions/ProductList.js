@@ -111,7 +111,7 @@ const ProductList = ({
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="star"
               customColor="#219653"
@@ -122,7 +122,7 @@ const ProductList = ({
               popup
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="long arrow alternate down"
               customColor="#F2994A"
@@ -133,7 +133,7 @@ const ProductList = ({
               popup
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="dolly flatbed"
               customColor="#2D9CDB"
@@ -144,7 +144,7 @@ const ProductList = ({
               padding
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="reply"
               customColor="#9B51E0"
