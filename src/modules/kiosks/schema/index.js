@@ -32,6 +32,7 @@ const FragmentInventory = {
           images
           defaultCost
         }
+        surfaceSize
       }
     }
   `,
