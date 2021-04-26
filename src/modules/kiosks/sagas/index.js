@@ -35,5 +35,8 @@ export default function* kiosksSaga() {
     fork(getAllKiosksForTable),
     fork(updateKioskProps),
     fork(setPlanogramSwitchState),
+    fork(deleteLoadCell),
+    fork(exportCsvOrderList),
+    fork(exportCsvPackList),
   ]);
 }

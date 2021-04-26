@@ -62,6 +62,8 @@ const columns = [
     formatter: ({ count }) => {
       if (count === 0) {
         return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}> {count} </div>;
       }
       return <div style={{ textAlign: 'center' }}> {count} </div>;
     },
@@ -72,6 +74,8 @@ const columns = [
     formatter: ({ loadCell }) => {
       if (loadCell === '') {
         return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}> {loadCell} </div>;
       }
       return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
     },
@@ -84,9 +88,8 @@ const columns = [
         return '';
       } else if (screenWidth < 750) {
         return <div style={{ textAlign: 'left' }}> {weight} </div>;
-      } else {
-        return <div style={{ textAlign: 'center' }}> {weight} </div>;
       }
+      return <div style={{ textAlign: 'center' }}> {weight} </div>;
     },
   },
   {
@@ -97,17 +100,21 @@ const columns = [
         return '';
       } else if (screenWidth < 750) {
         return <div style={{ textAlign: 'left' }}> {cost}€ </div>;
-      } else {
-        return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
       }
+      return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
     },
   },
   {
     title: 'Total Cost',
     field: 'total',
-    formatter: ({ total }) => (
-      <div style={{ textAlign: 'right' }}> {total}€ </div>
-    ),
+    formatter: ({ total }) => {
+      if (total === '') {
+        return '';
+      } else if (screenWidth < 750) {
+        return <div style={{ textAlign: 'left' }}> {total}€ </div>;
+      }
+      return <div style={{ textAlign: 'right' }}> {total}€ </div>;
+    },
   },
 ];
 
