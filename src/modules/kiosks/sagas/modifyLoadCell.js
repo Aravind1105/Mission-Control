@@ -18,6 +18,7 @@ function* handler({ payload }) {
     isQuantityChanged,
     isPositionIdChanged,
     isCellIdChanged,
+    isShelfSizeChanged,
     data,
     oldData,
   } = payload;
@@ -30,9 +31,13 @@ function* handler({ payload }) {
     surfaceSize,
     product: { value: productId },
   } = data;
-  alert(surfaceSize);
   try {
-    if (isProductChanged || isPositionIdChanged || isCellIdChanged) {
+    if (
+      isProductChanged ||
+      isPositionIdChanged ||
+      isCellIdChanged ||
+      isShelfSizeChanged
+    ) {
       const variables = {
         data: {
           kioskId,

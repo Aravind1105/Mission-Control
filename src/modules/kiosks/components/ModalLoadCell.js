@@ -121,6 +121,10 @@ const ModalLoadCell = ({
     const isReplacementRequired =
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.planogramPosition);
+    const isShelfSizeChanged =
+      initVal.surfaceSize.value !== data.surfaceSize.value;
+
+    data.surfaceSize = data.surfaceSize.value;
     data.price = +data.price || 0;
     data.quantity = +data.quantity || 0;
     let oldData;
@@ -133,16 +137,16 @@ const ModalLoadCell = ({
       if (isCellIdChanged) {
         oldData.cellId = initVal.cellId.value;
       }
-      oldData.surfaceSize = initVal.surfaceSize.value;
     }
     data.cellId = data.cellId.value;
-    data.surfaceSize = data.surfaceSize.value;
+
     modifyKioskLoadCell({
       isPriceChanged,
       isProductChanged,
       isQuantityChanged,
       isPositionIdChanged,
       isCellIdChanged,
+      isShelfSizeChanged,
       data,
       oldData,
       callback: handleClose,
