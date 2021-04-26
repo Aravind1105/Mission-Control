@@ -13,27 +13,30 @@ import {
   modifyProductSuccess as actionSuccess,
 } from '../actions';
 
-function* handler({ payload: { values, initialValues, uploadedImage, isImageDeleted } }) {
+function* handler({
+  payload: { values, initialValues, uploadedImage, isImageDeleted },
+}) {
   const { id, defaultPriceId, images, ...rest } = values;
   let isPriceUpdate = false;
   if (isImageDeleted) rest.images = [];
   try {
-    if(!id){
+    if (!id) {
       rest.defaultPrice = Number(rest.defaultPrice);
-    }else if(id && initialValues.defaultPrice !== rest.defaultPrice){
+    } else if (id && initialValues.defaultPrice !== rest.defaultPrice) {
       isPriceUpdate = true;
       rest.defaultPrice = Number(rest.defaultPrice);
-    }else{
+    } else {
       delete rest.defaultPrice;
     }
     const taxes = yield select(selectorGetProductTax);
-    const tax = (initialValues.tax !== rest.tax ) 
-      ? taxes.find(el => el.taxValue === rest.tax) 
-      : '';
+    const tax =
+      initialValues.tax !== rest.tax
+        ? taxes.find(el => el.taxValue === rest.tax)
+        : '';
     rest.tax = tax ? tax._id : '';
-    (initialValues.defaultCost !== rest.defaultCost)
-    ? rest.defaultCost = Number(rest.defaultCost)
-    : delete rest.defaultCost;
+    initialValues.defaultCost !== rest.defaultCost
+      ? (rest.defaultCost = Number(rest.defaultCost))
+      : delete rest.defaultCost;
 
     const variables = {
       data: rest,
@@ -53,21 +56,21 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
       }),
       isPriceUpdate
         ? call(gqlProducts.mutate, {
-          mutation: UPDATE_PRODUCT_LINE_PRICE_MUTATION,
-          variables: {
-            id,
-            data: {
-              priceId: defaultPriceId,
-              price: rest.defaultPrice,
-              default: true,
+            mutation: UPDATE_PRODUCT_LINE_PRICE_MUTATION,
+            variables: {
+              id,
+              data: {
+                priceId: defaultPriceId,
+                price: rest.defaultPrice,
+                default: true,
+              },
             },
-          },
-        })
+          })
         : null,
     ]);
-    
+
     const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
-    
+
     const priceHistory = get(
       priceMutation,
       'data.updateProductLinePrice.priceHistory',
@@ -76,7 +79,9 @@ function* handler({ payload: { values, initialValues, uploadedImage, isImageDele
     yield put(actionSuccess({ ...responseData, priceHistory }));
   } catch (e) {
     console.log(e);
-    window.alert('An error has occurred with your action. Please contact the Livello staff.');
+    window.alert(
+      'An error has occurred with your action. Please contact the Livello staff.',
+    );
   }
 }
 

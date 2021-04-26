@@ -227,6 +227,7 @@ export const selectorGetProductInitValue = createSelector(
       defaultPriceId: get(priceHistory, '_id', ''),
       // family: get(product, 'family._id', ''),
       tax,
+      articleNumber: get(product, 'articleNumber', '') || '',
       defaultCost: (+rest.defaultCost).toFixed(2),
     };
   },
