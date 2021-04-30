@@ -6,10 +6,10 @@ import './coloredBlock.less';
 export function defineColor(percent) {
   if (percent === null) return undefined;
 
-  if (percent >= 60) {
+  if (percent >= 70) {
     return 'textGreen';
   }
-  return percent > 30 ? 'textOrange' : 'textRed';
+  return percent > 39 ? 'textOrange' : 'textRed';
 }
 
 const ColoredBlock = ({ children, type, value }) => {

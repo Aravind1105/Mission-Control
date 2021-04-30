@@ -21,7 +21,7 @@ function* handler({ payload }) {
     });
     // TODO: fix null name and img from resetKiosk endpoint. This is a workaround to solve LIV-1310.
     const {
-      data: { getKioskById },
+      data: { getKioskWithCapacities },
     } = yield call(
       gqlKiosk.query, {
       query: GET_KIOSK_QUERY,
@@ -29,10 +29,10 @@ function* handler({ payload }) {
     });
     const kiosk = {
       // ...kioskReset,
-      ...getKioskById,
+      ...getKioskWithCapacities,
       inventory: {
         // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
-        loadCells: toFlatLoadCellItem(getKioskById.inventory.loadCells, payload),
+        loadCells: toFlatLoadCellItem(getKioskWithCapacities.inventory.loadCells, payload),
       },
     };
     

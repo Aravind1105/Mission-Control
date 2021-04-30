@@ -12,6 +12,7 @@ const Card = ({
   handleEdit,
   isActive,
   surfaceSize,
+  // occupancy,
 }) => {
   const handleClick = () => {
     handleEdit({
