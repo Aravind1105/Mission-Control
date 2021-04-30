@@ -21,7 +21,7 @@ function* handler({ payload }) {
     variables = {
       id: payload,
     };
-    const { data: { getKioskById } } = yield call(
+    const { data: { getKioskWithCapacities } } = yield call(
       gqlKiosk.query, {
         query: GET_KIOSK_QUERY,
         variables,
@@ -31,7 +31,7 @@ function* handler({ payload }) {
       ...getKioskById,
       inventory: {
         // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
-        loadCells: toFlatLoadCellItem(getKioskById.inventory.loadCells, payload),
+        loadCells: toFlatLoadCellItem(getKioskWithCapacities.inventory.loadCells, payload),
       },
     };
     yield put(actionSuccess(kiosk));

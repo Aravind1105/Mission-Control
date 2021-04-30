@@ -31,8 +31,14 @@ const FragmentInventory = {
           name
           images
           defaultCost
+          capacities {
+            surfaceSize
+            units
+          }
         }
         surfaceSize
+        occupancy
+        maxQty
       }
     }
   `,
@@ -193,7 +199,7 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
 `;
 export const GET_KIOSK_QUERY = gql`
   query kiosk($id: String!) {
-    getKioskById(id: $id) {
+    getKioskWithCapacities(id: $id) {
       ...FragmentKiosk
     }
   }

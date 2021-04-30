@@ -3,6 +3,7 @@ import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
+import { isNull } from 'lodash';
 
 const Card = ({
   cellId,
@@ -12,6 +13,8 @@ const Card = ({
   handleEdit,
   isActive,
   surfaceSize,
+  occupancy,
+  maxQty,
 }) => {
   const handleClick = () => {
     handleEdit({
@@ -54,8 +57,11 @@ const Card = ({
             </b>
             <p>
               Qty:&nbsp;
-              <ColoredBlock type="b" value={totalProducts ? 100 : 0}>
-                {totalProducts}
+              <ColoredBlock
+                type="b"
+                value={isNull(occupancy) ? undefined : occupancy}
+              >
+                {maxQty > 0 ? `${totalProducts}/${maxQty}` : `${totalProducts}`}
               </ColoredBlock>
             </p>
             <p>{`€ ${productLine.price}`}</p>
