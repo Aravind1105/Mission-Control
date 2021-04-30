@@ -37,7 +37,8 @@ const FragmentInventory = {
           }
         }
         surfaceSize
-        # occupancy
+        occupancy
+        maxQty
       }
     }
   `,
