@@ -240,29 +240,43 @@ export const DELETE_PRODUCT_LINE_IMAGE_MUTATION = gql`
   }
 `;
 
+export const priceHistory = gql`
+  fragment priceHistory on PriceHistory {
+    _id
+    price
+    validForKiosk {
+      id
+      name
+    }
+    validFrom
+    validTo
+    default
+  }
+`;
+
 export const GET_PRODUCT_PRICE_HISTORY = gql`
   query($productLineId: String!) {
     getDefaultProductLinePriceHistory(productLineId: $productLineId) {
-      _id
-      price
-      validForKiosk {
-        id
-        name
-      }
-      validFrom
-      validTo
-      default
+      ...priceHistory
     }
     getProductLineActivePriceHistory(productLineId: $productLineId) {
-      _id
-      price
-      validForKiosk {
-        id
-        name
-      }
-      validFrom
-      validTo
-      default
+      ...priceHistory
     }
   }
+  ${priceHistory}
+`;
+
+export const DELETE_PRODUCT_LINE_ACTIVE_PRICE = gql`
+  mutation deleteActivePriceHistory(
+    $productLineId: String!
+    $priceHistoryId: String!
+  ) {
+    deleteActivePriceHistory(
+      productLineId: $productLineId
+      priceHistoryId: $priceHistoryId
+    ) {
+      ...priceHistory
+    }
+  }
+  ${priceHistory}
 `;

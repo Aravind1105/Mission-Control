@@ -17,7 +17,7 @@ import './styles.less';
 import WidgetItem from './WidgetItem';
 import ConfirmationModal from '../../../shared/components/ConfirmationModal';
 
-const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
+const PriceHistoryWidget = ({ activePriceHistory, priceHistory, onClickDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState();
 
@@ -89,11 +89,11 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
                   price={price.toFixed(2)}
                   kioskUrl={!isEmpty(id) ? `/kiosks/detail/${id}` : undefined}
                   kioskName={kioskName}
-                  // showDelete={activePriceHistory}
-                  // onClickDelete={() => {
-                  //   setToDelete(_id);
-                  //   setIsModalOpen(true);
-                  // }}
+                  showDelete={activePriceHistory}
+                  onClickDelete={() => {
+                    setToDelete(_id);
+                    setIsModalOpen(true);
+                  }}
                 />
               );
             })}
@@ -105,8 +105,7 @@ const PriceHistoryWidget = ({ activePriceHistory, priceHistory }) => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         confirmHandler={() => {
-          //TODO: handle delete by using price history id from toDelete
-          //TODO: unset toDelete after deleting
+          onClickDelete(toDelete);
           setIsModalOpen(false);
         }}
         onClickNo={() => setToDelete('')}
