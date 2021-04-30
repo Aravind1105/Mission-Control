@@ -13,6 +13,7 @@ import {
   modifyProductSuccess,
   getPriceHistorySuccess,
   resetPriceHistory,
+  deleteActivePriceHistorySuccess,
 } from '../actions';
 
 const initialState = {
@@ -79,6 +80,10 @@ export default handleActions(
       ...state,
       defaultPriceHistory: [],
       activePriceHistory: [],
+    }),
+    [deleteActivePriceHistorySuccess]: (state, { payload }) => ({
+      ...state,
+      activePriceHistory: payload.activePriceHistory,
     }),
   },
   initialState,

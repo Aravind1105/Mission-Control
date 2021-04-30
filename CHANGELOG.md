@@ -1,4 +1,4 @@
-#### 1.3.38 (2021-04-30)
+#### 1.3.39 (2021-04-30)
 
 ##### Build System / Dependencies
 
@@ -8,6 +8,21 @@
 
 * **kiosk details:** LIV-2326 load cell occupany and detail inventory (84cc57d3)
 * **kiosk planogram:** LIV-2326 loadcell occupancies (5e8d2646)
+
+##### Bug Fixes
+
+* **Dashboard Alerts:**  LIV-3155 Slow Alert Table Updated (6573e845)
+* **LIV-3152:**  edit planogram error fix (8a165e2c)
+
+#### 1.3.38 (2021-04-30)
+
+##### Build System / Dependencies
+
+* **LIV-2835:**  KPI widgets designed for refills (5a6b1c1f)
+
+##### New Features
+
+* **price histroy:** LIV-2276 delete active price history feature added (41581778)
 
 ##### Bug Fixes
 

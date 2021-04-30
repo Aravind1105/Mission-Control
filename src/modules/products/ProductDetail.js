@@ -12,6 +12,7 @@ import {
   deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
+  deleteActivePriceHistory,
 } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
@@ -59,6 +60,7 @@ const ProductDetail = ({
   defaultPriceHistory,
   activePriceHistory,
   resetPriceHistory,
+  deleteActivePriceHistory,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -161,6 +163,9 @@ const ProductDetail = ({
             <PriceHistoryWidget
               priceHistory={activePriceHistory}
               activePriceHistory
+              onClickDelete={priceHistoryId =>
+                deleteActivePriceHistory({ productLineId: id, priceHistoryId })
+              }
             />
           )}
           <ImageUploader
@@ -209,6 +214,7 @@ const mapDispatchToProps = {
   deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
+  deleteActivePriceHistory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
