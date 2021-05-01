@@ -121,7 +121,7 @@ const ModalLoadCell = ({
     const isReplacementRequired =
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.planogramPosition);
-    console.log(initVal.surfaceSize, data.surfaceSize);
+
     const isShelfSizeChanged = initVal.surfaceSize
       ? initVal.surfaceSize.value !== data.surfaceSize.value
       : true;
