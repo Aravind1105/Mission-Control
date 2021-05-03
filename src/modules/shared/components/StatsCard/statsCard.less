@@ -2,14 +2,6 @@
   margin: 1em 0 !important;
 
   .stats-card-header {
-    display: flex;
-    flex-wrap: wrap;
-
-    & > * {
-      flex: 1 1 49%;
-      // margin-bottom: 0.5em !important;
-    }
-
     .content {
       white-space: normal;
       text-align: left;
@@ -21,52 +13,16 @@
     }
 
     .column-left {
-      flex: 2;
-      margin-top: 10px !important;
-    }
-
-    .column-right {
-      flex: 1;
-      flex-direction: row;
-      align-self: flex-end;
+      margin: 10px 0px 0px 5px !important;
     }
   }
 
   .sub-header {
-    font-size: 12px !important;
+    font-size: 11px !important;
   }
 
-  .stats-card-header-double {
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 0.5em !important;
-
-    & > * {
-      flex: 1 1 49%;
-    }
-
-    .content {
-      text-align: left;
-      white-space: normal;
-      vertical-align: auto;
-      font-size: 18px;
-    }
-
-    .sub.header {
-      text-align: left;
-      white-space: normal;
-      vertical-align: auto;
-    }
-
-    .column-left {
-      flex: 2;
-    }
-    .column-right {
-      flex: 1;
-      flex-direction: column;
-      align-self: center;
-      // vertical-align: middle;
-    }
+  .kpi-icons {
+    float: right;
   }
 }
 

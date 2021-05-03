@@ -146,7 +146,7 @@ const TransactionsList = ({
             <StatsCard
               icon="tag"
               customColor="#9B51E0"
-              text="Average Purchase"
+              text="Average Purchase Value"
               amount={`${widgetsData.averagePurchaseValue} €`}
               padding
               multipleWidgets

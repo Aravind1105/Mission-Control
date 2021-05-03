@@ -15,7 +15,6 @@ const StatsCard = ({
   secondaryAmount,
   multipleWidgets,
 }) => {
-  const isDoubleDeck = secondaryText || secondaryAmount;
   const [largeTxt, isLargeTxt] = useState(false);
 
   useEffect(() => {
@@ -31,25 +30,23 @@ const StatsCard = ({
       <Header
         as="h1"
         style={{ color: customColor }}
-        className={
-          isDoubleDeck ? 'stats-card-header-double' : 'stats-card-header'
-        }
+        className="stats-card-header"
       >
         <Grid.Column className="column-left">
           <Grid.Row>
             <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row style={padding && { paddingTop: '30px' }}>
-            {popup && largeTxt ? (
+          <Grid.Row style={padding && { paddingTop: '20px' }}>
+            {popup || largeTxt ? (
               <Popup
                 trigger={
                   <Header.Content
                     style={{
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
-                      width: '130px',
+                      width: '120px',
                       whiteSpace: 'nowrap',
-                      fontSize: '22px',
+                      fontSize: '26px',
                     }}
                   >
                     {amount}
@@ -64,16 +61,19 @@ const StatsCard = ({
             ) : (
               <Header.Content
                 style={{
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  width: '115px',
-                  whiteSpace: 'nowrap',
-                  fontSize: '22px',
+                  fontSize: '26px',
                 }}
               >
                 {amount}
               </Header.Content>
             )}
+
+            <Icon
+              name={icon}
+              className="kpi-icons"
+              size="large"
+              style={{ fontSize: '30px' }}
+            />
           </Grid.Row>
           {secondaryText && (
             <Header.Subheader className="sub-header">
@@ -83,16 +83,6 @@ const StatsCard = ({
           {secondaryAmount && (
             <Header.Content>{secondaryAmount}</Header.Content>
           )}
-        </Grid.Column>
-        <Grid.Column
-          className="column-right"
-          style={padding && { paddingTop: '30px' }}
-        >
-          <Icon
-            name={icon}
-            size="large"
-            style={multipleWidgets && { fontSize: '1.2em' }}
-          />
         </Grid.Column>
       </Header>
     </Segment>
