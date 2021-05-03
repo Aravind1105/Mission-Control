@@ -8,10 +8,8 @@ const StatsCard = ({
   customColor,
   amount,
   text,
-  padding,
   popup,
   secondaryText,
-  secondaryAmount,
   fontTo18,
 }) => {
   const [largeTxt, isLargeTxt] = useState(false);
@@ -32,10 +30,10 @@ const StatsCard = ({
         className="stats-card-header"
       >
         <Grid.Column className="column-left">
-          <Grid.Row>
+          <Grid.Row className="stats-row">
             <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row style={padding && { paddingTop: '20px' }}>
+          <Grid.Row className="stats-row">
             {popup && largeTxt ? (
               <Popup
                 trigger={
@@ -71,16 +69,19 @@ const StatsCard = ({
               name={icon}
               className="kpi-icons"
               size="large"
-              style={{ fontSize: '28px' }}
+              style={{ fontSize: '1.1em' }}
             />
           </Grid.Row>
           {secondaryText && (
-            <Header.Subheader className="sub-header">
-              {secondaryText}
-            </Header.Subheader>
-          )}
-          {secondaryAmount && (
-            <Header.Content>{secondaryAmount}</Header.Content>
+            <Grid.Row
+              style={{
+                padding: '0px 10px 10px 10px',
+              }}
+            >
+              <Header.Subheader className="sub-header">
+                {secondaryText}
+              </Header.Subheader>
+            </Grid.Row>
           )}
         </Grid.Column>
       </Header>

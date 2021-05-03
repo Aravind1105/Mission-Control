@@ -108,8 +108,6 @@ const TransactionsList = ({
               customColor="#219653"
               text="Total Net Sales"
               amount={`${widgetsData.totalNetIncome} €`}
-              padding
-              multipleWidgets
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -117,8 +115,6 @@ const TransactionsList = ({
               customColor="#219653"
               text="Total Gross Sales"
               amount={`${widgetsData.totalGrossIncome} €`}
-              padding
-              multipleWidgets
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -127,8 +123,6 @@ const TransactionsList = ({
               customColor="#F2994A"
               text="Total Products sold"
               amount={widgetsData.totalNumberOfProductsSold}
-              padding
-              multipleWidgets
             />
           </Grid.Column>
 
@@ -138,8 +132,6 @@ const TransactionsList = ({
               customColor="#2F80ED"
               text="Total Transactions"
               amount={widgetsData.totalNumberOfTransactions}
-              padding
-              multipleWidgets
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={16}>
@@ -148,8 +140,6 @@ const TransactionsList = ({
               customColor="#9B51E0"
               text="Average Purchase Value"
               amount={`${widgetsData.averagePurchaseValue} €`}
-              padding
-              multipleWidgets
             />
           </Grid.Column>
         </Grid.Row>

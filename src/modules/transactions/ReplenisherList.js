@@ -115,8 +115,6 @@ const ReplenisherList = ({
               customColor="#219653"
               text="Replen. Products Total Cost"
               amount={`${widgetsData.totalCostValueOfReplenishedProducts} €`}
-              multipleWidgets
-              padding
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -125,8 +123,6 @@ const ReplenisherList = ({
               customColor="#F2994A"
               text="Total Products Added"
               amount={widgetsData.totalNumberOfProductsAdded}
-              multipleWidgets
-              padding
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -134,8 +130,6 @@ const ReplenisherList = ({
               customColor="#219653"
               text="Replen. Products Sales Value"
               amount={`${widgetsData.totalSaleValueOfReplenishedProducts} €`}
-              multipleWidgets
-              padding
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -144,8 +138,6 @@ const ReplenisherList = ({
               customColor="#F2994A"
               text="Total Products Removed"
               amount={widgetsData.totalNumberOfProductsRemoved}
-              multipleWidgets
-              padding
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={16}>
@@ -154,8 +146,6 @@ const ReplenisherList = ({
               customColor="#9B51E0"
               text="Spoilage Rate"
               amount={`${widgetsData.averageSpoilageRate} %`}
-              multipleWidgets
-              padding
             />
           </Grid.Column>
         </Grid.Row>

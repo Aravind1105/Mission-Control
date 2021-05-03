@@ -59,7 +59,6 @@ const Dashboard = ({
             icon="users"
             customColor="#2D9CDB"
             text="Customers Today"
-            padding
             amount={widgetData.totalNumberOfCustomers}
           />
         </Grid.Column>
@@ -68,7 +67,6 @@ const Dashboard = ({
             icon="boxes"
             customColor="#F2994A"
             text="Products Sold Today"
-            padding
             amount={widgetData.totalNumberOfProducts}
           />
         </Grid.Column>
@@ -77,7 +75,6 @@ const Dashboard = ({
             icon="credit card"
             customColor="#219653"
             text="Revenue Today"
-            padding
             amount={`${widgetData.totalGrossIncome} €`}
           />
         </Grid.Column>
@@ -86,7 +83,6 @@ const Dashboard = ({
             icon="tag"
             customColor="#9B51E0"
             text="Monthly Revenue"
-            padding
             amount={`${widgetData.totalMonthlyGrossIncome} €`}
           />
         </Grid.Column>

@@ -118,7 +118,6 @@ const ProductList = ({
               text="Most Sold Product"
               amount={`${widgetsData.mostRefilledProductName} `}
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
-              padding
               popup
               fontTo18
             />
@@ -130,7 +129,6 @@ const ProductList = ({
               text="Least Sold Product"
               amount={`${widgetsData.leastSoldProductName} `}
               secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
-              padding
               popup
               fontTo18
             />
@@ -143,7 +141,6 @@ const ProductList = ({
               amount={`${widgetsData.mostRefilledProductName} `}
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
               popup
-              padding
               fontTo18
             />
           </Grid.Column>
@@ -155,7 +152,6 @@ const ProductList = ({
               amount={`${widgetsData.mostRemovedProductName} `}
               secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
               popup
-              padding
               fontTo18
             />
           </Grid.Column>
