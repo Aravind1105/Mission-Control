@@ -120,6 +120,7 @@ const ProductList = ({
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
               padding
               popup
+              fontTo18
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
@@ -131,6 +132,7 @@ const ProductList = ({
               secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
               padding
               popup
+              fontTo18
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
@@ -142,6 +144,7 @@ const ProductList = ({
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
               popup
               padding
+              fontTo18
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
@@ -153,6 +156,7 @@ const ProductList = ({
               secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
               popup
               padding
+              fontTo18
             />
           </Grid.Column>
         </Grid.Row>

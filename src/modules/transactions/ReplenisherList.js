@@ -113,7 +113,7 @@ const ReplenisherList = ({
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
-              text="Replenished Products Total Cost"
+              text="Replen. Products Total Cost"
               amount={`${widgetsData.totalCostValueOfReplenishedProducts} €`}
               multipleWidgets
               padding
@@ -122,7 +122,7 @@ const ReplenisherList = ({
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="boxes"
-              customColor="#219653"
+              customColor="#F2994A"
               text="Total Products Added"
               amount={widgetsData.totalNumberOfProductsAdded}
               multipleWidgets
@@ -131,8 +131,8 @@ const ReplenisherList = ({
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
-              customColor="#F2994A"
-              text="Replenished Products Sales Value"
+              customColor="#219653"
+              text="Replen. Products Sales Value"
               amount={`${widgetsData.totalSaleValueOfReplenishedProducts} €`}
               multipleWidgets
               padding

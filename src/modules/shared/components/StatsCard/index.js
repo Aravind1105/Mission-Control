@@ -4,7 +4,6 @@ import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 import './statsCard.less';
 
 const StatsCard = ({
-  color,
   icon,
   customColor,
   amount,
@@ -13,12 +12,12 @@ const StatsCard = ({
   popup,
   secondaryText,
   secondaryAmount,
-  multipleWidgets,
+  fontTo18,
 }) => {
   const [largeTxt, isLargeTxt] = useState(false);
 
   useEffect(() => {
-    if (amount.length > 13) isLargeTxt(true);
+    if (amount.length > 20) isLargeTxt(true);
     else isLargeTxt(false);
   }, [amount]);
 
@@ -37,16 +36,16 @@ const StatsCard = ({
             <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
           <Grid.Row style={padding && { paddingTop: '20px' }}>
-            {popup || largeTxt ? (
+            {popup && largeTxt ? (
               <Popup
                 trigger={
                   <Header.Content
                     style={{
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
-                      width: '120px',
+                      width: '140px',
                       whiteSpace: 'nowrap',
-                      fontSize: '26px',
+                      fontSize: fontTo18 ? '18px' : '28px',
                     }}
                   >
                     {amount}
@@ -61,7 +60,7 @@ const StatsCard = ({
             ) : (
               <Header.Content
                 style={{
-                  fontSize: '26px',
+                  fontSize: fontTo18 ? '18px' : '28px',
                 }}
               >
                 {amount}
@@ -72,7 +71,7 @@ const StatsCard = ({
               name={icon}
               className="kpi-icons"
               size="large"
-              style={{ fontSize: '30px' }}
+              style={{ fontSize: '28px' }}
             />
           </Grid.Row>
           {secondaryText && (
