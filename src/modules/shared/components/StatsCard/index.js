@@ -69,20 +69,15 @@ const StatsCard = ({
               name={icon}
               className="kpi-icons"
               size="large"
-              style={{ fontSize: '1.1em' }}
+              style={{ fontSize: '1.1em', marginTop: secondaryText && '10px' }}
             />
-          </Grid.Row>
-          {secondaryText && (
-            <Grid.Row
-              style={{
-                padding: '0px 10px 10px 10px',
-              }}
-            >
-              <Header.Subheader className="sub-header">
+
+            {secondaryText && (
+              <Header.Subheader style={{ marginBottom: '5px' }}>
                 {secondaryText}
               </Header.Subheader>
-            </Grid.Row>
-          )}
+            )}
+          </Grid.Row>
         </Grid.Column>
       </Header>
     </Segment>
