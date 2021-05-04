@@ -1,3 +1,18 @@
+#### 1.3.40 (2021-05-04)
+
+##### New Features
+
+* **user details:** LIV-3164 payment methods display texts updated (8a56d124)
+
+##### Bug Fixes
+
+* **LIV-2835:**
+  *  KPI card fix (cecffa6d)
+  *  layout fix (714de345)
+  *  Fixed card issue and the  productline null value (29a16fe4)
+* **KPI:**  Layout and font changes (bf871628)
+* **modal load cell:** LIV-2326 shelf size not saving bug fix (507dfb11)
+
 #### 1.3.39 (2021-04-30)
 
 ##### Build System / Dependencies

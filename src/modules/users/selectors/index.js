@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import format from 'date-fns/format';
+import * as R from 'ramda';
 
 const userLogMessages = {
   purchase: 'CONSUMER APP',
@@ -48,7 +49,15 @@ export const userInitialValues = {
 };
 
 export const getActiveUserIDState = createSelector(getActiveUserState, user => {
-  return user
+  const cardTypes = {
+    credit: 'Credit Card',
+    debit: 'Debit Card',
+    sepa_debit: 'SEPA Direct Debit',
+    mastercard: 'Master Card',
+    visa: 'Visa',
+  };
+
+  const userState = user
     ? {
         id: user._id,
         ...pick(user, [
@@ -65,8 +74,9 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
         mobile: get(user, 'mobile', '') || '',
         paymentMethods: user.paymentMethods
           ? user.paymentMethods.map(pMethod => {
-              return `${pMethod.provider[0].toUpperCase() +
-                pMethod.provider.slice(1)}`;
+              return pMethod.cardType
+                ? cardTypes[pMethod.cardType]
+                : cardTypes[pMethod.provider] ?? 'Placeholder';
             })
           : [],
         userCards: user.membercards ? user.membercards : [],
@@ -79,6 +89,10 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
           : [],
       }
     : userInitialValues;
+
+    // remove duplicates in payment method types
+    userState.paymentMethods = R.uniq(userState.paymentMethods);
+    return userState;
 });
 
 export const getUserLogsState = createSelector(getUserLogs, log => {
