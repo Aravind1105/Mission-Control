@@ -64,14 +64,17 @@ const StatsCard = ({
                 {amount}
               </Header.Content>
             )}
-
-            <Icon
-              name={icon}
-              className="kpi-icons"
-              size="large"
-              style={{ fontSize: '1.1em', marginTop: secondaryText && '10px' }}
-            />
-
+            {icon && (
+              <Icon
+                name={icon}
+                className="kpi-icons"
+                size="large"
+                style={{
+                  fontSize: '1.1em',
+                  marginTop: secondaryText && '10px',
+                }}
+              />
+            )}
             {secondaryText && (
               <Header.Subheader style={{ marginBottom: '5px' }}>
                 {secondaryText}
