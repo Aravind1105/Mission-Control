@@ -1,8 +1,7 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
-
 import RefillsTable from './TransactionsTable/Refills';
 const screenWidth = window.innerWidth;
+
 const columns = [
   {
     title: 'Date / Time',
@@ -123,30 +122,28 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
   return (
-    <Segment>
-      <RefillsTable
-        sortByColumn="created"
-        columns={columns}
-        data={refills}
-        getData={getData}
-        sortable
-        selectable
-        striped
-        isLoading={isLoading}
-        excludeSortBy={[
-          'status',
-          'productName',
-          'articleNumber',
-          'count',
-          'loadCell',
-          'weight',
-          'price',
-          'total',
-        ]}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
-    </Segment>
+    <RefillsTable
+      sortByColumn="created"
+      columns={columns}
+      data={refills}
+      getData={getData}
+      sortable
+      selectable
+      striped
+      isLoading={isLoading}
+      excludeSortBy={[
+        'status',
+        'productName',
+        'articleNumber',
+        'count',
+        'loadCell',
+        'weight',
+        'price',
+        'total',
+      ]}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+      sortDirection="DESC"
+    />
   );
 };
 

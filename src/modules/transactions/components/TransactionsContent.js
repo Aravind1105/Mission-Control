@@ -1,9 +1,8 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
-
 import TransactionsTable from './TransactionsTable/Sales';
 
 const screenWidth = window.innerWidth;
+
 const columns = [
   {
     title: 'Date / Time',
@@ -14,13 +13,9 @@ const columns = [
       } else if (screenWidth < 750) {
         return <div style={{ textAlign: 'left' }}> {created} </div>;
       }
-      return <div style={{ textAlign: 'center' }}> {created} </div>;
+      return <div style={{ textAlign: 'left' }}> {created} </div>;
     },
   },
-  // {
-  //   title: 'Status',
-  //   field: 'status',
-  // },
   {
     title: 'Kiosk',
     field: 'kioskName',
@@ -45,10 +40,6 @@ const columns = [
     title: 'Member Card ID',
     field: 'membercardId',
   },
-  // {
-  //   title: 'Terminal ID',
-  //   field: 'terminalID',
-  // },
   {
     title: 'Article Number',
     field: 'articleNumber',
@@ -63,16 +54,6 @@ const columns = [
       return <div style={{ textAlign: 'left' }}> {productName} </div>;
     },
   },
-  // {
-  //   title: 'Net',
-  //   field: 'price',
-  //   formatter: ({ price }) => `${(+price).toFixed(2) || 0} €`,
-  // },
-  // {
-  //   title: 'Tax',
-  //   field: 'tax',
-  //   formatter: ({ tax }) => `${tax || 0}%`,
-  // },
   {
     title: 'Quantity',
     field: 'quantity',
@@ -109,10 +90,6 @@ const columns = [
       return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
     },
   },
-  // {
-  //   title: 'Type',
-  //   field: 'type',
-  // },
 ];
 
 const TransactionsContent = ({
@@ -125,27 +102,25 @@ const TransactionsContent = ({
   //   history.push(`/kiosks/detail/${_id}`);
   // };
   return (
-    <Segment>
-      <TransactionsTable
-        sortByColumn="created"
-        excludeSortBy={[
-          'transactionID',
-          'membercardId',
-          'productName',
-          'quantity',
-          'price',
-        ]}
-        columns={columns}
-        data={transactions}
-        getData={getData}
-        sortable
-        selectable
-        striped
-        isLoading={isLoading}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
-    </Segment>
+    <TransactionsTable
+      sortByColumn="created"
+      excludeSortBy={[
+        'transactionID',
+        'membercardId',
+        'productName',
+        'quantity',
+        'price',
+      ]}
+      columns={columns}
+      data={transactions}
+      getData={getData}
+      sortable
+      selectable
+      striped
+      isLoading={isLoading}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+      sortDirection="DESC"
+    />
   );
 };
 
