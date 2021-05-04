@@ -30,7 +30,11 @@ const columns = [
     field: 'created',
     formatter: ({ created }) => {
       let [date, time] = created.split(' ');
-      return `${date}, ${time}`;
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}>
+          {date}, {time}
+        </div>
+      );
     },
   },
   {
