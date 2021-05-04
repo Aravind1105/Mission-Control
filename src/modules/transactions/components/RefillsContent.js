@@ -10,7 +10,9 @@ const columns = [
       if (created === '') {
         return '';
       }
-      return <div style={{ textAlign: 'left' }}> {created} </div>;
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+      );
     },
   },
   // {
