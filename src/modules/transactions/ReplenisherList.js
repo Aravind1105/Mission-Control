@@ -114,7 +114,9 @@ const ReplenisherList = ({
             <StatsCard
               customColor="#219653"
               text="Replen. Products Total Cost"
-              amount={`${widgetsData.totalCostValueOfReplenishedProducts} €`}
+              amount={`${widgetsData.totalCostValueOfReplenishedProducts
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -122,14 +124,18 @@ const ReplenisherList = ({
               icon="boxes"
               customColor="#F2994A"
               text="Total Products Added"
-              amount={widgetsData.totalNumberOfProductsAdded}
+              amount={widgetsData.totalNumberOfProductsAdded
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
               text="Replen. Products Sales Value"
-              amount={`${widgetsData.totalSaleValueOfReplenishedProducts} €`}
+              amount={`${widgetsData.totalSaleValueOfReplenishedProducts
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -137,7 +143,9 @@ const ReplenisherList = ({
               icon="reply"
               customColor="#F2994A"
               text="Total Products Removed"
-              amount={widgetsData.totalNumberOfProductsRemoved}
+              amount={widgetsData.totalNumberOfProductsRemoved
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={3} tablet={16}>
