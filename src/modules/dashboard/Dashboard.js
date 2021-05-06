@@ -59,7 +59,9 @@ const Dashboard = ({
             icon="users"
             customColor="#2D9CDB"
             text="Customers Today"
-            amount={widgetData.totalNumberOfCustomers}
+            amount={widgetData.totalNumberOfCustomers
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
@@ -67,7 +69,9 @@ const Dashboard = ({
             icon="boxes"
             customColor="#F2994A"
             text="Products Sold Today"
-            amount={widgetData.totalNumberOfProducts}
+            amount={widgetData.totalNumberOfProducts
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
@@ -75,7 +79,9 @@ const Dashboard = ({
             icon="credit card"
             customColor="#219653"
             text="Revenue Today"
-            amount={`${widgetData.totalGrossIncome} €`}
+            amount={`${widgetData.totalGrossIncome
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
           />
         </Grid.Column>
         <Grid.Column mobile={8} computer={4}>
@@ -83,7 +89,9 @@ const Dashboard = ({
             icon="tag"
             customColor="#9B51E0"
             text="Monthly Revenue"
-            amount={`${widgetData.totalMonthlyGrossIncome} €`}
+            amount={`${widgetData.totalMonthlyGrossIncome
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
           />
         </Grid.Column>
       </Grid.Row>
