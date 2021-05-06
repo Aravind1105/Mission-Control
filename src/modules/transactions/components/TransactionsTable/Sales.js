@@ -109,7 +109,7 @@ const SalesTable = ({
                   Array.isArray(excludeSortBy) &&
                   sortable &&
                   !excludeSortBy.find(elem => elem === field)
-                    ? 'sortable-th'
+                    ? 'sortable-transaction-header'
                     : '';
 
                 return (
