@@ -13,7 +13,9 @@ const columns = [
       } else if (screenWidth < 750) {
         return <div style={{ textAlign: 'left' }}> {created} </div>;
       }
-      return <div style={{ textAlign: 'left' }}> {created} </div>;
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+      );
     },
   },
   {
@@ -33,7 +35,7 @@ const columns = [
       if (transactionID === '') {
         return '';
       }
-      return <div style={{ textAlign: 'left' }}> {transactionID} </div>;
+      return <div style={{ textAlign: 'left' }}>{transactionID}</div>;
     },
   },
   {

@@ -57,13 +57,13 @@ const columns = [
       if (screenWidth < 750) {
         return (
           <div style={{ textAlign: 'left' }}>
-            <CellTemp temperature={temperature} />{' '}
+            <CellTemp temperature={temperature} />
           </div>
         );
       } else {
         return (
           <div style={{ textAlign: 'center' }}>
-            <CellTemp temperature={temperature} />{' '}
+            <CellTemp temperature={temperature} />
           </div>
         );
       }
