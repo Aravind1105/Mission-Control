@@ -117,9 +117,7 @@ const ProductList = ({
               customColor="#219653"
               text="Most Sold Product"
               amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue.sum
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Sold`}
+              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
               popup
               fontTo18
             />
@@ -130,9 +128,7 @@ const ProductList = ({
               customColor="#F2994A"
               text="Least Sold Product"
               amount={`${widgetsData.leastSoldProductName} `}
-              secondaryText={`${widgetsData.leastSoldProductValue.sum
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Sold`}
+              secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
               popup
               fontTo18
             />
@@ -143,9 +139,7 @@ const ProductList = ({
               customColor="#2D9CDB"
               text="Most Refilled Product"
               amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue.sum
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Refilled`}
+              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
               popup
               fontTo18
             />
@@ -156,9 +150,7 @@ const ProductList = ({
               customColor="#9B51E0"
               text="Most Removed Product"
               amount={`${widgetsData.mostRemovedProductName} `}
-              secondaryText={`${widgetsData.mostRemovedProductValue.sum
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}  Removed`}
+              secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
               popup
               fontTo18
             />
