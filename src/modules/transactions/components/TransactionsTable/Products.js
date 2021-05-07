@@ -115,7 +115,7 @@ const ProductsTable = ({
       >
         {!headless && (
           <Table.Header>
-            <Table.Row negative>
+            <Table.Row>
               <Table.HeaderCell
                 onClick={
                   sortable ? handlerHCellClick('productName') : undefined
@@ -133,22 +133,14 @@ const ProductsTable = ({
             {isSmartScreen ? (
               <></>
             ) : (
-              <>
-                <Table.Row>
-                  <Table.HeaderCell textAlign="center">
-                    Quantity
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Quantity
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    Quantity
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-                </Table.Row>
-              </>
+              <Table.Row>
+                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+              </Table.Row>
             )}
           </Table.Header>
         )}
