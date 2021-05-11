@@ -164,6 +164,7 @@ const ProductList = ({
         setSortByInCaller={sort => setSort([sort])}
         // sortDirection="DESC"
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}

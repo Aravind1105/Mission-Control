@@ -3,37 +3,7 @@ import { Segment } from 'semantic-ui-react';
 
 import ProductsTable from './TransactionsTable/Products';
 
-const columns = [
-  {
-    title: 'Product Name',
-    field: 'ProductName',
-  },
-  {
-    title: 'Sold Product Qty.',
-    field: 'SoldProductQuantity',
-  },
-  {
-    title: 'Sold Product Value',
-    field: 'SoldProductValue',
-  },
-  {
-    title: 'Replenished Product Qty.',
-    field: 'ReplenishedProductQty',
-  },
-  {
-    title: 'Replenished Product Value',
-    title2: 'test3',
-  },
-  {
-    title: 'Removed Product Qty.',
-    title2: 'test4',
-  },
-  {
-    title: 'Removed Product Value',
-    title2: 'test5',
-  },
-];
-
+//
 const ProductsContent = ({
   isLoading,
   products,
@@ -43,7 +13,6 @@ const ProductsContent = ({
   return (
     <ProductsTable
       sortByColumn="sold"
-      columns={columns}
       data={products}
       getData={getData}
       sortable

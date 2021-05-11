@@ -1,8 +1,6 @@
 import React from 'react';
 import TransactionsTable from './TransactionsTable/Sales';
 
-const screenWidth = window.innerWidth;
-
 const columns = [
   {
     title: 'Date / Time',
@@ -10,12 +8,10 @@ const columns = [
     formatter: ({ created }) => {
       if (created === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {created} </div>;
-      }
-      return (
-        <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
-      );
+      } else
+        return (
+          <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+        );
     },
   },
   {
@@ -62,10 +58,7 @@ const columns = [
     formatter: ({ quantity }) => {
       if (quantity === 0) {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {quantity} </div>;
-      }
-      return <div style={{ textAlign: 'center' }}> {quantity} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {quantity} </div>;
     },
   },
   {
@@ -74,10 +67,8 @@ const columns = [
     formatter: ({ price }) => {
       if (price === 0) {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {price.toFixed(2)}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
+      } else
+        return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
     },
   },
   {
@@ -86,10 +77,8 @@ const columns = [
     formatter: ({ total }) => {
       if (total === 0) {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {total.toFixed(2)}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
+      } else
+        return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
     },
   },
 ];
