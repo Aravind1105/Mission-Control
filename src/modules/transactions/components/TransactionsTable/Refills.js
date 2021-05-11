@@ -86,12 +86,13 @@ const RefillsTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <>
+    <div style={{ overflow: 'auto' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable transactions-table"
         basic
         celled
+        unstackable
         padded
         structured
         fixed={fixed}
@@ -181,7 +182,7 @@ const RefillsTable = ({
           </Table.Body>
         ))}
       </Table>
-    </>
+    </div>
   );
 };
 

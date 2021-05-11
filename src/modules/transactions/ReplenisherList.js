@@ -164,6 +164,7 @@ const ReplenisherList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}

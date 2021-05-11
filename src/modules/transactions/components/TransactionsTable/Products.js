@@ -13,7 +13,6 @@ const sortTypes = {
 };
 
 const ProductsTable = ({
-  columns,
   data,
   fixed,
   headless,
@@ -36,26 +35,6 @@ const ProductsTable = ({
   );
   const [sortBy, setSortBy] = useState(sortByColumn);
   const [activeRow, setActiveRow] = useState(-1);
-  let isSmartScreen;
-  let screenWidth = window.innerWidth;
-  if (screenWidth < 740) {
-    isSmartScreen = true;
-  } else {
-    isSmartScreen = false;
-  }
-  const smartScreenRow = {
-    display: 'flex',
-    flexDirection: 'row',
-  };
-  const smartScreenCellOne = {
-    flex: 1,
-    fontWeight: 'bold',
-    textAlign: 'left',
-  };
-  const smartScreenCellTwo = {
-    flex: 2,
-    textAlign: 'right',
-  };
 
   useEffect(() => {
     let res = data;
@@ -99,12 +78,13 @@ const ProductsTable = ({
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
 
   return (
-    <>
+    <div style={{ overflow: 'auto' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable"
         basic
         celled
+        unstackable
         padded
         structured
         fixed={fixed}
@@ -130,155 +110,61 @@ const ProductsTable = ({
               </Table.HeaderCell>
               <Table.HeaderCell colSpan="2">Removed Products</Table.HeaderCell>
             </Table.Row>
-            {isSmartScreen ? (
-              <></>
-            ) : (
-              <Table.Row>
-                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-                <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-              </Table.Row>
-            )}
+            <Table.Row>
+              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+            </Table.Row>
           </Table.Header>
         )}
-        {isSmartScreen ? (
-          <>
-            <Table.Body className="tb-products">
-              {resultData.length > 0 &&
-                resultData.map(product => {
-                  return (
-                    <Table.Row
-                      key={_.uniqueId()}
-                      active={activeRow === product.productID}
-                    >
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>Product Name</div>
-                          <div style={smartScreenCellTwo}>
-                            {product.productName}
-                          </div>
-                        </div>
-                      </Table.Cell>
 
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>Sold: Quantity</div>
-                          <div style={smartScreenCellTwo}>
-                            {`${Number(product.sold || 0).toFixed(0)}`}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>Sold: Value</div>
-                          <div style={smartScreenCellTwo}>
-                            {`${Number(product.totalGrossSales || 0).toFixed(
-                              2,
-                            )}€`}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>
-                            Replenished: Quantity
-                          </div>
-                          <div style={smartScreenCellTwo}>
-                            {product.refilled || 0}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>
-                            Replenished: Value
-                          </div>
-                          <div style={smartScreenCellTwo}>
-                            {`${Number(
-                              product.refilled * product.defaultPrice || 0,
-                            ).toFixed(2)} €`}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>
-                            Removed: Quantity
-                          </div>
-                          <div style={smartScreenCellTwo}>
-                            {product.removed || 0}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <div style={smartScreenRow}>
-                          <div style={smartScreenCellOne}>Removed: Value</div>
-                          <div style={smartScreenCellTwo}>
-                            {`${Number(
-                              product.removed * product.defaultPrice || 0,
-                            ).toFixed(2)}€`}
-                          </div>
-                        </div>
-                      </Table.Cell>
-                    </Table.Row>
-                  );
-                })}
-              {resultData.length === 0 && (
-                <Table.Row>
-                  <Table.Cell>Your query returned no results.</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </>
-        ) : (
-          <>
-            <Table.Body className="tb-products">
-              {resultData.length > 0 &&
-                resultData.map(product => {
-                  return (
-                    <Table.Row
-                      key={_.uniqueId()}
-                      active={activeRow === product.productID}
-                    >
-                      <Table.Cell>{product.productName}</Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {`${Number(product.sold || 0).toFixed(0)}`}
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">{`${Number(
-                        product.totalGrossSales || 0,
-                      ).toFixed(2)}€`}</Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {product.refilled || 0}
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        {`${Number(
-                          product.refilled * product.defaultPrice || 0,
-                        ).toFixed(2)} €`}
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">
-                        {product.removed || 0}
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        {`${Number(
-                          product.removed * product.defaultPrice || 0,
-                        ).toFixed(2)}€`}
-                      </Table.Cell>
-                    </Table.Row>
-                  );
-                })}
-              {resultData.length === 0 && (
-                <Table.Row>
-                  <Table.Cell>Your query returned no results.</Table.Cell>
-                </Table.Row>
-              )}
-            </Table.Body>
-          </>
-        )}
+        <>
+          <Table.Body className="tb-products">
+            {resultData.length > 0 &&
+              resultData.map(product => {
+                return (
+                  <Table.Row
+                    key={_.uniqueId()}
+                    active={activeRow === product.productID}
+                  >
+                    <Table.Cell>{product.productName}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {`${Number(product.sold || 0).toFixed(0)}`}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">{`${Number(
+                      product.totalGrossSales || 0,
+                    ).toFixed(2)}€`}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {product.refilled || 0}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {`${Number(
+                        product.refilled * product.defaultPrice || 0,
+                      ).toFixed(2)}€`}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {product.removed || 0}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {`${Number(
+                        product.removed * product.defaultPrice || 0,
+                      ).toFixed(2)}€`}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
+            {resultData.length === 0 && (
+              <Table.Row>
+                <Table.Cell>Your query returned no results.</Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </>
       </Table>
-    </>
+    </div>
   );
 };
 

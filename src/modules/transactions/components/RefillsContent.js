@@ -1,6 +1,5 @@
 import React from 'react';
 import RefillsTable from './TransactionsTable/Refills';
-const screenWidth = window.innerWidth;
 
 const columns = [
   {
@@ -63,10 +62,7 @@ const columns = [
     formatter: ({ count }) => {
       if (count === 0) {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {count} </div>;
-      }
-      return <div style={{ textAlign: 'center' }}> {count} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {count} </div>;
     },
   },
   {
@@ -75,10 +71,7 @@ const columns = [
     formatter: ({ loadCell }) => {
       if (loadCell === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {loadCell} </div>;
-      }
-      return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
     },
   },
   {
@@ -87,10 +80,7 @@ const columns = [
     formatter: ({ weight }) => {
       if (weight === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {weight} </div>;
-      }
-      return <div style={{ textAlign: 'center' }}> {weight} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {weight} </div>;
     },
   },
   {
@@ -99,10 +89,7 @@ const columns = [
     formatter: ({ cost }) => {
       if (cost === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {cost}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
+      } else return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
     },
   },
   {
@@ -111,10 +98,7 @@ const columns = [
     formatter: ({ total }) => {
       if (total === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {total}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}> {total}€ </div>;
+      } else return <div style={{ textAlign: 'right' }}> {total}€ </div>;
     },
   },
 ];
