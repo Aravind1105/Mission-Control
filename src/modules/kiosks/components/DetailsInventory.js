@@ -57,7 +57,7 @@ const DetailsInventory = ({ list, total }) => {
         </Grid.Row>
       </Grid>
       <Divider />
-      <Table basic="very">
+      <Table basic="very" unstackable>
         <Table.Body>
           {inventoryItems.map(
             (
