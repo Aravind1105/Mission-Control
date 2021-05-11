@@ -1,3 +1,21 @@
+#### 1.3.41 (2021-05-11)
+
+##### Bug Fixes
+
+* **kiosk details:** LIV-3240 qr code PDF download fix (111886fd)
+* **Dashboard, Kiosks, Organizations, Products :**  LIV-3233: Tables Headers Border Updated (48b5d552)
+* **Transaction-Products:**  LIV-3236: Headers Border Updated (80ff0c59)
+* **Transaction:**
+  *  LIV-3224: Products:Widgets number format (2b43b049)
+  *  LIV-3224: Products:Widgets number format (65272563)
+  *  LIV-3223: Refills:Widgets number format (4d33c2d3)
+  *  LIV-3222: Sales:Widget number format (b3412154)
+  *  LIV-3093:Sales and Refills Table Fixed (2b3b25bb)
+* **Dashboard:**  LIV-3225: Dashboard:Widgets number format (f640d39e)
+* **Transaction/Activity Log:**  LIV-2973: Date/Time Formate (492b1c2e)
+* **Transactions/Activity Log:**  LIV-2973 Time Date Formate (83f6dbc0)
+* **LIV-2835:**  refills KPI fix (fccaf23d)
+
 #### 1.3.40 (2021-05-04)
 
 ##### New Features
