@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid,
@@ -9,21 +9,24 @@ import {
   Button,
 } from 'semantic-ui-react';
 import QRCode from 'qrcode.react';
+import { Document, Page, PDFDownloadLink, Image } from '@react-pdf/renderer';
 
-const id = Date.now();
-const DetailQRCode = ({ qrCode }) => {
-  const downloadQR = () => {
-    const svg = window.document.getElementById(id);
-    const printWindow = window.open('', '', 'width=800,height=600');
-    printWindow.document.write(
-      '<svg shape-rendering="crispEdges" height="400" width="400" viewBox="0 0 25 25">',
-    );
-    printWindow.document.write(svg.innerHTML);
-    printWindow.document.write('</svg>');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-  };
+const DetailQRCode = ({ qrCode, fileName }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [qrImage, setQrImage] = useState('');
+
+  useEffect(() => {
+    setQrImage(document.querySelector('canvas').toDataURL('image/jpg', 0.3));
+    setIsLoading(false);
+  }, []);
+
+  const QrDocument = (
+    <Document>
+      <Page size="A4" style={{}}>
+        <Image src={{ uri: qrImage }} style={{ height: 200, width: 200 }} />
+      </Page>
+    </Document>
+  );
 
   return (
     <Grid.Row>
@@ -35,23 +38,24 @@ const DetailQRCode = ({ qrCode }) => {
                 <Header as="h3">QR Code</Header>
               </Grid.Column>
               <Grid.Column width={4} className="text-align-right">
-                <Button onClick={downloadQR} basic icon="print" />
+                {!isLoading && (
+                  <PDFDownloadLink document={QrDocument} fileName={fileName}>
+                    {({ blob, url, loading, error }) => (
+                      <Button basic icon="print" />
+                    )}
+                  </PDFDownloadLink>
+                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
           <Divider />
           <Container textAlign="center">
-            <QRCode value={qrCode} size={200} renderAs="svg" id={id} />
+            <QRCode value={qrCode} size={200} renderAs="canvas" />
           </Container>
         </Segment>
       </Grid.Column>
     </Grid.Row>
   );
-};
-
-DetailQRCode.propTypes = {
-  qrCode: PropTypes.string.isRequired,
 };
 
 export default DetailQRCode;
