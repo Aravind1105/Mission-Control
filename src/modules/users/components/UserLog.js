@@ -118,7 +118,7 @@ const columns = [
             {event.paymentMethod.map(pay => {
               return (
                 <span style={{ paddingLeft: '15px' }}>
-                  {pay.isPaid ? 'PAID' : 'NOT PAID'} /{' '}
+                  {pay.isPaid ? 'PAID' : 'PENDING'} /{' '}
                   {pay.memberId !== null
                     ? `MembercardId: ${pay.memberId}`
                     : pay.stripeId !== null
