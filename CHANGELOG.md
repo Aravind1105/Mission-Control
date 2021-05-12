@@ -1,3 +1,11 @@
+#### 1.4.1 (2021-05-12)
+
+##### Bug Fixes
+
+* **Mobile View - Kiosk Details - breadcrumb:**  LIV-3249:Menu Redesign (e356af56)
+* **Mobile View - Kiosk Details - Inventory:**  LIV-3253:  Kiosk details Inventory Table Updated (4707d459)
+* **kiosks:** sagas fixed (646edbe3)
+
 ### 1.4.0 (2021-05-12)
 
 ##### Bug Fixes
