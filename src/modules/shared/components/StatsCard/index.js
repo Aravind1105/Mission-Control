@@ -1,46 +1,86 @@
-import React from 'react';
-import { Header, Icon, Segment, Grid } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 
 import './statsCard.less';
 
 const StatsCard = ({
-  color,
   icon,
+  customColor,
   amount,
   text,
+  popup,
   secondaryText,
-  secondaryAmount,
+  fontTo18,
 }) => {
-  const isDoubleDeck = secondaryText || secondaryAmount;
+  const [largeTxt, isLargeTxt] = useState(false);
+
+  useEffect(() => {
+    if (amount.length > 20) isLargeTxt(true);
+    else isLargeTxt(false);
+  }, [amount]);
+
   return (
-    <Segment className="stats-card">
+    <Segment
+      className="stats-card"
+      style={{ borderBottom: `3px solid ${customColor}` }}
+    >
       <Header
         as="h1"
-        color={color}
-        className={
-          isDoubleDeck ? 'stats-card-header-double' : 'stats-card-header'
-        }
+        style={{ color: customColor }}
+        className="stats-card-header"
       >
         <Grid.Column className="column-left">
-          <Grid.Row>
-            <Header.Subheader>{text}</Header.Subheader>
+          <Grid.Row className="stats-row">
+            <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row>
-            <Header.Content>{amount}</Header.Content>
+          <Grid.Row className="stats-row">
+            {popup && largeTxt ? (
+              <Popup
+                trigger={
+                  <Header.Content
+                    style={{
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      width: '140px',
+                      whiteSpace: 'nowrap',
+                      fontSize: fontTo18 ? '18px' : '28px',
+                    }}
+                  >
+                    {amount}
+                  </Header.Content>
+                }
+                position="top left"
+                wide
+                hoverable
+              >
+                {amount}
+              </Popup>
+            ) : (
+              <Header.Content
+                style={{
+                  fontSize: fontTo18 ? '18px' : '28px',
+                }}
+              >
+                {amount}
+              </Header.Content>
+            )}
+            {icon && (
+              <Icon
+                name={icon}
+                className="kpi-icons"
+                size="large"
+                style={{
+                  fontSize: '1.1em',
+                  marginTop: secondaryText && '10px',
+                }}
+              />
+            )}
+            {secondaryText && (
+              <Header.Subheader style={{ marginBottom: '5px' }}>
+                {secondaryText}
+              </Header.Subheader>
+            )}
           </Grid.Row>
-          {isDoubleDeck && (
-            <>
-              <Grid.Row className="lower-deck">
-                <Header.Subheader>{secondaryText}</Header.Subheader>
-              </Grid.Row>
-              <Grid.Row>
-                <Header.Content>{secondaryAmount}</Header.Content>
-              </Grid.Row>
-            </>
-          )}
-        </Grid.Column>
-        <Grid.Column className="column-right">
-          <Icon name={icon} size="large" />
         </Grid.Column>
       </Header>
     </Segment>

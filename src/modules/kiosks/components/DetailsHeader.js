@@ -7,12 +7,19 @@ import CellDoorStatus from './CellDoorStatus';
 
 import '../styles.less';
 
-const DetailsHeader = ({ name, doorStatus, temperature, session }) => {
+const DetailsHeader = ({ name, doorStatus, temperature, session, service }) => {
   return (
     <Grid>
       <Grid.Row relaxed="very" columns={4}>
         <Grid.Column width={doorStatus === 'open' ? 4 : 6}>
           <Header as="h3">{name}</Header>
+          {service ? (
+            <b style={{ textDecoration: 'underline', color: '#EB5757' }}>
+              Out of Service
+            </b>
+          ) : (
+            <></>
+          )}
         </Grid.Column>
         <Grid.Column width={4} className="flex-end">
           <b>

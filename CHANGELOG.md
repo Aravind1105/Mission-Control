@@ -1,3 +1,155 @@
+#### 1.3.42 (2021-05-12)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3267 SEPA payment status set to PENDING from NOT PAID (61e54585)
+* **Mobile View Optimization-Transaction Tables:**  LIV-3255:  Updated All Trasaction Tables Component and added Horizontal Scrollable Functionality (92f51bb1)
+* **Mobile View Optimization:**
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (7f911a4e)
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (ca8f90ea)
+
+#### 1.3.41 (2021-05-11)
+
+##### Bug Fixes
+
+* **kiosk details:** LIV-3240 qr code PDF download fix (111886fd)
+* **Dashboard, Kiosks, Organizations, Products :**  LIV-3233: Tables Headers Border Updated (48b5d552)
+* **Transaction-Products:**  LIV-3236: Headers Border Updated (80ff0c59)
+* **Transaction:**
+  *  LIV-3224: Products:Widgets number format (2b43b049)
+  *  LIV-3224: Products:Widgets number format (65272563)
+  *  LIV-3223: Refills:Widgets number format (4d33c2d3)
+  *  LIV-3222: Sales:Widget number format (b3412154)
+  *  LIV-3093:Sales and Refills Table Fixed (2b3b25bb)
+* **Dashboard:**  LIV-3225: Dashboard:Widgets number format (f640d39e)
+* **Transaction/Activity Log:**  LIV-2973: Date/Time Formate (492b1c2e)
+* **Transactions/Activity Log:**  LIV-2973 Time Date Formate (83f6dbc0)
+* **LIV-2835:**  refills KPI fix (fccaf23d)
+
+#### 1.3.40 (2021-05-04)
+
+##### New Features
+
+* **user details:** LIV-3164 payment methods display texts updated (8a56d124)
+
+##### Bug Fixes
+
+* **LIV-2835:**
+  *  KPI card fix (cecffa6d)
+  *  layout fix (714de345)
+  *  Fixed card issue and the  productline null value (29a16fe4)
+* **KPI:**  Layout and font changes (bf871628)
+* **modal load cell:** LIV-2326 shelf size not saving bug fix (507dfb11)
+
+#### 1.3.39 (2021-04-30)
+
+##### Build System / Dependencies
+
+* **LIV-2835:**  KPI widgets designed for refills (5a6b1c1f)
+
+##### New Features
+
+* **kiosk details:** LIV-2326 load cell occupany and detail inventory (84cc57d3)
+* **kiosk planogram:** LIV-2326 loadcell occupancies (5e8d2646)
+
+##### Bug Fixes
+
+* **Dashboard Alerts:**  LIV-3155 Slow Alert Table Updated (6573e845)
+* **LIV-3152:**  edit planogram error fix (8a165e2c)
+
+#### 1.3.38 (2021-04-30)
+
+##### Build System / Dependencies
+
+* **LIV-2835:**  KPI widgets designed for refills (5a6b1c1f)
+
+##### New Features
+
+* **price histroy:** LIV-2276 delete active price history feature added (41581778)
+
+##### Bug Fixes
+
+* **Dashboard Alerts:**  LIV-3155 Slow Alert Table Updated (6573e845)
+* **LIV-3152:**  edit planogram error fix (8a165e2c)
+
+#### 1.3.37 (2021-04-26)
+
+##### New Features
+
+* **modify load cell:** LIV-3122 surface size changing (7792111e)
+
+##### Bug Fixes
+
+* **Mobile-Transaction-Product:**  LIV-3087:Product Transaction Mobile View Optimized (f2d89e0b)
+* **kiosks:** sagas fixed (ee317d5b)
+
+#### 1.3.36 (2021-04-23)
+
+##### Bug Fixes
+
+* **product detail:** LIV-3134 random price history shown for create product screen - bug fixed (b691aa20)
+* **Product Detail Article Number:**
+  *  LIV-2826:Article Number on Product updated with null check (a4af814e)
+  *  LIV-2826:Article Number on Product will be updated for each product (976177ba)
+* **User Profile Bar:**
+  *  LIV-3097:Long UserName and Email OverFlow Fix updated (909aec6e)
+  *  LIV-3097:Long UserName and Email OverFlow Fix (d7f6379e)
+* **Trasactions CSV Button:**  LIV-2953: CSV Button Filter Functionality Updated (4e73a00b)
+* **Kiosk Activity Log:**  LIV-2825: Activity Log updated (7b90ca4f)
+* **Dashboard Chart:**
+  *  LIV-3012: Shortedn the text of days (aaa4258e)
+  *  LIV-3012: Shortedn the text of days (2a0127d4)
+  *  LIV-3012: Origntation of the Days at chart (428b9ad5)
+* **Kiosks:**  LIV-2915: Out of Service Header (5a8fdec2)
+* **LIV-3079:**  card txt size fixed (f575d34d)
+* **Kiosks Filter Option:**  LIV-3050: Placeholder of Kiosk Dropdown Updated (dca67dfb)
+* **transactions-products:** LIV-3133 kpi resolver called twice removed (5a1d2917)
+
+##### Other Changes
+
+*  Refills CSV Download): LIV-3135: CSV Button Filter Functionality Updated (12ff7c2e)
+* **LIV-3079:**  KPI widgets sales design changed (057df3f4)
+* **LIV-3080:**  KPI design changed (64006a59)
+* **LIV-3111:** Changed the design of KPI widgets (7ae9ffcb)
+
+#### 1.3.35 (2021-04-19)
+
+##### Build System / Dependencies
+
+* **QRcode:**  updated QRcode link (db4fc718)
+
+##### New Features
+
+* **LIV-3100:**  Changed the format of address column (cfbcc3c9)
+
+##### Bug Fixes
+
+* **Transactions-refills:** LIV-3133 refils KPI resolver called for the second time is removed as it is not necessary (804cb6a7)
+* **transaction-sales:** LIV-3133 KPI data called for the second time is removed as it it not necessary (bbcfa14d)
+* **LIV-3095:**  Alert info icon visible (db7f241c)
+* **LIV-3105:**  inventory sorted in asc (95823c09)
+* **LIV-3104:** default price fixed to 2 decimal places (4505a057)
+* **LIV-3102:**  directions/notes format changed (b5756be4)
+* **LIV-3103:**  notes and address lines bug (1aab87bb)
+* **Users:**  LIV-2869:User Cards to Member Cards (236ecc64)
+* **Transactions:**
+  *  LIV-2661 : Products Products Filter Hide (827cf6ec)
+  *  LIV-2661 : Products Fileters (475b62f4)
+* **Dashboard:**  LIV-2799 : Tooltip fixed (7de53b9b)
+* **Products:**  LIV-2951 : dropdown category space added (5ae8d99b)
+* **Dashboard Alert:**  LIV-2799 : tooltip added on Alert Button (5f212702)
+* **Products Dropdown:**
+  *  LIV-2951 Dropdown option fixed for Categories (f86ed720)
+  *  LIV-2951 Dropdown option fixed for Categories (5ca78e1f)
+* **products list:** LIV-2951 toolbar unsed code causing white screen fixed (e51dbf71)
+* **product detail:**
+  * LIV-1952 price history widget price format fixed (2a02a55c)
+  * LIV-1952 price format fixed (7d1df5f9)
+  * LIV-1952 date format fixed in the component (7ddb81b0)
+* **Standardised Format:**
+  *  LIV-2793 Temp formate updated (c55190e2)
+  *  LIV-2793 Temp formate updated (f78ef1af)
+
 #### 1.3.34 (2021-04-12)
 
 ##### New Features

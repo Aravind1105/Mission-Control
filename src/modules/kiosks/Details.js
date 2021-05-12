@@ -111,6 +111,7 @@ const KioskDetails = ({
                     doorStatus={kiosk && kiosk.doorStatus}
                     temperature={kiosk && kiosk.temperature}
                     session={kiosk && kiosk.session}
+                    service={kiosk && kiosk.controller.serviceCheck.enabled}
                   />
                   <Divider />
                   <DetailsInfo
@@ -183,6 +184,7 @@ const KioskDetails = ({
               qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk &&
                 kiosk.qrcode}&slug=${orgData &&
                 orgData.slug}&appleId=${orgData && orgData.appleId}`}
+              fileName={kiosk && kiosk.name || ''}
             />
             <Grid.Row>
               <Grid.Column>

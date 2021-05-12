@@ -96,7 +96,6 @@ const ReplenisherList = ({
 
   useEffect(() => {
     getProductListSaga();
-    getRefillsWidgetsData();
   }, []);
 
   useEffect(() => {
@@ -111,38 +110,50 @@ const ReplenisherList = ({
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
+            <StatsCard
+              customColor="#219653"
+              text="Replen. Products Total Cost"
+              amount={`${widgetsData.totalCostValueOfReplenishedProducts
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="boxes"
-              color="green"
-              text="Total Products Replenished"
-              amount={widgetsData.totalNumberOfProductsAdded}
+              customColor="#F2994A"
+              text="Total Products Added"
+              amount={widgetsData.totalNumberOfProductsAdded
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
-              icon="tag"
-              color="orange"
-              text="Replenished Products Total Cost"
-              amount={`€ ${widgetsData.totalCostValueOfReplenishedProducts} `}
-              secondaryText="Replenished Products Sales Value"
-              secondaryAmount={`€ ${widgetsData.totalSaleValueOfReplenishedProducts} `}
+              customColor="#219653"
+              text="Replen. Products Sales Value"
+              amount={`${widgetsData.totalSaleValueOfReplenishedProducts
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="reply"
-              color="blue"
-              text="Total products Removed"
-              amount={widgetsData.totalNumberOfProductsRemoved}
+              customColor="#F2994A"
+              text="Total Products Removed"
+              amount={widgetsData.totalNumberOfProductsRemoved
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3} tablet={16}>
             <StatsCard
               icon="trash alternate"
-              color="violet"
-              text="Spoilage rate"
-              amount={`${widgetsData.averageSpoilageRate}%`}
+              customColor="#9B51E0"
+              text="Spoilage Rate"
+              amount={`${widgetsData.averageSpoilageRate} %`}
             />
           </Grid.Column>
         </Grid.Row>
@@ -153,6 +164,7 @@ const ReplenisherList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}

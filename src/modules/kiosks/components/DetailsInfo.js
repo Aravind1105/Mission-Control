@@ -13,6 +13,7 @@ const DetailsInfo = ({
   notes,
   pin,
 }) => {
+  let name = '';
   let addressLine1 = '';
   let addressLine2 = '';
   let addressLine3 = '';
@@ -22,15 +23,11 @@ const DetailsInfo = ({
   let address = location && location.address;
 
   if (address && address.line1 !== null) {
-    addressLine1 += address.name ? `${address.name}, ` : '';
+    name = address.name ? `${address.name}` : '';
     addressLine1 += `${address.line1}`;
     addressLine2 += address.line2 ? `${address.line2}` : '';
-    if (address.line2) {
-      addressLine3 += `, ${address.state}`;
-    } else {
-      // addressLine1 += `, ${address.state}`;
-    }
     addressSecondLine += `${address.postalCode} ${address.city}`;
+    if (address.state) addressSecondLine += `, ${address.state}`;
     addressThirdLine += `${address.country}`;
   }
   let sessionType = 'no session';
@@ -50,14 +47,15 @@ const DetailsInfo = ({
               <InfoRow title="Serial" description={serial} />
               <InfoRow title="Session" description={sessionType} />
               {addressLine1 !== '' && (
-                <InfoRow title="Address" description={addressLine1} />
+                <InfoRow title="Address" description={name} />
               )}
+              {addressLine1 !== '' && <InfoRow description={addressLine1} />}
               {addressLine2 !== '' && <InfoRow description={addressLine2} />}
               {addressLine3 !== '' && <InfoRow description={addressLine3} />}
-              {addressLine1 !== '' && (
+              {addressSecondLine !== '' && (
                 <InfoRow description={addressSecondLine} />
               )}
-              {addressLine1 !== '' && (
+              {addressThirdLine !== '' && (
                 <InfoRow description={addressThirdLine} />
               )}
               {notes && (

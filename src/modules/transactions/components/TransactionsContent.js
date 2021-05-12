@@ -1,6 +1,4 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
-
 import TransactionsTable from './TransactionsTable/Sales';
 
 const columns = [
@@ -10,14 +8,12 @@ const columns = [
     formatter: ({ created }) => {
       if (created === '') {
         return '';
-      }
-      return <div style={{ textAlign: 'center' }}> {created} </div>;
+      } else
+        return (
+          <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+        );
     },
   },
-  // {
-  //   title: 'Status',
-  //   field: 'status',
-  // },
   {
     title: 'Kiosk',
     field: 'kioskName',
@@ -35,17 +31,13 @@ const columns = [
       if (transactionID === '') {
         return '';
       }
-      return <div style={{ textAlign: 'left' }}> {transactionID} </div>;
+      return <div style={{ textAlign: 'left' }}>{transactionID}</div>;
     },
   },
   {
     title: 'Member Card ID',
     field: 'membercardId',
   },
-  // {
-  //   title: 'Terminal ID',
-  //   field: 'terminalID',
-  // },
   {
     title: 'Article Number',
     field: 'articleNumber',
@@ -60,24 +52,13 @@ const columns = [
       return <div style={{ textAlign: 'left' }}> {productName} </div>;
     },
   },
-  // {
-  //   title: 'Net',
-  //   field: 'price',
-  //   formatter: ({ price }) => `${(+price).toFixed(2) || 0} €`,
-  // },
-  // {
-  //   title: 'Tax',
-  //   field: 'tax',
-  //   formatter: ({ tax }) => `${tax || 0}%`,
-  // },
   {
     title: 'Quantity',
     field: 'quantity',
     formatter: ({ quantity }) => {
       if (quantity === 0) {
         return '';
-      }
-      return <div style={{ textAlign: 'center' }}> {quantity} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {quantity} </div>;
     },
   },
   {
@@ -86,21 +67,20 @@ const columns = [
     formatter: ({ price }) => {
       if (price === 0) {
         return '';
-      }
-      return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
+      } else
+        return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
     },
   },
   {
     title: 'Total Price',
     field: 'total',
-    formatter: ({ total }) => (
-      <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>
-    ),
+    formatter: ({ total }) => {
+      if (total === 0) {
+        return '';
+      } else
+        return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
+    },
   },
-  // {
-  //   title: 'Type',
-  //   field: 'type',
-  // },
 ];
 
 const TransactionsContent = ({
@@ -113,27 +93,25 @@ const TransactionsContent = ({
   //   history.push(`/kiosks/detail/${_id}`);
   // };
   return (
-    <Segment>
-      <TransactionsTable
-        sortByColumn="created"
-        excludeSortBy={[
-          'transactionID',
-          'membercardId',
-          'productName',
-          'quantity',
-          'price',
-        ]}
-        columns={columns}
-        data={transactions}
-        getData={getData}
-        sortable
-        selectable
-        striped
-        isLoading={isLoading}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
-    </Segment>
+    <TransactionsTable
+      sortByColumn="created"
+      excludeSortBy={[
+        'transactionID',
+        'membercardId',
+        'productName',
+        'quantity',
+        'price',
+      ]}
+      columns={columns}
+      data={transactions}
+      getData={getData}
+      sortable
+      selectable
+      striped
+      isLoading={isLoading}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+      sortDirection="DESC"
+    />
   );
 };
 

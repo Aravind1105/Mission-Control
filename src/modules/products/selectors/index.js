@@ -31,7 +31,7 @@ export const getProductsDropdownList = createSelector(
     }));
     const sortedProductList = sortByText(productsList, 'text');
 
-    return [{ value: '', text: 'All products', key: 'all' }].concat(
+    return [{ value: '', text: 'All Products', key: 'all' }].concat(
       sortedProductList,
     );
   },
@@ -227,6 +227,7 @@ export const selectorGetProductInitValue = createSelector(
       defaultPriceId: get(priceHistory, '_id', ''),
       // family: get(product, 'family._id', ''),
       tax,
+      articleNumber: get(product, 'articleNumber', '') || '',
       defaultCost: (+rest.defaultCost).toFixed(2),
     };
   },

@@ -2,78 +2,25 @@
   margin: 1em 0 !important;
 
   .stats-card-header {
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 0.5em !important;
-    // padding-bottom: 0.5em !important;
-
-    & > * {
-      flex: 1 1 49%;
-      margin-bottom: 0.5em !important;
-    }
-
     .content {
       white-space: normal;
       text-align: left;
     }
 
-    .sub.header {
+    .sub-header {
       white-space: normal;
-      text-align: left;
+      font-size: 11px !important;
+      font-weight: 700 !important;
     }
 
     .column-left {
-      flex: 2;
-      margin-top: 14px !important;
-    }
-
-    .column-right {
-      flex: 1;
-      flex-direction: row;
-      align-self: flex-end;
-      margin-top: 14px !important;
-      margin-bottom: 20px !important;
+      padding: 10px;
     }
   }
 
-  .stats-card-header-double {
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 110;
-    max-height: 170px;
-    padding-top: 0.2em !important;
-    padding-bottom: 0.5em !important;
-
-    & > * {
-      flex: 1 1 49%;
-    }
-
-    .lower-deck {
-      margin-top: 5px !important;
-    }
-
-    .content {
-      text-align: left;
-      white-space: normal;
-      vertical-align: auto;
-      font-size: 18px;
-    }
-
-    .sub.header {
-      text-align: left;
-      white-space: normal;
-      vertical-align: auto;
-    }
-
-    .column-left {
-      flex: 2;
-    }
-    .column-right {
-      flex: 1;
-      flex-direction: column;
-      align-self: center;
-      // vertical-align: middle;
-    }
+  .kpi-icons {
+    float: right;
+    line-height: unset;
   }
 }
 
@@ -88,4 +35,12 @@
 }
 .recharts-tooltip-label {
   display: none;
+}
+
+.stats-card {
+  padding: unset !important;
+}
+
+.stats-row {
+  padding: 10px 10px 5px 10px !important;
 }

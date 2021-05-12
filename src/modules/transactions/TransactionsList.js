@@ -91,10 +91,6 @@ const TransactionsList = ({
   };
 
   useEffect(() => {
-    getTransactionsWidgetsData();
-  }, []);
-
-  useEffect(() => {
     getData({ sort });
   }, [page, perPage, dateRange, kiosk]);
 
@@ -106,39 +102,54 @@ const TransactionsList = ({
         changeKiosk={changeKiosk}
       />
       <Grid>
-        <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4} tablet={8}>
+        <Grid.Row>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
-              icon="money"
-              color="green"
+              customColor="#219653"
               text="Total Net Sales"
-              amount={`€ ${widgetsData.totalNetIncome} `}
-              secondaryText="Total Gross Sales"
-              secondaryAmount={`€ ${widgetsData.totalGrossIncome} `}
+              amount={`${widgetsData.totalNetIncome
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
+            <StatsCard
+              customColor="#219653"
+              text="Total Gross Sales"
+              amount={`${widgetsData.totalGrossIncome
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
+            />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="boxes"
-              color="orange"
+              customColor="#F2994A"
               text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold}
+              amount={widgetsData.totalNumberOfProductsSold
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="credit card"
-              color="blue"
+              customColor="#2F80ED"
               text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions}
+              amount={widgetsData.totalNumberOfTransactions
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={3} tablet={16}>
             <StatsCard
               icon="tag"
-              color="purple"
+              customColor="#9B51E0"
               text="Average Purchase Value"
-              amount={`€ ${widgetsData.averagePurchaseValue}`}
+              amount={`${widgetsData.averagePurchaseValue
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
         </Grid.Row>
@@ -149,6 +160,7 @@ const TransactionsList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}

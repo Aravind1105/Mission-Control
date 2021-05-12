@@ -11,6 +11,8 @@ import {
   getFullProductData,
   deleteProductSaga,
   getPriceHistory,
+  resetPriceHistory,
+  deleteActivePriceHistory,
 } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
@@ -22,6 +24,7 @@ import {
 } from './selectors';
 import { getOrganizationsAsOptions } from '../organizations/selectors';
 import PriceHistoryWidget from './components/PriceHistoryWidget';
+import { isEqual } from 'lodash';
 
 const links = [
   {
@@ -56,6 +59,8 @@ const ProductDetail = ({
   getPriceHistory,
   defaultPriceHistory,
   activePriceHistory,
+  resetPriceHistory,
+  deleteActivePriceHistory,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -77,6 +82,11 @@ const ProductDetail = ({
     }
     if (id) {
       getPriceHistory({ productLineId: id });
+    }
+
+    // reset price history redux state if the product is a new one
+    if (isEqual(id, 'new')) {
+      resetPriceHistory();
     }
   }, []);
 
@@ -153,6 +163,9 @@ const ProductDetail = ({
             <PriceHistoryWidget
               priceHistory={activePriceHistory}
               activePriceHistory
+              onClickDelete={priceHistoryId =>
+                deleteActivePriceHistory({ productLineId: id, priceHistoryId })
+              }
             />
           )}
           <ImageUploader
@@ -200,6 +213,8 @@ const mapDispatchToProps = {
   getOrganizations,
   deleteProductSaga,
   getPriceHistory,
+  resetPriceHistory,
+  deleteActivePriceHistory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

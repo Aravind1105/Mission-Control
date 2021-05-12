@@ -85,11 +85,12 @@ const CustomTable = ({
 
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
   return (
-    <>
+    <div style={{ overflow: 'auto' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable"
         basic
+        unstackable
         celled
         padded
         structured
@@ -158,7 +159,7 @@ const CustomTable = ({
           )}
         </Table.Body>
       </Table>
-    </>
+    </div>
   );
 };
 

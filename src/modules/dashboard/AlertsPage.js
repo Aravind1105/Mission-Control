@@ -111,9 +111,7 @@ const AlertsPage = ({
               totalCount={total}
               page={page}
               perPage={perPage}
-              // searchValue={dateRange || kiosk || alert}
               changePage={changePage}
-              // changeSearchPage={changeSearchPage}
               changePerPage={changePerPage}
             />
           </Grid.Column>

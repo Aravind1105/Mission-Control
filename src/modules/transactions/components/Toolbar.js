@@ -39,22 +39,18 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
   };
 
   const DownloadCsv = () => {
-    if (exportData.from == '' && exportData.to == '') {
-      window.alert('Bitte wählen Sie zuerst das Datum.');
-    } else {
-      let value = {
-        from: Math.round(new Date(exportData.from)),
-        to: Math.round(new Date(exportData.to)),
-        kiosk: exportData.kiosk ? exportData.kiosk : '',
-      };
-      exportCsvSales(value);
-      toast({
-        description: 'Downloading the requested file.',
-        animation: 'fade left',
-        icon: 'info',
-        color: 'blue',
-      });
-    }
+    let value = {
+      from: Math.round(new Date(exportData.from)),
+      to: Math.round(new Date(exportData.to)),
+      kiosk: exportData.kiosk ? exportData.kiosk : '',
+    };
+    exportCsvSales(value);
+    toast({
+      description: 'Downloading the requested file.',
+      animation: 'fade left',
+      icon: 'info',
+      color: 'blue',
+    });
   };
 
   const handleKioskChange = (e, { value }) => {
@@ -69,18 +65,18 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
   return (
     <div
       style={{
-        margin: '20px 0',
+        marginTop: '20px',
       }}
     >
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
 
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <Dropdown
-              placeholder="Kiosk"
+              placeholder="All Kiosks"
               selection
               options={kiosks}
               className="full-width"
@@ -91,13 +87,13 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           {/* <Grid.Column width={4}>
             <SearchInput onChange={changeSearch} timeout={500} />
           </Grid.Column> */}
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadCsv}
-              disabled={!Boolean(exportData)}
+              // disabled={Boolean(exportData)}
             />
           </Grid.Column>
         </Grid.Row>

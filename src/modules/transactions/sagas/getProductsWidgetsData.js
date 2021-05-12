@@ -37,11 +37,17 @@ function* handler({ payload }) {
     });
     yield put(
       actionSuccess({
-        leastSoldProductName: getLeastSoldProduct.productLine.name,
+        leastSoldProductName:
+          getLeastSoldProduct.productLine &&
+          getLeastSoldProduct.productLine.name,
         leastSoldProductValue: getLeastSoldProduct,
-        mostRefilledProductName: getMostRefilledProduct.productLine.name,
+        mostRefilledProductName:
+          getMostRefilledProduct.productLine &&
+          getMostRefilledProduct.productLine.name,
         mostRefilledProductValue: getMostRefilledProduct,
-        mostRemovedProductName: getMostRemovedProduct.productLine.name,
+        mostRemovedProductName:
+          getMostRemovedProduct.productLine &&
+          getMostRemovedProduct.productLine.name,
         mostRemovedProductValue: getMostRemovedProduct,
       }),
     );
