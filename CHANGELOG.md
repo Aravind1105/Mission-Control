@@ -1,3 +1,13 @@
+#### 1.3.42 (2021-05-12)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3267 SEPA payment status set to PENDING from NOT PAID (61e54585)
+* **Mobile View Optimization-Transaction Tables:**  LIV-3255:  Updated All Trasaction Tables Component and added Horizontal Scrollable Functionality (92f51bb1)
+* **Mobile View Optimization:**
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (7f911a4e)
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (ca8f90ea)
+
 #### 1.3.41 (2021-05-11)
 
 ##### Bug Fixes
