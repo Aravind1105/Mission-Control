@@ -8,7 +8,7 @@ module.exports = configMerge(commonConfig, {
   entry: './src/index.js',
   output: {
     path: `${__dirname}/dist`,
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'bundle.js',
     chunkFilename: '[name].bundle.js',
   },

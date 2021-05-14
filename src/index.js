@@ -12,10 +12,19 @@ import App from './core/App';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware({});
 
-const store = createStore(reducers,
-  composeEnhancers(applyMiddleware(sagaMiddleware)));
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(sagaMiddleware)),
+);
 
 sagaMiddleware.run(rootSaga);
+
+window.addEventListener('error', e => {
+  // prompt user to confirm refresh
+  if (/Loading CSS chunk [\d]+ failed/.test(e.message)) {
+    window.location.reload();
+  }
+});
 
 ReactDOM.render(
   <Provider store={store}>

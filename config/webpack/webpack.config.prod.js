@@ -10,7 +10,7 @@ module.exports = configMerge(commonConfig, {
   entry: './src/index.js',
   output: {
     path: dist,
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
   },
