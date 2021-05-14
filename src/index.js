@@ -19,13 +19,6 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-window.addEventListener('error', e => {
-  // prompt user to confirm refresh
-  if (/Loading CSS chunk [\d]+ failed/.test(e.message)) {
-    window.location.reload();
-  }
-});
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
