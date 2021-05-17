@@ -1,3 +1,9 @@
+#### 1.4.3 (2021-05-17)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3318 payment methods of event object bug fix (f9337986)
+
 #### 1.4.2 (2021-05-17)
 
 ##### New Features
