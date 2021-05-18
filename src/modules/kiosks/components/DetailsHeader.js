@@ -9,9 +9,13 @@ import '../styles.less';
 
 const DetailsHeader = ({ name, doorStatus, temperature, session, service }) => {
   return (
-    <Grid>
+    <Grid stackable>
       <Grid.Row relaxed="very" columns={4}>
-        <Grid.Column width={doorStatus === 'open' ? 4 : 6}>
+        <Grid.Column
+          mobile={16}
+          tablet={16}
+          computer={doorStatus === 'open' ? 4 : 6}
+        >
           <Header as="h3">{name}</Header>
           {service ? (
             <b style={{ textDecoration: 'underline', color: '#EB5757' }}>
@@ -21,17 +25,22 @@ const DetailsHeader = ({ name, doorStatus, temperature, session, service }) => {
             <></>
           )}
         </Grid.Column>
-        <Grid.Column width={4} className="flex-end">
+        <Grid.Column mobile={4} tablet={6} computer={4} className="flex-end">
           <b>
             Temp:&nbsp;
             <CellTemp temperature={temperature} />
           </b>
         </Grid.Column>
-        <Grid.Column width={3} className="flex-end">
+        <Grid.Column mobile={4} tablet={5} computer={3} className="flex-end">
           <b>Status:&nbsp;</b>
           <CellHeartbeat temperature={temperature} showTime={false} boldFont />
         </Grid.Column>
-        <Grid.Column className="flex-end" width={doorStatus === 'open' ? 5 : 3}>
+        <Grid.Column
+          className="flex-end"
+          mobile={4}
+          tablet={4}
+          computer={doorStatus === 'open' ? 5 : 3}
+        >
           <b>
             Door:&nbsp;
             <CellDoorStatus doorStatus={doorStatus} session={session} />

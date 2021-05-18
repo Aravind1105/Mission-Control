@@ -184,7 +184,7 @@ const KioskDetails = ({
               qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk &&
                 kiosk.qrcode}&slug=${orgData &&
                 orgData.slug}&appleId=${orgData && orgData.appleId}`}
-              fileName={kiosk && kiosk.name || ''}
+              fileName={(kiosk && kiosk.name) || ''}
             />
             <Grid.Row>
               <Grid.Column>

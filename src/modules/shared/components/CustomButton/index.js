@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 
 import './styles.less';
+const screenWidth = window.innerWidth;
 
 const CustomButton = ({
   onClick,
@@ -14,7 +15,7 @@ const CustomButton = ({
 }) => {
   return (
     <>
-      {icon ? (
+      {icon && screenWidth > 770 ? (
         <Button
           className={`${
             defaultStyle ? 'custom-button-default' : 'custom-button-blue'

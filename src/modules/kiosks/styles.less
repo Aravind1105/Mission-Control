@@ -1,4 +1,6 @@
 @import './globals/site.variables';
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 
 .marginBottom {
   margin-bottom: 0;
@@ -146,4 +148,11 @@
 .flex-end {
   display: flex !important;
   justify-content: flex-end;
+  @media @tablet {
+    justify-content: left;
+  }
+  @media @mobile {
+    justify-content: left;
+    line-height: 0.1em;
+  }
 }
