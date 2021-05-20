@@ -15,7 +15,7 @@ const StatsCard = ({
   const [largeTxt, isLargeTxt] = useState(false);
 
   useEffect(() => {
-    if (amount.length > 20) isLargeTxt(true);
+    if (amount.length > 14) isLargeTxt(true);
     else isLargeTxt(false);
   }, [amount]);
 
