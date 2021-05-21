@@ -36,7 +36,7 @@ const initialState = {
     mostSoldProductValue: 0,
     leastSoldProductName: {},
     leastSoldProductValue: 0,
-    mostRefilledProductName: '',
+    mostRefilledProductName: {},
     mostRefilledProductValue: 0,
     mostRemovedProductName: {},
     mostRemovedProductValue: 0,
