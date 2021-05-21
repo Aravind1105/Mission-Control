@@ -116,8 +116,8 @@ const ProductList = ({
               icon="star"
               customColor="#219653"
               text="Most Sold Product"
-              amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
+              amount={`${widgetsData.mostSoldProductName} `}
+              secondaryText={`${widgetsData.mostSoldProductValue.sum}  Sold`}
               popup
               fontTo18
             />
