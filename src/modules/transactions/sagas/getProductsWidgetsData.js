@@ -14,6 +14,7 @@ function* handler({ payload }) {
   try {
     const {
       data: {
+        getMostSoldProduct,
         getLeastSoldProduct,
         getMostRefilledProduct,
         getMostRemovedProduct,
@@ -37,6 +38,9 @@ function* handler({ payload }) {
     });
     yield put(
       actionSuccess({
+        mostSoldProductName:
+          getMostSoldProduct.productLine && getMostSoldProduct.productLine.name,
+        mostSoldProductValue: getMostSoldProduct,
         leastSoldProductName:
           getLeastSoldProduct.productLine &&
           getLeastSoldProduct.productLine.name,

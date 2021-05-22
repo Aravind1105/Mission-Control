@@ -139,6 +139,14 @@ export const GET_REFILLS_WIDGET_DATA = gql`
 
 export const GET_PRODUCTS_WIDGET_DATA = gql`
   query($period: Period!, $kioskId: ID) {
+    getMostSoldProduct(period: $period, kioskId: $kioskId) {
+      productLine {
+        name
+        __typename
+      }
+      sum
+      __typename
+    }
     getLeastSoldProduct(period: $period, kioskId: $kioskId) {
       productLine {
         name
