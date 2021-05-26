@@ -130,7 +130,7 @@ const KioskDetails = ({
                       />
                       <CustomButton
                         label="Sync / Restart"
-                        icon="lock"
+                        icon="redo"
                         onClick={handlerResetKiosk}
                       />
                       <CustomButton
@@ -141,7 +141,7 @@ const KioskDetails = ({
                         }
                       />
                       <CustomButton
-                        icon="line graph"
+                        icon="list ul"
                         label="Activity Log"
                         onClick={() =>
                           history.push(
