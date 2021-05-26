@@ -111,7 +111,7 @@ const columns = [
           </div>
         );
       }
-      if (event.paymentMethod !== null && event.paymentMethod !== undefined) {
+      if (event.paymentMethod && event.paymentMethod !== undefined) {
         paymentDetails = (
           <div>
             Payment Details:

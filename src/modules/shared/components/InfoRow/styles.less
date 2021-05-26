@@ -1,5 +1,16 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+
 .info-cell {
   padding-top: 3px;
   padding-bottom: 3px;
   word-wrap: break-word;
+  @media @tablet {
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
+  }
+  @media @mobile {
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
+  }
 }

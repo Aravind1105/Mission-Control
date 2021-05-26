@@ -82,7 +82,7 @@ const DetailsInventory = ({ list, total }) => {
           )}
         </Table.Body>
       </Table>
-      <Table className="kiosk-inventory-total-values">
+      <Table className="kiosk-inventory-total-values" unstackable>
         <Table.Body>
           <Table.Row>
             <Table.Cell className="kiosk-inventory-total-values-cell">
@@ -97,9 +97,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>
-                <b>{`€ ${total}`}</b>
-              </b>
+              <b>{`€ ${total}`}</b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

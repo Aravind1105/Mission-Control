@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridColumn } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import './styles.less';
 
 const InfoRow = ({ title, description }) => (
   <>
-    <GridColumn width={5} className="info-cell">
+    <Grid.Column mobile={16} tablet={16} computer={5} className="info-cell">
       {title && <b>{`${title}:`}</b>}
-    </GridColumn>
-    <GridColumn width={11} className="info-cell">
+    </Grid.Column>
+    <Grid.Column mobile={16} tablet={16} computer={11} className="info-cell">
       {description}
-    </GridColumn>
+    </Grid.Column>
   </>
 );
 

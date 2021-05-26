@@ -1,3 +1,27 @@
+#### 1.4.3 (2021-05-17)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3318 payment methods of event object bug fix (f9337986)
+
+#### 1.4.2 (2021-05-17)
+
+##### New Features
+
+* **LIV-3256:** Kiosk Offline error message while update kioskProps (b94b9979)
+
+##### Bug Fixes
+
+* **kiosk details:** LIV-2107 kioskGridResolver call is removed (0800f482)
+* **test:**  test to reset css chunks (e36de492)
+* **cache:**  disables css and js cache (41dce052)
+* **CSSChunk:**  CSS chunk failed resolved by hard reload (fd35a2f3)
+* **chunkError:**  Css chunks after the ng-cli update resolved (c2ae84b4)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (9295a7fc)
+
 #### 1.4.1 (2021-05-12)
 
 ##### Bug Fixes
