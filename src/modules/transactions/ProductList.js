@@ -60,7 +60,7 @@ const ProductList = ({
     };
     const widgetPayload = {};
     if (dateRange || kiosk || product) {
-      const date = dateRange ? { created: dateRange } : {};
+      const date = dateRange ? dateRange : {};
       const kio = kiosk ? { kioskId: kiosk } : {};
       const prod = product ? { productLineId: product } : {};
 
