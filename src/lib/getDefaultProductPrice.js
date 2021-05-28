@@ -11,7 +11,6 @@ const getDefaultProductPrice = ({ products, productId, kioskId }) => {
         el => el.validForKiosk === kioskId && new Date() < new Date(el.validTo),
       ) || priceList.find(el => el.default);
   const price = get(priceHistory, 'price', 0);
-  alert(JSON.stringify(priceHistory));
   return price.toFixed(2);
 };
 
