@@ -86,6 +86,7 @@ const AlmostEmptyKiosks = ({
         changeKiosk={changeKiosk}
         changeSupplier={changeSupplier}
       />
+      <br></br>
       <CustomTable
         sortable
         onRowClick={handlerClickRow}

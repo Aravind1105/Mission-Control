@@ -76,6 +76,7 @@ const AlertsTable = ({
         changeAlert={changeAlert}
         changePage={changePage}
       />
+      <br></br>
       <CustomTable
         sortable
         sortByColumn="startDate"
