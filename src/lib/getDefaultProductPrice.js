@@ -3,10 +3,15 @@ import get from 'lodash/get';
 const getDefaultProductPrice = ({ products, productId, kioskId }) => {
   const product = products.find(({ _id }) => _id === productId);
   const priceList = product ? [...product.priceHistory] : [];
+  // price history should belong to the specific kiosk and should be currently active
   const priceHistory =
-    priceList.reverse().find(el => el.validForKiosk === kioskId) ||
-    priceList.find(el => el.default);
+    priceList
+      .reverse()
+      .find(
+        el => el.validForKiosk === kioskId && new Date() < new Date(el.validTo),
+      ) || priceList.find(el => el.default);
   const price = get(priceHistory, 'price', 0);
+  alert(JSON.stringify(priceHistory));
   return price.toFixed(2);
 };
 

@@ -1,3 +1,23 @@
+#### 1.4.5 (2021-05-28)
+
+#### 1.4.4 (2021-05-28)
+
+##### Bug Fixes
+
+* **kiosk detail:** LIV-3364 load cell change product kiosk level price after deleting active price from product detail (1ccf90fd)
+* **Kiosks - Kiosk Overview:**
+  *  LIV-3247: Sync/Restart Activity log Icons (47879226)
+  *  LIV-3211: Adjust the color of Planogram/Inventory (6ab18916)
+* **LIV-2107:** Revert LIV-2107 to filter all kiosks option (a81077af)
+* **Product Tab - Widgets Show Wrong Value:**  LIV-3207:  Widget for Most Sold Product Updated (29735464)
+* **statsCarrd:**  txt length reduced for ellipsis (0a07b728)
+* **Mobile View - Kiosk Details - Inventory:**  LIV-3253:  Kiosk details Inventory Table Updated (4bebf0f5)
+* **Mobile View - Kiosk Details - Kiosk Overview Body:**  LIV-3251:Kiosk Overview Body Updated (710894bf)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (0f9c6e5d)
+
 #### 1.4.3 (2021-05-17)
 
 ##### Bug Fixes
