@@ -62,7 +62,7 @@ const DetailsInfo = ({
                 <InfoRow title="Directions / Notes" description={notes} />
               )}
               <InfoRow title="Organization" description={ownerOrganization} />
-              <InfoRow title="Pin" description={pin} />
+              {/* <InfoRow title="Pin" description={pin} /> */}
             </Grid.Row>
           </Grid>
         </Grid.Column>
