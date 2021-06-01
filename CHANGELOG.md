@@ -1,3 +1,14 @@
+#### 1.4.6 (2021-06-01)
+
+##### New Features
+
+* **product form:** LIV-3368 profuct form - add product/edit product changes (fde895e2)
+
+##### Bug Fixes
+
+* **Dashboard- Alerts Show all Margin:**  LIV-3362: Alerts Show all Margin Modified (960c3f24)
+* **kiosk detail:** LIV-3364 load cell change product kiosk level price after deleting active price from product detail (b0535484)
+
 #### 1.4.5 (2021-05-28)
 
 #### 1.4.4 (2021-05-28)
