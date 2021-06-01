@@ -1,3 +1,9 @@
+#### 1.4.7 (2021-06-01)
+
+##### New Features
+
+* **product form:** LIV-3369 auto populate shelf size capacities (463c1164)
+
 #### 1.4.6 (2021-06-01)
 
 ##### New Features
