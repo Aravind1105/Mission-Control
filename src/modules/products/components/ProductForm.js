@@ -20,6 +20,7 @@ import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { modifyProductSaga, modifyProductImage } from '../actions';
 import get from 'lodash/get';
+import { isEqual } from 'lodash';
 
 let setImg;
 let restVal;
@@ -41,7 +42,7 @@ const ProductForm = ({
 
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
-        .netWeightGrams;
+      .netWeightGrams;
     values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0]
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
@@ -89,6 +90,28 @@ const ProductForm = ({
     setIsCancelTriggered(true);
     setIsImageDeleted(false);
     history.push('/products');
+  };
+
+  // In order to provide a faster filling out of the add products form,
+  // the shelf max capacity fields should be filled out automatically once one of them gets filled out by the customer ONLY FOR THE FIRST TIME
+  // User should be able to change the populated fields
+  const [isFirstShelfSizeChange, setIsFirstShelfSizeChange] = useState(true);
+  const handleShelfSizeChange = (form, field, value) => {
+    if (isFirstShelfSizeChange) {
+      if (isEqual(field, 'capacities.surfaceSize_100')) {
+        form.setFieldValue('capacities.surfaceSize_50', Math.floor(value / 2));
+        form.setFieldValue('capacities.surfaceSize_33', Math.floor(value / 3));
+      } else if (isEqual(field, 'capacities.surfaceSize_50')) {
+        const max = value * 2;
+        form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
+        form.setFieldValue('capacities.surfaceSize_33', Math.floor(max / 3));
+      } else if (isEqual(field, 'capacities.surfaceSize_33')) {
+        const max = value * 3.33;
+        form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
+        form.setFieldValue('capacities.surfaceSize_50', Math.floor(max / 2));
+      }
+      setIsFirstShelfSizeChange(false);
+    }
   };
 
   useEffect(() => {
@@ -364,6 +387,7 @@ const ProductForm = ({
                     required
                     component={FormInput}
                     limiting="integerField"
+                    callbackOnBlur={handleShelfSizeChange}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -374,6 +398,7 @@ const ProductForm = ({
                     required
                     component={FormInput}
                     limiting="integerField"
+                    callbackOnBlur={handleShelfSizeChange}
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -384,6 +409,7 @@ const ProductForm = ({
                     required
                     component={FormInput}
                     limiting="integerField"
+                    callbackOnBlur={handleShelfSizeChange}
                   />
                 </Grid.Column>
               </Grid.Row>
