@@ -41,7 +41,7 @@ const ProductForm = ({
 
   const onSubmit = (values, formActions) => {
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
-      .netWeightGrams;
+        .netWeightGrams;
     values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0]
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
@@ -52,9 +52,9 @@ const ProductForm = ({
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
       : values.packagingOptions[0].ean;
-    values.packagingOptions[0].description == ''
-      ? (values.packagingOptions[0].description = 'Optional field not used.')
-      : values.packagingOptions[0].description;
+    // values.packagingOptions[0].description == ''
+    //   ? (values.packagingOptions[0].description = 'Optional field not used.')
+    //   : values.packagingOptions[0].description;
 
     //convert capacities field to Livello BE expected format
     const { capacities } = values;
@@ -136,7 +136,7 @@ const ProductForm = ({
         manufacturer: Yup.string().required('This field is required'),
         packagingOptions: Yup.array().of(
           Yup.object().shape({
-            netWeightGrams: Yup.number().required('This field is required'),
+            // netWeightGrams: Yup.number().required('This field is required'),
             grossWeightGrams: Yup.number().required('This field is required'),
           }),
         ),
@@ -246,7 +246,6 @@ const ProductForm = ({
                     name="packagingOptions[0].netWeightGrams"
                     label="Net Quantity (ml/g)"
                     min={0}
-                    required
                     component={FormInputWithSelector}
                     limiting="integerField"
                     selectorOptions={[
@@ -327,7 +326,7 @@ const ProductForm = ({
                 </Grid.Column>
               </Grid.Row>
 
-              <Grid.Row>
+              {/* <Grid.Row>
                 <Grid.Column width={16}>
                   <Field
                     name="packagingOptions[0].description"
@@ -335,7 +334,7 @@ const ProductForm = ({
                     component={FormInput}
                   />
                 </Grid.Column>
-              </Grid.Row>
+              </Grid.Row> */}
             </Grid>
 
             <div style={{ marginTop: 25 }}>
