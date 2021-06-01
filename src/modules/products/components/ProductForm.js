@@ -47,15 +47,18 @@ const ProductForm = ({
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
       .shelfLifeDays;
+
     delete values.image;
     setIsCancelTriggered(false);
     setIsImageDeleted(false);
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
       : values.packagingOptions[0].ean;
-    // values.packagingOptions[0].description == ''
-    //   ? (values.packagingOptions[0].description = 'Optional field not used.')
-    //   : values.packagingOptions[0].description;
+
+    // description is mandatory in the backend and so filling it up with empty string
+    values.packagingOptions[0].description == ''
+      ? (values.packagingOptions[0].description = 'Optional field not used.')
+      : values.packagingOptions[0].description;
 
     //convert capacities field to Livello BE expected format
     const { capacities } = values;
@@ -106,7 +109,7 @@ const ProductForm = ({
         form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
         form.setFieldValue('capacities.surfaceSize_33', Math.floor(max / 3));
       } else if (isEqual(field, 'capacities.surfaceSize_33')) {
-        const max = value * 3.33;
+        const max = value * 3;
         form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
         form.setFieldValue('capacities.surfaceSize_50', Math.floor(max / 2));
       }
@@ -160,6 +163,7 @@ const ProductForm = ({
         packagingOptions: Yup.array().of(
           Yup.object().shape({
             // netWeightGrams: Yup.number().required('This field is required'),
+            shelfLifeDays: Yup.number().required('This field is required'),
             grossWeightGrams: Yup.number().required('This field is required'),
           }),
         ),
@@ -296,6 +300,7 @@ const ProductForm = ({
                     name="packagingOptions[0].shelfLifeDays"
                     label="Shelf life (days)"
                     limiting="integerField"
+                    required
                     min={0}
                     component={FormInput}
                   />
