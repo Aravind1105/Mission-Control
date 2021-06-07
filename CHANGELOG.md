@@ -1,3 +1,12 @@
+#### 1.4.8 (2021-06-07)
+
+##### Bug Fixes
+
+* **users:** LIV-3128 removed revoke root button for the user if the user is same as the logged in user (4bf7d2e3)
+* **Transaction Heading:**  LIV-3362: Transaction heading updated for small device (cbc30a5c)
+* **All Dropdowns:**  LIV-3366: Ellipsis for selected Items in All dropdowns (bf28cafe)
+* **product form:**  LIV-3368 add product save issue fixed (3be40063)
+
 #### 1.4.7 (2021-06-01)
 
 ##### New Features
