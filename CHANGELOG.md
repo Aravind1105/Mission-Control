@@ -1,3 +1,30 @@
+#### 1.3.36 (2021-06-07)
+
+##### Bug Fixes
+
+* **users:** LIV-3128 removed revoke root button for the user if the user is same as the logged in user (4bf7d2e3)
+* **Product Detail Article Number:**  LIV-2826:Article Number on Product will be updated for each product (976177ba)
+* **User Profile Bar:**
+  *  LIV-3097:Long UserName and Email OverFlow Fix updated (909aec6e)
+  *  LIV-3097:Long UserName and Email OverFlow Fix (d7f6379e)
+* **Trasactions CSV Button:**  LIV-2953: CSV Button Filter Functionality Updated (4e73a00b)
+* **Kiosk Activity Log:**  LIV-2825: Activity Log updated (7b90ca4f)
+* **Dashboard Chart:**
+  *  LIV-3012: Shortedn the text of days (aaa4258e)
+  *  LIV-3012: Shortedn the text of days (2a0127d4)
+  *  LIV-3012: Origntation of the Days at chart (428b9ad5)
+* **Kiosks:**  LIV-2915: Out of Service Header (5a8fdec2)
+* **LIV-3079:**  card txt size fixed (f575d34d)
+* **Kiosks Filter Option:**  LIV-3050: Placeholder of Kiosk Dropdown Updated (dca67dfb)
+* **transactions-products:** LIV-3133 kpi resolver called twice removed (5a1d2917)
+
+##### Other Changes
+
+*  Refills CSV Download): LIV-3135: CSV Button Filter Functionality Updated (12ff7c2e)
+* **LIV-3079:**  KPI widgets sales design changed (057df3f4)
+* **LIV-3080:**  KPI design changed (64006a59)
+* **LIV-3111:** Changed the design of KPI widgets (7ae9ffcb)
+
 #### 1.3.35 (2021-04-19)
 
 ##### Build System / Dependencies
