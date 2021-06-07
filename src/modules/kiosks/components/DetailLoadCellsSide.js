@@ -3,6 +3,7 @@ import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
+import { isNull } from 'lodash';
 
 const Card = ({
   cellId,
@@ -11,6 +12,9 @@ const Card = ({
   totalProducts,
   handleEdit,
   isActive,
+  surfaceSize,
+  occupancy,
+  maxQty,
 }) => {
   const handleClick = () => {
     handleEdit({
@@ -18,6 +22,7 @@ const Card = ({
       planogramPosition,
       cellId,
       availableProducts: totalProducts,
+      surfaceSize,
     });
   };
 
@@ -52,8 +57,11 @@ const Card = ({
             </b>
             <p>
               Qty:&nbsp;
-              <ColoredBlock type="b" value={totalProducts ? 100 : 0}>
-                {totalProducts}
+              <ColoredBlock
+                type="b"
+                value={isNull(occupancy) ? undefined : occupancy}
+              >
+                {maxQty > 0 ? `${totalProducts}/${maxQty}` : `${totalProducts}`}
               </ColoredBlock>
             </p>
             <p>{`€ ${productLine.price}`}</p>
@@ -73,10 +81,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
           return (
             <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
               {row.map((props, j) => {
-                // if (!j) {
-                //   fullWidth = Boolean(props);
-                // }
-                // if ((fullWidth && j) || (!fullWidth && !j)) return null;
                 return (
                   props && (
                     <Card
@@ -87,12 +91,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                     />
                   )
                 );
-                //  (
-                //     <Grid.Column
-                //       key={performance.now().toString(32)}
-                //       className="load-cell"
-                //     />
-                //   );
               })}
             </Grid.Row>
           );

@@ -80,5 +80,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getAllKiosks,
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(DesktopLayout);

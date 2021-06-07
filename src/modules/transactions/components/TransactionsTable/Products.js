@@ -13,7 +13,6 @@ const sortTypes = {
 };
 
 const ProductsTable = ({
-  columns,
   data,
   fixed,
   headless,
@@ -76,22 +75,16 @@ const ProductsTable = ({
     setSortBy(key);
   };
 
-  // const handlerRowClick = (item, i) => () => {
-  //   if (selectable) setActiveRow(i);
-  //   if (onRowClick) onRowClick(item, i);
-  // };
-
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
 
-  let toggleTableCellColor = true;
-
   return (
-    <>
+    <div style={{ overflow: 'auto' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable"
         basic
         celled
+        unstackable
         padded
         structured
         fixed={fixed}
@@ -102,30 +95,7 @@ const ProductsTable = ({
       >
         {!headless && (
           <Table.Header>
-            {/* <Table.Row>
-              {columns.map(({ title, field, className }) => {
-                const sorted =
-                  (sortBy && sortBy === field && direction) || undefined;
-                const sortClass =
-                  Array.isArray(excludeSortBy) &&
-                  sortable &&
-                  !excludeSortBy.find(elem => elem === field)
-                    ? 'sortable-th'
-                    : '';
-                return (
-                  <Table.HeaderCell
-                    key={field}
-                    className={`${className || ''} ${sortClass}`}
-                    sorted={sorted}
-                    onClick={sortable ? handlerHCellClick(field) : undefined}
-                  >
-                    {title}
-                  </Table.HeaderCell>
-                );
-              })}
-            </Table.Row> */}
-
-            <Table.Row negative>
+            <Table.Row>
               <Table.HeaderCell
                 onClick={
                   sortable ? handlerHCellClick('productName') : undefined
@@ -150,50 +120,51 @@ const ProductsTable = ({
             </Table.Row>
           </Table.Header>
         )}
-        <Table.Body className="tb-products">
-          {resultData.length > 0 &&
-            resultData.map(product => {
-              // const rowKey = product.productId;
-              return (
-                <Table.Row
-                  key={_.uniqueId()}
-                  active={activeRow === product.productID}
-                  // onClick={handlerRowClick(item, i)}
-                >
-                  <Table.Cell>{product.productName}</Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {`${Number(product.sold || 0).toFixed(0)}`}
-                  </Table.Cell>
-                  <Table.Cell textAlign="right">{`${Number(
-                    product.totalGrossSales || 0,
-                  ).toFixed(2)}€`}</Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {product.refilled || 0}
-                  </Table.Cell>
-                  <Table.Cell textAlign="right">
-                    {`${Number(
-                      product.refilled * product.defaultPrice || 0,
-                    ).toFixed(2)} €`}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {product.removed || 0}
-                  </Table.Cell>
-                  <Table.Cell textAlign="right">
-                    {`${Number(
-                      product.removed * product.defaultPrice || 0,
-                    ).toFixed(2)}€`}
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
-          {resultData.length === 0 && (
-            <Table.Row>
-              <Table.Cell>Your query returned no results.</Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Body>
+
+        <>
+          <Table.Body className="tb-products">
+            {resultData.length > 0 &&
+              resultData.map(product => {
+                return (
+                  <Table.Row
+                    key={_.uniqueId()}
+                    active={activeRow === product.productID}
+                  >
+                    <Table.Cell>{product.productName}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {`${Number(product.sold || 0).toFixed(0)}`}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">{`${Number(
+                      product.totalGrossSales || 0,
+                    ).toFixed(2)}€`}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {product.refilled || 0}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {`${Number(
+                        product.refilled * product.defaultPrice || 0,
+                      ).toFixed(2)}€`}
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      {product.removed || 0}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {`${Number(
+                        product.removed * product.defaultPrice || 0,
+                      ).toFixed(2)}€`}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
+            {resultData.length === 0 && (
+              <Table.Row>
+                <Table.Cell>Your query returned no results.</Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </>
       </Table>
-    </>
+    </div>
   );
 };
 

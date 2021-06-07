@@ -1,8 +1,6 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
-
 import RefillsTable from './TransactionsTable/Refills';
-const screenWidth = window.innerWidth;
+
 const columns = [
   {
     title: 'Date / Time',
@@ -11,7 +9,9 @@ const columns = [
       if (created === '') {
         return '';
       }
-      return <div style={{ textAlign: 'left' }}> {created} </div>;
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+      );
     },
   },
   // {
@@ -62,8 +62,7 @@ const columns = [
     formatter: ({ count }) => {
       if (count === 0) {
         return '';
-      }
-      return <div style={{ textAlign: 'center' }}> {count} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {count} </div>;
     },
   },
   {
@@ -72,8 +71,7 @@ const columns = [
     formatter: ({ loadCell }) => {
       if (loadCell === '') {
         return '';
-      }
-      return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
+      } else return <div style={{ textAlign: 'center' }}> {loadCell} </div>;
     },
   },
   {
@@ -82,11 +80,7 @@ const columns = [
     formatter: ({ weight }) => {
       if (weight === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {weight} </div>;
-      } else {
-        return <div style={{ textAlign: 'center' }}> {weight} </div>;
-      }
+      } else return <div style={{ textAlign: 'center' }}> {weight} </div>;
     },
   },
   {
@@ -95,19 +89,17 @@ const columns = [
     formatter: ({ cost }) => {
       if (cost === '') {
         return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}> {cost}€ </div>;
-      } else {
-        return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
-      }
+      } else return <div style={{ textAlign: 'right' }}> {cost}€ </div>;
     },
   },
   {
     title: 'Total Cost',
     field: 'total',
-    formatter: ({ total }) => (
-      <div style={{ textAlign: 'right' }}> {total}€ </div>
-    ),
+    formatter: ({ total }) => {
+      if (total === '') {
+        return '';
+      } else return <div style={{ textAlign: 'right' }}> {total}€ </div>;
+    },
   },
 ];
 
@@ -116,30 +108,28 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
   return (
-    <Segment>
-      <RefillsTable
-        sortByColumn="created"
-        columns={columns}
-        data={refills}
-        getData={getData}
-        sortable
-        selectable
-        striped
-        isLoading={isLoading}
-        excludeSortBy={[
-          'status',
-          'productName',
-          'articleNumber',
-          'count',
-          'loadCell',
-          'weight',
-          'price',
-          'total',
-        ]}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
-    </Segment>
+    <RefillsTable
+      sortByColumn="created"
+      columns={columns}
+      data={refills}
+      getData={getData}
+      sortable
+      selectable
+      striped
+      isLoading={isLoading}
+      excludeSortBy={[
+        'status',
+        'productName',
+        'articleNumber',
+        'count',
+        'loadCell',
+        'weight',
+        'price',
+        'total',
+      ]}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+      sortDirection="DESC"
+    />
   );
 };
 

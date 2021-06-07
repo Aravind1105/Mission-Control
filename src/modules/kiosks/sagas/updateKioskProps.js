@@ -23,7 +23,16 @@ function* handler({ payload: { finalProps } }) {
       variables,
     });
     const res = responseData.data.configureKioskProps;
-    if (!res.errors) {
+    if (
+      responseData.errors &&
+      responseData.errors[0].message === 'Kiosk is offline.'
+    ) {
+      toast({
+        type: 'error',
+        description: 'Kiosk is Offline! Please try again later',
+        animation: 'fade left',
+      });
+    } else if (!res.errors) {
       toast({
         type: 'success',
         description: 'Kiosk settings customized successfully',

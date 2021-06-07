@@ -18,12 +18,7 @@ import {
   getOrgIdFromKiosk,
   getOrgData,
 } from './selectors';
-import {
-  resetKiosk,
-  getAllKiosks,
-  getKiosk,
-  getOrganizationById,
-} from './actions';
+import { resetKiosk, getKiosk, getOrganizationById } from './actions';
 
 import './styles.less';
 
@@ -135,7 +130,7 @@ const KioskDetails = ({
                       />
                       <CustomButton
                         label="Sync / Restart"
-                        icon="lock"
+                        icon="redo"
                         onClick={handlerResetKiosk}
                       />
                       <CustomButton
@@ -146,7 +141,7 @@ const KioskDetails = ({
                         }
                       />
                       <CustomButton
-                        icon="line graph"
+                        icon="list ul"
                         label="Activity Log"
                         onClick={() =>
                           history.push(
@@ -184,6 +179,7 @@ const KioskDetails = ({
               qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk &&
                 kiosk.qrcode}&slug=${orgData &&
                 orgData.slug}&appleId=${orgData && orgData.appleId}`}
+              fileName={(kiosk && kiosk.name) || ''}
             />
             <Grid.Row>
               <Grid.Column>
@@ -211,7 +207,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   resetKiosk,
-  getAllKiosks,
   createRefill,
   getKiosk,
   getOrganizationById,

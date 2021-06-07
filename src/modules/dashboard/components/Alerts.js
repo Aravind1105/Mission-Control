@@ -116,8 +116,11 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
   };
 
   const getData = ({ sort }) => {
+    let today = new Date().toISOString();
+    let yesterday = new Date(Date.now() - 86400 * 1000).toISOString();
     const data = {
       limit: 6,
+      search: `{"startDate":{"$gte":"${yesterday}","$lte":"${today}"}}`,
     };
 
     if (sort) {

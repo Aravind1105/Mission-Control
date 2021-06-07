@@ -39,6 +39,10 @@ const FormInput = ({
     }
   };
 
+  const callbackOnBlur = ({ target }) => {
+    props.callbackOnBlur(form, field.name, target.value);
+  };
+
   return (
     <Input
       fluid
@@ -46,7 +50,13 @@ const FormInput = ({
       step={step}
       style={props.widthLimit && { width: '35%' }}
       {...field}
-      onBlur={prettier ? handleBlur : field.onBlur}
+      onBlur={
+        prettier
+          ? handleBlur
+          : props.callbackOnBlur
+          ? callbackOnBlur
+          : field.onBlur
+      }
       {...props}
       error={errMsg}
       onChange={limiting ? handleChange : field.onChange}

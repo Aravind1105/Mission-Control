@@ -20,6 +20,7 @@ const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
     cellId,
     availableProducts,
     planogramPosition,
+    surfaceSize,
   }) => {
     const data = pick(productLine, ['_id', 'name', 'price']);
     
@@ -28,7 +29,7 @@ const DetailsLoadCells = ({ cells, kioskName ,currentKioskSide}) => {
       cellId,
       planogramPosition: planogramPosition || '',
       availableProducts,
-      
+      surfaceSize,
     });
     
   };

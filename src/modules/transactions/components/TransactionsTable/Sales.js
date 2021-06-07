@@ -86,12 +86,13 @@ const SalesTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <>
+    <div style={{ overflow: 'auto' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable transactions-table"
         basic
         celled
+        unstackable
         padded
         structured
         fixed={fixed}
@@ -109,7 +110,7 @@ const SalesTable = ({
                   Array.isArray(excludeSortBy) &&
                   sortable &&
                   !excludeSortBy.find(elem => elem === field)
-                    ? 'sortable-th'
+                    ? 'sortable-transaction-header'
                     : '';
 
                 return (
@@ -186,7 +187,7 @@ const SalesTable = ({
           </Table.Body>
         ))}
       </Table>
-    </>
+    </div>
   );
 };
 

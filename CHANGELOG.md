@@ -1,9 +1,173 @@
-#### 1.3.36 (2021-06-07)
+#### 1.4.7 (2021-06-01)
+
+##### New Features
+
+* **product form:** LIV-3369 auto populate shelf size capacities (463c1164)
+
+#### 1.4.6 (2021-06-01)
+
+##### New Features
+
+* **product form:** LIV-3368 profuct form - add product/edit product changes (fde895e2)
 
 ##### Bug Fixes
 
-* **users:** LIV-3128 removed revoke root button for the user if the user is same as the logged in user (4bf7d2e3)
-* **Product Detail Article Number:**  LIV-2826:Article Number on Product will be updated for each product (976177ba)
+* **Dashboard- Alerts Show all Margin:**  LIV-3362: Alerts Show all Margin Modified (960c3f24)
+* **kiosk detail:** LIV-3364 load cell change product kiosk level price after deleting active price from product detail (b0535484)
+
+#### 1.4.5 (2021-05-28)
+
+#### 1.4.4 (2021-05-28)
+
+##### Bug Fixes
+
+* **kiosk detail:** LIV-3364 load cell change product kiosk level price after deleting active price from product detail (1ccf90fd)
+* **Kiosks - Kiosk Overview:**
+  *  LIV-3247: Sync/Restart Activity log Icons (47879226)
+  *  LIV-3211: Adjust the color of Planogram/Inventory (6ab18916)
+* **LIV-2107:** Revert LIV-2107 to filter all kiosks option (a81077af)
+* **Product Tab - Widgets Show Wrong Value:**  LIV-3207:  Widget for Most Sold Product Updated (29735464)
+* **statsCarrd:**  txt length reduced for ellipsis (0a07b728)
+* **Mobile View - Kiosk Details - Inventory:**  LIV-3253:  Kiosk details Inventory Table Updated (4bebf0f5)
+* **Mobile View - Kiosk Details - Kiosk Overview Body:**  LIV-3251:Kiosk Overview Body Updated (710894bf)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (0f9c6e5d)
+
+#### 1.4.3 (2021-05-17)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3318 payment methods of event object bug fix (f9337986)
+
+#### 1.4.2 (2021-05-17)
+
+##### New Features
+
+* **LIV-3256:** Kiosk Offline error message while update kioskProps (b94b9979)
+
+##### Bug Fixes
+
+* **kiosk details:** LIV-2107 kioskGridResolver call is removed (0800f482)
+* **test:**  test to reset css chunks (e36de492)
+* **cache:**  disables css and js cache (41dce052)
+* **CSSChunk:**  CSS chunk failed resolved by hard reload (fd35a2f3)
+* **chunkError:**  Css chunks after the ng-cli update resolved (c2ae84b4)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (9295a7fc)
+
+#### 1.4.1 (2021-05-12)
+
+##### Bug Fixes
+
+* **Mobile View - Kiosk Details - breadcrumb:**  LIV-3249:Menu Redesign (e356af56)
+* **Mobile View - Kiosk Details - Inventory:**  LIV-3253:  Kiosk details Inventory Table Updated (4707d459)
+* **kiosks:** sagas fixed (646edbe3)
+
+### 1.4.0 (2021-05-12)
+
+##### Bug Fixes
+
+* **Mobile View - Kiosk Details - breadcrumb:**  LIV-3249:Menu Redesign (e356af56)
+* **Mobile View - Kiosk Details - Inventory:**  LIV-3253:  Kiosk details Inventory Table Updated (4707d459)
+* **kiosks:** sagas fixed (646edbe3)
+
+#### 1.3.42 (2021-05-12)
+
+##### Bug Fixes
+
+* **user logs:** LIV-3267 SEPA payment status set to PENDING from NOT PAID (61e54585)
+* **Mobile View Optimization-Transaction Tables:**  LIV-3255:  Updated All Trasaction Tables Component and added Horizontal Scrollable Functionality (92f51bb1)
+* **Mobile View Optimization:**
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (7f911a4e)
+  *  LIV-3254:  Updated Custom Table Component and added Horizontal Scrollable Functionality (ca8f90ea)
+
+#### 1.3.41 (2021-05-11)
+
+##### Bug Fixes
+
+* **kiosk details:** LIV-3240 qr code PDF download fix (111886fd)
+* **Dashboard, Kiosks, Organizations, Products :**  LIV-3233: Tables Headers Border Updated (48b5d552)
+* **Transaction-Products:**  LIV-3236: Headers Border Updated (80ff0c59)
+* **Transaction:**
+  *  LIV-3224: Products:Widgets number format (2b43b049)
+  *  LIV-3224: Products:Widgets number format (65272563)
+  *  LIV-3223: Refills:Widgets number format (4d33c2d3)
+  *  LIV-3222: Sales:Widget number format (b3412154)
+  *  LIV-3093:Sales and Refills Table Fixed (2b3b25bb)
+* **Dashboard:**  LIV-3225: Dashboard:Widgets number format (f640d39e)
+* **Transaction/Activity Log:**  LIV-2973: Date/Time Formate (492b1c2e)
+* **Transactions/Activity Log:**  LIV-2973 Time Date Formate (83f6dbc0)
+* **LIV-2835:**  refills KPI fix (fccaf23d)
+
+#### 1.3.40 (2021-05-04)
+
+##### New Features
+
+* **user details:** LIV-3164 payment methods display texts updated (8a56d124)
+
+##### Bug Fixes
+
+* **LIV-2835:**
+  *  KPI card fix (cecffa6d)
+  *  layout fix (714de345)
+  *  Fixed card issue and the  productline null value (29a16fe4)
+* **KPI:**  Layout and font changes (bf871628)
+* **modal load cell:** LIV-2326 shelf size not saving bug fix (507dfb11)
+
+#### 1.3.39 (2021-04-30)
+
+##### Build System / Dependencies
+
+* **LIV-2835:**  KPI widgets designed for refills (5a6b1c1f)
+
+##### New Features
+
+* **kiosk details:** LIV-2326 load cell occupany and detail inventory (84cc57d3)
+* **kiosk planogram:** LIV-2326 loadcell occupancies (5e8d2646)
+
+##### Bug Fixes
+
+* **Dashboard Alerts:**  LIV-3155 Slow Alert Table Updated (6573e845)
+* **LIV-3152:**  edit planogram error fix (8a165e2c)
+
+#### 1.3.38 (2021-04-30)
+
+##### Build System / Dependencies
+
+* **LIV-2835:**  KPI widgets designed for refills (5a6b1c1f)
+
+##### New Features
+
+* **price histroy:** LIV-2276 delete active price history feature added (41581778)
+
+##### Bug Fixes
+
+* **Dashboard Alerts:**  LIV-3155 Slow Alert Table Updated (6573e845)
+* **LIV-3152:**  edit planogram error fix (8a165e2c)
+
+#### 1.3.37 (2021-04-26)
+
+##### New Features
+
+* **modify load cell:** LIV-3122 surface size changing (7792111e)
+
+##### Bug Fixes
+
+* **Mobile-Transaction-Product:**  LIV-3087:Product Transaction Mobile View Optimized (f2d89e0b)
+* **kiosks:** sagas fixed (ee317d5b)
+
+#### 1.3.36 (2021-04-23)
+
+##### Bug Fixes
+
+* **product detail:** LIV-3134 random price history shown for create product screen - bug fixed (b691aa20)
+* **Product Detail Article Number:**
+  *  LIV-2826:Article Number on Product updated with null check (a4af814e)
+  *  LIV-2826:Article Number on Product will be updated for each product (976177ba)
 * **User Profile Bar:**
   *  LIV-3097:Long UserName and Email OverFlow Fix updated (909aec6e)
   *  LIV-3097:Long UserName and Email OverFlow Fix (d7f6379e)

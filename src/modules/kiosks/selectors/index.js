@@ -164,7 +164,8 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
 export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
   const cells = shelves.list;
   const filteredCells = cells.filter(
-    cell => cell.planogramPosition.indexOf('A') !== -1,
+    cell =>
+      cell.planogramPosition && cell.planogramPosition.indexOf('A') !== -1,
   );
   const isTwoSides = cells.length !== filteredCells.length;
   const cellIdOptions = [];

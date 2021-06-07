@@ -4,51 +4,36 @@ import { Header, Icon, Segment, Grid, Popup } from 'semantic-ui-react';
 import './statsCard.less';
 
 const StatsCard = ({
-  color,
   icon,
   customColor,
   amount,
   text,
-  padding,
   popup,
   secondaryText,
-  secondaryAmount,
-  multipleWidgets,
+  fontTo18,
 }) => {
-  const isDoubleDeck = secondaryText || secondaryAmount;
   const [largeTxt, isLargeTxt] = useState(false);
 
   useEffect(() => {
-    if (amount.length > 13) isLargeTxt(true);
+    if (amount.length > 14) isLargeTxt(true);
     else isLargeTxt(false);
   }, [amount]);
 
   return (
     <Segment
       className="stats-card"
-      style={
-        customColor && {
-          borderBottom: `3px solid ${customColor}`,
-        }
-      }
+      style={{ borderBottom: `3px solid ${customColor}` }}
     >
       <Header
         as="h1"
-        style={
-          customColor && {
-            color: customColor,
-          }
-        }
-        color={color && color}
-        className={
-          isDoubleDeck ? 'stats-card-header-double' : 'stats-card-header'
-        }
+        style={{ color: customColor }}
+        className="stats-card-header"
       >
         <Grid.Column className="column-left">
-          <Grid.Row>
+          <Grid.Row className="stats-row">
             <Header.Subheader className="sub-header">{text}</Header.Subheader>
           </Grid.Row>
-          <Grid.Row style={padding && { paddingTop: '30px' }}>
+          <Grid.Row className="stats-row">
             {popup && largeTxt ? (
               <Popup
                 trigger={
@@ -56,9 +41,9 @@ const StatsCard = ({
                     style={{
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
-                      width: '130px',
+                      width: '140px',
                       whiteSpace: 'nowrap',
-                      fontSize: '22px',
+                      fontSize: fontTo18 ? '18px' : '28px',
                     }}
                   >
                     {amount}
@@ -73,35 +58,29 @@ const StatsCard = ({
             ) : (
               <Header.Content
                 style={{
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  width: '100px',
-                  whiteSpace: 'nowrap',
-                  fontSize: '22px',
+                  fontSize: fontTo18 ? '18px' : '28px',
                 }}
               >
                 {amount}
               </Header.Content>
             )}
+            {icon && (
+              <Icon
+                name={icon}
+                className="kpi-icons"
+                size="large"
+                style={{
+                  fontSize: '1.1em',
+                  marginTop: secondaryText && '10px',
+                }}
+              />
+            )}
+            {secondaryText && (
+              <Header.Subheader style={{ marginBottom: '5px' }}>
+                {secondaryText}
+              </Header.Subheader>
+            )}
           </Grid.Row>
-          {secondaryText && (
-            <Header.Subheader className="sub-header">
-              {secondaryText}
-            </Header.Subheader>
-          )}
-          {secondaryAmount && (
-            <Header.Content>{secondaryAmount}</Header.Content>
-          )}
-        </Grid.Column>
-        <Grid.Column
-          className="column-right"
-          style={padding && { paddingTop: '30px' }}
-        >
-          <Icon
-            name={icon}
-            size="large"
-            style={multipleWidgets && { fontSize: '1.2em' }}
-          />
         </Grid.Column>
       </Header>
     </Segment>

@@ -13,16 +13,16 @@ function* handler({ payload }) {
     let kiosk = null;
     if (payload !== 'new') {
       const {
-        data: { getKioskById },
+        data: { getKioskWithCapacities },
       } = yield call(gqlKiosk.query, {
         query: GET_KIOSK_QUERY,
         variables,
       });
 
       kiosk = {
-        ...getKioskById,
+        ...getKioskWithCapacities,
         inventory: {
-          loadCells: toFlatLoadCellItem(getKioskById.inventory.loadCells),
+          loadCells: toFlatLoadCellItem(getKioskWithCapacities.inventory.loadCells),
         },
       };
     }

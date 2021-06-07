@@ -37,6 +37,7 @@ export const userDetailOnUser = gql`
       default
       created
       updated
+      cardType
     }
     kiosks {
       _id
@@ -150,6 +151,7 @@ export const GET_USERS_SHORT_INFO_QUERY = gql`
           type
           provider
           last4digits
+          cardType
         }
         kiosks {
           _id

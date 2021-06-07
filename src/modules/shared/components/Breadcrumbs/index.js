@@ -9,7 +9,7 @@ const Breadcrumbs = ({ links, backLink, activeLink }) => {
   return (
     <Grid>
       <Grid.Row verticalAlign="middle">
-        <Grid.Column mobile={16} computer={8}>
+        <Grid.Column width={12} textAlign="left">
           <Breadcrumb size="small">
             {links.map(prop => (
               <BreadcrumbItem key={prop.name} {...prop} />
@@ -17,8 +17,9 @@ const Breadcrumbs = ({ links, backLink, activeLink }) => {
             <BreadcrumbItem name={activeLink} isActive />
           </Breadcrumb>
         </Grid.Column>
-
-        {backLink && <BackLink {...backLink} />}
+        <Grid.Column width={4} textAlign="right">
+          <BackLink {...backLink} />
+        </Grid.Column>
       </Grid.Row>
     </Grid>
   );

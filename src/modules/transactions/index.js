@@ -11,9 +11,15 @@ import { SemanticToastContainer } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 import './styles.less';
+const screenWidth = window.innerWidth;
 
 const navSwitcherConfig = [
   { name: 'transactions' },
+  { name: 'sales', goTo: '/transactions/sales' },
+  { name: 'refills', goTo: '/transactions/refills' },
+  { name: 'products', goTo: '/transactions/product' },
+];
+const navMobileSwitcherConfig = [
   { name: 'sales', goTo: '/transactions/sales' },
   { name: 'refills', goTo: '/transactions/refills' },
   { name: 'products', goTo: '/transactions/product' },
@@ -23,7 +29,13 @@ const Transactions = () => (
   <>
     <Segment>
       <SemanticToastContainer position="top-right" />
-      <NavSwitcher config={navSwitcherConfig} />
+      <>
+        {screenWidth < 770 ? (
+          <NavSwitcher config={navMobileSwitcherConfig} />
+        ) : (
+          <NavSwitcher config={navSwitcherConfig} />
+        )}
+      </>
       <Switch>
         <Route exact path="/transactions/sales" component={TransactionsList} />
         <Route exact path="/transactions/refills" component={ReplenisherList} />

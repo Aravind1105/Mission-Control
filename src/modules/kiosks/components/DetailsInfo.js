@@ -41,7 +41,7 @@ const DetailsInfo = ({
   return (
     <div className="kiosk-info">
       <Grid>
-        <Grid.Column width={12}>
+        <Grid.Column mobile={8} tablet={10} computer={12}>
           <Grid>
             <Grid.Row>
               <InfoRow title="Serial" description={serial} />
@@ -62,11 +62,13 @@ const DetailsInfo = ({
                 <InfoRow title="Directions / Notes" description={notes} />
               )}
               <InfoRow title="Organization" description={ownerOrganization} />
-              <InfoRow title="Pin" description={pin} />
+              {/* <InfoRow title="Pin" description={pin} /> */}
             </Grid.Row>
           </Grid>
         </Grid.Column>
-        <Grid.Column width={4}>{children}</Grid.Column>
+        <Grid.Column mobile={8} tablet={6} computer={4}>
+          {children}
+        </Grid.Column>
       </Grid>
     </div>
   );

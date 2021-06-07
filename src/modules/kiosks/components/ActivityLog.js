@@ -30,8 +30,13 @@ const columns = [
     field: 'created',
     formatter: ({ created }) => {
       let [date, time] = created.split(' ');
-      return `${date}, ${time}`;
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}>
+          {date}, {time}
+        </div>
+      );
     },
+    className: 'ActivityLog',
   },
   {
     title: 'Event',
@@ -140,7 +145,7 @@ const ActivityLogGrid = ({
               <Header.Content>Activity Log</Header.Content>
             </Header>
           </SegmentHeader>
-          <Grid>
+          <Grid stackable>
             <Grid.Row className="activity-log-filter-row">
               <Grid.Column mobile={16} computer={4}>
                 <DatePicker type="range" onChange={handleDateChange} />

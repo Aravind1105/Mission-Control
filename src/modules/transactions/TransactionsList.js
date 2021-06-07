@@ -103,53 +103,53 @@ const TransactionsList = ({
       />
       <Grid>
         <Grid.Row>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
               text="Total Net Sales"
-              amount={`${widgetsData.totalNetIncome} €`}
-              padding
-              multipleWidgets
+              amount={`${widgetsData.totalNetIncome
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
               text="Total Gross Sales"
-              amount={`${widgetsData.totalGrossIncome} €`}
-              padding
-              multipleWidgets
+              amount={`${widgetsData.totalGrossIncome
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="boxes"
               customColor="#F2994A"
               text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold}
-              padding
-              multipleWidgets
+              amount={widgetsData.totalNumberOfProductsSold
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
 
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               icon="credit card"
               customColor="#2F80ED"
               text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions}
-              padding
-              multipleWidgets
+              amount={widgetsData.totalNumberOfTransactions
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={3}>
+          <Grid.Column mobile={16} computer={3} tablet={16}>
             <StatsCard
               icon="tag"
               customColor="#9B51E0"
-              text="Average Purchase"
-              amount={`${widgetsData.averagePurchaseValue} €`}
-              padding
-              multipleWidgets
+              text="Average Purchase Value"
+              amount={`${widgetsData.averagePurchaseValue
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
         </Grid.Row>
@@ -160,6 +160,7 @@ const TransactionsList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}

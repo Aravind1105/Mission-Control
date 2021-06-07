@@ -60,7 +60,7 @@ const ProductList = ({
     };
     const widgetPayload = {};
     if (dateRange || kiosk || product) {
-      const date = dateRange ? { created: dateRange } : {};
+      const date = dateRange ? dateRange : {};
       const kio = kiosk ? { kioskId: kiosk } : {};
       const prod = product ? { productLineId: product } : {};
 
@@ -111,29 +111,29 @@ const ProductList = ({
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="star"
               customColor="#219653"
               text="Most Sold Product"
-              amount={`${widgetsData.mostRefilledProductName} `}
-              secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Sold`}
-              padding
+              amount={`${widgetsData.mostSoldProductName} `}
+              secondaryText={`${widgetsData.mostSoldProductValue.sum}  Sold`}
               popup
+              fontTo18
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="long arrow alternate down"
               customColor="#F2994A"
               text="Least Sold Product"
               amount={`${widgetsData.leastSoldProductName} `}
               secondaryText={`${widgetsData.leastSoldProductValue.sum}  Sold`}
-              padding
               popup
+              fontTo18
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="dolly flatbed"
               customColor="#2D9CDB"
@@ -141,10 +141,10 @@ const ProductList = ({
               amount={`${widgetsData.mostRefilledProductName} `}
               secondaryText={`${widgetsData.mostRefilledProductValue.sum}  Refilled`}
               popup
-              padding
+              fontTo18
             />
           </Grid.Column>
-          <Grid.Column mobile={8} computer={4}>
+          <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               icon="reply"
               customColor="#9B51E0"
@@ -152,7 +152,7 @@ const ProductList = ({
               amount={`${widgetsData.mostRemovedProductName} `}
               secondaryText={`${widgetsData.mostRemovedProductValue.sum}  Removed`}
               popup
-              padding
+              fontTo18
             />
           </Grid.Column>
         </Grid.Row>
@@ -164,6 +164,7 @@ const ProductList = ({
         setSortByInCaller={sort => setSort([sort])}
         // sortDirection="DESC"
       />
+      <br></br>
       <Pagination
         totalCount={total}
         page={page}
