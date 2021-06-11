@@ -1,3 +1,9 @@
+#### 1.4.10 (2021-06-11)
+
+##### New Features
+
+* **temp log:** LIV-3381 download CSV button (731ea996)
+
 #### 1.4.9 (2021-06-11)
 
 ##### Bug Fixes
