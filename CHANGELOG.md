@@ -1,3 +1,11 @@
+#### 1.4.9 (2021-06-11)
+
+##### Bug Fixes
+
+* **products overview:** product search regexI updated to regex and options (54dba66d)
+* **kiosk overview:**  search fridge regexI updated to regex and options (756910f1)
+* **Dashboard:**  LIV-2724: hide graph in mobile view (28e488d0)
+
 #### 1.4.8 (2021-06-07)
 
 ##### Bug Fixes
