@@ -35,6 +35,7 @@ export const updateKiosksForTable = createAction(
 export const updateAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_UPDATE',
 );
+export const exportCsvTempLogs = createAction('@@saga/GET_TEMP_LOGS_CSV');
 
 export const updateKioskById = createAction('@@state/UPDATE_BY_ID');
 export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
