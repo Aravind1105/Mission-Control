@@ -12,15 +12,15 @@ function* handler({ payload }) {
   try {
     const { kioskId, cellId, callback } = payload;
     const {
-      data: { deactivateLoadCell },
+      data: { deleteLoadCell },
     } = yield call(gqlKiosk.mutate, {
       mutation: DELETE_LOAD_CELL,
       variables: { kioskId, cellId },
     });
     const kiosk = {
-      ...deactivateLoadCell,
+      ...deleteLoadCell,
       inventory: {
-        loadCells: toFlatLoadCellItem(deactivateLoadCell.inventory.loadCells),
+        loadCells: toFlatLoadCellItem(deleteLoadCell.inventory.loadCells),
       },
     };
     yield put(actionSuccess(kiosk));
