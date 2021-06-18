@@ -8,6 +8,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
+import MobileUser from './UserExtableTable/MobileUser';
 import { getUsers, setActiveUser } from '../actions';
 import {
   getUsersListState,
@@ -106,11 +107,30 @@ const UsersContent = ({
       />
 
       {!isLoading ? (
-        <Grid stackable reversed="mobile">
-          <Grid.Column width={4}>
+        <Grid>
+          <Grid.Column mobile={16} tablet={8} computer={4}>
             <Segment>
               <Grid>
-                <Grid.Row>
+                <Grid.Row only="mobile">
+                  <Grid.Column>
+                    <>
+                      <br></br>
+                      <br></br>
+                      <MobileUser
+                        sortByColumn="name"
+                        columns={columns}
+                        data={userList}
+                        getData={getData}
+                        list={list}
+                        sortable
+                        selectable
+                        setSortByInCaller={sort => setSort([sort])}
+                        sortDirection="ASC"
+                      />
+                    </>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row only="tablet computer">
                   <Grid.Column>
                     <CustomTable
                       sortByColumn="name"
@@ -142,17 +162,19 @@ const UsersContent = ({
               </Grid>
             </Segment>
           </Grid.Column>
-          <Grid.Column width={12}>
-            {activeUser && (
-              <Grid.Column>
-                <UsersDetail />
-              </Grid.Column>
-            )}
-            {!activeUser && (
-              <Grid.Column>
-                <UserTemplate />
-              </Grid.Column>
-            )}
+          <Grid.Column computer={12} only="tablet computer">
+            <Grid.Row only="computer">
+              {activeUser && (
+                <Grid.Column>
+                  <UsersDetail />
+                </Grid.Column>
+              )}
+              {!activeUser && (
+                <Grid.Column>
+                  <UserTemplate />
+                </Grid.Column>
+              )}
+            </Grid.Row>
           </Grid.Column>
         </Grid>
       ) : (

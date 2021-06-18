@@ -42,6 +42,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                 style={{
                   paddingBottom: '0px',
                 }}
+                only="tablet computer"
               >
                 <Comment.Group size="massive">
                   <Comment>
@@ -54,9 +55,6 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                       <Comment.Author as="a" style={{ lineHeight: 2 }}>
                         {name}
                       </Comment.Author>
-                      {/* <Comment.Text>
-                    {user.root ? 'Admin' : 'Consumer'} - {user.status}
-                  </Comment.Text> */}
                       <Comment.Text style={{ marginTop: '10px' }}>
                         <Comment.Actions>
                           Last Updated: {user.updated}
@@ -66,13 +64,25 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                   </Comment>
                 </Comment.Group>
               </Grid.Row>
-              <Divider />
+              <Grid.Row only="mobile">
+                <Grid.Column>
+                  <h5>
+                    {user.firstName} {user.lastName}
+                  </h5>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row only="computer" style={{ paddingTop: '0px' }}>
+                <Grid.Column>
+                  <Divider></Divider>
+                </Grid.Column>
+              </Grid.Row>
+
               <Grid.Row
                 style={{
                   paddingTop: '0px',
                 }}
               >
-                <Grid.Column width={12}>
+                <Grid.Column computer={12} mobile={16}>
                   <Grid>
                     <Grid.Row>
                       <UserInfoRow
@@ -160,21 +170,24 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                     </Grid.Row>
                   </Grid>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column computer={4} mobile={16}>
                   <CustomButton
                     label="Edit"
                     icon="edit"
+                    size="mini"
                     onClick={editUserHandler}
                   />
                   <CustomButton
                     label="User log"
                     icon="line graph"
+                    size="mini"
                     onClick={userLogHandler}
                   />
                   {rootUser && (
                     <CustomButton
                       label={`${user.root ? 'Revoke Root' : 'Grant Root'}`}
                       icon={`${user.root ? 'lock' : 'lock open'}`}
+                      size="mini"
                       onClick={handlerRoleToggle}
                     />
                   )}

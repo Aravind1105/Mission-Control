@@ -1,3 +1,5 @@
+@mobile: ~'only screen and (max-width: 600px)';
+@import '../../../styling/theme/globals/site.variables';
 .user-info {
   button,
   & .button {
@@ -21,6 +23,11 @@
 .usr-detail-style {
   position: sticky !important;
   top: 130px;
+  @media @mobile {
+    background: @grey6 !important;
+    // padding: '0 0 0 20px' !important;
+    font-size: 11px !important;
+  }
 }
 .toolbar {
   position: sticky !important;
@@ -38,7 +45,7 @@
   padding-bottom: 9rem !important;
 }
 .user-empty-icon {
-  color: #2D9CDB;
+  color: #2d9cdb;
 }
 
 .empty-total-users-label {
@@ -46,16 +53,16 @@
 }
 
 .empty-total-users {
-  color: #2D9CDB;
+  color: #2d9cdb;
   font-size: 30px;
   font-weight: bold;
   margin-right: 10px !important;
 }
 
-#ev-title{
+#ev-title {
   padding-bottom: 10px;
 }
-#prod-taken{
+#prod-taken {
   padding-left: 97px;
   padding-top: 8px;
 }

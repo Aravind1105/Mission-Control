@@ -1,4 +1,11 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+
 .info-cell {
   padding-top: 3px;
   padding-bottom: 3px;
+  word-break: break-word;
+  @media @mobile {
+    font-size: '11px';
+  }
 }
