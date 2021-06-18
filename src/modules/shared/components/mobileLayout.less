@@ -10,8 +10,13 @@
   }
 
   .mobile-content {
-    min-height: calc(100vh - @mobileNavTopPadding);
+    height: calc(100vh - @mobileNavTopPadding);
     padding-bottom: 15px;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
   }
 
   .sidebar.menu {
