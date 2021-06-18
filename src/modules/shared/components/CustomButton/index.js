@@ -11,6 +11,7 @@ const CustomButton = ({
   defaultStyle,
   className,
   color,
+  size,
   ...props
 }) => {
   return (
@@ -34,6 +35,7 @@ const CustomButton = ({
             defaultStyle ? 'custom-button-default' : 'custom-button-blue'
           } ${className}`}
           color={color}
+          size={size}
           {...props}
         >
           {label}

@@ -24,13 +24,14 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
     history.push('/users/edit/new');
   };
   return (
-    <Segment className="toolbar">
-      <Grid stackable>
-        <Grid.Row verticalAlign="middle" columns="equal">
-          <Grid.Column width={5}>
-            <SearchInput onChange={changeSearch} timeout={500} />
-          </Grid.Column>
-          <Grid.Column width={5}>
+    <>
+      <Segment className="toolbar">
+        <Grid stackable>
+          <Grid.Row verticalAlign="middle" columns="equal">
+            <Grid.Column width={5}>
+              <SearchInput onChange={changeSearch} timeout={500} />
+            </Grid.Column>
+            {/* <Grid.Column width={5}> */}
             {/* <Dropdown
               placeholder="All types"
               selection
@@ -38,8 +39,8 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
               className="full-width"
               onChange={(event, data) => changeUserType(data.value)}
             /> */}
-          </Grid.Column>
-          {/* <Grid.Column textAlign="right">
+            {/* </Grid.Column> */}
+            {/* <Grid.Column textAlign="right">
             <Button
               icon
               labelPosition="left"
@@ -53,10 +54,11 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
               Add User
             </Button>
           </Grid.Column> */}
-        </Grid.Row>
-      </Grid>
-      <Link to="/kiosks/add" />
-    </Segment>
+          </Grid.Row>
+        </Grid>
+        <Link to="/kiosks/add" />
+      </Segment>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
+import MobileUser from './UserExtableTable/MobileUser';
 import { getUsers, setActiveUser } from '../actions';
 import {
   getUsersListState,
@@ -104,56 +105,77 @@ const UsersContent = ({
         changeSearch={changeSearch}
         // changeUserType={changeUserType}
       />
+
       {!isLoading ? (
         <Grid>
-          <Grid.Row columns={2} stretched>
-            <Grid.Column width={4}>
-              <Segment>
-                <Grid>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <CustomTable
+          <Grid.Column mobile={16} tablet={8} computer={4}>
+            <Segment>
+              <Grid>
+                <Grid.Row only="mobile">
+                  <Grid.Column>
+                    <>
+                      <br></br>
+                      <br></br>
+                      <MobileUser
                         sortByColumn="name"
                         columns={columns}
-                        onRowClick={handleRowClick}
                         data={userList}
                         getData={getData}
+                        list={list}
                         sortable
                         selectable
                         setSortByInCaller={sort => setSort([sort])}
                         sortDirection="ASC"
                       />
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Pagination
-                        totalCount={total}
-                        page={page}
-                        perPage={perPage}
-                        boundaryRange={1}
-                        siblingRange={0}
-                        changePage={changePage}
-                        changePerPage={changePerPage}
-                        isLoading={isLoading}
-                        // setFontSize
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Segment>
-            </Grid.Column>
-            {activeUser && (
-              <Grid.Column width={12}>
-                <UsersDetail />
-              </Grid.Column>
-            )}
-            {!activeUser && (
-              <Grid.Column width={12}>
-                <UserTemplate />
-              </Grid.Column>
-            )}
-          </Grid.Row>
+                    </>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row only="tablet computer">
+                  <Grid.Column>
+                    <CustomTable
+                      sortByColumn="name"
+                      columns={columns}
+                      onRowClick={handleRowClick}
+                      data={userList}
+                      getData={getData}
+                      sortable
+                      selectable
+                      setSortByInCaller={sort => setSort([sort])}
+                      sortDirection="ASC"
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Pagination
+                      totalCount={total}
+                      page={page}
+                      perPage={perPage}
+                      boundaryRange={1}
+                      siblingRange={0}
+                      changePage={changePage}
+                      changePerPage={changePerPage}
+                      isLoading={isLoading}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Segment>
+          </Grid.Column>
+          <Grid.Column computer={12} only="tablet computer">
+            <Grid.Row only="computer">
+              {activeUser && (
+                <Grid.Column>
+                  <UsersDetail />
+                </Grid.Column>
+              )}
+              {!activeUser && (
+                <Grid.Column>
+                  <UserTemplate />
+                </Grid.Column>
+              )}
+            </Grid.Row>
+          </Grid.Column>
         </Grid>
       ) : (
         <Loader />
