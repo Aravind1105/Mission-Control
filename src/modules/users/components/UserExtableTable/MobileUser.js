@@ -18,12 +18,7 @@ import {
   getUsersListForTable,
 } from '../../selectors';
 
-import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
-
-import Loader from 'modules/shared/components/Loader';
-
-import './styles.less';
 import UsersDetail from '../UsersDetail';
 import './styles.less';
 
@@ -114,18 +109,19 @@ const MobileUser = ({
     setActiveUser(item._id);
   };
 
-  function Row(props) {
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
+  const Row = ({ row, isEvenIdx }) => {
+    const [open, setOpen] = useState(false);
     return (
-      <React.Fragment>
+      <>
         <TableRow
           className="mobile-table-row"
           key={row}
           onClick={handlerRowClick(row)}
         >
           <TableCell
-            className="mobile-table-row-test"
+            className={
+              isEvenIdx ? 'mobile-table-row-test even' : 'mobile-table-row-test odd'
+            }
             style={{ padding: '6px 24px 6px 12px' }}
             key={row}
             onClick={() => {
@@ -150,9 +146,9 @@ const MobileUser = ({
             </Collapse>
           </TableCell>
         </TableRow>
-      </React.Fragment>
+      </>
     );
-  }
+  };
 
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
   return (
@@ -177,7 +173,7 @@ const MobileUser = ({
         </TableHead>
         <TableBody>
           {resultData.map((row, i) => (
-            <Row key={i} row={row} />
+            <Row key={i} row={row} isEvenIdx={i % 2 === 0} />
           ))}
         </TableBody>
       </Table>
