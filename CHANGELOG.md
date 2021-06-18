@@ -1,3 +1,26 @@
+#### 1.4.10 (2021-06-11)
+
+##### New Features
+
+* **temp log:** LIV-3381 download CSV button (731ea996)
+
+#### 1.4.9 (2021-06-11)
+
+##### Bug Fixes
+
+* **products overview:** product search regexI updated to regex and options (54dba66d)
+* **kiosk overview:**  search fridge regexI updated to regex and options (756910f1)
+* **Dashboard:**  LIV-2724: hide graph in mobile view (28e488d0)
+
+#### 1.4.8 (2021-06-07)
+
+##### Bug Fixes
+
+* **users:** LIV-3128 removed revoke root button for the user if the user is same as the logged in user (4bf7d2e3)
+* **Transaction Heading:**  LIV-3362: Transaction heading updated for small device (cbc30a5c)
+* **All Dropdowns:**  LIV-3366: Ellipsis for selected Items in All dropdowns (bf28cafe)
+* **product form:**  LIV-3368 add product save issue fixed (3be40063)
+
 #### 1.4.7 (2021-06-01)
 
 ##### New Features

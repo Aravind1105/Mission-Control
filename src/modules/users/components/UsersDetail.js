@@ -7,10 +7,20 @@ import CustomButton from 'modules/shared/components/CustomButton';
 import UserInfoRow from 'modules/shared/components/UserInfoRow';
 import history from 'lib/history';
 import { toggleUserRole } from '../actions';
-import { getActiveUserIDState, getUsersListState } from '../selectors';
+import {
+  getActiveUserIDState,
+  getUsersListState,
+  getLoggedInUserId,
+} from '../selectors';
 import './styles.less';
 
-const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
+const UsersDetail = ({
+  user,
+  toggleUserRole,
+  isLoading,
+  rootUser,
+  loggedInUserId,
+}) => {
   const handlerRoleToggle = () => {
     const payload = {
       userId: user.id,
@@ -183,7 +193,7 @@ const UsersDetail = ({ user, toggleUserRole, isLoading, rootUser }) => {
                     size="mini"
                     onClick={userLogHandler}
                   />
-                  {rootUser && (
+                  {rootUser && user.id !== loggedInUserId &&  (
                     <CustomButton
                       label={`${user.root ? 'Revoke Root' : 'Grant Root'}`}
                       icon={`${user.root ? 'lock' : 'lock open'}`}
@@ -213,6 +223,7 @@ const mapStateToProps = state => ({
   userList: getUsersListState(state),
   isLoading: state.users.isLoading,
   rootUser: state.user.root,
+  loggedInUserId: getLoggedInUserId(state),
 });
 
 const mapDispatchToProps = {

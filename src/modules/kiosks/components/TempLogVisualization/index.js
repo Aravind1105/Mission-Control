@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import format from 'date-fns/format';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import { Grid, Segment, Header, Button } from 'semantic-ui-react';
+import { toast } from 'react-semantic-toasts';
+import { isEmpty } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
+import CustomButton from 'modules/shared/components/CustomButton';
 import ComplexChart from '../ComplexChart';
-import { getTemperatureLogs, getKiosk } from '../../actions';
+import { getTemperatureLogs, getKiosk, exportCsvTempLogs } from '../../actions';
 import { getKioskSingle, getTemperatureLogsState } from '../../selectors';
 
 import './styles.less';
@@ -32,10 +35,12 @@ const TempLogVisualization = ({
   getTemperatureLogs,
   temperatureLogs,
   getKiosk,
+  exportCsvTempLogs,
 }) => {
   const [resolution, setResolution] = useState(optionsResolution[1].value);
   const [dateRange, setDateRange] = useState(defaultDateRange);
   const { id } = match.params;
+  const [exportData, setExportData] = useState({});
 
   const getData = id =>
     getTemperatureLogs({
@@ -64,10 +69,33 @@ const TempLogVisualization = ({
     } else {
       setDateRange(defaultDateRange);
     }
+
+    if (date.$gte && date.$lte) {
+      setExportData({
+        from: date.$gte,
+        to: date.$lte,
+        kiosk: kiosk === null ? id : kiosk._id,
+      });
+    }
   };
 
   const handleChangeResolution = ({ value }) => {
     setResolution(value);
+  };
+
+  const DownloadCsv = () => {
+    let value = {
+      from: Math.round(new Date(exportData.from)),
+      to: Math.round(new Date(exportData.to)),
+      kiosk: exportData.kiosk,
+    };
+    exportCsvTempLogs(value);
+    toast({
+      description: 'Downloading the requested file.',
+      animation: 'fade left',
+      icon: 'info',
+      color: 'blue',
+    });
   };
 
   return (
@@ -91,19 +119,15 @@ const TempLogVisualization = ({
                   defaultValue={optionsResolution[1]}
                 />
               </Grid.Column>
-              {/* <Grid.Column width={4}>
-                <Button
-                  style={{
-                    background: 'white',
-                    border: '1px solid rgba(34,36,38,.15)',
-                  }}
-                // onClick={DownloadCsv}
-                // disabled={!Boolean(exportData)}
-                >
-                  Download CSV&nbsp;&nbsp;
-                  <i className="arrow down icon" />
-                </Button>
-              </Grid.Column> */}
+              <Grid.Column mobile={16} tablet={8} computer={3}>
+                <CustomButton
+                  label="Download CSV&nbsp;"
+                  icon="arrow down icon"
+                  className="custom-button-default"
+                  onClick={DownloadCsv}
+                  disabled={isEmpty(exportData)}
+                />
+              </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column mobile={16} computer={16}>
@@ -128,6 +152,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getTemperatureLogs,
   getKiosk,
+  exportCsvTempLogs,
 };
 
 export default connect(

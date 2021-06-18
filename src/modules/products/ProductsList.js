@@ -37,9 +37,13 @@ const ProductsList = ({
     };
 
     if (search || category || supplier) {
-      const name = search ? { name: { $regexI: search } } : {};
-      const cat = category ? { category: { $regexI: category } } : {};
-      const sup = supplier ? { manufacturer: { $regexI: supplier } } : {};
+      const name = search ? { name: { $regex: search, $options: 'i' } } : {};
+      const cat = category
+        ? { category: { $regex: category, $options: 'i' } }
+        : {};
+      const sup = supplier
+        ? { manufacturer: { $regex: supplier, $options: 'i' } }
+        : {};
 
       data.search = JSON.stringify({
         ...name,

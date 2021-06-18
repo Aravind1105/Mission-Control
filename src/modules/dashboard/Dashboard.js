@@ -96,8 +96,8 @@ const Dashboard = ({
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Row stretched>
-        <Grid.Column mobile={16} computer={16}>
+      <Grid.Row stretched only="computer">
+        <Grid.Column computer={16}>
           {!isSalesStatLoading && !isEmpty(salesStatistics) && (
             <MainChart kiosksOptions={kiosksOptions} />
           )}

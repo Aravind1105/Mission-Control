@@ -179,3 +179,6 @@ export const getMemberCardsAsOptions = createSelector(
       : [];
   },
 );
+
+
+export const getLoggedInUserId = state => state.user._id;
