@@ -125,6 +125,7 @@ const ImageUploader = ({
     setUploadedImage(files[0]);
     setIsImageDeleted(false);
 
+    // convert image into base64 string 
     getBase64(files[0], base64Img => {
       setBase64Img(base64Img);
     });
