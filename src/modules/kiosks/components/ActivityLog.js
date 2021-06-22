@@ -52,7 +52,16 @@ const columns = [
         return (
           `Products Taken -` +
           event.touchedScales.map(scl => {
-            return ` Weight: ${scl.weight}g / Cable ID: ${scl.id}`;
+            return (
+              ' Cable ID: ' +
+              scl.id +
+              ' / Weight:' +
+              scl.weight +
+              '\n  \t \t \t \t \n \t \t \t \t \t '
+            );
+            // {
+            //   return ` Weight: ${scl.weight}g / Cable ID: ${scl.id}`;
+            // }
           })
         );
       } else if (
