@@ -225,7 +225,7 @@ export const DELETE_PRODUCT_LINE_MUTATION = gql`
 `;
 
 export const UPLOAD_PRODUCT_LINE_IMAGE_MUTATION = gql`
-  mutation updateProductLineImage($id: String!, $image: Upload!) {
+  mutation updateProductLineImage($id: String!, $image: String!) {
     updateProductLineImage(id: $id, image: $image) {
       _id
     }

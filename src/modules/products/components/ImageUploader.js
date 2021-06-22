@@ -8,6 +8,7 @@ import CustomAlert from 'modules/shared/components/CustomAlert';
 import { toast } from 'react-semantic-toasts';
 
 import './styles.less';
+import getBase64 from '../../../lib/imageToBase64';
 
 const reg = /^.+\//;
 
@@ -45,13 +46,13 @@ const ImageUploader = ({
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
   const [customAlertStatus, setcustomAlertStatus] = useState(false);
+  const [base64Img, setBase64Img] = useState('');
 
   const independentUpdateImage = image => {
     dispatch(
       modifyProductImage({
         id: initialValues.id,
-        orgId: initialValues.orgId,
-        image,
+        image: base64Img,
       }),
     );
   };
@@ -117,12 +118,17 @@ const ImageUploader = ({
 
   const handleChange = ({ target }) => {
     const { files } = target;
-    setImageSize(files[0].size);
     const newImg = URL.createObjectURL(files[0]);
+    setImageSize(files[0].size);
     setImgName(files[0].name);
     setImg(newImg);
     setUploadedImage(files[0]);
     setIsImageDeleted(false);
+
+    getBase64(files[0], base64Img => {
+      setBase64Img(base64Img);
+    });
+
     target.value = '';
   };
 
