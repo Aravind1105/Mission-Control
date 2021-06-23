@@ -55,7 +55,8 @@ const columns = [
           event.touchedScales[0].id +
           ' / Weight:' +
           event.touchedScales[0].weight +
-          event.touchedScales.splice(2, len).map(scl => {
+          ',' +
+          event.touchedScales.slice(2, len).map(scl => {
             return (
               '\n\t\t\t\t\t   Cable ID: ' + scl.id + ' / Weight:' + scl.weight
             );
