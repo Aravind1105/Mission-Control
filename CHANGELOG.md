@@ -1,3 +1,29 @@
+#### 1.4.11 (2021-06-23)
+
+##### New Features
+
+* **kiosk detail:** LIV-3386 kiosk planogram delete loadcell - resolver changed from deactivateLoadcell to deleteLoadcell (a6e608cd)
+
+##### Bug Fixes
+
+* **product create:** LIV-3406 uploading image when creating product rewritten completely (3d6da048)
+* **product detail:**
+  * LIV-3406 image upload modifications (dc508025)
+  * LIV-3406 product detail image upload complete rewritten (0cee9b61)
+* **Users Details:** LIV-3258 Mobile Optimization for Users (8de826af)
+* **Kiosk Activity:**
+  * LIV-2242 Fixing  Line Issue updated (41469812)
+  * LIV-2242 Fixing  Line Issue (fd85d0eb)
+  * LIV-2242 Fixing  Line Issue (cc7d85b2)
+  * LIV-2761 Fixing  Line Issue (ef72f54e)
+* **product image upload:** LIV-3406 image upload is now changed to base64 string upload instead of file upload (f6cdd7cf)
+* **Navbar:** LIV-2761 Fixed Navbar Scroll Issue (af387ba5)
+* **users page:** LIV-3258 users table mobile view alternate color for table row fixed (e6229125)
+* **Users details:**
+  * LIV-3258 Users Mobile Page Optimization (0a7aa001)
+  * LIV-3258 Users Mobile Page Optimization (5e221e7d)
+* **Users:**  LIV-3258: Mobile View: Users Overview (e31bb55a)
+
 #### 1.4.10 (2021-06-11)
 
 ##### New Features

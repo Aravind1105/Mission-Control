@@ -66,12 +66,12 @@ const ProductDetail = ({
   const isNewProduct = id === 'new';
   const productName = isNewProduct ? 'New Product' : get(product, 'name', '');
   const { priceHistory, ...initialValues } = product;
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
   const [buttonVal, setButtonVal] = useState('Submit');
   const [disableForm, setDisableForm] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+
+  // this state variable is used only when a product is created along with the image
+  const [firstUploadImage, setFirstUploadImage] = useState(null);
 
   useEffect(() => {
     const { id } = match.params;
@@ -127,16 +127,12 @@ const ProductDetail = ({
                   // categoryOption={categoryOption}
                   // familyOption={familyOption}
                   taxesOption={taxesOption}
-                  uploadedImage={uploadedImage}
                   organizations={organizations}
-                  isImageDeleted={isImageDeleted}
                   setIsCancelTriggered={setIsCancelTriggered}
-                  setIsImageDeleted={setIsImageDeleted}
                   buttonVal={buttonVal}
                   disableForm={disableForm}
                   isProductLoading={isProductLoading}
-                  showAlert={showAlert}
-                  setShowAlert={setShowAlert}
+                  firstUploadImage={firstUploadImage}
                 />
               </Segment>
             </Grid.Column>
@@ -169,18 +165,11 @@ const ProductDetail = ({
             />
           )}
           <ImageUploader
-            src={productImg}
-            setUploadedImage={setUploadedImage}
-            setIsImageDeleted={setIsImageDeleted}
             isCancelTriggered={isCancelTriggered}
-            isImageDeleted={isImageDeleted}
             setDisableForm={setDisableForm}
-            showAlert={showAlert}
-            setShowAlert={setShowAlert}
             setIsCancelTriggered={setIsCancelTriggered}
-            uploadedImage={uploadedImage}
-            isImageDeleted={isImageDeleted}
             initialValues={{ ...initialValues, image: 0 }}
+            setFirstUploadImage={setFirstUploadImage}
           />
         </Grid.Column>
       ) : null}

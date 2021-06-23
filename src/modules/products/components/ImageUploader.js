@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
 import { modifyProductImage, deleteProductImage } from '../actions';
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import CustomButton from 'modules/shared/components/CustomButton';
 import CustomAlert from 'modules/shared/components/CustomAlert';
-import { toast } from 'react-semantic-toasts';
 
 import './styles.less';
 import getBase64 from '../../../lib/imageToBase64';
+import { get } from 'lodash';
 
 const reg = /^.+\//;
 
@@ -25,52 +25,61 @@ const NoImageBlock = () => (
 
 const ImageUploader = ({
   src,
-  setUploadedImage,
-  setIsImageDeleted,
   isCancelTriggered,
-  isImageDeleted,
   setDisableForm,
-  showAlert,
-  setShowAlert,
   setIsCancelTriggered,
-  uploadedImage,
   initialValues,
+  modifyProductImage,
+  deleteProductImage,
+  setFirstUploadImage,
 }) => {
-  const dispatch = useDispatch();
-
-  const [img, setImg] = useState(src);
+  const [img, setImg] = useState(null);
   const [imgName, setImgName] = useState('');
   const [showWarning, setShowWarning] = useState(false);
   const [imageProp, setSize] = useState(null);
   const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [initialImageName, setInitialImageName] = useState(null);
-  const [customAlertStatus, setcustomAlertStatus] = useState(false);
+  const [customAlertStatus, setCustomAlertStatus] = useState(false);
   const [base64Img, setBase64Img] = useState('');
+  const [isImageDeleted, setIsImageDeleted] = useState(false);
+  const [isImageUpdated, setIsImageUpdated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const independentUpdateImage = image => {
-    dispatch(
-      modifyProductImage({
-        id: initialValues.id,
-        image: base64Img,
-      }),
-    );
+  // show confirm dialog to user on click delete image or when the image is updated
+  useEffect(() => {
+    if (isImageDeleted || isImageUpdated) {
+      setShowAlert(true);
+    }
+  }, [isImageDeleted, isImageUpdated]);
+
+  const updateImage = () => {
+    modifyProductImage({
+      id: initialValues.id,
+      image: base64Img,
+    });
+    setIsImageUpdated(false);
+    setCustomAlertStatus(false);
   };
 
-  const independentDeleteImage = () => {
-    dispatch(
-      deleteProductImage({
-        id: initialValues.id,
-        orgId: initialValues.orgId,
-      }),
-    );
+  const deleteImage = () => {
+    deleteProductImage({
+      id: initialValues.id,
+      orgId: initialValues.orgId,
+    });
+    setIsImageDeleted(false);
+    setCustomAlertStatus(false);
   };
 
   useEffect(() => {
     const image = new Image();
+    let tempImage = src;
+    if (img) {
+      tempImage = img;
+    }
     image.onload = () => {
-      const fileName = img
-        ? img.replace(reg, '').replace(/\%20/g, ' ')
+      const fileName = tempImage
+        ? tempImage.replace(reg, '').replace(/\%20/g, ' ')
         : 'noname';
       if (
         image.naturalWidth > 1400 ||
@@ -95,7 +104,7 @@ const ImageUploader = ({
       });
       setInitialImageName(fileName);
     };
-    image.src = img || '';
+    image.src = tempImage || '';
   }, [img]);
 
   useEffect(() => {
@@ -108,10 +117,13 @@ const ImageUploader = ({
 
   useEffect(() => {
     if (customAlertStatus) {
-      if (uploadedImage && initialValues.id !== undefined) {
-        independentUpdateImage(uploadedImage);
+      if (isImageUpdated && initialValues.id !== undefined) {
+        updateImage();
       } else if (isImageDeleted) {
-        independentDeleteImage();
+        deleteImage();
+      } else if(initialValues.id === undefined) {
+        // while creating a new product with image, this method will be called
+        setFirstUploadImage(base64Img);
       }
     }
   }, [customAlertStatus]);
@@ -122,15 +134,13 @@ const ImageUploader = ({
     setImageSize(files[0].size);
     setImgName(files[0].name);
     setImg(newImg);
-    setUploadedImage(files[0]);
+    setIsImageUpdated(true);
     setIsImageDeleted(false);
 
-    // convert image into base64 string 
+    // convert image into base64 string
     getBase64(files[0], base64Img => {
       setBase64Img(base64Img);
     });
-
-    target.value = '';
   };
 
   const handleDelete = () => {
@@ -138,7 +148,7 @@ const ImageUploader = ({
     setImg(null);
     setSize(null);
     setImgName(null);
-    setUploadedImage(null);
+    setIsImageUpdated(false);
     setIsImageDeleted(true);
   };
 
@@ -147,9 +157,9 @@ const ImageUploader = ({
       <h3>Product Image</h3>
       <Divider />
       <div className="img-wrapper">
-        {img ? <img src={img} alt="product" /> : <NoImageBlock />}
+        {img || src ? <img src={img || src} alt="product" /> : <NoImageBlock />}
       </div>
-      {imageProp && img && (
+      {imageProp && (img || src) && (
         <Container textAlign="center">
           <div className="filename-wrapper">{`Filename: ${imgName ||
             imageProp.fileName}`}</div>
@@ -157,7 +167,7 @@ const ImageUploader = ({
         </Container>
       )}
       <div className="label-wrapper">
-        {img && (
+        {src && (
           <CustomButton
             onClick={handleDelete}
             defaultStyle
@@ -171,7 +181,7 @@ const ImageUploader = ({
             <div className="icon-side">
               <Icon name="upload" />
             </div>
-            <div className="label-side">{img ? 'Change' : 'Upload'} Image</div>
+            <div className="label-side">{src ? 'Change' : 'Upload'} Image</div>
           </div>
 
           <input
@@ -185,24 +195,19 @@ const ImageUploader = ({
         <CustomAlert
           visible={showAlert}
           onApprove={() => {
-            setcustomAlertStatus(true);
+            setCustomAlertStatus(true);
             setShowAlert(false);
-            if (initialValues.id)
-              toast({
-                type: 'success',
-                description: 'Product Image updated successfully.',
-                animation: 'fade left',
-              });
           }}
           onCancel={() => {
             setIsCancelTriggered(true);
             setIsImageDeleted(false);
+            setIsImageUpdated(false);
             setShowAlert(false);
           }}
           alertMsg={
             isImageDeleted
               ? `Are you sure that you want to DELETE the pictures of this product?`
-              : ` Are you sure that you want to UPDATE the picture of this product?`
+              : `Are you sure that you want to UPDATE the picture of this product?`
           }
         />
       </div>
@@ -215,4 +220,13 @@ const ImageUploader = ({
   );
 };
 
-export default ImageUploader;
+const mapStateToProps = state => ({
+  src: get(state.products.product, 'images[0]', ''),
+});
+
+const mapDispatchToProps = {
+  modifyProductImage,
+  deleteProductImage,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageUploader);

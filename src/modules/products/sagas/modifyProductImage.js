@@ -5,6 +5,7 @@ import {
   modifyProductImage as action,
   modifyProductImageSuccess as actionSuccess,
 } from '../actions';
+import { toast } from 'react-semantic-toasts';
 
 function* handler({ payload: { id, image } }) {
   try {
@@ -19,11 +20,18 @@ function* handler({ payload: { id, image } }) {
     });
 
     yield put(actionSuccess(updateProductLineImage));
+    toast({
+      type: 'success',
+      description: 'Product Image updated successfully.',
+      animation: 'fade left',
+    });
   } catch (e) {
     console.log(e);
-    window.alert(
-      'An error has occurred with your action. Please contact the Livello staff.',
-    );
+    toast({
+      type: 'error',
+      description: 'Error updating product image.',
+      animation: 'fade left',
+    });
   }
 }
 

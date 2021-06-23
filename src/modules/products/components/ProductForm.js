@@ -18,25 +18,20 @@ import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
-import { modifyProductSaga, modifyProductImage } from '../actions';
+import { modifyProductSaga } from '../actions';
 import get from 'lodash/get';
 import { isEqual } from 'lodash';
 
-let setImg;
-let restVal;
 let updatingProduct = false;
 const ProductForm = ({
   initialValues,
   taxesOption,
-  uploadedImage,
   organizations,
-  isImageDeleted,
   setIsCancelTriggered,
-  setIsImageDeleted,
   buttonVal,
   disableForm,
-  setShowAlert,
   isProductLoading,
+  firstUploadImage,
 }) => {
   const dispatch = useDispatch();
 
@@ -49,8 +44,8 @@ const ProductForm = ({
       .shelfLifeDays;
 
     delete values.image;
+
     setIsCancelTriggered(false);
-    setIsImageDeleted(false);
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
       : values.packagingOptions[0].ean;
@@ -77,13 +72,13 @@ const ProductForm = ({
     });
     values.capacities = newCapacities;
 
+    // firstUploadImage is null by default. On creating product, if image is uploaded then firstUploadImage will have a base64 string of the image and hence it will be considered for the update
     updatingProduct = dispatch(
       modifyProductSaga({
         values,
         formActions,
         initialValues,
-        uploadedImage,
-        isImageDeleted,
+        uploadedImage: firstUploadImage,
       }),
     );
   };
@@ -133,22 +128,6 @@ const ProductForm = ({
     }
   });
 
-  useEffect(() => {
-    if (uploadedImage) {
-      if (setImg) {
-        setShowAlert(true);
-        setIsCancelTriggered(false);
-        setImg({ ...restVal, image: restVal.image + 1 }, true);
-      }
-    } else if (isImageDeleted) {
-      if (setImg) {
-        setShowAlert(true);
-        setIsCancelTriggered(false);
-        setImg({ ...restVal, image: restVal.image + 1 }, true);
-      }
-    }
-  }, [uploadedImage, isImageDeleted]);
-
   return (
     <Formik
       initialValues={initialValues}
@@ -184,8 +163,6 @@ const ProductForm = ({
               (1 + (values.tax || 0) / 100)) *
               100,
           ) / 100;
-        setImg = setValues;
-        restVal = values;
         return (
           <Form onSubmit={handleSubmit}>
             <Grid>

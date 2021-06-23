@@ -228,6 +228,7 @@ export const UPLOAD_PRODUCT_LINE_IMAGE_MUTATION = gql`
   mutation updateProductLineImage($id: String!, $image: String!) {
     updateProductLineImage(id: $id, image: $image) {
       _id
+      images
     }
   }
 `;
