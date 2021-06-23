@@ -217,7 +217,7 @@ const ImageUploader = ({
 };
 
 const mapStateToProps = state => ({
-  src: state.products.product.images[0] || '',
+  src: get(state.products.product, 'images[0]', ''),
 });
 
 const mapDispatchToProps = {

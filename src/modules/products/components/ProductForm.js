@@ -26,11 +26,8 @@ let updatingProduct = false;
 const ProductForm = ({
   initialValues,
   taxesOption,
-  uploadedImage,
   organizations,
-  isImageDeleted,
   setIsCancelTriggered,
-  setIsImageDeleted,
   buttonVal,
   disableForm,
   isProductLoading,
@@ -47,7 +44,6 @@ const ProductForm = ({
 
     delete values.image;
     setIsCancelTriggered(false);
-    setIsImageDeleted(false);
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
       : values.packagingOptions[0].ean;
@@ -79,8 +75,6 @@ const ProductForm = ({
         values,
         formActions,
         initialValues,
-        uploadedImage,
-        isImageDeleted,
       }),
     );
   };
