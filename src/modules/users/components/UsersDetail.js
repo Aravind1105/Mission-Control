@@ -74,24 +74,20 @@ const UsersDetail = ({
                   </Comment>
                 </Comment.Group>
               </Grid.Row>
-              <Grid.Row only="mobile">
+              {/* <Grid.Row only="mobile">
                 <Grid.Column>
                   <h5>
                     {user.firstName} {user.lastName}
                   </h5>
                 </Grid.Column>
-              </Grid.Row>
+              </Grid.Row> */}
               <Grid.Row only="computer" style={{ paddingTop: '0px' }}>
                 <Grid.Column>
                   <Divider></Divider>
                 </Grid.Column>
               </Grid.Row>
 
-              <Grid.Row
-                style={{
-                  paddingTop: '0px',
-                }}
-              >
+              <Grid.Row className="user-detail-row">
                 <Grid.Column computer={12} mobile={16}>
                   <Grid>
                     <Grid.Row>
@@ -193,7 +189,7 @@ const UsersDetail = ({
                     size="mini"
                     onClick={userLogHandler}
                   />
-                  {rootUser && user.id !== loggedInUserId &&  (
+                  {rootUser && user.id !== loggedInUserId && (
                     <CustomButton
                       label={`${user.root ? 'Revoke Root' : 'Grant Root'}`}
                       icon={`${user.root ? 'lock' : 'lock open'}`}

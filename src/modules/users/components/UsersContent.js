@@ -110,7 +110,7 @@ const UsersContent = ({
         <Grid>
           <Grid.Column mobile={16} tablet={8} computer={4}>
             <Segment>
-              <Grid>
+              <Grid stackable>
                 <Grid.Row only="mobile">
                   <Grid.Column>
                     <>
