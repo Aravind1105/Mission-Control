@@ -31,6 +31,7 @@ const ImageUploader = ({
   initialValues,
   modifyProductImage,
   deleteProductImage,
+  setFirstUploadImage,
 }) => {
   const [img, setImg] = useState(null);
   const [imgName, setImgName] = useState('');
@@ -120,6 +121,9 @@ const ImageUploader = ({
         updateImage();
       } else if (isImageDeleted) {
         deleteImage();
+      } else if(initialValues.id === undefined) {
+        // while creating a new product with image, this method will be called
+        setFirstUploadImage(base64Img);
       }
     }
   }, [customAlertStatus]);

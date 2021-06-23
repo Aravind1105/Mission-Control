@@ -31,6 +31,7 @@ const ProductForm = ({
   buttonVal,
   disableForm,
   isProductLoading,
+  firstUploadImage,
 }) => {
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ const ProductForm = ({
       .shelfLifeDays;
 
     delete values.image;
+
     setIsCancelTriggered(false);
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
@@ -70,11 +72,13 @@ const ProductForm = ({
     });
     values.capacities = newCapacities;
 
+    // firstUploadImage is null by default. On creating product, if image is uploaded then firstUploadImage will have a base64 string of the image and hence it will be considered for the update
     updatingProduct = dispatch(
       modifyProductSaga({
         values,
         formActions,
         initialValues,
+        uploadedImage: firstUploadImage,
       }),
     );
   };

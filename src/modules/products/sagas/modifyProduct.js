@@ -14,11 +14,10 @@ import {
 } from '../actions';
 
 function* handler({
-  payload: { values, initialValues, uploadedImage, isImageDeleted },
+  payload: { values, initialValues, uploadedImage },
 }) {
   const { id, defaultPriceId, images, ...rest } = values;
   let isPriceUpdate = false;
-  if (isImageDeleted) rest.images = [];
   try {
     if (!id) {
       rest.defaultPrice = Number(rest.defaultPrice);

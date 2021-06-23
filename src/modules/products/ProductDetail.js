@@ -70,6 +70,9 @@ const ProductDetail = ({
   const [buttonVal, setButtonVal] = useState('Submit');
   const [disableForm, setDisableForm] = useState(false);
 
+  // this state variable is used only when a product is created along with the image
+  const [firstUploadImage, setFirstUploadImage] = useState(null);
+
   useEffect(() => {
     const { id } = match.params;
     if (!isLoading) {
@@ -129,6 +132,7 @@ const ProductDetail = ({
                   buttonVal={buttonVal}
                   disableForm={disableForm}
                   isProductLoading={isProductLoading}
+                  firstUploadImage={firstUploadImage}
                 />
               </Segment>
             </Grid.Column>
@@ -165,6 +169,7 @@ const ProductDetail = ({
             setDisableForm={setDisableForm}
             setIsCancelTriggered={setIsCancelTriggered}
             initialValues={{ ...initialValues, image: 0 }}
+            setFirstUploadImage={setFirstUploadImage}
           />
         </Grid.Column>
       ) : null}
