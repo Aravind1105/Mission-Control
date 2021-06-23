@@ -49,10 +49,21 @@ const columns = [
         event.touchedScales !== undefined &&
         event.touchedScales.length > 0
       ) {
+        let len = event.touchedScales.length - 1;
         return (
-          `Products Taken -` +
-          event.touchedScales.map(scl => {
-            return ` Weight: ${scl.weight}g / Cable ID: ${scl.id}`;
+          `Products Taken -     Cable ID:` +
+          event.touchedScales[0].id +
+          ' / Weight:' +
+          event.touchedScales[0].weight +
+          '\n' +
+          event.touchedScales.splice(2, len).map(scl => {
+            return (
+              '\n\t\t\t\t\t   Cable ID: ' +
+              scl.id +
+              ' / Weight:' +
+              scl.weight +
+              '\n'
+            );
           })
         );
       } else if (
