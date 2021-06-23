@@ -120,7 +120,9 @@ const MobileUser = ({
         >
           <TableCell
             className={
-              isEvenIdx ? 'mobile-table-row-test even' : 'mobile-table-row-test odd'
+              isEvenIdx
+                ? 'mobile-table-row-test even'
+                : 'mobile-table-row-test odd'
             }
             style={{ padding: '6px 24px 6px 12px' }}
             key={row}
