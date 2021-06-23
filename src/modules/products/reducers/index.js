@@ -14,6 +14,8 @@ import {
   getPriceHistorySuccess,
   resetPriceHistory,
   deleteActivePriceHistorySuccess,
+  modifyProductImageSuccess,
+  deleteProductImageSuccess,
 } from '../actions';
 
 const initialState = {
@@ -70,6 +72,14 @@ export default handleActions(
       ...state,
       product: payload,
       isLoading: false,
+    }),
+    [modifyProductImageSuccess]: (state, { payload }) => ({
+      ...state,
+      product: { ...state.product, images: payload.images },
+    }),
+    [deleteProductImageSuccess]: (state, { payload }) => ({
+      ...state,
+      product: { ...state.product, images: [] },
     }),
     [getPriceHistorySuccess]: (state, { payload }) => ({
       ...state,

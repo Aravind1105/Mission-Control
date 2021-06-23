@@ -18,12 +18,10 @@ import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
-import { modifyProductSaga, modifyProductImage } from '../actions';
+import { modifyProductSaga } from '../actions';
 import get from 'lodash/get';
 import { isEqual } from 'lodash';
 
-let setImg;
-let restVal;
 let updatingProduct = false;
 const ProductForm = ({
   initialValues,
@@ -35,7 +33,6 @@ const ProductForm = ({
   setIsImageDeleted,
   buttonVal,
   disableForm,
-  setShowAlert,
   isProductLoading,
 }) => {
   const dispatch = useDispatch();
@@ -133,22 +130,6 @@ const ProductForm = ({
     }
   });
 
-  useEffect(() => {
-    if (uploadedImage) {
-      if (setImg) {
-        setShowAlert(true);
-        setIsCancelTriggered(false);
-        setImg({ ...restVal, image: restVal.image + 1 }, true);
-      }
-    } else if (isImageDeleted) {
-      if (setImg) {
-        setShowAlert(true);
-        setIsCancelTriggered(false);
-        setImg({ ...restVal, image: restVal.image + 1 }, true);
-      }
-    }
-  }, [uploadedImage, isImageDeleted]);
-
   return (
     <Formik
       initialValues={initialValues}
@@ -184,8 +165,6 @@ const ProductForm = ({
               (1 + (values.tax || 0) / 100)) *
               100,
           ) / 100;
-        setImg = setValues;
-        restVal = values;
         return (
           <Form onSubmit={handleSubmit}>
             <Grid>
