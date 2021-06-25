@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
+import { Grid, Icon, Button, Segment, Popup } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
@@ -52,9 +52,17 @@ const Card = ({
             )}
           </div>
           <div className="load-cell-body">
-            <b className="load-cell-title">
+            <Popup
+              content={productLine ? `${productLine.name}` : null}
+              trigger={
+                <b className="load-cell-title">
+                  {productLine ? `${productLine.name}` : null}
+                </b>
+              }
+            />
+            {/* <b className="load-cell-title">
               {productLine ? `${productLine.name}` : null}
-            </b>
+            </b> */}
             <p>
               Qty:&nbsp;
               <ColoredBlock
