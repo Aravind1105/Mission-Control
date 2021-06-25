@@ -10,7 +10,8 @@ const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
   let style = { color: '#DB2828' };
   let text = 'Offline';
 
-  if (dif <= 60) {
+  // if (dif <= 60) {
+  if (dif <= 10) {
     style = { color: '#7cb122' };
     text = 'Online';
   } else if (showTime) {
