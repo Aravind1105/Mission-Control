@@ -1,3 +1,12 @@
+#### 1.4.12 (2021-06-25)
+
+##### Bug Fixes
+
+* **product detail:** LIV-3408 image uploading will not accept images of all sizes (9f5fc39f)
+* **Change Kiosk Status Logic:** LIV-3426 Update Kiosk Status (abcca212)
+* **Planogram:** LIV-2906 Kiosk Planogram Column Overlapping Issue Resolved (90a3ae87)
+* **Users Details:** LIV-3257 Mobile Optimization for Users Background Color (06cb76a4)
+
 #### 1.4.11 (2021-06-23)
 
 ##### New Features
