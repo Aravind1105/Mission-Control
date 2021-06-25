@@ -26,7 +26,6 @@ const NoImageBlock = () => (
 const ImageUploader = ({
   src,
   isCancelTriggered,
-  setDisableForm,
   setIsCancelTriggered,
   initialValues,
   modifyProductImage,
@@ -48,7 +47,7 @@ const ImageUploader = ({
 
   // show confirm dialog to user on click delete image or when the image is updated
   useEffect(() => {
-    if (isImageDeleted || isImageUpdated) {
+    if ((isImageDeleted || isImageUpdated) && imageSize <= 500000) {
       setShowAlert(true);
     }
   }, [isImageDeleted, isImageUpdated]);
@@ -87,9 +86,7 @@ const ImageUploader = ({
         imageSize > 500000
       ) {
         setShowWarning(true);
-        setDisableForm(true);
       } else {
-        setDisableForm(false);
         setShowWarning(false);
       }
       setSize({
@@ -121,7 +118,7 @@ const ImageUploader = ({
         updateImage();
       } else if (isImageDeleted) {
         deleteImage();
-      } else if(initialValues.id === undefined) {
+      } else if (initialValues.id === undefined) {
         // while creating a new product with image, this method will be called
         setFirstUploadImage(base64Img);
       }
