@@ -20,6 +20,7 @@ const UsersDetail = ({
   isLoading,
   rootUser,
   loggedInUserId,
+  color,
 }) => {
   const handlerRoleToggle = () => {
     const payload = {
@@ -45,7 +46,12 @@ const UsersDetail = ({
     <>
       {!isLoading && (
         <div className="user-info">
-          <Segment className="usr-detail-style">
+          <Segment
+            className="usr-detail-style"
+            style={{
+              backgroundColor: color,
+            }}
+          >
             <Grid>
               <Grid.Row
                 columns="equal"
@@ -74,13 +80,6 @@ const UsersDetail = ({
                   </Comment>
                 </Comment.Group>
               </Grid.Row>
-              {/* <Grid.Row only="mobile">
-                <Grid.Column>
-                  <h5>
-                    {user.firstName} {user.lastName}
-                  </h5>
-                </Grid.Column>
-              </Grid.Row> */}
               <Grid.Row only="computer" style={{ paddingTop: '0px' }}>
                 <Grid.Column>
                   <Divider></Divider>

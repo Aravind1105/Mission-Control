@@ -144,7 +144,11 @@ const MobileUser = ({
             colSpan={1}
           >
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <UsersDetail />
+              {isEvenIdx ? (
+                <UsersDetail color={'#FFFFFF'} />
+              ) : (
+                <UsersDetail color={'#f2f2f2'} />
+              )}
             </Collapse>
           </TableCell>
         </TableRow>
