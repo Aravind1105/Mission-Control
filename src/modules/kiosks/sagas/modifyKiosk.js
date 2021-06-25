@@ -5,7 +5,7 @@ import history from 'lib/history';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import {
   modifyKiosk as action,
-  modifyKioskSuccess as actionSuccess,
+  getKiosk as actionSuccess,
 } from '../actions';
 import {
   CREATE_KIOSK_MUTATION,
@@ -61,7 +61,7 @@ function* handler({ payload: { values, formActions } }) {
         animation: 'fade left',
       });
     }
-    yield put(actionSuccess(kiosk));
+    yield put(actionSuccess(responseData._id));
   } catch (error) {
     console.log(error);
   }
