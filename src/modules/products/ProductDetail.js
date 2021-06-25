@@ -68,7 +68,6 @@ const ProductDetail = ({
   const { priceHistory, ...initialValues } = product;
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
   const [buttonVal, setButtonVal] = useState('Submit');
-  const [disableForm, setDisableForm] = useState(false);
 
   // this state variable is used only when a product is created along with the image
   const [firstUploadImage, setFirstUploadImage] = useState(null);
@@ -130,7 +129,6 @@ const ProductDetail = ({
                   organizations={organizations}
                   setIsCancelTriggered={setIsCancelTriggered}
                   buttonVal={buttonVal}
-                  disableForm={disableForm}
                   isProductLoading={isProductLoading}
                   firstUploadImage={firstUploadImage}
                 />
@@ -166,7 +164,6 @@ const ProductDetail = ({
           )}
           <ImageUploader
             isCancelTriggered={isCancelTriggered}
-            setDisableForm={setDisableForm}
             setIsCancelTriggered={setIsCancelTriggered}
             initialValues={{ ...initialValues, image: 0 }}
             setFirstUploadImage={setFirstUploadImage}

@@ -29,7 +29,6 @@ const ProductForm = ({
   organizations,
   setIsCancelTriggered,
   buttonVal,
-  disableForm,
   isProductLoading,
   firstUploadImage,
 }) => {
@@ -505,11 +504,7 @@ const ProductForm = ({
                   >
                     Cancel
                   </Button>
-                  <Button
-                    color="green"
-                    type="submit"
-                    disabled={!dirty || disableForm}
-                  >
+                  <Button color="green" type="submit" disabled={!dirty}>
                     {buttonVal}
                   </Button>
                 </Grid.Column>
