@@ -30,7 +30,6 @@ const Toolbar = ({
   categories,
   supplier,
 }) => {
-
   const handleSearchChange = ({ target }) => {
     changeSearch(target.value);
   };
@@ -45,7 +44,12 @@ const Toolbar = ({
   };
 
   return (
-    <Segment className="toolbar">
+    <div
+      style={{
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
+    >
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={6}>
@@ -74,7 +78,7 @@ const Toolbar = ({
         </Grid.Row>
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
         <Grid.Row verticalAlign="middle" columns={2}>
-          <Grid.Column mobile={16} computer={4}>
+          <Grid.Column mobile={16} tablet={8} computer={4}>
             <Dropdown
               placeholder="All Categories"
               selection
@@ -83,7 +87,7 @@ const Toolbar = ({
               options={categories}
             ></Dropdown>
           </Grid.Column>
-          <Grid.Column mobile={16} computer={4}>
+          <Grid.Column mobile={16} tablet={8} computer={4}>
             <Dropdown
               placeholder="All Suppliers"
               selection
@@ -94,7 +98,7 @@ const Toolbar = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Segment>
+    </div>
   );
 };
 

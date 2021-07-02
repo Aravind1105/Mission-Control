@@ -57,19 +57,17 @@ const ProductsContent = ({
   };
 
   return (
-    <Segment>
-      <CustomTable
-        sortByColumn="name"
-        columns={columns}
-        data={products}
-        onRowClick={clickRow}
-        getData={getData}
-        sortable
-        selectable
-        isLoading={isLoading}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-      />
-    </Segment>
+    <CustomTable
+      sortByColumn="name"
+      columns={columns}
+      data={products}
+      onRowClick={clickRow}
+      getData={getData}
+      sortable
+      selectable
+      isLoading={isLoading}
+      setSortByInCaller={sort => setSortByInCaller(sort)}
+    />
   );
 };
 
