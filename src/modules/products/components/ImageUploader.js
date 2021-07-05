@@ -45,12 +45,20 @@ const ImageUploader = ({
   const [isImageUpdated, setIsImageUpdated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  // show confirm dialog to user on click delete image or when the image is updated
+  // show confirm dialog to user on click delete image or when the image is updated or deleted
+  // upload image only if the size of the image is less then 500kb
+  // upload image only if the height and width are less than or equal to 1400
+  // imageProp will be null, if the product has no image originally
+  // imageProp will contain image's height and width if the image is currently uploaded
+
   useEffect(() => {
-    if ((isImageDeleted || isImageUpdated) && imageSize <= 500000) {
+    if ((!showWarning && isImageUpdated) || isImageDeleted) {
       setShowAlert(true);
+    } else {
+      setShowAlert(false);
     }
-  }, [isImageDeleted, isImageUpdated]);
+  }, [showWarning, isImageUpdated, isImageDeleted]);
+
 
   const updateImage = () => {
     modifyProductImage({
@@ -171,6 +179,7 @@ const ImageUploader = ({
             label="Delete Image"
             icon="trash alternate outline"
             className="image-button "
+            disabled={showWarning}
           />
         )}
         <label htmlFor="productImgUpload" className="modify-button">

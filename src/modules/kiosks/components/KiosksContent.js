@@ -25,6 +25,7 @@ const sortDefault = [
 const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
+  serialNumber: 'serialNumber',
 };
 
 const defaultFilterValues = { search: '', kiosk: '', kioskStatus: '' };

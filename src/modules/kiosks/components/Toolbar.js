@@ -66,7 +66,12 @@ const Toolbar = ({
   //   setKioskNetworkStatus(text)
   // };
   return (
-    <Segment className="toolbar">
+    <div
+      style={{
+        marginTop: '20px',
+        marginBottom: '20px',
+      }}
+    >
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={6}>
@@ -147,7 +152,7 @@ const Toolbar = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </Segment>
+    </div>
   );
 };
 
