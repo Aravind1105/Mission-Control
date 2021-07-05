@@ -327,19 +327,14 @@ const ModalLoadCell = ({
             <CustomAlert
               visible={showDeleteAlert}
               onApprove={() => {
-                if (quantityState === 0) {
-                  handleDeleteLoadCell();
-                } else {
-                  setShowDeleteAlert(false);
-                }
+                handleDeleteLoadCell();
               }}
               onCancel={() => setShowDeleteAlert(false)}
               alertMsg={
                 quantityState === 0
                   ? 'Are you sure want to delete this load cell?'
-                  : 'Loadcell should be empty before deleting.'
+                  : 'There are still some products on this load cell. Are you sure want to delete?'
               }
-              isWarning={quantityState !== 0}
             />
             <CustomAlert
               visible={showPositionErrorAlert}

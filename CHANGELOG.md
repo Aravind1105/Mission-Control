@@ -1,3 +1,16 @@
+#### 1.4.14 (2021-07-05)
+
+##### Bug Fixes
+
+* **delete load cell:**  LIV-3450 Fixing the deleting of load cell for non empty quantity (790e9f03)
+* **kiosk list:** LIV-3289 kiosk sort by serial number fixed (8e6f063d)
+* **Kiosk Details, Organization, Products:** LIV-3446 Components are retouched for Web and Mobile Optimization (263caf44)
+* **product detail:** LIV-3406 product image upload bug fix (7c4e77cf)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into fix/deleteLoadCell (27b9daef)
+
 #### 1.4.13 (2021-07-05)
 
 ##### Bug Fixes
