@@ -1,3 +1,17 @@
+#### 1.4.15 (2021-07-06)
+
+##### New Features
+
+* **kiosk list:** LIV-3451 search by kiosk name or serial number (a6b13938)
+
+##### Bug Fixes
+
+* **delete load cell:**  LIV-3450 Fixing the deleting of load cell for non empty quantity (790e9f03)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into fix/deleteLoadCell (27b9daef)
+
 #### 1.4.14 (2021-07-05)
 
 ##### Bug Fixes
