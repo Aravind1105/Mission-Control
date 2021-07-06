@@ -172,6 +172,8 @@ const ProductForm = ({
                     label="Name"
                     required
                     component={FormInput}
+                    placeholder="max. 50 characters"
+                    maxLength="50"
                   />
                 </Grid.Column>
                 <Grid.Column width={8}>
@@ -191,7 +193,8 @@ const ProductForm = ({
                     name="packagingOptions[0].ean"
                     label="EAN"
                     component={FormInput}
-                    placeholder="EAN is optional."
+                    placeholder="ex:1234567890123"
+                    maxLength="13"
                   />
                 </Grid.Column>
                 <Grid.Column>
@@ -199,6 +202,8 @@ const ProductForm = ({
                     name="articleNumber"
                     label="Article Number (SKU)"
                     component={FormInput}
+                    placeholder="ex:V172712312"
+                    maxLength="20"
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -209,6 +214,8 @@ const ProductForm = ({
                     name="manufacturer"
                     label="Manufacturer"
                     required
+                    placeholder="max. 50 characters"
+                    maxLength="50"
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -222,6 +229,8 @@ const ProductForm = ({
                     label="Description"
                     rows={5}
                     component={FormTextArea}
+                    placeholder="Enter a product description."
+                    maxLength="200"
                   />
                 </Grid.Column>
                 {/* <Grid.Column>
@@ -249,6 +258,7 @@ const ProductForm = ({
                     name="packagingOptions[0].netWeightGrams"
                     label="Net Quantity (ml/g)"
                     min={0}
+                    maxLength="5"
                     component={FormInputWithSelector}
                     limiting="integerField"
                     selectorOptions={[
@@ -267,6 +277,7 @@ const ProductForm = ({
                     label="Actual Weight (g)"
                     min={0}
                     required
+                    maxLength="5"
                     component={FormInput}
                     limiting="integerField"
                   />
@@ -278,6 +289,8 @@ const ProductForm = ({
                     limiting="integerField"
                     required
                     min={0}
+                    maxLength="3"
+                    placeholder="optional"
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -294,6 +307,7 @@ const ProductForm = ({
                     prettier={prettierNumber}
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="6"
                   />
                 </Grid.Column>
                 <Grid.Column width={4}>
@@ -304,6 +318,7 @@ const ProductForm = ({
                     className="not-active-input"
                     value={netPrice.toFixed(2)}
                     component={FormInput}
+                    maxLength="6"
                   />
                 </Grid.Column>
                 <Grid.Column width={4}>
@@ -325,6 +340,7 @@ const ProductForm = ({
                     prettier={prettierNumber}
                     limiting="floatingField"
                     required
+                    maxLength="6"
                     min={0}
                   />
                 </Grid.Column>
@@ -366,6 +382,7 @@ const ProductForm = ({
                     label="Full Shelf (L)"
                     min={0}
                     required
+                    maxLength="3"
                     component={FormInput}
                     limiting="integerField"
                     callbackOnBlur={handleShelfSizeChange}
@@ -377,6 +394,7 @@ const ProductForm = ({
                     label="1/2 Shelf (M)"
                     min={0}
                     required
+                    maxLength="3"
                     component={FormInput}
                     limiting="integerField"
                     callbackOnBlur={handleShelfSizeChange}
@@ -388,6 +406,7 @@ const ProductForm = ({
                     label="1/3 Shelf (S)"
                     min={0}
                     required
+                    maxLength="3"
                     component={FormInput}
                     limiting="integerField"
                     callbackOnBlur={handleShelfSizeChange}
@@ -407,6 +426,7 @@ const ProductForm = ({
                     label="kJ/kcal"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -416,6 +436,7 @@ const ProductForm = ({
                     label="Total Fat (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -425,6 +446,7 @@ const ProductForm = ({
                     label="Saturated Fats (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -434,6 +456,7 @@ const ProductForm = ({
                     label="Carbohydrates (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -443,6 +466,7 @@ const ProductForm = ({
                     label="Sugar (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -455,6 +479,7 @@ const ProductForm = ({
                     label="Fiber (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -464,6 +489,7 @@ const ProductForm = ({
                     label="Protein (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -473,6 +499,7 @@ const ProductForm = ({
                     label="Salt (g)"
                     component={FormInput}
                     limiting="floatingField"
+                    maxLength="5"
                     min={0}
                   />
                 </Grid.Column>
@@ -481,6 +508,7 @@ const ProductForm = ({
                     name="allergens"
                     label="Allergens"
                     component={FormInput}
+                    maxLength="100"
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -490,7 +518,9 @@ const ProductForm = ({
                     name="ingredientsList"
                     label="Ingredients"
                     rows={5}
+                    maxLength="400"
                     component={FormTextArea}
+                    placeholder="Enter the ingredients of the product here."
                   />
                 </Grid.Column>
               </Grid.Row>
