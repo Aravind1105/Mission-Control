@@ -461,6 +461,7 @@ export const getActivityLogsState = createSelector(getActivityLogs, log => {
         event: {
           doorStatus: activityLogMessages[actLog.payload.message.door_status],
           touchedScales: actLog.payload.message.touchedScales,
+          scales: actLog.payload.message.scales,
           paymentTerminal:
             activityLogMessages[actLog.payload.message.payment_terminal],
         },

@@ -49,16 +49,27 @@ const columns = [
         event.touchedScales !== undefined &&
         event.touchedScales.length > 0
       ) {
-        let len = event.touchedScales.length - 1;
+        let len = event.touchedScales.length;
+        let Scallen = event.scales.length;
         return (
-          `Products Taken -     Cable ID:` +
+          `Products Touched -     Cable ID:` +
           event.touchedScales[0].id +
           ' / Weight:' +
           event.touchedScales[0].weight +
           ',' +
-          event.touchedScales.slice(2, len).map(scl => {
+          event.touchedScales.slice(1, len).map(scl => {
             return (
-              '\n\t\t\t\t\t   Cable ID: ' + scl.id + ' / Weight:' + scl.weight
+              '\n\t\t\t\t\t\t Cable ID: ' + scl.id + ' / Weight:' + scl.weight
+            );
+          }) +
+          '\n\n Product Taken -             Cable ID:' +
+          event.scales[0].id +
+          ' / Weight:' +
+          event.scales[0].weight +
+          ',' +
+          event.scales.slice(1, Scallen).map(scl => {
+            return (
+              '\n\t\t\t\t\t\t Cable ID: ' + scl.id + ' / Weight:' + scl.weight
             );
           })
         );
@@ -66,9 +77,9 @@ const columns = [
         event.touchedScales !== null &&
         event.touchedScales !== undefined &&
         event.touchedScales.length === 0
-      )
-        return `Products Taken - Empty`;
-      else if (
+      ) {
+        return `Products Touched - Empty`;
+      } else if (
         event.paymentTerminal !== null &&
         event.paymentTerminal !== undefined
       )
