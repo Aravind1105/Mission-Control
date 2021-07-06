@@ -125,7 +125,14 @@ const KiosksContent = ({
     };
 
     if (search || kiosk || kioskStatus) {
-      const name = search ? { name: { $regex: search, $options: 'i' } } : {};
+      const name = search
+        ? {
+            $or: [
+              { name: { $regex: search, $options: 'i' } },
+              { serialNumber: { $regex: search, $options: 'i' } },
+            ],
+          }
+        : {};
       const kio = kiosk ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
