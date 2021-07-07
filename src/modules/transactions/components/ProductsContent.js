@@ -12,7 +12,7 @@ const ProductsContent = ({
 }) => {
   return (
     <ProductsTable
-      sortByColumn="sold"
+      sortByColumn="productLine"
       data={products}
       getData={getData}
       sortable
@@ -20,7 +20,7 @@ const ProductsContent = ({
       striped
       isLoading={isLoading}
       setSortByInCaller={sort => setSortByInCaller(sort)}
-      sortDirection="DESC"
+      sortDirection="ASC"
     />
   );
 };

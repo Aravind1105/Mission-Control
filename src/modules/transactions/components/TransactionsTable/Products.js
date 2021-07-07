@@ -97,8 +97,9 @@ const ProductsTable = ({
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell
+              sorted={sortBy === 'productLine'? direction: null}
                 onClick={
-                  sortable ? handlerHCellClick('productName') : undefined
+                  sortable ? handlerHCellClick('productLine') : undefined
                 }
                 rowSpan="2"
               >
@@ -111,12 +112,35 @@ const ProductsTable = ({
               <Table.HeaderCell colSpan="2">Removed Products</Table.HeaderCell>
             </Table.Row>
             <Table.Row>
-              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
-              <Table.HeaderCell textAlign="center">Quantity</Table.HeaderCell>
-              <Table.HeaderCell textAlign="right">Value</Table.HeaderCell>
+              <Table.HeaderCell textAlign="center" 
+              sorted={sortBy === 'sold'? direction: null} 
+              onClick={sortable ? handlerHCellClick('sold') : null}>
+                Quantity</Table.HeaderCell>
+              
+              <Table.HeaderCell textAlign="right" 
+              sorted={sortBy === 'totalGrossSales'? direction: null} 
+              onClick={sortable ? handlerHCellClick('totalGrossSales') : null}>
+                Value</Table.HeaderCell>
+              
+              <Table.HeaderCell textAlign="center" 
+              sorted={sortBy === 'refilled'? direction: null} 
+              onClick={sortable ? handlerHCellClick('refilled') : null}>
+                Quantity</Table.HeaderCell>
+
+              <Table.HeaderCell textAlign="right" 
+              sorted={sortBy === 'totalCost'? direction: null} 
+              onClick={sortable ? handlerHCellClick('totalCost') : null}>
+                Value</Table.HeaderCell>
+
+              <Table.HeaderCell textAlign="center" 
+              sorted={sortBy === 'removed'? direction: null} 
+              onClick={sortable ? handlerHCellClick('removed') : null}>
+                Quantity</Table.HeaderCell>
+
+              <Table.HeaderCell textAlign="right" 
+              sorted={sortBy === 'totalRemovedCost'? direction: null} 
+              onClick={sortable ? handlerHCellClick('totalRemovedCost') : null}>
+                Value</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
         )}
@@ -142,7 +166,7 @@ const ProductsTable = ({
                     </Table.Cell>
                     <Table.Cell textAlign="right">
                       {`${Number(
-                        product.refilled * product.defaultPrice || 0,
+                        product.totalCost || 0,
                       ).toFixed(2)}€`}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
@@ -150,7 +174,7 @@ const ProductsTable = ({
                     </Table.Cell>
                     <Table.Cell textAlign="right">
                       {`${Number(
-                        product.removed * product.defaultPrice || 0,
+                        product.totalRemovedCost || 0,
                       ).toFixed(2)}€`}
                     </Table.Cell>
                   </Table.Row>

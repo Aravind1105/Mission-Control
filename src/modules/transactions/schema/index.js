@@ -69,6 +69,7 @@ export const GET_PRODUCTS_QUERY = gql`
         }
         totalCost
         totalGrossSales
+        totalRemovedCost
         refilled
         sold
         removed

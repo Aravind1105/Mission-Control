@@ -19,8 +19,8 @@ import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
-    column: 'sold',
-    direction: 'DESC',
+    column: 'productLine',
+    direction: 'ASC',
   },
 ];
 
@@ -162,7 +162,6 @@ const ProductList = ({
         isLoading={isLoading}
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
-        // sortDirection="DESC"
       />
       <br></br>
       <Pagination
