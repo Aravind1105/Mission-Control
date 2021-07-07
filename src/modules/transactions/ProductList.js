@@ -33,6 +33,7 @@ const sortValue = {
   sold: 'sold',
   totalCost: 'totalCost',
   totalGrossSales: 'totalGrossSales',
+  totalRemovedCost: 'totalRemovedCost'
 };
 
 const ProductList = ({
