@@ -18,7 +18,7 @@ const DetailQRCode = ({ qrCode, fileName }) => {
   useEffect(() => {
     setQrImage(document.querySelector('canvas').toDataURL('image/jpg', 0.3));
     setIsLoading(false);
-  }, []);
+  }, [qrCode]);
 
   const QrDocument = (
     <Document>
