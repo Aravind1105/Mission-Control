@@ -114,6 +114,8 @@ const KioskForm = ({
                   name="name"
                   label="Name"
                   required
+                  maxLength="50"
+                  placeholder="max. 50 characters"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -122,6 +124,8 @@ const KioskForm = ({
                   name="serialNumber"
                   label="Serial Number"
                   required
+                  maxLength="50"
+                  placeholder="max. 50 characters"
                   disabled={Boolean(initialValues.id)}
                   component={FormInput}
                 />
@@ -173,6 +177,8 @@ const KioskForm = ({
                   name="location.address.name"
                   label="Client Name"
                   required
+                  maxLength="50"
+                  placeholder="max. 50 characters"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -184,6 +190,7 @@ const KioskForm = ({
                   name="location.address.country"
                   label="Country"
                   required
+                  maxLength="50"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -192,6 +199,7 @@ const KioskForm = ({
                   name="location.address.city"
                   label="City"
                   required
+                  maxLength="50"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -200,6 +208,7 @@ const KioskForm = ({
                   name="location.address.state"
                   label="State"
                   required
+                  maxLength="50"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -211,6 +220,7 @@ const KioskForm = ({
                   name="location.address.line1"
                   label="Address 1"
                   required
+                  maxLength="50"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -218,6 +228,7 @@ const KioskForm = ({
                 <Field
                   name="location.address.line2"
                   label="Address 2"
+                  maxLength="50"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -226,6 +237,8 @@ const KioskForm = ({
                   name="location.address.postalCode"
                   label="ZIP Code"
                   required
+                  placeholder="ex. 51377"
+                  maxLength="10"
                   component={FormInput}
                 />
               </Grid.Column>
@@ -237,6 +250,8 @@ const KioskForm = ({
                   name="notes"
                   label="Directions / Notes"
                   rows={5}
+                  maxLength="200"
+                  placeholder="Enter directions or notes here"
                   component={FormTextArea}
                 />
               </Grid.Column>
@@ -248,6 +263,9 @@ const KioskForm = ({
                     name="pin"
                     label="Replenishment PIN"
                     required
+                    maxLength="4"
+                    placeholder="4-digit pin"
+                    limiting="integerField"
                     component={FormInput}
                   />
                 </Grid.Column>
@@ -257,7 +275,10 @@ const KioskForm = ({
                   <Field
                     name="technicianPin"
                     label="Technician PIN"
+                    maxLength="4"
+                    limiting="integerField"
                     required
+                    placeholder="4-digit pin"
                     component={FormInput}
                   />
                 </Grid.Column>
