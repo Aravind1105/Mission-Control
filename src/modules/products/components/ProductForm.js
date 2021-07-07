@@ -290,7 +290,7 @@ const ProductForm = ({
                     required
                     min={0}
                     maxLength="3"
-                    placeholder="optional"
+                    // placeholder="optional"
                     component={FormInput}
                   />
                 </Grid.Column>
