@@ -51,25 +51,39 @@ const columns = [
       ) {
         let len = event.touchedScales.length;
         let Scallen = event.scales.length;
+        let ScalResults = event.scales.filter(item => item.weight !== 0);
+        let TouchedResults = event.touchedScales.filter(
+          item => item.weight !== 0,
+        );
         return (
-          `Products Touched -     Cable ID:` +
-          event.touchedScales[0].id +
+          `Products Touched -     Cable ID: ` +
+          TouchedResults[0].id +
           ' / Weight:' +
-          event.touchedScales[0].weight +
+          TouchedResults[0].weight +
+          ' g' +
           ',' +
-          event.touchedScales.slice(1, len).map(scl => {
+          TouchedResults.slice(1, len).map(scl => {
             return (
-              '\n\t\t\t\t\t\t Cable ID: ' + scl.id + ' / Weight:' + scl.weight
+              '\n\t\t\t\t\t\t Cable ID: ' +
+              scl.id +
+              ' / Weight: ' +
+              scl.weight +
+              ' g'
             );
           }) +
-          '\n\n Product Taken -             Cable ID:' +
-          event.scales[0].id +
-          ' / Weight:' +
-          event.scales[0].weight +
+          '\n\n Product Taken -             Cable ID: ' +
+          ScalResults[0].id +
+          ' / Weight: ' +
+          ScalResults[0].weight +
+          ' g' +
           ',' +
-          event.scales.slice(1, Scallen).map(scl => {
+          ScalResults.slice(1, Scallen).map(scl => {
             return (
-              '\n\t\t\t\t\t\t Cable ID: ' + scl.id + ' / Weight:' + scl.weight
+              '\n\t\t\t\t\t\t Cable ID:  ' +
+              scl.id +
+              ' / Weight: ' +
+              scl.weight +
+              ' g'
             );
           })
         );
