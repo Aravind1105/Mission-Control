@@ -16,6 +16,7 @@ import FormGroupTitle from './FormGroupTitle';
 import getCountries from '../../sagas/getCountries';
 import loadOptions from '../../sagas/getOrganizationsForForm';
 import { modifyOrganization } from '../../actions';
+import CountryPicker from '../../../shared/components/CountryPicker';
 
 const OrganizationForm = ({ initialValues, orgOptions }) => {
   const dispatch = useDispatch();
@@ -110,8 +111,8 @@ const OrganizationForm = ({ initialValues, orgOptions }) => {
                   name="address.country"
                   label="Country"
                   required
-                  loadOptions={getCountries(500)}
-                  component={FormAsyncSelect}
+                  // loadOptions={getCountries(500)}
+                  component={CountryPicker}
                 />
               </Grid.Column>
             </Grid.Row>
