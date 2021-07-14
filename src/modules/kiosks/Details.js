@@ -12,6 +12,7 @@ import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
+import get from 'lodash/get';
 import {
   getKioskSingle,
   getKioskShelves,
@@ -19,8 +20,8 @@ import {
   getOrgData,
 } from './selectors';
 import { resetKiosk, getKiosk, getOrganizationById } from './actions';
-
 import './styles.less';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const links = [
   {
@@ -80,6 +81,7 @@ const KioskDetails = ({
       createRefill(kiosk._id);
     }
   };
+
   const loaded = !isKioskLoading && orgData;
   return loaded ? (
     <>
@@ -102,7 +104,6 @@ const KioskDetails = ({
                 <Segment>
                   <DetailsHeader
                     name={kiosk && kiosk.name}
-                    temp={kiosk && kiosk.temperature.value}
                     doorStatus={kiosk && kiosk.doorStatus}
                     temperature={kiosk && kiosk.temperature}
                     session={kiosk && kiosk.session}
@@ -152,6 +153,18 @@ const KioskDetails = ({
                       <CustomButton
                         icon="setting"
                         label="Settings"
+                        disabled={(function() {
+                          const value = get(
+                            kiosk && kiosk.temperature,
+                            'updated',
+                            0,
+                          );
+                          const dif = differenceInMinutes(
+                            new Date(),
+                            new Date(value),
+                          );
+                          return !(dif <= 10);
+                        })()}
                         onClick={() =>
                           history.push(`/kiosks/settings/${kiosk && kiosk._id}`)
                         }
