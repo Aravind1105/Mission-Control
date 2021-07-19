@@ -4,9 +4,12 @@ import { groupBy, orderBy } from 'lodash';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import './styles.less';
 const DetailsInventory = ({ list, total }) => {
+  // filter list for active load cells
+  const filteredList = list.filter(ele => ele.isActive !== false);
+
   const sortedByProductName = orderBy(
-    list,
-    [list => list.productLine.name.toLowerCase()],
+    filteredList,
+    [filteredList => filteredList.productLine.name.toLowerCase()],
     ['asc'],
   );
   const groupedByProductLines = groupBy(sortedByProductName, 'productLine._id');
