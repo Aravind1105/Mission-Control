@@ -51,23 +51,17 @@ const columns = [
         event.paymentTerminal !== undefined
       )
         return `Payment Terminal: ${event.paymentTerminal}`;
-      else if (
-        event.touchedScales !== null &&
-        event.touchedScales !== undefined &&
-        event.touchedScales.length > 0
-      ) {
-        let len = event.touchedScales.length;
-        let TouchedResults = event.touchedScales;
-
+      else if (event.touchedScales.length > 0 || event.scales.length > 0) {
+        let prodTaken;
         if (
           event.scales !== null &&
           event.scales !== undefined &&
           event.scales.length > 0
         ) {
-          let Scallen = event.scales.length;
+          let ScalLen = event.scales.length;
           let ScalResults = event.scales;
 
-          let prodTaken =
+          prodTaken =
             '\n\n Product Taken -             Cable ID :  ' +
             ScalResults[0].id +
             '  /  Weight :  ' +
@@ -75,18 +69,28 @@ const columns = [
             ' g' +
             '  /  Name :  ' +
             ScalResults[0].name +
-            ',' +
-            ScalResults.slice(1, Scallen).map(scl => {
-              return (
-                '\n\t\t\t\t\t\t Cable ID :  ' +
-                scl.id +
-                '  /  Weight :  ' +
-                scl.weight +
-                ' g' +
-                '  /  Name :  ' +
-                scl.name
-              );
-            });
+            (ScalResults.length > 1
+              ? ',' +
+                ScalResults.slice(1, ScalLen).map(scl => {
+                  return (
+                    '\n\t\t\t\t\t\t Cable ID :  ' +
+                    scl.id +
+                    '  /  Weight :  ' +
+                    scl.weight +
+                    ' g' +
+                    '  /  Name :  ' +
+                    scl.name
+                  );
+                })
+              : '');
+        }
+        if (
+          event.touchedScales !== null &&
+          event.touchedScales !== undefined &&
+          event.touchedScales.length > 0
+        ) {
+          let touchedLen = event.touchedScales.length;
+          let TouchedResults = event.touchedScales;
           return (
             `Products Touched -     Cable ID :  ` +
             TouchedResults[0].id +
@@ -95,19 +99,21 @@ const columns = [
             ' g' +
             '  /  Name :  ' +
             TouchedResults[0].name +
-            ',' +
-            TouchedResults.slice(1, len).map(scl => {
-              return (
-                '\n\t\t\t\t\t\t Cable ID :  ' +
-                scl.id +
-                '  /  Weight :  ' +
-                scl.weight +
-                ' g' +
-                '  /  Name :  ' +
-                scl.name
-              );
-            }) +
-            prodTaken
+            (TouchedResults.length > 1
+              ? ',' +
+                TouchedResults.slice(1, touchedLen).map(scl => {
+                  return (
+                    '\n\t\t\t\t\t\t Cable ID :  ' +
+                    scl.id +
+                    '  /  Weight :  ' +
+                    scl.weight +
+                    ' g' +
+                    '  /  Name :  ' +
+                    scl.name
+                  );
+                }) +
+                prodTaken
+              : '')
           );
         }
       } else if (
