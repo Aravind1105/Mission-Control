@@ -44,63 +44,96 @@ const columns = [
     formatter: ({ event }) => {
       if (event.doorStatus !== null && event.doorStatus !== undefined)
         return `Door Status: ${event.doorStatus}`;
+      else if (event.alertType !== null && event.alertType !== undefined)
+        return `Alert: ${event.alertType}`;
+      else if (
+        event.paymentTerminal !== null &&
+        event.paymentTerminal !== undefined
+      )
+        return `Payment Terminal: ${event.paymentTerminal}`;
       else if (
         event.touchedScales !== null &&
         event.touchedScales !== undefined &&
         event.touchedScales.length > 0
       ) {
         let len = event.touchedScales.length;
-        let Scallen = event.scales.length;
-        let ScalResults = event.scales.filter(item => item.weight !== 0);
-        let TouchedResults = event.touchedScales.filter(
-          item => item.weight !== 0,
-        );
-        return (
-          `Products Touched -     Cable ID: ` +
-          TouchedResults[0].id +
-          ' / Weight:' +
-          TouchedResults[0].weight +
-          ' g' +
-          ',' +
-          TouchedResults.slice(1, len).map(scl => {
-            return (
-              '\n\t\t\t\t\t\t Cable ID: ' +
-              scl.id +
-              ' / Weight: ' +
-              scl.weight +
-              ' g'
-            );
-          }) +
-          '\n\n Product Taken -             Cable ID: ' +
-          ScalResults[0].id +
-          ' / Weight: ' +
-          ScalResults[0].weight +
-          ' g' +
-          ',' +
-          ScalResults.slice(1, Scallen).map(scl => {
-            return (
-              '\n\t\t\t\t\t\t Cable ID:  ' +
-              scl.id +
-              ' / Weight: ' +
-              scl.weight +
-              ' g'
-            );
-          })
-        );
+        let TouchedResults = event.touchedScales;
+
+        if (
+          event.scales !== null &&
+          event.scales !== undefined &&
+          event.scales.length > 0
+        ) {
+          let Scallen = event.scales.length;
+          let ScalResults = event.scales;
+
+          let prodTaken =
+            '\n\n Product Taken -             Cable ID :  ' +
+            ScalResults[0].id +
+            '  /  Weight :  ' +
+            ScalResults[0].weight +
+            ' g' +
+            '  /  Name :  ' +
+            ScalResults[0].name +
+            ',' +
+            ScalResults.slice(1, Scallen).map(scl => {
+              return (
+                '\n\t\t\t\t\t\t Cable ID :  ' +
+                scl.id +
+                '  /  Weight :  ' +
+                scl.weight +
+                ' g' +
+                '  /  Name :  ' +
+                scl.name
+              );
+            });
+          return (
+            `Products Touched -     Cable ID :  ` +
+            TouchedResults[0].id +
+            '  /  Weight :  ' +
+            TouchedResults[0].weight +
+            ' g' +
+            '  /  Name :  ' +
+            TouchedResults[0].name +
+            ',' +
+            TouchedResults.slice(1, len).map(scl => {
+              return (
+                '\n\t\t\t\t\t\t Cable ID :  ' +
+                scl.id +
+                '  /  Weight :  ' +
+                scl.weight +
+                ' g' +
+                '  /  Name :  ' +
+                scl.name
+              );
+            }) +
+            prodTaken
+          );
+        }
       } else if (
         event.touchedScales !== null &&
         event.touchedScales !== undefined &&
-        event.touchedScales.length === 0
-      ) {
-        return `Products Touched - Empty`;
-      } else if (
-        event.paymentTerminal !== null &&
-        event.paymentTerminal !== undefined
+        event.touchedScales.length === 0 &&
+        event.scales !== null &&
+        event.scales !== undefined &&
+        event.scales.length === 0
       )
-        return `Payment Terminal: ${event.paymentTerminal}`;
+        return `Products Touched/Taken - Empty`;
       else return '-';
     },
   },
+  // {
+  //   title: 'By',
+  //   field: 'event',
+  //   formatter: ({ event }) => {
+  //     console.log(event.user);
+  //     return event.user !== null && event.user !== undefined
+  //       ? 'User App' + '\n' + 'User ID: ' + event.user
+  //       : event.paymentTerminal !== null && event.paymentTerminal !== undefined
+  //       ? 'Payment Terminal'
+  //       : 'Replenishment';
+  //   },
+  // },
 ];
 
 const ActivityLogGrid = ({

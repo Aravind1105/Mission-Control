@@ -28,8 +28,9 @@ const alertSeverity = {
 };
 
 const activityLogMessages = {
-  open: 'Opened',
-  closed: 'Closed',
+  open: 'Unlocked / Opened',
+  closed: 'Closed / Locked',
+  door_not_opened: 'Door Not Opened',
   payment_success: 'Payment Success',
   valid_card_read: 'Valid Card Read',
   valid_membercard_read: 'Valid MemberCard Read',
@@ -452,24 +453,55 @@ export const getTotalActivityLogs = state => state.kiosks.activityLogs.total;
 
 export const getActivityLogs = state => state.kiosks.activityLogs.data;
 
-export const getActivityLogsState = createSelector(getActivityLogs, log => {
-  if (log) {
-    const logs = log.map(actLog => {
-      const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss');
-      return {
-        created: date,
-        event: {
-          doorStatus: activityLogMessages[actLog.payload.message.door_status],
-          touchedScales: actLog.payload.message.touchedScales,
-          scales: actLog.payload.message.scales,
-          paymentTerminal:
-            activityLogMessages[actLog.payload.message.payment_terminal],
-        },
-      };
+export const getActivityLogsScaleName = (kiosk, scales) => {
+  const cells = get(kiosk, 'inventory.loadCells', []);
+  let filteredData = [];
+  scales &&
+    scales.filter(function(scale) {
+      return cells.filter(function(cell) {
+        if (scale.id === cell.cellId && scale.weight !== 0) {
+          filteredData.push({
+            id: scale.id,
+            weight: scale.weight,
+            name: cell.productLine.name,
+          });
+        }
+      });
     });
-    return logs;
-  }
-});
+  return filteredData;
+};
+
+export const getActivityLogsState = createSelector(
+  getActivityLogs,
+  state => state,
+  (log, state) => {
+    if (log) {
+      const logs = log.map(actLog => {
+        const date = format(new Date(actLog.created), 'dd-MM-yyyy HH:mm:ss');
+        return {
+          created: date,
+          event: {
+            alertType: activityLogMessages[actLog.payload.message.alert_type],
+            doorStatus: activityLogMessages[actLog.payload.message.door_status],
+            touchedScales: getActivityLogsScaleName(
+              state.kiosks.kiosk,
+              actLog.payload.message.touchedScales,
+            ),
+            scales: getActivityLogsScaleName(
+              state.kiosks.kiosk,
+              actLog.payload.message.scales,
+            ),
+            paymentTerminal:
+              activityLogMessages[actLog.payload.message.payment_terminal],
+            user: actLog.payload.user_id,
+            sessionId: actLog.payload.session_id,
+          },
+        };
+      });
+      return logs;
+    }
+  },
+);
 
 export const getTemperatureLogsState = state => {
   const monthNames = [
