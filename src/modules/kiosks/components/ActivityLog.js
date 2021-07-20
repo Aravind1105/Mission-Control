@@ -45,7 +45,7 @@ const columns = [
       if (event.doorStatus !== null && event.doorStatus !== undefined)
         return `Door Status: ${event.doorStatus}`;
       else if (event.alertType !== null && event.alertType !== undefined)
-        return `Alert: ${event.alertType}`;
+        return event.alertType;
       else if (
         event.paymentTerminal !== null &&
         event.paymentTerminal !== undefined
