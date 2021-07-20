@@ -98,9 +98,9 @@ const Dashboard = ({
 
       <Grid.Row stretched only="computer">
         <Grid.Column computer={16}>
-          {/* {!isSalesStatLoading && !isEmpty(salesStatistics) && (
+          {!isSalesStatLoading && !isEmpty(salesStatistics) && (
             <MainChart kiosksOptions={kiosksOptions} />
-          )} */}
+          )}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row stretched>
