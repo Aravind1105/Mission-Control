@@ -287,3 +287,12 @@ export const ARCHIVE_PRODUCTLINE = gql`
     archiveProductLine(productLineId: $productLineId)
   }
 `;
+
+export const DUPLICATE_PRODCUTLINE = gql`
+  mutation duplicateProductLine($productLineId: String!) {
+    duplicateProductLine(productLineId: $productLineId) {
+      ...product
+    }
+  }
+  ${productOnProductLine}
+`;

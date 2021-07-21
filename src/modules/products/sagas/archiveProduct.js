@@ -4,6 +4,7 @@ import gqlProducts from 'lib/https/gqlProducts';
 import { archiveProduct as action } from '../actions';
 import { ARCHIVE_PRODUCTLINE } from '../schema';
 import { toast } from 'react-semantic-toasts';
+import history from 'lib/history';
 
 function* handler({ payload }) {
   try {
@@ -21,6 +22,7 @@ function* handler({ payload }) {
         description: 'Product deleted successfully.',
         animation: 'fade left',
       });
+      history.push(`/products`);
     } else {
       toast({
         type: 'error',

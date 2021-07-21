@@ -9,11 +9,11 @@ import ProductForm from './components/ProductForm';
 import ImageUploader from './components/ImageUploader';
 import {
   getFullProductData,
-  deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
   deleteActivePriceHistory,
   archiveProduct,
+  duplicateProductLine,
 } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
@@ -52,7 +52,6 @@ const ProductDetail = ({
   categoryOption,
   // familyOption,
   taxesOption,
-  deleteProductSaga,
   isLoading,
   match,
   getFullProductData,
@@ -65,6 +64,7 @@ const ProductDetail = ({
   resetPriceHistory,
   deleteActivePriceHistory,
   archiveProduct,
+  duplicateProductLine,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -73,6 +73,7 @@ const ProductDetail = ({
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
   const [buttonVal, setButtonVal] = useState('Submit');
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDuplicateAlert, setShowDuplicateAlert] = useState(false);
 
   // this state variable is used only when a product is created along with the image
   const [firstUploadImage, setFirstUploadImage] = useState(null);
@@ -93,17 +94,6 @@ const ProductDetail = ({
       resetPriceHistory();
     }
   }, []);
-
-  // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
-  const deleteProductLine = () => {
-    if (window.confirm('Willst Du das Product Line löschen?')) {
-      const { payload } = deleteProductSaga(id);
-      if (payload == id) {
-        window.alert('Product Line erfolgreich gelöscht!');
-        window.location.href = backLink.link;
-      }
-    }
-  };
 
   return (
     <Grid stackable>
@@ -135,6 +125,7 @@ const ProductDetail = ({
                           <Button
                             className="product-detail-header-action-button"
                             size="small"
+                            onClick={() => setShowDuplicateAlert(true)}
                           >
                             Duplicate
                           </Button>
@@ -146,6 +137,17 @@ const ProductDetail = ({
                             Delete
                           </Button>
                         </Grid.Column>
+                        <ConfirmationModal
+                          title="Duplicate"
+                          isModalOpen={showDuplicateAlert}
+                          setIsModalOpen={setShowDuplicateAlert}
+                          confirmHandler={() => {
+                            duplicateProductLine({ productLineId: id });
+                            setShowDuplicateAlert(false);
+                          }}
+                        >
+                          {'Are you sure want to duplicate this product?'}
+                        </ConfirmationModal>
                         <ConfirmationModal
                           title="Delete"
                           isModalOpen={showDeleteAlert}
@@ -184,16 +186,6 @@ const ProductDetail = ({
 
       {isProductLoaded ? (
         <Grid.Column width={5}>
-          {/* "Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.*/}
-          {/* <Segment 
-            onClick={deleteProductLine}
-            style={{ cursor:'pointer', color:"red" }}>
-            <h3>Delete Product
-              <i 
-                className="trash alternate outline icon" 
-                style={{ float: 'right' }} />
-            </h3>
-          </Segment> */}
           {defaultPriceHistory.length > 0 && (
             <PriceHistoryWidget priceHistory={defaultPriceHistory} />
           )}
@@ -244,11 +236,11 @@ const mapStateToProps = (state, { match: { params } }) => {
 const mapDispatchToProps = {
   getFullProductData,
   getOrganizations,
-  deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
   deleteActivePriceHistory,
   archiveProduct,
+  duplicateProductLine,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

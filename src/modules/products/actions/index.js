@@ -17,6 +17,9 @@ export const deleteActivePriceHistory = createAction(
   '@@saga/DELETE_PRICE_HISTORY',
 );
 export const archiveProduct = createAction('@@saga/ARCHIVE_PRODUCT');
+export const duplicateProductLine = createAction(
+  '@@saga/DUPLICATE_PRODUCTLINE',
+);
 
 // State Actions
 export const getProductListSuccess = createAction(

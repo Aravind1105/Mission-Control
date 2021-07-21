@@ -1,3 +1,9 @@
+#### 1.4.21 (2021-07-21)
+
+##### New Features
+
+* **product detail:** LIV-3434 duplicate product line (09230d6a)
+
 #### 1.4.20 (2021-07-21)
 
 ##### New Features
