@@ -80,8 +80,8 @@ const ProductDetail = ({
 
   useEffect(() => {
     const { id } = match.params;
-    getFullProductData(id);
     if (!isLoading) {
+      getFullProductData(id);
       getOrganizations();
       setButtonVal(id == 'new' ? 'Submit' : 'Save');
     }
