@@ -1,3 +1,25 @@
+#### 1.4.19 (2021-07-21)
+
+##### New Features
+
+* **LIV-3504:**  alert type is remvd in logs (9a9d9617)
+
+##### Bug Fixes
+
+* **Transaction Sales:**  LIV-2845 Removing transaction id from Transaction Sales page (5ce7ef26)
+* **LIV-3504:**  activity log updated for prod taken array (3c0768a1)
+* **LIV-3336:**  settings button is enabled for all kiosks (8d7b6a7c)
+* **QRcode:**  Qrcode link updated on download (924ec1dc)
+* **kiosk edit:** LIV-3424 hotfix - kiosk does not show capacities after editing the kiosk (70d71e1b)
+* **kiosk detail:** LIV-3416 kiosk detail with capacities after deleting loadcell (22113ab7)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (06f22198)
+
+##### Other Changes
+
+* **dashboard:**
+  * sales graph is hidden due to accesscontrol bug" (f44ff436)
+  * sales graph is hidden due to accesscontrol bug (7b4f6b11)
+
 #### 1.4.18 (2021-07-19)
 
 ##### New Features
