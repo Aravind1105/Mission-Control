@@ -194,7 +194,7 @@ export const UPDATE_PRODUCT_LINE_PRICE_MUTATION = gql`
 `;
 
 export const CREATE_PRODUCT_LINE_MUTATION = gql`
-  mutation createProductLine($data: ProductLineInput!, $image: Upload) {
+  mutation createProductLine($data: ProductLineInput!, $image: String) {
     createProductLine(data: $data, image: $image) {
       ...product
     }
