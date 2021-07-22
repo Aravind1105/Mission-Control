@@ -281,3 +281,18 @@ export const DELETE_PRODUCT_LINE_ACTIVE_PRICE = gql`
   }
   ${priceHistory}
 `;
+
+export const ARCHIVE_PRODUCTLINE = gql`
+  mutation archiveProductLine($productLineId: String!) {
+    archiveProductLine(productLineId: $productLineId)
+  }
+`;
+
+export const DUPLICATE_PRODCUTLINE = gql`
+  mutation duplicateProductLine($productLineId: String!) {
+    duplicateProductLine(productLineId: $productLineId) {
+      ...product
+    }
+  }
+  ${productOnProductLine}
+`;
