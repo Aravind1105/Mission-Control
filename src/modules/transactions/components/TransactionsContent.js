@@ -25,16 +25,6 @@ const columns = [
     },
   },
   {
-    title: 'Transaction ID',
-    field: 'transactionID',
-    formatter: ({ transactionID }) => {
-      if (transactionID === '') {
-        return '';
-      }
-      return <div style={{ textAlign: 'left' }}>{transactionID}</div>;
-    },
-  },
-  {
     title: 'Member Card ID',
     field: 'membercardId',
   },

@@ -5,6 +5,7 @@ import gqlKiosk from 'lib/https/gqlKiosk';
 import {
   deleteLoadCell as action,
   deleteLoadCellSuccess as actionSuccess,
+  getKiosk,
 } from '../actions';
 import { DELETE_LOAD_CELL } from '../schema';
 
