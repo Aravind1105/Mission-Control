@@ -16,7 +16,8 @@ const CellHeartbeat = ({ temperature, showTime, boldFont }) => {
     text = 'Online';
   } else if (showTime) {
     let time = parseInt(dif / 60);
-    if (time < 24) {
+    if (time === 0) text += ` > ${dif} minutes`;
+    else if (time < 24) {
       text += ` > ${time} ${time === 1 ? 'hour' : 'hours'}`;
     } else {
       time = parseInt(time / 24);
