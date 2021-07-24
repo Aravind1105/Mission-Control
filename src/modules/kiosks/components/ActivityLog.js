@@ -45,7 +45,7 @@ const columns = [
       if (event.doorStatus !== null && event.doorStatus !== undefined)
         return `Door Status: ${event.doorStatus}`;
       else if (event.alertType !== null && event.alertType !== undefined)
-        return `Alert: ${event.alertType}`;
+        return event.alertType;
       else if (
         event.paymentTerminal !== null &&
         event.paymentTerminal !== undefined
@@ -60,9 +60,7 @@ const columns = [
         ) {
           let ScalLen = event.scales.length;
           let ScalResults = event.scales;
-
           prodTaken =
-            '\n\n Product Taken -             Cable ID :  ' +
             ScalResults[0].id +
             '  /  Weight :  ' +
             ScalResults[0].weight +
@@ -72,15 +70,17 @@ const columns = [
             (ScalResults.length > 1
               ? ',' +
                 ScalResults.slice(1, ScalLen).map(scl => {
-                  return (
-                    '\n\t\t\t\t\t\t Cable ID :  ' +
+                  let prodTaken_1 =
+                    ' Cable ID :  ' +
                     scl.id +
                     '  /  Weight :  ' +
                     scl.weight +
                     ' g' +
                     '  /  Name :  ' +
-                    scl.name
-                  );
+                    scl.name;
+                  return event.touchedScales.length > 0
+                    ? '\n\t\t\t\t\t\t' + prodTaken_1
+                    : '\n\t\t\t\t\t' + prodTaken_1;
                 })
               : '');
         }
@@ -92,7 +92,7 @@ const columns = [
           let touchedLen = event.touchedScales.length;
           let TouchedResults = event.touchedScales;
           return (
-            `Products Touched -     Cable ID :  ` +
+            `Products Touched  - \t Cable ID :  ` +
             TouchedResults[0].id +
             '  /  Weight :  ' +
             TouchedResults[0].weight +
@@ -112,10 +112,11 @@ const columns = [
                     scl.name
                   );
                 }) +
+                '\n\nProduct Taken  - \t\t Cable ID :  ' +
                 prodTaken
-              : '')
+              : '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken)
           );
-        }
+        } else return 'Product Taken  - \t Cable ID :  ' + prodTaken;
       } else if (
         event.touchedScales !== null &&
         event.touchedScales !== undefined &&
