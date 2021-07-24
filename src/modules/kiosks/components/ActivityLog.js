@@ -114,7 +114,7 @@ const columns = [
                 }) +
                 '\n\nProduct Taken  - \t\t Cable ID :  ' +
                 prodTaken
-              : '')
+              : '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken)
           );
         } else return 'Product Taken  - \t Cable ID :  ' + prodTaken;
       } else if (
