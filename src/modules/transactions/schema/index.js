@@ -102,6 +102,7 @@ export const GRID_REFILLS_QUERY = gql`
         scale {
           cellId
           weight
+          refillCost
           productLine {
             _id
             name

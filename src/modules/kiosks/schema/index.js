@@ -365,6 +365,7 @@ export const GET_ACTIVITY_LOGS = gql`
           type
           message {
             door_status
+            alert_type
             touchedScales {
               weight
               id

@@ -1,3 +1,112 @@
+#### 1.4.21 (2021-07-21)
+
+##### New Features
+
+* **product detail:** LIV-3434 duplicate product line (09230d6a)
+
+#### 1.4.20 (2021-07-21)
+
+##### New Features
+
+* **delete product:** LIV-3433 delete product line (d1a8108b)
+* **LIV-3504:**  alert type is remvd in logs (9a9d9617)
+
+##### Bug Fixes
+
+* **Transaction Sales:**  LIV-2845 Removing transaction id from Transaction Sales page (5ce7ef26)
+* **LIV-3504:**  activity log updated for prod taken array (3c0768a1)
+* **LIV-3336:**  settings button is enabled for all kiosks (8d7b6a7c)
+* **QRcode:**  Qrcode link updated on download (924ec1dc)
+* **kiosk edit:** LIV-3424 hotfix - kiosk does not show capacities after editing the kiosk (70d71e1b)
+* **kiosk detail:** LIV-3416 kiosk detail with capacities after deleting loadcell (22113ab7)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (06f22198)
+
+##### Other Changes
+
+* **dashboard:**
+  * sales graph is hidden due to accesscontrol bug" (f44ff436)
+  * sales graph is hidden due to accesscontrol bug (7b4f6b11)
+
+#### 1.4.19 (2021-07-21)
+
+##### New Features
+
+* **LIV-3504:**  alert type is remvd in logs (9a9d9617)
+
+##### Bug Fixes
+
+* **Transaction Sales:**  LIV-2845 Removing transaction id from Transaction Sales page (5ce7ef26)
+* **LIV-3504:**  activity log updated for prod taken array (3c0768a1)
+* **LIV-3336:**  settings button is enabled for all kiosks (8d7b6a7c)
+* **QRcode:**  Qrcode link updated on download (924ec1dc)
+* **kiosk edit:** LIV-3424 hotfix - kiosk does not show capacities after editing the kiosk (70d71e1b)
+* **kiosk detail:** LIV-3416 kiosk detail with capacities after deleting loadcell (22113ab7)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (06f22198)
+
+##### Other Changes
+
+* **dashboard:**
+  * sales graph is hidden due to accesscontrol bug" (f44ff436)
+  * sales graph is hidden due to accesscontrol bug (7b4f6b11)
+
+#### 1.4.18 (2021-07-19)
+
+##### New Features
+
+* **LIV-3504:**  Updated activity logs with some evnts and filtered scale data (6aa5f88a)
+* **settings:**  disable settings btn once it is offline (bad3717a)
+* **organizations:** LIV-3470 countrypicker (6e4b4199)
+* **kiosk list:** LIV-3451 search by kiosk name or serial number (a6b13938)
+
+##### Bug Fixes
+
+* **LIV-3504:**  activity logs for prod touched updated (c7e5aba6)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (8986aa1e)
+* **QRcode:**  Qrcode link updated on download (952757b1)
+* **Kiosk Details:** LIV-3372 Edit or new Kiosk Details page Input validation (690555a7)
+* **Product Detail:**
+  * LIV-3373 Input Field formate removed default zero for all fields (bf3f85b1)
+  * LIV-3373 Input Field formate (ba4560ec)
+* **Kiosk Details Activity Log:**
+  * LIV-3379 Kiosk Activity Product Touched and Product taken zero Value removed (992779d7)
+  * LIV-3379 Kiosk Activity Product Touched and Product taken Implemented (e435509c)
+* **delete load cell:**  LIV-3450 Fixing the deleting of load cell for non empty quantity (790e9f03)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (eed3fbed)
+* //gitlab.com/livello-network/livello-mission-control into fix/deleteLoadCell (27b9daef)
+* //gitlab.com/livello-network/livello-mission-control into productsSorting (8326bf79)
+
+#### 1.4.16 (2021-07-19)
+
+##### New Features
+
+* **LIV-3504:**  Updated activity logs with some evnts and filtered scale data (6aa5f88a)
+* **settings:**  disable settings btn once it is offline (bad3717a)
+* **organizations:** LIV-3470 countrypicker (6e4b4199)
+* **kiosk list:** LIV-3451 search by kiosk name or serial number (a6b13938)
+
+##### Bug Fixes
+
+* **LIV-3504:**  activity logs for prod touched updated (c7e5aba6)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (8986aa1e)
+* **QRcode:**  Qrcode link updated on download (952757b1)
+* **Kiosk Details:** LIV-3372 Edit or new Kiosk Details page Input validation (690555a7)
+* **Product Detail:**
+  * LIV-3373 Input Field formate removed default zero for all fields (bf3f85b1)
+  * LIV-3373 Input Field formate (ba4560ec)
+* **Kiosk Details Activity Log:**
+  * LIV-3379 Kiosk Activity Product Touched and Product taken zero Value removed (992779d7)
+  * LIV-3379 Kiosk Activity Product Touched and Product taken Implemented (e435509c)
+* **delete load cell:**  LIV-3450 Fixing the deleting of load cell for non empty quantity (790e9f03)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into staging-master (eed3fbed)
+* //gitlab.com/livello-network/livello-mission-control into fix/deleteLoadCell (27b9daef)
+* //gitlab.com/livello-network/livello-mission-control into productsSorting (8326bf79)
+
 #### 1.4.15 (2021-07-06)
 
 ##### New Features

@@ -153,18 +153,18 @@ const KioskDetails = ({
                       <CustomButton
                         icon="setting"
                         label="Settings"
-                        disabled={(function() {
-                          const value = get(
-                            kiosk && kiosk.temperature,
-                            'updated',
-                            0,
-                          );
-                          const dif = differenceInMinutes(
-                            new Date(),
-                            new Date(value),
-                          );
-                          return !(dif <= 10);
-                        })()}
+                        // disabled={(function() {
+                        //   const value = get(
+                        //     kiosk && kiosk.temperature,
+                        //     'updated',
+                        //     0,
+                        //   );
+                        //   const dif = differenceInMinutes(
+                        //     new Date(),
+                        //     new Date(value),
+                        //   );
+                        //   return !(dif <= 10);
+                        // })()}
                         onClick={() =>
                           history.push(`/kiosks/settings/${kiosk && kiosk._id}`)
                         }

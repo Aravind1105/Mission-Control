@@ -152,11 +152,10 @@ export const getGridRefillsTableState = createSelector(
 
       let refillsTotalCost = 0;
       const arr = newScale.reduce(
-        (prev, { productLine, count, weight, cellId }) => {
+        (prev, { productLine, count, weight, cellId, refillCost}) => {
           if (productLine && count !== 0) {
-            const total = (Math.abs(count) * productLine.defaultCost).toFixed(
-              2,
-            );
+            var refillCost = (refillCost || productLine.defaultCost).toFixed(2)
+            const total = (Math.abs(count) * refillCost).toFixed(2);
             let status = '';
             if (count > 0) {
               status = 'Added';
@@ -167,7 +166,7 @@ export const getGridRefillsTableState = createSelector(
               id: productLine._id,
               productName: get(productLine, 'name', '') || 'unknown',
               total,
-              cost: productLine.defaultCost.toFixed(2),
+              cost: refillCost,
               articleNumber: get(productLine, 'articleNumber', '') || '',
               count,
               weight,
