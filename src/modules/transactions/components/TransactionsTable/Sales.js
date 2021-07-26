@@ -151,7 +151,7 @@ const SalesTable = ({
                       field === 'transactionID' ||
                       field === 'kioskName' ||
                       field === 'created' ||
-                      field === 'membercardId';
+                      field === 'paymentMethod';
                     if (!item.transactionID && isOnlyRootField) {
                       return;
                     }
