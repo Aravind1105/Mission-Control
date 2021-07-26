@@ -36,7 +36,10 @@ export const GET_TRANSACTIONS_QUERY = gql`
         created
         total
         type
+        userId
         paymentMethod {
+          stripeCustomerId
+          isPaid
           membercardId
         }
         itemsPurchased {

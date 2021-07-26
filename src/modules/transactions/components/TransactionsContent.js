@@ -25,8 +25,43 @@ const columns = [
     },
   },
   {
-    title: 'Member Card ID',
-    field: 'membercardId',
+    title: 'Payment Type',
+    field: 'paymentMethod',
+    formatter: ({ paymentMethod }) => {
+      if (paymentMethod) {
+        if (paymentMethod.membercardId !== null)
+          return <div style={{ textAlign: 'center' }}>MEMBER CARD</div>;
+        else if (paymentMethod.stripeCustomerId !== null)
+          return <div style={{ textAlign: 'center' }}>CONSUMER APP</div>;
+        else return <div style={{ textAlign: 'center' }}>PT TERMINAL</div>;
+      }
+    },
+  },
+  {
+    title: 'Payment Status',
+    field: 'paymentMethod',
+    formatter: ({ paymentMethod }) => {
+      if (paymentMethod) {
+        if (
+          paymentMethod.isPaid === false &&
+          paymentMethod.stripeCustomerId !== null
+        ) {
+          return (
+            <div style={{ textAlign: 'center' }}>
+              <a href="https://dashboard.stripe.com/login" target="_blank">
+                CHECK HERE
+              </a>
+            </div>
+          );
+        } else if (
+          paymentMethod.isPaid === false &&
+          paymentMethod.stripeCustomerId === null
+        )
+          return <div style={{ textAlign: 'center' }}>NOT PAID</div>;
+        else if (paymentMethod.isPaid === true)
+          return <div style={{ textAlign: 'center' }}>PAID</div>;
+      }
+    },
   },
   {
     title: 'Article Number',
@@ -86,11 +121,11 @@ const TransactionsContent = ({
     <TransactionsTable
       sortByColumn="created"
       excludeSortBy={[
-        'transactionID',
-        'membercardId',
+        'paymentMethod',
         'productName',
         'quantity',
         'price',
+        'articleNumber',
       ]}
       columns={columns}
       data={transactions}

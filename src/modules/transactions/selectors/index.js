@@ -83,7 +83,8 @@ export const getTransactionsTableState = createSelector(
       ({ itemsPurchased, created, paymentMethod, ...rest }) => {
         const item = {
           transactionID: rest._id,
-          membercardId: get(paymentMethod[0], 'membercardId', '') || '',
+          userId: rest.userId,
+          paymentMethod: paymentMethod[0],
           type: rest.type,
           created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
           session: rest.session,
@@ -152,9 +153,9 @@ export const getGridRefillsTableState = createSelector(
 
       let refillsTotalCost = 0;
       const arr = newScale.reduce(
-        (prev, { productLine, count, weight, cellId, refillCost}) => {
+        (prev, { productLine, count, weight, cellId, refillCost }) => {
           if (productLine && count !== 0) {
-            var refillCost = (refillCost || productLine.defaultCost).toFixed(2)
+            var refillCost = (refillCost || productLine.defaultCost).toFixed(2);
             const total = (Math.abs(count) * refillCost).toFixed(2);
             let status = '';
             if (count > 0) {
