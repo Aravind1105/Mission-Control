@@ -48,7 +48,7 @@ const columns = [
         ) {
           return (
             <div style={{ textAlign: 'center' }}>
-              <a href="https://dashboard.stripe.com/login" target="_blank">
+              <a href="https://dashboard.stripe.com/" target="_blank">
                 CHECK HERE
               </a>
             </div>
