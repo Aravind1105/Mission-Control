@@ -8,6 +8,7 @@ import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
+import moment from 'moment';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
@@ -471,60 +472,34 @@ export const getActivityLogsState = createSelector(getActivityLogs, log => {
   }
 });
 
-export const getTemperatureLogsState = state => {
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const { temperatureLogs } = state.kiosks;
-  const logs = temperatureLogs.sort((a, b) => {
-    const aDate = new Date();
-    aDate.setMonth(a.month - 1 || 1);
-    aDate.setDate(a.day || 1);
-    aDate.setFullYear(a.year);
+export const getTemperatureLogsState = state => state.kiosks.temperatureLogs;
 
-    const bDate = new Date();
-    bDate.setMonth(b.month - 1 || 1);
-    bDate.setDate(b.day || 1);
-    bDate.setFullYear(b.year);
+export const getGridTempratureTableState = createSelector(
+  getTemperatureLogsState,
 
-    return aDate > bDate ? 1 : -1;
-  });
-
-  let month = -1;
-  if (logs.length > 0) {
-    month = logs[0].month;
-  }
-  const isAllMonthsSame = logs.every(log => log.month === month);
-
-  const organizedData = logs.map(log => {
-    const date = new Date();
-    date.setMonth(log.month - 1);
-    date.setDate(log.day || 1);
-    date.setFullYear(log.year);
-    return {
-      avgTemp: parseInt(log.avgTemp),
-      minTemp: parseInt(log.minTemp),
-      maxTemp: parseInt(log.maxTemp),
-      year: log.year,
-      month: monthNames[log.month - 1],
-      day: isAllMonthsSame
-        ? log.day
-        : `${monthNames[log.month - 1]}/${log.day}`,
-      date: format(date, 'dd-MM-yyyy'),
-    };
-  });
-  return organizedData;
-};
+  TempLogs => {
+    let newArr = [];
+    TempLogs.forEach(({ updated, payload }) => {
+      const Item = {
+        time: moment(updated).format('MMM Do'),
+        Sensor1: payload.message.sensors[0]
+          ? payload.message.sensors[0].temperature / 100
+          : null,
+        Sensor2: payload.message.sensors[1]
+          ? payload.message.sensors[1].temperature / 100
+          : null,
+        Sensor3: payload.message.sensors[2]
+          ? payload.message.sensors[2].temperature / 100
+          : null,
+        Sensor4: payload.message.sensors[3]
+          ? payload.message.sensors[3].temperature / 100
+          : null,
+      };
+      newArr.push(Item);
+    });
+    return newArr;
+  },
+);
 
 export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
   const playListData =

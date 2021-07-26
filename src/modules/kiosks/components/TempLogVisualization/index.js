@@ -8,9 +8,9 @@ import { toast } from 'react-semantic-toasts';
 import { isEmpty } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
 import CustomButton from 'modules/shared/components/CustomButton';
-import ComplexChart from '../ComplexChart';
+import LinearChart from '../LinearChart';
 import { getTemperatureLogs, getKiosk, exportCsvTempLogs } from '../../actions';
-import { getKioskSingle, getTemperatureLogsState } from '../../selectors';
+import { getKioskSingle, getGridTempratureTableState } from '../../selectors';
 
 import './styles.less';
 
@@ -36,6 +36,7 @@ const TempLogVisualization = ({
   temperatureLogs,
   getKiosk,
   exportCsvTempLogs,
+  newtemperatureLogs,
 }) => {
   const [resolution, setResolution] = useState(optionsResolution[1].value);
   const [dateRange, setDateRange] = useState(defaultDateRange);
@@ -112,13 +113,13 @@ const TempLogVisualization = ({
               <Grid.Column mobile={16} computer={4}>
                 <DatePicker type="range" onChange={handleDateChange} />
               </Grid.Column>
-              <Grid.Column mobile={16} computer={4}>
+              {/* <Grid.Column mobile={16} computer={4}>
                 <Select
                   onChange={handleChangeResolution}
                   options={optionsResolution}
                   defaultValue={optionsResolution[1]}
                 />
-              </Grid.Column>
+              </Grid.Column> */}
               <Grid.Column mobile={16} tablet={8} computer={3}>
                 <CustomButton
                   label="Download CSV&nbsp;"
@@ -131,9 +132,9 @@ const TempLogVisualization = ({
             </Grid.Row>
             <Grid.Row>
               <Grid.Column mobile={16} computer={16}>
-                <ComplexChart
+                <LinearChart
                   data={temperatureLogs}
-                  xAxisDataKey={resolution}
+                  xAxisDataKey={temperatureLogs}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -146,7 +147,7 @@ const TempLogVisualization = ({
 
 const mapStateToProps = state => ({
   kiosk: getKioskSingle(state),
-  temperatureLogs: getTemperatureLogsState(state),
+  temperatureLogs: getGridTempratureTableState(state),
 });
 
 const mapDispatchToProps = {
