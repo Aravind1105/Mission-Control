@@ -112,9 +112,12 @@ const columns = [
                     scl.name
                   );
                 }) +
-                '\n\nProduct Taken  - \t\t Cable ID :  ' +
-                prodTaken
-              : '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken)
+                (prodTaken
+                  ? '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken
+                  : null)
+              : prodTaken
+              ? '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken
+              : null)
           );
         } else return 'Product Taken  - \t Cable ID :  ' + prodTaken;
       } else if (
