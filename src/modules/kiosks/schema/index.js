@@ -312,19 +312,26 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
   ${productOnProductLine}
 `;
 export const GET_TEMPERATURE_LOGS = gql`
-  query getTemperatureEventsByKioskWithResolution(
-    $data: TemperatureEventsByKioskWithResolutionInput
-  ) {
-    getTemperatureEventsByKioskWithResolution(data: $data) {
-      avgTemp
-      maxTemp
-      minTemp
-      year
+  query($kioskId: String!, $from: DateTime!, $to: DateTime!, $limit: Int!) {
+    getTemperatureEventsByKiosk(
+      kioskId: $kioskId
+      from: $from
+      to: $to
+      limit: $limit
+    ) {
+      _id
       kiosk
-      year
-      month
-      day
-      hour
+      type
+      payload {
+        message_timestamp
+        message {
+          sensors {
+            temperature
+          }
+        }
+      }
+      created
+      updated
     }
   }
 `;

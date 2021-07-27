@@ -5,23 +5,28 @@ import gqlIot from 'lib/https/gqlIot';
 import { GET_TEMPERATURE_LOGS } from '../schema';
 import { getTemperatureLogs, getTemperatureLogsSuccess } from '../actions';
 
+const today = new Date();
+var date = new Date();
+date.setDate(date.getDate() - 30);
+var lastMonth = date.toISOString().split('T')[0];
 function* handler({ payload }) {
   try {
-    const { data: { getTemperatureEventsByKioskWithResolution } } = yield call(gqlIot.query, {
+    const {
+      data: { getTemperatureEventsByKiosk },
+    } = yield call(gqlIot.query, {
       query: GET_TEMPERATURE_LOGS,
       variables: {
-        data: {
-          kioskId: payload.kioskId,
-          from: payload.from,
-          to: payload.to,
-          limit: 25,
-          resolution: payload.resolution,
-        },
+        kioskId: payload.kioskId,
+        from: lastMonth,
+        to: today,
+        limit: 25,
       },
     });
-    yield put(getTemperatureLogsSuccess({
-      temperatureLogs: getTemperatureEventsByKioskWithResolution,
-    }));
+    yield put(
+      getTemperatureLogsSuccess({
+        temperatureLogs: getTemperatureEventsByKiosk || [],
+      }),
+    );
   } catch (error) {
     console.log(error);
   }
