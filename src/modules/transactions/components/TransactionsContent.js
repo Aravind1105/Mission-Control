@@ -30,10 +30,10 @@ const columns = [
     formatter: ({ paymentMethod }) => {
       if (paymentMethod) {
         if (paymentMethod.membercardId !== null)
-          return <div style={{ textAlign: 'center' }}>MEMBER CARD</div>;
+          return <div style={{ textAlign: 'center' }}>Member Card</div>;
         else if (paymentMethod.stripeCustomerId !== null)
-          return <div style={{ textAlign: 'center' }}>CONSUMER APP</div>;
-        else return <div style={{ textAlign: 'center' }}>PT TERMINAL</div>;
+          return <div style={{ textAlign: 'center' }}>Consumer App</div>;
+        else return <div style={{ textAlign: 'center' }}>ZVT Terminal</div>;
       }
     },
   },
@@ -49,7 +49,7 @@ const columns = [
           return (
             <div style={{ textAlign: 'center' }}>
               <a href="https://dashboard.stripe.com/" target="_blank">
-                CHECK HERE
+                Check here
               </a>
             </div>
           );
@@ -57,9 +57,9 @@ const columns = [
           paymentMethod.isPaid === false &&
           paymentMethod.stripeCustomerId === null
         )
-          return <div style={{ textAlign: 'center' }}>NOT PAID</div>;
+          return <div style={{ textAlign: 'center' }}>Not Paid</div>;
         else if (paymentMethod.isPaid === true)
-          return <div style={{ textAlign: 'center' }}>PAID</div>;
+          return <div style={{ textAlign: 'center' }}>Paid</div>;
       }
     },
   },
