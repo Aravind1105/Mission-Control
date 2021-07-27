@@ -79,7 +79,7 @@ const DetailsInventory = ({ list, total }) => {
                 <Table.Cell
                   style={{ textAlign: 'right' }}
                   collapsing
-                >{`€ ${price || 0}`}</Table.Cell>
+                >{`${price || 0} €`}</Table.Cell>
               </Table.Row>
             ),
           )}
@@ -92,7 +92,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Costs of Goods:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${totalCost.toFixed(2)}`}</b>
+              <b>{`${totalCost.toFixed(2)} €`}</b>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -100,7 +100,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${total}`}</b>
+              <b>{`${total} €`}</b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
