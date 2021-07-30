@@ -155,6 +155,14 @@ const FragmentAlertUnauthorizedAccessOnKiosk = gql`
     }
   }
 `;
+const FragmentAlertNoProductsBoughtOnKiosk = gql`
+  fragment FragmentAlertNoProductsBought on AlertNoProductsBought {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
 const FragmentAlertTabletDisconnectedOnKiosk = gql`
   fragment FragmentAlertTabletDisconnected on AlertTabletDisconn {
     kioskId {
@@ -273,6 +281,7 @@ export const GET_ALERTS_GRID = gql`
           ...FragmentAlertHighTemp
           ...FragmentAlertLowTemp
           ...FragmentAlertUnauthorizedAccess
+          ...FragmentAlertNoProductsBought
           ...FragmentAlertTabletDisconnected
         }
       }
@@ -283,6 +292,7 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertHighTempOnKiosk}
   ${FragmentAlertLowTempOnKiosk}
   ${FragmentAlertUnauthorizedAccessOnKiosk}
+  ${FragmentAlertNoProductsBoughtOnKiosk}
   ${FragmentAlertTabletDisconnectedOnKiosk}
 `;
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
