@@ -19,7 +19,7 @@ const alertMessages = {
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  NoProductsBought: 'Empty Purchase Session',
+  NoProductsBought: 'No Purchase Session',
   NoLeftScalesData: 'No Left Scales Data',
   NoRightScalesData: 'No Right Scales Data',
 
