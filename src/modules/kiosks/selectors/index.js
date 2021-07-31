@@ -20,6 +20,9 @@ const alertMessages = {
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
   NoProductsBought: 'Empty Purchase Session',
+  NoLeftScalesData: 'No Left Scales Data',
+  NoRightScalesData: 'No Right Scales Data',
+
   TabletDisconn: 'Tablet Disconnected',
 };
 
