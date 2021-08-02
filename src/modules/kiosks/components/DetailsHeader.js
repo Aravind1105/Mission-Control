@@ -7,7 +7,14 @@ import CellDoorStatus from './CellDoorStatus';
 
 import '../styles.less';
 
-const DetailsHeader = ({ name, doorStatus, temperature, session, service }) => {
+const DetailsHeader = ({
+  name,
+  doorStatus,
+  heartbeat,
+  temperature,
+  session,
+  service,
+}) => {
   return (
     <Grid stackable>
       <Grid.Row relaxed="very" columns={4}>
@@ -33,7 +40,7 @@ const DetailsHeader = ({ name, doorStatus, temperature, session, service }) => {
         </Grid.Column>
         <Grid.Column mobile={4} tablet={5} computer={3} className="flex-end">
           <b>Status:&nbsp;</b>
-          <CellHeartbeat temperature={temperature} showTime={false} boldFont />
+          <CellHeartbeat heartbeat={heartbeat} showTime={false} boldFont />
         </Grid.Column>
         <Grid.Column
           className="flex-end"
