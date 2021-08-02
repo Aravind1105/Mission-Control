@@ -79,8 +79,9 @@ const FragmentKioskOnKiosk = gql`
         hotlineAvailability
       }
     }
-    internet {
-      signalStrength
+    heartbeat {
+      uptime
+      updated
     }
     session {
       type
@@ -201,6 +202,10 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
           _id
           type
           orgId
+        }
+        heartbeat {
+          uptime
+          updated
         }
         temperature {
           value

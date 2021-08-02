@@ -218,9 +218,9 @@ export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
     }));
 
   const filteredOfflineKiosks = kiosks
-    .filter(({ temperature }) => {
-      if (temperature && temperature.updated) {
-        return Date.now() - new Date(temperature.updated) > twoHours;
+    .filter(({ heartbeat }) => {
+      if (heartbeat && heartbeat.updated) {
+        return Date.now() - new Date(heartbeat.updated) > twoHours;
       }
       return false;
     })
