@@ -33,7 +33,7 @@ const columns = [
           return <div style={{ textAlign: 'center' }}>Member Card</div>;
         else if (paymentMethod.stripeCustomerId !== null)
           return <div style={{ textAlign: 'center' }}>Consumer App</div>;
-        else return <div style={{ textAlign: 'center' }}>ZVT Terminal</div>;
+        else return <div style={{ textAlign: 'center' }}>Payment Terminal</div>;
       }
     },
   },

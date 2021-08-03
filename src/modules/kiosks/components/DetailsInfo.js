@@ -33,10 +33,13 @@ const DetailsInfo = ({
   }
 
   if (session) {
-    if (session.type === 'terminal_purchase') sessionType = 'ZVT Terminal';
-    else if (session.type === 'member_purchase') sessionType = 'Member Card';
+    if (session.type === 'terminal_purchase')
+      sessionType = 'Purchase - Payment Terminal';
+    else if (session.type === 'member_purchase')
+      sessionType = 'Purchase - Member Card';
     else if (session.type === 'refill') sessionType = 'Replenisher Mode';
-    else if (session.type === 'purchase') sessionType = 'Consumer App';
+    else if (session.type === 'purchase')
+      sessionType = 'Purchase - Consumer App';
   } else sessionType = 'No Session';
 
   return (
