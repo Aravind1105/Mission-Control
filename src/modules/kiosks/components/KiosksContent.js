@@ -81,9 +81,9 @@ const columns = [
   },
   {
     title: 'Network Status',
-    field: 'temperature.updated',
-    formatter: ({ temperature }) => (
-      <CellHeartbeat temperature={temperature} showTime />
+    field: 'heartbeat.updated',
+    formatter: ({ heartbeat }) => (
+      <CellHeartbeat heartbeat={heartbeat} showTime />
     ),
   },
   {

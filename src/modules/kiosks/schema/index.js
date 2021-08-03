@@ -79,8 +79,9 @@ const FragmentKioskOnKiosk = gql`
         hotlineAvailability
       }
     }
-    internet {
-      signalStrength
+    heartbeat {
+      uptime
+      updated
     }
     session {
       type
@@ -155,8 +156,32 @@ const FragmentAlertUnauthorizedAccessOnKiosk = gql`
     }
   }
 `;
+const FragmentAlertNoProductsBoughtOnKiosk = gql`
+  fragment FragmentAlertNoProductsBought on AlertNoProductsBought {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
 const FragmentAlertTabletDisconnectedOnKiosk = gql`
   fragment FragmentAlertTabletDisconnected on AlertTabletDisconn {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertNoLeftScalesDataOnKiosk = gql`
+  fragment FragmentAlertNoLeftScalesData on AlertNoLeftScalesData {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertNoRightScalesDataOnKiosk = gql`
+  fragment FragmentAlertNoRightScalesData on AlertNoRightScalesData {
     kioskId {
       _id
       name
@@ -181,6 +206,10 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
           _id
           type
           orgId
+        }
+        heartbeat {
+          uptime
+          updated
         }
         temperature {
           value
@@ -277,7 +306,10 @@ export const GET_ALERTS_GRID = gql`
           ...FragmentAlertHighTemp
           ...FragmentAlertLowTemp
           ...FragmentAlertUnauthorizedAccess
+          ...FragmentAlertNoProductsBought
           ...FragmentAlertTabletDisconnected
+          ...FragmentAlertNoRightScalesData
+          ...FragmentAlertNoLeftScalesData
         }
       }
     }
@@ -287,7 +319,10 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertHighTempOnKiosk}
   ${FragmentAlertLowTempOnKiosk}
   ${FragmentAlertUnauthorizedAccessOnKiosk}
+  ${FragmentAlertNoProductsBoughtOnKiosk}
   ${FragmentAlertTabletDisconnectedOnKiosk}
+  ${FragmentAlertNoRightScalesDataOnKiosk}
+  ${FragmentAlertNoLeftScalesDataOnKiosk}
 `;
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
   query getAlmostEmptyKiosks(

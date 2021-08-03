@@ -301,7 +301,7 @@ const ProductForm = ({
                     name="defaultPrice"
                     label="Price - Selling - Gross"
                     icon="euro"
-                    iconPosition="left"
+                    iconPosition="right"
                     min={0}
                     required
                     prettier={prettierNumber}
@@ -314,7 +314,7 @@ const ProductForm = ({
                   <Field
                     label="Netto - Selling - price"
                     icon="euro"
-                    iconPosition="left"
+                    iconPosition="right"
                     className="not-active-input"
                     value={netPrice.toFixed(2)}
                     component={FormInput}
@@ -335,7 +335,7 @@ const ProductForm = ({
                     name="defaultCost"
                     label="Cost"
                     icon="euro"
-                    iconPosition="left"
+                    iconPosition="right"
                     component={FormInput}
                     prettier={prettierNumber}
                     limiting="floatingField"

@@ -72,7 +72,7 @@ const Card = ({
                 {maxQty > 0 ? `${totalProducts}/${maxQty}` : `${totalProducts}`}
               </ColoredBlock>
             </p>
-            <p>{`€ ${productLine.price}`}</p>
+            <p>{`${productLine.price} €`}</p>
           </div>
         </div>
       </div>

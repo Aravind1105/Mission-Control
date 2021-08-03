@@ -90,33 +90,48 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
         </div>
       )}
       {!isEmpty(kiosks) && (
-        <ResponsiveContainer width="100%" height={500}>
-          <BarChart data={data} margin={{ left: 10, right: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis
-              dataKey={({ date }) => {
-                return date;
+        <div className="chart-data">
+          <ResponsiveContainer>
+            <BarChart
+              data={data}
+              margin={{
+                top: 5,
+                right: 1,
+                left: -15,
+                bottom: 5,
               }}
-              height={100}
-              interval={0}
-              tickSize={10}
-              tick={<CustomizedAxisTick />}
-            />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            {kiosks.map((kiosk, i) => (
-              <Bar
-                key={kiosk}
-                dataKey={kiosk}
-                name={kiosk}
-                stackId="a"
-                fill={colorsArr[i % (colorsArr.length - 1)]}
-                className="chartTest"
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis
+                XAxis
+                dataKey="date"
+                height={60}
+                interval={0}
+                tickSize={10}
+                tick={<CustomizedAxisTick />}
               />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+              <YAxis />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend
+                wrapperStyle={{
+                  left: 20,
+                  right: 25,
+                }}
+              />
+
+              {kiosks.map((kiosk, i) => (
+                <Bar
+                  key={kiosk}
+                  dataKey={kiosk}
+                  name={kiosk}
+                  stackId="a"
+                  fill={colorsArr[i % (colorsArr.length - 1)]}
+                  className="chartTest"
+                />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
     </Segment>
   );

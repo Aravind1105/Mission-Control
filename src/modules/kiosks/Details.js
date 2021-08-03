@@ -106,6 +106,7 @@ const KioskDetails = ({
                     name={kiosk && kiosk.name}
                     doorStatus={kiosk && kiosk.doorStatus}
                     temperature={kiosk && kiosk.temperature}
+                    heartbeat={kiosk && kiosk.heartbeat}
                     session={kiosk && kiosk.session}
                     service={kiosk && kiosk.controller.serviceCheck.enabled}
                   />

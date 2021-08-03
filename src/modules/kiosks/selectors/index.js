@@ -19,6 +19,10 @@ const alertMessages = {
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
+  NoProductsBought: 'No Purchase',
+  NoLeftScalesData: 'No Left Scales Data',
+  NoRightScalesData: 'No Right Scales Data',
+
   TabletDisconn: 'Tablet Disconnected',
 };
 
@@ -214,9 +218,9 @@ export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
     }));
 
   const filteredOfflineKiosks = kiosks
-    .filter(({ temperature }) => {
-      if (temperature && temperature.updated) {
-        return Date.now() - new Date(temperature.updated) > twoHours;
+    .filter(({ heartbeat }) => {
+      if (heartbeat && heartbeat.updated) {
+        return Date.now() - new Date(heartbeat.updated) > twoHours;
       }
       return false;
     })
