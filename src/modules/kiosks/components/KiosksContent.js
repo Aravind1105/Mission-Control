@@ -147,7 +147,7 @@ const KiosksContent = ({
 
       const organizationId = organization
         ? { orgId: organization }
-        : { orgId: organization };
+        : {};
 
       data.search = JSON.stringify({
         ...name,
