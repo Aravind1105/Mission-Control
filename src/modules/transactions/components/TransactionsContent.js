@@ -49,7 +49,7 @@ const columns = [
           return (
             <div style={{ textAlign: 'center' }}>
               <a href="https://dashboard.stripe.com/" target="_blank">
-                Check here
+                Pending
               </a>
             </div>
           );
