@@ -1,3 +1,6 @@
+@import './globals/site.variables';
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 .custom-button-blue {
   white-space: nowrap;
   overflow: hidden;
@@ -16,8 +19,16 @@
   color: #828282 !important;
   border: 1.5px solid #bdbdbd !important;
   border-radius: 5px !important;
-  width: 500px;
-  max-width: 100%;
+  @media @tablet {
+    width: 500px;
+    max-width: 100%;
+  }
+  @media @mobile {
+    width: 500px;
+    max-width: 100%;
+  }
+  // width: 500px;
+  // max-width: 100%;
   padding: 15px;
   .icon {
     background-color: #f2f2f2 !important;

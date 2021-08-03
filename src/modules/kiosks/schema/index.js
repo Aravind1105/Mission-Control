@@ -170,6 +170,10 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
       data {
         _id
         name
+        ownerOrganization {
+          _id
+          name
+        }
         dayIncome
         doorStatus
         serialNumber

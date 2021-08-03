@@ -22,6 +22,8 @@ const Toolbar = ({
   setSearch,
   kiosks,
   setKiosk,
+  organizations,
+  setOrganization,
   kiosksStatus,
   setKioskStatus,
   rootUser,
@@ -36,6 +38,10 @@ const Toolbar = ({
   const handleKioskChange = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     setKiosk(text);
+  };
+  const handleOrganizationChange = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    setOrganization(text);
   };
   const handleKiosksStatus = (e, { value }) => {
     const text = value === 'All' ? '' : value;
@@ -97,7 +103,7 @@ const Toolbar = ({
 
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
 
-        <Grid.Row verticalAlign="middle" columns={4}>
+        <Grid.Row verticalAlign="middle" columns={5}>
           <Grid.Column>
             <Dropdown
               placeholder="All Kiosks"
@@ -105,6 +111,15 @@ const Toolbar = ({
               className="full-width"
               onChange={handleKioskChange}
               options={kiosks}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Dropdown
+              placeholder="All Organization"
+              selection
+              className="full-width"
+              onChange={handleOrganizationChange}
+              options={organizations}
             />
           </Grid.Column>
 
@@ -130,7 +145,7 @@ const Toolbar = ({
 
           <Grid.Column>
             <CustomButton
-              label="Download Order List&nbsp;"
+              label="Download Order List"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadOrderListCsv}
@@ -139,7 +154,7 @@ const Toolbar = ({
 
           <Grid.Column>
             <CustomButton
-              label="Download Pack List&nbsp;"
+              label="Download Pack List"
               icon="arrow down icon"
               className="custom-button-default"
               onClick={DownloadPackListCsv}

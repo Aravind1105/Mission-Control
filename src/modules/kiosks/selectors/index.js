@@ -331,11 +331,45 @@ export const getKioskOptionsForTableDropdown = createSelector(
   },
 );
 
+/**
+ * Selector for Organization Dropdown*.
+ */
+export const getOrganizationsState = state => state.kiosks.listOrganizations;
+export const getOrganizationOptionsForTableDropdown = createSelector(
+  getKiosksState,
+  organization => {
+    let newArr = [{ value: '', text: 'All Organizations', key: '' }];
+    let test = organization.map(item => ({
+      id: item.ownerOrganization._id,
+      name: item.ownerOrganization.name,
+    }));
+    var setObj = new Set();
+    var result = test.reduce((acc, item) => {
+      if (!setObj.has(item.id)) {
+        setObj.add(item.id, item);
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+
+    result.forEach(item => {
+      const Item = {
+        value: item.id,
+        text: item.name,
+        key: item.id,
+      };
+      newArr.push(Item);
+    });
+    return newArr;
+  },
+);
+
 export const kioskInitialValues = {
   name: '',
   serialNumber: '',
   notes: '',
   orgId: '',
+  organization: '',
   location: {
     address: {
       name: '',
