@@ -28,7 +28,12 @@ const sortValue = {
   serialNumber: 'serialNumber',
 };
 
-const defaultFilterValues = { search: '', kiosk: '', kioskStatus: '' };
+const defaultFilterValues = {
+  search: '',
+  kiosk: '',
+  kioskStatus: '',
+  organization: '',
+};
 const screenWidth = window.innerWidth;
 const columns = [
   {
@@ -43,6 +48,10 @@ const columns = [
         return serialNumber.substring(0, 15) + '...';
       } else return serialNumber;
     },
+  },
+  {
+    title: 'Organization',
+    field: 'ownerOrganization.name',
   },
   {
     title: 'Door Status',
@@ -112,19 +121,19 @@ const KiosksContent = ({
   search,
   kiosk,
   kioskStatus,
+  organization,
 }) => {
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
   const [filter, setFilters] = useState(defaultFilterValues);
-
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
       limit: perPage,
     };
 
-    if (search || kiosk || kioskStatus) {
+    if (search || kiosk || kioskStatus || organization) {
       const name = search
         ? {
             $or: [
@@ -136,16 +145,26 @@ const KiosksContent = ({
       const kio = kiosk ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
+      const organizationId = organization
+        ? { orgId: organization }
+        : {};
+
       data.search = JSON.stringify({
         ...name,
         ...kio,
         ...door,
+        ...organizationId,
       });
       const searchIndex = isEqual(search, filter.search);
       const kioskIndex = isEqual(kiosk, filter.kiosk);
       const kioskStatusIndex = isEqual(kioskStatus, filter.kioskStatus);
 
-      if (!searchIndex || !kioskIndex || !kioskStatusIndex) {
+      if (
+        !searchIndex ||
+        !kioskIndex ||
+        !kioskStatusIndex ||
+        !kioskStatusIndex
+      ) {
         data.skip = 0;
         changePage(0);
         setFilters({
@@ -166,7 +185,7 @@ const KiosksContent = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, kioskStatus]);
+  }, [page, perPage, search, kiosk, kioskStatus, organization]);
 
   const handlerClickRow = ({ _id }) => {
     history.push(`/kiosks/detail/${_id}`);
