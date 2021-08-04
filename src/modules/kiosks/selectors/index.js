@@ -19,11 +19,11 @@ const alertMessages = {
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  NoProductsBought: 'No Purchase',
-  NoLeftScalesData: 'No Left Scales Data',
-  NoRightScalesData: 'No Right Scales Data',
-
+  NoProductsBought: 'No Products Bought',
+  NoLeftScalesData: 'Left Scales Disconnected',
+  NoRightScalesData: 'Right Scales Disconnected',
   TabletDisconn: 'Tablet Disconnected',
+  TabletMqttDisconn: 'Tablet MQTT Disconnected',
 };
 
 const alertSeverity = {

@@ -48,7 +48,10 @@ const columns = [
         ) {
           return (
             <div style={{ textAlign: 'center' }}>
-              <a href="https://dashboard.stripe.com/" target="_blank">
+              <a
+                href={`https://dashboard.stripe.com/payments/${paymentMethod.stripePaymentIntentId}`}
+                target="_blank"
+              >
                 Pending
               </a>
             </div>

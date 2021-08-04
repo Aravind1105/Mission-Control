@@ -39,6 +39,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
         userId
         paymentMethod {
           stripeCustomerId
+          stripePaymentIntentId
           isPaid
           membercardId
         }
