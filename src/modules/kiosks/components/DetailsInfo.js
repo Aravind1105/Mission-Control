@@ -19,6 +19,7 @@ const DetailsInfo = ({
   let addressLine3 = '';
   let addressSecondLine = '';
   let addressThirdLine = '';
+  let sessionType = '';
 
   let address = location && location.address;
 
@@ -30,13 +31,16 @@ const DetailsInfo = ({
     if (address.state) addressSecondLine += `, ${address.state}`;
     addressThirdLine += `${address.country}`;
   }
-  let sessionType = 'no session';
+
   if (session) {
-    sessionType = session.type;
-    if (sessionType === 'refill') {
-      sessionType = 'Replenisher Mode';
-    }
-  }
+    if (session.type === 'terminal_purchase')
+      sessionType = 'Purchase - Payment Terminal';
+    else if (session.type === 'member_purchase')
+      sessionType = 'Purchase - Member Card';
+    else if (session.type === 'refill') sessionType = 'Replenisher Mode';
+    else if (session.type === 'purchase')
+      sessionType = 'Purchase - Consumer App';
+  } else sessionType = 'No Session';
 
   return (
     <div className="kiosk-info">
