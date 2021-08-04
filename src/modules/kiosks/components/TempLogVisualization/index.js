@@ -80,9 +80,9 @@ const TempLogVisualization = ({
     }
   };
 
-  const handleChangeResolution = ({ value }) => {
-    setResolution(value);
-  };
+  // const handleChangeResolution = ({ value }) => {
+  //   setResolution(value);
+  // };
 
   const DownloadCsv = () => {
     let value = {
@@ -100,48 +100,53 @@ const TempLogVisualization = ({
   };
 
   return (
-    <Grid.Row>
-      <Grid.Column>
-        <Segment>
-          <SegmentHeader>
-            <Header as="h4" color="black">
-              <Header.Content>Temperature Log</Header.Content>
-            </Header>
-          </SegmentHeader>
-          <Grid>
-            <Grid.Row className="temp-log-filter-row">
-              <Grid.Column mobile={16} computer={4}>
-                <DatePicker type="range" onChange={handleDateChange} />
-              </Grid.Column>
-              {/* <Grid.Column mobile={16} computer={4}>
+    <>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment>
+            <SegmentHeader>
+              <Header as="h4" color="black">
+                <Header.Content>Temperature Log</Header.Content>
+              </Header>
+            </SegmentHeader>
+            <Grid stackable>
+              <Grid.Row className="temp-log-filter-row">
+                <Grid.Column mobile={16} computer={4}>
+                  <DatePicker type="range" onChange={handleDateChange} />
+                </Grid.Column>
+                {/* <Grid.Column mobile={16} computer={4}>
                 <Select
                   onChange={handleChangeResolution}
                   options={optionsResolution}
                   defaultValue={optionsResolution[1]}
                 />
               </Grid.Column> */}
-              <Grid.Column mobile={16} tablet={8} computer={3}>
-                <CustomButton
-                  label="Download CSV&nbsp;"
-                  icon="arrow down icon"
-                  className="custom-button-default"
-                  onClick={DownloadCsv}
-                  disabled={isEmpty(exportData)}
-                />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column mobile={16} computer={16}>
-                <LinearChart
-                  data={temperatureLogs}
-                  xAxisDataKey={temperatureLogs}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      </Grid.Column>
-    </Grid.Row>
+                <Grid.Column mobile={16} tablet={8} computer={3}>
+                  <CustomButton
+                    label="Download CSV&nbsp;"
+                    icon="arrow down icon"
+                    className="custom-button-default"
+                    onClick={DownloadCsv}
+                    disabled={isEmpty(exportData)}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+      <br></br>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment>
+            <LinearChart
+              data={temperatureLogs}
+              xAxisDataKey={temperatureLogs}
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+    </>
   );
 };
 
