@@ -172,6 +172,14 @@ const FragmentAlertTabletDisconnectedOnKiosk = gql`
     }
   }
 `;
+const FragmentAlertTabletMQTTDisconnectedOnKiosk = gql`
+  fragment FragmentAlertTabletMQTTDisconnected on AlertTabletMqttDisconn {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
 const FragmentAlertNoLeftScalesDataOnKiosk = gql`
   fragment FragmentAlertNoLeftScalesData on AlertNoLeftScalesData {
     kioskId {
@@ -308,6 +316,7 @@ export const GET_ALERTS_GRID = gql`
           ...FragmentAlertUnauthorizedAccess
           ...FragmentAlertNoProductsBought
           ...FragmentAlertTabletDisconnected
+          ...FragmentAlertTabletMQTTDisconnected
           ...FragmentAlertNoRightScalesData
           ...FragmentAlertNoLeftScalesData
         }
@@ -323,6 +332,7 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertTabletDisconnectedOnKiosk}
   ${FragmentAlertNoRightScalesDataOnKiosk}
   ${FragmentAlertNoLeftScalesDataOnKiosk}
+  ${FragmentAlertTabletMQTTDisconnectedOnKiosk}
 `;
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
   query getAlmostEmptyKiosks(
