@@ -551,18 +551,19 @@ export const getGridTempratureTableState = createSelector(
     let newArr = [];
     TempLogs.forEach(({ updated, payload }) => {
       const Item = {
-        time: moment(updated).format('MMM Do'),
+        time: updated,
+        timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? payload.message.sensors[0].temperature / 100
+          ? Number(payload.message.sensors[0].temperature / 100).toFixed(1)
           : null,
         Sensor2: payload.message.sensors[1]
-          ? payload.message.sensors[1].temperature / 100
+          ? Number(payload.message.sensors[1].temperature / 100).toFixed(1)
           : null,
         Sensor3: payload.message.sensors[2]
-          ? payload.message.sensors[2].temperature / 100
+          ? Number(payload.message.sensors[2].temperature / 100).toFixed(1)
           : null,
         Sensor4: payload.message.sensors[3]
-          ? payload.message.sensors[3].temperature / 100
+          ? Number(payload.message.sensors[3].temperature / 100).toFixed(1)
           : null,
       };
       newArr.push(Item);
