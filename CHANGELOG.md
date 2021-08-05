@@ -1,3 +1,44 @@
+#### 1.4.22 (2021-08-05)
+
+##### New Features
+
+* **mqtt:**  tablet mqtt disconnected alert (84220364)
+* **stripe:**  stripe payment link updated (5f8f074d)
+* **LIV-3568:**  Update the session type in kiosk details page (dccf656f)
+* **LIV-3560:**  Updated heartbeat msg to give acurate Nw status (79620afc)
+* **LIV-3556:**  Alert for scales are not working after purchase session (08ea6c1f)
+* **LIV-3550:**  Alert is triggered when there is an empty purchase session (49f8e047)
+* **LIV-3538:**  update txn payment type on sales table (d23db17c)
+* **log:**  activity log update (a155fe22)
+
+##### Bug Fixes
+
+* **products overview:** LIV-3542 suppliers - renamed to manufacturers and manufacturers drop down fixed (7fb252d7)
+* **status:**
+  *  session status name changed (0b8bb92b)
+  *  Nw status dif update in minutes (07ca0228)
+* **Kiosk Overview:**  LIV-3371: Added Organization Column with Organizations DropDown (46baaba8)
+* **alert:**  alert message changed (72bac3e7)
+* **kiosk details Format of number + Currency:**
+  *  LIV-3498 Planogram (c615921f)
+  *  LIV-3497 Invetory Table Formate changed (8cd8abcb)
+* **log:**  log and stripe url update (b620936b)
+* **kiosk details Temprature:**  LIV-3382 Temprature Graph Updated and Table Removed (9e7c757c)
+* **create product:** hotfix creating product image type bug (b71be1bd)
+
+##### Other Changes
+
+*  Temprature Log): LIV-3382: Updated Temprature Log (d91a89e1)
+*  Products): LIV-3545 Widget ToolTip Updated with respect to character width (90ad6dcc)
+*  Sales By Fridge ): LIV-3532 Dashboard Chart for Mobile Enable Again (5bdd33d7)
+*  Edit/Add Screen): LIV-3509 Change the euro Sign to right side (e804d6e8)
+*  Planogram Overlapping Image and text): LIV-3496 Kiosk Details Planogram Overlapping Image (c3eded9c)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (2298380d)
+* **status:**
+  *  changed status to pending in sales table (befc64fa)
+  *  update payment type and status in sales table (67f32c05)
+* **alert:**  alert msg updated (ef72e906)
+
 #### 1.4.21 (2021-07-21)
 
 ##### New Features
