@@ -15,11 +15,9 @@ const reg = /^.+\//;
 const NoImageBlock = () => (
   <>
     <p className="image-upload-text">
-      Please upload JPG image with
+      Please upload a JPG/PNG image with
       <br />
-      max size 1400x1400px.
-      <br />
-      Max File Size: 500kb
+      max size 1400 x 1400 px, 500 KB
     </p>
     <NoImg />
   </>
@@ -255,7 +253,7 @@ const ImageUploader = ({
 
           <input
             type="file"
-            accept="image/*"
+            accept="image/x-png,image/jpg,image/jpeg"
             id="productImgUpload"
             className="img-button"
             onChange={e => handleChange(e)}
@@ -283,7 +281,7 @@ const ImageUploader = ({
       </div>
       {showWarning && (
         <p className="image-warning">
-          Image size should be equal or less then 1400x1400 and 500kb
+          Image size should be equal or less then 1400 x 1400 px and 500 KB
         </p>
       )}
     </Segment>
