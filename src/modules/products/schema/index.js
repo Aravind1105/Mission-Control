@@ -296,3 +296,9 @@ export const DUPLICATE_PRODCUTLINE = gql`
   }
   ${productOnProductLine}
 `;
+
+export const GET_MANUFACTURERS = gql`
+  {
+    getManufacturers
+  }
+`;

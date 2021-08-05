@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Pagination from 'modules/shared/components/Pagination';
 import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
-import { getProductLinesWithFilter } from './actions';
+import { getProductLinesWithFilter, getManufacturers } from './actions';
 import { selectorGetProducts, getTotalProductsCount } from './selectors';
 import { isEqual } from 'lodash';
 
@@ -14,17 +14,18 @@ const sortDefault = [
     direction: 'ASC',
   },
 ];
-const defaulFilterValues = { search: '', category: '', supplier: '' };
+const defaulFilterValues = { search: '', category: '', manufacturer: '' };
 
 const ProductsList = ({
   products,
   total,
   isLoading,
   getProductLinesWithFilter,
+  getManufacturers,
 }) => {
   const [search, changeSearch] = useState('');
   const [category, changeCategory] = useState('');
-  const [supplier, changeSupplier] = useState('');
+  const [manufacturer, changeManufacturer] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
@@ -36,13 +37,21 @@ const ProductsList = ({
       limit: perPage,
     };
 
-    if (search || category || supplier) {
-      const name = search ? { name: { $regex: search, $options: 'i' } } : {};
+    if (search || category || manufacturer) {
+      const name = search
+        ? {
+            $or: [
+              { name: { $regex: search, $options: 'i' } },
+              { manufacturer: { $regex: search, $options: 'i' } },
+            ],
+          }
+        : {};
+
       const cat = category
         ? { category: { $regex: category, $options: 'i' } }
         : {};
-      const sup = supplier
-        ? { manufacturer: { $regex: supplier, $options: 'i' } }
+      const sup = manufacturer
+        ? { manufacturer: { $regex: manufacturer, $options: 'i' } }
         : {};
 
       data.search = JSON.stringify({
@@ -53,15 +62,15 @@ const ProductsList = ({
 
       const searchIndex = isEqual(search, filter.search);
       const categoryIndex = isEqual(category, filter.category);
-      const supplierIndex = isEqual(supplier, filter.supplier);
+      const manufacturerIndex = isEqual(manufacturer, filter.manufacturer);
 
-      if (!searchIndex || !categoryIndex || !supplierIndex) {
+      if (!searchIndex || !categoryIndex || !manufacturerIndex) {
         data.skip = 0;
         setFilters({
           ...filter,
           search,
           category,
-          supplier,
+          manufacturer,
         });
       }
     }
@@ -74,14 +83,15 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category, supplier]);
+    getManufacturers();
+  }, [page, perPage, search, category, manufacturer]);
 
   return (
     <>
       <Toolbar
         changeSearch={changeSearch}
         changeCategory={changeCategory}
-        changeSupplier={changeSupplier}
+        changeManufacturer={changeManufacturer}
       />
       <ProductsContent
         products={products}
@@ -109,6 +119,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getProductLinesWithFilter,
+  getManufacturers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
