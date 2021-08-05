@@ -38,7 +38,15 @@ const ProductsList = ({
     };
 
     if (search || category || manufacturer) {
-      const name = search ? { name: { $regex: search, $options: 'i' } } : {};
+      const name = search
+        ? {
+            $or: [
+              { name: { $regex: search, $options: 'i' } },
+              { manufacturer: { $regex: search, $options: 'i' } },
+            ],
+          }
+        : {};
+
       const cat = category
         ? { category: { $regex: category, $options: 'i' } }
         : {};
