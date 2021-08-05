@@ -17,7 +17,9 @@ const NoImageBlock = () => (
     <p className="image-upload-text">
       Please upload JPG image with
       <br />
-      max size 1400x1400px
+      max size 1400x1400px.
+      <br />
+      Max File Size: 500kb
     </p>
     <NoImg />
   </>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import CustomTable from 'modules/shared/components/CustomTable';
 import Pagination from 'modules/shared/components/Pagination';
 import Loader from 'modules/shared/components/Loader';
@@ -145,9 +144,7 @@ const KiosksContent = ({
       const kio = kiosk ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
-      const organizationId = organization
-        ? { orgId: organization }
-        : {};
+      const organizationId = organization ? { orgId: organization } : {};
 
       data.search = JSON.stringify({
         ...name,
