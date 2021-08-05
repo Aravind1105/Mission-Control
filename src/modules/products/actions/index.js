@@ -20,6 +20,7 @@ export const archiveProduct = createAction('@@saga/ARCHIVE_PRODUCT');
 export const duplicateProductLine = createAction(
   '@@saga/DUPLICATE_PRODUCTLINE',
 );
+export const getManufacturers = createAction('@@saga/GET_MANUFACTURERS');
 
 // State Actions
 export const getProductListSuccess = createAction(
@@ -54,4 +55,7 @@ export const resetPriceHistorySuccess = createAction(
 );
 export const deleteActivePriceHistorySuccess = createAction(
   '@@saga/DELETE_PRICE_HISTORY_SUCCESS',
+);
+export const getManufacturersSuccess = createAction(
+  '@@saga/GET_MANUFACTURERS_SUCCESS',
 );
