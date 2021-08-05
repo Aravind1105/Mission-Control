@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {
   getProductsDropdownList,
-  selectorGetSupplier,
+  selectorGetManufacturer,
 } from 'modules/products/selectors';
 import { getKioskOptionsForTableDropdown } from 'modules/kiosks/selectors';
 
@@ -14,7 +14,7 @@ const Toolbar = ({
   changeKiosk,
   kiosks,
   products,
-  supplier,
+  manufacturers,
 }) => {
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
@@ -22,7 +22,7 @@ const Toolbar = ({
   const handleProductChange = (e, { value }) => {
     changeProduct(value);
   };
-  const handleSupplierChange = (e, { value }) => {
+  const handleChangeManufacturer = (e, { value }) => {
     changeSupplier(value);
   };
   return (
@@ -48,11 +48,11 @@ const Toolbar = ({
         </Grid.Column>
         <Grid.Column mobile={16} computer={4}>
           <Dropdown
-            placeholder="All Suppliers"
+            placeholder="All Manufacturers"
             selection
-            options={supplier}
+            options={manufacturers}
             className="full-width"
-            onChange={handleSupplierChange}
+            onChange={handleChangeManufacturer}
           />
         </Grid.Column>
       </Grid.Row>
@@ -62,7 +62,7 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   products: getProductsDropdownList(state),
-  supplier: selectorGetSupplier(state),
+  manufacturers: selectorGetManufacturer(state),
   kiosks: getKioskOptionsForTableDropdown(state),
 });
 const mapDispatchToProps = {};
