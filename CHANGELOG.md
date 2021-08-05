@@ -1,3 +1,9 @@
+#### 1.4.23 (2021-08-05)
+
+##### Bug Fixes
+
+* **products overview:** LIV-3542 grid - supplier name renamed to manufacturer (04678bae)
+
 #### 1.4.22 (2021-08-05)
 
 ##### New Features
