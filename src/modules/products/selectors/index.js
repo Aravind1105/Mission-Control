@@ -231,3 +231,5 @@ export const getDefaultPriceHistoryState = state =>
 
 export const getActivePriceHistoryState = state =>
   state.products.activePriceHistory;
+
+export const getProductsPaginationState = state => state.pagination.products;
