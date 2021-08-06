@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { pick, get } from 'lodash';
 import { sort } from 'ramda';
+import sortByText from 'lib/sortByText';
 
 export const selectorGetProducts = state => state.products.list;
 
