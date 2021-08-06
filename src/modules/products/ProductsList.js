@@ -5,7 +5,6 @@ import Pagination from 'modules/shared/components/Pagination';
 import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
 import { getProductLinesWithFilter, getManufacturers } from './actions';
-import { setProductsPagination } from '../../core/actions/paginationActions';
 import { selectorGetProducts, getTotalProductsCount } from './selectors';
 import { isEqual } from 'lodash';
 
@@ -23,7 +22,6 @@ const ProductsList = ({
   isLoading,
   getProductLinesWithFilter,
   getManufacturers,
-  setProductsPagination,
 }) => {
   const [search, changeSearch] = useState('');
   const [category, changeCategory] = useState('');
@@ -80,9 +78,6 @@ const ProductsList = ({
     if (sort) {
       data.sort = sort;
     }
-    // set pagination and search filters to redux state
-    setProductsPagination(data);
-    
     getProductLinesWithFilter({ data });
   };
 
@@ -125,7 +120,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getProductLinesWithFilter,
   getManufacturers,
-  setProductsPagination,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
