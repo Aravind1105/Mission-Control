@@ -6,6 +6,7 @@ import {
   getProductsWidgetsDataSuccess as actionSuccess,
 } from '../actions';
 import { GET_PRODUCTS_WIDGET_DATA } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   const startDateOfMonth = new Date(
@@ -19,6 +20,7 @@ function* handler({ payload }) {
         getMostRefilledProduct,
         getMostRemovedProduct,
       },
+      errors,
     } = yield call(gqlTransactions.query, {
       query: GET_PRODUCTS_WIDGET_DATA,
 
@@ -36,25 +38,30 @@ function* handler({ payload }) {
         kioskId: payload && payload.kioskId,
       },
     });
-    yield put(
-      actionSuccess({
-        mostSoldProductName:
-          getMostSoldProduct.productLine && getMostSoldProduct.productLine.name,
-        mostSoldProductValue: getMostSoldProduct,
-        leastSoldProductName:
-          getLeastSoldProduct.productLine &&
-          getLeastSoldProduct.productLine.name,
-        leastSoldProductValue: getLeastSoldProduct,
-        mostRefilledProductName:
-          getMostRefilledProduct.productLine &&
-          getMostRefilledProduct.productLine.name,
-        mostRefilledProductValue: getMostRefilledProduct,
-        mostRemovedProductName:
-          getMostRemovedProduct.productLine &&
-          getMostRemovedProduct.productLine.name,
-        mostRemovedProductValue: getMostRemovedProduct,
-      }),
-    );
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(
+        actionSuccess({
+          mostSoldProductName:
+            getMostSoldProduct.productLine &&
+            getMostSoldProduct.productLine.name,
+          mostSoldProductValue: getMostSoldProduct,
+          leastSoldProductName:
+            getLeastSoldProduct.productLine &&
+            getLeastSoldProduct.productLine.name,
+          leastSoldProductValue: getLeastSoldProduct,
+          mostRefilledProductName:
+            getMostRefilledProduct.productLine &&
+            getMostRefilledProduct.productLine.name,
+          mostRefilledProductValue: getMostRefilledProduct,
+          mostRemovedProductName:
+            getMostRemovedProduct.productLine &&
+            getMostRemovedProduct.productLine.name,
+          mostRemovedProductValue: getMostRemovedProduct,
+        }),
+      );
+    }
   } catch (error) {
     console.log(error);
   }
