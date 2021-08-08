@@ -8,6 +8,7 @@ import {
   modifyOrganizationSuccess as actionSuccess,
 } from '../actions';
 // import { CREATE_ORGANIZATION_MUTATION, UPDATE_ORGANIZATION_MUTATION } from '../schema';
+// import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { values, formActions } }) {
   try {
@@ -19,14 +20,18 @@ function* handler({ payload: { values, formActions } }) {
       variables.id = id;
     }
 
-    // const { data } = yield call(gqlKiosk.mutate, {
+    // const { data,errors } = yield call(gqlKiosk.mutate, {
     //   mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
     //   variables,
     // });
+    // if (errors && errors[0].message === 'Token expired')
+    // yield put(updateSessionExpired(true));
+    // else {
     // const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
     // history.push(`/kiosks/edit/${responseData._id}`);
     // yield put(actionSuccess(responseData));
+    // }
   } catch (error) {
     console.log(error);
   }

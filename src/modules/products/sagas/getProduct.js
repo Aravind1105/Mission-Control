@@ -6,6 +6,7 @@ import {
   getProductSaga as action,
   getProductSuccess as actionSuccess,
 } from '../actions';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 export function handlerGetProduct(id) {
   const token = ls.getItem(TOKEN_STORAGE_KEY);
@@ -24,8 +25,12 @@ function* handler({ payload }) {
     if (response.status !== 200) {
       throw Error('error in saga');
     }
-    const data = yield call([response, response.json]);
-    yield put(actionSuccess(data));
+    if (response.errors && response.errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      const data = yield call([response, response.json]);
+      yield put(actionSuccess(data));
+    }
   } catch (e) {
     console.log(e);
   }

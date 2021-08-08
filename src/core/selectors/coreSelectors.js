@@ -11,3 +11,8 @@ export const getLanguage = createSelector(
   [getCoreState],
   coreState => coreState.language,
 );
+
+export const getSessionExpired = createSelector(
+  [getCoreState],
+  coreState => coreState.isExpired,
+);

@@ -6,6 +6,7 @@ import {
   getRefillsWidgetsDataSuccess as actionSuccess,
 } from '../actions';
 import { GET_REFILLS_WIDGET_DATA } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   const startDateOfMonth = new Date(
@@ -21,6 +22,7 @@ function* handler({ payload }) {
         getDefaultTotalSalesValueOfRefills,
         getDefaultTotalCostValueOfRefills,
       },
+      errors,
     } = yield call(gqlTransactions.query, {
       query: GET_REFILLS_WIDGET_DATA,
       variables: {
@@ -37,16 +39,20 @@ function* handler({ payload }) {
         kioskId: payload && payload.kioskId,
       },
     });
-    yield put(
-      actionSuccess({
-        totalNumberOfProductsAdded: getTotalNumberOfProductsAdded,
-        totalGrossValueOfRefills: getTotalGrossValueOfRefills,
-        totalNumberOfProductsRemoved: getTotalNumberOfProductsRemoved,
-        averageSpoilageRate: getAverageSpoilageRate,
-        totalCostValueOfReplenishedProducts: getDefaultTotalCostValueOfRefills,
-        totalSaleValueOfReplenishedProducts: getDefaultTotalSalesValueOfRefills,
-      }),
-    );
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(
+        actionSuccess({
+          totalNumberOfProductsAdded: getTotalNumberOfProductsAdded,
+          totalGrossValueOfRefills: getTotalGrossValueOfRefills,
+          totalNumberOfProductsRemoved: getTotalNumberOfProductsRemoved,
+          averageSpoilageRate: getAverageSpoilageRate,
+          totalCostValueOfReplenishedProducts: getDefaultTotalCostValueOfRefills,
+          totalSaleValueOfReplenishedProdukicts: getDefaultTotalSalesValueOfRefills,
+        }),
+      );
+    }
   } catch (error) {
     console.log(error);
   }

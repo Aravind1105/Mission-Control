@@ -7,6 +7,7 @@ import {
   resetKioskSuccess as actionSuccess,
 } from '../actions';
 import { KIOSK_RESET_MUTATION, GET_KIOSK_QUERY } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   try {
@@ -22,21 +23,28 @@ function* handler({ payload }) {
     // TODO: fix null name and img from resetKiosk endpoint. This is a workaround to solve LIV-1310.
     const {
       data: { getKioskWithCapacities },
-    } = yield call(
-      gqlKiosk.query, {
+      errors,
+    } = yield call(gqlKiosk.query, {
       query: GET_KIOSK_QUERY,
       variables,
     });
-    const kiosk = {
-      // ...kioskReset,
-      ...getKioskWithCapacities,
-      inventory: {
-        // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
-        loadCells: toFlatLoadCellItem(getKioskWithCapacities.inventory.loadCells, payload),
-      },
-    };
-    
-    yield put(actionSuccess(kiosk));
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      const kiosk = {
+        // ...kioskReset,
+        ...getKioskWithCapacities,
+        inventory: {
+          // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
+          loadCells: toFlatLoadCellItem(
+            getKioskWithCapacities.inventory.loadCells,
+            payload,
+          ),
+        },
+      };
+
+      yield put(actionSuccess(kiosk));
+    }
   } catch (error) {
     console.log(error);
   }

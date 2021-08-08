@@ -6,9 +6,12 @@ import {
   getTransactionsWidgetsDataSuccess as actionSuccess,
 } from '../actions';
 import { GET_TRANSACTIONS_WIDGET_DATA } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
-  const startDateOfMonth = new Date(new Date(new Date().setHours(0, 0, 0)).setDate(1));
+  const startDateOfMonth = new Date(
+    new Date(new Date().setHours(0, 0, 0)).setDate(1),
+  );
   try {
     const {
       data: {
@@ -18,6 +21,7 @@ function* handler({ payload }) {
         getTotalNetIncome,
         getTotalGrossIncome,
       },
+      errors,
     } = yield call(gqlTransactions.query, {
       query: GET_TRANSACTIONS_WIDGET_DATA,
       variables: {
@@ -34,15 +38,19 @@ function* handler({ payload }) {
         kioskId: payload && payload.kioskId,
       },
     });
-    yield put(
-      actionSuccess({
-        totalNumberOfTransactions: getTotalNumberOfTransactions,
-        averagePurchaseValue: getAveragePurchaseValue,
-        totalNumberOfProductsSold: getTotalNumberOfProductsSold,
-        totalNetIncome: getTotalNetIncome,
-        totalGrossIncome: getTotalGrossIncome,
-      }),
-    );
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(
+        actionSuccess({
+          totalNumberOfTransactions: getTotalNumberOfTransactions,
+          averagePurchaseValue: getAveragePurchaseValue,
+          totalNumberOfProductsSold: getTotalNumberOfProductsSold,
+          totalNetIncome: getTotalNetIncome,
+          totalGrossIncome: getTotalGrossIncome,
+        }),
+      );
+    }
   } catch (error) {
     console.log(error);
   }

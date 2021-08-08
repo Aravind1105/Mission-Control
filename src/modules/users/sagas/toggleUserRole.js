@@ -4,6 +4,7 @@ import gqlOrganization from 'lib/https/gqlOrganization';
 import { toggleUserRole, toggleUserRoleSuccess } from '../actions';
 import { USER_ROLE_TOGGLE_MUTATION } from '../schema';
 import { toast } from 'react-semantic-toasts';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   const variables = {
@@ -17,14 +18,20 @@ function* handler({ payload }) {
   if (!response.errors) {
     toast({
       type: 'success',
-      description: `${responseData.root ? `Root access successfully granted` : `Root access successfully revoked`}`,
+      description: `${
+        responseData.root
+          ? `Root access successfully granted`
+          : `Root access successfully revoked`
+      }`,
       animation: 'fade left',
     });
   } else {
+    if (response.errors && response.errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
     toast({
       type: 'error',
       description: 'Error! Root access denied',
-      animation: 'fade left'
+      animation: 'fade left',
     });
   }
   yield put(toggleUserRoleSuccess(responseData));
