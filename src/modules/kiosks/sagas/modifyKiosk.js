@@ -37,7 +37,8 @@ function* handler({ payload: { values, formActions } }) {
       variables,
     });
 
-    if (!responseData.errors) {
+    if (!errors) {
+      console.log('12345');
       const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
       history.push(`/kiosks/detail/${responseData._id}`);
@@ -52,11 +53,9 @@ function* handler({ payload: { values, formActions } }) {
         description: 'Kiosk was saved successfully',
         animation: 'fade left',
       });
+      yield put(actionSuccess(responseData._id));
     } else {
-      if (
-        responseData.errors &&
-        responseData.errors[0].message === 'Token expired'
-      )
+      if (errors && errors[0].message === 'Token expired')
         yield put(updateSessionExpired(true));
       toast({
         type: 'error',
@@ -64,7 +63,6 @@ function* handler({ payload: { values, formActions } }) {
         animation: 'fade left',
       });
     }
-    yield put(actionSuccess(responseData._id));
   } catch (error) {
     console.log(error);
   }
