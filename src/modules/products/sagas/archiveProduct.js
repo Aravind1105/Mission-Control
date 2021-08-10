@@ -5,11 +5,13 @@ import { archiveProduct as action } from '../actions';
 import { ARCHIVE_PRODUCTLINE } from '../schema';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   try {
     const {
       data: { archiveProductLine },
+      errors,
     } = yield call(gqlProducts.mutate, {
       mutation: ARCHIVE_PRODUCTLINE,
       variables: {
@@ -23,7 +25,9 @@ function* handler({ payload }) {
         animation: 'fade left',
       });
       history.push(`/products`);
-    } else {
+    } else if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
       toast({
         type: 'error',
         description:

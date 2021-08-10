@@ -10,27 +10,19 @@ import {
   Divider,
   Input,
 } from 'semantic-ui-react';
-
-import SearchInput from 'modules/shared/components/SearchInput';
 import {
   selectorGetProductCategories,
-  selectorGetSupplier,
+  selectorGetManufacturer,
 } from '../selectors';
 
-const stateOptions = [
-  { key: 'client', value: 'client', text: 'client' },
-  { key: 'license', value: 'license', text: 'license' },
-];
 const Toolbar = ({
   search,
-  setSearch,
   changeSearch,
   changeCategory,
-  changeSupplier,
+  changeManufacturer,
   categories,
-  supplier,
+  manufacturer,
 }) => {
-
   const handleSearchChange = ({ target }) => {
     changeSearch(target.value);
   };
@@ -39,9 +31,9 @@ const Toolbar = ({
     changeCategory(text);
   };
 
-  const handleChangeSupplier = (e, { value }) => {
-    const text = value === 'All Suppliers' ? '' : value;
-    changeSupplier(text);
+  const handleChangeManufacturer = (e, { value }) => {
+    const text = value === 'All Manufacturers' ? '' : value;
+    changeManufacturer(text);
   };
 
   return (
@@ -85,11 +77,11 @@ const Toolbar = ({
           </Grid.Column>
           <Grid.Column mobile={16} computer={4}>
             <Dropdown
-              placeholder="All Suppliers"
+              placeholder="All Manufacturers"
               selection
               className="full-width"
-              onChange={handleChangeSupplier}
-              options={supplier}
+              onChange={handleChangeManufacturer}
+              options={manufacturer}
             ></Dropdown>
           </Grid.Column>
         </Grid.Row>
@@ -100,7 +92,7 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   categories: selectorGetProductCategories(state),
-  supplier: selectorGetSupplier(state),
+  manufacturer: selectorGetManufacturer(state),
 });
 
 export default connect(mapStateToProps)(Toolbar);

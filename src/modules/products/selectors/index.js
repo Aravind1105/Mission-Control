@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import pick from 'lodash/pick';
-import get from 'lodash/get';
+import { pick, get } from 'lodash';
+import { sort } from 'ramda';
 import sortByText from 'lib/sortByText';
 
 export const selectorGetProducts = state => state.products.list;
@@ -47,28 +47,22 @@ export const selectorProductTaxOptions = createSelector(
     })),
 );
 
-export const selectorGetSupplier = createSelector(
-  selectorGetProducts,
-  products => {
-    const supplierList = products.reduce((prev, curr, i) => {
-      if (!prev.length || !prev.some(el => el.value === curr.manufacturer)) {
-        return prev.concat({
-          text: curr.manufacturer,
-          value: curr.manufacturer,
-          key: `${i}_${curr.manufacturer}`,
-        });
-      }
-      return prev;
-    }, []);
-
-    return [
+export const selectorGetManufacturer = createSelector(
+  state => state.products.manufacturers,
+  manufacturers =>
+    [
       {
         value: '',
-        text: 'All Suppliers',
+        text: 'All Manufacturers',
         key: 'all',
       },
-    ].concat(sortByText(supplierList, 'value'));
-  },
+    ].concat(
+      sort((a, b) => a < b, manufacturers).map(option => ({
+        value: option,
+        text: option,
+        key: option,
+      })),
+    ),
 );
 
 export const selectorGetProductFamilyForm = createSelector(

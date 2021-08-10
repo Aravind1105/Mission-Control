@@ -12,7 +12,7 @@ const columns = [
     field: 'name',
   },
   {
-    title: 'Supplier',
+    title: 'Manufacturer',
     field: 'manufacturer',
   },
   {

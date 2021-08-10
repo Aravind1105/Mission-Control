@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Divider, Container, Icon } from 'semantic-ui-react';
 import { modifyProductImage, deleteProductImage } from '../actions';
@@ -15,9 +15,9 @@ const reg = /^.+\//;
 const NoImageBlock = () => (
   <>
     <p className="image-upload-text">
-      Please upload JPG image with
+      Please upload a JPG/PNG image with
       <br />
-      max size 1400x1400px
+      max size 1400 x 1400 px, 500 KB
     </p>
     <NoImg />
   </>
@@ -32,18 +32,29 @@ const ImageUploader = ({
   deleteProductImage,
   setFirstUploadImage,
 }) => {
-  const [img, setImg] = useState(null);
-  const [imgName, setImgName] = useState('');
+  const [checkImg, setCheckImg] = useState({
+    imgSrc: null,
+    imgName: null,
+    imgSize: null,
+    imgbase64: null,
+  });
+  const [imgProps, setImgProps] = useState({
+    imgSrc: null,
+    imgName: '',
+    imgSize: {
+      width: '',
+      height: '',
+    },
+    imgbase64: '',
+  });
+
   const [showWarning, setShowWarning] = useState(false);
-  const [imageProp, setSize] = useState(null);
-  const [imageSize, setImageSize] = useState(null);
   const [initialImageProps, setInitialImageProps] = useState(null);
-  const [initialImageName, setInitialImageName] = useState(null);
   const [customAlertStatus, setCustomAlertStatus] = useState(false);
-  const [base64Img, setBase64Img] = useState('');
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   const [isImageUpdated, setIsImageUpdated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const fileInput = useRef('');
 
   // show confirm dialog to user on click delete image or when the image is updated or deleted
   // upload image only if the size of the image is less then 500kb
@@ -52,19 +63,19 @@ const ImageUploader = ({
   // imageProp will contain image's height and width if the image is currently uploaded
 
   useEffect(() => {
-    if ((!showWarning && isImageUpdated) || isImageDeleted) {
+    if (isImageUpdated || isImageDeleted) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
     }
-  }, [showWarning, isImageUpdated, isImageDeleted]);
-
+  }, [isImageUpdated, isImageDeleted]);
 
   const updateImage = () => {
     modifyProductImage({
       id: initialValues.id,
-      image: base64Img,
+      image: imgProps.imgbase64,
     });
+    fileInput.current.value = '';
     setIsImageUpdated(false);
     setCustomAlertStatus(false);
   };
@@ -79,44 +90,89 @@ const ImageUploader = ({
   };
 
   useEffect(() => {
-    const image = new Image();
-    let tempImage = src;
-    if (img) {
-      tempImage = img;
+    if (showWarning) {
+      setTimeout(() => {
+        setShowWarning(false);
+      }, 5000);
     }
-    image.onload = () => {
+  }, [showWarning]);
+
+  useEffect(() => {
+    let tempImage = src;
+    if (checkImg.imgSrc) {
+      const image = new Image();
+      tempImage = checkImg.imgSrc;
+      image.src = tempImage || '';
+
+      image.onload = () => {
+        const fileName = tempImage
+          ? tempImage.replace(reg, '').replace(/\%20/g, ' ')
+          : 'noname';
+        if (
+          image.naturalWidth > 1400 ||
+          image.naturalHeight > 1400 ||
+          checkImg.imgSize > 500000
+        ) {
+          setShowWarning(true);
+        } else {
+          setShowWarning(false);
+          setImgProps({
+            imgSrc: tempImage,
+            imgName: fileName,
+            imgSize: {
+              width: image.naturalWidth,
+              height: image.naturalHeight,
+            },
+            imgbase64: checkImg.imgbase64,
+          });
+          setIsImageUpdated(true);
+          setIsImageDeleted(false);
+        }
+      };
+    } else {
+      const initImage = new Image();
+      initImage.src = tempImage;
       const fileName = tempImage
         ? tempImage.replace(reg, '').replace(/\%20/g, ' ')
         : 'noname';
-      if (
-        image.naturalWidth > 1400 ||
-        image.naturalHeight > 1400 ||
-        imageSize > 500000
-      ) {
-        setShowWarning(true);
-      } else {
-        setShowWarning(false);
-      }
-      setSize({
-        width: image.naturalWidth,
-        height: image.naturalHeight,
-        fileName,
+
+      initImage.onload = () => {
+        setInitialImageProps({
+          width: initImage.naturalWidth,
+          height: initImage.naturalHeight,
+          fileName,
+        });
+      };
+    }
+  }, [checkImg]);
+
+  useEffect(() => {
+    if (src === '') {
+      setImgProps({
+        imgSrc: null,
+        imgName: '',
+        imgSize: {
+          width: '',
+          height: '',
+        },
+        imgbase64: '',
       });
-      setInitialImageProps({
-        width: image.naturalWidth,
-        height: image.naturalHeight,
-        fileName,
-      });
-      setInitialImageName(fileName);
-    };
-    image.src = tempImage || '';
-  }, [img]);
+    }
+  }, [src]);
 
   useEffect(() => {
     if (isCancelTriggered) {
-      setImg(src);
-      setSize(isImageDeleted ? null : { ...initialImageProps });
-      setImgName(initialImageName);
+      setImgProps({
+        imgSrc: null,
+        imgName: '',
+        imgSize: {
+          width: '',
+          height: '',
+        },
+        imgbase64: '',
+      });
+      fileInput.current.value = '';
+      setIsCancelTriggered(false);
     }
   }, [isCancelTriggered]);
 
@@ -136,24 +192,18 @@ const ImageUploader = ({
   const handleChange = ({ target }) => {
     const { files } = target;
     const newImg = URL.createObjectURL(files[0]);
-    setImageSize(files[0].size);
-    setImgName(files[0].name);
-    setImg(newImg);
-    setIsImageUpdated(true);
-    setIsImageDeleted(false);
-
     // convert image into base64 string
     getBase64(files[0], base64Img => {
-      setBase64Img(base64Img);
+      setCheckImg({
+        imgSrc: newImg,
+        imgName: files[0].name,
+        imgSize: files[0].size,
+        imgbase64: base64Img,
+      });
     });
   };
 
   const handleDelete = () => {
-    setShowWarning(false);
-    setImg(null);
-    setSize(null);
-    setImgName(null);
-    setIsImageUpdated(false);
     setIsImageDeleted(true);
   };
 
@@ -162,13 +212,24 @@ const ImageUploader = ({
       <h3>Product Image</h3>
       <Divider />
       <div className="img-wrapper">
-        {img || src ? <img src={img || src} alt="product" /> : <NoImageBlock />}
+        {imgProps.imgSrc || src ? (
+          <img src={imgProps.imgSrc || src} alt="product" />
+        ) : (
+          <NoImageBlock />
+        )}
       </div>
-      {imageProp && (img || src) && (
+      {(imgProps.imgSrc || src) && (
         <Container textAlign="center">
-          <div className="filename-wrapper">{`Filename: ${imgName ||
-            imageProp.fileName}`}</div>
-          <div>{`Size: ${imageProp.width}x${imageProp.height}px`}</div>
+          <div className="filename-wrapper">{`Filename: ${(imgProps.imgName !==
+            null &&
+            imgProps.imgName) ||
+            (initialImageProps && initialImageProps.fileName)}`}</div>
+          <div>{`Size: ${(imgProps.imgSize.width !== null &&
+            imgProps.imgSize.width) ||
+            (initialImageProps && initialImageProps.width)}x${(imgProps.imgSize
+            .height !== null &&
+            imgProps.imgSize.height) ||
+            (initialImageProps && initialImageProps.height)}px`}</div>
         </Container>
       )}
       <div className="label-wrapper">
@@ -192,10 +253,11 @@ const ImageUploader = ({
 
           <input
             type="file"
-            accept="image/*"
+            accept="image/x-png,image/jpg,image/jpeg"
             id="productImgUpload"
             className="img-button"
-            onChange={handleChange}
+            onChange={e => handleChange(e)}
+            ref={ref => (fileInput.current = ref)}
           />
         </label>
         <CustomAlert
@@ -219,7 +281,7 @@ const ImageUploader = ({
       </div>
       {showWarning && (
         <p className="image-warning">
-          Image size should be equal or less then 1400x1400 and 500kb
+          Image size should be equal or less then 1400 x 1400 px and 500 KB
         </p>
       )}
     </Segment>

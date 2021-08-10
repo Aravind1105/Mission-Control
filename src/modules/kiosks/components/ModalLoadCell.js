@@ -110,6 +110,8 @@ const ModalLoadCell = ({
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== +data.quantity;
     const isCellIdChanged = initVal.cellId.value !== data.cellId.value;
+    
+    // compare price with default price or compare price with previous price
     const isPriceChanged =
       Number(
         getDefaultProductPrice({
@@ -117,7 +119,8 @@ const ModalLoadCell = ({
           productId: data.product.value,
           kioskId: match.params.id,
         }),
-      ) !== +data.price;
+      ) !== +data.price || initVal.price !== +data.price;
+
     const isReplacementRequired =
       isPositionIdChanged &&
       loadedPosition.some(el => el === data.planogramPosition);

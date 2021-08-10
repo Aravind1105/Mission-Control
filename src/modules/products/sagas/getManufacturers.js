@@ -2,29 +2,23 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import gqlProducts from 'lib/https/gqlProducts';
 import {
-  getProductLinesByOrgId as action,
-  getProductLinesByOrgIdSuccess as actionSuccess,
+  getManufacturers as action,
+  getManufacturersSuccess as actionSuccess,
 } from '../actions';
-import { GET_PRODUCT_LINES_BY_ORG_ID } from '../../products/schema';
+import { GET_MANUFACTURERS } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({ payload }) {
+function* handler({}) {
   try {
     const {
-      data: { getProductLinesByOrgId },
+      data: { getManufacturers },
       errors,
     } = yield call(gqlProducts.query, {
-      query: GET_PRODUCT_LINES_BY_ORG_ID,
-      variables: { orgId: payload },
+      query: GET_MANUFACTURERS,
     });
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));
-    else {
-      const response = {
-        productsByOrgId: getProductLinesByOrgId,
-      };
-      yield put(actionSuccess(response));
-    }
+    else yield put(actionSuccess(getManufacturers));
   } catch (error) {
     console.log(error);
   }
