@@ -373,7 +373,6 @@ export const kioskInitialValues = {
   serialNumber: '',
   notes: '',
   orgId: '',
-  organization: '',
   location: {
     address: {
       name: '',

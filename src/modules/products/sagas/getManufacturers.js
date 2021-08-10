@@ -6,15 +6,19 @@ import {
   getManufacturersSuccess as actionSuccess,
 } from '../actions';
 import { GET_MANUFACTURERS } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({ }) {
+function* handler({}) {
   try {
     const {
       data: { getManufacturers },
+      errors,
     } = yield call(gqlProducts.query, {
       query: GET_MANUFACTURERS,
     });
-    yield put(actionSuccess(getManufacturers));
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else yield put(actionSuccess(getManufacturers));
   } catch (error) {
     console.log(error);
   }

@@ -13,6 +13,7 @@ import {
   getFullProductData as action,
   getFullProductDataSuccess as actionSuccess,
 } from '../actions';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   const isEdit = payload !== 'new';
@@ -32,13 +33,16 @@ function* handler({ payload }) {
         getProductFamilies = [],
         taxFindAll = [],
       },
+      errors,
     } = yield call(gqlProducts.query, query);
     const response = {
       product: getProductLineById,
       family: getProductFamilies,
       taxes: taxFindAll,
     };
-    yield put(actionSuccess(response));
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else yield put(actionSuccess(response));
   } catch (e) {
     console.log(e);
   }

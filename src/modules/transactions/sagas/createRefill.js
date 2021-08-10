@@ -8,30 +8,37 @@ import {
 } from '../actions';
 import { GET_KIOSK_QUERY } from '../../kiosks/schema';
 import { CREATE_REFILL_MUTATION } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   try {
     let variables = {
       kioskId: payload,
     };
-    yield call(gqlTransactions.mutate, {
+    const { errors } = yield call(gqlTransactions.mutate, {
       mutation: CREATE_REFILL_MUTATION,
       variables,
     });
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
     variables = {
       id: payload,
     };
-    const { data: { getKioskWithCapacities } } = yield call(
-      gqlKiosk.query, {
-        query: GET_KIOSK_QUERY,
-        variables,
-      },
-    );
+    const {
+      data: { getKioskWithCapacities },
+    } = yield call(gqlKiosk.query, {
+      query: GET_KIOSK_QUERY,
+      variables,
+    });
+
     const kiosk = {
       ...getKioskById,
       inventory: {
         // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
-        loadCells: toFlatLoadCellItem(getKioskWithCapacities.inventory.loadCells, payload),
+        loadCells: toFlatLoadCellItem(
+          getKioskWithCapacities.inventory.loadCells,
+          payload,
+        ),
       },
     };
     yield put(actionSuccess(kiosk));

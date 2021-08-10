@@ -6,11 +6,18 @@ import {
   getWidgetTodayDataSuccess as actionSuccess,
 } from '../actions';
 import { GET_WIDGET_TODAY_DATA } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler() {
   try {
     const {
-      data: { getTotalNumberOfTransactions, getTotalNumberOfProductsSold, getTotalNetIncome, getTotalGrossIncome },
+      data: {
+        getTotalNumberOfTransactions,
+        getTotalNumberOfProductsSold,
+        getTotalNetIncome,
+        getTotalGrossIncome,
+      },
+      errors,
     } = yield call(gqlTransactions.query, {
       query: GET_WIDGET_TODAY_DATA,
       variables: {
@@ -20,16 +27,20 @@ function* handler() {
         },
       },
     });
-    yield put(
-      actionSuccess({
-        // temporarly total number of customers is replaced by total number of transactions
-        // please visit https://livello.atlassian.net/browse/LIV-1944?focusedCommentId=11929 for more details
-        totalNumberOfCustomers: getTotalNumberOfTransactions,
-        totalNumberOfProducts: getTotalNumberOfProductsSold,
-        totalGrossIncome: getTotalGrossIncome,
-        totalNetIncome: getTotalNetIncome,
-      }),
-    );
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(
+        actionSuccess({
+          // temporarly total number of customers is replaced by total number of transactions
+          // please visit https://livello.atlassian.net/browse/LIV-1944?focusedCommentId=11929 for more details
+          totalNumberOfCustomers: getTotalNumberOfTransactions,
+          totalNumberOfProducts: getTotalNumberOfProductsSold,
+          totalGrossIncome: getTotalGrossIncome,
+          totalNetIncome: getTotalNetIncome,
+        }),
+      );
+    }
   } catch (error) {
     console.log(error);
   }

@@ -6,21 +6,27 @@ import {
   getOrganizationByIdSuccess as actionSuccess,
 } from '../actions';
 import { GET_ORGANIZATION_BY_ID } from '../../organizations/schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   try {
     const {
       data: { getOrganizationById },
+      errors,
     } = yield call(gqlOrganization.query, {
       query: GET_ORGANIZATION_BY_ID,
       variables: {
         id: payload,
       },
     });
-    const response = {
-      org: getOrganizationById,
-    };
-    yield put(actionSuccess(response));
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      const response = {
+        org: getOrganizationById,
+      };
+      yield put(actionSuccess(response));
+    }
   } catch (error) {
     console.log(error);
   }

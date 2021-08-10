@@ -7,6 +7,7 @@ import {
 } from '../actions';
 import { CONFIGURE_KIOSK_PROPS } from '../schema';
 import { toast } from 'react-semantic-toasts';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { finalProps } }) {
   try {
@@ -32,13 +33,18 @@ function* handler({ payload: { finalProps } }) {
         description: 'Kiosk is Offline! Please try again later',
         animation: 'fade left',
       });
-    } else if (!res.errors) {
+    } else if (!responseData.errors) {
       toast({
         type: 'success',
         description: 'Kiosk settings customized successfully',
         animation: 'fade left',
       });
-    } else {
+    } else if (
+      responseData.errors &&
+      responseData.errors[0].message === 'Token expired'
+    )
+      yield put(updateSessionExpired(true));
+    else {
       toast({
         type: 'error',
         description: 'Error! Something went wrong',

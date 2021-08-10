@@ -7,6 +7,7 @@ import {
 } from '../actions';
 import { UPDATE_PLAYLIST } from '../schema';
 import { toast } from 'react-semantic-toasts';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { kioskId, data } }) {
   try {
@@ -19,13 +20,18 @@ function* handler({ payload: { kioskId, data } }) {
       variables,
     });
     const res = responseData.data.updatePlayList;
-    if (res && !res.errors) {
+    if (responseData && !responseData.errors) {
       toast({
         type: 'success',
         description: 'Playlist saved successfully',
         animation: 'fade left',
       });
-    } else {
+    } else if (
+      responseData.errors &&
+      responseData.errors[0].message === 'Token expired'
+    )
+      yield put(updateSessionExpired(true));
+    else {
       toast({
         type: 'error',
         description: 'Error! Something went wrong',
