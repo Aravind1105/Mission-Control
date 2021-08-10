@@ -90,7 +90,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
-              icon="arrow down icon"
+              icon="arrow down"
               className="custom-button-default"
               onClick={DownloadCsv}
               // disabled={Boolean(exportData)}

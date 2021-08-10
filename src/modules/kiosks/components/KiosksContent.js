@@ -86,17 +86,17 @@ const columns = [
       <CellHeartbeat heartbeat={heartbeat} showTime />
     ),
   },
-  {
-    title: 'Address',
-    field: 'location',
-    formatter: ({ location: { address } }) => {
-      const { postalCode, city } = address;
-      const addr = [postalCode, city, !postalCode && !city && 'N.A.']
-        .filter(el => Boolean(el))
-        .join(', ');
-      return addr;
-    },
-  },
+  // {
+  //   title: 'Address',
+  //   field: 'location',
+  //   formatter: ({ location: { address } }) => {
+  //     const { postalCode, city } = address;
+  //     const addr = [postalCode, city, !postalCode && !city && 'N.A.']
+  //       .filter(el => Boolean(el))
+  //       .join(', ');
+  //     return addr;
+  //   },
+  // },
   {
     title: 'Sales Today',
     field: 'dayIncome',
@@ -145,9 +145,7 @@ const KiosksContent = ({
       const kio = kiosk ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
-      const organizationId = organization
-        ? { orgId: organization }
-        : {};
+      const organizationId = organization ? { orgId: organization } : {};
 
       data.search = JSON.stringify({
         ...name,
