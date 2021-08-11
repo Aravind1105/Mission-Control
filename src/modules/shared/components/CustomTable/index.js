@@ -136,6 +136,7 @@ const CustomTable = ({
                   key={rowKey}
                   active={activeRow === i}
                   onClick={handlerRowClick(item, i)}
+                  verticalAlign="top"
                 >
                   {columns.map(({ field, formatter }, j) => {
                     const cellKey = `${i}-${field}`;
