@@ -14,11 +14,13 @@ import {
   deleteActivePriceHistory,
   archiveProduct,
   duplicateProductLine,
+  getKiosksWithProduct,
 } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
   getActivePriceHistoryState,
   getDefaultPriceHistoryState,
+  getKiosksWithProductState,
   selectorGetProductInitValue,
   // selectorGetProductFamilyForm,
   selectorProductTaxOptions,
@@ -28,6 +30,7 @@ import PriceHistoryWidget from './components/PriceHistoryWidget';
 import { isEqual } from 'lodash';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
 import './styles.less';
+import UsedKiosksWidget from './components/UsedKiosksWidget';
 
 const links = [
   {
@@ -65,6 +68,8 @@ const ProductDetail = ({
   deleteActivePriceHistory,
   archiveProduct,
   duplicateProductLine,
+  getKiosksWithProduct,
+  kiosksWithProduct,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -87,6 +92,7 @@ const ProductDetail = ({
     }
     if (id) {
       getPriceHistory({ productLineId: id });
+      getKiosksWithProduct({ productLineId: id });
     }
 
     // reset price history redux state if the product is a new one
@@ -201,6 +207,9 @@ const ProductDetail = ({
               }
             />
           )}
+          {kiosksWithProduct.length > 0 && (
+            <UsedKiosksWidget data={kiosksWithProduct} />
+          )}
           <ImageUploader
             isCancelTriggered={isCancelTriggered}
             setIsCancelTriggered={setIsCancelTriggered}
@@ -230,6 +239,7 @@ const mapStateToProps = (state, { match: { params } }) => {
     organizations: getOrganizationsAsOptions(state),
     defaultPriceHistory: getDefaultPriceHistoryState(state),
     activePriceHistory: getActivePriceHistoryState(state),
+    kiosksWithProduct: getKiosksWithProductState(state),
   };
 };
 
@@ -241,6 +251,7 @@ const mapDispatchToProps = {
   deleteActivePriceHistory,
   archiveProduct,
   duplicateProductLine,
+  getKiosksWithProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
