@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Segment, Divider, Table, Header, Grid } from 'semantic-ui-react';
-import { useParams } from 'react-router-dom';
-import history from 'lib/history';
 import './styles.less';
+import WidgetItem from './WidgetItem';
 
-const UsedKiosksWidget = ({ data }) => {
-  // product line id
-  const { id } = useParams();
-
-  // TODO: uncomment delete button for active price history after delete feature for price history is confirmed
-
+const UsedKiosksWidget = ({ kioskData }) => {
   return (
     <>
       <Segment>
@@ -29,29 +23,9 @@ const UsedKiosksWidget = ({ data }) => {
           singleLine
         >
           <Table.Body>
-            {/* {filteredUsedKiosks.map(priceObj => {
-              const { _id, price, validFrom, validForKiosk } = priceObj;
-              const kioskName = get(validForKiosk, 'name', 'Default');
-              const id = get(validForKiosk, 'id', '');
-              const dateDisplay = format(
-                new Date(validFrom),
-                'dd-MM-yyyy, HH:mm:ss',
-              );
-              return (
-                <WidgetItem
-                  priceHistoryId={_id}
-                  dateTime={dateDisplay}
-                  price={price.toFixed(2)}
-                  kioskUrl={!isEmpty(id) ? `/kiosks/detail/${id}` : undefined}
-                  kioskName={kioskName}
-                  showDelete={activeUsedKiosks}
-                  onClickDelete={() => {
-                    setToDelete(_id);
-                    setIsModalOpen(true);
-                  }}
-                />
-              );
-            })} */}
+            {kioskData.map(kiosk => (
+              <WidgetItem kiosk={kiosk} />
+            ))}
           </Table.Body>
         </Table>
       </Segment>

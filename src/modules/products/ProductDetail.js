@@ -208,7 +208,7 @@ const ProductDetail = ({
             />
           )}
           {kiosksWithProduct.length > 0 && (
-            <UsedKiosksWidget data={kiosksWithProduct} />
+            <UsedKiosksWidget kioskData={kiosksWithProduct} />
           )}
           <ImageUploader
             isCancelTriggered={isCancelTriggered}

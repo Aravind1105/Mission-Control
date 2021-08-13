@@ -17,7 +17,7 @@ const KiosksScreen = () => (
 
     <Switch>
       <Route path="/kiosks" exact component={KiosksList} />
-      <Route path="/kiosks/detail/:id" exact component={KioskDetails} />
+      <Route path="/kiosks/detail/:id/:cabelId?" component={KioskDetails} />
       <Route path="/kiosks/edit/:id" exact component={KioskEdit} />
       <Route path="/kiosks/log/temp/:id" exact component={KioskTempLog} />
       <Route
