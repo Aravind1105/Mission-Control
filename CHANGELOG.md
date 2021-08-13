@@ -1,3 +1,19 @@
+#### 1.4.25 (2021-08-13)
+
+##### New Features
+
+* **log:**  activity log update and heartbeat time update (7e30b001)
+
+##### Bug Fixes
+
+* **kiosk planogram:** LIV-3675 removed usage of isActive flag (52916aa8)
+* **log:**  activity logs update (b5abf2c0)
+* **create product:**  hot fix create product image type bug (a55d7657)
+
+##### Other Changes
+
+* **dashboard:** sales graph is hidden due to accesscontrol bug" (2d0f00a6)
+
 #### 1.4.24 (2021-08-13)
 
 ##### New Features
