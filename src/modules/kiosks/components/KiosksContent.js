@@ -85,17 +85,17 @@ const columns = [
       <CellHeartbeat heartbeat={heartbeat} showTime />
     ),
   },
-  {
-    title: 'Address',
-    field: 'location',
-    formatter: ({ location: { address } }) => {
-      const { postalCode, city } = address;
-      const addr = [postalCode, city, !postalCode && !city && 'N.A.']
-        .filter(el => Boolean(el))
-        .join(', ');
-      return addr;
-    },
-  },
+  // {
+  //   title: 'Address',
+  //   field: 'location',
+  //   formatter: ({ location: { address } }) => {
+  //     const { postalCode, city } = address;
+  //     const addr = [postalCode, city, !postalCode && !city && 'N.A.']
+  //       .filter(el => Boolean(el))
+  //       .join(', ');
+  //     return addr;
+  //   },
+  // },
   {
     title: 'Sales Today',
     field: 'dayIncome',

@@ -86,7 +86,7 @@ const RefillsTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <div style={{ overflow: 'auto' }}>
+    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable transactions-table"
