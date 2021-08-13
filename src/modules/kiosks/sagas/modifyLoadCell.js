@@ -47,7 +47,6 @@ function* handler({ payload }) {
               productLine: productId,
               planogramPosition,
               cellId,
-              isActive: true,
               surfaceSize: `N${surfaceSize}`,
             },
           ],
@@ -59,7 +58,6 @@ function* handler({ payload }) {
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition[0],
             cellId: oldData.cellId,
-            isActive: false,
             surfaceSize: `N${oldData.surfaceSize}`,
           });
         } else if (isPositionIdChanged) {
@@ -67,7 +65,6 @@ function* handler({ payload }) {
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition,
             cellId: oldData.cellId,
-            isActive: true,
             surfaceSize: `N${oldData.surfaceSize}`,
           };
         }
