@@ -14,13 +14,13 @@ export default ({
   onClickDelete,
 }) => (
   <Table.Row>
-    <Table.Cell className="price-history-widged-td" width="5">
+    <Table.Cell className="price-history-widget-td" width="5">
       {dateTime}
     </Table.Cell>
-    <Table.Cell className="price-history-widged-td" width="2">
+    <Table.Cell className="price-history-widget-td" width="2">
       {price !== 'Default' ? `${price} €` : 'Default'}
     </Table.Cell>
-    <Table.Cell className="price-history-widged-td" width="3">
+    <Table.Cell className="price-history-widget-td" width="3">
       {!isEmpty(kioskUrl) ? (
         <Link to={{ pathname: kioskUrl }}>{kioskName}</Link>
       ) : (
@@ -28,7 +28,7 @@ export default ({
       )}
     </Table.Cell>
     {showDelete && (
-      <Table.Cell className="price-history-widged-td" width="1">
+      <Table.Cell className="price-history-widget-td" width="1">
         <Icon
           name="delete"
           color="red"

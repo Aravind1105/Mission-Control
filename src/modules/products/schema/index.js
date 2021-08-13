@@ -302,3 +302,14 @@ export const GET_MANUFACTURERS = gql`
     getManufacturers
   }
 `;
+
+export const GET_KIOSKS_WITH_PRODUCT = gql`
+  query getProductLineLinkedKiosks($productLineId: String!) {
+    getProductLineLinkedKiosks(productLineId: $productLineId) {
+      _id
+      name
+      serialNumber
+      cabelIds
+    }
+  }
+`;
