@@ -79,6 +79,7 @@ const CustomTable = ({
   };
 
   const handlerRowClick = (item, i) => () => {
+    console.log('button is clicked', i);
     if (selectable) setActiveRow(i);
     if (onRowClick) onRowClick(item, i);
   };
@@ -145,7 +146,14 @@ const CustomTable = ({
                       : get(item, field, '');
 
                     return (
-                      <Table.Cell key={cellKey} className="table-cell-text">
+                      <Table.Cell
+                        key={cellKey}
+                        className={
+                          activeRow === i
+                            ? 'table-cell-select'
+                            : 'table-cell-text'
+                        }
+                      >
                         {cellValue}
                       </Table.Cell>
                     );
