@@ -66,3 +66,12 @@ export const getManufacturersSuccess = createAction(
 export const getKiosksWithProductSuccess = createAction(
   '@@state/GET_KIOSKS_WITH_PRODUCT_SUCCESS',
 );
+
+// pagination actions
+export const setSearch = createAction('@@state/SET_SEARCH');
+export const setCategory = createAction('@@state/SET_CATEGORY');
+export const setManufacturer = createAction('@@state/SET_MANUFACTURER');
+export const setPage = createAction('@@state/SET_PAGE');
+export const setPerPage = createAction('@@state/SET_PER_PAGE');
+export const setSort = createAction('@@state/SET_SORT');
+export const setFilters = createAction('@@state/SET_FILTERS');

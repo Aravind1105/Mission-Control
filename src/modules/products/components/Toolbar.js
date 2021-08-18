@@ -21,7 +21,8 @@ const Toolbar = ({
   changeCategory,
   changeManufacturer,
   categories,
-  manufacturer,
+  manufacturers,
+  manufacturer
 }) => {
   const handleSearchChange = ({ target }) => {
     changeSearch(target.value);
@@ -81,7 +82,8 @@ const Toolbar = ({
               selection
               className="full-width"
               onChange={handleChangeManufacturer}
-              options={manufacturer}
+              options={manufacturers}
+              value={manufacturer}
             ></Dropdown>
           </Grid.Column>
         </Grid.Row>
@@ -92,7 +94,7 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   categories: selectorGetProductCategories(state),
-  manufacturer: selectorGetManufacturer(state),
+  manufacturers: selectorGetManufacturer(state),
 });
 
 export default connect(mapStateToProps)(Toolbar);
