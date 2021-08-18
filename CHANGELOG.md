@@ -1,3 +1,10 @@
+#### 1.4.26 (2021-08-18)
+
+##### Bug Fixes
+
+* **kiosks:** LIV-3558 navigation and pagination data saved to redux state (5afcda25)
+* **products:** LIV-3558 pagination state moved to redux (9fe44dc7)
+
 #### 1.4.25 (2021-08-13)
 
 ##### New Features
