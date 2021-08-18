@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
@@ -9,17 +9,19 @@ import Loader from 'modules/shared/components/Loader';
 import CellHeartbeat from './CellHeartbeat';
 import CellDoorStatus from './CellDoorStatus';
 import CellTemp from './CellTemp';
-import AllKiosksTableToolbar from './AllKiosksTableToolbar';
-import { getTotalKiosks, getKiosksTableState } from '../selectors';
-import { getAllKiosksForTable } from '../actions';
+import {
+  getTotalKiosks,
+  getKiosksTableState,
+  getPaginationState,
+} from '../selectors';
+import {
+  getAllKiosksForTable,
+  setPage as changePage,
+  setPerPage as changePerPage,
+  setSort,
+  setFilters,
+} from '../actions';
 import { isEqual } from 'lodash';
-
-const sortDefault = [
-  {
-    column: 'name',
-    direction: 'ASC',
-  },
-];
 
 const sortValue = {
   name: 'name',
@@ -121,11 +123,14 @@ const KiosksContent = ({
   kiosk,
   kioskStatus,
   organization,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
+  paginationState,
 }) => {
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+  const { page, perPage, sort, filters } = paginationState;
+
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
@@ -152,9 +157,9 @@ const KiosksContent = ({
         ...door,
         ...organizationId,
       });
-      const searchIndex = isEqual(search, filter.search);
-      const kioskIndex = isEqual(kiosk, filter.kiosk);
-      const kioskStatusIndex = isEqual(kioskStatus, filter.kioskStatus);
+      const searchIndex = isEqual(search, filters.search);
+      const kioskIndex = isEqual(kiosk, filters.kiosk);
+      const kioskStatusIndex = isEqual(kioskStatus, filters.kioskStatus);
 
       if (
         !searchIndex ||
@@ -165,7 +170,7 @@ const KiosksContent = ({
         data.skip = 0;
         changePage(0);
         setFilters({
-          ...filter,
+          ...filters,
           search,
           kiosk,
           kioskStatus,
@@ -191,9 +196,6 @@ const KiosksContent = ({
     <>
       {isLoading && <Loader />}
       <Segment>
-        {/* <AllKiosksTableToolbar
-          {...{ changeKiosk, changeDoorStatus, changeNetworkStatus }}
-        /> */}
         <CustomTable
           columns={columns}
           data={kiosks}
@@ -223,10 +225,15 @@ const mapStateToProps = state => ({
   kiosks: getKiosksTableState(state),
   isLoading: state.kiosks.isLoading,
   total: getTotalKiosks(state),
+  paginationState: getPaginationState(state),
 });
 
 const mapDispatchToProps = {
   getAllKiosksForTable,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
 };
 
 KiosksContent.propTypes = {

@@ -30,6 +30,8 @@ const Toolbar = ({
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
+  selectedKiosk,
+  selectedOrganization,
   // kiosksNetworkStatus, //!LIV-2285
   // setKioskNetworkStatus //!LIV-2285
 }) => {
@@ -115,6 +117,7 @@ const Toolbar = ({
               className="full-width"
               onChange={handleKioskChange}
               options={kiosks}
+              value={selectedKiosk}
             />
           </Grid.Column>
           <Grid.Column computer={3}>
@@ -124,6 +127,7 @@ const Toolbar = ({
               className="full-width"
               onChange={handleOrganizationChange}
               options={organizations}
+              value={selectedOrganization}
             />
           </Grid.Column>
 

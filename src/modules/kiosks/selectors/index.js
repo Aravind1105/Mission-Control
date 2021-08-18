@@ -587,3 +587,5 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
     });
   return playListData;
 });
+
+export const getPaginationState = state => state.kiosks.pagination;

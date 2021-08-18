@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Toolbar from './components/Toolbar';
 import KiosksContent from './components/KiosksContent';
 import {
@@ -6,7 +6,14 @@ import {
   getKioskDoorStatus,
   getKiosksNetworkStatus,
   getOrganizationOptionsForTableDropdown,
+  getPaginationState,
 } from './selectors';
+import {
+  setSearch,
+  setKiosk,
+  setOrganization,
+  setKioskStatus,
+} from './actions';
 import { connect } from 'react-redux';
 
 const KiosksList = ({
@@ -14,13 +21,14 @@ const KiosksList = ({
   organizations,
   kiosksStatus,
   kiosksNetworkStatus,
+  setSearch,
+  setKiosk,
+  setOrganization,
+  setKioskStatus,
+  paginationState,
   ...props
 }) => {
-  const [search, setSearch] = useState('');
-  const [kiosk, setKiosk] = useState('');
-  const [organization, setOrganization] = useState('');
-  const [kioskStatus, setKioskStatus] = useState('');
-  // const [kioskNetworkStatus, setKioskNetworkStatus] = useState(''); //!LIV-2285
+  const { search, kiosk, organization, kioskStatus } = paginationState;
 
   return (
     <>
@@ -34,7 +42,8 @@ const KiosksList = ({
         kiosksNetworkStatus={kiosksNetworkStatus}
         organizations={organizations}
         setOrganization={setOrganization}
-        // setKioskNetworkStatus={setKioskNetworkStatus} //!LIV-2285
+        selectedKiosk={kiosk}
+        selectedOrganization={organization}
       />
       <KiosksContent
         {...props}
@@ -53,6 +62,14 @@ const mapStateToProps = state => ({
   kiosksStatus: getKioskDoorStatus(state),
   kiosksNetworkStatus: getKiosksNetworkStatus(state),
   organizations: getOrganizationOptionsForTableDropdown(state),
+  paginationState: getPaginationState(state),
 });
 
-export default connect(mapStateToProps)(KiosksList);
+const mapDispatchToProps = {
+  setSearch,
+  setKiosk,
+  setOrganization,
+  setKioskStatus,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(KiosksList);
