@@ -41,6 +41,10 @@ export const modifyProductSuccess = createAction(
 export const deleteProductSuccess = createAction(
   '@@state/DELETE_PRODUCT_SUCCESS',
 );
+export const getKiosksWithProduct = createAction(
+  '@@state/GET_KIOSKS_WITH_PRODUCT',
+);
+
 export const modifyProductImageSuccess = createAction(
   '@@saga/MODIFY_PRODUCT_IMAGE_SUCCESS',
 );
@@ -58,4 +62,7 @@ export const deleteActivePriceHistorySuccess = createAction(
 );
 export const getManufacturersSuccess = createAction(
   '@@saga/GET_MANUFACTURERS_SUCCESS',
+);
+export const getKiosksWithProductSuccess = createAction(
+  '@@state/GET_KIOSKS_WITH_PRODUCT_SUCCESS',
 );

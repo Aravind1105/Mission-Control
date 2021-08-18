@@ -232,3 +232,5 @@ export const getDefaultPriceHistoryState = state =>
 
 export const getActivePriceHistoryState = state =>
   state.products.activePriceHistory;
+
+export const getKiosksWithProductState = state => state.products.kiosksWithProduct;

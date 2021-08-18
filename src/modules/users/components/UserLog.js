@@ -247,7 +247,7 @@ const UserLog = ({
                   <Grid.Column width={3}>
                     <CustomButton
                       label="Download CSV&nbsp;"
-                      icon="arrow down icon"
+                      icon="arrow down"
                       className="custom-button-default"
                       // onClick={DownloadCsv}
                       disabled={true}
