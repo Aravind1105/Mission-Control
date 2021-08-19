@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
-const SearchInput = ({ onChange, timeout = 0 }) => {
+const SearchInput = ({ onChange, timeout = 0, value }) => {
   const handleChangeSearch = (e, { value }) => {
     onChange(value);
   };
@@ -18,6 +18,7 @@ const SearchInput = ({ onChange, timeout = 0 }) => {
       fluid
       onChange={requestDebounce}
       className="input-search"
+      value={value}
     />
   );
 };

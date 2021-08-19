@@ -19,7 +19,7 @@ const stateOptions = [
   { key: 'admin', value: 'admin', text: 'Admin' },
 ];
 
-const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
+const UsersToolbar = ({ changeSearch, search, changeUserType, openModal }) => {
   const addUserHandler = () => {
     history.push('/users/edit/new');
   };
@@ -28,7 +28,7 @@ const UsersToolbar = ({ changeSearch, changeUserType, openModal }) => {
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={5}>
-            <SearchInput onChange={changeSearch} timeout={500} />
+            <SearchInput onChange={changeSearch} timeout={500} value={search} />
           </Grid.Column>
           {/* <Grid.Column width={5}> */}
           {/* <Dropdown
