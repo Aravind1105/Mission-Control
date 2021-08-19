@@ -26,3 +26,10 @@ export const getUserTransactionsSuccess = createAction(
 export const modifyUserMemberCardSuccess = createAction(
   '@@state/MODIFY_USER_MEMBER_CARD_SUCCESS',
 );
+
+// pagination state actions
+export const setSearch = createAction('@@state/SET_SEARCH');
+export const setPage = createAction('@@state/SET_PAGE');
+export const setPerPage = createAction('@@state/SET_PER_PAGE');
+export const setSort = createAction('@@state/SET_SORT');
+export const setFilters = createAction('@@state/SET_FILTERS');
