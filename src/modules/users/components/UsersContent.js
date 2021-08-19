@@ -50,7 +50,7 @@ const UsersContent = ({
   setSort,
   setFilters,
 }) => {
-  const { search, page, perPage, sort, filters, activeUser } = paginationState;
+  const { search, page, perPage, sort, filters } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
