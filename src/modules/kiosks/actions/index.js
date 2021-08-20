@@ -78,11 +78,11 @@ export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');
 export const exportCsvPackList = createAction('@@saga/GET_PackList_CSV');
 
 // pagination actions
-export const setSearch = createAction('@@state/SET_SEARCH');
+export const setSearch = createAction('@@state/SET_KIOSK_SEARCH');
 export const setKiosk = createAction('@@state/SET_KIOSK');
-export const setOrganization = createAction('@@state/SET_ORGANIZATION');
+export const setOrganization = createAction('@@state/SET_KIOSKS_ORGANIZATION');
 export const setKioskStatus = createAction('@@state/SET_KIOSK_STATUS');
-export const setPage = createAction('@@state/SET_PAGE');
-export const setPerPage = createAction('@@state/SET_PER_PAGE');
-export const setSort = createAction('@@state/SET_SORT');
-export const setFilters = createAction('@@state/SET_FILTERS');
+export const setPage = createAction('@@state/SET_KIOSKS_PAGE');
+export const setPerPage = createAction('@@state/SET_KIOSKS_PER_PAGE');
+export const setSort = createAction('@@state/SET_KIOSKS_SORT');
+export const setFilters = createAction('@@state/SET_KIOSKS_FILTERS');

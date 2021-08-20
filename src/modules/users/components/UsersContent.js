@@ -10,7 +10,6 @@ import MobileUser from './UserExtableTable/MobileUser';
 import {
   getUsers,
   setActiveUser,
-  setSearch as changeSearch,
   setPage as changePage,
   setPerPage as changePerPage,
   setSort,
@@ -46,7 +45,6 @@ const UsersContent = ({
   paginationState,
   changePage,
   changePerPage,
-  changeSearch,
   setSort,
   setFilters,
 }) => {
@@ -87,11 +85,7 @@ const UsersContent = ({
 
   return (
     <>
-      <UsersToolbar
-        search={search}
-        changeSearch={changeSearch}
-        // changeUserType={changeUserType}
-      />
+      <UsersToolbar />
 
       {!isLoading ? (
         <Grid>
@@ -197,7 +191,6 @@ const mapDispatchToProps = {
   setActiveUser,
   changePage,
   changePerPage,
-  changeSearch,
   setSort,
   setFilters,
 };

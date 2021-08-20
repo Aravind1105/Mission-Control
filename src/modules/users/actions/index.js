@@ -28,8 +28,8 @@ export const modifyUserMemberCardSuccess = createAction(
 );
 
 // pagination state actions
-export const setSearch = createAction('@@state/SET_SEARCH');
-export const setPage = createAction('@@state/SET_PAGE');
-export const setPerPage = createAction('@@state/SET_PER_PAGE');
-export const setSort = createAction('@@state/SET_SORT');
-export const setFilters = createAction('@@state/SET_FILTERS');
+export const setSearch = createAction('@@state/SET_USER_SEARCH');
+export const setPage = createAction('@@state/SET_USERS_PAGE');
+export const setPerPage = createAction('@@state/SET_USERS_PER_PAGE');
+export const setSort = createAction('@@state/SET_USERS_SORT');
+export const setFilters = createAction('@@state/SET_USERS_FILTERS');
