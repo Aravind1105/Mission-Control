@@ -1,17 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  Segment,
-  Grid,
-  Input,
-  Dropdown,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Segment, Grid, Input } from 'semantic-ui-react';
 import history from 'lib/history';
-import SearchInput from 'modules/shared/components/SearchInput';
 import './styles.less';
+import { setSearch } from '../actions';
+import { getPaginationState } from '../selectors';
 
 const stateOptions = [
   { key: 'allusers', value: '', text: 'All Users' },
@@ -19,7 +13,7 @@ const stateOptions = [
   { key: 'admin', value: 'admin', text: 'Admin' },
 ];
 
-const UsersToolbar = ({ changeSearch, search, changeUserType, openModal }) => {
+const UsersToolbar = ({ setSearch, paginationState: { search } }) => {
   const addUserHandler = () => {
     history.push('/users/edit/new');
   };
@@ -28,7 +22,16 @@ const UsersToolbar = ({ changeSearch, search, changeUserType, openModal }) => {
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={5}>
-            <SearchInput onChange={changeSearch} timeout={500} value={search} />
+            <Input
+              icon="search"
+              placeholder="Search..."
+              fluid
+              onChange={({ target }) => {
+                setSearch(target.value);
+              }}
+              className="input-search"
+              value={search}
+            />
           </Grid.Column>
           {/* <Grid.Column width={5}> */}
           {/* <Dropdown
@@ -60,4 +63,12 @@ const UsersToolbar = ({ changeSearch, search, changeUserType, openModal }) => {
   );
 };
 
-export default connect()(UsersToolbar);
+const mapSateToProps = state => ({
+  paginationState: getPaginationState(state),
+});
+
+const mapDispatchToProps = {
+  setSearch,
+};
+
+export default connect(mapSateToProps, mapDispatchToProps)(UsersToolbar);
