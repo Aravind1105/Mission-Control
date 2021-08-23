@@ -1,3 +1,9 @@
+#### 1.4.27 (2021-08-23)
+
+##### Bug Fixes
+
+* **kiosk:**  Adding frontend changes for kiosk table sorting based on orgainzation name (af5c8334)
+
 #### 1.4.26 (2021-08-18)
 
 ##### Bug Fixes

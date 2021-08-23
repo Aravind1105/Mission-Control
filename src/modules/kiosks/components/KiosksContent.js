@@ -27,6 +27,7 @@ const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
+  'ownerOrganization.name': 'ownerOrganization.name'
 };
 
 const defaultFilterValues = {
