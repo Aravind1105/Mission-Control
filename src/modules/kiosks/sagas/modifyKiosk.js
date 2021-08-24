@@ -38,7 +38,6 @@ function* handler({ payload: { values, formActions } }) {
     });
 
     if (!errors) {
-      console.log('12345');
       const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
       history.push(`/kiosks/detail/${responseData._id}`);
