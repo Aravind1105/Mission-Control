@@ -96,8 +96,8 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
               data={data}
               margin={{
                 top: 5,
-                right: 1,
-                left: -15,
+                right: 0,
+                left: 0,
                 bottom: 5,
               }}
             >
