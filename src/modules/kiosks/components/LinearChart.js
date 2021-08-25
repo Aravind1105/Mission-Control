@@ -12,6 +12,7 @@ import {
 import { Header, Divider } from 'semantic-ui-react';
 import './styles.less';
 import moment from 'moment';
+
 const margin = {
   top: 10,
   right: 20,
@@ -117,7 +118,7 @@ const LinearChart = ({ data }) => {
 
   return (
     <>
-      <Header size="small">Last 30 days</Header>
+      <Header size="small">Last 7 days</Header>
       <Divider fitted style={{ marginBottom: '48px' }}></Divider>
       <div style={{ height: 474 }}>
         <ResponsiveContainer>
@@ -130,17 +131,27 @@ const LinearChart = ({ data }) => {
               bottom: 5,
             }}
           >
-            <CartesianGrid strokeDasharray="5 5" />
+            <CartesianGrid vertical={false} strokeDasharray="5 5" />
             <XAxis
               height={60}
               tickSize={10}
               dataKey="timeXaxis"
+              minTickGap={95}
+              reversed
               tick={<CustomizedAxisTick />}
             />
             <YAxis
+              tickCount={7}
+              tickSize={10}
               tickFormatter={value =>
                 new Intl.NumberFormat().format(value) + '°C'
               }
+              padding={{ top: 1 }}
+              type="number"
+              domain={[
+                dataMin => 0 - Math.abs(dataMin),
+                dataMax => dataMax * 2,
+              ]}
             />
             <Tooltip content={<CustomTooltip LegendArray={LegendArray} />} />
 
