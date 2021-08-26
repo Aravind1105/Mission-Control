@@ -25,8 +25,8 @@ const Toolbar = ({
   setKiosk,
   organizations,
   setOrganization,
-  // kiosksStatus,
-  // setKioskStatus,
+  kiosksStatus,
+  setKioskStatus,
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
@@ -46,10 +46,10 @@ const Toolbar = ({
     const text = value === 'All' ? '' : value;
     setOrganization(text);
   };
-  // const handleKiosksStatus = (e, { value }) => {
-  //   const text = value === 'All' ? '' : value;
-  //   setKioskStatus(text);
-  // };
+  const handleKiosksStatus = (e, { value }) => {
+    const text = value === 'All' ? '' : value;
+    setKioskStatus(text);
+  };
 
   const DownloadOrderListCsv = () => {
     exportCsvOrderList();
@@ -74,6 +74,7 @@ const Toolbar = ({
   //   const text = value === 'All' ? '' : value;
   //   setKioskNetworkStatus(text)
   // };
+
   return (
     <Segment className="toolbar">
       <Grid stackable>
@@ -109,79 +110,93 @@ const Toolbar = ({
 
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
 
-        <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
-          <Grid.Column computer={3}>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
-              className="full-width"
-              onChange={handleKioskChange}
-              options={kiosks}
-              value={selectedKiosk}
-            />
-          </Grid.Column>
-          <Grid.Column computer={3}>
-            <Dropdown
-              placeholder="All Organization"
-              selection
-              className="full-width"
-              onChange={handleOrganizationChange}
-              options={organizations}
-              value={selectedOrganization}
-            />
-          </Grid.Column>
+        {rootUser ? (
+          <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
+            <Grid.Column computer={3}>
+              <Dropdown
+                placeholder="All Kiosks"
+                selection
+                className="full-width"
+                onChange={handleKioskChange}
+                options={kiosks}
+                value={selectedKiosk}
+              />
+            </Grid.Column>
+            <Grid.Column computer={3}>
+              <Dropdown
+                placeholder="All Organization"
+                selection
+                className="full-width"
+                onChange={handleOrganizationChange}
+                options={organizations}
+                value={selectedOrganization}
+              />
+            </Grid.Column>
 
-          {/* <Grid.Column>
-            <Dropdown
-              placeholder="All Door Status"
-              selection
-              className="full-width"
-              onChange={handleKiosksStatus}
-              options={kiosksStatus}
-            />
-          </Grid.Column> */}
+            <Grid.Column computer={3}></Grid.Column>
+            <Grid.Column computer={3}>
+              <div className="download_orderlist_button">
+                <CustomButton
+                  label="Download Order List"
+                  icon="arrow down"
+                  className="custom-button-default"
+                  onClick={DownloadOrderListCsv}
+                />
+              </div>
+            </Grid.Column>
 
-          {/* <Grid.Column width={3}> //!LIV-2285
-          <Dropdown
-              placeholder="Network Status"
-              selection
-              className="full-width"
-              onChange={handleKiosksNetworkStatus}
-              options={kiosksNetworkStatus}
-          />
-           </Grid.Column> */}
+            <Grid.Column computer={3}>
+              <div className="download_packlist_button">
+                <CustomButton
+                  label="Download Pack List"
+                  icon="arrow down"
+                  className="custom-button-default"
+                  onClick={DownloadPackListCsv}
+                />
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        ) : (
+          <Grid.Row verticalAlign="middle" columns={4}>
+            <Grid.Column>
+              <Dropdown
+                placeholder="All Kiosks"
+                selection
+                className="full-width"
+                onChange={handleKioskChange}
+                options={kiosks}
+              />
+            </Grid.Column>
 
-          <Grid.Column computer={3}>
-            {/* <Dropdown
-              placeholder="All Organization"
-              selection
-              className="full-width"
-              onChange={handleOrganizationChange}
-              options={organizations}
-            /> */}
-          </Grid.Column>
-          <Grid.Column computer={3}>
-            <div className="download_orderlist_button">
+            <Grid.Column>
+              <Dropdown
+                placeholder="All Door Status"
+                selection
+                className="full-width"
+                onChange={handleKiosksStatus}
+                options={kiosksStatus}
+              />
+            </Grid.Column>
+
+            <Grid.Column>
               <CustomButton
-                label="Download Order List"
-                icon="arrow down"
-                className="custom-button-default"
+                label="Download Order List&nbsp;"
+                icon="arrow down icon"
+                className="custom-button-default-admin"
                 onClick={DownloadOrderListCsv}
               />
-            </div>
-          </Grid.Column>
+            </Grid.Column>
 
-          <Grid.Column computer={3}>
-            <div className="download_packlist_button">
+            <Grid.Column>
               <CustomButton
-                label="Download Pack List"
-                icon="arrow down"
-                className="custom-button-default"
+                label="Download Pack List&nbsp;"
+                icon="arrow down icon"
+                className="custom-button-default-admin"
                 onClick={DownloadPackListCsv}
               />
-            </div>
-          </Grid.Column>
-        </Grid.Row>
+            </Grid.Column>
+          </Grid.Row>
+        )}
       </Grid>
     </Segment>
   );

@@ -22,12 +22,12 @@ import {
   setFilters,
 } from '../actions';
 import { isEqual } from 'lodash';
-
+import { getUserType } from 'modules/authentication/selectors';
 const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
-  'ownerOrganization.name': 'ownerOrganization.name'
+  'ownerOrganization.name': 'ownerOrganization.name',
 };
 
 const defaultFilterValues = {
@@ -36,83 +36,9 @@ const defaultFilterValues = {
   kioskStatus: '',
   organization: '',
 };
+
 const screenWidth = window.innerWidth;
-const columns = [
-  {
-    title: 'Name',
-    field: 'name',
-  },
-  {
-    title: 'Serial Number',
-    field: 'serialNumber',
-    formatter: ({ serialNumber }) => {
-      if (serialNumber.length > 20) {
-        return serialNumber.substring(0, 15) + '...';
-      } else return serialNumber;
-    },
-  },
-  {
-    title: 'Organization',
-    field: 'ownerOrganization.name',
-  },
-  {
-    title: 'Door Status',
-    field: 'doorStatus',
-    formatter: ({ doorStatus, session }) => (
-      <CellDoorStatus doorStatus={doorStatus} session={session} />
-    ),
-  },
-  {
-    title: 'Temperature',
-    field: 'temperature.value',
-    formatter: ({ temperature }) => {
-      if (screenWidth < 750) {
-        return (
-          <div style={{ textAlign: 'left' }}>
-            <CellTemp temperature={temperature} />
-          </div>
-        );
-      } else {
-        return (
-          <div style={{ textAlign: 'center' }}>
-            <CellTemp temperature={temperature} />
-          </div>
-        );
-      }
-    },
-  },
-  {
-    title: 'Network Status',
-    field: 'heartbeat.updated',
-    formatter: ({ heartbeat }) => (
-      <CellHeartbeat heartbeat={heartbeat} showTime />
-    ),
-  },
-  // {
-  //   title: 'Address',
-  //   field: 'location',
-  //   formatter: ({ location: { address } }) => {
-  //     const { postalCode, city } = address;
-  //     const addr = [postalCode, city, !postalCode && !city && 'N.A.']
-  //       .filter(el => Boolean(el))
-  //       .join(', ');
-  //     return addr;
-  //   },
-  // },
-  {
-    title: 'Sales Today',
-    field: 'dayIncome',
-    // formatter: ({ dayIncome }) => `€ ${dayIncome}`,
-    formatter: ({ dayIncome }) => {
-      if (dayIncome === '') {
-        return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
-    },
-  },
-];
+let isSuperAdmin = false;
 
 const KiosksContent = ({
   isLoading,
@@ -129,9 +55,91 @@ const KiosksContent = ({
   setSort,
   setFilters,
   paginationState,
+  userType,
 }) => {
   const { page, perPage, sort, filters } = paginationState;
-
+  if (userType !== 'Admin') {
+    isSuperAdmin = true;
+  }
+  const columns = [
+    {
+      title: 'Name',
+      field: 'name',
+    },
+    {
+      title: 'Serial Number',
+      field: 'serialNumber',
+      formatter: ({ serialNumber }) => {
+        if (serialNumber.length > 20) {
+          return serialNumber.substring(0, 15) + '...';
+        } else return serialNumber;
+      },
+    },
+    {
+      title: 'Door Status',
+      field: 'doorStatus',
+      formatter: ({ doorStatus, session }) => (
+        <CellDoorStatus doorStatus={doorStatus} session={session} />
+      ),
+    },
+    {
+      title: 'Temperature',
+      field: 'temperature.value',
+      formatter: ({ temperature }) => {
+        if (screenWidth < 750) {
+          return (
+            <div style={{ textAlign: 'left' }}>
+              <CellTemp temperature={temperature} />
+            </div>
+          );
+        } else {
+          return (
+            <div style={{ textAlign: 'center' }}>
+              <CellTemp temperature={temperature} />
+            </div>
+          );
+        }
+      },
+    },
+    {
+      title: 'Network Status',
+      field: 'heartbeat.updated',
+      formatter: ({ heartbeat }) => (
+        <CellHeartbeat heartbeat={heartbeat} showTime />
+      ),
+    },
+    {
+      title: 'Address',
+      field: 'location',
+      formatter: ({ location: { address } }) => {
+        const { postalCode, city } = address;
+        const addr = [postalCode, city, !postalCode && !city && 'N.A.']
+          .filter(el => Boolean(el))
+          .join(', ');
+        return addr;
+      },
+    },
+    {
+      title: 'Sales Today',
+      field: 'dayIncome',
+      // formatter: ({ dayIncome }) => `€ ${dayIncome}`,
+      formatter: ({ dayIncome }) => {
+        if (dayIncome === '') {
+          return '';
+        } else if (screenWidth < 750) {
+          return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
+        }
+        return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
+      },
+    },
+  ];
+  if (isSuperAdmin) {
+    columns.splice(2, 0, {
+      title: 'Organization',
+      field: 'ownerOrganization.name',
+    });
+    columns.splice(6, 1);
+  }
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
@@ -227,6 +235,7 @@ const mapStateToProps = state => ({
   isLoading: state.kiosks.isLoading,
   total: getTotalKiosks(state),
   paginationState: getPaginationState(state),
+  userType: getUserType(state),
 });
 
 const mapDispatchToProps = {
