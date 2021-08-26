@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './styles.less';
 import { Input, Button, Checkbox } from 'semantic-ui-react';
 
@@ -8,7 +8,30 @@ const ICONS = {
   CLOSE: 'close',
 };
 
+function outsideClickHandler(ref, callback) {
+  useEffect(() => {
+    /**
+     * callback function will be called when clicked outside
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
+}
+
 const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
+  const containerRef = useRef(null);
+  outsideClickHandler(containerRef, () => setOptionsVisible(false));
+
   const [icon, setIcon] = useState(ICONS.DOWN);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -60,7 +83,7 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
   }, [searchText]);
 
   return (
-    <div className="select-checks-container">
+    <div className="select-checks-container" ref={containerRef}>
       <div onClick={() => setOptionsVisible(!optionsVisible)}>
         <Input
           icon={icon}
