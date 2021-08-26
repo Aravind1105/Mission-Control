@@ -80,6 +80,16 @@ build-push-staging:
     - if: $CI_COMMIT_BRANCH == "staging-master"
       when: always
 
+build-push-test:
+  variables:
+    app_name: livello-mission-control-test
+    app_domain_map: $MC_DOMAIN_NAME_TEST
+    api_proxy_url: $API_PROXY_URL_TEST
+  <<: *build-push-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "test-master"
+      when: always
+
 build-push-master:
   variables:
     app_name: livello-mission-control-prod
@@ -108,6 +118,16 @@ clound-run-staging:
   <<: *clound-run-template
   rules:
     - if: $CI_COMMIT_BRANCH == "staging-master"
+      when: on_success
+
+clound-run-test:
+  variables:
+    app_name: livello-mission-control-test
+    app_domain_map: $MC_DOMAIN_NAME_TEST
+    api_proxy_url: $API_PROXY_URL_TEST
+  <<: *clound-run-template
+  rules:
+    - if: $CI_COMMIT_BRANCH == "test-master"
       when: on_success
 
 clound-run-master:
