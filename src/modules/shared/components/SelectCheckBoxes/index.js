@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.less';
-import { Input, Button, Checkbox } from 'semantic-ui-react';
+import { Input, Button, Checkbox, Icon } from 'semantic-ui-react';
 
 const ICONS = {
   DOWN: 'caret down',
@@ -41,6 +41,9 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
   useEffect(() => {
     if (optionsVisible) {
       setIcon(ICONS.SEARCH);
+    } else if (selectedValues.length > 0) {
+      setSearchText('');
+      setIcon(ICONS.CLOSE);
     } else {
       setSearchText('');
       setIcon(ICONS.DOWN);
@@ -61,10 +64,9 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
       setSelectedValues([]);
     }
 
-    // icon change
-    // if (!optionsVisible && selectedValues.length > 0) {
-    //   setIcon(ICONS.CLOSE);
-    // }
+    if (selectedValues.length === 0 && !optionsVisible) {
+      setIcon(ICONS.DOWN);
+    }
   }, [selectedValues]);
 
   // filter options
@@ -86,7 +88,18 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
     <div className="select-checks-container" ref={containerRef}>
       <div onClick={() => setOptionsVisible(!optionsVisible)}>
         <Input
-          icon={icon}
+          icon={
+            <Icon
+              name={icon}
+              link={icon === ICONS.CLOSE}
+              onClick={event => {
+                setSelectedValues([]);
+                event.stopPropagation(); // to stop opening of the options
+                // call the apply handler to handle the callback in the parent
+                onClickApply([]);
+              }}
+            />
+          }
           value={
             optionsVisible
               ? searchText
