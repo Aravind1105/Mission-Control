@@ -1,3 +1,59 @@
+#### 1.4.27 (2021-08-23)
+
+##### Bug Fixes
+
+* **kiosk:**  Adding frontend changes for kiosk table sorting based on orgainzation name (af5c8334)
+
+#### 1.4.26 (2021-08-18)
+
+##### Bug Fixes
+
+* **kiosks:** LIV-3558 navigation and pagination data saved to redux state (5afcda25)
+* **products:** LIV-3558 pagination state moved to redux (9fe44dc7)
+
+#### 1.4.25 (2021-08-13)
+
+##### New Features
+
+* **log:**  activity log update and heartbeat time update (7e30b001)
+
+##### Bug Fixes
+
+* **kiosk planogram:** LIV-3675 removed usage of isActive flag (52916aa8)
+* **log:**  activity logs update (b5abf2c0)
+* **create product:**  hot fix create product image type bug (a55d7657)
+
+##### Other Changes
+
+* **dashboard:** sales graph is hidden due to accesscontrol bug" (2d0f00a6)
+
+#### 1.4.24 (2021-08-13)
+
+##### New Features
+
+* **product detail:**
+  * LIV-3605 list prouct used kiosks and navigation links to corresponding kiosks and loadcells (af58ec5c)
+  * LIV-3605 kiosks with product widget (5875dde8)
+* **LIV-3601:**  Redirect to Login page after the popup appears (52103819)
+
+##### Bug Fixes
+
+* **Dashbaard, Kiosk, Transactions Table Header:**  LIV-3544 All tables Angular Cornor removed (735cff7f)
+* **kiosk Overview Dropdowns Removel:**  LIV-3572 Removed Door Status Removel and Updated Column of Address (5d1f25da)
+* **kiosk planogram:** LIV-3537 product price change (to default) on planogram bug fix (a878eb48)
+* **kioskCreate:**  Fixed saga call and rm org name (e7b50956)
+* **products selectors:** sortByText import fixed (fae0b6ed)
+* **size:**  image type and size validation (3c61786a)
+* **loader:**  product form loader (d657bb45)
+* **LIV-3583:**  Image upload and delete is fixed (679a4a58)
+* **products overview:** LIV-3542 product search using manufacturer (c4a30cd9)
+
+##### Other Changes
+
+* Activity Log): LIV-3592 Activity Log Date should be vertically Top (856b9fc4)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved (014393e3)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (10898789)
+
 #### 1.4.23 (2021-08-05)
 
 ##### Bug Fixes

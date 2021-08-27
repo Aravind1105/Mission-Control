@@ -13,6 +13,7 @@ import deleteActivePrice from './deleteActivePrice';
 import archiveProduct from './archiveProduct';
 import duplicateProduct from './duplicateProduct';
 import getManufacturers from './getManufacturers';
+import getKiosksWithProduct from './getKiosksWithProduct';
 
 export default function* kiosksSaga() {
   yield all([
@@ -29,5 +30,6 @@ export default function* kiosksSaga() {
     fork(archiveProduct),
     fork(duplicateProduct),
     fork(getManufacturers),
+    fork(getKiosksWithProduct),
   ]);
 }

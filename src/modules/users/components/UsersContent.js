@@ -2,52 +2,35 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Segment, Grid } from 'semantic-ui-react';
-
-import { primaryColor, red, orange, teal } from 'lib/colors';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import UsersDetail from './UsersDetail';
 import MobileUser from './UserExtableTable/MobileUser';
-import { getUsers, setActiveUser } from '../actions';
+import {
+  getUsers,
+  setActiveUser,
+  setPage as changePage,
+  setPerPage as changePerPage,
+  setSort,
+  setFilters,
+} from '../actions';
 import {
   getUsersListState,
   getActiveUserState,
   getTotalUsers,
   getUsersListForTable,
+  getPaginationState,
 } from '../selectors';
 import UsersToolbar from './UsersToolbar';
 import UserTemplate from './UserTemplate';
 import { isEqual } from 'lodash';
-
-const sortDefault = [
-  {
-    column: 'firstName',
-    direction: 'ASC',
-  },
-];
-
-const defaultFilterValues = { search: '' };
-
-const colors = {
-  Consumer: primaryColor,
-  Admin: red,
-  Employee: orange,
-  Replenisher: teal,
-};
 
 const columns = [
   {
     title: 'Name',
     field: 'name',
   },
-  // {
-  //   title: 'Type',
-  //   field: 'type',
-  //   formatter: ({ type }) => (
-  //     <span style={{ color: colors[type] }}>{type}</span>
-  //   ),
-  // },
 ];
 
 const UsersContent = ({
@@ -59,12 +42,13 @@ const UsersContent = ({
   isLoading,
   total,
   selectedId,
+  paginationState,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
 }) => {
-  const [search, changeSearch] = useState('');
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+  const { search, page, perPage, sort, filters } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -74,12 +58,12 @@ const UsersContent = ({
     };
     if (search) {
       data.name = search;
-      const searchIndex = isEqual(search, filter.search);
+      const searchIndex = isEqual(search, filters.search);
       if (!searchIndex) {
         data.skip = 0;
         changePage(0);
         setFilters({
-          ...filter,
+          ...filters,
           search,
         });
       }
@@ -101,10 +85,7 @@ const UsersContent = ({
 
   return (
     <>
-      <UsersToolbar
-        changeSearch={changeSearch}
-        // changeUserType={changeUserType}
-      />
+      <UsersToolbar />
 
       {!isLoading ? (
         <Grid>
@@ -202,11 +183,16 @@ const mapStateToProps = state => ({
   activeUser: getActiveUserState(state),
   isLoading: state.users.isLoading,
   total: getTotalUsers(state),
+  paginationState: getPaginationState(state),
 });
 
 const mapDispatchToProps = {
   getUsers,
   setActiveUser,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContent);

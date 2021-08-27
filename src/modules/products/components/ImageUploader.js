@@ -184,7 +184,7 @@ const ImageUploader = ({
         deleteImage();
       } else if (initialValues.id === undefined) {
         // while creating a new product with image, this method will be called
-        setFirstUploadImage(base64Img);
+        setFirstUploadImage(imgProps.imgbase64);
       }
     }
   }, [customAlertStatus]);
