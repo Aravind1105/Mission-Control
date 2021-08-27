@@ -13,17 +13,16 @@ import moment from 'moment';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
-  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  NoProductsBought: 'No Products Bought',
-  NoLeftScalesData: 'Left Scales Disconnected',
-  NoRightScalesData: 'Right Scales Disconnected',
-  TabletDisconn: 'Tablet Disconnected',
-  TabletMqttDisconn: 'Tablet MQTT Disconnected',
+  NoProductsBought: 'Empty Purchase session',
+  NoLeftScalesData: 'Left Scales disconnected',
+  NoRightScalesData: 'Right Scales disconnected',
+  TabletDisconn: 'Tablet Internet disconnected',
+  TabletMqttDisconn: 'Tablet MQTT disconnected',
 };
 
 const alertSeverity = {
