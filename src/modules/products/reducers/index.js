@@ -17,6 +17,15 @@ import {
   modifyProductImageSuccess,
   deleteProductImageSuccess,
   getManufacturersSuccess,
+  getKiosksWithProduct,
+  getKiosksWithProductSuccess,
+  setSearch,
+  setCategory,
+  setManufacturer,
+  setPage,
+  setPerPage,
+  setSort,
+  setFilters,
 } from '../actions';
 
 const initialState = {
@@ -29,6 +38,21 @@ const initialState = {
   defaultPriceHistory: [],
   activePriceHistory: [],
   manufacturers: [],
+  kiosksWithProduct: [],
+  pagination: {
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'name',
+        direction: 'ASC',
+      },
+    ],
+    filters: { search: '', category: '', manufacturer: '' },
+    search: '',
+    category: '',
+    manufacturer: '',
+  },
 };
 
 export default handleActions(
@@ -100,6 +124,38 @@ export default handleActions(
     [getManufacturersSuccess]: (state, { payload }) => ({
       ...state,
       manufacturers: payload,
+    }),
+    [getKiosksWithProductSuccess]: (state, { payload }) => ({
+      ...state,
+      kiosksWithProduct: payload,
+    }),
+    [setSearch]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, search: payload },
+    }),
+    [setCategory]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, category: payload },
+    }),
+    [setManufacturer]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, manufacturer: payload },
+    }),
+    [setPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, page: payload },
+    }),
+    [setPerPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, perPage: payload },
+    }),
+    [setSort]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, sort: payload },
+    }),
+    [setFilters]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, filters: payload },
     }),
   },
   initialState,

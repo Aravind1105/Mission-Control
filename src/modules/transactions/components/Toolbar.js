@@ -7,8 +7,15 @@ import { connect } from 'react-redux';
 import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
-const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
+const Toolbar = ({
+  changeDate,
+  kiosks,
+  changeKiosk,
+  exportCsvSales,
+  isLoading,
+}) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -53,7 +60,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
     });
   };
 
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
     changeExportData({
       from: exportData.from ? exportData.from : '',
@@ -75,13 +82,14 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
-              options={kiosks}
-              className="full-width"
-              onChange={handleKioskChange}
-            />
+            {!isLoading && (
+              <SelectCheckBoxes
+                title="Kiosks"
+                options={kiosks}
+                allOptionKey="all"
+                onClickApply={handleKioskChange}
+              />
+            )}
           </Grid.Column>
 
           {/* <Grid.Column width={4}>
@@ -107,7 +115,9 @@ Toolbar.propTypes = {
   kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isLoading: state.kiosks.isLoading,
+});
 const mapDispatchToProps = {
   exportCsvSales,
 };

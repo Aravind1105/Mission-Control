@@ -219,7 +219,6 @@ const ModalLoadCell = ({
                       validate={validatePlanogramPosition}
                       component={FormInput}
                       onBlur={e => {
-                        //usedPositions will hold a list of planogram positions that has isActive flag set to true
                         //check if the planogramPosition is already available in the used positions list
                         //throw error if already available
                         if (isAddLoadCell) {

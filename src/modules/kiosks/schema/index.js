@@ -20,7 +20,6 @@ const FragmentInventory = {
     fragment InventoryForKiosk on Inventory {
       loadCells {
         cellId
-        isActive
         planogramPosition
         products {
           _id

@@ -8,7 +8,7 @@ import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 const today = new Date();
 var date = new Date();
-date.setDate(date.getDate() - 30);
+date.setDate(date.getDate() - 7);
 var lastMonth = date.toISOString().split('T')[0];
 function* handler({ payload }) {
   try {
@@ -21,7 +21,7 @@ function* handler({ payload }) {
         kioskId: payload.kioskId,
         from: lastMonth,
         to: today,
-        limit: 25,
+        limit: 100000,
       },
     });
     if (errors && errors[0].message === 'Token expired')

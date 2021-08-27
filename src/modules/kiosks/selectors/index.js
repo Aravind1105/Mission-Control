@@ -144,7 +144,7 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'productLine.name').reduce(
-    (prev, { products, productLine, isActive, ...rest }) => {
+    (prev, { products, productLine, ...rest }) => {
       const totalProducts = products.length;
       const totalPrice = totalProducts * productLine.price;
       prev.list.push({
@@ -155,7 +155,6 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         },
         totalProducts,
         totalPrice,
-        isActive,
       });
       prev.total += totalPrice;
 
@@ -185,12 +184,6 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
     if (availIdx === -1) {
       //if the cellId is not available, add it to the options
       cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
-    } else {
-      //if the cellId is already available, check if the isActive flag is false, then add it to the options
-      const loadCell = cells[availIdx];
-      if (loadCell.isActive === false) {
-        cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
-      }
     }
   }
   return cellIdOptions;
@@ -200,11 +193,7 @@ export const getUsedPlanogramPositions = createSelector(
   getKioskShelves,
   shelves => {
     const cells = shelves.list;
-    return cells.map(cell => {
-      if (cell.isActive !== false) {
-        return cell.planogramPosition;
-      }
-    });
+    return cells.map(cell => cell.planogramPosition);
   },
 );
 
@@ -598,3 +587,5 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
     });
   return playListData;
 });
+
+export const getPaginationState = state => state.kiosks.pagination;

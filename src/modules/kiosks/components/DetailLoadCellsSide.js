@@ -11,7 +11,6 @@ const Card = ({
   productLine,
   totalProducts,
   handleEdit,
-  isActive,
   surfaceSize,
   occupancy,
   maxQty,
@@ -25,11 +24,6 @@ const Card = ({
       surfaceSize,
     });
   };
-
-  if (isActive === false) {
-    // <Grid.Column className="load-cell"></Grid.Column>
-    return <></>;
-  }
 
   return (
     <Grid.Column className="load-cell">
@@ -95,7 +89,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                       {...props}
                       key={props.cellId}
                       handleEdit={handleEdit}
-                      isActive={props.isActive}
                     />
                   )
                 );
