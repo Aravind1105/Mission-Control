@@ -44,7 +44,7 @@ const columns = [
       if (paymentMethod) {
         if (
           paymentMethod.isPaid === false &&
-          paymentMethod.stripeCustomerId !== null
+          paymentMethod.stripePaymentIntentId !== null
         ) {
           return (
             <div style={{ textAlign: 'center' }}>
@@ -58,7 +58,7 @@ const columns = [
           );
         } else if (
           paymentMethod.isPaid === false &&
-          paymentMethod.stripeCustomerId === null
+          paymentMethod.stripePaymentIntentId === null
         )
           return <div style={{ textAlign: 'center' }}>Not Paid</div>;
         else if (paymentMethod.isPaid === true)
