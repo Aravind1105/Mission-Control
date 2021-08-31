@@ -541,16 +541,16 @@ export const getGridTempratureTableState = createSelector(
         time: updated,
         timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? Number(payload.message.sensors[0].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[0].temperature / 100).toFixed()
           : null,
         Sensor2: payload.message.sensors[1]
-          ? Number(payload.message.sensors[1].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[1].temperature / 100).toFixed()
           : null,
         Sensor3: payload.message.sensors[2]
-          ? Number(payload.message.sensors[2].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[2].temperature / 100).toFixed()
           : null,
         Sensor4: payload.message.sensors[3]
-          ? Number(payload.message.sensors[3].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[3].temperature / 100).toFixed()
           : null,
       };
       newArr.push(Item);
