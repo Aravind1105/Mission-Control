@@ -68,9 +68,7 @@ const TransactionsList = ({
       const kioskIndex = isEqual(kiosk, filter.kiosk);
 
       widgetPayload.period = dateRange;
-      if (kiosk.length > 0) {
-        widgetPayload.kioskId = kiosk;
-      }
+      widgetPayload.kioskId = kiosk;
 
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
