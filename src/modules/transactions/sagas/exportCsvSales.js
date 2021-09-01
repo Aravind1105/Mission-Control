@@ -21,24 +21,25 @@ export function handlerGetProduct(payload) {
     !isNaN(payload.to) &&
     !isNaN(payload.from)
   ) {
-    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}?kioskId=${payload.kiosk}`;
+    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
   } else if (!payload.kiosk == '' && isNaN(payload.to) && isNaN(payload.from)) {
-    link = `/api/v1/transactions/csv/export/${dateFrom}/${dateTo}?kioskId=${payload.kiosk}`;
+    link = `/api/v1/transactions/csv/export/${dateFrom}/${dateTo}`;
   }
 
   const token = ls.getItem(TOKEN_STORAGE_KEY);
 
   fetch(link, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({ kioskId: payload.kiosk }),
   })
     .catch(e => {
       return e;
     })
     .then(response => {
-      if (response.status != 200) {
+      if (response.status != 201) {
         alert('Etwas ist schief gelaufen. Versuche Sie es später noch einmal.');
       } else
         response.blob().then(blob => {
