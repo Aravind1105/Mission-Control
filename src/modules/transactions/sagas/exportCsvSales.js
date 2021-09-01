@@ -8,22 +8,12 @@ export function handlerGetProduct(payload) {
   let link;
   const dateFrom = 1420070400000;
   const dateTo = Math.round(new Date());
-  if (payload.kiosk == '' && isNaN(payload.to) && isNaN(payload.from)) {
+  if (isNaN(payload.to) && isNaN(payload.from)) {
     link = `/api/v1/transactions/csv/export/${dateFrom}/${dateTo}`;
-  } else if (
-    payload.kiosk == '' &&
-    !isNaN(payload.to) &&
-    !isNaN(payload.from)
-  ) {
+  } else if (!isNaN(payload.to) && !isNaN(payload.from)) {
     link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
-  } else if (
-    !payload.kiosk == '' &&
-    !isNaN(payload.to) &&
-    !isNaN(payload.from)
-  ) {
-    link = `/api/v1/transactions/csv/export/${payload.from}/${payload.to}`;
-  } else if (!payload.kiosk == '' && isNaN(payload.to) && isNaN(payload.from)) {
-    link = `/api/v1/transactions/csv/export/${dateFrom}/${dateTo}`;
+  } else if (isNaN(payload.to)) {
+    link = `/api/v1/transactions/csv/export/${payload.from}/${dateTo}`;
   }
 
   const token = ls.getItem(TOKEN_STORAGE_KEY);
@@ -32,6 +22,7 @@ export function handlerGetProduct(payload) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ kioskId: payload.kiosk }),
   })
