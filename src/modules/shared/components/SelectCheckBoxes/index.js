@@ -28,14 +28,14 @@ function outsideClickHandler(ref, callback) {
   }, [ref]);
 }
 
-const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
+const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply, value = [] }) => {
   const containerRef = useRef(null);
   outsideClickHandler(containerRef, () => setOptionsVisible(false));
 
   const [icon, setIcon] = useState(ICONS.DOWN);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues, setSelectedValues] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   useEffect(() => {

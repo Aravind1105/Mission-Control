@@ -26,25 +26,28 @@ const KiosksList = ({
   setOrganization,
   setKioskStatus,
   paginationState,
+  isLoading,
   ...props
 }) => {
   const { search, kiosk, organization, kioskStatus } = paginationState;
 
   return (
     <>
-      <Toolbar
-        search={search}
-        setSearch={setSearch}
-        kiosks={kiosks}
-        setKiosk={setKiosk}
-        kiosksStatus={kiosksStatus}
-        setKioskStatus={setKioskStatus}
-        kiosksNetworkStatus={kiosksNetworkStatus}
-        organizations={organizations}
-        setOrganization={setOrganization}
-        selectedKiosk={kiosk}
-        selectedOrganization={organization}
-      />
+      {!isLoading && (
+        <Toolbar
+          search={search}
+          setSearch={setSearch}
+          kiosks={kiosks}
+          setKiosk={setKiosk}
+          kiosksStatus={kiosksStatus}
+          setKioskStatus={setKioskStatus}
+          kiosksNetworkStatus={kiosksNetworkStatus}
+          organizations={organizations}
+          setOrganization={setOrganization}
+          selectedKiosk={kiosk}
+          selectedOrganization={organization}
+        />
+      )}
       <KiosksContent
         {...props}
         search={search}
@@ -63,6 +66,7 @@ const mapStateToProps = state => ({
   kiosksNetworkStatus: getKiosksNetworkStatus(state),
   organizations: getOrganizationOptionsForTableDropdown(state),
   paginationState: getPaginationState(state),
+  isLoading: state.kiosks.isLoading,
 });
 
 const mapDispatchToProps = {
