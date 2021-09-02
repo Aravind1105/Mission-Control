@@ -12,11 +12,12 @@ import {
   Divider,
 } from 'semantic-ui-react';
 import CustomButton from 'modules/shared/components/CustomButton';
-import { getActiveUserIDState } from '../../users/selectors';
 import { toast } from 'react-semantic-toasts';
 import { exportCsvOrderList } from '../actions';
 import { exportCsvPackList } from '../actions';
 import './styles.less';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
+import { getSelectedKiosksState } from '../selectors';
 
 const Toolbar = ({
   search,
@@ -32,15 +33,15 @@ const Toolbar = ({
   exportCsvPackList,
   selectedKiosk,
   selectedOrganization,
+  selectedKiosks,
   // kiosksNetworkStatus, //!LIV-2285
   // setKioskNetworkStatus //!LIV-2285
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
   };
-  const handleKioskChange = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
-    setKiosk(text);
+  const handleKioskChange = value => {
+    setKiosk(value);
   };
   const handleOrganizationChange = (e, { value }) => {
     const text = value === 'All' ? '' : value;
@@ -113,13 +114,12 @@ const Toolbar = ({
         {rootUser ? (
           <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
             <Grid.Column computer={3}>
-              <Dropdown
-                placeholder="All Kiosks"
-                selection
-                className="full-width"
-                onChange={handleKioskChange}
+              <SelectCheckBoxes
+                title="Kiosks"
                 options={kiosks}
-                value={selectedKiosk}
+                allOptionKey="all"
+                onClickApply={handleKioskChange}
+                value={selectedKiosks}
               />
             </Grid.Column>
             <Grid.Column computer={3}>
@@ -209,6 +209,7 @@ Toolbar.propTypes = {
 
 const mapStateToProps = state => ({
   rootUser: state.user.root,
+  selectedKiosks: getSelectedKiosksState(state),
 });
 const mapDispatchToProps = {
   exportCsvOrderList,
