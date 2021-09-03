@@ -34,6 +34,7 @@ const Toolbar = ({
   selectedKiosk,
   selectedOrganization,
   selectedKiosks,
+  isLoading,
   // kiosksNetworkStatus, //!LIV-2285
   // setKioskNetworkStatus //!LIV-2285
 }) => {
@@ -114,13 +115,15 @@ const Toolbar = ({
         {rootUser ? (
           <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
             <Grid.Column computer={3}>
-              <SelectCheckBoxes
-                title="Kiosks"
-                options={kiosks}
-                allOptionKey="all"
-                onClickApply={handleKioskChange}
-                value={selectedKiosks}
-              />
+              {!isLoading && (
+                <SelectCheckBoxes
+                  title="Kiosks"
+                  options={kiosks}
+                  allOptionKey="all"
+                  onClickApply={handleKioskChange}
+                  value={selectedKiosks}
+                />
+              )}
             </Grid.Column>
             <Grid.Column computer={3}>
               <Dropdown
@@ -210,6 +213,7 @@ Toolbar.propTypes = {
 const mapStateToProps = state => ({
   rootUser: state.user.root,
   selectedKiosks: getSelectedKiosksState(state),
+  isLoading: state.kiosks.isLoading,
 });
 const mapDispatchToProps = {
   exportCsvOrderList,
