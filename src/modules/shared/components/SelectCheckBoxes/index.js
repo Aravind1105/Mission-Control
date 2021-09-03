@@ -28,7 +28,13 @@ function outsideClickHandler(ref, callback) {
   }, [ref]);
 }
 
-const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply, value = [] }) => {
+const SelectCheckBoxes = ({
+  title,
+  options,
+  allOptionKey,
+  onClickApply,
+  value = [],
+}) => {
   const containerRef = useRef(null);
   outsideClickHandler(containerRef, () => setOptionsVisible(false));
 
