@@ -36,7 +36,7 @@ const AlertsPage = ({
   isLoading,
 }) => {
   const [dateRange, changeDate] = useState('');
-  const [kiosk, changeKiosk] = useState('');
+  const [kiosk, changeKiosk] = useState([]);
   const [alert, changeAlert] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
@@ -50,7 +50,7 @@ const AlertsPage = ({
     };
     if (dateRange || kiosk || alert) {
       const date = dateRange ? { startDate: dateRange } : {};
-      const kio = kiosk ? { kioskId: kiosk } : {};
+      const kio = kiosk.length > 0 ? { kioskId: kiosk } : {};
       const al = alert ? { type: alert } : {};
       data.search = JSON.stringify({
         ...date,
