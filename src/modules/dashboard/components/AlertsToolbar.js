@@ -9,6 +9,7 @@ import {
   getKioskOptionsForTableDropdown,
   getAlertsOptions,
 } from 'modules/kiosks/selectors';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
 const Toolbar = ({
   changeAlert,
@@ -18,7 +19,7 @@ const Toolbar = ({
   kiosks,
   alertsOptions,
 }) => {
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
   };
   const handleAlertsChange = (e, { value }) => {
@@ -55,12 +56,11 @@ const Toolbar = ({
           />
         </Grid.Column>
         <Grid.Column mobile={16} computer={4}>
-          <Dropdown
-            placeholder="All Kiosks"
-            selection
-            className="full-width"
-            onChange={handleKioskChange}
+          <SelectCheckBoxes
+            title="Kiosks"
             options={kiosks}
+            allOptionKey="all"
+            onClickApply={handleKioskChange}
           />
         </Grid.Column>
         <Grid.Column mobile={16} computer={4}>
