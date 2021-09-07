@@ -9,6 +9,8 @@ const CustomButton = ({
   label,
   icon,
   defaultStyle,
+  confirmStyle,
+  cancelStyle,
   className,
   color,
   size,
@@ -19,7 +21,13 @@ const CustomButton = ({
       {icon && screenWidth > 770 ? (
         <Button
           className={`${
-            defaultStyle ? 'custom-button-default' : 'custom-button-blue'
+            defaultStyle
+              ? 'custom-button-default'
+              : confirmStyle
+              ? 'custom-button-confirm'
+              : cancelStyle
+              ? 'custom-button-cancel'
+              : 'custom-button-blue'
           } ${className}`}
           onClick={onClick}
           content={label}
@@ -32,7 +40,13 @@ const CustomButton = ({
         <Button
           onClick={onClick}
           className={`${
-            defaultStyle ? 'custom-button-default' : 'custom-button-blue'
+            defaultStyle
+              ? 'custom-button-default'
+              : confirmStyle
+              ? 'custom-button-confirm'
+              : cancelStyle
+              ? 'custom-button-cancel'
+              : 'custom-button-blue'
           } ${className}`}
           color={color}
           size={size}

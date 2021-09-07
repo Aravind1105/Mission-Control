@@ -13,17 +13,16 @@ import moment from 'moment';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
-  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  NoProductsBought: 'No Products Bought',
-  NoLeftScalesData: 'Left Scales Disconnected',
-  NoRightScalesData: 'Right Scales Disconnected',
-  TabletDisconn: 'Tablet Disconnected',
-  TabletMqttDisconn: 'Tablet MQTT Disconnected',
+  NoProductsBought: 'Empty Purchase session',
+  NoLeftScalesData: 'Left Scales disconnected',
+  NoRightScalesData: 'Right Scales disconnected',
+  TabletDisconn: 'Tablet Internet disconnected',
+  TabletMqttDisconn: 'Tablet MQTT disconnected',
 };
 
 const alertSeverity = {
@@ -542,16 +541,16 @@ export const getGridTempratureTableState = createSelector(
         time: updated,
         timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? Number(payload.message.sensors[0].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[0].temperature / 100).toFixed()
           : null,
         Sensor2: payload.message.sensors[1]
-          ? Number(payload.message.sensors[1].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[1].temperature / 100).toFixed()
           : null,
         Sensor3: payload.message.sensors[2]
-          ? Number(payload.message.sensors[2].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[2].temperature / 100).toFixed()
           : null,
         Sensor4: payload.message.sensors[3]
-          ? Number(payload.message.sensors[3].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[3].temperature / 100).toFixed()
           : null,
       };
       newArr.push(Item);
@@ -589,3 +588,8 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
 });
 
 export const getPaginationState = state => state.kiosks.pagination;
+
+export const getSelectedKiosksState = createSelector(
+  getPaginationState,
+  pagination => pagination.kiosk,
+);
