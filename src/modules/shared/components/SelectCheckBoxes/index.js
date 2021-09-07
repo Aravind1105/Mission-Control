@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.less';
-import { Input, Button, Checkbox, Icon } from 'semantic-ui-react';
+import { Input, Button, Checkbox, Icon, Loader } from 'semantic-ui-react';
 
 const ICONS = {
   DOWN: 'caret down',
@@ -34,6 +34,7 @@ const SelectCheckBoxes = ({
   allOptionKey,
   onClickApply,
   value = [],
+  isLoading,
 }) => {
   const containerRef = useRef(null);
   outsideClickHandler(containerRef, () => setOptionsVisible(false));
@@ -88,7 +89,9 @@ const SelectCheckBoxes = ({
     } else {
       setFilteredOptions(options);
     }
-  }, [searchText]);
+  }, [searchText, options]);
+
+  if (isLoading) return <Loader active inline="centered" />;
 
   return (
     <div className="select-checks-container" ref={containerRef}>
