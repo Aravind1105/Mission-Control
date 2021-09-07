@@ -24,7 +24,10 @@ export function handlerGetProduct(payload) {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ kioskId: payload.kiosk }),
+    body:
+      payload.kiosk.length > 0
+        ? JSON.stringify({ kioskId: payload.kiosk })
+        : JSON.stringify({}),
   })
     .catch(e => {
       return e;
