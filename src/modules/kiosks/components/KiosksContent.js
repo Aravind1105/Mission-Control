@@ -29,6 +29,8 @@ const sortValue = {
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
   'ownerOrganization.name': 'ownerOrganization.name',
+  'dayIncome': 'dayIncome',
+  'heartbeat.updated': 'heartbeat.updated'
 };
 
 const screenWidth = window.innerWidth;
