@@ -17,13 +17,19 @@ const CustomAlert = ({ visible, onApprove, onCancel, alertMsg, isWarning }) => {
         <div className="inner-modal__actions">
           {!isWarning && (
             <>
-              <CustomButton label="No" onClick={() => onCancel()} />
-              <CustomButton label={'Yes'} onClick={() => onApprove()} />
+              <CustomButton
+                cancelStyle
+                label="Cancel"
+                onClick={() => onCancel()}
+              />
+              <CustomButton
+                confirmStyle
+                label="Confirm"
+                onClick={() => onApprove()}
+              />
             </>
           )}
-          {isWarning && (
-            <CustomButton label={'Ok'} onClick={() => onApprove()} />
-          )}
+          {isWarning && <CustomButton label="OK" onClick={() => onApprove()} />}
         </div>
       </div>
     </div>

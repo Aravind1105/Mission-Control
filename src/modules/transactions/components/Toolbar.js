@@ -82,14 +82,13 @@ const Toolbar = ({
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            {!isLoading && (
-              <SelectCheckBoxes
-                title="Kiosks"
-                options={kiosks}
-                allOptionKey="all"
-                onClickApply={handleKioskChange}
-              />
-            )}
+            <SelectCheckBoxes
+              title="Kiosks"
+              options={kiosks}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isLoading}
+            />
           </Grid.Column>
 
           {/* <Grid.Column width={4}>

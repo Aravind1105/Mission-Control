@@ -15,9 +15,9 @@ const reg = /^.+\//;
 const NoImageBlock = () => (
   <>
     <p className="image-upload-text">
-      Please upload a JPG/PNG image with
+      <b>Max size: </b>1400 x 1400 px, 500 KB
       <br />
-      max size 1400 x 1400 px, 500 KB
+      <b>Format: </b>.jpeg, .png
     </p>
     <NoImg />
   </>
@@ -48,7 +48,8 @@ const ImageUploader = ({
     imgbase64: '',
   });
 
-  const [showWarning, setShowWarning] = useState(false);
+  const [showSizeWarning, setShowSizeWarning] = useState(false);
+  const [showDimensionWarning, setShowDimensionWarning] = useState(false);
   const [initialImageProps, setInitialImageProps] = useState(null);
   const [customAlertStatus, setCustomAlertStatus] = useState(false);
   const [isImageDeleted, setIsImageDeleted] = useState(false);
@@ -90,12 +91,13 @@ const ImageUploader = ({
   };
 
   useEffect(() => {
-    if (showWarning) {
+    if (showSizeWarning || showDimensionWarning) {
       setTimeout(() => {
-        setShowWarning(false);
+        setShowSizeWarning(false);
+        setShowDimensionWarning(false);
       }, 5000);
     }
-  }, [showWarning]);
+  }, [showSizeWarning, showDimensionWarning]);
 
   useEffect(() => {
     let tempImage = src;
@@ -108,14 +110,14 @@ const ImageUploader = ({
         const fileName = tempImage
           ? tempImage.replace(reg, '').replace(/\%20/g, ' ')
           : 'noname';
-        if (
-          image.naturalWidth > 1400 ||
-          image.naturalHeight > 1400 ||
-          checkImg.imgSize > 500000
-        ) {
-          setShowWarning(true);
+        if (checkImg.imgSize > 500000) {
+          alert();
+          setShowSizeWarning(true);
+        } else if (image.naturalWidth > 1400 || image.naturalHeight > 1400) {
+          setShowDimensionWarning(true);
         } else {
-          setShowWarning(false);
+          setShowSizeWarning(false);
+          setShowDimensionWarning(false);
           setImgProps({
             imgSrc: tempImage,
             imgName: fileName,
@@ -184,7 +186,7 @@ const ImageUploader = ({
         deleteImage();
       } else if (initialValues.id === undefined) {
         // while creating a new product with image, this method will be called
-        setFirstUploadImage(base64Img);
+        setFirstUploadImage(imgProps.imgbase64);
       }
     }
   }, [customAlertStatus]);
@@ -220,16 +222,20 @@ const ImageUploader = ({
       </div>
       {(imgProps.imgSrc || src) && (
         <Container textAlign="center">
-          <div className="filename-wrapper">{`Filename: ${(imgProps.imgName !==
-            null &&
-            imgProps.imgName) ||
-            (initialImageProps && initialImageProps.fileName)}`}</div>
-          <div>{`Size: ${(imgProps.imgSize.width !== null &&
-            imgProps.imgSize.width) ||
-            (initialImageProps && initialImageProps.width)}x${(imgProps.imgSize
-            .height !== null &&
-            imgProps.imgSize.height) ||
-            (initialImageProps && initialImageProps.height)}px`}</div>
+          <div className="filename-wrapper">
+            <b>File Name: </b>
+            {(imgProps.imgName !== null && imgProps.imgName) ||
+              (initialImageProps && initialImageProps.fileName)}
+          </div>
+          <div>
+            <b>Size: </b>
+            {(imgProps.imgSize.width !== null && imgProps.imgSize.width) ||
+              (initialImageProps && initialImageProps.width)}{' '}
+            {'x'}{' '}
+            {(imgProps.imgSize.height !== null && imgProps.imgSize.height) ||
+              (initialImageProps && initialImageProps.height)}
+            px
+          </div>
         </Container>
       )}
       <div className="label-wrapper">
@@ -240,7 +246,7 @@ const ImageUploader = ({
             label="Delete Image"
             icon="trash alternate outline"
             className="image-button "
-            disabled={showWarning}
+            disabled={showSizeWarning || showDimensionWarning}
           />
         )}
         <label htmlFor="productImgUpload" className="modify-button">
@@ -274,14 +280,23 @@ const ImageUploader = ({
           }}
           alertMsg={
             isImageDeleted
-              ? `Are you sure that you want to DELETE the pictures of this product?`
-              : `Are you sure that you want to UPDATE the picture of this product?`
+              ? `Are you sure you want to\ndelete this image?`
+              : `Are you sure you want to\nchange this image?`
           }
         />
       </div>
-      {showWarning && (
+      {showDimensionWarning && (
         <p className="image-warning">
-          Image size should be equal or less then 1400 x 1400 px and 500 KB
+          Upload failed: Please make sure the image is
+          <br />
+          smaller than 1400 x 1400 px.
+        </p>
+      )}
+      {showSizeWarning && (
+        <p className="image-warning">
+          Upload failed: Please make sure the image is
+          <br />
+          smaller than 500 KB.
         </p>
       )}
     </Segment>

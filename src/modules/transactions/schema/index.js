@@ -133,7 +133,7 @@ export const CREATE_REFILL_MUTATION = gql`
 `;
 
 export const GET_REFILLS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getTotalNumberOfProductsAdded(period: $period, kioskId: $kioskId)
     getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
@@ -175,7 +175,7 @@ export const GET_PRODUCTS_WIDGET_DATA = gql`
 `;
 
 export const GET_TRANSACTIONS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getTotalNumberOfTransactions(period: $period, kioskId: $kioskId)
     getAveragePurchaseValue(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsSold(period: $period, kioskId: $kioskId)
