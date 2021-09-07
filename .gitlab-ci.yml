@@ -13,8 +13,8 @@ variables:
   gcr_path: "livello-backend/mission-control"
   region: "europe-west4"
   platform: "managed"
-  app_name: livello-mission-control-stage
-  app_domain_map: "mc-stage.livello.com"
+  app_name: livello-mission-control-test
+  app_domain_map: "mc-test.livello.com"
   app_port: 8080
   api_proxy_url: $API_PROXY_URL
   auth_domain: $AUTH_DOMAIN_MC
