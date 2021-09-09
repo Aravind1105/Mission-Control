@@ -5,8 +5,15 @@ import { exportCsvProducts } from '../actions';
 import { connect } from 'react-redux';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
-const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvProducts }) => {
+const Toolbar = ({
+  kiosks,
+  changeDate,
+  changeKiosk,
+  exportCsvProducts,
+  isKiosksLoading,
+}) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -36,7 +43,7 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvProducts }) => {
     }
   };
 
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
     changeExportData({
       from: exportData.from ? exportData.from : '',
@@ -57,12 +64,12 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvProducts }) => {
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
+            <SelectCheckBoxes
+              title="Kiosks"
               options={kiosks}
-              className="full-width"
-              onChange={handleKioskChange}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksLoading}
             />
           </Grid.Column>
         </Grid.Row>
@@ -79,7 +86,9 @@ Toolbar.propTypes = {
   kiosks: arrayOf(object),
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isKiosksLoading: state.kiosks.isLoading,
+});
 const mapDispatchToProps = {
   exportCsvProducts,
 };
