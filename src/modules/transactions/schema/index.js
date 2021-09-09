@@ -144,7 +144,7 @@ export const GET_REFILLS_WIDGET_DATA = gql`
 `;
 
 export const GET_PRODUCTS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getMostSoldProduct(period: $period, kioskId: $kioskId) {
       productLine {
         name
