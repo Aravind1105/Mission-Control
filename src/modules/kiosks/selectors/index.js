@@ -588,3 +588,8 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
 });
 
 export const getPaginationState = state => state.kiosks.pagination;
+
+export const getSelectedKiosksState = createSelector(
+  getPaginationState,
+  pagination => pagination.kiosk,
+);
