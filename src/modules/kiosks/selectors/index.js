@@ -361,47 +361,33 @@ export const kioskInitialValues = {
   serialNumber: '',
   notes: '',
   orgId: '',
-  location: {
-    address: {
-      name: '',
-      line1: '',
-      line2: '',
-      postalCode: '',
-      city: '',
-      state: '',
-      country: '',
-    },
-  },
+  locationName: '',
+  locationLine1: '',
+  locationLine2: '',
+  locationPostalCode: '',
+  locationCity: '',
+  locationState: '',
+  locationCountry: '',
   pin: '',
   technicianPin: '',
 };
 
 export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
-  let { __typename, ...address } = get(
-    kiosk,
-    'location.address',
-    kioskInitialValues.location.address,
-  );
-  address = Object.keys(address).reduce((prev, key) => {
-    if (address[key] !== null) {
-      prev[key] = address[key];
-    }
-    return prev;
-  }, {});
-
   return kiosk
     ? {
         id: kiosk._id,
         ...pick(kiosk, ['name', 'serialNumber', 'pin']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
-        },
+        locationName: get(kiosk.location.address, 'name', '') || '',
+        locationLine1: get(kiosk.location.address, 'line1', '') || '',
+        locationLine2: get(kiosk.location.address, 'line2', '') || '',
+        locationPostalCode: get(kiosk.location.address, 'postalCode', '') || '',
+        locationCity: get(kiosk.location.address, 'city', '') || '',
+        locationState: get(kiosk.location.address, 'state', '') || '',
+        locationCountry: get(kiosk.location.address, 'country', '') || '',
         technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
+        pin: get(kiosk, 'pin', '') || '',
       }
     : kioskInitialValues;
 });
