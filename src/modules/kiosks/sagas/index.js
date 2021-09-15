@@ -20,6 +20,7 @@ import deletePlayList from './deletePlaylist';
 import exportCsvOrderList from './exportCsvOrders';
 import exportCsvPackList from './exportCsvPacks';
 import exportCsvTempLogs from './exportCsvTempLogs';
+import getKiosksList from './getKiosksList';
 
 export default function* kiosksSaga() {
   yield all([
@@ -41,5 +42,6 @@ export default function* kiosksSaga() {
     fork(exportCsvOrderList),
     fork(exportCsvPackList),
     fork(exportCsvTempLogs),
+    fork(getKiosksList),
   ]);
 }

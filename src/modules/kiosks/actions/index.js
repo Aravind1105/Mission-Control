@@ -26,6 +26,7 @@ export const setPlanogramSwitchState = createAction(
   '@@saga/SET_PLANOGRAM_SWITCH_STATE',
 );
 export const deleteLoadCell = createAction('@@saga/DELETE_LOAD_CELL');
+export const getKiosksList = createAction('@@saga/GET_KIOSK_LIST');
 
 // State actions
 export const updateKiosks = createAction('@@state/KIOSKS_UPDATE');
@@ -72,6 +73,9 @@ export const setPlanogramSwitchStateSuccess = createAction(
 );
 export const deleteLoadCellSuccess = createAction(
   '@@saga/DELETE_LOAD_CELL_SUCCESS',
+);
+export const getKiosksListSuccess = createAction(
+  '@@state/GET_KIOSK_LIST_SUCCESS',
 );
 
 export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');

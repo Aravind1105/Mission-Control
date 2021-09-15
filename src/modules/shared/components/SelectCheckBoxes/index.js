@@ -59,16 +59,18 @@ const SelectCheckBoxes = ({
 
   // selecting or deselecting All Option. Example: All Kiosks
   useEffect(() => {
-    if (
-      options.length - 1 === selectedValues.length &&
-      selectedValues.indexOf(allOptionKey) === -1
-    ) {
-      setSelectedValues([...selectedValues, allOptionKey]);
-    } else if (
-      selectedValues.length === 1 &&
-      selectedValues[0] === allOptionKey
-    ) {
-      setSelectedValues([]);
+    if (selectedValues.length > 0) {
+      if (
+        options.length - 1 === selectedValues.length &&
+        selectedValues.indexOf(allOptionKey) === -1
+      ) {
+        setSelectedValues([...selectedValues, allOptionKey]);
+      } else if (
+        selectedValues.length === 1 &&
+        selectedValues[0] === allOptionKey
+      ) {
+        setSelectedValues([]);
+      }
     }
 
     if (selectedValues.length === 0 && !optionsVisible) {

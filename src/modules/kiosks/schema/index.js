@@ -466,3 +466,12 @@ export const DELETE_PLAYLIST = gql`
     }
   }
 `;
+
+export const GET_KIOSKS_LIST = gql`
+  query {
+    getAllKiosks {
+      _id
+      name
+    }
+  }
+`;
