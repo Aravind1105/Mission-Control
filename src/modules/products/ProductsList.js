@@ -38,6 +38,7 @@ const ProductsList = ({
   setFilters,
   changePage,
   changePerPage,
+  manufacturersOptions,
   manufacturers,
 }) => {
   const {
@@ -103,9 +104,9 @@ const ProductsList = ({
     getData({ sort });
   }, [page, perPage, search, category, manufacturer]);
 
-  useComponentDidMount(() => {
-    getManufacturers();
-  });
+  useEffect(() => {
+    if (manufacturers.length === 0) getManufacturers();
+  }, [manufacturers]);
 
   return (
     <>
@@ -115,7 +116,7 @@ const ProductsList = ({
         changeSearch={changeSearch}
         changeCategory={changeCategory}
         changeManufacturer={changeManufacturer}
-        manufacturerOptions={manufacturers}
+        manufacturerOptions={manufacturersOptions}
       />
       <ProductsContent
         products={products}
@@ -140,7 +141,8 @@ const mapStateToProps = state => ({
   total: getTotalProductsCount(state),
   isLoading: state.products.isLoading,
   paginationState: getPaginationState(state),
-  manufacturers: selectorGetManufacturer(state),
+  manufacturersOptions: selectorGetManufacturer(state),
+  manufacturers: state.products.manufacturers,
 });
 
 const mapDispatchToProps = {
