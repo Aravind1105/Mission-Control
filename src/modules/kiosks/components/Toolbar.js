@@ -32,8 +32,6 @@ const Toolbar = ({
   selectedOrganization,
   selectedKiosks,
   isLoading,
-  // kiosksNetworkStatus, //!LIV-2285
-  // setKioskNetworkStatus //!LIV-2285
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
@@ -149,7 +147,6 @@ const Toolbar = ({
                   value={selectedOrganization}
                 />
               </Grid.Column>
-
               <Grid.Column computer={3}></Grid.Column>
               <Grid.Column computer={3}>
                 <div className="download_orderlist_button">
@@ -161,7 +158,6 @@ const Toolbar = ({
                   />
                 </div>
               </Grid.Column>
-
               <Grid.Column computer={3}>
                 <div className="download_packlist_button">
                   <CustomButton
