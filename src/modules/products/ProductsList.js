@@ -19,8 +19,10 @@ import {
   selectorGetProducts,
   getTotalProductsCount,
   getPaginationState,
+  selectorGetManufacturer,
 } from './selectors';
 import { isEqual } from 'lodash';
+import { useComponentDidMount } from '../../lib/customHooks';
 
 const ProductsList = ({
   products,
@@ -36,6 +38,7 @@ const ProductsList = ({
   setFilters,
   changePage,
   changePerPage,
+  manufacturers,
 }) => {
   const {
     page,
@@ -53,7 +56,7 @@ const ProductsList = ({
       limit: perPage,
     };
 
-    if (search || category || manufacturer) {
+    if (search || category || manufacturer.length > 0) {
       const name = search
         ? {
             $or: [
@@ -66,9 +69,8 @@ const ProductsList = ({
       const cat = category
         ? { category: { $regex: category, $options: 'i' } }
         : {};
-      const sup = manufacturer
-        ? { manufacturer: { $regex: manufacturer, $options: 'i' } }
-        : {};
+      const sup =
+        manufacturer.length > 0 ? { manufacturer: { $in: manufacturer } } : {};
 
       data.search = JSON.stringify({
         ...name,
@@ -99,8 +101,11 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-    getManufacturers();
   }, [page, perPage, search, category, manufacturer]);
+
+  useComponentDidMount(() => {
+    getManufacturers();
+  });
 
   return (
     <>
@@ -110,6 +115,7 @@ const ProductsList = ({
         changeSearch={changeSearch}
         changeCategory={changeCategory}
         changeManufacturer={changeManufacturer}
+        manufacturerOptions={manufacturers}
       />
       <ProductsContent
         products={products}
@@ -134,6 +140,7 @@ const mapStateToProps = state => ({
   total: getTotalProductsCount(state),
   isLoading: state.products.isLoading,
   paginationState: getPaginationState(state),
+  manufacturers: selectorGetManufacturer(state),
 });
 
 const mapDispatchToProps = {
