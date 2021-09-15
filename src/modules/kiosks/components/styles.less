@@ -194,3 +194,16 @@ input::-webkit-inner-spin-button {
     padding-left: 0px;
   }
 }
+
+.kiosk-inventory-table {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 200px;
+  white-space: nowrap;
+  @media @mobile {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+    white-space: nowrap;
+  }
+}
