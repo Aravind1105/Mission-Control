@@ -26,12 +26,9 @@ const Toolbar = ({
   setKiosk,
   organizations,
   setOrganization,
-  kiosksStatus,
-  setKioskStatus,
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
-  selectedKiosk,
   selectedOrganization,
   selectedKiosks,
   isLoading,
@@ -41,16 +38,14 @@ const Toolbar = ({
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
   };
+
   const handleKioskChange = value => {
     setKiosk(value);
   };
+
   const handleOrganizationChange = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     setOrganization(text);
-  };
-  const handleKiosksStatus = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
-    setKioskStatus(text);
   };
 
   const DownloadOrderListCsv = () => {
@@ -62,6 +57,7 @@ const Toolbar = ({
       color: 'blue',
     });
   };
+
   const DownloadPackListCsv = () => {
     exportCsvPackList();
     toast({
@@ -71,11 +67,6 @@ const Toolbar = ({
       color: 'blue',
     });
   };
-
-  // const handleKiosksNetworkStatus = (e, { value }) => { //!LIV-2285
-  //   const text = value === 'All' ? '' : value;
-  //   setKioskNetworkStatus(text)
-  // };
 
   return (
     <Segment className="toolbar">
