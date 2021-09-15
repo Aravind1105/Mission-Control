@@ -88,6 +88,31 @@ const Toolbar = ({
               className="full-width"
             />
           </Grid.Column>
+          {!rootUser && (
+            <>
+              <Grid.Column></Grid.Column>
+              <Grid.Column>
+                <div className="download_orderlist_button_admin">
+                  <CustomButton
+                    label="Download Order List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadOrderListCsv}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div className="download_packlist_button_admin">
+                  <CustomButton
+                    label="Download Pack List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadPackListCsv}
+                  />
+                </div>
+              </Grid.Column>
+            </>
+          )}
 
           {rootUser && (
             <Grid.Column textAlign="right">
@@ -108,7 +133,11 @@ const Toolbar = ({
           )}
         </Grid.Row>
 
-        <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+        {rootUser ? (
+          <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+        ) : (
+          <></>
+        )}
 
         {rootUser ? (
           <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
@@ -157,45 +186,46 @@ const Toolbar = ({
             </Grid.Column>
           </Grid.Row>
         ) : (
-          <Grid.Row verticalAlign="middle" columns={4}>
-            <Grid.Column>
-              <Dropdown
-                placeholder="All Kiosks"
-                selection
-                className="full-width"
-                onChange={handleKioskChange}
-                options={kiosks}
-              />
-            </Grid.Column>
+          // <Grid.Row verticalAlign="middle" columns={4}>
+          //   <Grid.Column>
+          //     <Dropdown
+          //       placeholder="All Kiosks"
+          //       selection
+          //       className="full-width"
+          //       onChange={handleKioskChange}
+          //       options={kiosks}
+          //     />
+          //   </Grid.Column>
 
-            <Grid.Column>
-              <Dropdown
-                placeholder="All Door Status"
-                selection
-                className="full-width"
-                onChange={handleKiosksStatus}
-                options={kiosksStatus}
-              />
-            </Grid.Column>
+          //   <Grid.Column>
+          //     <Dropdown
+          //       placeholder="All Door Status"
+          //       selection
+          //       className="full-width"
+          //       onChange={handleKiosksStatus}
+          //       options={kiosksStatus}
+          //     />
+          //   </Grid.Column>
 
-            <Grid.Column>
-              <CustomButton
-                label="Download Order List&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default-admin"
-                onClick={DownloadOrderListCsv}
-              />
-            </Grid.Column>
+          //   <Grid.Column>
+          //     <CustomButton
+          //       label="Download Order List&nbsp;"
+          //       icon="arrow down icon"
+          //       className="custom-button-default-admin"
+          //       onClick={DownloadOrderListCsv}
+          //     />
+          //   </Grid.Column>
 
-            <Grid.Column>
-              <CustomButton
-                label="Download Pack List&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default-admin"
-                onClick={DownloadPackListCsv}
-              />
-            </Grid.Column>
-          </Grid.Row>
+          //   <Grid.Column>
+          //     <CustomButton
+          //       label="Download Pack List&nbsp;"
+          //       icon="arrow down icon"
+          //       className="custom-button-default-admin"
+          //       onClick={DownloadPackListCsv}
+          //     />
+          //   </Grid.Column>
+          // </Grid.Row>
+          <></>
         )}
       </Grid>
     </Segment>
