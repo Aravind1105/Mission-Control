@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Dropdown, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import format from 'date-fns/format';
+import { isEmpty } from 'ramda';
 
 import DatePicker from 'modules/shared/components/Datepicker';
 import {
@@ -18,6 +18,7 @@ const Toolbar = ({
   changeDate,
   kiosks,
   alertsOptions,
+  isKiosksLoading,
 }) => {
   const handleKioskChange = value => {
     changeKiosk(value);
@@ -55,12 +56,13 @@ const Toolbar = ({
             className="full-width"
           />
         </Grid.Column>
-        <Grid.Column mobile={16} computer={4}>
+        <Grid.Column  mobile={16} tablet={8} computer={3}>
           <SelectCheckBoxes
             title="Kiosks"
             options={kiosks}
             allOptionKey="all"
             onClickApply={handleKioskChange}
+            isLoading={isKiosksLoading}
           />
         </Grid.Column>
         <Grid.Column mobile={16} computer={4}>
@@ -81,6 +83,7 @@ const mapStateToProps = state => ({
   alerts: getKiosksAlertsForTable(state),
   kiosks: getKioskOptionsForTableDropdown(state),
   alertsOptions: getAlertsOptions(),
+  isKiosksLoading: state.kiosks.isLoading,
 });
 const mapDispatchToProps = {};
 

@@ -115,15 +115,14 @@ const Toolbar = ({
         {rootUser ? (
           <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
             <Grid.Column computer={3}>
-              {!isLoading && (
-                <SelectCheckBoxes
-                  title="Kiosks"
-                  options={kiosks}
-                  allOptionKey="all"
-                  onClickApply={handleKioskChange}
-                  value={selectedKiosks}
-                />
-              )}
+              <SelectCheckBoxes
+                title="Kiosks"
+                options={kiosks}
+                allOptionKey="all"
+                onClickApply={handleKioskChange}
+                value={selectedKiosks}
+                isLoading={isLoading}
+              />
             </Grid.Column>
             <Grid.Column computer={3}>
               <Dropdown
