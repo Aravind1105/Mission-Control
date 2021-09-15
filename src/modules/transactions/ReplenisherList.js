@@ -12,7 +12,6 @@ import {
   getTotalGridRefillsCount,
   getWidgetDataState,
 } from './selectors';
-import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
@@ -42,13 +41,12 @@ const ReplenisherList = ({
   isLoading,
   total,
   getGridRefills,
-  kiosks,
   getProductListSaga,
   getRefillsWidgetsData,
   widgetsData,
 }) => {
   const [dateRange, changeDate] = useState('');
-  const [kiosk, changeKiosk] = useState('');
+  const [kiosk, changeKiosk] = useState([]);
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
@@ -63,7 +61,7 @@ const ReplenisherList = ({
 
     if (kiosk || dateRange) {
       const date = dateRange ? { created: dateRange } : {};
-      const kio = kiosk ? { kiosk } : {};
+      const kio = kiosk.length > 0 ? { kiosk } : {};
 
       data.search = JSON.stringify({
         ...date,
@@ -73,7 +71,9 @@ const ReplenisherList = ({
       const kioskIndex = isEqual(kiosk, filter.kiosk);
 
       widgetPayload.period = dateRange;
-      widgetPayload.kioskId = kiosk;
+      if (kiosk.length > 0) {
+        widgetPayload.kioskId = kiosk;
+      }
 
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
@@ -103,11 +103,7 @@ const ReplenisherList = ({
   }, [page, perPage, kiosk, dateRange]);
   return (
     <>
-      <RefillsToolbar
-        changeDate={changeDate}
-        changeKiosk={changeKiosk}
-        kiosks={kiosks}
-      />
+      <RefillsToolbar changeDate={changeDate} changeKiosk={changeKiosk} />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
           <Grid.Column mobile={16} computer={3} tablet={8}>
@@ -181,7 +177,6 @@ const mapStateToProps = state => ({
   refills: getGridRefillsTableState(state),
   total: getTotalGridRefillsCount(state),
   isLoading: state.transactions.isLoading,
-  kiosks: getKioskOptionsForTableDropdown(state),
   productsList: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
 });

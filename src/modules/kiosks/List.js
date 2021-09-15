@@ -45,6 +45,7 @@ const KiosksList = ({
         selectedKiosk={kiosk}
         selectedOrganization={organization}
       />
+
       <KiosksContent
         {...props}
         search={search}

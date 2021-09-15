@@ -49,7 +49,7 @@ function* handler({ payload }) {
           totalNumberOfProductsRemoved: getTotalNumberOfProductsRemoved,
           averageSpoilageRate: getAverageSpoilageRate,
           totalCostValueOfReplenishedProducts: getDefaultTotalCostValueOfRefills,
-          totalSaleValueOfReplenishedProdukicts: getDefaultTotalSalesValueOfRefills,
+          totalSaleValueOfReplenishedProducts: getDefaultTotalSalesValueOfRefills,
         }),
       );
     }
