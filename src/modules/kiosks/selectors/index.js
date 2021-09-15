@@ -13,17 +13,17 @@ import moment from 'moment';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
-  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  NoProductsBought: 'No Products Bought',
-  NoLeftScalesData: 'Left Scales Disconnected',
-  NoRightScalesData: 'Right Scales Disconnected',
-  TabletDisconn: 'Tablet Disconnected',
-  TabletMqttDisconn: 'Tablet MQTT Disconnected',
+  NoProductsBought: 'Empty Purchase session',
+  InvalidScaleWeight: 'Invalid Scales weight',
+  NoLeftScalesData: 'Left Scales disconnected',
+  NoRightScalesData: 'Right Scales disconnected',
+  TabletDisconn: 'Tablet Internet disconnected',
+  TabletMqttDisconn: 'Tablet MQTT disconnected',
 };
 
 const alertSeverity = {
@@ -362,47 +362,33 @@ export const kioskInitialValues = {
   serialNumber: '',
   notes: '',
   orgId: '',
-  location: {
-    address: {
-      name: '',
-      line1: '',
-      line2: '',
-      postalCode: '',
-      city: '',
-      state: '',
-      country: '',
-    },
-  },
+  locationName: '',
+  locationLine1: '',
+  locationLine2: '',
+  locationPostalCode: '',
+  locationCity: '',
+  locationState: '',
+  locationCountry: '',
   pin: '',
   technicianPin: '',
 };
 
 export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
-  let { __typename, ...address } = get(
-    kiosk,
-    'location.address',
-    kioskInitialValues.location.address,
-  );
-  address = Object.keys(address).reduce((prev, key) => {
-    if (address[key] !== null) {
-      prev[key] = address[key];
-    }
-    return prev;
-  }, {});
-
   return kiosk
     ? {
         id: kiosk._id,
         ...pick(kiosk, ['name', 'serialNumber', 'pin']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
-        },
+        locationName: get(kiosk.location.address, 'name', '') || '',
+        locationLine1: get(kiosk.location.address, 'line1', '') || '',
+        locationLine2: get(kiosk.location.address, 'line2', '') || '',
+        locationPostalCode: get(kiosk.location.address, 'postalCode', '') || '',
+        locationCity: get(kiosk.location.address, 'city', '') || '',
+        locationState: get(kiosk.location.address, 'state', '') || '',
+        locationCountry: get(kiosk.location.address, 'country', '') || '',
         technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
+        pin: get(kiosk, 'pin', '') || '',
       }
     : kioskInitialValues;
 });
@@ -542,16 +528,16 @@ export const getGridTempratureTableState = createSelector(
         time: updated,
         timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? Number(payload.message.sensors[0].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[0].temperature / 100).toFixed()
           : null,
         Sensor2: payload.message.sensors[1]
-          ? Number(payload.message.sensors[1].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[1].temperature / 100).toFixed()
           : null,
         Sensor3: payload.message.sensors[2]
-          ? Number(payload.message.sensors[2].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[2].temperature / 100).toFixed()
           : null,
         Sensor4: payload.message.sensors[3]
-          ? Number(payload.message.sensors[3].temperature / 100).toFixed(1)
+          ? Number(payload.message.sensors[3].temperature / 100).toFixed()
           : null,
       };
       newArr.push(Item);
@@ -589,3 +575,8 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
 });
 
 export const getPaginationState = state => state.kiosks.pagination;
+
+export const getSelectedKiosksState = createSelector(
+  getPaginationState,
+  pagination => pagination.kiosk,
+);

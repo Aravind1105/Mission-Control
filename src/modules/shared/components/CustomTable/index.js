@@ -79,7 +79,6 @@ const CustomTable = ({
   };
 
   const handlerRowClick = (item, i) => () => {
-    console.log('button is clicked', i);
     if (selectable) setActiveRow(i);
     if (onRowClick) onRowClick(item, i);
   };

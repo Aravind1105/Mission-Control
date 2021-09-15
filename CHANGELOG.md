@@ -1,3 +1,41 @@
+#### 1.4.27 (2021-09-09)
+
+##### New Features
+
+* **teansactions-products:** LIV-3786 multiple kiosk filter for transaction products (2c186e7d)
+* **transactions refills:** LIV-3726 multiple kiosk filter and updated widgest and CSV (2c9b415d)
+* **alerts page:** LIV-3785 multiple kiosk selection filter (aa22626c)
+* **kiosk list page:** LIV-3727 multiple kiosk filtering (43c15424)
+* **transaction sales:** LIV-2787 CSV export for sales (4c580c0d)
+* **transactions sales:** LIV-2787 CSV (13d99894)
+* **transactions-sales:** LIV-2787 multiple kiosk filtering (83295102)
+* **components:**
+  * LIV-2787 multi select chck box options - clear button (0cb96893)
+  * LIV-2787 outside click handler for multiple selection options (a849d128)
+* **Components:** LIV-2787 multiple selection component (ea5f090f)
+
+##### Bug Fixes
+
+* **LIV-3583:**
+  *  Updated btn design and msg format (47dcfe3a)
+  * fixed img base64 and updated alerts name (29da2db5)
+* **kiosks list page:** LIV-3727 multiple selection filter displays after full loading (0a1d07d8)
+* **transactions sales:** LIV-2787 widgets show data for multiple kiosks (3bab257e)
+* **payment:**  payment status update (1225056f)
+* **Kiosk Overview Admin and Super Admin:**  LIV-3371 different Kiosk Overview of Admin and Super Admin (784fa9ab)
+* **kiosk:**  LIV-3371 Adding frontend changes for kiosk table sorting based on organization name (f4144409)
+* **users, products, kiosks:** LIV-3558 pagination redux actions updated and users search on redux fixed (7a4309d7)
+* **users:** LIV-3558 users navigation pagination and search data saved on redux state (d638d7f3)
+* **Users:**  LIV-3458 User Low must be highlighted once selected (f80db353)
+
+##### Other Changes
+
+*  Temp Decimal fixed): LIV-3382 Temp Log of last 7 dates decimal value fixed (fdf2d0f0)
+* LIV-2787 kiosk multiple filtering widget data (302eb58b)
+*  Temp): LIV-3382 Temp Log of last 7 dates (669bdaf1)
+*  Temp): LIV-3382 Temp Log of last 7 dates (2c6f9b1f)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved updated (0a2a8fad)
+
 #### 1.4.27 (2021-08-23)
 
 ##### Bug Fixes

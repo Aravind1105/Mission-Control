@@ -16,10 +16,6 @@ const columns = [
     field: 'manufacturer',
   },
   {
-    title: 'Category',
-    field: 'category',
-  },
-  {
     title: 'Weight',
     field: 'weight',
     formatter: ({ packagingOptions }) => {
