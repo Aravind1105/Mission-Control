@@ -56,7 +56,7 @@ const DetailsInventory = ({ list, total }) => {
         <Grid.Row>
           <Grid.Column width={16}>
             <Header as="h3">
-              Inventory Test:&nbsp;
+              Inventory:&nbsp;
               <ColoredBlock type="b" value={totalKioskOccupancy}>
                 {`${totalKioskOccupancy.toPrecision(4)} %`}
               </ColoredBlock>
@@ -85,14 +85,7 @@ const DetailsInventory = ({ list, total }) => {
                     {productName.length > 16 ? (
                       <Popup
                         trigger={
-                          <div
-                            style={{
-                              textOverflow: 'ellipsis',
-                              overflow: 'hidden',
-                              width: '210px',
-                              whiteSpace: 'nowrap',
-                            }}
-                          >
+                          <div className="kiosk-inventory-table">
                             {productName}
                           </div>
                         }
