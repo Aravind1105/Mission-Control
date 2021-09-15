@@ -181,13 +181,13 @@ const SelectCheckBoxes = ({
           <div className="select-checks-options-divider" />
           <div className="select-check-options-footer">
             <Button
-              className="select-checks-footer-btn select-checks-footer-btn-left"
+              className="select-checks-footer-btn select-checks-footer-btn-left custom-button-cancel"
               onClick={() => setSelectedValues([])}
             >
               Clear
             </Button>
             <Button
-              className="select-checks-footer-btn custom-button-blue"
+              className="select-checks-footer-btn custom-button-confirm"
               onClick={() => {
                 onClickApply(
                   selectedValues.filter(value => value !== allOptionKey),

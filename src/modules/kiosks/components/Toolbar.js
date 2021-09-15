@@ -115,7 +115,6 @@ const Toolbar = ({
               </Grid.Column>
             </>
           )}
-
           {rootUser && (
             <Grid.Column textAlign="right">
               <div className="add_kiosk_button">
@@ -140,15 +139,14 @@ const Toolbar = ({
             <Divider style={{ marginTop: 0, marginBottom: 0 }} />
             <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
               <Grid.Column computer={3}>
-                {!isLoading && (
-                  <SelectCheckBoxes
-                    title="Kiosks"
-                    options={kiosks}
-                    allOptionKey="all"
-                    onClickApply={handleKioskChange}
-                    value={selectedKiosks}
-                  />
-                )}
+                <SelectCheckBoxes
+                  title="Kiosks"
+                  options={kiosks}
+                  allOptionKey="all"
+                  onClickApply={handleKioskChange}
+                  value={selectedKiosks}
+                  isLoading={isLoading}
+                />
               </Grid.Column>
               <Grid.Column computer={3}>
                 <Dropdown
