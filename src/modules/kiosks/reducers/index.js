@@ -250,7 +250,7 @@ const kiosksReducer = handleActions(
     }),
     [getKiosksList]: (state, {}) => ({
       ...state,
-      pagination: { ...state, isKiosksListLoading: true },
+      pagination: { ...state.pagination, isKiosksListLoading: true },
     }),
     [getKiosksListSuccess]: (state, { payload }) => ({
       ...state,
