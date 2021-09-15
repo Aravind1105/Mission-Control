@@ -106,7 +106,7 @@ const ProductList = ({
       <ProductsToolbar
         changeDate={changeDate}
         changeKiosk={changeKiosk}
-        kiosks={kiosks}
+        kiosksOptions={kiosks}
         productsListValue={productsListValue}
         changeProduct={changeProduct}
       />
