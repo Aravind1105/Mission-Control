@@ -56,7 +56,7 @@ const Toolbar = ({
             className="full-width"
           />
         </Grid.Column>
-        <Grid.Column  mobile={16} tablet={8} computer={3}>
+        <Grid.Column mobile={16} tablet={8} computer={3}>
           <SelectCheckBoxes
             title="Kiosks"
             options={kiosks}
@@ -83,7 +83,7 @@ const mapStateToProps = state => ({
   alerts: getKiosksAlertsForTable(state),
   kiosks: getKioskOptionsForTableDropdown(state),
   alertsOptions: getAlertsOptions(),
-  isKiosksLoading: state.kiosks.isLoading,
+  isKiosksLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {};
 

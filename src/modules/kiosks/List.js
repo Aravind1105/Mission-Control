@@ -42,7 +42,7 @@ const KiosksList = ({
         kiosksNetworkStatus={kiosksNetworkStatus}
         organizations={organizations}
         setOrganization={setOrganization}
-        selectedKiosk={kiosk}
+        selectedKiosks={kiosk}
         selectedOrganization={organization}
       />
 

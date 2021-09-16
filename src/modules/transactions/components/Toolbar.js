@@ -14,7 +14,7 @@ const Toolbar = ({
   kiosks,
   changeKiosk,
   exportCsvSales,
-  isLoading,
+  isKiosksListLoading,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -87,7 +87,7 @@ const Toolbar = ({
               options={kiosks}
               allOptionKey="all"
               onClickApply={handleKioskChange}
-              isLoading={isLoading}
+              isLoading={isKiosksListLoading}
             />
           </Grid.Column>
 
@@ -115,7 +115,7 @@ Toolbar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.kiosks.isLoading,
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvSales,
