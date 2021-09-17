@@ -4,7 +4,7 @@ import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
 import logoSmall from 'styling/assets/images/new_Menu_Logo.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
-import { getAllKiosks } from 'modules/kiosks/actions';
+import { getKiosksList } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar/';
@@ -16,8 +16,9 @@ const DesktopLayout = ({
   children,
   isLoading,
   alerts,
-  getAllKiosks,
+  getKiosksList,
   userType,
+  kiosks,
 }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
@@ -27,8 +28,10 @@ const DesktopLayout = ({
   };
 
   useEffect(() => {
-    if (!isLoading) getAllKiosks({ data: {} });
-  }, []);
+    if (kiosks.length === 0) {
+      getKiosksList();
+    }
+  }, [kiosks]);
 
   return (
     <div className={`desktop-container${minimized ? ' minimized' : ''}`}>
@@ -75,9 +78,10 @@ const mapStateToProps = state => ({
   isLoading: state.kiosks.isLoading,
   alerts: getKiosksAlerts(state),
   userType: getUserType(state),
+  kiosks: state.kiosks.kiosksList,
 });
 
 const mapDispatchToProps = {
-  getAllKiosks,
+  getKiosksList,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DesktopLayout);

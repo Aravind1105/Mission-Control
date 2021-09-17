@@ -1,3 +1,62 @@
+#### 1.4.28 (2021-09-15)
+
+##### New Features
+
+* **LIV-3839:**  added alert for invalid scale readings (07fb3a0c)
+* **products listing:** LIV-3788 removed category column from products page (de8734fa)
+* **teansactions-products:** LIV-3786 multiple kiosk filter for transaction products (2c186e7d)
+* **test:**  added test url for test env (a129bda3)
+* **transactions refills:** LIV-3726 multiple kiosk filter and updated widgest and CSV (2c9b415d)
+* **alerts page:** LIV-3785 multiple kiosk selection filter (aa22626c)
+* **kiosk list page:** LIV-3727 multiple kiosk filtering (43c15424)
+* **transaction sales:** LIV-2787 CSV export for sales (4c580c0d)
+* **transactions sales:** LIV-2787 CSV (13d99894)
+* **ci-cd:**  add test-master deployments (88c3f3c6)
+* **transactions-sales:** LIV-2787 multiple kiosk filtering (83295102)
+* **components:**
+  * LIV-2787 multi select chck box options - clear button (0cb96893)
+  * LIV-2787 outside click handler for multiple selection options (a849d128)
+* **Components:** LIV-2787 multiple selection component (ea5f090f)
+
+##### Bug Fixes
+
+* **transactions products:**  LIV-3207 a minor fix in request payload when none of the kiosks is selected (42e1cd68)
+* **factor:**  refactoring code (adeb8691)
+* **Kiosk:**
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (65606ce7)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (25e2cfc5)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (e896ae4c)
+  *  LIV-3372 Input Formate and Validation (a427b10c)
+* **LIV-3583:**
+  *  fixed same image uplaod twice (a62aa0bd)
+  *  Updated btn design and msg format (47dcfe3a)
+  * fixed img base64 and updated alerts name (29da2db5)
+* **kiosks:**  update placeholder img styling (eb2d6b3b)
+* **Products:**
+  *  LIV-3378 Product Form Validation (dad05d30)
+  *  LIV-3378 Product Form Validation (a94687e5)
+* **kiosks list page:** LIV-3727 multiple selection filter displays after full loading (0a1d07d8)
+* **transactions sales:** LIV-2787 widgets show data for multiple kiosks (3bab257e)
+* **payment:**  payment status update (1225056f)
+* **Kiosk Overview Admin and Super Admin:**  LIV-3371 different Kiosk Overview of Admin and Super Admin (784fa9ab)
+* **kiosk:**  LIV-3371 Adding frontend changes for kiosk table sorting based on organization name (f4144409)
+* **users, products, kiosks:** LIV-3558 pagination redux actions updated and users search on redux fixed (7a4309d7)
+* **users:** LIV-3558 users navigation pagination and search data saved on redux state (d638d7f3)
+* **Users:**  LIV-3458 User Low must be highlighted once selected (f80db353)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into test-master (e1b1307f)
+*  Temp Decimal fixed): LIV-3382 Temp Log of last 7 dates decimal value fixed (fdf2d0f0)
+* LIV-2787 kiosk multiple filtering widget data (302eb58b)
+*  Temp): LIV-3382 Temp Log of last 7 dates (669bdaf1)
+*  Temp): LIV-3382 Temp Log of last 7 dates (2c6f9b1f)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved updated (0a2a8fad)
+
+##### Tests
+
+* **k8:**  add yaml files for test env (6e4f3024)
+
 #### 1.4.27 (2021-09-09)
 
 ##### New Features

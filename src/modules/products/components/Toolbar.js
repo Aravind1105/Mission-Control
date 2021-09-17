@@ -10,9 +10,10 @@ import {
   Divider,
   Input,
 } from 'semantic-ui-react';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 import {
   selectorGetProductCategories,
-  selectorGetManufacturer,
+  getProductsDropdownList,
 } from '../selectors';
 
 const Toolbar = ({
@@ -20,9 +21,9 @@ const Toolbar = ({
   changeSearch,
   changeCategory,
   changeManufacturer,
-  categories,
-  manufacturers,
-  manufacturer
+  manufacturerOptions,
+  manufacturer,
+  isManufacturesLoading,
 }) => {
   const handleSearchChange = ({ target }) => {
     changeSearch(target.value);
@@ -32,9 +33,9 @@ const Toolbar = ({
     changeCategory(text);
   };
 
-  const handleChangeManufacturer = (e, { value }) => {
+  const handleChangeManufacturer = value => {
     const text = value === 'All Manufacturers' ? '' : value;
-    changeManufacturer(text);
+    changeManufacturer(value);
   };
 
   return (
@@ -67,24 +68,25 @@ const Toolbar = ({
         </Grid.Row>
         <Divider style={{ marginTop: 0, marginBottom: 0 }} />
         <Grid.Row verticalAlign="middle" columns={2}>
-          <Grid.Column mobile={16} computer={4}>
-            <Dropdown
-              placeholder="All Categories"
-              selection
-              className="full-width"
-              onChange={handleChangeCategory}
-              options={categories}
-            ></Dropdown>
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4}>
-            <Dropdown
-              placeholder="All Manufacturers"
-              selection
-              className="full-width"
-              onChange={handleChangeManufacturer}
-              options={manufacturers}
+          {/* <Grid.Column mobile={16} tablet={8} computer={3}>
+            <SelectCheckBoxes
+              title="Products"
+              options={products}
+              allOptionKey="all"
+              onClickApply={handleProductsChange}
+              isLoading={isProductsLoading}
+              value={product}
+            />
+          </Grid.Column> */}
+          <Grid.Column mobile={16} tablet={8} computer={3}>
+            <SelectCheckBoxes
+              title="Manufacturers"
+              options={manufacturerOptions}
+              allOptionKey="all"
+              onClickApply={handleChangeManufacturer}
+              isLoading={isManufacturesLoading}
               value={manufacturer}
-            ></Dropdown>
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -94,7 +96,8 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   categories: selectorGetProductCategories(state),
-  manufacturers: selectorGetManufacturer(state),
+  isManufacturesLoading: state.products.isManufacturesLoading,
+  products: getProductsDropdownList(state),
 });
 
 export default connect(mapStateToProps)(Toolbar);

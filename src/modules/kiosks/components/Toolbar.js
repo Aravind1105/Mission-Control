@@ -26,31 +26,24 @@ const Toolbar = ({
   setKiosk,
   organizations,
   setOrganization,
-  kiosksStatus,
-  setKioskStatus,
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
-  selectedKiosk,
   selectedOrganization,
   selectedKiosks,
-  isLoading,
-  // kiosksNetworkStatus, //!LIV-2285
-  // setKioskNetworkStatus //!LIV-2285
+  isKiosksListLoading,
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
   };
+
   const handleKioskChange = value => {
     setKiosk(value);
   };
+
   const handleOrganizationChange = (e, { value }) => {
     const text = value === 'All' ? '' : value;
     setOrganization(text);
-  };
-  const handleKiosksStatus = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
-    setKioskStatus(text);
   };
 
   const DownloadOrderListCsv = () => {
@@ -62,6 +55,7 @@ const Toolbar = ({
       color: 'blue',
     });
   };
+
   const DownloadPackListCsv = () => {
     exportCsvPackList();
     toast({
@@ -71,11 +65,6 @@ const Toolbar = ({
       color: 'blue',
     });
   };
-
-  // const handleKiosksNetworkStatus = (e, { value }) => { //!LIV-2285
-  //   const text = value === 'All' ? '' : value;
-  //   setKioskNetworkStatus(text)
-  // };
 
   return (
     <Segment className="toolbar">
@@ -90,7 +79,31 @@ const Toolbar = ({
               className="full-width"
             />
           </Grid.Column>
-
+          {!rootUser && (
+            <>
+              <Grid.Column></Grid.Column>
+              <Grid.Column>
+                <div className="download_orderlist_button_admin">
+                  <CustomButton
+                    label="Download Order List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadOrderListCsv}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div className="download_packlist_button_admin">
+                  <CustomButton
+                    label="Download Pack List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadPackListCsv}
+                  />
+                </div>
+              </Grid.Column>
+            </>
+          )}
           {rootUser && (
             <Grid.Column textAlign="right">
               <div className="add_kiosk_button">
@@ -110,95 +123,53 @@ const Toolbar = ({
           )}
         </Grid.Row>
 
-        <Divider style={{ marginTop: 0, marginBottom: 0 }} />
-
-        {rootUser ? (
-          <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
-            <Grid.Column computer={3}>
-              {!isLoading && (
+        {rootUser && (
+          <>
+            <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+            <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
+              <Grid.Column computer={3}>
                 <SelectCheckBoxes
                   title="Kiosks"
                   options={kiosks}
                   allOptionKey="all"
                   onClickApply={handleKioskChange}
                   value={selectedKiosks}
+                  isLoading={isKiosksListLoading}
                 />
-              )}
-            </Grid.Column>
-            <Grid.Column computer={3}>
-              <Dropdown
-                placeholder="All Organization"
-                selection
-                className="full-width"
-                onChange={handleOrganizationChange}
-                options={organizations}
-                value={selectedOrganization}
-              />
-            </Grid.Column>
-
-            <Grid.Column computer={3}></Grid.Column>
-            <Grid.Column computer={3}>
-              <div className="download_orderlist_button">
-                <CustomButton
-                  label="Download Order List"
-                  icon="arrow down"
-                  className="custom-button-default"
-                  onClick={DownloadOrderListCsv}
+              </Grid.Column>
+              <Grid.Column computer={3}>
+                <Dropdown
+                  placeholder="All Organization"
+                  selection
+                  className="full-width"
+                  onChange={handleOrganizationChange}
+                  options={organizations}
+                  value={selectedOrganization}
                 />
-              </div>
-            </Grid.Column>
-
-            <Grid.Column computer={3}>
-              <div className="download_packlist_button">
-                <CustomButton
-                  label="Download Pack List"
-                  icon="arrow down"
-                  className="custom-button-default"
-                  onClick={DownloadPackListCsv}
-                />
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        ) : (
-          <Grid.Row verticalAlign="middle" columns={4}>
-            <Grid.Column>
-              <Dropdown
-                placeholder="All Kiosks"
-                selection
-                className="full-width"
-                onChange={handleKioskChange}
-                options={kiosks}
-              />
-            </Grid.Column>
-
-            <Grid.Column>
-              <Dropdown
-                placeholder="All Door Status"
-                selection
-                className="full-width"
-                onChange={handleKiosksStatus}
-                options={kiosksStatus}
-              />
-            </Grid.Column>
-
-            <Grid.Column>
-              <CustomButton
-                label="Download Order List&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default-admin"
-                onClick={DownloadOrderListCsv}
-              />
-            </Grid.Column>
-
-            <Grid.Column>
-              <CustomButton
-                label="Download Pack List&nbsp;"
-                icon="arrow down icon"
-                className="custom-button-default-admin"
-                onClick={DownloadPackListCsv}
-              />
-            </Grid.Column>
-          </Grid.Row>
+              </Grid.Column>
+              <Grid.Column computer={3}></Grid.Column>
+              <Grid.Column computer={3}>
+                <div className="download_orderlist_button">
+                  <CustomButton
+                    label="Download Order List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadOrderListCsv}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column computer={3}>
+                <div className="download_packlist_button">
+                  <CustomButton
+                    label="Download Pack List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadPackListCsv}
+                  />
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </>
         )}
       </Grid>
     </Segment>
@@ -212,8 +183,7 @@ Toolbar.propTypes = {
 
 const mapStateToProps = state => ({
   rootUser: state.user.root,
-  selectedKiosks: getSelectedKiosksState(state),
-  isLoading: state.kiosks.isLoading,
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvOrderList,

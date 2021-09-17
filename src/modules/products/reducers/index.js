@@ -26,6 +26,7 @@ import {
   setPerPage,
   setSort,
   setFilters,
+  getManufacturers,
 } from '../actions';
 
 const initialState = {
@@ -38,6 +39,7 @@ const initialState = {
   defaultPriceHistory: [],
   activePriceHistory: [],
   manufacturers: [],
+  isManufacturesLoading: false,
   kiosksWithProduct: [],
   pagination: {
     page: 0,
@@ -48,10 +50,10 @@ const initialState = {
         direction: 'ASC',
       },
     ],
-    filters: { search: '', category: '', manufacturer: '' },
+    filters: { search: '', category: '', manufacturer: [] },
     search: '',
     category: '',
-    manufacturer: '',
+    manufacturer: [],
   },
 };
 
@@ -121,8 +123,13 @@ export default handleActions(
       ...state,
       activePriceHistory: payload.activePriceHistory,
     }),
+    [getManufacturers]: (state, { payload }) => ({
+      ...state,
+      isManufacturesLoading: true,
+    }),
     [getManufacturersSuccess]: (state, { payload }) => ({
       ...state,
+      isManufacturesLoading: false,
       manufacturers: payload,
     }),
     [getKiosksWithProductSuccess]: (state, { payload }) => ({
