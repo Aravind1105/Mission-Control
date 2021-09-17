@@ -295,23 +295,26 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => {
-  const options = kiosks.map(({ _id, name }) => ({
-    value: _id,
-    label: name,
-  }));
-  // sort options based on the alphabetical order of the kiosk names
-  const sortByKioskNameCaseInsensitive = R.sortBy(
-    R.compose(R.toLower, R.prop('label')),
-  );
-  return [
-    { value: '', label: 'All Kiosks' },
-    ...sortByKioskNameCaseInsensitive(options),
-  ];
-});
+export const getKioskOptions = createSelector(
+  getKiosksState,
+  kiosks => {
+    const options = kiosks.map(({ _id, name }) => ({
+      value: _id,
+      label: name,
+    }));
+    // sort options based on the alphabetical order of the kiosk names
+    const sortByKioskNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('label')),
+    );
+    return [
+      { value: '', label: 'All Kiosks' },
+      ...sortByKioskNameCaseInsensitive(options),
+    ];
+  },
+);
 
 export const getKioskOptionsForTableDropdown = createSelector(
-  getKiosksState,
+  state => state.kiosks.kiosksList,
   kiosks => {
     const allKiosks = kiosks.map(({ _id, name }) => ({
       value: _id,
@@ -528,16 +531,16 @@ export const getGridTempratureTableState = createSelector(
         time: updated,
         timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? Number(payload.message.sensors[0].temperature / 100).toFixed()
+          ? payload.message.sensors[0].temperature / 100
           : null,
         Sensor2: payload.message.sensors[1]
-          ? Number(payload.message.sensors[1].temperature / 100).toFixed()
+          ? payload.message.sensors[1].temperature / 100
           : null,
         Sensor3: payload.message.sensors[2]
-          ? Number(payload.message.sensors[2].temperature / 100).toFixed()
+          ? payload.message.sensors[2].temperature / 100
           : null,
         Sensor4: payload.message.sensors[3]
-          ? Number(payload.message.sensors[3].temperature / 100).toFixed()
+          ? payload.message.sensors[3].temperature / 100
           : null,
       };
       newArr.push(Item);

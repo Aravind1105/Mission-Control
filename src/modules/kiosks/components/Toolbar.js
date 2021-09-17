@@ -31,7 +31,7 @@ const Toolbar = ({
   exportCsvPackList,
   selectedOrganization,
   selectedKiosks,
-  isLoading,
+  isKiosksListLoading,
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
@@ -134,7 +134,7 @@ const Toolbar = ({
                   allOptionKey="all"
                   onClickApply={handleKioskChange}
                   value={selectedKiosks}
-                  isLoading={isLoading}
+                  isLoading={isKiosksListLoading}
                 />
               </Grid.Column>
               <Grid.Column computer={3}>
@@ -183,8 +183,7 @@ Toolbar.propTypes = {
 
 const mapStateToProps = state => ({
   rootUser: state.user.root,
-  selectedKiosks: getSelectedKiosksState(state),
-  isLoading: state.kiosks.isLoading,
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvOrderList,

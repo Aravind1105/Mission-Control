@@ -38,7 +38,9 @@ const CustomTooltip = ({ active, payload, label, LegendArray }) => {
     const listSensors = LegendArray.map(item => (
       <li style={{ color: `${item.color}` }}>{item.value}: </li>
     ));
-    const listValue = SensorValues.slice(2).map(item => <li>{item} °C</li>);
+    const listValue = SensorValues.slice(2).map(item => (
+      <li>{Number(item).toFixed(1)} °C</li>
+    ));
     let date = moment(payload[0].payload.time).format('MMM D yyyy, hh:mm ');
     return (
       <div className="custom_tool_tip">
@@ -144,7 +146,7 @@ const LinearChart = ({ data }) => {
               tickCount={7}
               tickSize={10}
               tickFormatter={value =>
-                new Intl.NumberFormat().format(value) + '°C'
+                new Number(Intl.NumberFormat().format(value)).toFixed() + '°C'
               }
               padding={{ top: 1 }}
               type="number"
