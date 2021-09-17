@@ -14,7 +14,7 @@ const Toolbar = ({
   kiosks,
   changeKiosk,
   exportCsvSales,
-  isLoading,
+  isKiosksListLoading,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -82,14 +82,13 @@ const Toolbar = ({
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            {!isLoading && (
-              <SelectCheckBoxes
-                title="Kiosks"
-                options={kiosks}
-                allOptionKey="all"
-                onClickApply={handleKioskChange}
-              />
-            )}
+            <SelectCheckBoxes
+              title="Kiosks"
+              options={kiosks}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksListLoading}
+            />
           </Grid.Column>
 
           {/* <Grid.Column width={4}>
@@ -116,7 +115,7 @@ Toolbar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.kiosks.isLoading,
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvSales,

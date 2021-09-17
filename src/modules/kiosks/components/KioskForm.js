@@ -20,7 +20,31 @@ const KioskForm = ({
   sNum,
 }) => {
   const dispatch = useDispatch();
+  const addressModifier = values => {
+    values.location = {};
+    values.location.address = {
+      name: values.locationName,
+      line1: values.locationLine1,
+      line2: values.locationLine2,
+      postalCode: values.locationPostalCode,
+      city: values.locationCity,
+      state: values.locationState,
+      country: values.locationCountry,
+    };
+    // Deleting Custom Properties
+    delete values.locationName;
+    delete values.locationLine1;
+    delete values.locationLine2;
+    delete values.locationPostalCode;
+    delete values.locationCity;
+    delete values.locationCountry;
+    delete values.locationState;
+
+    return values;
+  };
   const onSubmit = (values, formActions) => {
+    //Modifying Address According to BE
+    addressModifier(values);
     updatingKiosk = dispatch(modifyKiosk({ values, formActions }));
   };
 
@@ -50,17 +74,13 @@ const KioskForm = ({
               } else return true;
             },
           }),
+        locationName: Yup.string().required('This field is required'),
+        locationLine1: Yup.string().required('This field is required'),
+        locationPostalCode: Yup.string().required('This field is required'),
+        locationCity: Yup.string().required('This field is required'),
+        locationState: Yup.string().required('This field is required'),
+        locationCountry: Yup.string().required('This field is required'),
         orgId: Yup.string().required('This field is required'),
-        location: Yup.object().shape({
-          address: Yup.object().shape({
-            name: Yup.string().required('This field is required'),
-            country: Yup.string().required('This field is required'),
-            city: Yup.string().required('This field is required'),
-            state: Yup.string().required('This field is required'),
-            line1: Yup.string().required('This field is required'),
-            postalCode: Yup.string().required('This field is required'),
-          }),
-        }),
         pin: Yup.number()
           .required('This field is required')
           .test({
@@ -174,7 +194,7 @@ const KioskForm = ({
             <Grid.Row columns="equal">
               <Grid.Column>
                 <Field
-                  name="location.address.name"
+                  name="locationName"
                   label="Client Name"
                   required
                   maxLength="50"
@@ -187,7 +207,7 @@ const KioskForm = ({
             <Grid.Row>
               <Grid.Column width={6}>
                 <Field
-                  name="location.address.country"
+                  name="locationCountry"
                   label="Country"
                   required
                   maxLength="50"
@@ -196,7 +216,7 @@ const KioskForm = ({
               </Grid.Column>
               <Grid.Column width={6}>
                 <Field
-                  name="location.address.city"
+                  name="locationCity"
                   label="City"
                   required
                   maxLength="50"
@@ -205,7 +225,7 @@ const KioskForm = ({
               </Grid.Column>
               <Grid.Column width={4}>
                 <Field
-                  name="location.address.state"
+                  name="locationState"
                   label="State"
                   required
                   maxLength="50"
@@ -217,7 +237,7 @@ const KioskForm = ({
             <Grid.Row>
               <Grid.Column width={6}>
                 <Field
-                  name="location.address.line1"
+                  name="locationLine1"
                   label="Address 1"
                   required
                   maxLength="50"
@@ -226,7 +246,7 @@ const KioskForm = ({
               </Grid.Column>
               <Grid.Column width={6}>
                 <Field
-                  name="location.address.line2"
+                  name="locationLine2"
                   label="Address 2"
                   maxLength="50"
                   component={FormInput}
@@ -234,7 +254,7 @@ const KioskForm = ({
               </Grid.Column>
               <Grid.Column width={4}>
                 <Field
-                  name="location.address.postalCode"
+                  name="locationPostalCode"
                   label="ZIP Code"
                   required
                   placeholder="ex. 51377"

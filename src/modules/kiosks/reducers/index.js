@@ -38,6 +38,8 @@ import {
   setKiosk,
   setOrganization,
   setKioskStatus,
+  getKiosksList,
+  getKiosksListSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -56,6 +58,8 @@ const initialState = {
   totalEmptyKiosks: 0,
   temperatureLogs: [],
   activityLogs: [],
+  kiosksList: [],
+  isKiosksListLoading: false,
   pagination: {
     page: 0,
     perPage: 25,
@@ -67,12 +71,12 @@ const initialState = {
     ],
     filters: {
       search: '',
-      kiosk: '',
+      kiosk: [],
       kioskStatus: '',
       organization: '',
     },
     search: '',
-    kiosk: '',
+    kiosk: [],
     organization: '',
     kioskStatus: '',
   },
@@ -243,6 +247,15 @@ const kiosksReducer = handleActions(
     [setKioskStatus]: (state, { payload }) => ({
       ...state,
       pagination: { ...state.pagination, kioskStatus: payload },
+    }),
+    [getKiosksList]: (state, {}) => ({
+      ...state,
+      pagination: { ...state.pagination, isKiosksListLoading: true },
+    }),
+    [getKiosksListSuccess]: (state, { payload }) => ({
+      ...state,
+      kiosksList: payload,
+      isKiosksListLoading: false,
     }),
   },
   initialState,

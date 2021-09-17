@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles.less';
-import { Input, Button, Checkbox, Icon } from 'semantic-ui-react';
+import { Input, Button, Checkbox, Icon, Loader } from 'semantic-ui-react';
 
 const ICONS = {
   DOWN: 'caret down',
@@ -28,14 +28,21 @@ function outsideClickHandler(ref, callback) {
   }, [ref]);
 }
 
-const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
+const SelectCheckBoxes = ({
+  title,
+  options,
+  allOptionKey,
+  onClickApply,
+  value = [],
+  isLoading,
+}) => {
   const containerRef = useRef(null);
   outsideClickHandler(containerRef, () => setOptionsVisible(false));
 
   const [icon, setIcon] = useState(ICONS.DOWN);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues, setSelectedValues] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   useEffect(() => {
@@ -52,16 +59,18 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
 
   // selecting or deselecting All Option. Example: All Kiosks
   useEffect(() => {
-    if (
-      options.length - 1 === selectedValues.length &&
-      selectedValues.indexOf(allOptionKey) === -1
-    ) {
-      setSelectedValues([...selectedValues, allOptionKey]);
-    } else if (
-      selectedValues.length === 1 &&
-      selectedValues[0] === allOptionKey
-    ) {
-      setSelectedValues([]);
+    if (selectedValues.length > 0) {
+      if (
+        options.length - 1 === selectedValues.length &&
+        selectedValues.indexOf(allOptionKey) === -1
+      ) {
+        setSelectedValues([...selectedValues, allOptionKey]);
+      } else if (
+        selectedValues.length === 1 &&
+        selectedValues[0] === allOptionKey
+      ) {
+        setSelectedValues([]);
+      }
     }
 
     if (selectedValues.length === 0 && !optionsVisible) {
@@ -82,7 +91,9 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
     } else {
       setFilteredOptions(options);
     }
-  }, [searchText]);
+  }, [searchText, options]);
+
+  if (isLoading) return <Loader active inline="centered" />;
 
   return (
     <div className="select-checks-container" ref={containerRef}>
@@ -172,13 +183,13 @@ const SelectCheckBoxes = ({ title, options, allOptionKey, onClickApply }) => {
           <div className="select-checks-options-divider" />
           <div className="select-check-options-footer">
             <Button
-              className="select-checks-footer-btn select-checks-footer-btn-left"
+              className="select-checks-footer-btn select-checks-footer-btn-left custom-button-cancel"
               onClick={() => setSelectedValues([])}
             >
               Clear
             </Button>
             <Button
-              className="select-checks-footer-btn custom-button-blue"
+              className="select-checks-footer-btn custom-button-confirm"
               onClick={() => {
                 onClickApply(
                   selectedValues.filter(value => value !== allOptionKey),

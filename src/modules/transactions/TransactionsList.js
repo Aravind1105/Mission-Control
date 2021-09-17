@@ -38,7 +38,7 @@ const TransactionsList = ({
   isLoading,
   total,
   getAllTransactions,
-  kiosks,
+  kiosksOptions,
   getTransactionsWidgetsData,
   widgetsData,
 }) => {
@@ -68,9 +68,7 @@ const TransactionsList = ({
       const kioskIndex = isEqual(kiosk, filter.kiosk);
 
       widgetPayload.period = dateRange;
-      if (kiosk.length > 0) {
-        widgetPayload.kioskId = kiosk;
-      }
+      widgetPayload.kioskId = kiosk;
 
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
@@ -100,7 +98,7 @@ const TransactionsList = ({
     <>
       <Toolbar
         changeDate={changeDate}
-        kiosks={kiosks}
+        kiosks={kiosksOptions}
         changeKiosk={changeKiosk}
       />
       <Grid>
@@ -179,7 +177,7 @@ const mapStateToProps = state => ({
   transactions: getTransactionsTableState(state),
   total: getTotalTransactionsCount(state),
   isLoading: state.transactions.isLoading,
-  kiosks: getKioskOptionsForTableDropdown(state),
+  kiosksOptions: getKioskOptionsForTableDropdown(state),
   widgetsData: getWidgetDataState(state),
 });
 

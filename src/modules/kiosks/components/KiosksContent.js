@@ -23,18 +23,14 @@ import {
 } from '../actions';
 import { isEqual } from 'lodash';
 import { getUserType } from 'modules/authentication/selectors';
+
 const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
   'ownerOrganization.name': 'ownerOrganization.name',
-};
-
-const defaultFilterValues = {
-  search: '',
-  kiosk: '',
-  kioskStatus: '',
-  organization: '',
+  dayIncome: 'dayIncome',
+  'heartbeat.updated': 'heartbeat.updated',
 };
 
 const screenWidth = window.innerWidth;
@@ -146,7 +142,7 @@ const KiosksContent = ({
       limit: perPage,
     };
 
-    if (search || kiosk || kioskStatus || organization) {
+    if (search || kiosk.length > 0 || kioskStatus || organization) {
       const name = search
         ? {
             $or: [
@@ -155,7 +151,7 @@ const KiosksContent = ({
             ],
           }
         : {};
-      const kio = kiosk ? { _id: kiosk } : {};
+      const kio = kiosk.length > 0 ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
 
       const organizationId = organization ? { orgId: organization } : {};

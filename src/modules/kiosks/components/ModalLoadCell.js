@@ -110,7 +110,7 @@ const ModalLoadCell = ({
     const isQuantityChanged =
       isProductChanged || initVal.quantity !== +data.quantity;
     const isCellIdChanged = initVal.cellId.value !== data.cellId.value;
-    
+
     // compare price with default price or compare price with previous price
     const isPriceChanged =
       Number(
@@ -322,8 +322,8 @@ const ModalLoadCell = ({
               onCancel={() => setShowAlert(false)}
               alertMsg={
                 initVal.cellId.value && initVal.planogramPosition != position
-                  ? `A loadcell is already assigned to this position (${position})! Do you want to switch positions?`
-                  : `Are you sure that you want to update the product?`
+                  ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
+                  : `Are you sure you want to\nupdate the product?`
               }
             />
             <CustomAlert
@@ -334,8 +334,8 @@ const ModalLoadCell = ({
               onCancel={() => setShowDeleteAlert(false)}
               alertMsg={
                 quantityState === 0
-                  ? 'Are you sure want to delete this load cell?'
-                  : 'There are still some products on this load cell. Are you sure want to delete?'
+                  ? 'Are you sure you want to\ndelete this image?'
+                  : 'There are still some products on this load cell.\nAre you sure want to delete?'
               }
             />
             <CustomAlert
