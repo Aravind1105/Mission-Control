@@ -1,5 +1,12 @@
 import React from 'react';
-import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
+import {
+  Segment,
+  Header,
+  Grid,
+  Divider,
+  Table,
+  Popup,
+} from 'semantic-ui-react';
 import { groupBy, orderBy } from 'lodash';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import './styles.less';
@@ -14,6 +21,7 @@ const DetailsInventory = ({ list, total }) => {
   let totalCost = 0;
   let kioskAvailableQty = 0;
   let kioskMaxCapacity = 0;
+
   Object.values(groupedByProductLines).forEach(ele => {
     let totalQty = 0;
     let productName = '';
@@ -72,7 +80,26 @@ const DetailsInventory = ({ list, total }) => {
                       : `${totalQty}`}
                   </ColoredBlock>
                 </Table.Cell>
-                <Table.Cell>{productName}</Table.Cell>
+                <Table.Cell>
+                  <>
+                    {productName.length > 16 ? (
+                      <Popup
+                        trigger={
+                          <div className="kiosk-inventory-table">
+                            {productName}
+                          </div>
+                        }
+                        position="top left"
+                        wide
+                        hoverable
+                      >
+                        {productName}
+                      </Popup>
+                    ) : (
+                      <>{productName}</>
+                    )}
+                  </>
+                </Table.Cell>
                 <Table.Cell
                   style={{ textAlign: 'right' }}
                   collapsing
