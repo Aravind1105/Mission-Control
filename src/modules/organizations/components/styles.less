@@ -1,0 +1,14 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+
+.toolbar-container {
+  @media @mobile {
+    margin-left: 0px !important;
+  }
+}
+.toolbar-dropdown {
+  margin-left: -15px !important;
+  @media @mobile {
+    margin-left: 0px !important;
+  }
+}
