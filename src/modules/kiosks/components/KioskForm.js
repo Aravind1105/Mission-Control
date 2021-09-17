@@ -155,25 +155,6 @@ const KioskForm = ({
             <Grid.Row columns="equal">
               <Grid.Column>
                 <Field
-                  name="modelType"
-                  label="Model"
-                  component={FormInput}
-                  disabled
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Field
-                  name="statusDetail"
-                  label="Status"
-                  disabled
-                  component={FormInput}
-                />
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row columns="equal">
-              <Grid.Column>
-                <Field
                   name="orgId"
                   label="Organization"
                   required
@@ -181,17 +162,6 @@ const KioskForm = ({
                   options={organizations}
                 />
               </Grid.Column>
-              <Grid.Column>
-                <Field
-                  name="customerOrganization"
-                  label="Customer organization"
-                  disabled
-                  component={FormInput}
-                />
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row columns="equal">
               <Grid.Column>
                 <Field
                   name="locationName"
@@ -203,7 +173,6 @@ const KioskForm = ({
                 />
               </Grid.Column>
             </Grid.Row>
-
             <Grid.Row>
               <Grid.Column width={6}>
                 <Field
