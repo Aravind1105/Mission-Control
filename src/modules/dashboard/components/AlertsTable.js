@@ -8,6 +8,7 @@ import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
 import history from 'lib/history';
 import Toolbar from './AlertsToolbar';
 import { ToolTip } from './Alerts';
+import './styles.less';
 const backLink = {
   name: 'Back to Dashboard',
   link: '/',
@@ -70,13 +71,14 @@ const AlertsTable = ({
         </Header>
         <BackLink {...{ ...backLink }} />
       </SegmentHeader>
-      <Toolbar
-        changeDate={changeDate}
-        changeKiosk={changeKiosk}
-        changeAlert={changeAlert}
-        changePage={changePage}
-      />
-      <br></br>
+      <div className="toolbar-container">
+        <Toolbar
+          changeDate={changeDate}
+          changeKiosk={changeKiosk}
+          changeAlert={changeAlert}
+          changePage={changePage}
+        />
+      </div>
       <CustomTable
         sortable
         sortByColumn="startDate"
