@@ -82,7 +82,7 @@ const DetailsInventory = ({ list, total }) => {
                 </Table.Cell>
                 <Table.Cell>
                   <>
-                    {productName.length > 16 ? (
+                    {productName.length >= 27 ? (
                       <Popup
                         trigger={
                           <div className="kiosk-inventory-table">
@@ -96,7 +96,9 @@ const DetailsInventory = ({ list, total }) => {
                         {productName}
                       </Popup>
                     ) : (
-                      <>{productName}</>
+                      <div className="kiosk-inventory-table-item">
+                        {productName}
+                      </div>
                     )}
                   </>
                 </Table.Cell>

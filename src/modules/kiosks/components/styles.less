@@ -203,13 +203,23 @@ input::-webkit-inner-spin-button {
 
 .kiosk-inventory-table {
   text-overflow: ellipsis;
+  cursor: default;
   overflow: hidden;
-  width: 200px;
+  width: 180px;
   white-space: nowrap;
   @media @mobile {
     text-overflow: ellipsis;
     overflow: hidden;
     width: 150px;
     white-space: nowrap;
+  }
+}
+
+.kiosk-inventory-table-item {
+  cursor: default;
+  overflow: hidden;
+  width: 180px;
+  @media @mobile {
+    width: 150px;
   }
 }
