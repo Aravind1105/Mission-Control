@@ -300,14 +300,15 @@ export const getKioskOptions = createSelector(
   kiosks => {
     const options = kiosks.map(({ _id, name }) => ({
       value: _id,
-      label: name,
+      text: name,
+      key: _id,
     }));
     // sort options based on the alphabetical order of the kiosk names
     const sortByKioskNameCaseInsensitive = R.sortBy(
-      R.compose(R.toLower, R.prop('label')),
+      R.compose(R.toLower, R.prop('text')),
     );
     return [
-      { value: '', label: 'All Kiosks' },
+      { value: '', text: 'All Kiosks', key: '' },
       ...sortByKioskNameCaseInsensitive(options),
     ];
   },

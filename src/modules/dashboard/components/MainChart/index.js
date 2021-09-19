@@ -20,6 +20,7 @@ import CustomTooltip from '../CustomTooltip';
 import { getSalesStatisticState } from '../../selectors';
 import { computeAndFormatData } from '../../sagas/formatData';
 import './styles.less';
+import SelectCheckBoxes from '../../../shared/components/SelectCheckBoxes';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
@@ -31,8 +32,8 @@ const optionsTime = [
   { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ kiosksOptions, salesStats }) => {
-  const [kioskId, setKiosk] = useState('');
+const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
+  const [kioskId, setKiosk] = useState([]);
   const [time, setTime] = useState(optionsTime[3].value);
   const [data, setData] = useState(salesStats[time]);
   const [kiosks, setKiosks] = useState([]);
@@ -47,7 +48,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
     setData(formattedData);
   }, [kioskId, time]);
 
-  const handlerChangeKiosk = ({ value }) => {
+  const handleKioskChange = value => {
     setKiosk(value);
   };
 
@@ -66,10 +67,17 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
           </Grid.Column>
 
           <Grid.Column mobile={16} computer={4}>
-            <Select
+            {/* <Select
               onChange={handlerChangeKiosk}
               options={kiosksOptions}
               defaultValue={kiosksOptions[0]}
+            /> */}
+            <SelectCheckBoxes
+              title="Kiosks"
+              options={kiosksOptions}
+              allOptionKey=""
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksListLoading}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4}>
@@ -139,6 +147,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
 
 const mapStateToProps = state => ({
   salesStats: getSalesStatisticState(state),
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 
 export default connect(mapStateToProps)(MainChart);
