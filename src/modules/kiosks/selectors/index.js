@@ -296,7 +296,7 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
 );
 
 export const getKioskOptions = createSelector(
-  getKiosksState,
+  state => state.kiosks.kiosksList,
   kiosks => {
     const options = kiosks.map(({ _id, name }) => ({
       value: _id,
