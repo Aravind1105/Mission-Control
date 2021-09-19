@@ -71,6 +71,13 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
               options={kiosksOptions}
               defaultValue={kiosksOptions[0]}
             />
+            <SelectCheckBoxes
+              title="Kiosks"
+              options={kiosks}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksListLoading}
+            />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4}>
             <Select
@@ -139,6 +146,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
 
 const mapStateToProps = state => ({
   salesStats: getSalesStatisticState(state),
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 
 export default connect(mapStateToProps)(MainChart);
