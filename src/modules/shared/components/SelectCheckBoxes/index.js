@@ -59,16 +59,18 @@ const SelectCheckBoxes = ({
 
   // selecting or deselecting All Option. Example: All Kiosks
   useEffect(() => {
-    if (
-      options.length - 1 === selectedValues.length &&
-      selectedValues.indexOf(allOptionKey) === -1
-    ) {
-      setSelectedValues([...selectedValues, allOptionKey]);
-    } else if (
-      selectedValues.length === 1 &&
-      selectedValues[0] === allOptionKey
-    ) {
-      setSelectedValues([]);
+    if (selectedValues.length > 0) {
+      if (
+        options.length - 1 === selectedValues.length &&
+        selectedValues.indexOf(allOptionKey) === -1
+      ) {
+        setSelectedValues([...selectedValues, allOptionKey]);
+      } else if (
+        selectedValues.length === 1 &&
+        selectedValues[0] === allOptionKey
+      ) {
+        setSelectedValues([]);
+      }
     }
 
     if (selectedValues.length === 0 && !optionsVisible) {
@@ -181,13 +183,13 @@ const SelectCheckBoxes = ({
           <div className="select-checks-options-divider" />
           <div className="select-check-options-footer">
             <Button
-              className="select-checks-footer-btn select-checks-footer-btn-left"
+              className="select-checks-footer-btn select-checks-footer-btn-left custom-button-cancel"
               onClick={() => setSelectedValues([])}
             >
               Clear
             </Button>
             <Button
-              className="select-checks-footer-btn custom-button-blue"
+              className="select-checks-footer-btn custom-button-confirm"
               onClick={() => {
                 onClickApply(
                   selectedValues.filter(value => value !== allOptionKey),

@@ -19,7 +19,7 @@ const alertMessages = {
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
   NoProductsBought: 'Empty Purchase session',
-  InvalidScaleWeight: 'Invalid Scaless weight',
+  InvalidScaleWeight: 'Invalid Scales weight',
   NoLeftScalesData: 'Left Scales disconnected',
   NoRightScalesData: 'Right Scales disconnected',
   TabletDisconn: 'Tablet Internet disconnected',
@@ -61,7 +61,7 @@ export const getAlertsOptions = () => [
 
 const twoHours = 1000 * 60 * 60 * 2;
 
-export const getKiosksState = state => state.kiosks.list;
+export const getKiosksState = state => state.kiosks.tableList;
 
 export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
   return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
@@ -295,23 +295,27 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => {
-  const options = kiosks.map(({ _id, name }) => ({
-    value: _id,
-    label: name,
-  }));
-  // sort options based on the alphabetical order of the kiosk names
-  const sortByKioskNameCaseInsensitive = R.sortBy(
-    R.compose(R.toLower, R.prop('label')),
-  );
-  return [
-    { value: '', label: 'All Kiosks' },
-    ...sortByKioskNameCaseInsensitive(options),
-  ];
-});
+export const getKioskOptions = createSelector(
+  state => state.kiosks.kiosksList,
+  kiosks => {
+    const options = kiosks.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    // sort options based on the alphabetical order of the kiosk names
+    const sortByKioskNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('text')),
+    );
+    return [
+      { value: '', text: 'All Kiosks', key: '' },
+      ...sortByKioskNameCaseInsensitive(options),
+    ];
+  },
+);
 
 export const getKioskOptionsForTableDropdown = createSelector(
-  getKiosksState,
+  state => state.kiosks.kiosksList,
   kiosks => {
     const allKiosks = kiosks.map(({ _id, name }) => ({
       value: _id,
@@ -327,33 +331,45 @@ export const getKioskOptionsForTableDropdown = createSelector(
 /**
  * Selector for Organization Dropdown*.
  */
-export const getOrganizationsState = state => state.kiosks.listOrganizations;
 export const getOrganizationOptionsForTableDropdown = createSelector(
-  getKiosksState,
+  state => state.kiosks.orgsList,
   organization => {
-    let newArr = [{ value: '', text: 'All Organizations', key: '' }];
-    let test = organization.map(item => ({
-      id: item.ownerOrganization._id,
-      name: item.ownerOrganization.name,
-    }));
-    var setObj = new Set();
-    var result = test.reduce((acc, item) => {
-      if (!setObj.has(item.id)) {
-        setObj.add(item.id, item);
-        acc.push(item);
-      }
-      return acc;
-    }, []);
+    // let newArr = [{ value: '', text: 'All Organizations', key: '' }];
+    // let test = organization.map(item => ({
+    //   id: item._id,
+    //   name: item.name,
+    // }));
+    // var setObj = new Set();
+    // var result = test.reduce((acc, item) => {
+    //   if (!setObj.has(item.id)) {
+    //     setObj.add(item.id, item);
+    //     acc.push(item);
+    //   }
+    //   return acc;
+    // }, []);
 
-    result.forEach(item => {
-      const Item = {
-        value: item.id,
-        text: item.name,
-        key: item.id,
-      };
-      newArr.push(Item);
-    });
-    return newArr;
+    // result.forEach(item => {
+    //   const Item = {
+    //     value: item.id,
+    //     text: item.name,
+    //     key: item.id,
+    //   };
+    //   newArr.push(Item);
+    // });
+    // return newArr;
+    const options = organization.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    // sort options based on the alphabetical order of the org names
+    const sortByOrgNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('text')),
+    );
+    return [
+      { value: '', text: 'All Organizations', key: '' },
+      ...sortByOrgNameCaseInsensitive(options),
+    ];
   },
 );
 
@@ -362,47 +378,33 @@ export const kioskInitialValues = {
   serialNumber: '',
   notes: '',
   orgId: '',
-  location: {
-    address: {
-      name: '',
-      line1: '',
-      line2: '',
-      postalCode: '',
-      city: '',
-      state: '',
-      country: '',
-    },
-  },
+  locationName: '',
+  locationLine1: '',
+  locationLine2: '',
+  locationPostalCode: '',
+  locationCity: '',
+  locationState: '',
+  locationCountry: '',
   pin: '',
   technicianPin: '',
 };
 
 export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
-  let { __typename, ...address } = get(
-    kiosk,
-    'location.address',
-    kioskInitialValues.location.address,
-  );
-  address = Object.keys(address).reduce((prev, key) => {
-    if (address[key] !== null) {
-      prev[key] = address[key];
-    }
-    return prev;
-  }, {});
-
   return kiosk
     ? {
         id: kiosk._id,
         ...pick(kiosk, ['name', 'serialNumber', 'pin']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
-        },
+        locationName: get(kiosk.location.address, 'name', '') || '',
+        locationLine1: get(kiosk.location.address, 'line1', '') || '',
+        locationLine2: get(kiosk.location.address, 'line2', '') || '',
+        locationPostalCode: get(kiosk.location.address, 'postalCode', '') || '',
+        locationCity: get(kiosk.location.address, 'city', '') || '',
+        locationState: get(kiosk.location.address, 'state', '') || '',
+        locationCountry: get(kiosk.location.address, 'country', '') || '',
         technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
+        pin: get(kiosk, 'pin', '') || '',
       }
     : kioskInitialValues;
 });
@@ -542,16 +544,16 @@ export const getGridTempratureTableState = createSelector(
         time: updated,
         timeXaxis: moment(updated).format('MMM D'),
         Sensor1: payload.message.sensors[0]
-          ? Number(payload.message.sensors[0].temperature / 100).toFixed()
+          ? payload.message.sensors[0].temperature / 100
           : null,
         Sensor2: payload.message.sensors[1]
-          ? Number(payload.message.sensors[1].temperature / 100).toFixed()
+          ? payload.message.sensors[1].temperature / 100
           : null,
         Sensor3: payload.message.sensors[2]
-          ? Number(payload.message.sensors[2].temperature / 100).toFixed()
+          ? payload.message.sensors[2].temperature / 100
           : null,
         Sensor4: payload.message.sensors[3]
-          ? Number(payload.message.sensors[3].temperature / 100).toFixed()
+          ? payload.message.sensors[3].temperature / 100
           : null,
       };
       newArr.push(Item);

@@ -466,3 +466,21 @@ export const DELETE_PLAYLIST = gql`
     }
   }
 `;
+
+export const GET_KIOSKS_LIST = gql`
+  query {
+    getAllKiosks {
+      _id
+      name
+    }
+  }
+`;
+
+export const GET_ORGS_LIST = gql`
+  query {
+    getAllOrganizations {
+      _id
+      name
+    }
+  }
+`;

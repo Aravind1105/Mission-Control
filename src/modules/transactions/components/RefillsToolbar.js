@@ -111,7 +111,7 @@ Toolbar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isKiosksLoading: state.kiosks.isLoading,
+  isKiosksLoading: state.kiosks.isKiosksListLoading,
   kiosks: getKioskOptionsForTableDropdown(state),
 });
 const mapDispatchToProps = {
