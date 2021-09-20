@@ -1,7 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 
 import resetKiosk from './resetKiosk';
-import getAllKiosks from './getAllKiosks';
 import getAllKiosksForTable from './getAllKiosksForTable';
 import modifyLoadCellSaga from './modifyLoadCell';
 import modifyKioskSaga from './modifyKiosk';
@@ -21,10 +20,10 @@ import exportCsvOrderList from './exportCsvOrders';
 import exportCsvPackList from './exportCsvPacks';
 import exportCsvTempLogs from './exportCsvTempLogs';
 import getKiosksList from './getKiosksList';
+import getOrgsList from './getOrganizationsList';
 
 export default function* kiosksSaga() {
   yield all([
-    fork(getAllKiosks),
     fork(resetKiosk),
     fork(modifyLoadCellSaga),
     fork(modifyKioskSaga),
@@ -43,5 +42,6 @@ export default function* kiosksSaga() {
     fork(exportCsvPackList),
     fork(exportCsvTempLogs),
     fork(getKiosksList),
+    fork(getOrgsList),
   ]);
 }

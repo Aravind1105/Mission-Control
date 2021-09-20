@@ -16,8 +16,6 @@ import { toast } from 'react-semantic-toasts';
 import { exportCsvOrderList } from '../actions';
 import { exportCsvPackList } from '../actions';
 import './styles.less';
-import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
-import { getSelectedKiosksState } from '../selectors';
 
 const Toolbar = ({
   search,

@@ -7,7 +7,7 @@ import {
   getKiosksAlertsForTable,
   getTotalAlerts,
 } from 'modules/kiosks/selectors';
-import { getAlertsGrid, getAllKiosks } from 'modules/kiosks/actions';
+import { getAlertsGrid } from 'modules/kiosks/actions';
 import AlertsTable from './components/AlertsTable';
 import Loader from 'modules/shared/components/Loader';
 import { isEqual } from 'lodash';
@@ -28,13 +28,7 @@ const sortValue = {
   'details.kioskId.name': 'details.kioskId.name',
 };
 
-const AlertsPage = ({
-  getAllKiosks,
-  total,
-  getAlertsGrid,
-  alerts,
-  isLoading,
-}) => {
+const AlertsPage = ({ total, getAlertsGrid, alerts, isLoading }) => {
   const [dateRange, changeDate] = useState('');
   const [kiosk, changeKiosk] = useState([]);
   const [alert, changeAlert] = useState('');
@@ -78,10 +72,6 @@ const AlertsPage = ({
     }
     getAlertsGrid({ data });
   };
-
-  useEffect(() => {
-    getAllKiosks({ data: {} });
-  }, []);
 
   useEffect(() => {
     getData({ sort });
@@ -129,7 +119,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getAlertsGrid,
-  getAllKiosks,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlertsPage);

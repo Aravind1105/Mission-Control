@@ -1,10 +1,6 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { findIndex, propEq, update } from 'ramda';
 import get from 'lodash/get';
 import {
-  getAllKiosks,
-  updateKiosks,
-  updateKioskById,
   getKiosk,
   getKioskSuccess,
   modifyKioskSuccess,
@@ -40,12 +36,13 @@ import {
   setKioskStatus,
   getKiosksList,
   getKiosksListSuccess,
+  getOrgsList,
+  getOrgsListSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
 
 const initialState = {
-  list: [],
   tableList: [],
   kiosk: null,
   isKioskLoading: false,
@@ -59,6 +56,7 @@ const initialState = {
   temperatureLogs: [],
   activityLogs: [],
   kiosksList: [],
+  orgsList: [],
   isKiosksListLoading: false,
   pagination: {
     page: 0,
@@ -84,7 +82,7 @@ const initialState = {
 
 const kiosksReducer = handleActions(
   {
-    [combineActions(getAllKiosks, getAllKiosksForTable)]: state => ({
+    [combineActions(getAllKiosksForTable)]: state => ({
       ...state,
       isLoading: true,
     }),
@@ -92,26 +90,12 @@ const kiosksReducer = handleActions(
       ...state,
       isKioskLoading: true,
     }),
-    [updateKiosks]: (state, { payload }) => ({
-      ...state,
-      list: payload.list,
-      total: payload.total,
-      isLoading: false,
-    }),
     [updateKiosksForTable]: (state, { payload }) => ({
       ...state,
       tableList: payload.list,
       total: payload.total,
       isLoading: false,
     }),
-    [updateKioskById]: (state, { payload }) => {
-      const index = findIndex(propEq('_id', payload._id))(state);
-      return {
-        ...state,
-        list: update(index, { ...state.list[index], ...payload }, state),
-        isLoading: false,
-      };
-    },
     [combineActions(modifyKiosk, updateKioskProps)]: state => {
       return {
         ...state,
@@ -256,6 +240,14 @@ const kiosksReducer = handleActions(
       ...state,
       kiosksList: payload,
       isKiosksListLoading: false,
+    }),
+    [getOrgsList]: (state, {}) => ({
+      ...state,
+      pagination: { ...state.pagination },
+    }),
+    [getOrgsListSuccess]: (state, { payload }) => ({
+      ...state,
+      orgsList: payload,
     }),
   },
   initialState,
