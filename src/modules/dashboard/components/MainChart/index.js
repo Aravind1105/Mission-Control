@@ -67,22 +67,10 @@ const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
           </Grid.Column>
 
           <Grid.Column mobile={16} computer={4}>
-            {/* <Select
-              onChange={handlerChangeKiosk}
-              options={kiosksOptions}
-              defaultValue={kiosksOptions[0]}
-            /> */}
             <SelectCheckBoxes
               title="Kiosks"
               options={kiosksOptions}
               allOptionKey=""
-              onClickApply={handleKioskChange}
-              isLoading={isKiosksListLoading}
-            />
-            <SelectCheckBoxes
-              title="Kiosks"
-              options={kiosks}
-              allOptionKey="all"
               onClickApply={handleKioskChange}
               isLoading={isKiosksListLoading}
             />
