@@ -16,29 +16,19 @@ import { toast } from 'react-semantic-toasts';
 import { exportCsvOrderList } from '../actions';
 import { exportCsvPackList } from '../actions';
 import './styles.less';
-import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
-import { getSelectedKiosksState } from '../selectors';
 
 const Toolbar = ({
   search,
   setSearch,
-  kiosks,
-  setKiosk,
   organizations,
   setOrganization,
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
   selectedOrganization,
-  selectedKiosks,
-  isKiosksListLoading,
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
-  };
-
-  const handleKioskChange = value => {
-    setKiosk(value);
   };
 
   const handleOrganizationChange = (e, { value }) => {
@@ -128,16 +118,6 @@ const Toolbar = ({
             <Divider style={{ marginTop: 0, marginBottom: 0 }} />
             <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
               <Grid.Column computer={3}>
-                <SelectCheckBoxes
-                  title="Kiosks"
-                  options={kiosks}
-                  allOptionKey="all"
-                  onClickApply={handleKioskChange}
-                  value={selectedKiosks}
-                  isLoading={isKiosksListLoading}
-                />
-              </Grid.Column>
-              <Grid.Column computer={3}>
                 <Dropdown
                   placeholder="All Organization"
                   selection
@@ -147,6 +127,7 @@ const Toolbar = ({
                   value={selectedOrganization}
                 />
               </Grid.Column>
+              <Grid.Column computer={3}></Grid.Column>
               <Grid.Column computer={3}></Grid.Column>
               <Grid.Column computer={3}>
                 <div className="download_orderlist_button">
@@ -183,7 +164,6 @@ Toolbar.propTypes = {
 
 const mapStateToProps = state => ({
   rootUser: state.user.root,
-  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvOrderList,

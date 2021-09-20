@@ -4,7 +4,7 @@ import { Checkbox, Container, Menu } from 'semantic-ui-react';
 
 import logoSmall from 'styling/assets/images/new_Menu_Logo.png';
 import { getKiosksAlerts } from 'modules/kiosks/selectors';
-import { getKiosksList } from 'modules/kiosks/actions';
+import { getKiosksList, getOrgsList } from 'modules/kiosks/actions';
 import { getUserType } from 'modules/authentication/selectors';
 import Navigation from '../Navigation';
 import UserProfileBar from '../UserProfileBar/';
@@ -12,13 +12,15 @@ import UserProfileBar from '../UserProfileBar/';
 import AlertsList from '../AlertsList';
 import './desktopLayout.less';
 import { version } from '../../../../../package.json';
+
 const DesktopLayout = ({
   children,
-  isLoading,
+  orgs,
   alerts,
   getKiosksList,
   userType,
   kiosks,
+  getOrgsList,
 }) => {
   // TODO: The setting should be stored in the localstorage
   const [minimized, setMinimized] = useState(false);
@@ -28,10 +30,12 @@ const DesktopLayout = ({
   };
 
   useEffect(() => {
-    if (kiosks.length === 0) {
-      getKiosksList();
-    }
+    if (kiosks.length === 0) getKiosksList();
   }, [kiosks]);
+
+  useEffect(() => {
+    if (orgs.length === 0) getOrgsList();
+  }, [orgs]);
 
   return (
     <div className={`desktop-container${minimized ? ' minimized' : ''}`}>
@@ -79,9 +83,11 @@ const mapStateToProps = state => ({
   alerts: getKiosksAlerts(state),
   userType: getUserType(state),
   kiosks: state.kiosks.kiosksList,
+  orgs: state.kiosks.orgsList,
 });
 
 const mapDispatchToProps = {
   getKiosksList,
+  getOrgsList,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DesktopLayout);

@@ -475,3 +475,12 @@ export const GET_KIOSKS_LIST = gql`
     }
   }
 `;
+
+export const GET_ORGS_LIST = gql`
+  query {
+    getAllOrganizations {
+      _id
+      name
+    }
+  }
+`;
