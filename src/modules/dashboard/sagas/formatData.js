@@ -18,8 +18,8 @@ export const computeAndFormatData = (time, data, kioskId) => {
   const kioskNames = [];
   if (data) {
     let filteredData = data;
-    if (kioskId) {
-      filteredData = data.filter(ele => ele._id.kiosk._id === kioskId);
+    if (kioskId && kioskId.length > 0) {
+      filteredData = data.filter(ele => kioskId.includes(ele._id.kiosk._id));
     }
     filteredData.forEach(ele => {
       if (!kioskNames.includes(ele._id.kiosk.name)) {

@@ -61,7 +61,7 @@ export const getAlertsOptions = () => [
 
 const twoHours = 1000 * 60 * 60 * 2;
 
-export const getKiosksState = state => state.kiosks.list;
+export const getKiosksState = state => state.kiosks.tableList;
 
 export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
   return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
@@ -296,18 +296,19 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
 );
 
 export const getKioskOptions = createSelector(
-  getKiosksState,
+  state => state.kiosks.kiosksList,
   kiosks => {
     const options = kiosks.map(({ _id, name }) => ({
       value: _id,
-      label: name,
+      text: name,
+      key: _id,
     }));
     // sort options based on the alphabetical order of the kiosk names
     const sortByKioskNameCaseInsensitive = R.sortBy(
-      R.compose(R.toLower, R.prop('label')),
+      R.compose(R.toLower, R.prop('text')),
     );
     return [
-      { value: '', label: 'All Kiosks' },
+      { value: '', text: 'All Kiosks', key: '' },
       ...sortByKioskNameCaseInsensitive(options),
     ];
   },
@@ -330,33 +331,45 @@ export const getKioskOptionsForTableDropdown = createSelector(
 /**
  * Selector for Organization Dropdown*.
  */
-export const getOrganizationsState = state => state.kiosks.listOrganizations;
 export const getOrganizationOptionsForTableDropdown = createSelector(
-  getKiosksState,
+  state => state.kiosks.orgsList,
   organization => {
-    let newArr = [{ value: '', text: 'All Organizations', key: '' }];
-    let test = organization.map(item => ({
-      id: item.ownerOrganization._id,
-      name: item.ownerOrganization.name,
-    }));
-    var setObj = new Set();
-    var result = test.reduce((acc, item) => {
-      if (!setObj.has(item.id)) {
-        setObj.add(item.id, item);
-        acc.push(item);
-      }
-      return acc;
-    }, []);
+    // let newArr = [{ value: '', text: 'All Organizations', key: '' }];
+    // let test = organization.map(item => ({
+    //   id: item._id,
+    //   name: item.name,
+    // }));
+    // var setObj = new Set();
+    // var result = test.reduce((acc, item) => {
+    //   if (!setObj.has(item.id)) {
+    //     setObj.add(item.id, item);
+    //     acc.push(item);
+    //   }
+    //   return acc;
+    // }, []);
 
-    result.forEach(item => {
-      const Item = {
-        value: item.id,
-        text: item.name,
-        key: item.id,
-      };
-      newArr.push(Item);
-    });
-    return newArr;
+    // result.forEach(item => {
+    //   const Item = {
+    //     value: item.id,
+    //     text: item.name,
+    //     key: item.id,
+    //   };
+    //   newArr.push(Item);
+    // });
+    // return newArr;
+    const options = organization.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    // sort options based on the alphabetical order of the org names
+    const sortByOrgNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('text')),
+    );
+    return [
+      { value: '', text: 'All Organizations', key: '' },
+      ...sortByOrgNameCaseInsensitive(options),
+    ];
   },
 );
 
