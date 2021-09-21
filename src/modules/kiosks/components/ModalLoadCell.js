@@ -334,8 +334,8 @@ const ModalLoadCell = ({
               onCancel={() => setShowDeleteAlert(false)}
               alertMsg={
                 quantityState === 0
-                  ? 'Are you sure you want to\ndelete this image?'
-                  : 'There are still some products on this load cell.\nAre you sure want to delete?'
+                  ? 'Are you sure you want to\ndelete this scale?'
+                  : 'There are still some products on this scale.\nAre you sure want to delete?'
               }
             />
             <CustomAlert
