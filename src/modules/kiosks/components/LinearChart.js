@@ -51,8 +51,8 @@ const CustomTooltip = ({ active, payload, label, LegendArray }) => {
               style={{
                 'list-style-type': 'none',
                 padding: 0,
-                margin: '10px 0 10px 14px',
-                width: '100px',
+                margin: '10px 0px 0px 10px',
+                width: '60px',
                 textAlign: 'left',
               }}
             >
@@ -63,7 +63,7 @@ const CustomTooltip = ({ active, payload, label, LegendArray }) => {
             <ul
               style={{
                 'list-style-type': 'none',
-                margin: '10px 15px 0px 0px',
+                margin: '10px 10px 0px 0px',
                 padding: 0,
                 textAlign: 'left',
               }}
