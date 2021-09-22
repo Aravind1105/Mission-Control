@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Field } from 'formik';
-import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
+import { Button, Grid, Popup, Icon, Modal, Form } from 'semantic-ui-react';
 import * as R from 'ramda';
 
 import { getProductLinesByOrgId } from 'modules/kiosks/actions';
@@ -18,11 +18,11 @@ import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ModalForm';
 import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
-import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
+import * as Yup from 'yup';
 
 const ToolTip = () => (
   <Popup
@@ -166,6 +166,15 @@ const ModalLoadCell = ({
       }}
       initialValues={initVal}
       key={initVal.price}
+      validateOnChange
+      enableReinitialize
+      validationSchema={Yup.object().shape({
+        product: Yup.string().required('This field is required'),
+        planogramPosition: Yup.string().required('This field is required'),
+        cellId: Yup.string().required('This field is required'),
+        price: Yup.number().required('This field is required'),
+        surfaceSize: Yup.string().required('This field is required'),
+      })}
     >
       {({ dirty, handleSubmit }) => (
         <ConfirmModal
@@ -177,13 +186,15 @@ const ModalLoadCell = ({
               : `${kioskName}`
           }
         >
-          <form onSubmit={handleSubmit} className="modal-form">
+          <Form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
               {isProductLoading && <Loader />}
               <Grid>
                 <Grid.Row columns="equal">
                   <Grid.Column>
-                    <b>Product&nbsp;</b>
+                    <b>
+                      Product<span style={{ color: 'red' }}>&#42;</span>&nbsp;
+                    </b>
                     {initVal.quantity ? <ToolTip /> : null}
                     <Field
                       name="product"
@@ -211,7 +222,10 @@ const ModalLoadCell = ({
 
                 <Grid.Row columns="equal">
                   <Grid.Column>
-                    <b>Planogram Position</b>
+                    <b>
+                      Planogram Position
+                      <span style={{ color: 'red' }}>&#42;</span>&nbsp;
+                    </b>
                     {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
@@ -250,10 +264,12 @@ const ModalLoadCell = ({
 
                   <Grid.Column>
                     <b>Cable ID</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="cellId"
                       options={cellIdOptions}
                       disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      required
                       component={FormAsyncSelect}
                       onChange={({}) => {
                         setIsValid({ ...isValid, cableId: true });
@@ -265,44 +281,44 @@ const ModalLoadCell = ({
                 <Grid.Row columns="equal">
                   <Grid.Column>
                     <b>Price</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="price"
                       limiting="floatingField"
                       icon="euro"
-                      iconPosition="left"
+                      iconPosition="right"
                       min={0}
-                      prettier={prettierNumber}
+                      required
                       component={FormInput}
                     />
                   </Grid.Column>
                   <Grid.Column>
                     <b>Shelf Size</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="surfaceSize"
                       options={shelfSizeOptions}
                       component={FormAsyncSelect}
+                      required
                       onChange={({}) => {
                         // setIsValid({ ...isValid, cableId: true });
                       }}
                     />
                   </Grid.Column>
                 </Grid.Row>
-
-                {!isAddLoadCell && (
-                  <Grid.Row>
-                    <Button
-                      color="red"
-                      style={{ marginLeft: 15 }}
-                      onClick={() => setShowDeleteAlert(true)}
-                    >
-                      Delete
-                    </Button>
-                  </Grid.Row>
-                )}
               </Grid>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="red" onClick={() => handleClose()}>
+              {!isAddLoadCell && (
+                <Button
+                  color="red"
+                  floated="left"
+                  onClick={() => setShowDeleteAlert(true)}
+                >
+                  Delete
+                </Button>
+              )}
+              <Button color="darkgrey" onClick={() => handleClose()}>
                 Cancel
               </Button>
               <Button
@@ -360,7 +376,7 @@ const ModalLoadCell = ({
               alertMsg={`Provided planogram position is already in use.\nPlease choose another one.`}
               isWarning={true}
             />
-          </form>
+          </Form>
         </ConfirmModal>
       )}
     </Formik>
