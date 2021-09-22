@@ -39,7 +39,6 @@ const ProductForm = ({
 
   // Modifier for Package Options for Livello BE expected format
   const packagingOptionModifier = values => {
-    // console.log('this is package Option Modified', values);
     values.packagingOptions = [
       {
         ean: values.packagingOptionsEan,
@@ -101,15 +100,6 @@ const ProductForm = ({
     delete values.image;
 
     setIsCancelTriggered(false);
-    values.packagingOptions[0].ean == ''
-      ? (values.packagingOptions[0].ean = 'Optional field not used.')
-      : values.packagingOptions[0].ean;
-
-    // description is mandatory in the backend and so filling it up with empty string
-    values.packagingOptions[0].description == ''
-      ? (values.packagingOptions[0].description = 'Optional field not used.')
-      : values.packagingOptions[0].description;
-
     //convert capacities field to Livello BE expected format
     capacityModifier(values);
 
