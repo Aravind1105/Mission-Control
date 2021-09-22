@@ -48,6 +48,18 @@ const DetailsInventory = ({ list, total }) => {
       availability,
     });
   });
+
+  // Inventory sorting on the bases of Availability
+  if (inventoryItems[0] !== undefined && inventoryItems[0].availability < 0) {
+    inventoryItems.sort((a, b) => {
+      return b.availability - a.availability;
+    });
+  } else {
+    inventoryItems.sort((a, b) => {
+      return a.availability - b.availability;
+    });
+  }
+
   const totalKioskOccupancy = (kioskAvailableQty / kioskMaxCapacity) * 100;
 
   return (
