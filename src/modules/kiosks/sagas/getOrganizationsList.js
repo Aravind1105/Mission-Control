@@ -7,7 +7,6 @@ import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({}) {
   try {
-    console.log('qwerty==-=-=-=-=-=');
     const {
       data: { getAllOrganizations },
       errors,

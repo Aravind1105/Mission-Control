@@ -74,7 +74,7 @@ const ModalLoadCell = ({
   });
   const [showPositionErrorAlert, setShowPositionErrorAlert] = useState(false);
   const [isValidPosition, setIsValidPosition] = useState(true);
-
+  
   useEffect(() => {
     getProductLinesByOrgId(orgId);
   }, []);
@@ -321,7 +321,7 @@ const ModalLoadCell = ({
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={
-                initVal.cellId.value && initVal.planogramPosition != position
+                initVal.cellId.value && usedPositions.includes(position)
                   ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
                   : `Are you sure you want to\nupdate the product?`
               }
