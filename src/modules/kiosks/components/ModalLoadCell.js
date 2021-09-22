@@ -66,7 +66,7 @@ const ModalLoadCell = ({
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [quantityState, setQuantityState] = useState(initVal.quantity);
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState('');
   const [productInfo, setproductInfo] = useState();
   const [isValid, setIsValid] = useState({
     productLine: false,
@@ -162,7 +162,7 @@ const ModalLoadCell = ({
     <Formik
       onSubmit={data => {
         setproductInfo(data);
-        setPosition(data.planogramPosition);
+        // setPosition(data.planogramPosition);
       }}
       initialValues={initVal}
       key={initVal.price}
@@ -240,13 +240,24 @@ const ModalLoadCell = ({
                           if (usedPositions.indexOf(e.target.value) === -1) {
                             setShowPositionErrorAlert(false);
                             setIsValidPosition(true);
-                          } else if (
-                            initVal.planogramPosition !== e.target.value
-                          ) {
+                          } else {
                             setShowPositionErrorAlert(true);
                             setIsValidPosition(false);
                           }
-                        }
+                          setPosition(e.target.value);
+                        } else if (
+                          initVal.planogramPosition !== e.target.value &&
+                          usedPositions.includes(e.target.value)
+                        ) {
+                          setIsValidPosition(false);
+                          setPosition(e.target.value);
+                        } else if (
+                          initVal.planogramPosition !== e.target.value &&
+                          !usedPositions.includes(e.target.value)
+                        )
+                          setIsValidPosition(true);
+                        else if (initVal.planogramPosition === e.target.value)
+                          setIsValidPosition(true);
                       }}
                     />
                   </Grid.Column>
@@ -337,7 +348,10 @@ const ModalLoadCell = ({
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={
-                initVal.cellId.value && usedPositions.includes(position)
+                (isAddLoadCell &&
+                  !isValidPosition &&
+                  !showPositionErrorAlert) ||
+                (initVal.cellId.value && !isValidPosition)
                   ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
                   : `Are you sure you want to\nupdate the product?`
               }
@@ -359,7 +373,7 @@ const ModalLoadCell = ({
               onApprove={() => {
                 setShowPositionErrorAlert(false);
               }}
-              alertMsg="Provided planogram position is already in use. Please choose another one."
+              alertMsg={`Provided planogram position is already in use.\nPlease choose another one.`}
               isWarning={true}
             />
           </Form>
