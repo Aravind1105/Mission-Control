@@ -1,34 +1,26 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
-import { GET_ALL_KIOSKS_GRID_QUERY } from '../schema';
-import { updateKiosks, getAllKiosks } from '../actions';
+import { GET_KIOSKS_LIST } from '../schema';
+import { getKiosksList, getKiosksListSuccess } from '../actions';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({ payload }) {
+function* handler({}) {
   try {
     const {
-      data: { getKiosksGrid: response },
+      data: { getAllKiosks },
       errors,
     } = yield call(gqlKiosk.query, {
-      query: GET_ALL_KIOSKS_GRID_QUERY,
-      variables: payload,
+      query: GET_KIOSKS_LIST,
     });
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));
-    else {
-      yield put(
-        updateKiosks({
-          list: response.data || [],
-          total: response.total,
-        }),
-      );
-    }
+    else yield put(getKiosksListSuccess(getAllKiosks));
   } catch (error) {
     console.log(error);
   }
 }
 
 export default function* saga() {
-  yield takeLatest(getAllKiosks, handler);
+  yield takeLatest(getKiosksList, handler);
 }

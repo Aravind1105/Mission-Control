@@ -146,14 +146,20 @@ input::-webkit-inner-spin-button {
   font-family: Lato;
   font-weight: 900;
   .custom_tool_tip_container {
-    margin: 10px 0px 0 15px;
+    margin: 0px;
+    margin-top: 10px;
+    padding: 10px 20px auto 15px;
+    text-align: center;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .custom_tool_tip_container_parent {
     display: flex;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
   .custom_tool_tip_container_narrow {
-    width: 75px;
+    width: 70px;
   }
 
   .custom_tool_tip_container_wide {
@@ -180,5 +186,40 @@ input::-webkit-inner-spin-button {
   padding-left: 50px;
   @media @mobile {
     padding-left: 0px;
+  }
+}
+.download_orderlist_button_admin {
+  padding-left: 10px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+.download_packlist_button_admin {
+  padding-left: 0px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+
+.kiosk-inventory-table {
+  text-overflow: ellipsis;
+  cursor: default;
+  overflow: hidden;
+  width: 180px;
+  white-space: nowrap;
+  @media @mobile {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+    white-space: nowrap;
+  }
+}
+
+.kiosk-inventory-table-item {
+  cursor: default;
+  overflow: hidden;
+  width: 180px;
+  @media @mobile {
+    width: 150px;
   }
 }

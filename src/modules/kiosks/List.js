@@ -35,14 +35,11 @@ const KiosksList = ({
       <Toolbar
         search={search}
         setSearch={setSearch}
-        kiosks={kiosks}
-        setKiosk={setKiosk}
         kiosksStatus={kiosksStatus}
         setKioskStatus={setKioskStatus}
         kiosksNetworkStatus={kiosksNetworkStatus}
         organizations={organizations}
         setOrganization={setOrganization}
-        selectedKiosk={kiosk}
         selectedOrganization={organization}
       />
 

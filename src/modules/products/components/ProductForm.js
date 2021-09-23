@@ -37,7 +37,59 @@ const ProductForm = ({
 }) => {
   const dispatch = useDispatch();
 
+  // Modifier for Package Options for Livello BE expected format
+  const packagingOptionModifier = values => {
+    values.packagingOptions = [
+      {
+        ean: values.packagingOptionsEan,
+        unitCount: values.packagingOptionsUnitCount,
+        grossWeightGrams: parseInt(values.packagingOptionsGrossWeightGrams),
+        packageWeightGrams: parseInt(values.packagingOptionsPackageWeightGrams),
+        netWeightGramsUnit: values.packagingOptionsPackageWeightGramsUnit,
+        netWeightGrams: parseInt(values.packagingOptionsNetWeightGrams),
+        shelfLifeDays: parseInt(values.packagingOptionsShelfLifeDays),
+        tolerancePercentage: values.packagingOptionsTolerancePercentage,
+        description: values.packagingOptionsDescription,
+      },
+    ];
+    // Deleting Custom Properties
+    delete values.packagingOptionsGrossWeightGrams;
+    delete values.packagingOptionsEan;
+    delete values.packagingOptionsShelfLifeDays;
+    delete values.packagingOptionsTolerancePercentage;
+    delete values.packagingOptionsDescription;
+    delete values.packagingOptionsNetWeightGrams;
+    delete values.packagingOptionsUnitCount;
+    delete values.packagingOptionsPackageWeightGrams;
+    delete values.packagingOptionsPackageWeightGramsUnit;
+    delete values.packagingOptionsNetWeightGramsUnit;
+    return values;
+  };
+
+  // Modifier for Capacity Options for Livello BE expected format
+  const capacityModifier = values => {
+    const newCapacities = [];
+    newCapacities.push({
+      surfaceSize: 'N33',
+      units: parseInt(values.capacitiesSurfaceSize_33),
+    });
+    newCapacities.push({
+      surfaceSize: 'N50',
+      units: parseInt(values.capacitiesSurfaceSize_50),
+    });
+    newCapacities.push({
+      surfaceSize: 'N100',
+      units: parseInt(values.capacitiesSurfaceSize_100),
+    });
+    delete values.capacitiesSurfaceSize_33;
+    delete values.capacitiesSurfaceSize_50;
+    delete values.capacitiesSurfaceSize_100;
+    values.capacities = newCapacities;
+    return values;
+  };
+
   const onSubmit = (values, formActions) => {
+    packagingOptionModifier(values);
     values.packagingOptions[0].netWeightGrams = +values.packagingOptions[0]
       .netWeightGrams;
     values.packagingOptions[0].grossWeightGrams = +values.packagingOptions[0]
@@ -48,31 +100,8 @@ const ProductForm = ({
     delete values.image;
 
     setIsCancelTriggered(false);
-    values.packagingOptions[0].ean == ''
-      ? (values.packagingOptions[0].ean = 'Optional field not used.')
-      : values.packagingOptions[0].ean;
-
-    // description is mandatory in the backend and so filling it up with empty string
-    values.packagingOptions[0].description == ''
-      ? (values.packagingOptions[0].description = 'Optional field not used.')
-      : values.packagingOptions[0].description;
-
     //convert capacities field to Livello BE expected format
-    const { capacities } = values;
-    const newCapacities = [];
-    newCapacities.push({
-      surfaceSize: 'N33',
-      units: parseInt(get(capacities, 'surfaceSize_33', '0')),
-    });
-    newCapacities.push({
-      surfaceSize: 'N50',
-      units: parseInt(get(capacities, 'surfaceSize_50', '0')),
-    });
-    newCapacities.push({
-      surfaceSize: 'N100',
-      units: parseInt(get(capacities, 'surfaceSize_100', '0')),
-    });
-    values.capacities = newCapacities;
+    capacityModifier(values);
 
     // firstUploadImage is null by default. On creating product, if image is uploaded then firstUploadImage will have a base64 string of the image and hence it will be considered for the update
     updatingProduct = dispatch(
@@ -98,17 +127,17 @@ const ProductForm = ({
   const [isFirstShelfSizeChange, setIsFirstShelfSizeChange] = useState(true);
   const handleShelfSizeChange = (form, field, value) => {
     if (isFirstShelfSizeChange) {
-      if (isEqual(field, 'capacities.surfaceSize_100')) {
-        form.setFieldValue('capacities.surfaceSize_50', Math.floor(value / 2));
-        form.setFieldValue('capacities.surfaceSize_33', Math.floor(value / 3));
-      } else if (isEqual(field, 'capacities.surfaceSize_50')) {
+      if (isEqual(field, 'capacitiesSurfaceSize_100')) {
+        form.setFieldValue('capacitiesSurfaceSize_50', Math.floor(value / 2));
+        form.setFieldValue('capacitiesSurfaceSize_33', Math.floor(value / 3));
+      } else if (isEqual(field, 'capacitiesSurfaceSize_50')) {
         const max = value * 2;
-        form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
-        form.setFieldValue('capacities.surfaceSize_33', Math.floor(max / 3));
-      } else if (isEqual(field, 'capacities.surfaceSize_33')) {
+        form.setFieldValue('capacitiesSurfaceSize_100', Math.floor(max));
+        form.setFieldValue('capacitiesSurfaceSize_33', Math.floor(max / 3));
+      } else if (isEqual(field, 'capacitiesSurfaceSize_33')) {
         const max = value * 3;
-        form.setFieldValue('capacities.surfaceSize_100', Math.floor(max));
-        form.setFieldValue('capacities.surfaceSize_50', Math.floor(max / 2));
+        form.setFieldValue('capacitiesSurfaceSize_100', Math.floor(max));
+        form.setFieldValue('capacitiesSurfaceSize_50', Math.floor(max / 2));
       }
       setIsFirstShelfSizeChange(false);
     }
@@ -143,20 +172,23 @@ const ProductForm = ({
           orgId: Yup.string().required('This field is required'),
           tax: Yup.string().required('This field is required'),
           manufacturer: Yup.string().required('This field is required'),
-          packagingOptions: Yup.array().of(
-            Yup.object().shape({
-              // netWeightGrams: Yup.number().required('This field is required'),
-              shelfLifeDays: Yup.number().required('This field is required'),
-              grossWeightGrams: Yup.number().required('This field is required'),
-            }),
+          packagingOptionsShelfLifeDays: Yup.string().required(
+            'This field is required',
+          ),
+          packagingOptionsGrossWeightGrams: Yup.string().required(
+            'This field is required',
+          ),
+          capacitiesSurfaceSize_33: Yup.number().required(
+            'This field is required',
+          ),
+          capacitiesSurfaceSize_50: Yup.number().required(
+            'This field is required',
+          ),
+          capacitiesSurfaceSize_100: Yup.number().required(
+            'This field is required',
           ),
           defaultPrice: Yup.string().required('This field is required'),
           defaultCost: Yup.string().required('This field is required'),
-          capacities: Yup.object().shape({
-            surfaceSize_100: Yup.number().required('This field is required'),
-            surfaceSize_50: Yup.number().required('This field is required'),
-            surfaceSize_33: Yup.number().required('This field is required'),
-          }),
         })}
         enableReinitialize
       >
@@ -195,11 +227,12 @@ const ProductForm = ({
                 <Grid.Row columns="equal">
                   <Grid.Column>
                     <Field
-                      name="packagingOptions[0].ean"
+                      name="packagingOptionsEan"
                       label="EAN"
                       component={FormInput}
                       placeholder="ex:1234567890123"
                       maxLength="13"
+                      limiting="integerField"
                     />
                   </Grid.Column>
                   <Grid.Column>
@@ -260,7 +293,7 @@ const ProductForm = ({
                 <Grid.Row columns="equal" stretched>
                   <Grid.Column>
                     <Field
-                      name="packagingOptions[0].netWeightGrams"
+                      name="packagingOptionsNetWeightGrams"
                       label="Net Quantity (ml/g)"
                       min={0}
                       maxLength="5"
@@ -272,13 +305,13 @@ const ProductForm = ({
                       ]}
                       selectorDefaultValueIndex={1}
                       dropdownSelectedValue={
-                        values.packagingOptions[0].netWeightGramsUnit || 'g'
+                        values.packagingOptionsPackageWeightGramsUnit
                       }
                     />
                   </Grid.Column>
                   <Grid.Column>
                     <Field
-                      name="packagingOptions[0].grossWeightGrams"
+                      name="packagingOptionsGrossWeightGrams"
                       label="Actual Weight (g)"
                       min={0}
                       required
@@ -289,13 +322,12 @@ const ProductForm = ({
                   </Grid.Column>
                   <Grid.Column>
                     <Field
-                      name="packagingOptions[0].shelfLifeDays"
+                      name="packagingOptionsShelfLifeDays"
                       label="Shelf life (days)"
                       limiting="integerField"
                       required
                       min={0}
                       maxLength="3"
-                      // placeholder="optional"
                       component={FormInput}
                     />
                   </Grid.Column>
@@ -309,7 +341,6 @@ const ProductForm = ({
                       iconPosition="right"
                       min={0}
                       required
-                      prettier={prettierNumber}
                       component={FormInput}
                       limiting="floatingField"
                       maxLength="6"
@@ -342,7 +373,6 @@ const ProductForm = ({
                       icon="euro"
                       iconPosition="right"
                       component={FormInput}
-                      prettier={prettierNumber}
                       limiting="floatingField"
                       required
                       maxLength="6"
@@ -383,7 +413,7 @@ const ProductForm = ({
                 <Grid.Row columns="equal" stretched>
                   <Grid.Column>
                     <Field
-                      name="capacities.surfaceSize_100"
+                      name="capacitiesSurfaceSize_100"
                       label="Full Shelf (L)"
                       min={0}
                       required
@@ -395,7 +425,7 @@ const ProductForm = ({
                   </Grid.Column>
                   <Grid.Column>
                     <Field
-                      name="capacities.surfaceSize_50"
+                      name="capacitiesSurfaceSize_50"
                       label="1/2 Shelf (M)"
                       min={0}
                       required
@@ -407,7 +437,7 @@ const ProductForm = ({
                   </Grid.Column>
                   <Grid.Column>
                     <Field
-                      name="capacities.surfaceSize_33"
+                      name="capacitiesSurfaceSize_33"
                       label="1/3 Shelf (S)"
                       min={0}
                       required

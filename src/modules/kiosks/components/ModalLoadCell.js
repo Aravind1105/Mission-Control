@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Formik, Field } from 'formik';
-import { Button, Grid, Popup, Icon, Modal } from 'semantic-ui-react';
+import { Button, Grid, Popup, Icon, Modal, Form } from 'semantic-ui-react';
 import * as R from 'ramda';
 
 import { getProductLinesByOrgId } from 'modules/kiosks/actions';
@@ -18,11 +18,11 @@ import Loader from 'modules/shared/components/Loader';
 import ConfirmModal from 'modules/shared/components/ModalForm';
 import CustomAlert from 'modules/shared/components/CustomAlert';
 import getDefaultProductPrice from 'lib/getDefaultProductPrice';
-import prettierNumber from 'lib/prettierNumber';
 import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
+import * as Yup from 'yup';
 
 const ToolTip = () => (
   <Popup
@@ -66,7 +66,7 @@ const ModalLoadCell = ({
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [quantityState, setQuantityState] = useState(initVal.quantity);
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState('');
   const [productInfo, setproductInfo] = useState();
   const [isValid, setIsValid] = useState({
     productLine: false,
@@ -162,10 +162,19 @@ const ModalLoadCell = ({
     <Formik
       onSubmit={data => {
         setproductInfo(data);
-        setPosition(data.planogramPosition);
+        // setPosition(data.planogramPosition);
       }}
       initialValues={initVal}
       key={initVal.price}
+      validateOnChange
+      enableReinitialize
+      validationSchema={Yup.object().shape({
+        product: Yup.string().required('This field is required'),
+        planogramPosition: Yup.string().required('This field is required'),
+        cellId: Yup.string().required('This field is required'),
+        price: Yup.number().required('This field is required'),
+        surfaceSize: Yup.string().required('This field is required'),
+      })}
     >
       {({ dirty, handleSubmit }) => (
         <ConfirmModal
@@ -177,13 +186,15 @@ const ModalLoadCell = ({
               : `${kioskName}`
           }
         >
-          <form onSubmit={handleSubmit} className="modal-form">
+          <Form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
               {isProductLoading && <Loader />}
               <Grid>
                 <Grid.Row columns="equal">
                   <Grid.Column>
-                    <b>Product&nbsp;</b>
+                    <b>
+                      Product<span style={{ color: 'red' }}>&#42;</span>&nbsp;
+                    </b>
                     {initVal.quantity ? <ToolTip /> : null}
                     <Field
                       name="product"
@@ -211,7 +222,10 @@ const ModalLoadCell = ({
 
                 <Grid.Row columns="equal">
                   <Grid.Column>
-                    <b>Planogram Position</b>
+                    <b>
+                      Planogram Position
+                      <span style={{ color: 'red' }}>&#42;</span>&nbsp;
+                    </b>
                     {initVal.quantity ? <PositionTip /> : null}
                     <Field
                       name="planogramPosition"
@@ -226,23 +240,36 @@ const ModalLoadCell = ({
                           if (usedPositions.indexOf(e.target.value) === -1) {
                             setShowPositionErrorAlert(false);
                             setIsValidPosition(true);
-                          } else if (
-                            initVal.planogramPosition !== e.target.value
-                          ) {
+                          } else {
                             setShowPositionErrorAlert(true);
                             setIsValidPosition(false);
                           }
-                        }
+                          setPosition(e.target.value);
+                        } else if (
+                          initVal.planogramPosition !== e.target.value &&
+                          usedPositions.includes(e.target.value)
+                        ) {
+                          setIsValidPosition(false);
+                          setPosition(e.target.value);
+                        } else if (
+                          initVal.planogramPosition !== e.target.value &&
+                          !usedPositions.includes(e.target.value)
+                        )
+                          setIsValidPosition(true);
+                        else if (initVal.planogramPosition === e.target.value)
+                          setIsValidPosition(true);
                       }}
                     />
                   </Grid.Column>
 
                   <Grid.Column>
                     <b>Cable ID</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="cellId"
                       options={cellIdOptions}
                       disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      required
                       component={FormAsyncSelect}
                       onChange={({}) => {
                         setIsValid({ ...isValid, cableId: true });
@@ -254,44 +281,44 @@ const ModalLoadCell = ({
                 <Grid.Row columns="equal">
                   <Grid.Column>
                     <b>Price</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="price"
                       limiting="floatingField"
                       icon="euro"
-                      iconPosition="left"
+                      iconPosition="right"
                       min={0}
-                      prettier={prettierNumber}
+                      required
                       component={FormInput}
                     />
                   </Grid.Column>
                   <Grid.Column>
                     <b>Shelf Size</b>
+                    <span style={{ color: 'red' }}>&#42;</span>
                     <Field
                       name="surfaceSize"
                       options={shelfSizeOptions}
                       component={FormAsyncSelect}
+                      required
                       onChange={({}) => {
                         // setIsValid({ ...isValid, cableId: true });
                       }}
                     />
                   </Grid.Column>
                 </Grid.Row>
-
-                {!isAddLoadCell && (
-                  <Grid.Row>
-                    <Button
-                      color="red"
-                      style={{ marginLeft: 15 }}
-                      onClick={() => setShowDeleteAlert(true)}
-                    >
-                      Delete
-                    </Button>
-                  </Grid.Row>
-                )}
               </Grid>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="red" onClick={() => handleClose()}>
+              {!isAddLoadCell && (
+                <Button
+                  color="red"
+                  floated="left"
+                  onClick={() => setShowDeleteAlert(true)}
+                >
+                  Delete
+                </Button>
+              )}
+              <Button color="darkgrey" onClick={() => handleClose()}>
                 Cancel
               </Button>
               <Button
@@ -321,7 +348,10 @@ const ModalLoadCell = ({
               }}
               onCancel={() => setShowAlert(false)}
               alertMsg={
-                initVal.cellId.value && initVal.planogramPosition != position
+                (isAddLoadCell &&
+                  !isValidPosition &&
+                  !showPositionErrorAlert) ||
+                (initVal.cellId.value && !isValidPosition)
                   ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
                   : `Are you sure you want to\nupdate the product?`
               }
@@ -334,8 +364,8 @@ const ModalLoadCell = ({
               onCancel={() => setShowDeleteAlert(false)}
               alertMsg={
                 quantityState === 0
-                  ? 'Are you sure you want to\ndelete this image?'
-                  : 'There are still some products on this load cell.\nAre you sure want to delete?'
+                  ? 'Are you sure you want to\ndelete this scale?'
+                  : 'There are still some products on this scale.\nAre you sure want to delete?'
               }
             />
             <CustomAlert
@@ -343,10 +373,10 @@ const ModalLoadCell = ({
               onApprove={() => {
                 setShowPositionErrorAlert(false);
               }}
-              alertMsg="Provided planogram position is already in use. Please choose another one."
+              alertMsg={`Provided planogram position is already in use.\nPlease choose another one.`}
               isWarning={true}
             />
-          </form>
+          </Form>
         </ConfirmModal>
       )}
     </Formik>

@@ -13,6 +13,21 @@ function* handler({ payload }) {
     new Date(new Date().setHours(0, 0, 0)).setDate(1),
   );
   try {
+    const variables = {
+      period:
+        payload && payload.period
+          ? {
+              from: payload.period.dateFrom,
+              to: payload.period.dateTo,
+            }
+          : {
+              from: startDateOfMonth,
+              to: new Date(),
+            }
+    }
+    if(payload && payload.kioskId) {
+      variables.kioskId = payload.kioskId
+    }
     const {
       data: {
         getMostSoldProduct,
@@ -23,20 +38,7 @@ function* handler({ payload }) {
       errors,
     } = yield call(gqlTransactions.query, {
       query: GET_PRODUCTS_WIDGET_DATA,
-
-      variables: {
-        period:
-          payload && payload.period
-            ? {
-                from: payload.period.dateFrom,
-                to: payload.period.dateTo,
-              }
-            : {
-                from: startDateOfMonth,
-                to: new Date(),
-              },
-        kioskId: payload && payload.kioskId,
-      },
+      variables,
     });
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));

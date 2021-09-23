@@ -29,8 +29,8 @@ const sortValue = {
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
   'ownerOrganization.name': 'ownerOrganization.name',
-  'dayIncome': 'dayIncome',
-  'heartbeat.updated': 'heartbeat.updated'
+  dayIncome: 'dayIncome',
+  'heartbeat.updated': 'heartbeat.updated',
 };
 
 const screenWidth = window.innerWidth;
@@ -99,9 +99,13 @@ const KiosksContent = ({
     },
     {
       title: 'Network Status',
-      field: 'heartbeat.updated',
-      formatter: ({ heartbeat }) => (
-        <CellHeartbeat heartbeat={heartbeat} showTime />
+      field: 'heartbeat.updated,temperature.updated',
+      formatter: ({ heartbeat, temperature }) => (
+        <CellHeartbeat
+          heartbeat={heartbeat}
+          temperature={temperature}
+          showTime
+        />
       ),
     },
     {

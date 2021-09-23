@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livello-mc-test
+  labels:
+    app: livello-mc-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: livello-mc-test
+  template:
+    metadata:
+      labels:
+        app: livello-mc-test
+    spec:
+      containers:
+        - name: livello-mc-test
+          image: gcr.io/livello-backend/livello-mission-control-test:0.6.4
+          ports:
+            - containerPort: 8080

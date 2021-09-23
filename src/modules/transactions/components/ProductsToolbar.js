@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import { Grid, Dropdown } from 'semantic-ui-react';
 import { exportCsvProducts } from '../actions';
@@ -8,11 +8,11 @@ import DatePicker from 'modules/shared/components/Datepicker';
 import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
 const Toolbar = ({
-  kiosks,
   changeDate,
   changeKiosk,
   exportCsvProducts,
   isKiosksLoading,
+  kiosksOptions,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -66,7 +66,7 @@ const Toolbar = ({
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <SelectCheckBoxes
               title="Kiosks"
-              options={kiosks}
+              options={kiosksOptions}
               allOptionKey="all"
               onClickApply={handleKioskChange}
               isLoading={isKiosksLoading}
@@ -87,7 +87,7 @@ Toolbar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isKiosksLoading: state.kiosks.isLoading,
+  isKiosksLoading: state.kiosks.isKiosksListLoading,
 });
 const mapDispatchToProps = {
   exportCsvProducts,

@@ -122,8 +122,17 @@ const FragmentKioskOfflineOnKiosk = gql`
     }
   }
 `;
-const FragmentAlertDoorOpenOnKiosk = gql`
-  fragment FragmentAlertDoorOpen on AlertDoorOpen {
+const FragmentAlertDoorLeftOpenPurchaseOnKiosk = gql`
+  fragment FragmentAlertDoorLeftOpenPurchase on AlertDoorLeftOpenPurchase {
+    kioskId {
+      _id
+      name
+      doorStatus
+    }
+  }
+`;
+const FragmentAlertDoorLeftOpenRefillOnKiosk = gql`
+  fragment FragmentAlertDoorLeftOpenRefill on AlertDoorLeftOpenRefill {
     kioskId {
       _id
       name
@@ -189,6 +198,14 @@ const FragmentAlertNoLeftScalesDataOnKiosk = gql`
 `;
 const FragmentAlertNoRightScalesDataOnKiosk = gql`
   fragment FragmentAlertNoRightScalesData on AlertNoRightScalesData {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertInvalidScaleWeightOnKiosk = gql`
+  fragment FragmentAlertInvalidScaleWeight on AlertInvalidScaleWeight {
     kioskId {
       _id
       name
@@ -309,7 +326,8 @@ export const GET_ALERTS_GRID = gql`
         endDate
         details {
           ...FragmentKioskOffline
-          ...FragmentAlertDoorOpen
+          ...FragmentAlertDoorLeftOpenRefill
+          ...FragmentAlertDoorLeftOpenPurchase
           ...FragmentAlertHighTemp
           ...FragmentAlertLowTemp
           ...FragmentAlertUnauthorizedAccess
@@ -318,12 +336,14 @@ export const GET_ALERTS_GRID = gql`
           ...FragmentAlertTabletMQTTDisconnected
           ...FragmentAlertNoRightScalesData
           ...FragmentAlertNoLeftScalesData
+          ...FragmentAlertInvalidScaleWeight
         }
       }
     }
   }
   ${FragmentKioskOfflineOnKiosk}
-  ${FragmentAlertDoorOpenOnKiosk}
+  ${FragmentAlertDoorLeftOpenRefillOnKiosk}
+  ${FragmentAlertDoorLeftOpenPurchaseOnKiosk}
   ${FragmentAlertHighTempOnKiosk}
   ${FragmentAlertLowTempOnKiosk}
   ${FragmentAlertUnauthorizedAccessOnKiosk}
@@ -331,6 +351,7 @@ export const GET_ALERTS_GRID = gql`
   ${FragmentAlertTabletDisconnectedOnKiosk}
   ${FragmentAlertNoRightScalesDataOnKiosk}
   ${FragmentAlertNoLeftScalesDataOnKiosk}
+  ${FragmentAlertInvalidScaleWeightOnKiosk}
   ${FragmentAlertTabletMQTTDisconnectedOnKiosk}
 `;
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
@@ -463,6 +484,24 @@ export const DELETE_PLAYLIST = gql`
       type
       enabled
       order
+    }
+  }
+`;
+
+export const GET_KIOSKS_LIST = gql`
+  query {
+    getAllKiosks {
+      _id
+      name
+    }
+  }
+`;
+
+export const GET_ORGS_LIST = gql`
+  query {
+    getAllOrganizations {
+      _id
+      name
     }
   }
 `;

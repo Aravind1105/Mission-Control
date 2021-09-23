@@ -111,7 +111,6 @@ const ImageUploader = ({
           ? tempImage.replace(reg, '').replace(/\%20/g, ' ')
           : 'noname';
         if (checkImg.imgSize > 500000) {
-          alert();
           setShowSizeWarning(true);
         } else if (image.naturalWidth > 1400 || image.naturalHeight > 1400) {
           setShowDimensionWarning(true);
@@ -180,11 +179,11 @@ const ImageUploader = ({
 
   useEffect(() => {
     if (customAlertStatus) {
-      if (isImageUpdated && initialValues.id !== undefined) {
+      if (isImageUpdated && initialValues.id !== '') {
         updateImage();
       } else if (isImageDeleted) {
         deleteImage();
-      } else if (initialValues.id === undefined) {
+      } else if (initialValues.id === '') {
         // while creating a new product with image, this method will be called
         setFirstUploadImage(imgProps.imgbase64);
       }
@@ -262,6 +261,9 @@ const ImageUploader = ({
             accept="image/x-png,image/jpg,image/jpeg"
             id="productImgUpload"
             className="img-button"
+            onClick={e => {
+              e.target.value = '';
+            }}
             onChange={e => handleChange(e)}
             ref={ref => (fileInput.current = ref)}
           />
@@ -271,6 +273,8 @@ const ImageUploader = ({
           onApprove={() => {
             setCustomAlertStatus(true);
             setShowAlert(false);
+            setIsImageDeleted(false);
+            setIsImageUpdated(false);
           }}
           onCancel={() => {
             setIsCancelTriggered(true);

@@ -1,0 +1,29 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+.toolbar-container {
+  margin-bottom: 10px !important;
+  .toolbar-dropdown {
+    margin-left: -17px !important;
+    @media @mobile {
+      margin-left: 0px !important;
+    }
+  }
+  .kiosk-toolbar-dropdown {
+    margin-left: 0px !important;
+    @media @mobile {
+      margin-left: 0px !important;
+    }
+  }
+  .products-toolbar-dropdown {
+    margin-left: -5px !important;
+    @media @mobile {
+      margin-left: 0px !important;
+    }
+  }
+  .manufactur-toolbar-dropdown {
+    margin-left: -10px !important;
+    @media @mobile {
+      margin-left: 0px !important;
+    }
+  }
+}
