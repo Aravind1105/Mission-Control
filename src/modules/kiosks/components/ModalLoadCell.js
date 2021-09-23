@@ -74,6 +74,10 @@ const ModalLoadCell = ({
   });
   const [showPositionErrorAlert, setShowPositionErrorAlert] = useState(false);
   const [isValidPosition, setIsValidPosition] = useState(true);
+  const [disableCableId, setDisableCableId] = useState(false);
+  const [disablePlanogramPosition, setDisablePlanogramPosition] = useState(
+    false,
+  );
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -232,7 +236,18 @@ const ModalLoadCell = ({
                       required
                       validate={validatePlanogramPosition}
                       component={FormInput}
+                      disabled={disablePlanogramPosition}
                       onBlur={e => {
+                        // if position modified, disable cable ID field
+                        if (
+                          initVal.planogramPosition !== e.target.value &&
+                          !isAddLoadCell
+                        ) {
+                          setDisableCableId(true);
+                        } else {
+                          setDisableCableId(false);
+                        }
+
                         //check if the planogramPosition is already available in the used positions list
                         //throw error if already available
                         if (isAddLoadCell) {
@@ -254,10 +269,13 @@ const ModalLoadCell = ({
                         } else if (
                           initVal.planogramPosition !== e.target.value &&
                           !usedPositions.includes(e.target.value)
-                        )
+                        ) {
                           setIsValidPosition(true);
-                        else if (initVal.planogramPosition === e.target.value)
+                        } else if (
+                          initVal.planogramPosition === e.target.value
+                        ) {
                           setIsValidPosition(true);
+                        }
                       }}
                     />
                   </Grid.Column>
@@ -268,11 +286,21 @@ const ModalLoadCell = ({
                     <Field
                       name="cellId"
                       options={cellIdOptions}
-                      disabled={!isAddLoadCell && Boolean(initVal.quantity)}
+                      disabled={
+                        (!isAddLoadCell && Boolean(initVal.quantity)) ||
+                        disableCableId
+                      }
                       required
                       component={FormAsyncSelect}
-                      onChange={({}) => {
+                      onChange={({ data }) => {
                         setIsValid({ ...isValid, cableId: true });
+
+                        // if cable ID is changed, disable planogram position field
+                        if (data.value !== initVal.cableId && !isAddLoadCell) {
+                          setDisablePlanogramPosition(true);
+                        } else {
+                          setDisablePlanogramPosition(false);
+                        }
                       }}
                     />
                   </Grid.Column>
