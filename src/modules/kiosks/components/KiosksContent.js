@@ -99,9 +99,13 @@ const KiosksContent = ({
     },
     {
       title: 'Network Status',
-      field: 'heartbeat.updated',
-      formatter: ({ heartbeat }) => (
-        <CellHeartbeat heartbeat={heartbeat} showTime />
+      field: 'heartbeat.updated,temperature.updated',
+      formatter: ({ heartbeat, temperature }) => (
+        <CellHeartbeat
+          heartbeat={heartbeat}
+          temperature={temperature}
+          showTime
+        />
       ),
     },
     {
