@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Icon, Menu, Sidebar } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import UserProfileBar from './UserProfileBar';
 import logoSmall from '../../../styling/assets/images/new_Menu_Logo.png';
+import { connect } from 'react-redux';
+import { getKiosksList } from '../../kiosks/actions';
 
 import './mobileLayout.less';
 
-const MobileLayout = ({ children }) => {
+const MobileLayout = ({ children, kiosks, getKiosksList }) => {
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (kiosks.length === 0) getKiosksList();
+  }, [kiosks]);
 
   return (
     <>
@@ -46,4 +52,12 @@ const MobileLayout = ({ children }) => {
   );
 };
 
-export default MobileLayout;
+const mapStateToProps = state => ({
+  kiosks: state.kiosks.kiosksList,
+});
+
+const mapDispatchToProps = {
+  getKiosksList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MobileLayout);
