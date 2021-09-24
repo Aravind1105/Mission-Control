@@ -18,57 +18,55 @@ const stateOptions = [
 
 const OrganizationsToolbar = () => {
   return (
-    <Segment className="toolbar">
-      <div className="toolbar-container">
-        <Grid stackable>
-          <Grid.Row verticalAlign="middle" columns="equal">
-            <Grid.Column width={6}>
-              <Input
-                icon="search"
-                placeholder="Search..."
+    <Segment className="org-toolbar">
+      <Grid stackable>
+        <Grid.Row verticalAlign="middle" columns="equal">
+          <Grid.Column mobile={16} tablet={8} computer={6}>
+            <Input
+              icon="search"
+              placeholder="Search..."
+              className="full-width"
+            />
+          </Grid.Column>
+
+          <Grid.Column>
+            <div className="toolbar-dropdown">
+              <Dropdown
+                placeholder="All types"
+                selection
+                options={stateOptions}
                 className="full-width"
               />
-            </Grid.Column>
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div className="toolbar-dropdown">
+              <Dropdown
+                placeholder="All types"
+                selection
+                options={stateOptions}
+                className="full-width"
+              />
+            </div>
+          </Grid.Column>
 
-            <Grid.Column>
-              <div className="toolbar-dropdown">
-                <Dropdown
-                  placeholder="All types"
-                  selection
-                  options={stateOptions}
-                  className="full-width"
-                />
-              </div>
-            </Grid.Column>
-            <Grid.Column>
-              <div className="toolbar-dropdown">
-                <Dropdown
-                  placeholder="All types"
-                  selection
-                  options={stateOptions}
-                  className="full-width"
-                />
-              </div>
-            </Grid.Column>
-
-            <Grid.Column textAlign="right">
-              <Button
-                icon
-                labelPosition="left"
-                color="green"
-                compact
-                as={Link}
-                to="/organizations/create"
-                // disabled={true}
-                //! Disabled temporarily #golive2
-              >
-                <Icon name="right arrow" />
-                Add organization
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+          <Grid.Column textAlign="right">
+            <Button
+              icon
+              labelPosition="left"
+              color="green"
+              compact
+              as={Link}
+              to="/organizations/create"
+              // disabled={true}
+              //! Disabled temporarily #golive2
+            >
+              <Icon name="right arrow" />
+              Add organization
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Segment>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Grid } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
@@ -83,26 +83,44 @@ const OrganizationsContent = ({
   return (
     <>
       {isLoading && <Loader />}
-      <Segment>
-        <CustomTable
-          columns={columns}
-          data={organizations}
-          onRowClick={clickRow}
-          sortable
-          selectable
-          sortByColumn="name"
-          setSortByInCaller={sort => setSort([sort])}
-          sortDirection="ASC"
-        />
-        <Pagination
-          totalCount={total}
-          page={page}
-          perPage={perPage}
-          changePage={changePage}
-          changePerPage={changePerPage}
-          isLoading={isLoading}
-        />
-      </Segment>
+      <Grid>
+        <Grid.Column mobile={16} tablet={8} computer={16}>
+          <Segment>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <CustomTable
+                        columns={columns}
+                        data={organizations}
+                        onRowClick={clickRow}
+                        sortable
+                        selectable
+                        sortByColumn="name"
+                        setSortByInCaller={sort => setSort([sort])}
+                        sortDirection="ASC"
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Pagination
+                        totalCount={total}
+                        page={page}
+                        perPage={perPage}
+                        changePage={changePage}
+                        changePerPage={changePerPage}
+                        isLoading={isLoading}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     </>
   );
 };

@@ -1,11 +1,26 @@
 @tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
 @mobile: ~'only screen and (max-width: 600px)';
-
-.toolbar-container {
+.org-table {
+  padding-top: 70px !important;
   @media @mobile {
-    margin-left: 0px !important;
+    padding-top: 7px !important;
   }
 }
+.org-toolbar {
+  position: fixed !important;
+  overflow: hidden !important;
+  width: 78.4% !important;
+  z-index: 1;
+  margin-top: -17px !important;
+  margin-left: 0px !important;
+  margin-right: 10px !important;
+  @media @mobile {
+    position: initial !important;
+    margin-top: 0px !important;
+    width: 100% !important;
+  }
+}
+
 .toolbar-dropdown {
   margin-left: -15px !important;
   @media @mobile {
