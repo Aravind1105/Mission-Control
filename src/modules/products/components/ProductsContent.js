@@ -12,12 +12,8 @@ const columns = [
     field: 'name',
   },
   {
-    title: 'Supplier',
+    title: 'Manufacturer',
     field: 'manufacturer',
-  },
-  {
-    title: 'Category',
-    field: 'category',
   },
   {
     title: 'Weight',

@@ -20,6 +20,7 @@ import CustomTooltip from '../CustomTooltip';
 import { getSalesStatisticState } from '../../selectors';
 import { computeAndFormatData } from '../../sagas/formatData';
 import './styles.less';
+import SelectCheckBoxes from '../../../shared/components/SelectCheckBoxes';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
@@ -31,8 +32,8 @@ const optionsTime = [
   { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ kiosksOptions, salesStats }) => {
-  const [kioskId, setKiosk] = useState('');
+const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
+  const [kioskId, setKiosk] = useState([]);
   const [time, setTime] = useState(optionsTime[3].value);
   const [data, setData] = useState(salesStats[time]);
   const [kiosks, setKiosks] = useState([]);
@@ -47,7 +48,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
     setData(formattedData);
   }, [kioskId, time]);
 
-  const handlerChangeKiosk = ({ value }) => {
+  const handleKioskChange = value => {
     setKiosk(value);
   };
 
@@ -66,10 +67,12 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
           </Grid.Column>
 
           <Grid.Column mobile={16} computer={4}>
-            <Select
-              onChange={handlerChangeKiosk}
+            <SelectCheckBoxes
+              title="Kiosks"
               options={kiosksOptions}
-              defaultValue={kiosksOptions[0]}
+              allOptionKey=""
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksListLoading}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4}>
@@ -90,33 +93,48 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
         </div>
       )}
       {!isEmpty(kiosks) && (
-        <ResponsiveContainer width="100%" height={500}>
-          <BarChart data={data} margin={{ left: 10, right: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis
-              dataKey={({ date }) => {
-                return date;
+        <div className="chart-data">
+          <ResponsiveContainer>
+            <BarChart
+              data={data}
+              margin={{
+                top: 5,
+                right: 0,
+                left: 0,
+                bottom: 5,
               }}
-              height={100}
-              interval={0}
-              tickSize={10}
-              tick={<CustomizedAxisTick />}
-            />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            {kiosks.map((kiosk, i) => (
-              <Bar
-                key={kiosk}
-                dataKey={kiosk}
-                name={kiosk}
-                stackId="a"
-                fill={colorsArr[i % (colorsArr.length - 1)]}
-                className="chartTest"
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis
+                XAxis
+                dataKey="date"
+                height={60}
+                interval={0}
+                tickSize={10}
+                tick={<CustomizedAxisTick />}
               />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+              <YAxis />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend
+                wrapperStyle={{
+                  left: 20,
+                  right: 25,
+                }}
+              />
+
+              {kiosks.map((kiosk, i) => (
+                <Bar
+                  key={kiosk}
+                  dataKey={kiosk}
+                  name={kiosk}
+                  stackId="a"
+                  fill={colorsArr[i % (colorsArr.length - 1)]}
+                  className="chartTest"
+                />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
     </Segment>
   );
@@ -124,6 +142,7 @@ const MainChart = ({ kiosksOptions, salesStats }) => {
 
 const mapStateToProps = state => ({
   salesStats: getSalesStatisticState(state),
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
 });
 
 export default connect(mapStateToProps)(MainChart);

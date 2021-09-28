@@ -1,7 +1,6 @@
 import { createAction } from 'redux-actions';
 
 // Saga actions
-export const getAllKiosks = createAction('@@saga/KIOSK_LOAD');
 export const getAllKiosksForTable = createAction('@@saga/KIOSK_FOR_TABLE_LOAD');
 export const getAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_LOAD',
@@ -26,9 +25,10 @@ export const setPlanogramSwitchState = createAction(
   '@@saga/SET_PLANOGRAM_SWITCH_STATE',
 );
 export const deleteLoadCell = createAction('@@saga/DELETE_LOAD_CELL');
+export const getKiosksList = createAction('@@saga/GET_KIOSK_LIST');
+export const getOrgsList = createAction('@@saga/GET_ORG_LIST');
 
 // State actions
-export const updateKiosks = createAction('@@state/KIOSKS_UPDATE');
 export const updateKiosksForTable = createAction(
   '@@state/KIOSKS_UPDATE_FOR_TABLE',
 );
@@ -37,7 +37,6 @@ export const updateAlmostEmptyKiosks = createAction(
 );
 export const exportCsvTempLogs = createAction('@@saga/GET_TEMP_LOGS_CSV');
 
-export const updateKioskById = createAction('@@state/UPDATE_BY_ID');
 export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
 export const updateKioskPropsSuccess = createAction(
   '@@state/UPDATE_KIOSK_PROPS_SUCCESS',
@@ -73,6 +72,20 @@ export const setPlanogramSwitchStateSuccess = createAction(
 export const deleteLoadCellSuccess = createAction(
   '@@saga/DELETE_LOAD_CELL_SUCCESS',
 );
+export const getKiosksListSuccess = createAction(
+  '@@state/GET_KIOSK_LIST_SUCCESS',
+);
+export const getOrgsListSuccess = createAction('@@state/GET_ORG_LIST_SUCCESS');
 
 export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');
 export const exportCsvPackList = createAction('@@saga/GET_PackList_CSV');
+
+// pagination actions
+export const setSearch = createAction('@@state/SET_KIOSK_SEARCH');
+export const setKiosk = createAction('@@state/SET_KIOSK');
+export const setOrganization = createAction('@@state/SET_KIOSKS_ORGANIZATION');
+export const setKioskStatus = createAction('@@state/SET_KIOSK_STATUS');
+export const setPage = createAction('@@state/SET_KIOSKS_PAGE');
+export const setPerPage = createAction('@@state/SET_KIOSKS_PER_PAGE');
+export const setSort = createAction('@@state/SET_KIOSKS_SORT');
+export const setFilters = createAction('@@state/SET_KIOSKS_FILTERS');

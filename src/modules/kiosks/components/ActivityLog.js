@@ -117,7 +117,7 @@ const columns = [
                   : null)
               : prodTaken
               ? '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken
-              : null)
+              : '')
           );
         } else return 'Product Taken  - \t Cable ID :  ' + prodTaken;
       } else if (
@@ -228,7 +228,7 @@ const ActivityLogGrid = ({
               <Grid.Column mobile={16} computer={4}>
                 <CustomButton
                   label="Download CSV&nbsp;"
-                  icon="arrow down icon"
+                  icon="arrow down"
                   className="custom-button-default"
                   onClick={DownloadCsv}
                   disabled={true}

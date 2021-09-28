@@ -38,14 +38,14 @@ const TransactionsList = ({
   isLoading,
   total,
   getAllTransactions,
-  kiosks,
+  kiosksOptions,
   getTransactionsWidgetsData,
   widgetsData,
 }) => {
   const [dateRange, changeDate] = useState('');
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
-  const [kiosk, changeKiosk] = useState('');
+  const [kiosk, changeKiosk] = useState([]);
   const [sort, setSort] = useState(sortDefault);
   const [filter, setFilters] = useState(defaultFilterValues);
 
@@ -58,7 +58,7 @@ const TransactionsList = ({
 
     if (dateRange || kiosk) {
       const date = dateRange ? { created: dateRange } : {};
-      const kio = kiosk ? { kiosk } : {};
+      const kio = kiosk.length > 0 ? { kiosk: { $in: kiosk } } : {};
 
       data.search = JSON.stringify({
         ...date,
@@ -98,7 +98,7 @@ const TransactionsList = ({
     <>
       <Toolbar
         changeDate={changeDate}
-        kiosks={kiosks}
+        kiosks={kiosksOptions}
         changeKiosk={changeKiosk}
       />
       <Grid>
@@ -177,7 +177,7 @@ const mapStateToProps = state => ({
   transactions: getTransactionsTableState(state),
   total: getTotalTransactionsCount(state),
   isLoading: state.transactions.isLoading,
-  kiosks: getKioskOptionsForTableDropdown(state),
+  kiosksOptions: getKioskOptionsForTableDropdown(state),
   widgetsData: getWidgetDataState(state),
 });
 

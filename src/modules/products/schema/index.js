@@ -281,3 +281,35 @@ export const DELETE_PRODUCT_LINE_ACTIVE_PRICE = gql`
   }
   ${priceHistory}
 `;
+
+export const ARCHIVE_PRODUCTLINE = gql`
+  mutation archiveProductLine($productLineId: String!) {
+    archiveProductLine(productLineId: $productLineId)
+  }
+`;
+
+export const DUPLICATE_PRODCUTLINE = gql`
+  mutation duplicateProductLine($productLineId: String!) {
+    duplicateProductLine(productLineId: $productLineId) {
+      ...product
+    }
+  }
+  ${productOnProductLine}
+`;
+
+export const GET_MANUFACTURERS = gql`
+  {
+    getManufacturers
+  }
+`;
+
+export const GET_KIOSKS_WITH_PRODUCT = gql`
+  query getProductLineLinkedKiosks($productLineId: String!) {
+    getProductLineLinkedKiosks(productLineId: $productLineId) {
+      _id
+      name
+      serialNumber
+      cabelIds
+    }
+  }
+`;

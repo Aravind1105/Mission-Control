@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import pick from 'lodash/pick';
-import get from 'lodash/get';
+import { pick, get } from 'lodash';
+import { sort } from 'ramda';
 import sortByText from 'lib/sortByText';
 
 export const selectorGetProducts = state => state.products.list;
@@ -47,28 +47,22 @@ export const selectorProductTaxOptions = createSelector(
     })),
 );
 
-export const selectorGetSupplier = createSelector(
-  selectorGetProducts,
-  products => {
-    const supplierList = products.reduce((prev, curr, i) => {
-      if (!prev.length || !prev.some(el => el.value === curr.manufacturer)) {
-        return prev.concat({
-          text: curr.manufacturer,
-          value: curr.manufacturer,
-          key: `${i}_${curr.manufacturer}`,
-        });
-      }
-      return prev;
-    }, []);
-
-    return [
+export const selectorGetManufacturer = createSelector(
+  state => state.products.manufacturers,
+  manufacturers =>
+    [
       {
         value: '',
-        text: 'All Suppliers',
+        text: 'All Manufacturers',
         key: 'all',
       },
-    ].concat(sortByText(supplierList, 'value'));
-  },
+    ].concat(
+      sort((a, b) => a < b, manufacturers).map(option => ({
+        value: option,
+        text: option,
+        key: option,
+      })),
+    ),
 );
 
 export const selectorGetProductFamilyForm = createSelector(
@@ -110,6 +104,7 @@ export const selectorGetProductCategories = createSelector(
 );
 
 const defaultFormInit = {
+  id: '',
   name: '',
   manufacturer: '',
   articleNumber: '',
@@ -130,30 +125,32 @@ const defaultFormInit = {
   defaultCost: '',
   orgId: '',
   images: [],
-  capacities: {
-    surfaceSize_33: '',
-    surfaceSize_50: '',
-    surfaceSize_100: '',
-  },
-  packagingOptions: [
-    {
-      ean: '',
-      unitCount: 1,
-      grossWeightGrams: '',
-      packageWeightGrams: 0,
-      netWeightGrams: '',
-      shelfLifeDays: '',
-      tolerancePercentage: 0,
-      description: '',
-    },
-  ],
+  capacitiesSurfaceSize_33: '',
+  capacitiesSurfaceSize_50: '',
+  capacitiesSurfaceSize_100: '',
+  packagingOptionsEan: '',
+  packagingOptionsUnitCount: 1,
+  packagingOptionsGrossWeightGrams: '',
+  packagingOptionsPackageWeightGrams: 0,
+  packagingOptionsNetWeightGrams: 0,
+  packagingOptionsShelfLifeDays: '',
+  packagingOptionsTolerancePercentage: 0,
+  packagingOptionsDescription: '',
+  packagingOptionsPackageWeightGramsUnit: '',
 };
 
 export const selectorGetProductInitValue = createSelector(
   selectorGetProduct,
   product => {
     if (!product) return defaultFormInit;
-    const { packagingOptions, family, taxHistory, tax, ...rest } = product;
+    const {
+      packagingOptions,
+      family,
+      taxHistory,
+      tax,
+      // capacities,
+      ...rest
+    } = product;
     rest.priceHistory = rest.priceHistory.map(el => ({
       ...el,
       price: el.price.toFixed(2),
@@ -174,6 +171,7 @@ export const selectorGetProductInitValue = createSelector(
       'manufacturer',
       'articleNumber',
       'name',
+      'id',
       'protein',
       'salt',
       'priceHistory',
@@ -182,46 +180,37 @@ export const selectorGetProductInitValue = createSelector(
       'capacities',
     ]);
 
-    //convert capacities field (array of objects) to Formik expected format
-    const capacities = {
-      surfaceSize_33: 0,
-      surfaceSize_50: 0,
-      surfaceSize_100: 0,
-    };
-    initialValues.capacities.forEach(capacity => {
-      switch (capacity.surfaceSize) {
-        case 33:
-          capacities['surfaceSize_33'] = capacity.units || 0;
-          break;
-        case 50:
-          capacities['surfaceSize_50'] = capacity.units || 0;
-          break;
-        case 100:
-          capacities['surfaceSize_100'] = capacity.units || 0;
-          break;
-        default:
-          break;
-      }
-    });
-    initialValues['capacities'] = capacities;
-
+    const capacitiesArray = initialValues.capacities;
+    delete initialValues.capacities;
     return {
       ...defaultFormInit,
       ...initialValues,
-      packagingOptions: [
-        {
-          ...defaultFormInit.packagingOptions[0],
-          ...pick(packaging, [
-            'ean',
-            'unitCount',
-            'grossWeightGrams',
-            'netWeightGrams',
-            'netWeightGramsUnit',
-            'shelfLifeDays',
-            'description',
-          ]),
-        },
-      ],
+
+      capacitiesSurfaceSize_33:
+        typeof capacitiesArray[0] !== 'undefined'
+          ? capacitiesArray[0].units
+          : '',
+      capacitiesSurfaceSize_50:
+        typeof capacitiesArray[1] !== 'undefined'
+          ? capacitiesArray[1].units
+          : '',
+      capacitiesSurfaceSize_100:
+        typeof capacitiesArray[2] !== 'undefined'
+          ? capacitiesArray[2].units
+          : '',
+
+      packagingOptionsEan: get(packaging, ['ean'], '') || '',
+      packagingOptionsUnitCount: get(packaging, ['unitCount']),
+      packagingOptionsGrossWeightGrams: get(packaging, ['grossWeightGrams']),
+      packagingOptionsPackageWeightGrams: get(packaging, ['grossWeightGrams']),
+      packagingOptionsNetWeightGrams: get(packaging, ['netWeightGrams']),
+      packagingOptionsShelfLifeDays: get(packaging, ['shelfLifeDays']),
+      packagingOptionsDescription: get(packaging, ['description']),
+      packagingOptionsPackageWeightGramsUnit: get(
+        packaging,
+        ['netWeightGramsUnit'],
+        '' || 'g',
+      ),
       id: rest._id,
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),
@@ -238,3 +227,8 @@ export const getDefaultPriceHistoryState = state =>
 
 export const getActivePriceHistoryState = state =>
   state.products.activePriceHistory;
+
+export const getKiosksWithProductState = state =>
+  state.products.kiosksWithProduct;
+
+export const getPaginationState = state => state.products.pagination;

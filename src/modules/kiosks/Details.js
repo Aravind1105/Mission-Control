@@ -12,7 +12,6 @@ import DetailsInventory from './components/DetailsInventory';
 import DetailsHeader from './components/DetailsHeader';
 import DetailsInfo from './components/DetailsInfo';
 import DetailQRCode from './components/DetailQRCode';
-import get from 'lodash/get';
 import {
   getKioskSingle,
   getKioskShelves,
@@ -21,7 +20,6 @@ import {
 } from './selectors';
 import { resetKiosk, getKiosk, getOrganizationById } from './actions';
 import './styles.less';
-import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const links = [
   {
@@ -106,6 +104,7 @@ const KioskDetails = ({
                     name={kiosk && kiosk.name}
                     doorStatus={kiosk && kiosk.doorStatus}
                     temperature={kiosk && kiosk.temperature}
+                    heartbeat={kiosk && kiosk.heartbeat}
                     session={kiosk && kiosk.session}
                     service={kiosk && kiosk.controller.serviceCheck.enabled}
                   />

@@ -6,11 +6,13 @@ import {
   modifyProductImageSuccess as actionSuccess,
 } from '../actions';
 import { toast } from 'react-semantic-toasts';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { id, image } }) {
   try {
     const {
       data: { updateProductLineImage },
+      errors,
     } = yield call(gqlProducts.mutate, {
       mutation: UPLOAD_PRODUCT_LINE_IMAGE_MUTATION,
       variables: {
@@ -18,13 +20,16 @@ function* handler({ payload: { id, image } }) {
         image,
       },
     });
-
-    yield put(actionSuccess(updateProductLineImage));
-    toast({
-      type: 'success',
-      description: 'Product Image updated successfully.',
-      animation: 'fade left',
-    });
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(actionSuccess(updateProductLineImage));
+      toast({
+        type: 'success',
+        description: 'Product Image updated successfully.',
+        animation: 'fade left',
+      });
+    }
   } catch (e) {
     console.log(e);
     toast({

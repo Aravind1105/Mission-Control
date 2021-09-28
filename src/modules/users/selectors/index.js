@@ -90,9 +90,9 @@ export const getActiveUserIDState = createSelector(getActiveUserState, user => {
       }
     : userInitialValues;
 
-    // remove duplicates in payment method types
-    userState.paymentMethods = R.uniq(userState.paymentMethods);
-    return userState;
+  // remove duplicates in payment method types
+  userState.paymentMethods = R.uniq(userState.paymentMethods);
+  return userState;
 });
 
 export const getUserLogsState = createSelector(getUserLogs, log => {
@@ -180,5 +180,6 @@ export const getMemberCardsAsOptions = createSelector(
   },
 );
 
-
 export const getLoggedInUserId = state => state.user._id;
+
+export const getPaginationState = state => state.users.pagination;

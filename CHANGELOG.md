@@ -1,3 +1,254 @@
+#### 1.4.28 (2021-09-15)
+
+##### New Features
+
+* **LIV-3839:**  added alert for invalid scale readings (07fb3a0c)
+* **products listing:** LIV-3788 removed category column from products page (de8734fa)
+* **teansactions-products:** LIV-3786 multiple kiosk filter for transaction products (2c186e7d)
+* **test:**  added test url for test env (a129bda3)
+* **transactions refills:** LIV-3726 multiple kiosk filter and updated widgest and CSV (2c9b415d)
+* **alerts page:** LIV-3785 multiple kiosk selection filter (aa22626c)
+* **kiosk list page:** LIV-3727 multiple kiosk filtering (43c15424)
+* **transaction sales:** LIV-2787 CSV export for sales (4c580c0d)
+* **transactions sales:** LIV-2787 CSV (13d99894)
+* **ci-cd:**  add test-master deployments (88c3f3c6)
+* **transactions-sales:** LIV-2787 multiple kiosk filtering (83295102)
+* **components:**
+  * LIV-2787 multi select chck box options - clear button (0cb96893)
+  * LIV-2787 outside click handler for multiple selection options (a849d128)
+* **Components:** LIV-2787 multiple selection component (ea5f090f)
+
+##### Bug Fixes
+
+* **transactions products:**  LIV-3207 a minor fix in request payload when none of the kiosks is selected (42e1cd68)
+* **factor:**  refactoring code (adeb8691)
+* **Kiosk:**
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (65606ce7)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (25e2cfc5)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (e896ae4c)
+  *  LIV-3372 Input Formate and Validation (a427b10c)
+* **LIV-3583:**
+  *  fixed same image uplaod twice (a62aa0bd)
+  *  Updated btn design and msg format (47dcfe3a)
+  * fixed img base64 and updated alerts name (29da2db5)
+* **kiosks:**  update placeholder img styling (eb2d6b3b)
+* **Products:**
+  *  LIV-3378 Product Form Validation (dad05d30)
+  *  LIV-3378 Product Form Validation (a94687e5)
+* **kiosks list page:** LIV-3727 multiple selection filter displays after full loading (0a1d07d8)
+* **transactions sales:** LIV-2787 widgets show data for multiple kiosks (3bab257e)
+* **payment:**  payment status update (1225056f)
+* **Kiosk Overview Admin and Super Admin:**  LIV-3371 different Kiosk Overview of Admin and Super Admin (784fa9ab)
+* **kiosk:**  LIV-3371 Adding frontend changes for kiosk table sorting based on organization name (f4144409)
+* **users, products, kiosks:** LIV-3558 pagination redux actions updated and users search on redux fixed (7a4309d7)
+* **users:** LIV-3558 users navigation pagination and search data saved on redux state (d638d7f3)
+* **Users:**  LIV-3458 User Low must be highlighted once selected (f80db353)
+
+##### Other Changes
+
+* livello-network/livello-mission-control into test-master (e1b1307f)
+*  Temp Decimal fixed): LIV-3382 Temp Log of last 7 dates decimal value fixed (fdf2d0f0)
+* LIV-2787 kiosk multiple filtering widget data (302eb58b)
+*  Temp): LIV-3382 Temp Log of last 7 dates (669bdaf1)
+*  Temp): LIV-3382 Temp Log of last 7 dates (2c6f9b1f)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved updated (0a2a8fad)
+
+##### Tests
+
+* **k8:**  add yaml files for test env (6e4f3024)
+
+#### 1.4.27 (2021-09-09)
+
+##### New Features
+
+* **teansactions-products:** LIV-3786 multiple kiosk filter for transaction products (2c186e7d)
+* **transactions refills:** LIV-3726 multiple kiosk filter and updated widgest and CSV (2c9b415d)
+* **alerts page:** LIV-3785 multiple kiosk selection filter (aa22626c)
+* **kiosk list page:** LIV-3727 multiple kiosk filtering (43c15424)
+* **transaction sales:** LIV-2787 CSV export for sales (4c580c0d)
+* **transactions sales:** LIV-2787 CSV (13d99894)
+* **transactions-sales:** LIV-2787 multiple kiosk filtering (83295102)
+* **components:**
+  * LIV-2787 multi select chck box options - clear button (0cb96893)
+  * LIV-2787 outside click handler for multiple selection options (a849d128)
+* **Components:** LIV-2787 multiple selection component (ea5f090f)
+
+##### Bug Fixes
+
+* **LIV-3583:**
+  *  Updated btn design and msg format (47dcfe3a)
+  * fixed img base64 and updated alerts name (29da2db5)
+* **kiosks list page:** LIV-3727 multiple selection filter displays after full loading (0a1d07d8)
+* **transactions sales:** LIV-2787 widgets show data for multiple kiosks (3bab257e)
+* **payment:**  payment status update (1225056f)
+* **Kiosk Overview Admin and Super Admin:**  LIV-3371 different Kiosk Overview of Admin and Super Admin (784fa9ab)
+* **kiosk:**  LIV-3371 Adding frontend changes for kiosk table sorting based on organization name (f4144409)
+* **users, products, kiosks:** LIV-3558 pagination redux actions updated and users search on redux fixed (7a4309d7)
+* **users:** LIV-3558 users navigation pagination and search data saved on redux state (d638d7f3)
+* **Users:**  LIV-3458 User Low must be highlighted once selected (f80db353)
+
+##### Other Changes
+
+*  Temp Decimal fixed): LIV-3382 Temp Log of last 7 dates decimal value fixed (fdf2d0f0)
+* LIV-2787 kiosk multiple filtering widget data (302eb58b)
+*  Temp): LIV-3382 Temp Log of last 7 dates (669bdaf1)
+*  Temp): LIV-3382 Temp Log of last 7 dates (2c6f9b1f)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved updated (0a2a8fad)
+
+#### 1.4.27 (2021-08-23)
+
+##### Bug Fixes
+
+* **kiosk:**  Adding frontend changes for kiosk table sorting based on orgainzation name (af5c8334)
+
+#### 1.4.26 (2021-08-18)
+
+##### Bug Fixes
+
+* **kiosks:** LIV-3558 navigation and pagination data saved to redux state (5afcda25)
+* **products:** LIV-3558 pagination state moved to redux (9fe44dc7)
+
+#### 1.4.25 (2021-08-13)
+
+##### New Features
+
+* **log:**  activity log update and heartbeat time update (7e30b001)
+
+##### Bug Fixes
+
+* **kiosk planogram:** LIV-3675 removed usage of isActive flag (52916aa8)
+* **log:**  activity logs update (b5abf2c0)
+* **create product:**  hot fix create product image type bug (a55d7657)
+
+##### Other Changes
+
+* **dashboard:** sales graph is hidden due to accesscontrol bug" (2d0f00a6)
+
+#### 1.4.24 (2021-08-13)
+
+##### New Features
+
+* **product detail:**
+  * LIV-3605 list prouct used kiosks and navigation links to corresponding kiosks and loadcells (af58ec5c)
+  * LIV-3605 kiosks with product widget (5875dde8)
+* **LIV-3601:**  Redirect to Login page after the popup appears (52103819)
+
+##### Bug Fixes
+
+* **Dashbaard, Kiosk, Transactions Table Header:**  LIV-3544 All tables Angular Cornor removed (735cff7f)
+* **kiosk Overview Dropdowns Removel:**  LIV-3572 Removed Door Status Removel and Updated Column of Address (5d1f25da)
+* **kiosk planogram:** LIV-3537 product price change (to default) on planogram bug fix (a878eb48)
+* **kioskCreate:**  Fixed saga call and rm org name (e7b50956)
+* **products selectors:** sortByText import fixed (fae0b6ed)
+* **size:**  image type and size validation (3c61786a)
+* **loader:**  product form loader (d657bb45)
+* **LIV-3583:**  Image upload and delete is fixed (679a4a58)
+* **products overview:** LIV-3542 product search using manufacturer (c4a30cd9)
+
+##### Other Changes
+
+* Activity Log): LIV-3592 Activity Log Date should be vertically Top (856b9fc4)
+*  Salex By Fridge Graph): LIV-3571 Sales By Frdidge Graph Overlapping text issue resolved (014393e3)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (10898789)
+
+#### 1.4.23 (2021-08-05)
+
+##### Bug Fixes
+
+* **products overview:** LIV-3542 grid - supplier name renamed to manufacturer (04678bae)
+
+#### 1.4.22 (2021-08-05)
+
+##### New Features
+
+* **mqtt:**  tablet mqtt disconnected alert (84220364)
+* **stripe:**  stripe payment link updated (5f8f074d)
+* **LIV-3568:**  Update the session type in kiosk details page (dccf656f)
+* **LIV-3560:**  Updated heartbeat msg to give acurate Nw status (79620afc)
+* **LIV-3556:**  Alert for scales are not working after purchase session (08ea6c1f)
+* **LIV-3550:**  Alert is triggered when there is an empty purchase session (49f8e047)
+* **LIV-3538:**  update txn payment type on sales table (d23db17c)
+* **log:**  activity log update (a155fe22)
+
+##### Bug Fixes
+
+* **products overview:** LIV-3542 suppliers - renamed to manufacturers and manufacturers drop down fixed (7fb252d7)
+* **status:**
+  *  session status name changed (0b8bb92b)
+  *  Nw status dif update in minutes (07ca0228)
+* **Kiosk Overview:**  LIV-3371: Added Organization Column with Organizations DropDown (46baaba8)
+* **alert:**  alert message changed (72bac3e7)
+* **kiosk details Format of number + Currency:**
+  *  LIV-3498 Planogram (c615921f)
+  *  LIV-3497 Invetory Table Formate changed (8cd8abcb)
+* **log:**  log and stripe url update (b620936b)
+* **kiosk details Temprature:**  LIV-3382 Temprature Graph Updated and Table Removed (9e7c757c)
+* **create product:** hotfix creating product image type bug (b71be1bd)
+
+##### Other Changes
+
+*  Temprature Log): LIV-3382: Updated Temprature Log (d91a89e1)
+*  Products): LIV-3545 Widget ToolTip Updated with respect to character width (90ad6dcc)
+*  Sales By Fridge ): LIV-3532 Dashboard Chart for Mobile Enable Again (5bdd33d7)
+*  Edit/Add Screen): LIV-3509 Change the euro Sign to right side (e804d6e8)
+*  Planogram Overlapping Image and text): LIV-3496 Kiosk Details Planogram Overlapping Image (c3eded9c)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (2298380d)
+* **status:**
+  *  changed status to pending in sales table (befc64fa)
+  *  update payment type and status in sales table (67f32c05)
+* **alert:**  alert msg updated (ef72e906)
+
+#### 1.4.21 (2021-07-21)
+
+##### New Features
+
+* **product detail:** LIV-3434 duplicate product line (09230d6a)
+
+#### 1.4.20 (2021-07-21)
+
+##### New Features
+
+* **delete product:** LIV-3433 delete product line (d1a8108b)
+* **LIV-3504:**  alert type is remvd in logs (9a9d9617)
+
+##### Bug Fixes
+
+* **Transaction Sales:**  LIV-2845 Removing transaction id from Transaction Sales page (5ce7ef26)
+* **LIV-3504:**  activity log updated for prod taken array (3c0768a1)
+* **LIV-3336:**  settings button is enabled for all kiosks (8d7b6a7c)
+* **QRcode:**  Qrcode link updated on download (924ec1dc)
+* **kiosk edit:** LIV-3424 hotfix - kiosk does not show capacities after editing the kiosk (70d71e1b)
+* **kiosk detail:** LIV-3416 kiosk detail with capacities after deleting loadcell (22113ab7)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (06f22198)
+
+##### Other Changes
+
+* **dashboard:**
+  * sales graph is hidden due to accesscontrol bug" (f44ff436)
+  * sales graph is hidden due to accesscontrol bug (7b4f6b11)
+
+#### 1.4.19 (2021-07-21)
+
+##### New Features
+
+* **LIV-3504:**  alert type is remvd in logs (9a9d9617)
+
+##### Bug Fixes
+
+* **Transaction Sales:**  LIV-2845 Removing transaction id from Transaction Sales page (5ce7ef26)
+* **LIV-3504:**  activity log updated for prod taken array (3c0768a1)
+* **LIV-3336:**  settings button is enabled for all kiosks (8d7b6a7c)
+* **QRcode:**  Qrcode link updated on download (924ec1dc)
+* **kiosk edit:** LIV-3424 hotfix - kiosk does not show capacities after editing the kiosk (70d71e1b)
+* **kiosk detail:** LIV-3416 kiosk detail with capacities after deleting loadcell (22113ab7)
+* **Kiosk detail:** LIV-3410 inventory maximum capacity calculation hotfix (06f22198)
+
+##### Other Changes
+
+* **dashboard:**
+  * sales graph is hidden due to accesscontrol bug" (f44ff436)
+  * sales graph is hidden due to accesscontrol bug (7b4f6b11)
+
 #### 1.4.18 (2021-07-19)
 
 ##### New Features

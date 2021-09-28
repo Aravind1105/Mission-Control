@@ -7,8 +7,16 @@ import { connect } from 'react-redux';
 import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
+import { getKioskOptionsForTableDropdown } from '../../kiosks/selectors';
 
-const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
+const Toolbar = ({
+  kiosks,
+  changeDate,
+  changeKiosk,
+  exportCsvRefills,
+  isKiosksLoading,
+}) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -33,12 +41,12 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
       changeExportData({
         from: date.$gte,
         to: date.$lte,
-        kiosk: exportData.kiosk ? exportData.kiosk : '',
+        kiosk: exportData.kiosk,
       });
     }
   };
 
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
     changeExportData({
       from: exportData.from ? exportData.from : '',
@@ -51,7 +59,7 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
     let value = {
       from: Math.round(new Date(exportData.from)),
       to: Math.round(new Date(exportData.to)),
-      kiosk: exportData.kiosk ? exportData.kiosk : '',
+      kiosk: exportData.kiosk,
     };
     exportCsvRefills(value);
     toast({
@@ -74,18 +82,18 @@ const Toolbar = ({ kiosks, changeDate, changeKiosk, exportCsvRefills }) => {
             <DatePicker type="range" onChange={handleDateChange} />
           </Grid.Column>
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
+            <SelectCheckBoxes
+              title="Kiosks"
               options={kiosks}
-              className="full-width"
-              onChange={handleKioskChange}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksLoading}
             />
           </Grid.Column>
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
-              icon="arrow down icon"
+              icon="arrow down"
               className="custom-button-default"
               onClick={DownloadCsv}
             />
@@ -102,7 +110,10 @@ Toolbar.propTypes = {
   kiosks: arrayOf(object),
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isKiosksLoading: state.kiosks.isKiosksListLoading,
+  kiosks: getKioskOptionsForTableDropdown(state),
+});
 const mapDispatchToProps = {
   exportCsvRefills,
 };

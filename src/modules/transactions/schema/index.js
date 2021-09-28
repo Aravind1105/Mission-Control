@@ -36,7 +36,11 @@ export const GET_TRANSACTIONS_QUERY = gql`
         created
         total
         type
+        userId
         paymentMethod {
+          stripeCustomerId
+          stripePaymentIntentId
+          isPaid
           membercardId
         }
         itemsPurchased {
@@ -102,6 +106,7 @@ export const GRID_REFILLS_QUERY = gql`
         scale {
           cellId
           weight
+          refillCost
           productLine {
             _id
             name
@@ -128,7 +133,7 @@ export const CREATE_REFILL_MUTATION = gql`
 `;
 
 export const GET_REFILLS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getTotalNumberOfProductsAdded(period: $period, kioskId: $kioskId)
     getDefaultTotalCostValueOfRefills(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsRemoved(period: $period, kioskId: $kioskId)
@@ -139,7 +144,7 @@ export const GET_REFILLS_WIDGET_DATA = gql`
 `;
 
 export const GET_PRODUCTS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getMostSoldProduct(period: $period, kioskId: $kioskId) {
       productLine {
         name
@@ -170,7 +175,7 @@ export const GET_PRODUCTS_WIDGET_DATA = gql`
 `;
 
 export const GET_TRANSACTIONS_WIDGET_DATA = gql`
-  query($period: Period!, $kioskId: ID) {
+  query($period: Period!, $kioskId: [String]) {
     getTotalNumberOfTransactions(period: $period, kioskId: $kioskId)
     getAveragePurchaseValue(period: $period, kioskId: $kioskId)
     getTotalNumberOfProductsSold(period: $period, kioskId: $kioskId)

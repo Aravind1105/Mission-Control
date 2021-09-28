@@ -20,7 +20,6 @@ const FragmentInventory = {
     fragment InventoryForKiosk on Inventory {
       loadCells {
         cellId
-        isActive
         planogramPosition
         products {
           _id
@@ -79,8 +78,9 @@ const FragmentKioskOnKiosk = gql`
         hotlineAvailability
       }
     }
-    internet {
-      signalStrength
+    heartbeat {
+      uptime
+      updated
     }
     session {
       type
@@ -122,8 +122,17 @@ const FragmentKioskOfflineOnKiosk = gql`
     }
   }
 `;
-const FragmentAlertDoorOpenOnKiosk = gql`
-  fragment FragmentAlertDoorOpen on AlertDoorOpen {
+const FragmentAlertDoorLeftOpenPurchaseOnKiosk = gql`
+  fragment FragmentAlertDoorLeftOpenPurchase on AlertDoorLeftOpenPurchase {
+    kioskId {
+      _id
+      name
+      doorStatus
+    }
+  }
+`;
+const FragmentAlertDoorLeftOpenRefillOnKiosk = gql`
+  fragment FragmentAlertDoorLeftOpenRefill on AlertDoorLeftOpenRefill {
     kioskId {
       _id
       name
@@ -155,8 +164,48 @@ const FragmentAlertUnauthorizedAccessOnKiosk = gql`
     }
   }
 `;
+const FragmentAlertNoProductsBoughtOnKiosk = gql`
+  fragment FragmentAlertNoProductsBought on AlertNoProductsBought {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
 const FragmentAlertTabletDisconnectedOnKiosk = gql`
   fragment FragmentAlertTabletDisconnected on AlertTabletDisconn {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertTabletMQTTDisconnectedOnKiosk = gql`
+  fragment FragmentAlertTabletMQTTDisconnected on AlertTabletMqttDisconn {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertNoLeftScalesDataOnKiosk = gql`
+  fragment FragmentAlertNoLeftScalesData on AlertNoLeftScalesData {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertNoRightScalesDataOnKiosk = gql`
+  fragment FragmentAlertNoRightScalesData on AlertNoRightScalesData {
+    kioskId {
+      _id
+      name
+    }
+  }
+`;
+const FragmentAlertInvalidScaleWeightOnKiosk = gql`
+  fragment FragmentAlertInvalidScaleWeight on AlertInvalidScaleWeight {
     kioskId {
       _id
       name
@@ -170,6 +219,10 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
       data {
         _id
         name
+        ownerOrganization {
+          _id
+          name
+        }
         dayIncome
         doorStatus
         serialNumber
@@ -177,6 +230,10 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
           _id
           type
           orgId
+        }
+        heartbeat {
+          uptime
+          updated
         }
         temperature {
           value
@@ -269,21 +326,33 @@ export const GET_ALERTS_GRID = gql`
         endDate
         details {
           ...FragmentKioskOffline
-          ...FragmentAlertDoorOpen
+          ...FragmentAlertDoorLeftOpenRefill
+          ...FragmentAlertDoorLeftOpenPurchase
           ...FragmentAlertHighTemp
           ...FragmentAlertLowTemp
           ...FragmentAlertUnauthorizedAccess
+          ...FragmentAlertNoProductsBought
           ...FragmentAlertTabletDisconnected
+          ...FragmentAlertTabletMQTTDisconnected
+          ...FragmentAlertNoRightScalesData
+          ...FragmentAlertNoLeftScalesData
+          ...FragmentAlertInvalidScaleWeight
         }
       }
     }
   }
   ${FragmentKioskOfflineOnKiosk}
-  ${FragmentAlertDoorOpenOnKiosk}
+  ${FragmentAlertDoorLeftOpenRefillOnKiosk}
+  ${FragmentAlertDoorLeftOpenPurchaseOnKiosk}
   ${FragmentAlertHighTempOnKiosk}
   ${FragmentAlertLowTempOnKiosk}
   ${FragmentAlertUnauthorizedAccessOnKiosk}
+  ${FragmentAlertNoProductsBoughtOnKiosk}
   ${FragmentAlertTabletDisconnectedOnKiosk}
+  ${FragmentAlertNoRightScalesDataOnKiosk}
+  ${FragmentAlertNoLeftScalesDataOnKiosk}
+  ${FragmentAlertInvalidScaleWeightOnKiosk}
+  ${FragmentAlertTabletMQTTDisconnectedOnKiosk}
 `;
 export const GET_ALMOST_EMPTY_KIOSKS = gql`
   query getAlmostEmptyKiosks(
@@ -312,19 +381,26 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
   ${productOnProductLine}
 `;
 export const GET_TEMPERATURE_LOGS = gql`
-  query getTemperatureEventsByKioskWithResolution(
-    $data: TemperatureEventsByKioskWithResolutionInput
-  ) {
-    getTemperatureEventsByKioskWithResolution(data: $data) {
-      avgTemp
-      maxTemp
-      minTemp
-      year
+  query($kioskId: String!, $from: DateTime!, $to: DateTime!, $limit: Int!) {
+    getTemperatureEventsByKiosk(
+      kioskId: $kioskId
+      from: $from
+      to: $to
+      limit: $limit
+    ) {
+      _id
       kiosk
-      year
-      month
-      day
-      hour
+      type
+      payload {
+        message_timestamp
+        message {
+          sensors {
+            temperature
+          }
+        }
+      }
+      created
+      updated
     }
   }
 `;
@@ -408,6 +484,24 @@ export const DELETE_PLAYLIST = gql`
       type
       enabled
       order
+    }
+  }
+`;
+
+export const GET_KIOSKS_LIST = gql`
+  query {
+    getAllKiosks {
+      _id
+      name
+    }
+  }
+`;
+
+export const GET_ORGS_LIST = gql`
+  query {
+    getAllOrganizations {
+      _id
+      name
     }
   }
 `;

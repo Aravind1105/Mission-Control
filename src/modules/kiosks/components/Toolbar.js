@@ -12,34 +12,28 @@ import {
   Divider,
 } from 'semantic-ui-react';
 import CustomButton from 'modules/shared/components/CustomButton';
-import { getActiveUserIDState } from '../../users/selectors';
 import { toast } from 'react-semantic-toasts';
 import { exportCsvOrderList } from '../actions';
 import { exportCsvPackList } from '../actions';
+import './styles.less';
 
 const Toolbar = ({
   search,
   setSearch,
-  kiosks,
-  setKiosk,
-  kiosksStatus,
-  setKioskStatus,
+  organizations,
+  setOrganization,
   rootUser,
   exportCsvOrderList,
   exportCsvPackList,
-  // kiosksNetworkStatus, //!LIV-2285
-  // setKioskNetworkStatus //!LIV-2285
+  selectedOrganization,
 }) => {
   const handleSearchChange = ({ target }) => {
     setSearch(target.value);
   };
-  const handleKioskChange = (e, { value }) => {
+
+  const handleOrganizationChange = (e, { value }) => {
     const text = value === 'All' ? '' : value;
-    setKiosk(text);
-  };
-  const handleKiosksStatus = (e, { value }) => {
-    const text = value === 'All' ? '' : value;
-    setKioskStatus(text);
+    setOrganization(text);
   };
 
   const DownloadOrderListCsv = () => {
@@ -51,6 +45,7 @@ const Toolbar = ({
       color: 'blue',
     });
   };
+
   const DownloadPackListCsv = () => {
     exportCsvPackList();
     toast({
@@ -61,10 +56,6 @@ const Toolbar = ({
     });
   };
 
-  // const handleKiosksNetworkStatus = (e, { value }) => { //!LIV-2285
-  //   const text = value === 'All' ? '' : value;
-  //   setKioskNetworkStatus(text)
-  // };
   return (
     <Segment className="toolbar">
       <Grid stackable>
@@ -78,74 +69,89 @@ const Toolbar = ({
               className="full-width"
             />
           </Grid.Column>
+          {!rootUser && (
+            <>
+              <Grid.Column></Grid.Column>
+              <Grid.Column>
+                <div className="download_orderlist_button_admin">
+                  <CustomButton
+                    label="Download Order List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadOrderListCsv}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div className="download_packlist_button_admin">
+                  <CustomButton
+                    label="Download Pack List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadPackListCsv}
+                  />
+                </div>
+              </Grid.Column>
+            </>
+          )}
           {rootUser && (
             <Grid.Column textAlign="right">
-              <Button
-                icon
-                labelPosition="left"
-                color="green"
-                compact
-                as={Link}
-                to="/kiosks/edit/new"
-              >
-                <Icon name="right arrow" />
-                Add Kiosk
-              </Button>
+              <div className="add_kiosk_button">
+                <Button
+                  icon
+                  labelPosition="left"
+                  color="green"
+                  compact
+                  as={Link}
+                  to="/kiosks/edit/new"
+                >
+                  <Icon name="right arrow" />
+                  Add Kiosk
+                </Button>
+              </div>
             </Grid.Column>
           )}
         </Grid.Row>
 
-        <Divider style={{ marginTop: 0, marginBottom: 0 }} />
-
-        <Grid.Row verticalAlign="middle" columns={4}>
-          <Grid.Column>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
-              className="full-width"
-              onChange={handleKioskChange}
-              options={kiosks}
-            />
-          </Grid.Column>
-
-          <Grid.Column>
-            <Dropdown
-              placeholder="All Door Status"
-              selection
-              className="full-width"
-              onChange={handleKiosksStatus}
-              options={kiosksStatus}
-            />
-          </Grid.Column>
-
-          {/* <Grid.Column width={3}> //!LIV-2285
-          <Dropdown
-              placeholder="Network Status"
-              selection
-              className="full-width"
-              onChange={handleKiosksNetworkStatus}
-              options={kiosksNetworkStatus}
-          />
-           </Grid.Column> */}
-
-          <Grid.Column>
-            <CustomButton
-              label="Download Order List&nbsp;"
-              icon="arrow down icon"
-              className="custom-button-default"
-              onClick={DownloadOrderListCsv}
-            />
-          </Grid.Column>
-
-          <Grid.Column>
-            <CustomButton
-              label="Download Pack List&nbsp;"
-              icon="arrow down icon"
-              className="custom-button-default"
-              onClick={DownloadPackListCsv}
-            />
-          </Grid.Column>
-        </Grid.Row>
+        {rootUser && (
+          <>
+            <Divider style={{ marginTop: 0, marginBottom: 0 }} />
+            <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
+              <Grid.Column computer={3}>
+                <Dropdown
+                  placeholder="All Organization"
+                  selection
+                  className="full-width"
+                  onChange={handleOrganizationChange}
+                  options={organizations}
+                  value={selectedOrganization}
+                />
+              </Grid.Column>
+              <Grid.Column computer={3}></Grid.Column>
+              <Grid.Column computer={3}></Grid.Column>
+              <Grid.Column computer={3}>
+                <div className="download_orderlist_button">
+                  <CustomButton
+                    label="Download Order List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadOrderListCsv}
+                  />
+                </div>
+              </Grid.Column>
+              <Grid.Column computer={3}>
+                <div className="download_packlist_button">
+                  <CustomButton
+                    label="Download Pack List"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    onClick={DownloadPackListCsv}
+                  />
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </>
+        )}
       </Grid>
     </Segment>
   );

@@ -19,8 +19,8 @@ import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
-    column: 'productLine',
-    direction: 'ASC',
+    column: 'sold',
+    direction: 'DESC',
   },
 ];
 
@@ -33,7 +33,7 @@ const sortValue = {
   sold: 'sold',
   totalCost: 'totalCost',
   totalGrossSales: 'totalGrossSales',
-  totalRemovedCost: 'totalRemovedCost'
+  totalRemovedCost: 'totalRemovedCost',
 };
 
 const ProductList = ({
@@ -106,7 +106,7 @@ const ProductList = ({
       <ProductsToolbar
         changeDate={changeDate}
         changeKiosk={changeKiosk}
-        kiosks={kiosks}
+        kiosksOptions={kiosks}
         productsListValue={productsListValue}
         changeProduct={changeProduct}
       />

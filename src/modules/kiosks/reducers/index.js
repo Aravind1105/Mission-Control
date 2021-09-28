@@ -1,10 +1,6 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { findIndex, propEq, update } from 'ramda';
 import get from 'lodash/get';
 import {
-  getAllKiosks,
-  updateKiosks,
-  updateKioskById,
   getKiosk,
   getKioskSuccess,
   modifyKioskSuccess,
@@ -30,12 +26,23 @@ import {
   setPlanogramSwitchStateSuccess,
   deleteLoadCell,
   deleteLoadCellSuccess,
+  setPage,
+  setPerPage,
+  setSort,
+  setFilters,
+  setSearch,
+  setKiosk,
+  setOrganization,
+  setKioskStatus,
+  getKiosksList,
+  getKiosksListSuccess,
+  getOrgsList,
+  getOrgsListSuccess,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
 
 const initialState = {
-  list: [],
   tableList: [],
   kiosk: null,
   isKioskLoading: false,
@@ -48,11 +55,34 @@ const initialState = {
   totalEmptyKiosks: 0,
   temperatureLogs: [],
   activityLogs: [],
+  kiosksList: [],
+  orgsList: [],
+  isKiosksListLoading: false,
+  pagination: {
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'name',
+        direction: 'ASC',
+      },
+    ],
+    filters: {
+      search: '',
+      kiosk: [],
+      kioskStatus: '',
+      organization: '',
+    },
+    search: '',
+    kiosk: [],
+    organization: '',
+    kioskStatus: '',
+  },
 };
 
 const kiosksReducer = handleActions(
   {
-    [combineActions(getAllKiosks, getAllKiosksForTable)]: state => ({
+    [combineActions(getAllKiosksForTable)]: state => ({
       ...state,
       isLoading: true,
     }),
@@ -60,26 +90,12 @@ const kiosksReducer = handleActions(
       ...state,
       isKioskLoading: true,
     }),
-    [updateKiosks]: (state, { payload }) => ({
-      ...state,
-      list: payload.list,
-      total: payload.total,
-      isLoading: false,
-    }),
     [updateKiosksForTable]: (state, { payload }) => ({
       ...state,
       tableList: payload.list,
       total: payload.total,
       isLoading: false,
     }),
-    [updateKioskById]: (state, { payload }) => {
-      const index = findIndex(propEq('_id', payload._id))(state);
-      return {
-        ...state,
-        list: update(index, { ...state.list[index], ...payload }, state),
-        isLoading: false,
-      };
-    },
     [combineActions(modifyKiosk, updateKioskProps)]: state => {
       return {
         ...state,
@@ -183,6 +199,55 @@ const kiosksReducer = handleActions(
     [deleteLoadCell]: state => ({
       ...state,
       isLoading: true,
+    }),
+    [setPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, page: payload },
+    }),
+    [setPerPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, perPage: payload },
+    }),
+    [setSort]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, sort: payload },
+    }),
+    [setFilters]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, filters: payload },
+    }),
+    [setSearch]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, search: payload },
+    }),
+    [setKiosk]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, kiosk: payload },
+    }),
+    [setOrganization]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, organization: payload },
+    }),
+    [setKioskStatus]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, kioskStatus: payload },
+    }),
+    [getKiosksList]: (state, {}) => ({
+      ...state,
+      pagination: { ...state.pagination, isKiosksListLoading: true },
+    }),
+    [getKiosksListSuccess]: (state, { payload }) => ({
+      ...state,
+      kiosksList: payload,
+      isKiosksListLoading: false,
+    }),
+    [getOrgsList]: (state, {}) => ({
+      ...state,
+      pagination: { ...state.pagination },
+    }),
+    [getOrgsListSuccess]: (state, { payload }) => ({
+      ...state,
+      orgsList: payload,
     }),
   },
   initialState,

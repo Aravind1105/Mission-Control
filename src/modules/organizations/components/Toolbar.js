@@ -9,6 +9,7 @@ import {
   Button,
   Icon,
 } from 'semantic-ui-react';
+import './styles.less';
 
 const stateOptions = [
   { key: 'client', value: 'client', text: 'client' },
@@ -18,50 +19,56 @@ const stateOptions = [
 const OrganizationsToolbar = () => {
   return (
     <Segment className="toolbar">
-      <Grid stackable>
-        <Grid.Row verticalAlign="middle" columns="equal">
-          <Grid.Column width={6}>
-            <Input
-              icon="search"
-              placeholder="Search..."
-              className="full-width"
-            />
-          </Grid.Column>
+      <div className="toolbar-container">
+        <Grid stackable>
+          <Grid.Row verticalAlign="middle" columns="equal">
+            <Grid.Column width={6}>
+              <Input
+                icon="search"
+                placeholder="Search..."
+                className="full-width"
+              />
+            </Grid.Column>
 
-          <Grid.Column>
-            <Dropdown
-              placeholder="All types"
-              selection
-              options={stateOptions}
-              className="full-width"
-            />
-          </Grid.Column>
-          <Grid.Column>
-            <Dropdown
-              placeholder="All types"
-              selection
-              options={stateOptions}
-              className="full-width"
-            />
-          </Grid.Column>
+            <Grid.Column>
+              <div className="toolbar-dropdown">
+                <Dropdown
+                  placeholder="All types"
+                  selection
+                  options={stateOptions}
+                  className="full-width"
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div className="toolbar-dropdown">
+                <Dropdown
+                  placeholder="All types"
+                  selection
+                  options={stateOptions}
+                  className="full-width"
+                />
+              </div>
+            </Grid.Column>
 
-          <Grid.Column textAlign="right">
-            <Button
-              icon
-              labelPosition="left"
-              color="green"
-              compact
-              as={Link}
-              to="/organizations/create"
-              // disabled={true}
-              //! Disabled temporarily #golive2
-            >
-              <Icon name="right arrow" />
-              Add organization
-            </Button>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+            <Grid.Column textAlign="right">
+              <Button
+                icon
+                labelPosition="left"
+                color="green"
+                compact
+                as={Link}
+                to="/organizations/create"
+                // disabled={true}
+                //! Disabled temporarily #golive2
+              >
+                <Icon name="right arrow" />
+                Add organization
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     </Segment>
   );
 };

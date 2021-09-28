@@ -12,10 +12,9 @@ import {
   modifyProductSaga as action,
   modifyProductSuccess as actionSuccess,
 } from '../actions';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({
-  payload: { values, initialValues, uploadedImage },
-}) {
+function* handler({ payload: { values, initialValues, uploadedImage } }) {
   const { id, defaultPriceId, images, ...rest } = values;
   let isPriceUpdate = false;
   try {
@@ -46,7 +45,7 @@ function* handler({
     if (id) {
       variables.id = id;
     }
-    const [{ data }, priceMutation] = yield all([
+    const [{ data, errors }, priceMutation] = yield all([
       call(gqlProducts.mutate, {
         mutation: id
           ? UPDATE_PRODUCT_LINE_MUTATION
@@ -67,15 +66,18 @@ function* handler({
           })
         : null,
     ]);
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
 
-    const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
-
-    const priceHistory = get(
-      priceMutation,
-      'data.updateProductLinePrice.priceHistory',
-      responseData.priceHistory,
-    );
-    yield put(actionSuccess({ ...responseData, priceHistory }));
+      const priceHistory = get(
+        priceMutation,
+        'data.updateProductLinePrice.priceHistory',
+        responseData.priceHistory,
+      );
+      yield put(actionSuccess({ ...responseData, priceHistory }));
+    }
   } catch (e) {
     console.log(e);
     window.alert(

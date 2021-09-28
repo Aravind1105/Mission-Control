@@ -9,6 +9,7 @@ import {
   RESET_LOAD_CELL_INVENTORY_MUTATION,
 } from '../schema';
 import { modifyKioskLoadCell, getKiosk } from '../actions';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   const {
@@ -46,7 +47,6 @@ function* handler({ payload }) {
               productLine: productId,
               planogramPosition,
               cellId,
-              isActive: true,
               surfaceSize: `N${surfaceSize}`,
             },
           ],
@@ -58,7 +58,6 @@ function* handler({ payload }) {
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition[0],
             cellId: oldData.cellId,
-            isActive: false,
             surfaceSize: `N${oldData.surfaceSize}`,
           });
         } else if (isPositionIdChanged) {
@@ -66,16 +65,17 @@ function* handler({ payload }) {
             productLine: oldData.productLine._id,
             planogramPosition: oldData.planogramPosition,
             cellId: oldData.cellId,
-            isActive: true,
             surfaceSize: `N${oldData.surfaceSize}`,
           };
         }
       }
 
-      yield call(gqlKiosk.mutate, {
+      const { data, errors } = yield call(gqlKiosk.mutate, {
         mutation: LOAD_CELL_CONFIG_MUTATION,
         variables,
       });
+      if (errors && errors[0].message === 'Token expired')
+        yield put(updateSessionExpired(true));
     }
 
     if (isQuantityChanged) {
@@ -84,10 +84,12 @@ function* handler({ payload }) {
         cellId,
         data: { amount: parseInt(quantity, 10) },
       };
-      yield call(gqlKiosk.mutate, {
+      const { data, errors } = yield call(gqlKiosk.mutate, {
         mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,
         variables,
       });
+      if (errors && errors[0].message === 'Token expired')
+        yield put(updateSessionExpired(true));
     }
 
     if (isPriceChanged) {
@@ -99,10 +101,12 @@ function* handler({ payload }) {
           validForKiosk: kioskId,
         },
       };
-      yield call(gqlProduct.mutate, {
+      const { data, errors } = yield call(gqlProduct.mutate, {
         mutation: CREATE_PRODUCT_LINE_PRICE_MUTATION,
         variables,
       });
+      if (errors && errors[0].message === 'Token expired')
+        yield put(updateSessionExpired(true));
     }
 
     yield put(getKiosk(kioskId));

@@ -3,16 +3,14 @@ import toFlatLoadCellItem from 'lib/toFlatLoadCells';
 // import responseErrorFormatter from 'lib/responseErrorFormatter';
 import history from 'lib/history';
 import gqlKiosk from 'lib/https/gqlKiosk';
-import {
-  modifyKiosk as action,
-  getKiosk as actionSuccess,
-} from '../actions';
+import { modifyKiosk as action, getKiosk as actionSuccess } from '../actions';
 import {
   CREATE_KIOSK_MUTATION,
   UPDATE_KIOSK_MUTATION,
   GET_KIOSK_QUERY,
 } from '../schema';
 import { toast } from 'react-semantic-toasts';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { values, formActions } }) {
   try {
@@ -34,34 +32,36 @@ function* handler({ payload: { values, formActions } }) {
     }
     variables.data.pin = parseInt(pin);
 
-    const { data } = yield call(gqlKiosk.mutate, {
+    const { data, errors } = yield call(gqlKiosk.mutate, {
       mutation: id ? UPDATE_KIOSK_MUTATION : CREATE_KIOSK_MUTATION,
       variables,
     });
-    const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
-    history.push(`/kiosks/detail/${responseData._id}`);
-    const kiosk = {
-      ...responseData,
-      inventory: {
-        loadCells: toFlatLoadCellItem(responseData.inventory.loadCells),
-      },
-    };
+    if (!errors) {
+      const responseData = data[id ? 'kioskUpdate' : 'kioskCreate'];
 
-    if (!responseData.errors) {
+      history.push(`/kiosks/detail/${responseData._id}`);
+      const kiosk = {
+        ...responseData,
+        inventory: {
+          loadCells: toFlatLoadCellItem(responseData.inventory.loadCells),
+        },
+      };
       toast({
         type: 'success',
         description: 'Kiosk was saved successfully',
         animation: 'fade left',
       });
+      yield put(actionSuccess(responseData._id));
     } else {
+      if (errors && errors[0].message === 'Token expired')
+        yield put(updateSessionExpired(true));
       toast({
         type: 'error',
         description: 'Error! Something went wrong',
         animation: 'fade left',
       });
     }
-    yield put(actionSuccess(responseData._id));
   } catch (error) {
     console.log(error);
   }

@@ -25,18 +25,46 @@ const columns = [
     },
   },
   {
-    title: 'Transaction ID',
-    field: 'transactionID',
-    formatter: ({ transactionID }) => {
-      if (transactionID === '') {
-        return '';
+    title: 'Payment Type',
+    field: 'paymentMethod',
+    formatter: ({ paymentMethod }) => {
+      if (paymentMethod) {
+        if (paymentMethod.membercardId !== null)
+          return <div style={{ textAlign: 'center' }}>Member Card</div>;
+        else if (paymentMethod.stripeCustomerId !== null)
+          return <div style={{ textAlign: 'center' }}>Consumer App</div>;
+        else return <div style={{ textAlign: 'center' }}>Payment Terminal</div>;
       }
-      return <div style={{ textAlign: 'left' }}>{transactionID}</div>;
     },
   },
   {
-    title: 'Member Card ID',
-    field: 'membercardId',
+    title: 'Payment Status',
+    field: 'paymentMethod',
+    formatter: ({ paymentMethod }) => {
+      if (paymentMethod) {
+        if (
+          paymentMethod.isPaid === false &&
+          paymentMethod.stripePaymentIntentId !== null
+        ) {
+          return (
+            <div style={{ textAlign: 'center' }}>
+              <a
+                href={`https://dashboard.stripe.com/payments/${paymentMethod.stripePaymentIntentId}`}
+                target="_blank"
+              >
+                Pending
+              </a>
+            </div>
+          );
+        } else if (
+          paymentMethod.isPaid === false &&
+          paymentMethod.stripePaymentIntentId === null
+        )
+          return <div style={{ textAlign: 'center' }}>Not Paid</div>;
+        else if (paymentMethod.isPaid === true)
+          return <div style={{ textAlign: 'center' }}>Paid</div>;
+      }
+    },
   },
   {
     title: 'Article Number',
@@ -96,11 +124,11 @@ const TransactionsContent = ({
     <TransactionsTable
       sortByColumn="created"
       excludeSortBy={[
-        'transactionID',
-        'membercardId',
+        'paymentMethod',
         'productName',
         'quantity',
         'price',
+        'articleNumber',
       ]}
       columns={columns}
       data={transactions}

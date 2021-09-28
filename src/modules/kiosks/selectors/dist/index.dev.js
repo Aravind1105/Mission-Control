@@ -415,6 +415,7 @@ var getKioskOptionsForTableDropdown = (0, _reselect.createSelector)(
 exports.getKioskOptionsForTableDropdown = getKioskOptionsForTableDropdown;
 var kioskInitialValues = {
   name: '',
+  organization: '',
   serialNumber: '',
   pin: '',
   location: {

@@ -11,7 +11,6 @@ const Card = ({
   productLine,
   totalProducts,
   handleEdit,
-  isActive,
   surfaceSize,
   occupancy,
   maxQty,
@@ -25,11 +24,6 @@ const Card = ({
       surfaceSize,
     });
   };
-
-  if (isActive === false) {
-    // <Grid.Column className="load-cell"></Grid.Column>
-    return <></>;
-  }
 
   return (
     <Grid.Column className="load-cell">
@@ -72,7 +66,7 @@ const Card = ({
                 {maxQty > 0 ? `${totalProducts}/${maxQty}` : `${totalProducts}`}
               </ColoredBlock>
             </p>
-            <p>{`€ ${productLine.price}`}</p>
+            <p>{`${productLine.price} €`}</p>
           </div>
         </div>
       </div>
@@ -95,7 +89,6 @@ const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
                       {...props}
                       key={props.cellId}
                       handleEdit={handleEdit}
-                      isActive={props.isActive}
                     />
                   )
                 );

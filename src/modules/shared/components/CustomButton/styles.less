@@ -1,3 +1,20 @@
+@import './globals/site.variables';
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+.custom-button-confirm {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #7DB040 !important;
+  color: white !important;
+}
+
+.custom-button-cancel {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #BDBDBD !important;
+  color: white !important;
+}
+
 .custom-button-blue {
   white-space: nowrap;
   overflow: hidden;
@@ -9,7 +26,32 @@
   }
 }
 
+
 .custom-button-default {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #ffffff !important;
+  color: #828282 !important;
+  border: 1.5px solid #bdbdbd !important;
+  border-radius: 5px !important;
+  @media @tablet {
+    width: 500px;
+    max-width: 100%;
+  }
+  @media @mobile {
+    width: 500px;
+    max-width: 100%;
+  }
+  // width: 500px;
+  // max-width: 100%;
+  padding: 15px;
+  .icon {
+    background-color: #f2f2f2 !important;
+    color: #828282;
+  }
+}
+
+.custom-button-default-admin {
   white-space: nowrap;
   overflow: hidden;
   background-color: #ffffff !important;

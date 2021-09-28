@@ -8,17 +8,22 @@ import pick from 'lodash/pick';
 import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
+import moment from 'moment';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 const alertMessages = {
   KioskOffline: 'System Offline',
-  DoorOpen: 'Door open',
   HighTemp: 'High temperature',
   LowTemp: 'Low temperature',
   DoorLeftOpenPurchase: 'Door left open (Purchase)',
   DoorLeftOpenRefill: 'Door left open (Refill)',
   UnauthAccess: 'Unauthorized Access',
-  TabletDisconn: 'Tablet Disconnected',
+  NoProductsBought: 'Empty Purchase session',
+  InvalidScaleWeight: 'Invalid Scales weight',
+  NoLeftScalesData: 'Left Scales disconnected',
+  NoRightScalesData: 'Right Scales disconnected',
+  TabletDisconn: 'Tablet Internet disconnected',
+  TabletMqttDisconn: 'Tablet MQTT disconnected',
 };
 
 const alertSeverity = {
@@ -56,7 +61,7 @@ export const getAlertsOptions = () => [
 
 const twoHours = 1000 * 60 * 60 * 2;
 
-export const getKiosksState = state => state.kiosks.list;
+export const getKiosksState = state => state.kiosks.tableList;
 
 export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
   return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
@@ -139,7 +144,7 @@ export const getKioskById = id =>
 export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
   const cells = get(kiosk, 'inventory.loadCells', []);
   const loadCells = sortBy(cells, 'productLine.name').reduce(
-    (prev, { products, productLine, isActive, ...rest }) => {
+    (prev, { products, productLine, ...rest }) => {
       const totalProducts = products.length;
       const totalPrice = totalProducts * productLine.price;
       prev.list.push({
@@ -150,7 +155,6 @@ export const getKioskShelves = createSelector(getKioskSingle, kiosk => {
         },
         totalProducts,
         totalPrice,
-        isActive,
       });
       prev.total += totalPrice;
 
@@ -180,12 +184,6 @@ export const getCellIdOptions = createSelector(getKioskShelves, shelves => {
     if (availIdx === -1) {
       //if the cellId is not available, add it to the options
       cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
-    } else {
-      //if the cellId is already available, check if the isActive flag is false, then add it to the options
-      const loadCell = cells[availIdx];
-      if (loadCell.isActive === false) {
-        cellIdOptions.push({ value: cellIdStr, label: cellIdStr });
-      }
     }
   }
   return cellIdOptions;
@@ -195,11 +193,7 @@ export const getUsedPlanogramPositions = createSelector(
   getKioskShelves,
   shelves => {
     const cells = shelves.list;
-    return cells.map(cell => {
-      if (cell.isActive !== false) {
-        return cell.planogramPosition;
-      }
-    });
+    return cells.map(cell => cell.planogramPosition);
   },
 );
 
@@ -213,9 +207,9 @@ export const getKiosksAlerts = createSelector(getKiosksState, kiosks => {
     }));
 
   const filteredOfflineKiosks = kiosks
-    .filter(({ temperature }) => {
-      if (temperature && temperature.updated) {
-        return Date.now() - new Date(temperature.updated) > twoHours;
+    .filter(({ heartbeat }) => {
+      if (heartbeat && heartbeat.updated) {
+        return Date.now() - new Date(heartbeat.updated) > twoHours;
       }
       return false;
     })
@@ -301,23 +295,27 @@ export const getKioskListName = createSelector(getKiosksState, kiosks =>
   }, {}),
 );
 
-export const getKioskOptions = createSelector(getKiosksState, kiosks => {
-  const options = kiosks.map(({ _id, name }) => ({
-    value: _id,
-    label: name,
-  }));
-  // sort options based on the alphabetical order of the kiosk names
-  const sortByKioskNameCaseInsensitive = R.sortBy(
-    R.compose(R.toLower, R.prop('label')),
-  );
-  return [
-    { value: '', label: 'All Kiosks' },
-    ...sortByKioskNameCaseInsensitive(options),
-  ];
-});
+export const getKioskOptions = createSelector(
+  state => state.kiosks.kiosksList,
+  kiosks => {
+    const options = kiosks.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    // sort options based on the alphabetical order of the kiosk names
+    const sortByKioskNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('text')),
+    );
+    return [
+      { value: '', text: 'All Kiosks', key: '' },
+      ...sortByKioskNameCaseInsensitive(options),
+    ];
+  },
+);
 
 export const getKioskOptionsForTableDropdown = createSelector(
-  getKiosksState,
+  state => state.kiosks.kiosksList,
   kiosks => {
     const allKiosks = kiosks.map(({ _id, name }) => ({
       value: _id,
@@ -330,52 +328,83 @@ export const getKioskOptionsForTableDropdown = createSelector(
   },
 );
 
+/**
+ * Selector for Organization Dropdown*.
+ */
+export const getOrganizationOptionsForTableDropdown = createSelector(
+  state => state.kiosks.orgsList,
+  organization => {
+    // let newArr = [{ value: '', text: 'All Organizations', key: '' }];
+    // let test = organization.map(item => ({
+    //   id: item._id,
+    //   name: item.name,
+    // }));
+    // var setObj = new Set();
+    // var result = test.reduce((acc, item) => {
+    //   if (!setObj.has(item.id)) {
+    //     setObj.add(item.id, item);
+    //     acc.push(item);
+    //   }
+    //   return acc;
+    // }, []);
+
+    // result.forEach(item => {
+    //   const Item = {
+    //     value: item.id,
+    //     text: item.name,
+    //     key: item.id,
+    //   };
+    //   newArr.push(Item);
+    // });
+    // return newArr;
+    const options = organization.map(({ _id, name }) => ({
+      value: _id,
+      text: name,
+      key: _id,
+    }));
+    // sort options based on the alphabetical order of the org names
+    const sortByOrgNameCaseInsensitive = R.sortBy(
+      R.compose(R.toLower, R.prop('text')),
+    );
+    return [
+      { value: '', text: 'All Organizations', key: '' },
+      ...sortByOrgNameCaseInsensitive(options),
+    ];
+  },
+);
+
 export const kioskInitialValues = {
   name: '',
   serialNumber: '',
   notes: '',
   orgId: '',
-  location: {
-    address: {
-      name: '',
-      line1: '',
-      line2: '',
-      postalCode: '',
-      city: '',
-      state: '',
-      country: '',
-    },
-  },
+  locationName: '',
+  locationLine1: '',
+  locationLine2: '',
+  locationPostalCode: '',
+  locationCity: '',
+  locationState: '',
+  locationCountry: '',
   pin: '',
   technicianPin: '',
 };
 
 export const getKioskInitValues = createSelector(getKioskSingle, kiosk => {
-  let { __typename, ...address } = get(
-    kiosk,
-    'location.address',
-    kioskInitialValues.location.address,
-  );
-  address = Object.keys(address).reduce((prev, key) => {
-    if (address[key] !== null) {
-      prev[key] = address[key];
-    }
-    return prev;
-  }, {});
-
   return kiosk
     ? {
         id: kiosk._id,
         ...pick(kiosk, ['name', 'serialNumber', 'pin']),
         notes: get(kiosk, 'notes', '') || '',
         orgId: kiosk.orgId,
-        location: {
-          address: {
-            ...kioskInitialValues.location.address,
-            ...address,
-          },
-        },
+        locationName: get(kiosk.location.address, 'name', '') || '',
+        locationLine1: get(kiosk.location.address, 'line1', '') || '',
+        locationLine2: get(kiosk.location.address, 'line2', '') || '',
+        locationPostalCode: get(kiosk.location.address, 'postalCode', '') || '',
+        locationCity: get(kiosk.location.address, 'city', '') || '',
+        locationState: get(kiosk.location.address, 'state', '') || '',
+        locationCountry: get(kiosk.location.address, 'country', '') || '',
         technicianPin: get(kiosk.controller, 'technicianPin', '') || '',
+        pin: get(kiosk, 'pin', '') || '',
       }
     : kioskInitialValues;
 });
@@ -503,60 +532,35 @@ export const getActivityLogsState = createSelector(
   },
 );
 
-export const getTemperatureLogsState = state => {
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const { temperatureLogs } = state.kiosks;
-  const logs = temperatureLogs.sort((a, b) => {
-    const aDate = new Date();
-    aDate.setMonth(a.month - 1 || 1);
-    aDate.setDate(a.day || 1);
-    aDate.setFullYear(a.year);
+export const getTemperatureLogsState = state => state.kiosks.temperatureLogs;
 
-    const bDate = new Date();
-    bDate.setMonth(b.month - 1 || 1);
-    bDate.setDate(b.day || 1);
-    bDate.setFullYear(b.year);
+export const getGridTempratureTableState = createSelector(
+  getTemperatureLogsState,
 
-    return aDate > bDate ? 1 : -1;
-  });
-
-  let month = -1;
-  if (logs.length > 0) {
-    month = logs[0].month;
-  }
-  const isAllMonthsSame = logs.every(log => log.month === month);
-
-  const organizedData = logs.map(log => {
-    const date = new Date();
-    date.setMonth(log.month - 1);
-    date.setDate(log.day || 1);
-    date.setFullYear(log.year);
-    return {
-      avgTemp: parseInt(log.avgTemp),
-      minTemp: parseInt(log.minTemp),
-      maxTemp: parseInt(log.maxTemp),
-      year: log.year,
-      month: monthNames[log.month - 1],
-      day: isAllMonthsSame
-        ? log.day
-        : `${monthNames[log.month - 1]}/${log.day}`,
-      date: format(date, 'dd-MM-yyyy'),
-    };
-  });
-  return organizedData;
-};
+  TempLogs => {
+    let newArr = [];
+    TempLogs.forEach(({ updated, payload }) => {
+      const Item = {
+        time: updated,
+        timeXaxis: moment(updated).format('MMM D'),
+        Sensor1: payload.message.sensors[0]
+          ? payload.message.sensors[0].temperature / 100
+          : null,
+        Sensor2: payload.message.sensors[1]
+          ? payload.message.sensors[1].temperature / 100
+          : null,
+        Sensor3: payload.message.sensors[2]
+          ? payload.message.sensors[2].temperature / 100
+          : null,
+        Sensor4: payload.message.sensors[3]
+          ? payload.message.sensors[3].temperature / 100
+          : null,
+      };
+      newArr.push(Item);
+    });
+    return newArr;
+  },
+);
 
 export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
   const playListData =
@@ -585,3 +589,10 @@ export const getContentPlaylist = createSelector(getKioskSingle, kiosk => {
     });
   return playListData;
 });
+
+export const getPaginationState = state => state.kiosks.pagination;
+
+export const getSelectedKiosksState = createSelector(
+  getPaginationState,
+  pagination => pagination.kiosk,
+);

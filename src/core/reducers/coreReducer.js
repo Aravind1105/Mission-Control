@@ -1,9 +1,14 @@
 import { handleActions } from 'redux-actions';
-import { setAppInitialized, setLanguageState } from '../actions/coreActions';
+import {
+  setAppInitialized,
+  setLanguageState,
+  updateSessionExpired,
+} from '../actions/coreActions';
 
 const initialState = {
   initialized: false,
   language: 'en',
+  isExpired: false,
 };
 
 export const coreReducer = handleActions(
@@ -15,6 +20,10 @@ export const coreReducer = handleActions(
     [setLanguageState]: (state, { payload }) => ({
       ...state,
       language: payload,
+    }),
+    [updateSessionExpired]: (state, { payload }) => ({
+      ...state,
+      isExpired: payload,
     }),
   },
   initialState,

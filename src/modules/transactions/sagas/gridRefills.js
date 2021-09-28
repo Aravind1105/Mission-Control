@@ -7,21 +7,27 @@ import {
   getGridRefillsFailed as actionFailed,
 } from '../actions';
 import { GRID_REFILLS_QUERY } from '../schema';
+import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
   try {
     const {
       data: { gridRefills },
+      errors,
     } = yield call(gqlTransactions.query, {
       query: GRID_REFILLS_QUERY,
       variables: payload,
     });
-    yield put(
-      actionSuccess({
-        refillsList: gridRefills.data || [],
-        totalRefills: gridRefills.total || 0,
-      }),
-    );
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
+    else {
+      yield put(
+        actionSuccess({
+          refillsList: gridRefills.data || [],
+          totalRefills: gridRefills.total || 0,
+        }),
+      );
+    }
   } catch (error) {
     yield put(actionFailed());
   }

@@ -1,15 +1,19 @@
 import React from 'react';
-import { Segment, Header, Grid, Divider, Table } from 'semantic-ui-react';
+import {
+  Segment,
+  Header,
+  Grid,
+  Divider,
+  Table,
+  Popup,
+} from 'semantic-ui-react';
 import { groupBy, orderBy } from 'lodash';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import './styles.less';
 const DetailsInventory = ({ list, total }) => {
-  // filter list for active load cells
-  const filteredList = list.filter(ele => ele.isActive !== false);
-
   const sortedByProductName = orderBy(
-    filteredList,
-    [filteredList => filteredList.productLine.name.toLowerCase()],
+    list,
+    [list => list.productLine.name.toLowerCase()],
     ['asc'],
   );
   const groupedByProductLines = groupBy(sortedByProductName, 'productLine._id');
@@ -17,6 +21,7 @@ const DetailsInventory = ({ list, total }) => {
   let totalCost = 0;
   let kioskAvailableQty = 0;
   let kioskMaxCapacity = 0;
+
   Object.values(groupedByProductLines).forEach(ele => {
     let totalQty = 0;
     let productName = '';
@@ -43,6 +48,18 @@ const DetailsInventory = ({ list, total }) => {
       availability,
     });
   });
+
+  // Inventory sorting on the bases of Availability
+  if (inventoryItems[0] !== undefined && inventoryItems[0].availability < 0) {
+    inventoryItems.sort((a, b) => {
+      return b.availability - a.availability;
+    });
+  } else {
+    inventoryItems.sort((a, b) => {
+      return a.availability - b.availability;
+    });
+  }
+
   const totalKioskOccupancy = (kioskAvailableQty / kioskMaxCapacity) * 100;
 
   return (
@@ -75,11 +92,32 @@ const DetailsInventory = ({ list, total }) => {
                       : `${totalQty}`}
                   </ColoredBlock>
                 </Table.Cell>
-                <Table.Cell>{productName}</Table.Cell>
+                <Table.Cell>
+                  <>
+                    {productName.length >= 27 ? (
+                      <Popup
+                        trigger={
+                          <div className="kiosk-inventory-table">
+                            {productName}
+                          </div>
+                        }
+                        position="top left"
+                        wide
+                        hoverable
+                      >
+                        {productName}
+                      </Popup>
+                    ) : (
+                      <div className="kiosk-inventory-table-item">
+                        {productName}
+                      </div>
+                    )}
+                  </>
+                </Table.Cell>
                 <Table.Cell
                   style={{ textAlign: 'right' }}
                   collapsing
-                >{`€ ${price || 0}`}</Table.Cell>
+                >{`${price || 0} €`}</Table.Cell>
               </Table.Row>
             ),
           )}
@@ -92,7 +130,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Costs of Goods:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${totalCost.toFixed(2)}`}</b>
+              <b>{`${totalCost.toFixed(2)} €`}</b>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -100,7 +138,7 @@ const DetailsInventory = ({ list, total }) => {
               <b>Total Sales Value:</b>
             </Table.Cell>
             <Table.Cell className="kiosk-inventory-total-values-cell kiosk-inventory-total-values-cell-right">
-              <b>{`€ ${total}`}</b>
+              <b>{`${total} €`}</b>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

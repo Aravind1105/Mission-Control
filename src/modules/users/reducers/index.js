@@ -11,6 +11,11 @@ import {
   modifyUserMemberCard,
   getUserTransactions,
   getOneUserWithInfo,
+  setPage,
+  setPerPage,
+  setSort,
+  setFilters,
+  setSearch,
 } from '../actions';
 
 const initialState = {
@@ -20,6 +25,18 @@ const initialState = {
   isLoading: false,
   userWithDetails: null,
   userLogs: {},
+  pagination: {
+    filters: { search: '' },
+    sort: [
+      {
+        column: 'firstName',
+        direction: 'ASC',
+      },
+    ],
+    page: 0,
+    perPage: 25,
+    search: '',
+  },
 };
 
 const usersReducer = handleActions(
@@ -73,6 +90,26 @@ const usersReducer = handleActions(
         isLoading: false,
       };
     },
+    [setPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, page: payload },
+    }),
+    [setPerPage]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, perPage: payload },
+    }),
+    [setSort]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, sort: payload },
+    }),
+    [setFilters]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, filters: payload },
+    }),
+    [setSearch]: (state, { payload }) => ({
+      ...state,
+      pagination: { ...state.pagination, search: payload },
+    }),
   },
   initialState,
 );

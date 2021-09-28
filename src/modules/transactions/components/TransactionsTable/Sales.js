@@ -86,7 +86,7 @@ const SalesTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <div style={{ overflow: 'auto' }}>
+    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable transactions-table"
@@ -151,7 +151,7 @@ const SalesTable = ({
                       field === 'transactionID' ||
                       field === 'kioskName' ||
                       field === 'created' ||
-                      field === 'membercardId';
+                      field === 'paymentMethod';
                     if (!item.transactionID && isOnlyRootField) {
                       return;
                     }

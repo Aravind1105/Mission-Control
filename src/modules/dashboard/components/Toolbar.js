@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import {
   getProductsDropdownList,
-  selectorGetSupplier,
+  selectorGetManufacturer,
 } from 'modules/products/selectors';
 import { getKioskOptionsForTableDropdown } from 'modules/kiosks/selectors';
+import './styles.less';
 
 const Toolbar = ({
   changeSupplier,
@@ -14,7 +15,7 @@ const Toolbar = ({
   changeKiosk,
   kiosks,
   products,
-  supplier,
+  manufacturers,
 }) => {
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
@@ -22,38 +23,44 @@ const Toolbar = ({
   const handleProductChange = (e, { value }) => {
     changeProduct(value);
   };
-  const handleSupplierChange = (e, { value }) => {
+  const handleChangeManufacturer = (e, { value }) => {
     changeSupplier(value);
   };
   return (
     <Grid stackable>
       <Grid.Row verticalAlign="middle">
-        <Grid.Column mobile={16} computer={4}>
-          <Dropdown
-            placeholder="All Kiosks"
-            selection
-            options={kiosks}
-            className="full-width"
-            onChange={handleKioskChange}
-          />
+        <Grid.Column mobile={16} tablet={8} computer={3}>
+          <div className="kiosk-toolbar-dropdown">
+            <Dropdown
+              placeholder="All Kiosks"
+              selection
+              options={kiosks}
+              className="full-width"
+              onChange={handleKioskChange}
+            />
+          </div>
         </Grid.Column>
-        <Grid.Column mobile={16} computer={4}>
-          <Dropdown
-            placeholder="All Products"
-            selection
-            options={products}
-            className="full-width"
-            onChange={handleProductChange}
-          />
+        <Grid.Column mobile={16} tablet={8} computer={3}>
+          <div className="products-toolbar-dropdown">
+            <Dropdown
+              placeholder="All Products"
+              selection
+              options={products}
+              className="full-width"
+              onChange={handleProductChange}
+            />
+          </div>
         </Grid.Column>
-        <Grid.Column mobile={16} computer={4}>
-          <Dropdown
-            placeholder="All Suppliers"
-            selection
-            options={supplier}
-            className="full-width"
-            onChange={handleSupplierChange}
-          />
+        <Grid.Column mobile={16} tablet={8} computer={3}>
+          <div className="manufactur-toolbar-dropdown">
+            <Dropdown
+              placeholder="All Manufacturers"
+              selection
+              options={manufacturers}
+              className="full-width"
+              onChange={handleChangeManufacturer}
+            />
+          </div>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -62,7 +69,7 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   products: getProductsDropdownList(state),
-  supplier: selectorGetSupplier(state),
+  manufacturers: selectorGetManufacturer(state),
   kiosks: getKioskOptionsForTableDropdown(state),
 });
 const mapDispatchToProps = {};

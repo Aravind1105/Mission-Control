@@ -1,3 +1,6 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
+
 .activity-log-filter-row {
   margin: 10px;
   margin-left: 0.05rem;
@@ -135,3 +138,88 @@ input::-webkit-inner-spin-button {
 // .table-cell-text:not(:last-of-type)::after {
 //   // content: 'assds';
 // }
+.custom_tool_tip {
+  width: 142px;
+  border: 1px solid #bdbdbd;
+  background: #ffffff;
+  color: #7b7b7b;
+  font-family: Lato;
+  font-weight: 900;
+  .custom_tool_tip_container {
+    margin: 0px;
+    margin-top: 10px;
+    padding: 10px 20px auto 15px;
+    text-align: center;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .custom_tool_tip_container_parent {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .custom_tool_tip_container_narrow {
+    width: 70px;
+  }
+
+  .custom_tool_tip_container_wide {
+    flex: 1;
+    width: 115px;
+  }
+}
+
+.add_kiosk_button {
+  margin-right: -4px;
+  @media @mobile {
+    margin-right: 0px;
+  }
+}
+
+.download_orderlist_button {
+  padding-left: 35px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+
+.download_packlist_button {
+  padding-left: 50px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+.download_orderlist_button_admin {
+  padding-left: 10px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+.download_packlist_button_admin {
+  padding-left: 0px;
+  @media @mobile {
+    padding-left: 0px;
+  }
+}
+
+.kiosk-inventory-table {
+  text-overflow: ellipsis;
+  cursor: default;
+  overflow: hidden;
+  width: 180px;
+  white-space: nowrap;
+  @media @mobile {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+    white-space: nowrap;
+  }
+}
+
+.kiosk-inventory-table-item {
+  cursor: default;
+  overflow: hidden;
+  width: 180px;
+  @media @mobile {
+    width: 150px;
+  }
+}

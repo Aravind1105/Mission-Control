@@ -6,7 +6,6 @@ import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
 import { getKioskSingle } from './selectors';
 import TempLogVisualization from './components/TempLogVisualization';
-import TempLog from './components/TempLog';
 import { getKiosk } from './actions';
 
 const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
@@ -21,13 +20,17 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
     },
     {
       name: kiosk === null ? '' : kiosk.name,
-      link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
+      link: `/kiosks/detail/${
+        kiosk === null ? props.match.params.id : kiosk._id
+      }`,
     },
-  ]
+  ];
   const backLink = {
     name: 'Back to kiosk detail',
-    link: `/kiosks/detail/${kiosk === null ? props.match.params.id : kiosk._id}`,
-  }
+    link: `/kiosks/detail/${
+      kiosk === null ? props.match.params.id : kiosk._id
+    }`,
+  };
   useEffect(() => {
     if (kiosk === null) {
       getKiosk(props.match.params.id);
@@ -50,7 +53,6 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
           </Grid.Column>
         </Grid.Row>
         <TempLogVisualization {...props} />
-        <TempLog />
       </Grid>
     </>
   );
@@ -58,10 +60,10 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
 
 const mapStateToProps = state => ({
   kiosk: getKioskSingle(state),
-  isLoading: state.kiosks.isLoading
+  isLoading: state.kiosks.isLoading,
 });
 const mapDispatchToProps = {
-  getKiosk
+  getKiosk,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Log);

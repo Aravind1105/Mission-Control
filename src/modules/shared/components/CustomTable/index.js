@@ -85,7 +85,7 @@ const CustomTable = ({
 
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
   return (
-    <div style={{ overflow: 'auto' }}>
+    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
       {isLoading && <Loader />}
       <Table
         className="unitable"
@@ -136,6 +136,7 @@ const CustomTable = ({
                   key={rowKey}
                   active={activeRow === i}
                   onClick={handlerRowClick(item, i)}
+                  verticalAlign="top"
                 >
                   {columns.map(({ field, formatter }, j) => {
                     const cellKey = `${i}-${field}`;
@@ -144,7 +145,14 @@ const CustomTable = ({
                       : get(item, field, '');
 
                     return (
-                      <Table.Cell key={cellKey} className="table-cell-text">
+                      <Table.Cell
+                        key={cellKey}
+                        className={
+                          activeRow === i
+                            ? 'table-cell-select'
+                            : 'table-cell-text'
+                        }
+                      >
                         {cellValue}
                       </Table.Cell>
                     );

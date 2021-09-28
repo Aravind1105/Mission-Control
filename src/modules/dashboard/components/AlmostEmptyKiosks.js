@@ -7,6 +7,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
 import history from 'lib/history';
 import Toolbar from './Toolbar';
+import './styles.less';
 
 const backLink = {
   name: 'Back to Dashboard',
@@ -81,12 +82,13 @@ const AlmostEmptyKiosks = ({
         </Header>
         <BackLink {...{ ...backLink }} />
       </SegmentHeader>
-      <Toolbar
-        changeProduct={changeProduct}
-        changeKiosk={changeKiosk}
-        changeSupplier={changeSupplier}
-      />
-      <br></br>
+      <div className="toolbar-container">
+        <Toolbar
+          changeProduct={changeProduct}
+          changeKiosk={changeKiosk}
+          changeSupplier={changeSupplier}
+        />
+      </div>
       <CustomTable
         sortable
         onRowClick={handlerClickRow}

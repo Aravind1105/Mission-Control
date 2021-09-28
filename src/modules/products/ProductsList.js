@@ -1,34 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Pagination from 'modules/shared/components/Pagination';
 import Toolbar from './components/Toolbar';
 import ProductsContent from './components/ProductsContent';
-import { getProductLinesWithFilter } from './actions';
-import { selectorGetProducts, getTotalProductsCount } from './selectors';
+import {
+  getProductLinesWithFilter,
+  getManufacturers,
+  setSearch as changeSearch,
+  setCategory as changeCategory,
+  setManufacturer as changeManufacturer,
+  setPage as changePage,
+  setPerPage as changePerPage,
+  setSort,
+  setFilters,
+} from './actions';
+import {
+  selectorGetProducts,
+  getTotalProductsCount,
+  getPaginationState,
+  selectorGetManufacturer,
+} from './selectors';
 import { isEqual } from 'lodash';
-
-const sortDefault = [
-  {
-    column: 'name',
-    direction: 'ASC',
-  },
-];
-const defaulFilterValues = { search: '', category: '', supplier: '' };
+import { useComponentDidMount } from '../../lib/customHooks';
 
 const ProductsList = ({
   products,
   total,
   isLoading,
   getProductLinesWithFilter,
+  getManufacturers,
+  paginationState,
+  changeSearch,
+  changeCategory,
+  changeManufacturer,
+  setSort,
+  setFilters,
+  changePage,
+  changePerPage,
+  manufacturersOptions,
+  manufacturers,
 }) => {
-  const [search, changeSearch] = useState('');
-  const [category, changeCategory] = useState('');
-  const [supplier, changeSupplier] = useState('');
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaulFilterValues);
+  const {
+    page,
+    perPage,
+    sort,
+    filters,
+    search,
+    category,
+    manufacturer,
+  } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -36,14 +57,21 @@ const ProductsList = ({
       limit: perPage,
     };
 
-    if (search || category || supplier) {
-      const name = search ? { name: { $regex: search, $options: 'i' } } : {};
+    if (search || category || manufacturer.length > 0) {
+      const name = search
+        ? {
+            $or: [
+              { name: { $regex: search, $options: 'i' } },
+              { manufacturer: { $regex: search, $options: 'i' } },
+            ],
+          }
+        : {};
+
       const cat = category
         ? { category: { $regex: category, $options: 'i' } }
         : {};
-      const sup = supplier
-        ? { manufacturer: { $regex: supplier, $options: 'i' } }
-        : {};
+      const sup =
+        manufacturer.length > 0 ? { manufacturer: { $in: manufacturer } } : {};
 
       data.search = JSON.stringify({
         ...name,
@@ -51,17 +79,17 @@ const ProductsList = ({
         ...sup,
       });
 
-      const searchIndex = isEqual(search, filter.search);
-      const categoryIndex = isEqual(category, filter.category);
-      const supplierIndex = isEqual(supplier, filter.supplier);
+      const searchIndex = isEqual(search, filters.search);
+      const categoryIndex = isEqual(category, filters.category);
+      const manufacturerIndex = isEqual(manufacturer, filters.manufacturer);
 
-      if (!searchIndex || !categoryIndex || !supplierIndex) {
+      if (!searchIndex || !categoryIndex || !manufacturerIndex) {
         data.skip = 0;
         setFilters({
-          ...filter,
+          ...filters,
           search,
           category,
-          supplier,
+          manufacturer,
         });
       }
     }
@@ -74,14 +102,21 @@ const ProductsList = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, category, supplier]);
+  }, [page, perPage, search, category, manufacturer]);
+
+  useEffect(() => {
+    if (manufacturers.length === 0) getManufacturers();
+  }, [manufacturers]);
 
   return (
     <>
       <Toolbar
+        search={search}
+        manufacturer={manufacturer}
         changeSearch={changeSearch}
         changeCategory={changeCategory}
-        changeSupplier={changeSupplier}
+        changeManufacturer={changeManufacturer}
+        manufacturerOptions={manufacturersOptions}
       />
       <ProductsContent
         products={products}
@@ -105,10 +140,21 @@ const mapStateToProps = state => ({
   products: selectorGetProducts(state),
   total: getTotalProductsCount(state),
   isLoading: state.products.isLoading,
+  paginationState: getPaginationState(state),
+  manufacturersOptions: selectorGetManufacturer(state),
+  manufacturers: state.products.manufacturers,
 });
 
 const mapDispatchToProps = {
   getProductLinesWithFilter,
+  getManufacturers,
+  changeSearch,
+  changeCategory,
+  changeManufacturer,
+  setSort,
+  setFilters,
+  changePage,
+  changePerPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

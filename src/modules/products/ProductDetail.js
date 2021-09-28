@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
+import { Grid, Segment, Header, Divider, Button } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
@@ -9,15 +9,18 @@ import ProductForm from './components/ProductForm';
 import ImageUploader from './components/ImageUploader';
 import {
   getFullProductData,
-  deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
   deleteActivePriceHistory,
+  archiveProduct,
+  duplicateProductLine,
+  getKiosksWithProduct,
 } from './actions';
 import { getOrganizations } from '../organizations/actions';
 import {
   getActivePriceHistoryState,
   getDefaultPriceHistoryState,
+  getKiosksWithProductState,
   selectorGetProductInitValue,
   // selectorGetProductFamilyForm,
   selectorProductTaxOptions,
@@ -25,6 +28,9 @@ import {
 import { getOrganizationsAsOptions } from '../organizations/selectors';
 import PriceHistoryWidget from './components/PriceHistoryWidget';
 import { isEqual } from 'lodash';
+import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
+import './styles.less';
+import UsedKiosksWidget from './components/UsedKiosksWidget';
 
 const links = [
   {
@@ -49,7 +55,6 @@ const ProductDetail = ({
   categoryOption,
   // familyOption,
   taxesOption,
-  deleteProductSaga,
   isLoading,
   match,
   getFullProductData,
@@ -61,6 +66,10 @@ const ProductDetail = ({
   activePriceHistory,
   resetPriceHistory,
   deleteActivePriceHistory,
+  archiveProduct,
+  duplicateProductLine,
+  getKiosksWithProduct,
+  kiosksWithProduct,
 }) => {
   const { id } = match.params;
   const isNewProduct = id === 'new';
@@ -68,6 +77,8 @@ const ProductDetail = ({
   const { priceHistory, ...initialValues } = product;
   const [isCancelTriggered, setIsCancelTriggered] = useState(false);
   const [buttonVal, setButtonVal] = useState('Submit');
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDuplicateAlert, setShowDuplicateAlert] = useState(false);
 
   // this state variable is used only when a product is created along with the image
   const [firstUploadImage, setFirstUploadImage] = useState(null);
@@ -81,6 +92,7 @@ const ProductDetail = ({
     }
     if (id) {
       getPriceHistory({ productLineId: id });
+      getKiosksWithProduct({ productLineId: id });
     }
 
     // reset price history redux state if the product is a new one
@@ -88,17 +100,6 @@ const ProductDetail = ({
       resetPriceHistory();
     }
   }, []);
-
-  // !"Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.
-  const deleteProductLine = () => {
-    if (window.confirm('Willst Du das Product Line löschen?')) {
-      const { payload } = deleteProductSaga(id);
-      if (payload == id) {
-        window.alert('Product Line erfolgreich gelöscht!');
-        window.location.href = backLink.link;
-      }
-    }
-  };
 
   return (
     <Grid stackable>
@@ -119,19 +120,70 @@ const ProductDetail = ({
           <Grid.Row>
             <Grid.Column>
               <Segment>
-                <Header as="h3">{productName}</Header>
+                <Grid stackable>
+                  <Grid.Row relaxed="very" columns={2}>
+                    <Grid.Column width={10}>
+                      <Header as="h2">{productName}</Header>
+                    </Grid.Column>
+                    {id !== 'new' && (
+                      <>
+                        <Grid.Column width={6} textAlign="right">
+                          <Button
+                            className="product-detail-header-action-button"
+                            size="small"
+                            onClick={() => setShowDuplicateAlert(true)}
+                          >
+                            Duplicate
+                          </Button>
+                          <Button
+                            className="product-detail-header-action-button product-detail-header-action-button-delete"
+                            size="small"
+                            onClick={() => setShowDeleteAlert(true)}
+                          >
+                            Delete
+                          </Button>
+                        </Grid.Column>
+                        <ConfirmationModal
+                          title="Duplicate"
+                          isModalOpen={showDuplicateAlert}
+                          setIsModalOpen={setShowDuplicateAlert}
+                          confirmHandler={() => {
+                            duplicateProductLine({ productLineId: id });
+                            setShowDuplicateAlert(false);
+                          }}
+                        >
+                          {'Are you sure want to duplicate this product?'}
+                        </ConfirmationModal>
+                        <ConfirmationModal
+                          title="Delete"
+                          isModalOpen={showDeleteAlert}
+                          setIsModalOpen={setShowDeleteAlert}
+                          confirmHandler={() => {
+                            archiveProduct({ productLineId: id });
+                            setShowDeleteAlert(false);
+                          }}
+                        >
+                          {'Are you sure want to delete this product?'}
+                        </ConfirmationModal>
+                      </>
+                    )}
+                  </Grid.Row>
+                </Grid>
+
                 <Divider />
-                <ProductForm
-                  initialValues={{ ...initialValues, image: 0 }}
-                  // categoryOption={categoryOption}
-                  // familyOption={familyOption}
-                  taxesOption={taxesOption}
-                  organizations={organizations}
-                  setIsCancelTriggered={setIsCancelTriggered}
-                  buttonVal={buttonVal}
-                  isProductLoading={isProductLoading}
-                  firstUploadImage={firstUploadImage}
-                />
+                <Grid.Row>
+                  <ProductForm
+                    initialValues={{ ...initialValues, image: 0 }}
+                    // categoryOption={categoryOption}
+                    // familyOption={familyOption}
+                    taxesOption={taxesOption}
+                    organizations={organizations}
+                    setIsCancelTriggered={setIsCancelTriggered}
+                    buttonVal={buttonVal}
+                    isProductLoading={isProductLoading}
+                    firstUploadImage={firstUploadImage}
+                  />
+                </Grid.Row>
               </Segment>
             </Grid.Column>
           </Grid.Row>
@@ -140,16 +192,6 @@ const ProductDetail = ({
 
       {isProductLoaded ? (
         <Grid.Column width={5}>
-          {/* "Delete Product " button UNAVAILABLE UNTIL LIV-1556 is solved.*/}
-          {/* <Segment 
-            onClick={deleteProductLine}
-            style={{ cursor:'pointer', color:"red" }}>
-            <h3>Delete Product
-              <i 
-                className="trash alternate outline icon" 
-                style={{ float: 'right' }} />
-            </h3>
-          </Segment> */}
           {defaultPriceHistory.length > 0 && (
             <PriceHistoryWidget priceHistory={defaultPriceHistory} />
           )}
@@ -158,9 +200,15 @@ const ProductDetail = ({
               priceHistory={activePriceHistory}
               activePriceHistory
               onClickDelete={priceHistoryId =>
-                deleteActivePriceHistory({ productLineId: id, priceHistoryId })
+                deleteActivePriceHistory({
+                  productLineId: id,
+                  priceHistoryId,
+                })
               }
             />
+          )}
+          {kiosksWithProduct.length > 0 && (
+            <UsedKiosksWidget kioskData={kiosksWithProduct} />
           )}
           <ImageUploader
             isCancelTriggered={isCancelTriggered}
@@ -191,16 +239,19 @@ const mapStateToProps = (state, { match: { params } }) => {
     organizations: getOrganizationsAsOptions(state),
     defaultPriceHistory: getDefaultPriceHistoryState(state),
     activePriceHistory: getActivePriceHistoryState(state),
+    kiosksWithProduct: getKiosksWithProductState(state),
   };
 };
 
 const mapDispatchToProps = {
   getFullProductData,
   getOrganizations,
-  deleteProductSaga,
   getPriceHistory,
   resetPriceHistory,
   deleteActivePriceHistory,
+  archiveProduct,
+  duplicateProductLine,
+  getKiosksWithProduct,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

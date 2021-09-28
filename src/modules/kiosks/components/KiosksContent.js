@@ -1,107 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import CustomTable from 'modules/shared/components/CustomTable';
 import Pagination from 'modules/shared/components/Pagination';
 import Loader from 'modules/shared/components/Loader';
 import CellHeartbeat from './CellHeartbeat';
 import CellDoorStatus from './CellDoorStatus';
 import CellTemp from './CellTemp';
-import AllKiosksTableToolbar from './AllKiosksTableToolbar';
-import { getTotalKiosks, getKiosksTableState } from '../selectors';
-import { getAllKiosksForTable } from '../actions';
+import {
+  getTotalKiosks,
+  getKiosksTableState,
+  getPaginationState,
+} from '../selectors';
+import {
+  getAllKiosksForTable,
+  setPage as changePage,
+  setPerPage as changePerPage,
+  setSort,
+  setFilters,
+} from '../actions';
 import { isEqual } from 'lodash';
-
-const sortDefault = [
-  {
-    column: 'name',
-    direction: 'ASC',
-  },
-];
+import { getUserType } from 'modules/authentication/selectors';
 
 const sortValue = {
   name: 'name',
   doorStatus: 'doorStatus',
   serialNumber: 'serialNumber',
+  'ownerOrganization.name': 'ownerOrganization.name',
+  dayIncome: 'dayIncome',
+  'heartbeat.updated': 'heartbeat.updated',
 };
 
-const defaultFilterValues = { search: '', kiosk: '', kioskStatus: '' };
 const screenWidth = window.innerWidth;
-const columns = [
-  {
-    title: 'Name',
-    field: 'name',
-  },
-  {
-    title: 'Serial Number',
-    field: 'serialNumber',
-    formatter: ({ serialNumber }) => {
-      if (serialNumber.length > 20) {
-        return serialNumber.substring(0, 15) + '...';
-      } else return serialNumber;
-    },
-  },
-  {
-    title: 'Door Status',
-    field: 'doorStatus',
-    formatter: ({ doorStatus, session }) => (
-      <CellDoorStatus doorStatus={doorStatus} session={session} />
-    ),
-  },
-  {
-    title: 'Temperature',
-    field: 'temperature.value',
-    formatter: ({ temperature }) => {
-      if (screenWidth < 750) {
-        return (
-          <div style={{ textAlign: 'left' }}>
-            <CellTemp temperature={temperature} />
-          </div>
-        );
-      } else {
-        return (
-          <div style={{ textAlign: 'center' }}>
-            <CellTemp temperature={temperature} />
-          </div>
-        );
-      }
-    },
-  },
-  {
-    title: 'Network Status',
-    field: 'temperature.updated',
-    formatter: ({ temperature }) => (
-      <CellHeartbeat temperature={temperature} showTime />
-    ),
-  },
-  {
-    title: 'Address',
-    field: 'location',
-    formatter: ({ location: { address } }) => {
-      const { postalCode, city } = address;
-      const addr = [postalCode, city, !postalCode && !city && 'N.A.']
-        .filter(el => Boolean(el))
-        .join(', ');
-      return addr;
-    },
-  },
-  {
-    title: 'Sales Today',
-    field: 'dayIncome',
-    // formatter: ({ dayIncome }) => `€ ${dayIncome}`,
-    formatter: ({ dayIncome }) => {
-      if (dayIncome === '') {
-        return '';
-      } else if (screenWidth < 750) {
-        return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
-      }
-      return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
-    },
-  },
-];
+let isSuperAdmin = false;
 
 const KiosksContent = ({
   isLoading,
@@ -112,19 +45,108 @@ const KiosksContent = ({
   search,
   kiosk,
   kioskStatus,
+  organization,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
+  paginationState,
+  userType,
 }) => {
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
-
+  const { page, perPage, sort, filters } = paginationState;
+  if (userType !== 'Admin') {
+    isSuperAdmin = true;
+  }
+  const columns = [
+    {
+      title: 'Name',
+      field: 'name',
+    },
+    {
+      title: 'Serial Number',
+      field: 'serialNumber',
+      formatter: ({ serialNumber }) => {
+        if (serialNumber.length > 20) {
+          return serialNumber.substring(0, 15) + '...';
+        } else return serialNumber;
+      },
+    },
+    {
+      title: 'Door Status',
+      field: 'doorStatus',
+      formatter: ({ doorStatus, session }) => (
+        <CellDoorStatus doorStatus={doorStatus} session={session} />
+      ),
+    },
+    {
+      title: 'Temperature',
+      field: 'temperature.value',
+      formatter: ({ temperature }) => {
+        if (screenWidth < 750) {
+          return (
+            <div style={{ textAlign: 'left' }}>
+              <CellTemp temperature={temperature} />
+            </div>
+          );
+        } else {
+          return (
+            <div style={{ textAlign: 'center' }}>
+              <CellTemp temperature={temperature} />
+            </div>
+          );
+        }
+      },
+    },
+    {
+      title: 'Network Status',
+      field: 'heartbeat.updated,temperature.updated',
+      formatter: ({ heartbeat, temperature }) => (
+        <CellHeartbeat
+          heartbeat={heartbeat}
+          temperature={temperature}
+          showTime
+        />
+      ),
+    },
+    {
+      title: 'Address',
+      field: 'location',
+      formatter: ({ location: { address } }) => {
+        const { postalCode, city } = address;
+        const addr = [postalCode, city, !postalCode && !city && 'N.A.']
+          .filter(el => Boolean(el))
+          .join(', ');
+        return addr;
+      },
+    },
+    {
+      title: 'Sales Today',
+      field: 'dayIncome',
+      // formatter: ({ dayIncome }) => `€ ${dayIncome}`,
+      formatter: ({ dayIncome }) => {
+        if (dayIncome === '') {
+          return '';
+        } else if (screenWidth < 750) {
+          return <div style={{ textAlign: 'left' }}>{dayIncome}€ </div>;
+        }
+        return <div style={{ textAlign: 'right' }}>{dayIncome}€ </div>;
+      },
+    },
+  ];
+  if (isSuperAdmin) {
+    columns.splice(2, 0, {
+      title: 'Organization',
+      field: 'ownerOrganization.name',
+    });
+    columns.splice(6, 1);
+  }
   const getData = ({ sort }) => {
     const data = {
       skip: page * perPage,
       limit: perPage,
     };
 
-    if (search || kiosk || kioskStatus) {
+    if (search || kiosk.length > 0 || kioskStatus || organization) {
       const name = search
         ? {
             $or: [
@@ -133,23 +155,31 @@ const KiosksContent = ({
             ],
           }
         : {};
-      const kio = kiosk ? { _id: kiosk } : {};
+      const kio = kiosk.length > 0 ? { _id: kiosk } : {};
       const door = kioskStatus ? { doorStatus: kioskStatus } : {};
+
+      const organizationId = organization ? { orgId: organization } : {};
 
       data.search = JSON.stringify({
         ...name,
         ...kio,
         ...door,
+        ...organizationId,
       });
-      const searchIndex = isEqual(search, filter.search);
-      const kioskIndex = isEqual(kiosk, filter.kiosk);
-      const kioskStatusIndex = isEqual(kioskStatus, filter.kioskStatus);
+      const searchIndex = isEqual(search, filters.search);
+      const kioskIndex = isEqual(kiosk, filters.kiosk);
+      const kioskStatusIndex = isEqual(kioskStatus, filters.kioskStatus);
 
-      if (!searchIndex || !kioskIndex || !kioskStatusIndex) {
+      if (
+        !searchIndex ||
+        !kioskIndex ||
+        !kioskStatusIndex ||
+        !kioskStatusIndex
+      ) {
         data.skip = 0;
         changePage(0);
         setFilters({
-          ...filter,
+          ...filters,
           search,
           kiosk,
           kioskStatus,
@@ -166,7 +196,7 @@ const KiosksContent = ({
 
   useEffect(() => {
     getData({ sort });
-  }, [page, perPage, search, kiosk, kioskStatus]);
+  }, [page, perPage, search, kiosk, kioskStatus, organization]);
 
   const handlerClickRow = ({ _id }) => {
     history.push(`/kiosks/detail/${_id}`);
@@ -175,9 +205,6 @@ const KiosksContent = ({
     <>
       {isLoading && <Loader />}
       <Segment>
-        {/* <AllKiosksTableToolbar
-          {...{ changeKiosk, changeDoorStatus, changeNetworkStatus }}
-        /> */}
         <CustomTable
           columns={columns}
           data={kiosks}
@@ -207,10 +234,16 @@ const mapStateToProps = state => ({
   kiosks: getKiosksTableState(state),
   isLoading: state.kiosks.isLoading,
   total: getTotalKiosks(state),
+  paginationState: getPaginationState(state),
+  userType: getUserType(state),
 });
 
 const mapDispatchToProps = {
   getAllKiosksForTable,
+  changePage,
+  changePerPage,
+  setSort,
+  setFilters,
 };
 
 KiosksContent.propTypes = {

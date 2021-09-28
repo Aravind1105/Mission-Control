@@ -7,8 +7,15 @@ import { connect } from 'react-redux';
 import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
+import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
-const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
+const Toolbar = ({
+  changeDate,
+  kiosks,
+  changeKiosk,
+  exportCsvSales,
+  isKiosksListLoading,
+}) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -53,7 +60,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
     });
   };
 
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
     changeExportData({
       from: exportData.from ? exportData.from : '',
@@ -75,12 +82,12 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
+            <SelectCheckBoxes
+              title="Kiosks"
               options={kiosks}
-              className="full-width"
-              onChange={handleKioskChange}
+              allOptionKey="all"
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksListLoading}
             />
           </Grid.Column>
 
@@ -90,7 +97,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, exportCsvSales }) => {
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"
-              icon="arrow down icon"
+              icon="arrow down"
               className="custom-button-default"
               onClick={DownloadCsv}
               // disabled={Boolean(exportData)}
@@ -107,7 +114,9 @@ Toolbar.propTypes = {
   kiosks: PropTypes.arrayOf(PropTypes.object),
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isKiosksListLoading: state.kiosks.isKiosksListLoading,
+});
 const mapDispatchToProps = {
   exportCsvSales,
 };
