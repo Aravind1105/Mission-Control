@@ -1,4 +1,4 @@
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
 
-export const getReports = state => state.reports;
+export const getWidgetDataState = state => state.reports.widgetData;

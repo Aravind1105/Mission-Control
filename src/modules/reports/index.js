@@ -1,32 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Header, Segment, Button, Icon } from 'semantic-ui-react';
-import { getReports } from './actions';
+import { Grid, Header, Segment, Button, Icon, Loa } from 'semantic-ui-react';
+import { getWidgetData } from './actions';
 import StatsCard from 'modules/shared/components/StatsCard';
-import {} from './selectors';
+import { getWidgetDataState } from './selectors';
 import './styles.less';
 
-const options = {
-  lastMonth: {
-    title: 'Sales last month',
-    color: 'green',
-  },
-  income: {
-    title: 'Sales income',
-    color: 'blue',
-  },
-  totalRevenue: {
-    title: 'total Revenue',
-    color: 'red',
-  },
-};
-
-const Reports = ({ isLoading }) => {
-  useEffect(() => {}, []);
+const Reports = ({ isLoading, getWidgetData, widgetData }) => {
+  useEffect(() => {
+    getWidgetData();
+  }, []);
 
   return (
     <>
-      {/* {isLoading && <Loader />} */}
       <Segment>
         <Header as="h3" dividing>
           Reports
@@ -39,30 +25,22 @@ const Reports = ({ isLoading }) => {
             <StatsCard
               customColor="#219653"
               text="Total Net Sales"
-              amount={`22 €`}
+              amount={widgetData.totalNetIncome
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               customColor="#F2994A"
               text="Total Products Sold"
-              amount={`23 €`}
+              amount={widgetData.totalNumberOfProductsSold
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#56CCF2"
-              text="Peak Hour"
-              amount={`-- €`}
-            />
-            {/* <StatsCard
-              icon="boxes"
-              customColor="#F2994A"
-              text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
+            <StatsCard customColor="#56CCF2" text="Peak Hour" amount={`-- €`} />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
@@ -70,21 +48,13 @@ const Reports = ({ isLoading }) => {
               text="Average Daily Net Sales"
               amount={`-- €`}
             />
-            {/* <StatsCard
-              icon="credit card"
-              customColor="#2F80ED"
-              text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
           </Grid.Column>
         </Grid.Row>
       </Grid>
 
       <div className="button__report-update">
         <Button
-          onClick={getReports}
+          onClick={() => {}}
           disabled={isLoading}
           basic
           color="orange"
@@ -99,10 +69,11 @@ const Reports = ({ isLoading }) => {
 
 const mapStateToProps = state => ({
   isLoading: state.reports.isLoading,
+  widgetData: getWidgetDataState(state),
 });
 
 const mapDispatchToProps = {
-  getReports,
+  getWidgetData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reports);
