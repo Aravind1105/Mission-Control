@@ -1,9 +1,23 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Header, Segment, Button, Icon } from 'semantic-ui-react';
+
+import OneLineChart from './components/OneLineChart';
+import TotalStatisticContainer from './components/TotalStatisticContainer';
+import ComplexChart from './components/ComplexChart';
+import PortfolioContainer from './components/PortfolioContainer';
+import TopSellers from './components/TopSellers';
+import BestSellerProducts from './components/BestSellerProducts';
+import PortfolioPerfGraph from './components/PortfolioPerfGraph';
 import { getReports } from './actions';
-import StatsCard from 'modules/shared/components/StatsCard';
-import {} from './selectors';
+import {
+  getSalesListReports,
+  getTargetStatistics,
+  getTargetSales,
+  getPortfolioStatistic,
+  getTopSellers,
+  getBestSellingProducts,
+} from './selectors';
 import './styles.less';
 
 const options = {
@@ -21,8 +35,19 @@ const options = {
   },
 };
 
-const Reports = ({ isLoading }) => {
-  useEffect(() => {}, []);
+const Reports = ({
+  portfolioStatistic,
+  salesListReports,
+  targetStatistics,
+  targetSales,
+  topSellers,
+  bestSellingProducts,
+  isLoading,
+  getReports,
+}) => {
+  useEffect(() => {
+    if (!isLoading) getReports();
+  }, []);
 
   return (
     <>
@@ -33,51 +58,36 @@ const Reports = ({ isLoading }) => {
         </Header>
       </Segment>
 
+      <PortfolioContainer statistic={portfolioStatistic} />
+
       <Grid>
-        <Grid.Row>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#219653"
-              text="Total Net Sales"
-              amount={`22 €`}
-            />
+        <Grid.Row columns="equal">
+          {Object.keys(salesListReports).map(key => (
+            <Grid.Column key={key}>
+              <OneLineChart
+                data={salesListReports[key]}
+                title={options[key].title}
+                color={options[key].color}
+              />
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+      </Grid>
+
+      <ComplexChart data={targetSales} />
+
+      <TotalStatisticContainer statistic={targetStatistics} />
+
+      <Grid>
+        <Grid.Row columns="equal">
+          <Grid.Column>
+            <TopSellers data={topSellers} />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#F2994A"
-              text="Total Products Sold"
-              amount={`23 €`}
-            />
+          <Grid.Column>
+            <BestSellerProducts data={bestSellingProducts} />
           </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#56CCF2"
-              text="Peak Hour"
-              amount={`-- €`}
-            />
-            {/* <StatsCard
-              icon="boxes"
-              customColor="#F2994A"
-              text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#BB6BD9"
-              text="Average Daily Net Sales"
-              amount={`-- €`}
-            />
-            {/* <StatsCard
-              icon="credit card"
-              customColor="#2F80ED"
-              text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
+          <Grid.Column>
+            <PortfolioPerfGraph data={portfolioStatistic} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -98,6 +108,12 @@ const Reports = ({ isLoading }) => {
 };
 
 const mapStateToProps = state => ({
+  salesListReports: getSalesListReports(state),
+  targetStatistics: getTargetStatistics(state),
+  targetSales: getTargetSales(state),
+  portfolioStatistic: getPortfolioStatistic(state),
+  topSellers: getTopSellers(state),
+  bestSellingProducts: getBestSellingProducts(state),
   isLoading: state.reports.isLoading,
 });
 
