@@ -1,108 +1,31 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Grid, Header, Segment, Button, Icon } from 'semantic-ui-react';
-import { getReports } from './actions';
-import StatsCard from 'modules/shared/components/StatsCard';
-import {} from './selectors';
+import React from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { Segment } from 'semantic-ui-react';
+import ReportsContent from './ReportsContent';
+import NavSwitcher from '../shared/components/NavSwitcher';
 import './styles.less';
 
-const options = {
-  lastMonth: {
-    title: 'Sales last month',
-    color: 'green',
-  },
-  income: {
-    title: 'Sales income',
-    color: 'blue',
-  },
-  totalRevenue: {
-    title: 'total Revenue',
-    color: 'red',
-  },
-};
+const screenWidth = window.innerWidth;
 
-const Reports = ({ isLoading }) => {
-  useEffect(() => {}, []);
+const navSwitcherConfig = [{ name: 'reports', goTo: '/reports' }];
+const navMobileSwitcherConfig = [{ name: 'reports', goTo: '/reports' }];
 
+const Reports = ({}) => {
   return (
-    <>
-      {/* {isLoading && <Loader />} */}
-      <Segment>
-        <Header as="h3" dividing>
-          Reports
-        </Header>
-      </Segment>
-
-      <Grid>
-        <Grid.Row>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#219653"
-              text="Total Net Sales"
-              amount={`22 €`}
-            />
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#F2994A"
-              text="Total Products Sold"
-              amount={`23 €`}
-            />
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#56CCF2"
-              text="Peak Hour"
-              amount={`-- €`}
-            />
-            {/* <StatsCard
-              icon="boxes"
-              customColor="#F2994A"
-              text="Total Products sold"
-              amount={widgetsData.totalNumberOfProductsSold
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard
-              customColor="#BB6BD9"
-              text="Average Daily Net Sales"
-              amount={`-- €`}
-            />
-            {/* <StatsCard
-              icon="credit card"
-              customColor="#2F80ED"
-              text="Total Transactions"
-              amount={widgetsData.totalNumberOfTransactions
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            /> */}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-
-      <div className="button__report-update">
-        <Button
-          onClick={getReports}
-          disabled={isLoading}
-          basic
-          color="orange"
-          loading={isLoading}
-        >
-          <Icon name="undo" />
-        </Button>
-      </div>
-    </>
+    <Segment>
+      <>
+        {screenWidth < 770 ? (
+          <NavSwitcher config={navMobileSwitcherConfig} />
+        ) : (
+          <NavSwitcher config={navSwitcherConfig} />
+        )}
+      </>
+      <Switch>
+        <Route exact path="/reports" component={ReportsContent} />
+        <Redirect to="/reports" />
+      </Switch>
+    </Segment>
   );
 };
 
-const mapStateToProps = state => ({
-  isLoading: state.reports.isLoading,
-});
-
-const mapDispatchToProps = {
-  getReports,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Reports);
+export default Reports;
