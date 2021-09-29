@@ -15,13 +15,15 @@ function* handler({ payload }) {
     if (response.errors) {
       if (response.errors[0].message === 'Token expired')
         yield put(updateSessionExpired(true));
-      toast({
-        description: response.errors[0].message,
-        animation: 'fade left',
-        icon: 'info',
-        color: 'red',
-        time: 5000,
-      });
+      else {
+        toast({
+          description: response.errors[0].message,
+          animation: 'fade left',
+          icon: 'info',
+          color: 'red',
+          time: 5000,
+        });
+      }
     }
   } catch (error) {
     console.log(error);
