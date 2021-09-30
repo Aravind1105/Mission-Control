@@ -96,6 +96,7 @@ const ProductForm = ({
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
       .shelfLifeDays;
+    values.packagingOptions[0].description = 'This is an optional field';
 
     delete values.image;
 
