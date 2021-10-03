@@ -67,6 +67,7 @@ const Pagination = ({
           options={pageOptions}
           value={perPage}
           onChange={handlerPerPageChange}
+          scrolling
         />
       </div>
     </Container>
