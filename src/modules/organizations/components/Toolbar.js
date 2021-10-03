@@ -18,7 +18,7 @@ const stateOptions = [
 
 const OrganizationsToolbar = () => {
   return (
-    <Segment className="toolbar">
+    <Segment className="org-toolbar">
       <div className="toolbar-container">
         <Grid stackable>
           <Grid.Row verticalAlign="middle" columns="equal">
