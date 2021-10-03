@@ -1,19 +1,10 @@
 @tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
 @mobile: ~'only screen and (max-width: 600px)';
-.org-table {
-  padding-top: 70px !important;
-  @media @mobile {
-    padding-top: 7px !important;
-  }
-}
+
 .org-toolbar {
-  position: fixed !important;
-  overflow: hidden !important;
-  width: 78.4% !important;
+  position: sticky !important;
   z-index: 1;
-  margin-top: -17px !important;
-  margin-left: 0px !important;
-  margin-right: 10px !important;
+  top: 50px;
   @media @mobile {
     position: initial !important;
     margin-top: 0px !important;

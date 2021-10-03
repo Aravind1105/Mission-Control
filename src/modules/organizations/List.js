@@ -7,9 +7,7 @@ import './styles.less';
 const OrganizationsList = () => (
   <>
     <Toolbar />
-    <div className="org-table">
-      <OrganizationsContent />
-    </div>
+    <OrganizationsContent />
   </>
 );
 
