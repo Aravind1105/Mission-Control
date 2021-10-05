@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button, Icon, Loa } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { getWidgetData } from './actions';
 import StatsCard from 'modules/shared/components/StatsCard';
 import { getWidgetDataState } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
+import { format } from 'date-fns';
 import './styles.less';
 
 const ReportsContent = ({
@@ -48,6 +49,7 @@ const ReportsContent = ({
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
+              icon="boxes"
               customColor="#F2994A"
               text="Total Products Sold"
               amount={widgetData.totalNumberOfProductsSold
@@ -56,29 +58,32 @@ const ReportsContent = ({
             />
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
-            <StatsCard customColor="#56CCF2" text="Peak Hour" amount={`-- €`} />
+            {widgetData.peakSalesHour && (
+              <StatsCard
+                icon="time"
+                customColor="#56CCF2"
+                text="Peak Hour"
+                amount={`${format(
+                  new Date(parseInt(widgetData.peakSalesHour.start)),
+                  'HH:mm',
+                )} - ${format(
+                  new Date(parseInt(widgetData.peakSalesHour.end)),
+                  'HH:mm',
+                )}`}
+              />
+            )}
           </Grid.Column>
           <Grid.Column mobile={16} computer={4} tablet={8}>
             <StatsCard
               customColor="#BB6BD9"
               text="Average Daily Net Sales"
-              amount={`-- €`}
+              amount={`${widgetData.averageDailyRevenue
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
             />
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
-      <div className="button__report-update">
-        <Button
-          onClick={() => {}}
-          disabled={isLoading}
-          basic
-          color="orange"
-          loading={isLoading}
-        >
-          <Icon name="undo" />
-        </Button>
-      </div>
     </>
   );
 };

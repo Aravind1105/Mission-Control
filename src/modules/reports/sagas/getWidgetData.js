@@ -14,7 +14,12 @@ function* handler({ payload }) {
   );
   try {
     const {
-      data: { getTotalNumberOfProductsSold, getTotalNetIncome },
+      data: {
+        getTotalNumberOfProductsSold,
+        getTotalNetIncome,
+        getAverageDailyNetRevenue,
+        getPeakSalesHour,
+      },
       errors,
     } = yield call(gqlTransactions.query, {
       query: GET_REPORTS_WIDGET_DATA,
@@ -30,9 +35,10 @@ function* handler({ payload }) {
                 to: new Date(),
               },
         kioskId: payload && payload.kioskId,
+        kioskIds: payload && payload.kioskId,
       },
     });
-    console.log(errors)
+
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));
     else {
@@ -40,6 +46,8 @@ function* handler({ payload }) {
         actionSuccess({
           totalNumberOfProductsSold: getTotalNumberOfProductsSold,
           totalNetIncome: getTotalNetIncome,
+          averageDailyRevenue: getAverageDailyNetRevenue,
+          peakSalesHour: getPeakSalesHour,
         }),
       );
     }
