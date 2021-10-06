@@ -3,7 +3,19 @@
 .table-cell-text {
   white-space: pre-wrap;
 }
+.ui.table thead tr:first-child > th:first-child {
+  border-radius: 3px 0 0 0 !important;
+}
 
+.ui.table thead tr:first-child > th:last-child {
+  border-radius: 0 3px 0 0;
+}
+.ui.table tr td:first-child {
+  border-radius: 0 0 0 3px !important;
+}
+.ui.table tr td:last-child {
+  border-radius: 0 0 3px 0 !important;
+}
 .ui.sortable.table {
   th {
     background-color: @grey2 !important;
@@ -11,12 +23,10 @@
     padding: 2px 0.78571429em !important;
     cursor: default !important;
     border: 0.5px solid rgb(211, 211, 211) !important;
-    border-radius: 1% 1% 1% 1% !important;
   }
   th.sorted {
     background-color: @greyExtraTable !important;
     color: #ffffff !important;
-    border-radius: 1% 1% 1% 1% !important;
   }
   tr:nth-child(2n) {
     background: @grey6 !important;
@@ -43,6 +53,7 @@
 }
 
 .transactions-table {
+  font-size: 11px !important;
   cursor: unset !important;
   tbody:hover tr td {
     background-color: #f1fcff !important;
