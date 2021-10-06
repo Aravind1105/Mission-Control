@@ -174,7 +174,16 @@ input::-webkit-inner-spin-button {
     margin-right: 0px;
   }
 }
-
+.kiosk_toolbar {
+  position: sticky !important;
+  z-index: 1;
+  top: 50px;
+  @media @mobile {
+    position: initial !important;
+    margin-top: 0px !important;
+    width: 100% !important;
+  }
+}
 .download_orderlist_button {
   padding-left: 35px;
   @media @mobile {
