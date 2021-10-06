@@ -7,6 +7,8 @@ const initialState = {
   widgetData: {
     totalNumberOfProductsSold: 0,
     totalNetIncome: 0,
+    averageDailyRevenue: 0,
+    peakSalesHour: null,
   },
 };
 

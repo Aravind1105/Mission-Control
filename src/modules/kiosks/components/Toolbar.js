@@ -57,7 +57,7 @@ const Toolbar = ({
   };
 
   return (
-    <Segment className="toolbar">
+    <Segment className="kiosk_toolbar">
       <Grid stackable>
         <Grid.Row verticalAlign="middle" columns="equal">
           <Grid.Column width={6}>
