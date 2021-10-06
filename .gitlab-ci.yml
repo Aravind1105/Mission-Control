@@ -9,12 +9,12 @@ stages:
   - cloudrun-service-deploy
 
 variables:
-  project_id: "livello-backend"
-  gcr_path: "livello-backend/mission-control"
-  region: "europe-west4"
-  platform: "managed"
-  app_name: livello-mission-control-test
-  app_domain_map: "mc-test.livello.com"
+  project_id: 'livello-backend'
+  gcr_path: 'livello-backend/mission-control'
+  region: 'europe-west4'
+  platform: 'managed'
+  app_name: livello-mission-control-stage
+  app_domain_map: 'mc-stage.livello.com'
   app_port: 8080
   api_proxy_url: $API_PROXY_URL
   auth_domain: $AUTH_DOMAIN_MC
@@ -50,7 +50,7 @@ variables:
     - docker push gcr.io/$gcr_path/$app_name:latest
   artifacts:
     expire_in: 1 days
-    name: "$CI_COMMIT_BRANCH"
+    name: '$CI_COMMIT_BRANCH'
     paths:
       - buildTag.txt
 
@@ -66,7 +66,7 @@ variables:
     - gcloud run deploy $app_name --project $project_id --image gcr.io/$gcr_path/$app_name:${VERSION}_b${BUILD_TAG} --platform $platform --region=$region --port=$app_port --cpu=1000m --memory=256Mi --max-instances=3 --allow-unauthenticated --update-env-vars API_PROXY_URL=$api_proxy_url
   artifacts:
     expire_in: 1 days
-    name: "$CI_COMMIT_BRANCH"
+    name: '$CI_COMMIT_BRANCH'
     paths:
       - buildTag.txt
 
