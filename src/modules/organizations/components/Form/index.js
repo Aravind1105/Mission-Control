@@ -17,11 +17,17 @@ import getCountries from '../../sagas/getCountries';
 import loadOptions from '../../sagas/getOrganizationsForForm';
 import { modifyOrganization } from '../../actions';
 import CountryPicker from '../../../shared/components/CountryPicker';
+import history from 'lib/history';
 
 const OrganizationForm = ({ initialValues, orgOptions }) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     dispatch(modifyOrganization({ values, formActions }));
+  };
+
+  const handleCancel = resetForm => {
+    resetForm();
+    history.push('/organizations');
   };
 
   return (
@@ -235,7 +241,7 @@ const OrganizationForm = ({ initialValues, orgOptions }) => {
             </Grid.Row>
             <Grid.Row textAlign="center">
               <Grid.Column>
-                <Button type="button" onClick={resetForm}>
+                <Button type="button" onClick={() => handleCancel(resetForm)}>
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>

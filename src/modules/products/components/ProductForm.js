@@ -96,7 +96,6 @@ const ProductForm = ({
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
       .shelfLifeDays;
-    
     // CRITICAL
     values.packagingOptions[0].description = 'Optional field not used.';
     values.packagingOptions[0].ean == ''
@@ -123,7 +122,7 @@ const ProductForm = ({
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
-    setIsImageDeleted(false);
+    // setIsImageDeleted(false);    LIV-3213
     history.push('/products');
   };
 
@@ -569,7 +568,7 @@ const ProductForm = ({
                 <Grid.Row textAlign="center">
                   <Grid.Column>
                     <Button
-                      disabled={!dirty}
+                      // disabled={dirty}   LIV-3213
                       onClick={() => handleCancel(resetForm)}
                       type="button"
                     >
