@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Segment, Header } from 'semantic-ui-react';
+import { Table, Segment, Header, Popup } from 'semantic-ui-react';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 
 import './styles.less';
@@ -11,7 +11,12 @@ export const FieldTypes = {
   RANK: 'rank',
 };
 
-const ReportsTable = ({ title, headers, data }) => {
+export const Size = {
+  HALF: 'half',
+  FULL: 'full',
+};
+
+const ReportsTable = ({ title, headers, data, size }) => {
   const keys = headers.map(header => header.key);
   const fieldTypes = headers.map(header => header.fieldType);
   const textAligns = headers.map(header => {
@@ -23,6 +28,19 @@ const ReportsTable = ({ title, headers, data }) => {
       return 'left';
     }
   });
+  const toolTipIndices = headers.map((header, index) => {
+    if (header.toolTipEnabled) {
+      return index;
+    }
+  });
+
+  let toolTipColClassName = 'reports-table-cell';
+  if (size === Size.HALF) {
+    toolTipColClassName += ' reports-table-cell-half';
+  } else if (size === Size.FULL) {
+    toolTipColClassName += ' reports-table-cell-full';
+  }
+
   return (
     <Segment size="small">
       <SegmentHeader>
@@ -56,16 +74,40 @@ const ReportsTable = ({ title, headers, data }) => {
             return (
               <Table.Row className={rowClassName}>
                 {keys.map((key, colIndex) => {
-                  return (
-                    <Table.Cell
-                      className="reports-table-cell"
-                      textAlign={textAligns[colIndex]}
-                    >
-                      {fieldTypes[colIndex] === FieldTypes.PRICE
-                        ? row[key] + ' €'
-                        : row[key]}
-                    </Table.Cell>
-                  );
+                  if (toolTipIndices.includes(colIndex)) {
+                    return (
+                      <Popup
+                        content={row[key]}
+                        size="mini"
+                        trigger={
+                          <Table.Cell
+                            // className={toolTipColClassName}
+                            textAlign={textAligns[colIndex]}
+                            singleLine
+                          >
+                            {fieldTypes[colIndex] === FieldTypes.PRICE ? (
+                              row[key] + ' €'
+                            ) : (
+                              <div className={toolTipColClassName}>
+                                {row[key]}
+                              </div>
+                            )}
+                          </Table.Cell>
+                        }
+                      />
+                    );
+                  } else {
+                    return (
+                      <Table.Cell
+                        className="reports-table-cell"
+                        textAlign={textAligns[colIndex]}
+                      >
+                        {fieldTypes[colIndex] === FieldTypes.PRICE
+                          ? row[key] + ' €'
+                          : row[key]}
+                      </Table.Cell>
+                    );
+                  }
                 })}
               </Table.Row>
             );

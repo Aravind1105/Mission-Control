@@ -7,7 +7,7 @@ import { getWidgetDataState } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
 import { format } from 'date-fns';
-import Table, { FieldTypes } from './components/Table';
+import Table, { FieldTypes, Size } from './components/Table';
 import './styles.less';
 
 const ReportsContent = ({
@@ -92,12 +92,14 @@ const ReportsContent = ({
           <Grid.Column>
             <Table
               title="Top Selling Kiosks"
+              size={Size.HALF}
               headers={[
                 { title: 'Rank', fieldType: FieldTypes.RANK, key: 'rank' },
                 {
                   title: 'Kiosk',
                   fieldType: FieldTypes.STRING,
                   key: 'kioskName',
+                  toolTipEnabled: true,
                 },
                 {
                   title: 'Net Sales',
@@ -123,7 +125,7 @@ const ReportsContent = ({
                 {
                   rank: 2,
                   kioskId: '5fa3dbcf3b0de589c3f25cf3',
-                  kioskName: 'ABT Sportsline GmbH',
+                  kioskName: 'ABT Sportsline GmbH ABT Sportsline GmbH ABT Sportsline GmbH',
                   netSales: 381.18,
                   netCost: 316,
                   profit: 65.18,
@@ -139,7 +141,7 @@ const ReportsContent = ({
               ]}
             />
           </Grid.Column>
-          <Grid.Column></Grid.Column>
+          {/* <Grid.Column></Grid.Column> */}
         </Grid.Row>
       </Grid>
     </>
