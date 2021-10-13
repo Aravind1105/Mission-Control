@@ -47,7 +47,7 @@ const ReportsTable = ({ title, headers, data }) => {
         <Table.Body>
           {data.map((row, index) => {
             let rowClassName = '';
-            if (index % 2 === 1) {
+            if (index % 2 === 0) {
               rowClassName = 'reports-table-row-odd';
             }
             return (
