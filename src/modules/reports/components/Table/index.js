@@ -29,7 +29,7 @@ const ReportsTable = ({ title, headers, data, size }) => {
     }
   });
   const toolTipIndices = headers.map((header, index) => {
-    if (header.toolTipEnabled) {
+    if (header.fieldType === FieldTypes.STRING) {
       return index;
     }
   });

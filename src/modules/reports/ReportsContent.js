@@ -99,7 +99,6 @@ const ReportsContent = ({
                   title: 'Kiosk',
                   fieldType: FieldTypes.STRING,
                   key: 'kioskName',
-                  toolTipEnabled: true,
                 },
                 {
                   title: 'Net Sales',
