@@ -87,42 +87,61 @@ const ReportsContent = ({
           </Grid.Row>
         </Grid>
       </Segment>
-      <Table
-        title="Top Selling Kiosks"
-        headers={[
-          { title: 'Rank', fieldType: FieldTypes.RANK, key: 'rank' },
-          { title: 'Kiosk', fieldType: FieldTypes.STRING, key: 'kioskName' },
-          { title: 'Net Sales', fieldType: FieldTypes.PRICE, key: 'netSales' },
-          { title: 'Net Cost', fieldType: FieldTypes.PRICE, key: 'netCost' },
-          { title: 'Profit', fieldType: FieldTypes.PRICE, key: 'profit' },
-        ]}
-        data={[
-          {
-            rank: 1,
-            kioskId: '60a66994e0c7dd35c96abad7',
-            kioskName: 'Westwing Group AG',
-            netSales: 1568.78,
-            netCost: 462.24,
-            profit: 1106.53,
-          },
-          {
-            rank: 2,
-            kioskId: '5fa3dbcf3b0de589c3f25cf3',
-            kioskName: 'ABT Sportsline GmbH',
-            netSales: 381.18,
-            netCost: 316,
-            profit: 65.18,
-          },
-          {
-            rank: 3,
-            kioskId: '5fa3dbf13b0de589c3f25cfe',
-            kioskName: 'Scaltel AG',
-            netSales: 359.6,
-            netCost: 362.07,
-            profit: -2.46,
-          },
-        ]}
-      />
+      <Grid>
+        <Grid.Row columns="2">
+          <Grid.Column>
+            <Table
+              title="Top Selling Kiosks"
+              headers={[
+                { title: 'Rank', fieldType: FieldTypes.RANK, key: 'rank' },
+                {
+                  title: 'Kiosk',
+                  fieldType: FieldTypes.STRING,
+                  key: 'kioskName',
+                },
+                {
+                  title: 'Net Sales',
+                  fieldType: FieldTypes.PRICE,
+                  key: 'netSales',
+                },
+                {
+                  title: 'Net Cost',
+                  fieldType: FieldTypes.PRICE,
+                  key: 'netCost',
+                },
+                { title: 'Profit', fieldType: FieldTypes.PRICE, key: 'profit' },
+              ]}
+              data={[
+                {
+                  rank: 1,
+                  kioskId: '60a66994e0c7dd35c96abad7',
+                  kioskName: 'Westwing Group AG',
+                  netSales: 1568.78,
+                  netCost: 462.24,
+                  profit: 1106.53,
+                },
+                {
+                  rank: 2,
+                  kioskId: '5fa3dbcf3b0de589c3f25cf3',
+                  kioskName: 'ABT Sportsline GmbH',
+                  netSales: 381.18,
+                  netCost: 316,
+                  profit: 65.18,
+                },
+                {
+                  rank: 3,
+                  kioskId: '5fa3dbf13b0de589c3f25cfe',
+                  kioskName: 'Scaltel AG',
+                  netSales: 359.6,
+                  netCost: 362.07,
+                  profit: -2.46,
+                },
+              ]}
+            />
+          </Grid.Column>
+          <Grid.Column></Grid.Column>
+        </Grid.Row>
+      </Grid>
     </>
   );
 };

@@ -15,7 +15,7 @@ const ReportsTable = ({ title, headers, data }) => {
   const keys = headers.map(header => header.key);
   const fieldTypes = headers.map(header => header.fieldType);
   return (
-    <Segment>
+    <Segment size="small">
       <SegmentHeader>
         <Header as="h4" color="black">
           <Header.Content>{title}</Header.Content>
