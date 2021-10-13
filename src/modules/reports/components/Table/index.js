@@ -14,6 +14,15 @@ export const FieldTypes = {
 const ReportsTable = ({ title, headers, data }) => {
   const keys = headers.map(header => header.key);
   const fieldTypes = headers.map(header => header.fieldType);
+  const textAligns = headers.map(header => {
+    if (header.fieldType === FieldTypes.PRICE) {
+      return 'right';
+    } else if (header.fieldType === FieldTypes.NUMBER) {
+      return 'center';
+    } else {
+      return 'left';
+    }
+  });
   return (
     <Segment size="small">
       <SegmentHeader>
@@ -25,17 +34,11 @@ const ReportsTable = ({ title, headers, data }) => {
       <Table className="reports-table">
         <Table.Header>
           <Table.Row>
-            {headers.map(header => {
-              let textAlign = 'left';
-              if (header.fieldType === FieldTypes.PRICE) {
-                textAlign = 'right';
-              } else if (header.fieldType === FieldTypes.NUMBER) {
-                textAlign = 'center';
-              }
+            {headers.map((header, index) => {
               return (
                 <Table.HeaderCell
                   className="reports-table-cell reports-table-header"
-                  textAlign={textAlign}
+                  textAlign={textAligns[index]}
                 >
                   {header.title}
                 </Table.HeaderCell>
@@ -45,28 +48,20 @@ const ReportsTable = ({ title, headers, data }) => {
         </Table.Header>
 
         <Table.Body>
-          {data.map((row, index) => {
+          {data.map((row, rowIndex) => {
             let rowClassName = '';
-            if (index % 2 === 0) {
+            if (rowIndex % 2 === 0) {
               rowClassName = 'reports-table-row-odd';
             }
             return (
               <Table.Row className={rowClassName}>
-                {keys.map(key => {
-                  const idx = keys.indexOf(key);
-                  const fieldType = fieldTypes[idx];
-                  let textAlign = 'left';
-                  if (fieldType === FieldTypes.PRICE) {
-                    textAlign = 'right';
-                  } else if (fieldType === FieldTypes.NUMBER) {
-                    textAlign = 'center';
-                  }
+                {keys.map((key, colIndex) => {
                   return (
                     <Table.Cell
                       className="reports-table-cell"
-                      textAlign={textAlign}
+                      textAlign={textAligns[colIndex]}
                     >
-                      {fieldType === FieldTypes.PRICE
+                      {fieldTypes[colIndex] === FieldTypes.PRICE
                         ? row[key] + ' €'
                         : row[key]}
                     </Table.Cell>
