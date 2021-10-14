@@ -86,7 +86,7 @@ const ProductsTable = ({
     >
       {isLoading && <Loader />}
       <Table
-        className="unitable"
+        className="product-table"
         basic
         celled
         unstackable

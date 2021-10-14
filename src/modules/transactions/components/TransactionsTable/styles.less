@@ -3,19 +3,6 @@
 .table-cell-text {
   white-space: pre-wrap;
 }
-.ui.table thead tr:first-child > th:first-child {
-  border-radius: 3px 0 0 0 !important;
-}
-
-.ui.table thead tr:first-child > th:last-child {
-  border-radius: 0 3px 0 0;
-}
-.ui.table tr td:first-child {
-  border-radius: 0 0 0 3px !important;
-}
-.ui.table tr td:last-child {
-  border-radius: 0 0 3px 0 !important;
-}
 .ui.sortable.table {
   th {
     background-color: @grey2 !important;
@@ -35,6 +22,7 @@
     cursor: pointer !important;
   }
   .sortable-transaction-header {
+    border-radius: 0% !important;
     cursor: pointer !important;
     width: 120px;
   }
@@ -52,13 +40,60 @@
   background: #ffffff !important;
 }
 
-.transactions-table {
-  font-size: 11px !important;
-  cursor: unset !important;
-  tbody:hover tr td {
-    background-color: #f1fcff !important;
+.product-table {
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 3px 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
   }
 }
+
+.transactions-table {
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 0 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
+}
+
 .tb-refills,
 .tb-sales {
   line-height: normal;

@@ -4,6 +4,7 @@ import get from 'lodash/get';
 
 import history from 'lib/history';
 import CustomTable from 'modules/shared/components/CustomTable';
+import './styles.less';
 const screenWidth = window.innerWidth;
 
 const columns = [
@@ -55,6 +56,7 @@ const ProductsContent = ({
   return (
     <Segment>
       <CustomTable
+        className="product-table"
         sortByColumn="name"
         columns={columns}
         data={products}

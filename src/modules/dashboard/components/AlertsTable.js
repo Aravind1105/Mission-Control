@@ -13,6 +13,7 @@ const backLink = {
   name: 'Back to Dashboard',
   link: '/',
 };
+import './styles.less';
 
 const AlertsTable = ({
   alerts,
@@ -80,6 +81,7 @@ const AlertsTable = ({
         />
       </div>
       <CustomTable
+        className="dashboard-table"
         sortable
         sortByColumn="startDate"
         onRowClick={handlerClickRow}

@@ -90,6 +90,7 @@ const AlmostEmptyKiosks = ({
         />
       </div>
       <CustomTable
+        className="dashboard-table"
         sortable
         onRowClick={handlerClickRow}
         excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
