@@ -239,6 +239,7 @@ const ActivityLogGrid = ({
           <Grid.Row className="activity-log-filter-row">
             <Grid.Column>
               <CustomTable
+                className="kiosk-table"
                 sortByColumn="created"
                 sortable
                 data={activityLogs || []}

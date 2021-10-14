@@ -19,6 +19,7 @@ import {
   getKiosksAlertsForTable,
   getTotalAlerts,
 } from '../../kiosks/selectors';
+import './styles.less';
 
 const sort = [
   {
@@ -153,6 +154,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
         </div>
       </SegmentHeader>
       <CustomTable
+        className="dashboard-table"
         sortByColumn="startDate"
         onRowClick={handlerClickRow}
         sortable

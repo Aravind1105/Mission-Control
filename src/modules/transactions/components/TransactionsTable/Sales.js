@@ -89,15 +89,15 @@ const SalesTable = ({
     <div
       style={{
         overflow: 'auto',
-        borderRadius: '5px',
       }}
     >
       {isLoading && <Loader />}
       <Table
-        className="unitable transactions-table"
+        className="transactions-table"
         basic
         celled
         unstackable
+        striped
         padded
         structured
         fixed={fixed}

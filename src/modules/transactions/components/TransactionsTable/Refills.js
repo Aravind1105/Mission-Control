@@ -89,17 +89,17 @@ const RefillsTable = ({
     <div
       style={{
         overflow: 'auto',
-        borderRadius: '5px',
       }}
     >
       {isLoading && <Loader />}
       <Table
-        className="unitable transactions-table"
+        className="transactions-table"
         basic
         celled
         unstackable
         padded
         structured
+        striped
         fixed={fixed}
         sortable={sortable}
         style={alignCenter && { textAlign: 'center' }}
