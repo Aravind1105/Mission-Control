@@ -86,15 +86,20 @@ const RefillsTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
+    <div
+      style={{
+        overflow: 'auto',
+      }}
+    >
       {isLoading && <Loader />}
       <Table
-        className="unitable transactions-table"
+        className="transactions-table"
         basic
         celled
         unstackable
         padded
         structured
+        striped
         fixed={fixed}
         sortable={sortable}
         style={alignCenter && { textAlign: 'center' }}

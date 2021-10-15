@@ -1,21 +1,26 @@
 import { handleActions } from 'redux-actions';
 
-import { getReports, getReportsSuccess } from '../actions';
+import { getWidgetData, getWidgetDataSuccess } from '../actions';
 
 const initialState = {
-  data: null,
   isLoading: false,
+  widgetData: {
+    totalNumberOfProductsSold: 0,
+    totalNetIncome: 0,
+    averageDailyRevenue: 0,
+    peakSalesHour: null,
+  },
 };
 
 const reportsReducer = handleActions(
   {
-    [getReports]: state => ({
+    [getWidgetData]: state => ({
       ...state,
       isLoading: true,
     }),
-    [getReportsSuccess]: (state, { payload }) => ({
+    [getWidgetDataSuccess]: (state, { payload }) => ({
       ...state,
-      data: payload,
+      widgetData: payload,
       isLoading: false,
     }),
   },

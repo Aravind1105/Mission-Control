@@ -9,6 +9,7 @@ import { getAlmostEmptyKiosksForTable } from 'modules/kiosks/selectors';
 
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
+import './styles.less';
 
 const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
   const { t } = useTranslation();
@@ -82,6 +83,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
       </SegmentHeader>
 
       <CustomTable
+        className="dashboard-table"
         onRowClick={handlerClickRow}
         sortable
         excludeSortBy={['product', 'amount', 'scale', 'kiosk']}

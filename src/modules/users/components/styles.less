@@ -1,6 +1,13 @@
 @mobile: ~'only screen and (max-width: 600px)';
 @import '../../../styling/theme/globals/site.variables';
 .user-info {
+  position: fixed;
+  width: 838px;
+  margin-right: 10px;
+  @media @mobile {
+    position: initial;
+    width: 100%;
+  }
   button,
   & .button {
     margin: 0 0 10px !important;
@@ -74,4 +81,35 @@
 #prod-taken {
   padding-left: 97px;
   padding-top: 8px;
+}
+
+.user-table {
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 3px 0 0 !important;
+  }
+  tr:last-child > td:first-child {
+    border-radius: 0 0 3px 3px;
+  }
+  tr {
+    font-size: 11px;
+  }
+}
+
+.user-log-table {
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+  thead tr:first-child > th:last-child {
+    border-radius: 0 3px 0 0 !important;
+  }
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
+
+  tr {
+    font-size: 11px;
+  }
 }

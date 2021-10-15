@@ -273,6 +273,7 @@ const ImageUploader = ({
           onApprove={() => {
             setCustomAlertStatus(true);
             setShowAlert(false);
+            initialValues.id === '' && setIsImageUpdated(false);
           }}
           onCancel={() => {
             setIsCancelTriggered(true);

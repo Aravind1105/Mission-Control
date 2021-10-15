@@ -16,6 +16,7 @@ import {
   getUserInitValues,
 } from '../selectors';
 import { getUserTransactions, getOneUserWithInfo } from '../actions';
+import './styles.less';
 
 const sortDefault = [
   {
@@ -258,6 +259,7 @@ const UserLog = ({
               <Grid.Row className="user-log-filter-row">
                 <Grid.Column>
                   <CustomTable
+                    className="user-log-table"
                     sortByColumn="created"
                     sortable
                     data={user || []}

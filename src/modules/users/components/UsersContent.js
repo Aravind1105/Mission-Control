@@ -25,6 +25,7 @@ import {
 import UsersToolbar from './UsersToolbar';
 import UserTemplate from './UserTemplate';
 import { isEqual } from 'lodash';
+import './styles.less';
 
 const columns = [
   {
@@ -114,6 +115,7 @@ const UsersContent = ({
                 <Grid.Row only="tablet computer">
                   <Grid.Column>
                     <CustomTable
+                      className="user-table"
                       sortByColumn="name"
                       columns={columns}
                       onRowClick={handleRowClick}

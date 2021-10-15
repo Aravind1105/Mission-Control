@@ -148,7 +148,9 @@ const LinearChart = ({ data }) => {
               tickCount={7}
               tickSize={10}
               tickFormatter={value =>
-                new Number(Intl.NumberFormat().format(value)).toFixed() + '°C'
+                new Number(
+                  Intl.NumberFormat().format(parseInt(value)),
+                ).toFixed() + '°C'
               }
               padding={{ top: 1 }}
               type="number"

@@ -23,6 +23,7 @@ import {
 } from '../actions';
 import { isEqual } from 'lodash';
 import { getUserType } from 'modules/authentication/selectors';
+import './styles.less';
 
 const sortValue = {
   name: 'name',
@@ -99,9 +100,13 @@ const KiosksContent = ({
     },
     {
       title: 'Network Status',
-      field: 'heartbeat.updated',
-      formatter: ({ heartbeat }) => (
-        <CellHeartbeat heartbeat={heartbeat} showTime />
+      field: 'heartbeat.updated,temperature.updated',
+      formatter: ({ heartbeat, temperature }) => (
+        <CellHeartbeat
+          heartbeat={heartbeat}
+          temperature={temperature}
+          showTime
+        />
       ),
     },
     {
@@ -202,6 +207,7 @@ const KiosksContent = ({
       {isLoading && <Loader />}
       <Segment>
         <CustomTable
+          className="kiosk-table"
           columns={columns}
           data={kiosks}
           onRowClick={handlerClickRow}

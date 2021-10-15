@@ -1,7 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 
-import getReports from './getReports';
+import getWidgetData from './getWidgetData';
 
 export default function* reportsSaga() {
-  yield all([fork(getReports)]);
+  yield all([fork(getWidgetData)]);
 }

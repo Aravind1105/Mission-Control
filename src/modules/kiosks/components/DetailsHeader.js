@@ -40,7 +40,12 @@ const DetailsHeader = ({
         </Grid.Column>
         <Grid.Column mobile={4} tablet={5} computer={3} className="flex-end">
           <b>Status:&nbsp;</b>
-          <CellHeartbeat heartbeat={heartbeat} showTime={false} boldFont />
+          <CellHeartbeat
+            temperature={temperature}
+            heartbeat={heartbeat}
+            showTime={false}
+            boldFont
+          />
         </Grid.Column>
         <Grid.Column
           className="flex-end"

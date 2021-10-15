@@ -39,7 +39,6 @@ const ProductForm = ({
 
   // Modifier for Package Options for Livello BE expected format
   const packagingOptionModifier = values => {
-    // console.log('this is package Option Modified', values);
     values.packagingOptions = [
       {
         ean: values.packagingOptionsEan,
@@ -97,19 +96,15 @@ const ProductForm = ({
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
       .shelfLifeDays;
-
-    delete values.image;
-
-    setIsCancelTriggered(false);
+    // CRITICAL
+    values.packagingOptions[0].description = 'Optional field not used.';
     values.packagingOptions[0].ean == ''
       ? (values.packagingOptions[0].ean = 'Optional field not used.')
       : values.packagingOptions[0].ean;
 
-    // description is mandatory in the backend and so filling it up with empty string
-    values.packagingOptions[0].description == ''
-      ? (values.packagingOptions[0].description = 'Optional field not used.')
-      : values.packagingOptions[0].description;
+    delete values.image;
 
+    setIsCancelTriggered(false);
     //convert capacities field to Livello BE expected format
     capacityModifier(values);
 
@@ -127,7 +122,7 @@ const ProductForm = ({
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
-    setIsImageDeleted(false);
+    // setIsImageDeleted(false);    LIV-3213
     history.push('/products');
   };
 
@@ -573,7 +568,7 @@ const ProductForm = ({
                 <Grid.Row textAlign="center">
                   <Grid.Column>
                     <Button
-                      disabled={!dirty}
+                      // disabled={dirty}   LIV-3213
                       onClick={() => handleCancel(resetForm)}
                       type="button"
                     >

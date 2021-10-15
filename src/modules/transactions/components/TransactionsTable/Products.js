@@ -78,15 +78,19 @@ const ProductsTable = ({
   const resultData = rowLimit ? tableData.slice(0, rowLimit) : tableData;
 
   return (
-    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
+    <div
+      style={{
+        overflow: 'auto',
+        borderRadius: '2px',
+      }}
+    >
       {isLoading && <Loader />}
       <Table
-        className="unitable"
+        className="product-table"
         basic
         celled
         unstackable
         padded
-        structured
         fixed={fixed}
         sortable={sortable}
         selectable={selectable}
