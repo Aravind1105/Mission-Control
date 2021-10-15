@@ -141,6 +141,7 @@ const LinearChart = ({ data }) => {
               dataKey="timeXaxis"
               minTickGap={95}
               reversed
+              domain={['No Data']}
               tick={<CustomizedAxisTick />}
             />
             <YAxis

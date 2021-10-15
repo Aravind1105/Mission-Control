@@ -9,6 +9,7 @@ import { isEmpty } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
 import CustomButton from 'modules/shared/components/CustomButton';
 import LinearChart from '../LinearChart';
+import Loader from 'modules/shared/components/Loader';
 import { getTemperatureLogs, getKiosk, exportCsvTempLogs } from '../../actions';
 import { getKioskSingle, getGridTempratureTableState } from '../../selectors';
 
@@ -37,6 +38,7 @@ const TempLogVisualization = ({
   getKiosk,
   exportCsvTempLogs,
   newtemperatureLogs,
+  isLoading,
 }) => {
   const [resolution, setResolution] = useState(optionsResolution[1].value);
   const [dateRange, setDateRange] = useState(defaultDateRange);
@@ -139,6 +141,7 @@ const TempLogVisualization = ({
       <Grid.Row>
         <Grid.Column>
           <Segment>
+            {isLoading && <Loader />}
             <LinearChart
               data={temperatureLogs}
               xAxisDataKey={temperatureLogs}
