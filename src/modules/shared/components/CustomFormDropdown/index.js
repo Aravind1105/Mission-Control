@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FormInput as Input } from 'semantic-ui-react';
 import './styles.less';
 
 function outsideClickHandler(ref, callback) {
@@ -62,20 +61,20 @@ const CustomDropdown = ({
       ref={containerRef}
       onClick={() => setOptionsVisible(!optionsVisible)}
     >
-      <Input
+      <input
         icon="angle down"
         className="livello-dropdown-input"
-        // as="input"
-        // autocomplete="off"
+        as="input"
+        autocomplete="off"
         {...field}
         placeholder={placeholder}
-        onChange={(e, { value }) => {
+        onChange={event => {
           setIsOptionSelected(false);
-          changeText(value);
+          changeText(event.target.value);
         }}
         error={errMsg}
         value={text}
-        // onkeyup={() => alert()}
+        onKeyDown={() => {}}
       />
       <div
         className={
