@@ -28,10 +28,17 @@ const CustomDropdown = ({
   placeholder,
   onChange,
   options = [],
-  ...props
 }) => {
   const containerRef = useRef(null);
-  outsideClickHandler(containerRef, () => setOptionsVisible(false));
+  outsideClickHandler(containerRef, () => {
+    setOptionsVisible(false);
+    resetHoverIndex();
+  });
+
+  const resetHoverIndex = () => setHoverIndex(-1);
+
+  const setFormFieldValue = optionObject =>
+    form.setFieldValue(field.name, optionObject);
 
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name] && form.errors[field.name].value;
@@ -41,6 +48,7 @@ const CustomDropdown = ({
   const [isOptionSelected, setIsOptionSelected] = useState(true);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [filteredOptions, setFilteredOptions] = useState(options);
+  const [hoverIndex, setHoverIndex] = useState(0);
 
   // filter options
   useEffect(() => {
@@ -54,7 +62,42 @@ const CustomDropdown = ({
     } else {
       setFilteredOptions(options);
     }
+    // reset hover index
+    resetHoverIndex();
   }, [text, options]);
+
+  const keyEventHandler = e => {
+    e = e || window.event;
+    let index = hoverIndex;
+    if (e.keyCode == '38') {
+      // up arrow
+      --index;
+      if (index < 0) {
+        index = filteredOptions.length - 1;
+      }
+    } else if (e.keyCode == '40') {
+      // down arrow
+      ++index;
+      if (index > filteredOptions.length - 1) {
+        index = 0;
+      }
+    } else if (e.keyCode == '13') {
+      // enter key
+      if (hoverIndex !== -1) {
+        e.preventDefault();
+        const selectedOption = filteredOptions[hoverIndex];
+        setFormFieldValue(selectedOption);
+        setIsOptionSelected(true);
+        changeText(selectedOption.label);
+        setOptionsVisible(false);
+      }
+    }
+    setHoverIndex(index);
+
+    if (!optionsVisible) {
+      setOptionsVisible(true);
+    }
+  };
 
   return (
     <div
@@ -65,7 +108,6 @@ const CustomDropdown = ({
       <Input
         icon="angle down"
         className="livello-dropdown-input"
-        // as="input"
         autocomplete="off"
         {...field}
         placeholder={placeholder}
@@ -75,7 +117,8 @@ const CustomDropdown = ({
         }}
         error={errMsg}
         value={text}
-        onKeyDown={() => {}}
+        onKeyDown={keyEventHandler}
+        autoComplete="off"
       />
       <div
         className={
@@ -85,15 +128,17 @@ const CustomDropdown = ({
         }
       >
         {filteredOptions.length > 0 &&
-          filteredOptions.map(option => (
+          filteredOptions.map((option, index) => (
             <div
               className={
                 text === option.label
                   ? 'livello-dropdown-options-item livello-dropdown-options-item-selected'
+                  : hoverIndex === index
+                  ? 'livello-dropdown-options-item livello-dropdown-options-item-hover'
                   : 'livello-dropdown-options-item'
               }
               onClick={() => {
-                form.setFieldValue(field.name, option);
+                setFormFieldValue(option);
                 setIsOptionSelected(true);
                 changeText(option.label);
                 if (onChange) {
@@ -101,6 +146,7 @@ const CustomDropdown = ({
                 }
                 setFilteredOptions(options);
               }}
+              onMouseOver={() => setHoverIndex(index)}
             >
               <span className="livello-dropdown-options-item-text">
                 {option.label}
