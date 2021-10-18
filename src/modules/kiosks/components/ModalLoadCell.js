@@ -22,6 +22,7 @@ import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
+import CustomFormDropdown from 'modules/shared/components/CustomFormDropdown';
 import * as Yup from 'yup';
 
 const ToolTip = () => (
@@ -177,7 +178,10 @@ const ModalLoadCell = ({
         planogramPosition: Yup.string().required('This field is required'),
         cellId: Yup.string().required('This field is required'),
         price: Yup.number().required('This field is required'),
-        surfaceSize: Yup.string().required('This field is required'),
+        // surfaceSize: Yup.string().required('This field is required'),
+        surfaceSize: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
       })}
     >
       {({ dirty, handleSubmit }) => (
@@ -326,11 +330,9 @@ const ModalLoadCell = ({
                     <Field
                       name="surfaceSize"
                       options={shelfSizeOptions}
-                      component={FormAsyncSelect}
                       required
-                      onChange={({}) => {
-                        // setIsValid({ ...isValid, cableId: true });
-                      }}
+                      component={CustomFormDropdown}
+                      placeholder="Select..."
                     />
                   </Grid.Column>
                 </Grid.Row>
