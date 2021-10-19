@@ -8,7 +8,6 @@ import getProductLinesWithFilter from './getProductLinesWithFilter';
 import modifyProductImage from './modifyProductImage';
 import deleteProductImage from './deleteProductImage';
 import getPriceHistorySaga from './getPriceHistorySaga';
-import resetPriceHistory from './resetPriceHistory';
 import deleteActivePrice from './deleteActivePrice';
 import archiveProduct from './archiveProduct';
 import duplicateProduct from './duplicateProduct';
@@ -25,7 +24,6 @@ export default function* kiosksSaga() {
     fork(modifyProductImage),
     fork(deleteProductImage),
     fork(getPriceHistorySaga),
-    fork(resetPriceHistory),
     fork(deleteActivePrice),
     fork(archiveProduct),
     fork(duplicateProduct),
