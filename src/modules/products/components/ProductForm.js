@@ -13,7 +13,6 @@ import {
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import prettierNumber from 'lib/prettierNumber';
-import Loader from 'modules/shared/components/Loader';
 import FormInput from 'modules/shared/components/FormInput';
 import FormInputWithSelector from 'modules/shared/components/FormInputWithSelector';
 import FormSelect from 'modules/shared/components/FormSelect';
@@ -27,7 +26,6 @@ import { isEqual } from 'lodash';
 let updatingProduct = false;
 const ProductForm = ({
   initialValues,
-  isLoading,
   taxesOption,
   organizations,
   setIsCancelTriggered,
@@ -166,7 +164,6 @@ const ProductForm = ({
 
   return (
     <>
-      {isLoading && <Loader />}
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -588,8 +585,4 @@ const ProductForm = ({
   );
 };
 
-const mapStateToProps = state => ({
-  isLoading: state.products.isLoading,
-});
-
-export default connect(mapStateToProps)(ProductForm);
+export default ProductForm;
