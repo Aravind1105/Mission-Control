@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 import get from 'lodash/get';
-import { resetProduct } from '../actions';
+
 import history from 'lib/history';
 import CustomTable from 'modules/shared/components/CustomTable';
 import './styles.less';
@@ -49,10 +48,8 @@ const ProductsContent = ({
   getData,
   isLoading,
   setSortByInCaller,
-  resetProduct,
 }) => {
   const clickRow = ({ _id }) => {
-    resetProduct();
     history.push(`/products/${_id}`);
   };
 
@@ -74,8 +71,4 @@ const ProductsContent = ({
   );
 };
 
-const mapDispatchToProps = {
-  resetProduct,
-};
-
-export default connect(null, mapDispatchToProps)(ProductsContent);
+export default ProductsContent;

@@ -13,10 +13,6 @@ export const modifyProductImage = createAction('@@saga/MODIFY_PRODUCT_IMAGE');
 export const deleteProductImage = createAction('@@saga/DELETE_PRODUCT_IMAGE');
 export const getPriceHistory = createAction('@@saga/GET_PRICE_HISTORY');
 export const resetPriceHistory = createAction('@@saga/RESET_PRICE_HISTORY');
-export const resetProduct = createAction('@@saga/RESET_PRODUCT');
-export const resetKioskWithProduct = createAction(
-  '@@saga/RESET_KIOSK_WITH_PRODUCT',
-);
 export const deleteActivePriceHistory = createAction(
   '@@saga/DELETE_PRICE_HISTORY',
 );
@@ -57,6 +53,9 @@ export const deleteProductImageSuccess = createAction(
 );
 export const getPriceHistorySuccess = createAction(
   '@@saga/GET_PRICE_HISTORY_SUCCESS',
+);
+export const resetPriceHistorySuccess = createAction(
+  '@@saga/RESET_PRICE_HISTORY_SUCCESS',
 );
 export const deleteActivePriceHistorySuccess = createAction(
   '@@saga/DELETE_PRICE_HISTORY_SUCCESS',
