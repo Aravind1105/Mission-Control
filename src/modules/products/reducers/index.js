@@ -13,7 +13,6 @@ import {
   modifyProductSuccess,
   getPriceHistorySuccess,
   resetPriceHistory,
-  resetKioskWithProduct,
   deleteActivePriceHistorySuccess,
   modifyProductImageSuccess,
   deleteProductImageSuccess,
@@ -28,7 +27,6 @@ import {
   setSort,
   setFilters,
   getManufacturers,
-  resetProduct,
 } from '../actions';
 
 const initialState = {
@@ -95,10 +93,6 @@ export default handleActions(
       family: payload.family,
       taxes: payload.taxes,
     }),
-    [resetProduct]: state => ({
-      ...state,
-      product: null,
-    }),
     [combineActions(getProductSuccess, modifyProductSuccess)]: (
       state,
       { payload },
@@ -141,10 +135,6 @@ export default handleActions(
     [getKiosksWithProductSuccess]: (state, { payload }) => ({
       ...state,
       kiosksWithProduct: payload,
-    }),
-    [resetKioskWithProduct]: state => ({
-      ...state,
-      kiosksWithProduct: [],
     }),
     [setSearch]: (state, { payload }) => ({
       ...state,
