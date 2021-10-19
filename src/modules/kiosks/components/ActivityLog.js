@@ -136,7 +136,6 @@ const columns = [
   //   title: 'By',
   //   field: 'event',
   //   formatter: ({ event }) => {
-  //     console.log(event.user);
   //     return event.user !== null && event.user !== undefined
   //       ? 'User App' + '\n' + 'User ID: ' + event.user
   //       : event.paymentTerminal !== null && event.paymentTerminal !== undefined
