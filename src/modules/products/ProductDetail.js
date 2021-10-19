@@ -22,7 +22,6 @@ import {
   getDefaultPriceHistoryState,
   getKiosksWithProductState,
   selectorGetProductInitValue,
-  // selectorGetProductFamilyForm,
   selectorProductTaxOptions,
 } from './selectors';
 import { getOrganizationsAsOptions } from '../organizations/selectors';
