@@ -9,8 +9,6 @@ import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
 import { modifyKiosk, getAllSerialNumbers } from '../actions';
 import { getAllSerialNumbersState } from '../selectors';
-import { toast } from 'react-semantic-toasts';
-import { otherwise } from 'ramda';
 
 let updatingKiosk = false;
 const KioskForm = ({
@@ -18,7 +16,6 @@ const KioskForm = ({
   organizations,
   cancelHandler,
   isKioskLoading,
-  sNum,
   modifyKiosk,
   getAllSerialNumbers,
   serialNumbers,
@@ -51,15 +48,10 @@ const KioskForm = ({
   };
   const onSubmit = (values, formActions) => {
     //Modifying Address According to BE
-    if (serialNumbers.includes(values.serialNumber)) {
-      alert('Serial number already used. Pls use a different one!');
-    } else {
-      addressModifier(values);
-      updatingKiosk = modifyKiosk({ values, formActions });
-    }
-  };
 
-  console.log(serialNumbers);
+    addressModifier(values);
+    updatingKiosk = modifyKiosk({ values, formActions });
+  };
 
   return (
     <Formik
@@ -75,7 +67,7 @@ const KioskForm = ({
             name: 'duplicate-serialNum-check',
             test: function(val) {
               if (Boolean(!initialValues.id)) {
-                const num = sNum.map(function(ele) {
+                const num = serialNumbers.map(function(ele) {
                   return ele.toLowerCase();
                 });
                 return num.indexOf(val && val.toLowerCase()) > -1
