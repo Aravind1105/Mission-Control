@@ -1,6 +1,10 @@
 import { handleActions } from 'redux-actions';
 
-import { getWidgetData, getWidgetDataSuccess } from '../actions';
+import {
+  getWidgetData,
+  getWidgetDataSuccess,
+  getTopSellingKiosksSuccess,
+} from '../actions';
 
 const initialState = {
   isLoading: false,
@@ -10,6 +14,7 @@ const initialState = {
     averageDailyRevenue: 0,
     peakSalesHour: null,
   },
+  topSellingKiosks: [],
 };
 
 const reportsReducer = handleActions(
@@ -22,6 +27,10 @@ const reportsReducer = handleActions(
       ...state,
       widgetData: payload,
       isLoading: false,
+    }),
+    [getTopSellingKiosksSuccess]: (state, { payload }) => ({
+      ...state,
+      topSellingKiosks: payload.topSellingKiosks,
     }),
   },
   initialState,
