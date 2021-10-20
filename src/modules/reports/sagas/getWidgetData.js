@@ -9,9 +9,15 @@ import { GET_REPORTS_WIDGET_DATA } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
-  const startDateOfMonth = new Date(
-    new Date(new Date().setHours(0, 0, 0)).setDate(1),
-  );
+  let dateFrom = new Date(new Date(new Date().setHours(0, 0, 0)).setDate(1));
+  let dateTo = new Date();
+  if (payload.period && payload.period.$gte) {
+    dateFrom = payload.period.$gte;
+  }
+
+  if (payload.period && payload.period.$lte) {
+    dateTo = payload.period.$lte;
+  }
   try {
     const {
       data: {
@@ -24,16 +30,10 @@ function* handler({ payload }) {
     } = yield call(gqlTransactions.query, {
       query: GET_REPORTS_WIDGET_DATA,
       variables: {
-        period:
-          payload && payload.period
-            ? {
-                from: payload.period.$gte,
-                to: payload.period.$lte,
-              }
-            : {
-                from: startDateOfMonth,
-                to: new Date(),
-              },
+        period: {
+          from: dateFrom,
+          to: dateTo,
+        },
         kioskId: payload && payload.kioskId,
         kioskIds: payload && payload.kioskId,
       },
