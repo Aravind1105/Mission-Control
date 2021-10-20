@@ -596,3 +596,5 @@ export const getSelectedKiosksState = createSelector(
   getPaginationState,
   pagination => pagination.kiosk,
 );
+
+export const getAllSerialNumbersState = state => state.kiosks.serialNumbers;
