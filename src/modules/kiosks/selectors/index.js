@@ -63,9 +63,6 @@ const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.tableList;
 
-export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
-  return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
-});
 export const getKiosksTableState = state =>
   state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
     ...el,
@@ -596,3 +593,5 @@ export const getSelectedKiosksState = createSelector(
   getPaginationState,
   pagination => pagination.kiosk,
 );
+
+export const getAllSerialNumbersState = state => state.kiosks.serialNumbers;
