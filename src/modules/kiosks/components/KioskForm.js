@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
-import { modifyKiosk } from '../actions';
+import { modifyKiosk, getAllSerialNumbers } from '../actions';
+import { getAllSerialNumbersState } from '../selectors';
 import { toast } from 'react-semantic-toasts';
 import { otherwise } from 'ramda';
 
@@ -18,8 +19,14 @@ const KioskForm = ({
   cancelHandler,
   isKioskLoading,
   sNum,
+  modifyKiosk,
+  getAllSerialNumbers,
+  serialNumbers,
 }) => {
-  const dispatch = useDispatch();
+  useEffect(() => {
+    getAllSerialNumbers();
+  }, []);
+
   const addressModifier = values => {
     values.location = {};
     values.location.address = {
@@ -44,9 +51,15 @@ const KioskForm = ({
   };
   const onSubmit = (values, formActions) => {
     //Modifying Address According to BE
-    addressModifier(values);
-    updatingKiosk = dispatch(modifyKiosk({ values, formActions }));
+    if (serialNumbers.includes(values.serialNumber)) {
+      alert('Serial number already used. Pls use a different one!');
+    } else {
+      addressModifier(values);
+      updatingKiosk = modifyKiosk({ values, formActions });
+    }
   };
+
+  console.log(serialNumbers);
 
   return (
     <Formik
@@ -324,4 +337,13 @@ const KioskForm = ({
   );
 };
 
-export default KioskForm;
+const mapStateToProps = state => ({
+  serialNumbers: getAllSerialNumbersState(state),
+});
+
+const mapDispatchToProps = {
+  modifyKiosk,
+  getAllSerialNumbers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(KioskForm);

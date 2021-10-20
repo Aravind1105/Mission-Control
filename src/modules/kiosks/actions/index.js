@@ -36,6 +36,9 @@ export const updateAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_UPDATE',
 );
 export const exportCsvTempLogs = createAction('@@saga/GET_TEMP_LOGS_CSV');
+export const getAllSerialNumbers = createAction(
+  '@@saga/GET_ALL_SERIAL_NUMBERS',
+);
 
 export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
 export const updateKioskPropsSuccess = createAction(
@@ -76,6 +79,9 @@ export const getKiosksListSuccess = createAction(
   '@@state/GET_KIOSK_LIST_SUCCESS',
 );
 export const getOrgsListSuccess = createAction('@@state/GET_ORG_LIST_SUCCESS');
+export const getAllSerialNumbersSuccess = createAction(
+  '@@state/GET_ALL_SERIAL_NUMBERS_SUCCESS',
+);
 
 export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');
 export const exportCsvPackList = createAction('@@saga/GET_PackList_CSV');

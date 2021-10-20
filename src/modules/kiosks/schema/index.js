@@ -505,3 +505,9 @@ export const GET_ORGS_LIST = gql`
     }
   }
 `;
+
+export const GET_ALL_SERIAL_NUMBERS = gql`
+  query {
+    getAllSerialNumbers
+  }
+`;
