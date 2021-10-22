@@ -1,5 +1,16 @@
 import gql from 'graphql-tag';
 
+export const GET_NET_SALES_PROFIT_COST_DATA = gql`
+  query dailyProfitByKiosks($kioskIds: [String], $period: Period) {
+    dailyProfitByKiosks(kioskIds: $kioskIds, period: $period) {
+      _id
+      total_cost
+      total_sales
+      profit
+      __typename
+    }
+  }
+`;
 export const GET_REPORTS_WIDGET_DATA = gql`
   query($period: Period!, $kioskId: [String], $kioskIds: [String]) {
     getTotalNetIncome(period: $period, kioskId: $kioskId)

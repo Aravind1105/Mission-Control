@@ -13,17 +13,19 @@ const navMobileSwitcherConfig = [{ name: 'reports', goTo: '/reports' }];
 const Reports = ({}) => {
   return (
     <>
-      {/* <>
+      <Segment>
+        {/* <>
         {screenWidth < 770 ? (
           <NavSwitcher config={navMobileSwitcherConfig} />
         ) : (
           <NavSwitcher config={navSwitcherConfig} />
         )}
       </> */}
-      <Switch>
-        <Route exact path="/reports" component={ReportsContent} />
-        <Redirect to="/reports" />
-      </Switch>
+        <Switch>
+          <Route exact path="/reports" component={ReportsContent} />
+          <Redirect to="/reports" />
+        </Switch>
+      </Segment>
     </>
   );
 };

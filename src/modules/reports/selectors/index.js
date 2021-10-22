@@ -3,6 +3,8 @@ import get from 'lodash/get';
 
 export const getWidgetDataState = state => state.reports.widgetData;
 
+export const getNetSalesProfitCostState = state =>
+  state.reports.netSalesProfitCostData;
 export const getTopSellingKiosksState = createSelector(
   state => state.reports.topSellingKiosks,
   data =>
