@@ -3,6 +3,8 @@ import { handleActions } from 'redux-actions';
 import {
   getWidgetData,
   getWidgetDataSuccess,
+  getNetSalesProfitNetCostData,
+  getNetSalesProfitCostDataSuccess,
   getTopSellingKiosksSuccess,
 } from '../actions';
 
@@ -14,6 +16,7 @@ const initialState = {
     averageDailyRevenue: 0,
     peakSalesHour: null,
   },
+  netSalesProfitCostData: [],
   topSellingKiosks: [],
 };
 
@@ -26,6 +29,15 @@ const reportsReducer = handleActions(
     [getWidgetDataSuccess]: (state, { payload }) => ({
       ...state,
       widgetData: payload,
+      isLoading: false,
+    }),
+    [getNetSalesProfitNetCostData]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [getNetSalesProfitCostDataSuccess]: (state, { payload }) => ({
+      ...state,
+      netSalesProfitCostData: payload.netSalesProfitCostData,
       isLoading: false,
     }),
     [getTopSellingKiosksSuccess]: (state, { payload }) => ({
