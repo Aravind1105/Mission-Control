@@ -174,17 +174,18 @@ const ModalLoadCell = ({
       validateOnChange
       enableReinitialize
       validationSchema={Yup.object().shape({
-        product: Yup.string().required('This field is required'),
+        product: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
         planogramPosition: Yup.string().required('This field is required'),
         cellId: Yup.string().required('This field is required'),
         price: Yup.number().required('This field is required'),
-        // surfaceSize: Yup.string().required('This field is required'),
         surfaceSize: Yup.object({
           value: Yup.string().required('This field is required'),
         }),
       })}
     >
-      {({ dirty, handleSubmit }) => (
+      {({ dirty, handleSubmit, errors }) => (
         <ConfirmModal
           onClose={handleClose}
           isPristine={!dirty}
@@ -206,11 +207,11 @@ const ModalLoadCell = ({
                     {initVal.quantity ? <ToolTip /> : null}
                     <Field
                       name="product"
-                      isSearchable
                       options={options}
                       onChange={handleSelect}
                       disabled={Boolean(initVal.quantity)}
-                      component={FormAsyncSelect}
+                      component={CustomFormDropdown}
+                      placeholder="Select..."
                       required
                     />
                   </Grid.Column>
@@ -356,13 +357,15 @@ const ModalLoadCell = ({
                 type="submit"
                 disabled={!dirty}
                 onClick={() => {
-                  if (!isAddLoadCell) {
-                    setShowAlert(true);
-                  } else {
-                    if (validateCellContents()) {
+                  if (R.isEmpty(errors)) {
+                    if (!isAddLoadCell) {
                       setShowAlert(true);
-                    } else if (!isValidPosition) {
-                      setShowPositionErrorAlert(true);
+                    } else {
+                      if (validateCellContents()) {
+                        setShowAlert(true);
+                      } else if (!isValidPosition) {
+                        setShowPositionErrorAlert(true);
+                      }
                     }
                   }
                 }}
