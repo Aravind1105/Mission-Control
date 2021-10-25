@@ -25,8 +25,8 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, isKiosksListLoading }) => {
         return prev;
       }, {});
     }
-    changeDate(date);
     if (date.$gte && date.$lte) {
+      changeDate(date);
       changeExportData({
         from: date.$gte,
         to: date.$lte,

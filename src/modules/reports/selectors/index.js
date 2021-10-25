@@ -8,6 +8,7 @@ export const getTopSellingKiosksState = createSelector(
   data =>
     data.map(row => {
       row['netSales'] = row['netSales'].toFixed(2);
+      row['netCost'] = row['netCost'].toFixed(2);
       return row;
     }),
 );
