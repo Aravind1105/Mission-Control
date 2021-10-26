@@ -105,9 +105,11 @@ const ReportsContent = ({
         <Grid.Row>
           <Grid.Column>
             {isLoading && <Loader />}
-            <Segment>
-              <AreaChartComponent data={NetSalesProfitNetCostData} />
-            </Segment>
+            {NetSalesProfitNetCostData && (
+              <Segment>
+                <AreaChartComponent data={NetSalesProfitNetCostData} />
+              </Segment>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
