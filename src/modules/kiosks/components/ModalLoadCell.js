@@ -178,7 +178,9 @@ const ModalLoadCell = ({
           value: Yup.string().required('This field is required'),
         }),
         planogramPosition: Yup.string().required('This field is required'),
-        cellId: Yup.string().required('This field is required'),
+        cellId: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
         price: Yup.number().required('This field is required'),
         surfaceSize: Yup.object({
           value: Yup.string().required('This field is required'),
@@ -296,7 +298,7 @@ const ModalLoadCell = ({
                         disableCableId
                       }
                       required
-                      component={FormAsyncSelect}
+                      component={CustomFormDropdown}
                       onChange={({ data }) => {
                         setIsValid({ ...isValid, cableId: true });
 
