@@ -42,65 +42,68 @@ const ReportsContent = ({
 
   return (
     <>
-      <Toolbar
-        changeDate={changeDateRange}
-        kiosks={kiosksOptions}
-        changeKiosk={changeKiosk}
-      />
-      <Grid>
-        <Grid.Row stretched className="custom-widgets">
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            {widgetData.totalNetIncome && (
-              <StatsCard
-                customColor="#219653"
-                text="Total Net Sales"
-                amount={`${widgetData.totalNetIncome
-                  .toFixed(2)
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`}
-              />
-            )}
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            {widgetData.totalNumberOfProductsSold && (
-              <StatsCard
-                icon="boxes"
-                customColor="#F2994A"
-                text="Total Products Sold"
-                amount={widgetData.totalNumberOfProductsSold
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              />
-            )}
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            {widgetData.peakSalesHour && (
-              <StatsCard
-                icon="time"
-                customColor="#56CCF2"
-                text="Peak Hour"
-                amount={`${format(
-                  new Date(parseInt(widgetData.peakSalesHour.start)),
-                  'HH:mm',
-                )} - ${format(
-                  new Date(parseInt(widgetData.peakSalesHour.end)),
-                  'HH:mm',
-                )}`}
-              />
-            )}
-          </Grid.Column>
-          <Grid.Column mobile={16} computer={4} tablet={8}>
-            {widgetData.averageDailyRevenue && (
-              <StatsCard
-                customColor="#BB6BD9"
-                text="Average Daily Net Sales"
-                amount={`${widgetData.averageDailyRevenue
-                  .toFixed(2)
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
-              />
-            )}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Segment>
+        <Toolbar
+          changeDate={changeDateRange}
+          kiosks={kiosksOptions}
+          changeKiosk={changeKiosk}
+        />
+        <Grid>
+          <Grid.Row stretched className="custom-widgets">
+            <Grid.Column mobile={16} computer={4} tablet={8}>
+              {widgetData.totalNetIncome && (
+                <StatsCard
+                  customColor="#219653"
+                  text="Total Net Sales"
+                  amount={`${widgetData.totalNetIncome
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`}
+                />
+              )}
+            </Grid.Column>
+            <Grid.Column mobile={16} computer={4} tablet={8}>
+              {widgetData.totalNumberOfProductsSold && (
+                <StatsCard
+                  icon="boxes"
+                  customColor="#F2994A"
+                  text="Total Products Sold"
+                  amount={widgetData.totalNumberOfProductsSold
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                />
+              )}
+            </Grid.Column>
+            <Grid.Column mobile={16} computer={4} tablet={8}>
+              {widgetData.peakSalesHour && (
+                <StatsCard
+                  icon="time"
+                  customColor="#56CCF2"
+                  text="Peak Hour"
+                  amount={`${format(
+                    new Date(parseInt(widgetData.peakSalesHour.start)),
+                    'HH:mm',
+                  )} - ${format(
+                    new Date(parseInt(widgetData.peakSalesHour.end)),
+                    'HH:mm',
+                  )}`}
+                />
+              )}
+            </Grid.Column>
+            <Grid.Column mobile={16} computer={4} tablet={8}>
+              {widgetData.averageDailyRevenue && (
+                <StatsCard
+                  customColor="#BB6BD9"
+                  text="Average Daily Net Sales"
+                  amount={`${widgetData.averageDailyRevenue
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
+                />
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+
       <Grid>
         <Grid.Row>
           <Grid.Column>
@@ -113,8 +116,9 @@ const ReportsContent = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
+
       <Grid>
-        <Grid.Row columns="1">
+        <Grid.Row columns="2">
           <Grid.Column>
             <Table
               title="Top Selling Kiosks"
@@ -168,7 +172,7 @@ const ReportsContent = ({
               data={topSellingKiosks}
             />
           </Grid.Column>
-          {/* <Grid.Column></Grid.Column> */}
+          <Grid.Column></Grid.Column>
         </Grid.Row>
       </Grid>
     </>
