@@ -5,35 +5,25 @@ import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import './styles.less';
 
-const TopSellingProductsTable = ({ topSellingProducts }) => {
+const TopSellingKiosksTable = ({ topSellingKiosks }) => {
+  console.log('this s top sellin kiosks data', topSellingKiosks);
   const { t } = useTranslation();
-  let rank = 1;
   const columns = [
     {
       title: t('Rank'),
-      field: 'productLine',
-      formatter: ({ productLine }) => {
-        return <div style={{ textAlign: 'left' }}> {rank++}. </div>;
+      field: 'rank',
+      formatter: ({ rank }) => {
+        return <div style={{ textAlign: 'left' }}> {rank}. </div>;
       },
     },
     {
-      title: t('Product'),
-      field: 'productLine',
-      formatter: ({ productLine }) => {
-        if (productLine === '') {
+      title: t('Kiosk'),
+      field: 'kioskName',
+      formatter: ({ kioskName }) => {
+        if (kioskName === '') {
           return '';
         }
-        return <div style={{ textAlign: 'left' }}> {productLine.name} </div>;
-      },
-    },
-    {
-      title: t('Quantity Sold'),
-      field: 'amount',
-      formatter: ({ amount }) => {
-        if (amount === '') {
-          return '';
-        }
-        return <div style={{ textAlign: 'center' }}> {amount} </div>;
+        return <div style={{ textAlign: 'left' }}> {kioskName} </div>;
       },
     },
     {
@@ -71,19 +61,19 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
     <Segment>
       <SegmentHeader>
         <Header as="h4">
-          <Header.Content>Top Selling Products &nbsp;</Header.Content>
+          <Header.Content>Top Selling Kiosks &nbsp;</Header.Content>
         </Header>
       </SegmentHeader>
       <CustomTable
-        className="reports-table-component"
+        className="reports-kiosks-table-component"
         sortable
         sortByColumn="startDate"
         fixed
-        data={topSellingProducts}
+        data={topSellingKiosks}
         columns={columns}
       />
     </Segment>
   );
 };
 
-export default TopSellingProductsTable;
+export default TopSellingKiosksTable;
