@@ -15,13 +15,14 @@ import {
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
 import { format } from 'date-fns';
-import Table, { FieldTypes, Size } from './components/Table';
 import AreaChartComponent from './components/AreaChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
+import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import './styles.less';
 import { getNetSalesProfitNetCostData } from './actions';
 import { getNetSalesProfitCostState } from './selectors';
 import Loader from 'modules/shared/components/Loader';
+import './styles.less';
 
 const ReportsContent = ({
   isLoading,
@@ -128,73 +129,22 @@ const ReportsContent = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Grid className="dashboard">
+      <Grid className="reports">
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={16}>
             <TopSellingProductsTable
               topSellingProducts={topSellingProducts}
-              fullTable
             ></TopSellingProductsTable>
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
-      <Grid>
-        <Grid.Row columns="2">
-          <Grid.Column>
-            <Table
-              title="Top Selling Kiosks"
-              size={Size.HALF}
-              headers={[
-                { title: 'Rank', fieldType: FieldTypes.RANK, key: 'rank' },
-                {
-                  title: 'Kiosk',
-                  fieldType: FieldTypes.STRING,
-                  key: 'kioskName',
-                },
-                {
-                  title: 'Net Sales',
-                  fieldType: FieldTypes.PRICE,
-                  key: 'netSales',
-                },
-                {
-                  title: 'Net Cost',
-                  fieldType: FieldTypes.PRICE,
-                  key: 'netCost',
-                },
-                { title: 'Profit', fieldType: FieldTypes.PRICE, key: 'profit' },
-              ]}
-              data={[
-                {
-                  rank: 1,
-                  kioskId: '60a66994e0c7dd35c96abad7',
-                  kioskName: 'Westwing Group AG',
-                  netSales: 1568.78,
-                  netCost: 462.24,
-                  profit: 1106.53,
-                },
-                {
-                  rank: 2,
-                  kioskId: '5fa3dbcf3b0de589c3f25cf3',
-                  kioskName:
-                    'ABT Sportsline GmbH ABT Sportsline GmbH ABT Sportsline GmbH',
-                  netSales: 381.18,
-                  netCost: 316,
-                  profit: 65.18,
-                },
-                {
-                  rank: 3,
-                  kioskId: '5fa3dbf13b0de589c3f25cfe',
-                  kioskName: 'Scaltel AG',
-                  netSales: 359.6,
-                  netCost: 362.07,
-                  profit: -2.46,
-                },
-              ]}
-              data={topSellingKiosks}
-            />
+      <Grid className="kiosks-reports-table">
+        <Grid.Row stretched>
+          <Grid.Column mobile={16} computer={8}>
+            <TopSellingKiosksTable
+              topSellingKiosks={topSellingKiosks}
+            ></TopSellingKiosksTable>
           </Grid.Column>
-          <Grid.Column></Grid.Column>
         </Grid.Row>
       </Grid>
     </>
