@@ -37,4 +37,20 @@ export const GET_TOP_SELLING_KIOSKS = gql`
   }
 `;
 
+export const GET_TOP_SELLING_PRODUCTS = gql`
+  query($period: Period!, $kioskIds: [String]) {
+    getTopSellingProducts(period: $period, kioskIds: $kioskIds) {
+      productLine {
+        _id
+        name
+      }
+      amount
+      netSales
+      netCost
+      profit
+      __typename
+    }
+  }
+`;
+
 export default {};
