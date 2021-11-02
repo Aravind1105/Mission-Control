@@ -5,6 +5,10 @@ export const getWidgetDataState = state => state.reports.widgetData;
 
 export const getNetSalesProfitCostState = state =>
   state.reports.netSalesProfitCostData;
+
+export const getTopSellingProductsState = state =>
+  state.reports.topSellingProducts;
+
 export const getTopSellingKiosksState = createSelector(
   state => state.reports.topSellingKiosks,
   data =>

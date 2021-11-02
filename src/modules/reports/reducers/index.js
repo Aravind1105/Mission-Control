@@ -6,6 +6,7 @@ import {
   getNetSalesProfitNetCostData,
   getNetSalesProfitCostDataSuccess,
   getTopSellingKiosksSuccess,
+  getTopSellingProductsSuccess,
 } from '../actions';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   },
   netSalesProfitCostData: [],
   topSellingKiosks: [],
+  topSellingProducts: [],
 };
 
 const reportsReducer = handleActions(
@@ -43,6 +45,10 @@ const reportsReducer = handleActions(
     [getTopSellingKiosksSuccess]: (state, { payload }) => ({
       ...state,
       topSellingKiosks: payload.topSellingKiosks,
+    }),
+    [getTopSellingProductsSuccess]: (state, { payload }) => ({
+      ...state,
+      topSellingProducts: payload.topSellingProducts,
     }),
   },
   initialState,

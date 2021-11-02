@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment } from 'semantic-ui-react';
-import { getWidgetData, getTopSellingKiosks } from './actions';
+import {
+  getWidgetData,
+  getTopSellingKiosks,
+  getTopSellingProducts,
+} from './actions';
 import StatsCard from 'modules/shared/components/StatsCard';
-import { getTopSellingKiosksState, getWidgetDataState } from './selectors';
+import {
+  getTopSellingKiosksState,
+  getWidgetDataState,
+  getTopSellingProductsState,
+} from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
 import { format } from 'date-fns';
 import Table, { FieldTypes, Size } from './components/Table';
 import AreaChartComponent from './components/AreaChart';
+import TopSellingProductsTable from './components/TopSellingProductsTable';
 import './styles.less';
 import { getNetSalesProfitNetCostData } from './actions';
 import { getNetSalesProfitCostState } from './selectors';
@@ -21,7 +30,9 @@ const ReportsContent = ({
   NetSalesProfitNetCostData,
   getNetSalesProfitNetCostData,
   topSellingKiosks,
+  topSellingProducts,
   getWidgetData,
+  getTopSellingProducts,
   getTopSellingKiosks,
 }) => {
   const [dateRange, changeDateRange] = useState('');
@@ -38,6 +49,7 @@ const ReportsContent = ({
     getWidgetData(data);
     getNetSalesProfitNetCostData(data);
     getTopSellingKiosks(data);
+    getTopSellingProducts(data);
   }, [dateRange, kiosk]);
 
   return (
@@ -116,6 +128,16 @@ const ReportsContent = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
+      <Grid className="dashboard">
+        <Grid.Row stretched>
+          <Grid.Column mobile={16} computer={16}>
+            <TopSellingProductsTable
+              topSellingProducts={topSellingProducts}
+              fullTable
+            ></TopSellingProductsTable>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
 
       <Grid>
         <Grid.Row columns="2">
@@ -185,12 +207,14 @@ const mapStateToProps = state => ({
   kiosksOptions: getKioskOptionsForTableDropdown(state),
   NetSalesProfitNetCostData: getNetSalesProfitCostState(state),
   topSellingKiosks: getTopSellingKiosksState(state),
+  topSellingProducts: getTopSellingProductsState(state),
 });
 
 const mapDispatchToProps = {
   getWidgetData,
   getNetSalesProfitNetCostData,
   getTopSellingKiosks,
+  getTopSellingProducts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContent);

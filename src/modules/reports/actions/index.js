@@ -21,3 +21,11 @@ export const getNetSalesProfitCostDataSuccess = createAction(
 export const getTopSellingKiosksSuccess = createAction(
   '@@state/GET_TOP_SELLING_KIOSKS_SUCCESS',
 );
+
+// Action For Top Selling Products Grid
+export const getTopSellingProducts = createAction(
+  '@@saga/GET_TOP_SELLING_PRODUCTS',
+);
+export const getTopSellingProductsSuccess = createAction(
+  '@@state/GET_TOP_SELLING_PRODUCTS_SUCCESS',
+);
