@@ -11,7 +11,7 @@ import { getOrganizationsAsOptions } from 'modules/organizations/selectors';
 import history from 'lib/history';
 import KioskForm from './components/KioskForm';
 import { getKiosk } from './actions';
-import { getKioskInitValues, getKiosksSerialNumbers } from './selectors';
+import { getKioskInitValues } from './selectors';
 
 const links = [
   {
@@ -32,7 +32,6 @@ const KioskEdit = ({
   organizationsOptions,
   getOrganizations,
   getKiosk,
-  serialNum,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const backLink = {
@@ -92,7 +91,6 @@ const KioskEdit = ({
                     organizations={organizationsOptions}
                     cancelHandler={cancelHandler}
                     isKioskLoading={isKioskLoading}
-                    sNum={serialNum}
                   />
                 </Segment>
               </Grid.Column>
@@ -120,7 +118,6 @@ const mapStateToProps = state => ({
   organizationsOptions: getOrganizationsAsOptions(state),
   isOrgLoading: state.organizations.isOrgLoading,
   isKioskLoading: state.kiosks.isKioskLoading,
-  serialNum: getKiosksSerialNumbers(state),
 });
 
 const mapDispatchToProps = {

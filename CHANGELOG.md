@@ -1,3 +1,144 @@
+#### 1.4.29 (2021-10-29)
+
+##### New Features
+
+* **reports:**
+  * [LIV-3295] add Net Sales/Profit/ Net Cost graph (ece8f0c7)
+  * LIV-3297 topSellingKiosks integration (32d50ebc)
+  * LIV-3790 table component updated for tooltip (8c398e57)
+  * LIV-3970 reports table component updated for tooltip (7928fbf4)
+  * LIV-3970 reports table component updated (40449600)
+  * LIV-3970 reports table component updated (cd78ea9d)
+  * LIV-3970 table component css updated (60ffd1ac)
+  * LIV-3970 new table component (da302482)
+  * LIV-3294 widgets and module cleanup (f65cef90)
+  * LIV-3294 reports widget (2840ae43)
+  * cleanup module (c4d79d7a)
+* **kiosks:** LIV-3986 kiosk serial numbers validation on kiosk creation (f1fad8f6)
+* **components:**
+  * LIV-3991 custom dropdown component with keyboard events implemented (efc32257)
+  * LIV-3991 form dropdown component updated (ccb521ca)
+  * LIV-3991 new custom form dropdown component (90353aac)
+  * LIV-3991 custom dropdown component (1c3bf1b0)
+* **reports widget:** LIV-3294 average daily revenue and peak sales hour widgets (967e3f28)
+* **nwStatus:**  update temp and heartbeat for nw status (6f6fdb71)
+* **dashboard:** LIV-3895 multiple kiosk selection for sales graph (35cff32b)
+* **kiosk overview:** LIV-3737 kiosk filter removed (8c7e8dfd)
+* **multiple seleciton kiosk:** LIV-3844 optimizaitions (6e807904)
+* **products:** LIV-3788 manufacturers multiple selection (583ded4e)
+* **LIV-3839:**  added alert for invalid scale readings (07fb3a0c)
+* **products listing:** LIV-3788 removed category column from products page (de8734fa)
+* **test:**  added test url for test env (a129bda3)
+* **ci-cd:**  add test-master deployments (88c3f3c6)
+
+##### Bug Fixes
+
+* **reports:**
+  * reports UI changes according to UX (3a37d3c3)
+  * LIV-3297 top selling kiosks fix decimal issue and fix date filter (60458017)
+  * LIV-3297 fixing date filters (1d66d1e2)
+* **Kiosk Planogram:**  LIV-3502 Applied Validation Add/Edit Scale updated (0e8cf765)
+* **components:** LIV-3991 dropdown component issues fixed (8aef4075)
+* **kiosk create:** LIV-3986 validate serial numbers on create (bdc8a7d3)
+* **LIV-3999:**  fixed kiosk with prod and loader and product to null initially for detail page. (8bd8e475)
+* **Temprature Log:**
+  *  LIV-3382 Fixed default value and put loader (f37aebb0)
+  *  LIV-3921 Fixed Nan for windows browser (a7a59f46)
+* **All Tables:**
+  *  LIV-3544 Hower Issue in Transactions Tables (a79bafad)
+  *  LIV-3544 Fixed Angular Corner and CSS Overlapping Issue (fbea2d52)
+  *  LIV-3544 Fixed Angular Corner and CSS Overlapping Issue (f38f6ca6)
+* **refils:** LIV-3956 export CSV with date range filter bug fix (1bb3a6ff)
+* **Define button Color:**
+  *  LIV-3213 Fixed product page edit/add cancel button updated for Organization and products (d2fedfef)
+  *  LIV-3213 Fixed product page edit/add cancel button updated (eac7551f)
+* **Planogram Hyphenation:**  LIV-3551 Fixed text hyphensation issue in planogram (d8655e0f)
+* **All Tables Update Corners:**  LIV-3544 Fixed Angular Corner of All Tables (6a17c4fe)
+* **Transaction Products Table:**
+  *  LIV-3847 transaction Product table Updated (ab898dcd)
+  *  LIV-3847 transaction Product table (18679808)
+* **Kiosks, Organizations, Products:**
+  *  LIV-3871 Organization Tool bar Position for mobile and web updated config (9e85a27c)
+  *  LIV-3871 Organization Tool bar Position for mobile and web updated after merge (83bf238b)
+  *  LIV-3871 Organization Tool bar Position for mobile and web updated (a9382d6e)
+* **Paginaztion dropdown:**  LIV-3855 Updated dropdowns for mobile (7ae6ce96)
+* **product form:**
+  * product form EAN fix (f2eaeea5)
+  * LIV-3929 product create hot fix (1512dc18)
+* **img:**  img graphql call fixed (d4fa1626)
+* **membercard:**  show error message for validation (c3fe83f9)
+* **multiple kiosks filter:** LIV-3856 mobile view fetch API call fixed (2cb8c139)
+* **Organizations:**  LIV-3871 Organization Tool bar Position for mobile and web (6902f9a1)
+* **kiosk detail:** LIV-3831 planogram cellId and planogram position change (c93b55c1)
+* **cicd:**  update yaml file (e47b6605)
+* **LIV-3583:**
+  *  updated alert for every imageupload (8196ca6e)
+  *  fixed same image uplaod twice (a62aa0bd)
+* **url:**  updated BE url for staging (55e3fbb1)
+* **Kiosk Planogram Edit/Add Scale:**  LIV-3502 Kiosk Overview Add/Edit Scale (f50a8218)
+* **modal:**  modal loadcell popup alert fixed (59feb7c6)
+* **Users Details:**  LIV-3876 User Details component Position fixed (31480098)
+* **kiosk Inventory Table:**
+  *  LIV-3226 Inventory Table Sorted Results (6b3b9740)
+  *  LIV-3226 Inventory Table Updated (3082f702)
+* **modal load cell:**
+  * LIV-3849 fixed wrong error message position changed (dec2189b)
+  * LIV-3865 delete load cell confirmation dialog change (a07deeba)
+* **Kiosk:**
+  *  LIV-3382 Temprature Graph time formate updated (ecc6a6a3)
+  *  LIV-3382 Temprature Graph time formate (57215ef3)
+  *  LIV-3226 Inventory List Tooltip Updated (60ac4066)
+  *  LIV-3226 Inventory List Tooltip Updated (cc4c2334)
+  *  LIV-3226 Inventory List Tooltip (b5aa7cd0)
+  *  LIV-3226 Inventory List Tooltip (fcc01eb5)
+  *  LIV-3382 Temprature Graph updated (42a95514)
+  *  LIV-3382 Temprature Graph updated (ab2afb82)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (65606ce7)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (25e2cfc5)
+  *  LIV-3371 Kiok Page for Admin and Super Admin Updated (e896ae4c)
+  *  LIV-3372 Input Formate and Validation (a427b10c)
+* **alerts:**  alert type fixed in graphql (6978c7cf)
+* **log:**  console logs  rmd (dcf04356)
+* **kiosk:**
+  *  [LIV-3226] Inventory list fix (7bf607ad)
+  *  Resolve LIV-3372 update kiosk form (f3cfbce4)
+  *  Resolve LIV-3226 fix inventory table (2301df3b)
+  *  Resolve LIV-3382 chart sensor values (b92b2f5d)
+* **actLog:**  rm null value from act logs (6c19a6ff)
+* **calls:**  rm unused calls and code tuning (2915ea67)
+* **css:**  css updated before the button rendered (23c66290)
+* **dashboard:**
+  * dashboard graph removed duplicate kiosk filter (124f24e4)
+  * LIV-3859 dashboard graph fix (49ddb63c)
+* **Dashboard and Organizations:**  LIV-3212 updated magins between the dropdowns (b65e3b64)
+* **kiosk screen:** LIV-3844  multiple kiosk selection (3e3dc652)
+* **manufacture:**  manufacture filter fixed (8ac9da92)
+* **select check boxes component:** optimized loading (d61428f2)
+* **transactions products:**  LIV-3207 a minor fix in request payload when none of the kiosks is selected (42e1cd68)
+* **factor:**  refactoring code (adeb8691)
+* **kiosks:**  update placeholder img styling (eb2d6b3b)
+* **Products:**
+  *  LIV-3378 Product Form Validation (dad05d30)
+  *  LIV-3378 Product Form Validation (a94687e5)
+* **All Margin btw Drop down:**  LIV-3212 Updating Margin tw Dropdowns (aeb21606)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into test-master (66754493)
+* //gitlab.com/livello-network/livello-mission-control into test-master (9c8cbe45)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (59d8455d)
+* //gitlab.com/livello-network/livello-mission-control into staging-master (111a9c2e)
+* //gitlab.com/livello-network/livello-mission-control into LIV-3226 (4c51b673)
+* //gitlab.com/livello-network/livello-mission-control into test-master (341aea4a)
+* //gitlab.com/livello-network/livello-mission-control into test-master (659a585b)
+* //gitlab.com/livello-network/livello-mission-control into test-master (df8722da)
+* //gitlab.com/livello-network/livello-mission-control into LIV-3844 (6273158e)
+* livello-network/livello-mission-control into test-master (e1b1307f)
+
+##### Tests
+
+* **k8:**  add yaml files for test env (6e4f3024)
+
 #### 1.4.28 (2021-09-29)
 
 ##### New Features

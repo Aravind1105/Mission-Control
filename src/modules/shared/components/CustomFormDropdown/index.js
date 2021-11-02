@@ -28,6 +28,7 @@ const CustomDropdown = ({
   placeholder,
   onChange,
   options = [],
+  disabled,
 }) => {
   const containerRef = useRef(null);
   outsideClickHandler(containerRef, () => {
@@ -37,8 +38,11 @@ const CustomDropdown = ({
 
   const resetHoverIndex = () => setHoverIndex(-1);
 
-  const setFormFieldValue = optionObject =>
+  const setFormFieldValue = optionObject => {
     form.setFieldValue(field.name, optionObject);
+    // this is just a work around to fix the two times selection of an option to hide the error message
+    setTimeout(() => form.setFieldValue(field.name, optionObject), 100);
+  };
 
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name] && form.errors[field.name].value;
@@ -61,6 +65,9 @@ const CustomDropdown = ({
       );
     } else {
       setFilteredOptions(options);
+      if (text === '') {
+        setFormFieldValue('');
+      }
     }
     // reset hover index
     resetHoverIndex();
@@ -85,11 +92,7 @@ const CustomDropdown = ({
       // enter key
       if (hoverIndex !== -1) {
         e.preventDefault();
-        const selectedOption = filteredOptions[hoverIndex];
-        setFormFieldValue(selectedOption);
-        setIsOptionSelected(true);
-        changeText(selectedOption.label);
-        setOptionsVisible(false);
+        handleOptionSelection(filteredOptions[hoverIndex], true);
       }
     }
     setHoverIndex(index);
@@ -97,6 +100,23 @@ const CustomDropdown = ({
     if (!optionsVisible) {
       setOptionsVisible(true);
     }
+  };
+
+  const handleOptionSelection = (option, isEnterKeyPress) => {
+    setFormFieldValue(option);
+    setIsOptionSelected(true);
+    changeText(option.label);
+    if (onChange) {
+      onChange({
+        fieldName: field.name,
+        data: option,
+        setFieldValue: form.setFieldValue,
+      });
+    }
+    if (isEnterKeyPress) {
+      setOptionsVisible(false);
+    }
+    setFilteredOptions(options);
   };
 
   return (
@@ -119,15 +139,20 @@ const CustomDropdown = ({
         value={text}
         onKeyDown={keyEventHandler}
         autoComplete="off"
+        disabled={disabled}
+        onBlur={event => {
+          event.preventDefault();
+        }}
       />
       <div
         className={
-          optionsVisible
+          !disabled && optionsVisible
             ? 'livello-dropdown-options-view'
             : 'livello-dropdown-options-view livello-dropdown-options-view-hidden'
         }
       >
-        {filteredOptions.length > 0 &&
+        {!disabled &&
+          filteredOptions.length > 0 &&
           filteredOptions.map((option, index) => (
             <div
               className={
@@ -137,15 +162,7 @@ const CustomDropdown = ({
                   ? 'livello-dropdown-options-item livello-dropdown-options-item-hover'
                   : 'livello-dropdown-options-item'
               }
-              onClick={() => {
-                setFormFieldValue(option);
-                setIsOptionSelected(true);
-                changeText(option.label);
-                if (onChange) {
-                  onChange(option.value);
-                }
-                setFilteredOptions(options);
-              }}
+              onClick={() => handleOptionSelection(option, false)}
               onMouseOver={() => setHoverIndex(index)}
             >
               <span className="livello-dropdown-options-item-text">

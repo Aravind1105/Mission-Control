@@ -1,11 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-import gqlTransactions from 'lib/https/gqlTransactions';
+import gqlReports from 'lib/https/gqlReports';
 import {
-  getWidgetData as action,
-  getWidgetDataSuccess as actionSuccess,
+  getTopSellingKiosks as action,
+  getTopSellingKiosksSuccess as actionSuccess,
 } from '../actions';
-import { GET_REPORTS_WIDGET_DATA } from '../schema';
+import { GET_TOP_SELLING_KIOSKS } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
@@ -20,22 +20,15 @@ function* handler({ payload }) {
   }
   try {
     const {
-      data: {
-        getTotalNumberOfProductsSold,
-        getTotalNetIncome,
-        getAverageDailyNetRevenue,
-        getPeakSalesHour,
-      },
+      data: { topSellingKiosks },
       errors,
-    } = yield call(gqlTransactions.query, {
-      query: GET_REPORTS_WIDGET_DATA,
+    } = yield call(gqlReports.query, {
+      query: GET_TOP_SELLING_KIOSKS,
       variables: {
         period: {
           from: dateFrom,
           to: dateTo,
         },
-        kioskId: payload && payload.kioskId,
-        kioskIds: payload && payload.kioskId,
       },
     });
 
@@ -44,10 +37,7 @@ function* handler({ payload }) {
     else {
       yield put(
         actionSuccess({
-          totalNumberOfProductsSold: getTotalNumberOfProductsSold,
-          totalNetIncome: getTotalNetIncome,
-          averageDailyRevenue: getAverageDailyNetRevenue,
-          peakSalesHour: getPeakSalesHour,
+          topSellingKiosks,
         }),
       );
     }
