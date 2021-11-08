@@ -18,7 +18,7 @@ function* handler({ payload }) {
       errors,
     } = yield call(gqlKiosk.mutate, {
       mutation: DELETE_LOAD_CELL,
-      variables: { kioskId, cellId },
+      variables: { kioskId, cellId, added: 'Mission Control' },
     });
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));

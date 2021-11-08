@@ -83,6 +83,7 @@ function* handler({ payload }) {
         id: kioskId,
         cellId,
         data: { amount: parseInt(quantity, 10) },
+        added: 'Mission Control'
       };
       const { data, errors } = yield call(gqlKiosk.mutate, {
         mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,

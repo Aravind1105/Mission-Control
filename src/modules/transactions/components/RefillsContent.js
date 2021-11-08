@@ -25,7 +25,7 @@ const columns = [
   {
     title: 'Kiosk',
     field: 'kioskName',
-    ormatter: ({ kioskName }) => {
+    formatter: ({ kioskName }) => {
       if (kioskName === '') {
         return '';
       }
@@ -54,6 +54,20 @@ const columns = [
         return '';
       }
       return <div style={{ textAlign: 'left' }}> {productName} </div>;
+    },
+  },
+  {
+    title: 'Refill',
+    field: 'added',
+    formatter: ({ added }) => {
+      if (added === 'automatic') {
+        added =  'Automatic';
+      } else if (added === 'Mission Control') {
+        added =  'Manual (Mission Control)';
+      } else if (added === 'tablet') {
+        added =  'Manual (Tablet)'
+      }
+      return <div style={{ textAlign: 'left' }}> {added} </div>;
     },
   },
   {
@@ -121,6 +135,7 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         'status',
         'productName',
         'articleNumber',
+        'added',
         'count',
         'loadCell',
         'weight',
