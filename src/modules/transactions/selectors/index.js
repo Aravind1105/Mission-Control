@@ -144,6 +144,7 @@ export const getGridRefillsTableState = createSelector(
           'dd-MM-yyyy, HH:mm:ss',
         ),
         kioskName: get(refill, 'kiosk.name', '') || 'unknown',
+        added: refill.added,
       };
       const newScale = refill.scale.filter(elem => elem.count !== 0);
       if (newScale.length > 1) {

@@ -290,8 +290,9 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
     $id: String!
     $cellId: String!
     $data: ResetLoadcellAmountInput!
+    $added: String!
   ) {
-    resetLoadcellInventory(id: $id, cellId: $cellId, data: $data) {
+    resetLoadcellInventory(id: $id, cellId: $cellId, data: $data, added: $added) {
       _id
     }
   }
@@ -452,8 +453,8 @@ export const GET_ACTIVITY_LOGS = gql`
 `;
 
 export const DELETE_LOAD_CELL = gql`
-  mutation deleteLoadCell($kioskId: String!, $cellId: String!) {
-    deleteLoadCell(kioskId: $kioskId, cellId: $cellId) {
+  mutation deleteLoadCell($kioskId: String!, $cellId: String!, $added: String!) {
+    deleteLoadCell(kioskId: $kioskId, cellId: $cellId, added: $added) {
       ...FragmentKiosk
     }
   }

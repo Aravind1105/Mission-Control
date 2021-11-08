@@ -90,6 +90,7 @@ export const GRID_REFILLS_QUERY = gql`
       data {
         _id
         created
+        added
         kiosk {
           _id
           name
