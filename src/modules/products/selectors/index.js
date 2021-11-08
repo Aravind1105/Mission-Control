@@ -203,14 +203,12 @@ export const selectorGetProductInitValue = createSelector(
       packagingOptionsUnitCount: get(packaging, ['unitCount']),
       packagingOptionsGrossWeightGrams: get(packaging, ['grossWeightGrams']),
       packagingOptionsPackageWeightGrams: get(packaging, ['grossWeightGrams']),
-      packagingOptionsNetWeightGrams: get(packaging, ['netWeightGrams']),
+      packagingOptionsNetWeightGrams: {
+        value: get(packaging, ['netWeightGrams']),
+        unit: get(packaging, ['netWeightGramsUnit'], 'g') || 'g',
+      },
       packagingOptionsShelfLifeDays: get(packaging, ['shelfLifeDays']),
       packagingOptionsDescription: get(packaging, ['description']),
-      packagingOptionsPackageWeightGramsUnit: get(
-        packaging,
-        ['netWeightGramsUnit'],
-        '' || 'g',
-      ),
       id: rest._id,
       defaultPrice: get(priceHistory, 'price', ''),
       defaultPriceId: get(priceHistory, '_id', ''),

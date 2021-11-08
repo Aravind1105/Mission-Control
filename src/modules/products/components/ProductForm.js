@@ -20,8 +20,8 @@ import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { modifyProductSaga } from '../actions';
-import get from 'lodash/get';
 import { isEqual } from 'lodash';
+import FormInputWithUnit from 'modules/shared/components/FormInputWithUnit';
 
 let updatingProduct = false;
 const ProductForm = ({
@@ -43,8 +43,8 @@ const ProductForm = ({
         unitCount: values.packagingOptionsUnitCount,
         grossWeightGrams: parseInt(values.packagingOptionsGrossWeightGrams),
         packageWeightGrams: parseInt(values.packagingOptionsPackageWeightGrams),
-        netWeightGramsUnit: values.packagingOptionsPackageWeightGramsUnit,
-        netWeightGrams: parseInt(values.packagingOptionsNetWeightGrams),
+        netWeightGramsUnit: values.packagingOptionsNetWeightGrams.unit,
+        netWeightGrams: parseInt(values.packagingOptionsNetWeightGrams.value),
         shelfLifeDays: parseInt(values.packagingOptionsShelfLifeDays),
         tolerancePercentage: values.packagingOptionsTolerancePercentage,
         description: values.packagingOptionsDescription,
@@ -180,6 +180,10 @@ const ProductForm = ({
           packagingOptionsGrossWeightGrams: Yup.string().required(
             'This field is required',
           ),
+          packagingOptionsNetWeightGrams: Yup.object({
+            value: Yup.number().required('This field is required'),
+            unit: Yup.string().required('This field is required'),
+          }),
           capacitiesSurfaceSize_33: Yup.number().required(
             'This field is required',
           ),
@@ -194,7 +198,9 @@ const ProductForm = ({
         })}
         enableReinitialize
       >
-        {({ dirty, handleSubmit, values, setValues, resetForm }) => {
+        {({ dirty, handleSubmit, values, setValues, resetForm, errors }) => {
+          console.log(values);
+          console.log(errors);
           const netPrice =
             Math.round(
               ((+values.defaultPrice.replace(',', '.') || 0) /
@@ -299,16 +305,13 @@ const ProductForm = ({
                       label="Net Quantity (ml/g)"
                       min={0}
                       maxLength="5"
-                      component={FormInputWithSelector}
+                      component={FormInputWithUnit}
                       limiting="integerField"
-                      selectorOptions={[
+                      unitOptions={[
                         { key: 'ml', text: 'ml', value: 'ml' },
                         { key: 'g', text: 'g', value: 'g' },
                       ]}
-                      selectorDefaultValueIndex={1}
-                      dropdownSelectedValue={
-                        values.packagingOptionsPackageWeightGramsUnit
-                      }
+                      defaultUnitIndex={1}
                     />
                   </Grid.Column>
                   <Grid.Column>
