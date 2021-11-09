@@ -53,4 +53,13 @@ export const GET_TOP_SELLING_PRODUCTS = gql`
   }
 `;
 
+export const GET_TOP_SELL_HOURS = gql`
+  query($period: Period!, $kioskIds: [String]) {
+    getTopSellHours(period: $period, kioskIds: $kioskIds) {
+      amount
+      hour
+    }
+  }
+`;
+
 export default {};

@@ -12,7 +12,7 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
     {
       title: t('Rank'),
       field: 'productLine',
-      formatter: ({ productLine }) => {
+      formatter: ({}) => {
         return <div style={{ textAlign: 'left' }}> {rank++}. </div>;
       },
     },

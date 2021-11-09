@@ -9,6 +9,8 @@ export const getNetSalesProfitCostState = state =>
 export const getTopSellingProductsState = state =>
   state.reports.topSellingProducts;
 
+export const getTopSellHoursState = state => state.reports.topSellHours;
+
 export const getTopSellingKiosksState = createSelector(
   state => state.reports.topSellingKiosks,
   data =>

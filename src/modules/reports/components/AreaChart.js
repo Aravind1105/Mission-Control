@@ -9,7 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Line,
   ResponsiveContainer,
 } from 'recharts';
 import './styles.less';
