@@ -29,3 +29,9 @@ export const getTopSellingProducts = createAction(
 export const getTopSellingProductsSuccess = createAction(
   '@@state/GET_TOP_SELLING_PRODUCTS_SUCCESS',
 );
+
+// Action For Top Selling Products BarChart
+export const getTopSellHours = createAction('@@saga/GET_TOP_SELL_HOURS');
+export const getTopSellHoursSuccess = createAction(
+  '@@state/GET_TOP_SELL_HOURS_SUCCESS',
+);

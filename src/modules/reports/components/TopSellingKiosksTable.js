@@ -6,7 +6,6 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import './styles.less';
 
 const TopSellingKiosksTable = ({ topSellingKiosks }) => {
-  console.log('this s top sellin kiosks data', topSellingKiosks);
   const { t } = useTranslation();
   const columns = [
     {

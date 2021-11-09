@@ -5,17 +5,20 @@ import {
   getWidgetData,
   getTopSellingKiosks,
   getTopSellingProducts,
+  getTopSellHours,
 } from './actions';
 import StatsCard from 'modules/shared/components/StatsCard';
 import {
   getTopSellingKiosksState,
   getWidgetDataState,
   getTopSellingProductsState,
+  getTopSellHoursState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
 import { format } from 'date-fns';
 import AreaChartComponent from './components/AreaChart';
+import SoldProductsBarChart from './components/SoldProductsBarChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import './styles.less';
@@ -32,9 +35,11 @@ const ReportsContent = ({
   getNetSalesProfitNetCostData,
   topSellingKiosks,
   topSellingProducts,
+  topSellHours,
   getWidgetData,
   getTopSellingProducts,
   getTopSellingKiosks,
+  getTopSellHours,
 }) => {
   const [dateRange, changeDateRange] = useState('');
   const [kiosk, changeKiosk] = useState([]);
@@ -51,6 +56,7 @@ const ReportsContent = ({
     getNetSalesProfitNetCostData(data);
     getTopSellingKiosks(data);
     getTopSellingProducts(data);
+    getTopSellHours(data);
   }, [dateRange, kiosk]);
 
   return (
@@ -132,18 +138,31 @@ const ReportsContent = ({
       <Grid className="reports">
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={16}>
-            <TopSellingProductsTable
-              topSellingProducts={topSellingProducts}
-            ></TopSellingProductsTable>
+            {isLoading && <Loader />}
+            <TopSellingProductsTable topSellingProducts={topSellingProducts} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
       <Grid className="kiosks-reports-table">
         <Grid.Row stretched>
+          {isLoading && <Loader />}
           <Grid.Column mobile={16} computer={8}>
-            <TopSellingKiosksTable
-              topSellingKiosks={topSellingKiosks}
-            ></TopSellingKiosksTable>
+            <TopSellingKiosksTable topSellingKiosks={topSellingKiosks} />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <Grid className="reports-sold-products-barchart">
+        <Grid.Row stretched>
+          {isLoading && <Loader />}
+          <Grid.Column mobile={16} computer={8}>
+            {topSellHours && (
+              <Segment>
+                <SoldProductsBarChart
+                  data={topSellHours}
+                  dateRange={dateRange}
+                ></SoldProductsBarChart>
+              </Segment>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -158,6 +177,7 @@ const mapStateToProps = state => ({
   NetSalesProfitNetCostData: getNetSalesProfitCostState(state),
   topSellingKiosks: getTopSellingKiosksState(state),
   topSellingProducts: getTopSellingProductsState(state),
+  topSellHours: getTopSellHoursState(state),
 });
 
 const mapDispatchToProps = {
@@ -165,6 +185,7 @@ const mapDispatchToProps = {
   getNetSalesProfitNetCostData,
   getTopSellingKiosks,
   getTopSellingProducts,
+  getTopSellHours,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContent);
