@@ -1,5 +1,6 @@
 @import '../../../../styling/theme/globals/site.variables';
-
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 .table-cell-text {
   white-space: pre-wrap;
 }
@@ -80,6 +81,29 @@
   // for table header first element
   thead tr:first-child > th:first-child {
     border-radius: 3px 0 0 0 !important;
+  }
+  
+  thead tr:first-child > th:nth-child(2) {
+    border-radius: 3px 0 0 0 !important;
+    width: 300px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+
+  thead tr:first-child > th:nth-child(6) {
+    border-radius: 3px 0 0 0 !important;
+    width: 360px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+  thead tr:first-child > th:nth-child(10) {
+    border-radius: 3px 0 0 0 !important;
+    width: 60px !important;
+    @media @mobile {
+      width: 60px !important;
+    }
   }
 
   // for table header last element
