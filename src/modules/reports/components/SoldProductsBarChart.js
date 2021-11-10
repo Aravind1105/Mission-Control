@@ -4,7 +4,7 @@ import { Grid, Container } from 'semantic-ui-react';
 import {
   BarChart,
   Bar,
-  Cell,
+  Text,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,7 +14,6 @@ import {
 } from 'recharts';
 import moment from 'moment';
 import './styles.less';
-import { findIndex } from 'lodash';
 
 // This is function to convert time value to to its range i.e. '1' will be converted to '02:00 - 02:59'
 const timeToTimerange = type => {
@@ -46,7 +45,26 @@ const timeToTimerange = type => {
   };
   return time[type];
 };
+const renderLegend = () => {
+  return <div className="custom-legend-barchart">Hours of the day</div>;
+};
 
+const CustomizedLabelForMsg = ({ kapi, metric, viewBox }) => {
+  return (
+    <Text
+      x={0}
+      y={0}
+      dx={-130}
+      dy={10}
+      textAnchor="middle"
+      fontSize={'14px'}
+      transform="rotate(-90)"
+      fill={'#7B7B7B'}
+    >
+      Accumulated sales per hour
+    </Text>
+  );
+};
 const CustomTooltip = ({ active, payload, label, dateRange }) => {
   if (active && payload && payload.length) {
     let dateTo = dateRange.$lte ? dateRange.$lte : new Date();
@@ -65,7 +83,7 @@ const CustomTooltip = ({ active, payload, label, dateRange }) => {
           <p style={{ float: 'left' }} className="tool-tip-quantity">
             {payload[0].payload.amount}
           </p>
-          <p style={{ float: 'left' }} className="tool-tip-Product">
+          <p style={{ float: 'left' }} className="tool-tip-product">
             products
           </p>
         </div>
@@ -76,7 +94,6 @@ const CustomTooltip = ({ active, payload, label, dateRange }) => {
   return null;
 };
 export default function SoldProductsBarChart({ data, dateRange }) {
-  console.log('this is Api', data);
   let peekHourAmount = Math.max(...data.map(item => item.amount), 0);
   let indexOfResult = data.findIndex(item => item.amount === peekHourAmount);
   let convertedPeekHours = timeToTimerange(indexOfResult);
@@ -87,16 +104,17 @@ export default function SoldProductsBarChart({ data, dateRange }) {
       <Divider fitted style={{ marginBottom: '48px' }}></Divider>
       <Grid>
         <Grid.Column>
-          <Container
-            textAlign="center"
+          <div
             style={{
               color: '#56CCF2',
               fontSize: '28px',
               fontWeight: 'bold',
+              marginTop: '-20px',
+              textAlign: 'center',
             }}
           >
             <p>{convertedPeekHours}</p>
-          </Container>
+          </div>
           <Container
             textAlign="center"
             style={{
@@ -117,7 +135,7 @@ export default function SoldProductsBarChart({ data, dateRange }) {
             data={data}
             margin={{
               top: 5,
-              left: -30,
+              left: 0,
               bottom: 5,
             }}
           >
@@ -130,11 +148,19 @@ export default function SoldProductsBarChart({ data, dateRange }) {
                 return strigy.padStart(2, '0');
               }}
             />
-            <YAxis tickSize={0} type="number" dataKey="amount" />
+            <YAxis axisLine={false} label={<CustomizedLabelForMsg />} />
+
+            <YAxis
+              tickSize={0}
+              type="number"
+              dataKey="amount"
+              axisLine={false}
+            />
             <Tooltip
               cursor={{ fill: '#f6f6f6' }}
               content={<CustomTooltip data={data} dateRange={dateRange} />}
             />
+            <Legend content={renderLegend} />
             <Bar dataKey="amount" fill="#56CCF2" isAnimationActive={false} />
           </BarChart>
         </ResponsiveContainer>

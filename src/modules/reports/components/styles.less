@@ -1,3 +1,5 @@
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 .custom_tool_tip {
   width: 180px !important;
   height: 120px !important;
@@ -32,7 +34,7 @@
 
 .custom_tool_tip_for_BarChart {
   width: 200px !important;
-  height: 80px !important;
+  height: 75px !important;
   border: 1px solid #bdbdbd;
   background: #ffffff;
   color: #7b7b7b;
@@ -50,13 +52,25 @@
   .tool-tip-quantity {
     margin-left: 16px !important;
     color: #56ccf2;
+    margin-top: -10px;
     font-size: 20px;
     text-align: left;
   }
-  .tool-tip-Product {
+  .tool-tip-product {
     text-align: left;
     color: #56ccf2;
+    margin-top: -10px;
     margin-left: 2px;
     font-size: 20px;
+  }
+}
+
+.custom-legend-barchart {
+  text-align: center !important;
+  color: #7b7b7b !important;
+  margin-left: 39px !important;
+  @media @mobile {
+    text-align: center !important;
+    margin-left: 50px !important;
   }
 }
