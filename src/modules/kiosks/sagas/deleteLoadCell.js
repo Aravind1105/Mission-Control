@@ -9,6 +9,7 @@ import {
 } from '../actions';
 import { DELETE_LOAD_CELL } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
+import { refillMode } from '../selectors';
 
 function* handler({ payload }) {
   try {
@@ -18,7 +19,7 @@ function* handler({ payload }) {
       errors,
     } = yield call(gqlKiosk.mutate, {
       mutation: DELETE_LOAD_CELL,
-      variables: { kioskId, cellId, added: 'Mission Control' },
+      variables: { kioskId, cellId, added: refillMode.MISSION_CONTROL },
     });
     if (errors && errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));

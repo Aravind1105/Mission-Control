@@ -11,6 +11,12 @@ import * as R from 'ramda';
 import moment from 'moment';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
+export const refillMode = {
+  MISSION_CONTROL: 'mission_control',
+  TABLET: 'tablet',
+  AUTOMATIC: 'automatic',
+};
+
 const alertMessages = {
   KioskOffline: 'System Offline',
   HighTemp: 'High temperature',
