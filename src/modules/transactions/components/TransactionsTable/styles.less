@@ -91,9 +91,16 @@
     }
   }
 
-  thead tr:first-child > th:nth-child(6) {
+  thead tr:first-child > th:nth-child(5) {
     border-radius: 3px 0 0 0 !important;
     width: 360px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+  thead tr:first-child > th:nth-child(6) {
+    border-radius: 3px 0 0 0 !important;
+    width: 210px !important;
     @media @mobile {
       width: 140px !important;
     }
