@@ -162,7 +162,6 @@ const ModalLoadCell = ({
       callback: handleClose,
     });
   };
-
   return (
     <Formik
       onSubmit={data => {
@@ -237,7 +236,7 @@ const ModalLoadCell = ({
                       Planogram Position
                       <span style={{ color: 'red' }}>&#42;</span>&nbsp;
                     </b>
-                    {initVal.quantity ? <PositionTip /> : null}
+                    <PositionTip />
                     <Field
                       name="planogramPosition"
                       required
@@ -372,7 +371,7 @@ const ModalLoadCell = ({
                   }
                 }}
               >
-                Update
+                {initVal.product.value ? 'Update' : 'Add'}
               </Button>
             </Modal.Actions>
             <CustomAlert
