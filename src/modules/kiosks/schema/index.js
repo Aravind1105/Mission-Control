@@ -292,7 +292,12 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
     $data: ResetLoadcellAmountInput!
     $added: RefillMode!
   ) {
-    resetLoadcellInventory(id: $id, cellId: $cellId, data: $data, added: $added) {
+    resetLoadcellInventory(
+      id: $id
+      cellId: $cellId
+      data: $data
+      added: $added
+    ) {
       _id
     }
   }
@@ -444,7 +449,9 @@ export const GET_ACTIVITY_LOGS = gql`
               weight
               id
             }
-            payment_terminal
+            card_details {
+              payment_terminal
+            }
           }
         }
       }
@@ -453,7 +460,11 @@ export const GET_ACTIVITY_LOGS = gql`
 `;
 
 export const DELETE_LOAD_CELL = gql`
-  mutation deleteLoadCell($kioskId: String!, $cellId: String!, $added: RefillMode!) {
+  mutation deleteLoadCell(
+    $kioskId: String!
+    $cellId: String!
+    $added: RefillMode!
+  ) {
     deleteLoadCell(kioskId: $kioskId, cellId: $cellId, added: $added) {
       ...FragmentKiosk
     }
