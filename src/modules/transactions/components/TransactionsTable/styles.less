@@ -82,6 +82,33 @@
   thead tr:first-child > th:first-child {
     border-radius: 3px 0 0 0 !important;
   }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 0 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
+}
+
+.refills-table {
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
   
   thead tr:first-child > th:nth-child(2) {
     border-radius: 3px 0 0 0 !important;
