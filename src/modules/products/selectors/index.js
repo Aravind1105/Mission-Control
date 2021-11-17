@@ -132,7 +132,7 @@ const defaultFormInit = {
   packagingOptionsUnitCount: 1,
   packagingOptionsGrossWeightGrams: '',
   packagingOptionsPackageWeightGrams: 0,
-  packagingOptionsNetWeightGrams: 0,
+  packagingOptionsNetWeightGrams: { value: '', unit: 'g' },
   packagingOptionsShelfLifeDays: '',
   packagingOptionsTolerancePercentage: 0,
   packagingOptionsDescription: '',
@@ -205,7 +205,7 @@ export const selectorGetProductInitValue = createSelector(
       packagingOptionsPackageWeightGrams: get(packaging, ['grossWeightGrams']),
       packagingOptionsNetWeightGrams: {
         value: get(packaging, ['netWeightGrams']),
-        unit: get(packaging, ['netWeightGramsUnit'], 'g') || 'g',
+        unit: get(packaging, ['netWeightGramsUnit'], 'g') || 'g',
       },
       packagingOptionsShelfLifeDays: get(packaging, ['shelfLifeDays']),
       packagingOptionsDescription: get(packaging, ['description']),

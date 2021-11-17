@@ -199,8 +199,6 @@ const ProductForm = ({
         enableReinitialize
       >
         {({ dirty, handleSubmit, values, setValues, resetForm, errors }) => {
-          console.log(values);
-          console.log(errors);
           const netPrice =
             Math.round(
               ((+values.defaultPrice.replace(',', '.') || 0) /
@@ -208,7 +206,7 @@ const ProductForm = ({
                 100,
             ) / 100;
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} noValidate>
               <Grid>
                 <Grid.Row columns="equal">
                   <Grid.Column>
@@ -307,6 +305,7 @@ const ProductForm = ({
                       maxLength="5"
                       component={FormInputWithUnit}
                       limiting="integerField"
+                      required
                       unitOptions={[
                         { key: 'ml', text: 'ml', value: 'ml' },
                         { key: 'g', text: 'g', value: 'g' },

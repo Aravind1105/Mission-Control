@@ -13,25 +13,19 @@ const FormInputWithUnit = ({
   limiting,
   ...props
 }) => {
-
   const isTouched = form.touched[field.name];
   const error = form.errors[field.name] && form.errors[field.name].value;
   const errMsg = isTouched && error ? { content: error } : undefined;
 
   const [text, changeText] = useState('');
   const [unit, setUnit] = useState(unitOptions[defaultUnitIndex].value);
-  const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
-    if (!isUpdated && form.values[field.name].value) {
-      changeText(form.values[field.name].value);
-      setUnit(form.values[field.name].unit);
-      setIsUpdated(true);
-    }
-  }, [form.values[field.name], isUpdated]);
+    changeText(form.values[field.name].value);
+    setUnit(form.values[field.name].unit);
+  }, [form.values[field.name]]);
 
   const handleValueChange = value => {
-    // const unit = form.values[field.name].unit;
     if (limiting === 'floatingField') {
       if (
         /^[0-9]{1,20}([,.][0-9]{1,2})?$/.test(value) ||
@@ -54,12 +48,6 @@ const FormInputWithUnit = ({
     }
   };
 
-  const setFormFieldValues = (value, unit) =>
-    form.setFieldValue(field.name, {
-      value,
-      unit,
-    });
-
   useEffect(() => {
     form.setFieldValue(field.name, {
       value: text,
@@ -69,7 +57,6 @@ const FormInputWithUnit = ({
 
   return (
     <Input
-      {...field}
       fluid
       onBlur={() =>
         form.setFieldValue(field.name, {
@@ -77,6 +64,7 @@ const FormInputWithUnit = ({
           unit,
         })
       }
+      {...field}
       placeholder={placeholder}
       error={errMsg}
       onChange={event => {
