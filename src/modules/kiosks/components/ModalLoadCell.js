@@ -371,7 +371,7 @@ const ModalLoadCell = ({
                   }
                 }}
               >
-                {initVal.product.value ? 'Update' : 'Add'}
+                {initVal.product.value ? 'Update' : 'Save'}
               </Button>
             </Modal.Actions>
             <CustomAlert
