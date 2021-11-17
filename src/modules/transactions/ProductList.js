@@ -16,6 +16,7 @@ import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllProducts, getProductsWidgetsData } from './actions';
 import { getProductsDropdownList } from '../products/selectors';
 import { isEqual } from 'lodash';
+import { useComponentDidMount } from 'lib/customHooks';
 
 const sortDefault = [
   {
@@ -100,6 +101,16 @@ const ProductList = ({
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, kiosk, dateRange, product]);
+
+  useComponentDidMount(() => {
+    const startDateOfMonth = new Date(
+      new Date(new Date().setHours(0, 0, 0)).setDate(1),
+    );
+    changeDate({
+      "dateFrom": startDateOfMonth,
+      "dateTo": new Date()
+    })
+  })
 
   return (
     <>
