@@ -93,7 +93,7 @@ const RefillsTable = ({
     >
       {isLoading && <Loader />}
       <Table
-        className="transactions-table"
+        className="refills-table"
         basic
         celled
         unstackable
