@@ -525,7 +525,8 @@ export const getActivityLogsState = createSelector(
             ),
             paymentTerminal:
               activityLogMessages[
-                actLog.payload.message.card_details.payment_terminal
+                actLog.payload.message.card_details &&
+                  actLog.payload.message.card_details.payment_terminal
               ],
             user: actLog.payload.user_id,
             sessionId: actLog.payload.session_id,
