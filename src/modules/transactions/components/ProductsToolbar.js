@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
 import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
+import moment from 'moment'
+const startOfMonth = moment().startOf('month').toDate();
+const currentDay   = new Date();
+const date = [startOfMonth, currentDay];
 
 const Toolbar = ({
   changeDate,
@@ -61,7 +65,7 @@ const Toolbar = ({
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <DatePicker type="range" onChange={handleDateChange} />
+            <DatePicker type="range" onChange={handleDateChange} value={date}/>
           </Grid.Column>
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <SelectCheckBoxes

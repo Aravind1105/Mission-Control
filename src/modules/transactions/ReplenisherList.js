@@ -16,6 +16,7 @@ import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
 import { isEqual } from 'lodash';
+import { useComponentDidMount } from 'lib/customHooks';
 
 const sortDefault = [
   {
@@ -97,6 +98,16 @@ const ReplenisherList = ({
   useEffect(() => {
     getProductListSaga();
   }, []);
+
+  useComponentDidMount(() => {
+    const startDateOfMonth = new Date(
+      new Date(new Date().setHours(0, 0, 0)).setDate(1),
+    );
+    changeDate({
+      "$gte": startDateOfMonth,
+      "$lte": new Date()
+    })
+  })
 
   useEffect(() => {
     getData({ sort });
