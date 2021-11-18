@@ -8,6 +8,8 @@ import {
   getTopSellingKiosksSuccess,
   getTopSellingProductsSuccess,
   getTopSellHoursSuccess,
+  getTopRefillsSuccess,
+  getTopRefills,
 } from '../actions';
 
 const initialState = {
@@ -22,6 +24,9 @@ const initialState = {
   topSellingKiosks: [],
   topSellingProducts: [],
   topSellHours: [],
+  topRefillsWeek: [],
+  topRefillsDay: [],
+  isTopRefillsLoading: false,
 };
 
 const reportsReducer = handleActions(
@@ -55,6 +60,16 @@ const reportsReducer = handleActions(
     [getTopSellHoursSuccess]: (state, { payload }) => ({
       ...state,
       topSellHours: payload.topSellHours,
+    }),
+    [getTopRefills]: state => ({
+      ...state,
+      isTopRefillsLoading: true,
+    }),
+    [getTopRefillsSuccess]: (state, { payload }) => ({
+      ...state,
+      topRefillsWeek: payload.topRefillsWeek,
+      topRefillsDay: payload.topRefillsDay,
+      isTopRefillsLoading: false,
     }),
   },
   initialState,

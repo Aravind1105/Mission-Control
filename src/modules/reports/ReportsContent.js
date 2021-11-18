@@ -13,6 +13,7 @@ import {
   getWidgetDataState,
   getTopSellingProductsState,
   getTopSellHoursState,
+  getTopRefillsState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
@@ -22,10 +23,11 @@ import SoldProductsBarChart from './components/SoldProductsBarChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import './styles.less';
-import { getNetSalesProfitNetCostData } from './actions';
+import { getNetSalesProfitNetCostData, getTopRefills } from './actions';
 import { getNetSalesProfitCostState } from './selectors';
 import Loader from 'modules/shared/components/Loader';
 import './styles.less';
+import BarChart from '../shared/components/BarChart';
 
 const ReportsContent = ({
   isLoading,
@@ -40,6 +42,9 @@ const ReportsContent = ({
   getTopSellingProducts,
   getTopSellingKiosks,
   getTopSellHours,
+  getTopRefills,
+  topRefills,
+  isTopRefillsLoading,
 }) => {
   const [dateRange, changeDateRange] = useState('');
   const [kiosk, changeKiosk] = useState([]);
@@ -57,6 +62,7 @@ const ReportsContent = ({
     getTopSellingKiosks(data);
     getTopSellingProducts(data);
     getTopSellHours(data);
+    getTopRefills(data);
   }, [dateRange, kiosk]);
 
   return (
@@ -151,7 +157,7 @@ const ReportsContent = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Grid className="reports-sold-products-barchart">
+      <Grid>
         <Grid.Row stretched>
           {isLoading && <Loader />}
           <Grid.Column mobile={16} computer={8}>
@@ -160,7 +166,36 @@ const ReportsContent = ({
                 <SoldProductsBarChart
                   data={topSellHours}
                   dateRange={dateRange}
-                ></SoldProductsBarChart>
+                />
+              </Segment>
+            )}
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={8}>
+            {isTopRefillsLoading && <Loader />}
+            {!isTopRefillsLoading && (
+              <Segment>
+                <BarChart
+                  data={topRefills}
+                  dateRange={dateRange}
+                  defaultGraphType="daily"
+                  xAxisDataKey="key"
+                  yAxisDataKey="amount"
+                  xAxisLegend={{
+                    daily: 'Hours of the day',
+                    weekly: 'Days of the week',
+                  }}
+                  yAxisLegend={{
+                    daily: 'Accumulated added products per hour',
+                    weekly: 'Accumulated added products per day',
+                  }}
+                  barColor="#2f80ed"
+                  widgetTextColor="#2f80ed"
+                  toolTipTextColor="#2f80ed"
+                  widgetLegend={{
+                    daily: 'peak hour',
+                    weekly: 'highest activity',
+                  }}
+                />
               </Segment>
             )}
           </Grid.Column>
@@ -178,6 +213,8 @@ const mapStateToProps = state => ({
   topSellingKiosks: getTopSellingKiosksState(state),
   topSellingProducts: getTopSellingProductsState(state),
   topSellHours: getTopSellHoursState(state),
+  topRefills: getTopRefillsState(state),
+  isTopRefillsLoading: state.reports.isTopRefillsLoading,
 });
 
 const mapDispatchToProps = {
@@ -186,6 +223,7 @@ const mapDispatchToProps = {
   getTopSellingKiosks,
   getTopSellingProducts,
   getTopSellHours,
+  getTopRefills,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContent);
