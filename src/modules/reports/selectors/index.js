@@ -20,3 +20,11 @@ export const getTopSellingKiosksState = createSelector(
       return row;
     }),
 );
+
+export const getTopRefillsState = createSelector(
+  state => state.reports,
+  data => ({
+    weekly: data.topRefillsWeek,
+    daily: data.topRefillsDay,
+  }),
+);

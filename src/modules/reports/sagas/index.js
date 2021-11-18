@@ -5,6 +5,7 @@ import getNetSalesProfitCostData from './getNetSalesProfitNetCostData';
 import getTopSellingKiosks from './getTopSellingKiosks';
 import getTopSellingProducts from './getTopSellingProducts';
 import getTopSellHours from './getTopSellHours';
+import getTopRefills from './getTopRefills';
 
 export default function* reportsSaga() {
   yield all([
@@ -13,5 +14,6 @@ export default function* reportsSaga() {
     fork(getTopSellingProducts),
     fork(getNetSalesProfitCostData),
     fork(getTopSellHours),
+    fork(getTopRefills),
   ]);
 }

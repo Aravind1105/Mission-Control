@@ -62,4 +62,19 @@ export const GET_TOP_SELL_HOURS = gql`
   }
 `;
 
+export const GET_TOP_REFILLS = gql`
+  query($period: Period!, $kioskIds: [String]) {
+    getTopRefillsWeek(period: $period, kioskIds: $kioskIds) {
+      amount
+      key
+      grouping
+    }
+    getTopRefillsHour(period: $period, kioskIds: $kioskIds) {
+      amount
+      key
+      grouping
+    }
+  }
+`;
+
 export default {};
