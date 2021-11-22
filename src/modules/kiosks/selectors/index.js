@@ -47,6 +47,10 @@ const activityLogMessages = {
   valid_membercard_read: 'Valid MemberCard Read',
   invalid_card_read: 'Invalid Card Read',
   payment_failed: 'Payment Failed',
+  app_purchase: 'Consumer App Purchase',
+  member_purchase: 'MemberCard Purchase',
+  terminal_purchase: 'Terminal Purchase',
+  refill: 'Replenishment',
 };
 
 const playlistTypes = {
@@ -513,6 +517,10 @@ export const getActivityLogsState = createSelector(
         return {
           created: date,
           event: {
+            type:
+              actLog.type !== 'status'
+                ? activityLogMessages[actLog.type]
+                : null,
             alertType: activityLogMessages[actLog.payload.message.alert_type],
             doorStatus: activityLogMessages[actLog.payload.message.door_status],
             touchedScales: getActivityLogsScaleName(
