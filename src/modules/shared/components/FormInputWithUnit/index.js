@@ -53,7 +53,7 @@ const FormInputWithUnit = ({
       value: text,
       unit,
     });
-  }, [unit]);
+  }, [unit, text]);
 
   return (
     <Input
