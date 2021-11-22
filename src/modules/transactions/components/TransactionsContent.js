@@ -67,6 +67,19 @@ const columns = [
     },
   },
   {
+    title: 'Member Card ID',
+    field: 'paymentMethod',
+    formatter: ({ paymentMethod }) => {
+      if (paymentMethod && paymentMethod.membercardId) {
+        return (
+          <div style={{ textAlign: 'center' }}>
+            {paymentMethod.membercardId}
+          </div>
+        );
+      }
+    },
+  },
+  {
     title: 'Article Number',
     field: 'articleNumber',
   },
