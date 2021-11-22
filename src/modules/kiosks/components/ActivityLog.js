@@ -42,6 +42,8 @@ const columns = [
     title: 'Event',
     field: 'event',
     formatter: ({ event }) => {
+      if (event.type !== null && event.type !== undefined)
+        return `Session Type: ${event.type}`;
       if (event.doorStatus !== null && event.doorStatus !== undefined)
         return `Door Status: ${event.doorStatus}`;
       else if (event.alertType !== null && event.alertType !== undefined)
