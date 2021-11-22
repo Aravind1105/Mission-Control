@@ -180,10 +180,10 @@ const ProductForm = ({
           packagingOptionsGrossWeightGrams: Yup.string().required(
             'This field is required',
           ),
-          packagingOptionsNetWeightGrams: Yup.object({
-            value: Yup.number().required('This field is required'),
-            unit: Yup.string().required('This field is required'),
-          }),
+          // packagingOptionsNetWeightGrams: Yup.object({
+          //   value: Yup.number().required('This field is required'),
+          //   unit: Yup.string().required('This field is required'),
+          // }),
           capacitiesSurfaceSize_33: Yup.number().required(
             'This field is required',
           ),
@@ -305,7 +305,7 @@ const ProductForm = ({
                       maxLength="5"
                       component={FormInputWithUnit}
                       limiting="integerField"
-                      required
+                      // required
                       unitOptions={[
                         { key: 'ml', text: 'ml', value: 'ml' },
                         { key: 'g', text: 'g', value: 'g' },
