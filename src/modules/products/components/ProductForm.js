@@ -12,9 +12,7 @@ import {
 } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import prettierNumber from 'lib/prettierNumber';
 import FormInput from 'modules/shared/components/FormInput';
-import FormInputWithSelector from 'modules/shared/components/FormInputWithSelector';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
@@ -180,10 +178,10 @@ const ProductForm = ({
           packagingOptionsGrossWeightGrams: Yup.string().required(
             'This field is required',
           ),
-          // packagingOptionsNetWeightGrams: Yup.object({
-          //   value: Yup.number().required('This field is required'),
-          //   unit: Yup.string().required('This field is required'),
-          // }),
+          packagingOptionsNetWeightGrams: Yup.object({
+            value: Yup.number().required('This field is required'),
+            unit: Yup.string().required('This field is required'),
+          }),
           capacitiesSurfaceSize_33: Yup.number().required(
             'This field is required',
           ),
@@ -305,7 +303,7 @@ const ProductForm = ({
                       maxLength="5"
                       component={FormInputWithUnit}
                       limiting="integerField"
-                      // required
+                      required
                       unitOptions={[
                         { key: 'ml', text: 'ml', value: 'ml' },
                         { key: 'g', text: 'g', value: 'g' },
