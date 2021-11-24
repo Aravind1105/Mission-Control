@@ -21,10 +21,8 @@ const FormInputWithUnit = ({
   const [unit, setUnit] = useState(unitOptions[defaultUnitIndex].value);
 
   useEffect(() => {
-    if(form.values[field.name] && form.values[field.name].value) {
-      changeText(form.values[field.name].value);
-      setUnit(form.values[field.name].unit);
-    }
+    changeText(form.values[field.name].value);
+    setUnit(form.values[field.name].unit);
   }, [form.values[field.name]]);
 
   const handleValueChange = value => {
@@ -44,8 +42,16 @@ const FormInputWithUnit = ({
     } else if (limiting === 'integerField') {
       if (/^\d+$/.test(value)) {
         changeText(value);
+        form.setFieldValue(field.name, {
+          value: value,
+          unit,
+        });
       } else if (value === '') {
         changeText('');
+        form.setFieldValue(field.name, {
+          value: '',
+          unit,
+        });
       }
     }
   };
@@ -55,17 +61,11 @@ const FormInputWithUnit = ({
       value: text,
       unit,
     });
-  }, [unit, text]);
+  }, [unit]);
 
   return (
     <Input
       fluid
-      onBlur={() =>
-        form.setFieldValue(field.name, {
-          value: text,
-          unit,
-        })
-      }
       {...field}
       placeholder={placeholder}
       error={errMsg}
