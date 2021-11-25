@@ -21,8 +21,10 @@ const FormInputWithUnit = ({
   const [unit, setUnit] = useState(unitOptions[defaultUnitIndex].value);
 
   useEffect(() => {
-    changeText(form.values[field.name].value);
-    setUnit(form.values[field.name].unit);
+    if (form.values[field.name]) {
+      changeText(form.values[field.name].value);
+      setUnit(form.values[field.name].unit);
+    }
   }, [form.values[field.name]]);
 
   const handleValueChange = value => {
