@@ -36,6 +36,15 @@ export const getTopSellHours = createAction('@@saga/GET_TOP_SELL_HOURS');
 export const getTopSellHoursSuccess = createAction(
   '@@state/GET_TOP_SELL_HOURS_SUCCESS',
 );
+
+// Action For Payment Methods PeiChart
+export const getPaymentsMethodsStats = createAction(
+  '@@saga/GET_PAYMENTS_METHODS_STATS',
+);
+export const getPaymentsMethodsStatsSuccess = createAction(
+  '@@state/GET_PAYMENTS_METHODS_STATS_SUCCESS',
+);
+
 export const getTopRefillsSuccess = createAction(
   '@@state/GET_TOP_REFILLS_SUCCESS',
 );

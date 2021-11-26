@@ -11,6 +11,9 @@ export const getTopSellingProductsState = state =>
 
 export const getTopSellHoursState = state => state.reports.topSellHours;
 
+export const getPaymentsMethodsState = state =>
+  state.reports.paymentMethodsStats;
+
 export const getTopSellingKiosksState = createSelector(
   state => state.reports.topSellingKiosks,
   data =>

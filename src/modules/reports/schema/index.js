@@ -77,4 +77,13 @@ export const GET_TOP_REFILLS = gql`
   }
 `;
 
+export const GET_PAYMENTS_METHODS_STATS = gql`
+  query($period: Period!) {
+    getPaymentsMethodsStats(period: $period) {
+      _id
+      cnt
+    }
+  }
+`;
+
 export default {};
