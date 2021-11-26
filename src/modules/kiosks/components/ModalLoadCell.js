@@ -64,7 +64,8 @@ const ModalLoadCell = ({
   deleteLoadCell,
   usedPositions,
 }) => {
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAddAlert, setShowAddAlert] = useState(false);
+  const [showUpdateAlert, setShowUpdateAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [quantityState, setQuantityState] = useState(initVal.quantity);
   const [position, setPosition] = useState('');
@@ -360,10 +361,10 @@ const ModalLoadCell = ({
                 onClick={() => {
                   if (R.isEmpty(errors)) {
                     if (!isAddLoadCell) {
-                      setShowAlert(true);
+                      setShowUpdateAlert(true);
                     } else {
                       if (validateCellContents()) {
-                        setShowAlert(true);
+                        setShowAddAlert(true);
                       } else if (!isValidPosition) {
                         setShowPositionErrorAlert(true);
                       }
@@ -375,19 +376,35 @@ const ModalLoadCell = ({
               </Button>
             </Modal.Actions>
             <CustomAlert
-              visible={showAlert}
+              visible={showUpdateAlert}
               onApprove={() => {
                 handleSave(productInfo);
-                setShowAlert(false);
+                setShowUpdateAlert(false);
               }}
-              onCancel={() => setShowAlert(false)}
+              onCancel={() => setShowUpdateAlert(false)}
               alertMsg={
                 (isAddLoadCell &&
                   !isValidPosition &&
                   !showPositionErrorAlert) ||
                 (initVal.cellId.value && !isValidPosition)
                   ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
-                  : `Are you sure you want to\nupdate the product?`
+                  : `Are you sure you want to\nupdate the scale?`
+              }
+            />
+            <CustomAlert
+              visible={showAddAlert}
+              onApprove={() => {
+                handleSave(productInfo);
+                setShowAddAlert(false);
+              }}
+              onCancel={() => setShowAddAlert(false)}
+              alertMsg={
+                (isAddLoadCell &&
+                  !isValidPosition &&
+                  !showPositionErrorAlert) ||
+                (initVal.cellId.value && !isValidPosition)
+                  ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
+                  : `Are you sure you want to\nadd the scale?`
               }
             />
             <CustomAlert
@@ -399,7 +416,7 @@ const ModalLoadCell = ({
               alertMsg={
                 quantityState === 0
                   ? 'Are you sure you want to\ndelete this scale?'
-                  : 'There are still some products on this scale.\nAre you sure want to delete?'
+                  : 'There are still some products on this scale.\nAre you sure you want to delete?'
               }
             />
             <CustomAlert
