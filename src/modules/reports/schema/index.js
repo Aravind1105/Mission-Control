@@ -57,7 +57,11 @@ export const GET_TOP_SELL_HOURS = gql`
   query($period: Period!, $kioskIds: [String]) {
     getTopSellHours(period: $period, kioskIds: $kioskIds) {
       amount
-      hour
+      key
+    }
+    getTopSellWeek(period: $period, kioskIds: $kioskIds) {
+      amount
+      key
     }
   }
 `;

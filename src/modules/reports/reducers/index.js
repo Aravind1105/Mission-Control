@@ -7,11 +7,12 @@ import {
   getNetSalesProfitCostDataSuccess,
   getTopSellingKiosksSuccess,
   getTopSellingProductsSuccess,
-  getTopSellHoursSuccess,
+  getTopSellSuccess,
   getTopRefillsSuccess,
   getTopRefills,
   getPaymentsMethodsStats,
   getPaymentsMethodsStatsSuccess,
+  getTopSell,
 } from '../actions';
 
 const initialState = {
@@ -26,6 +27,8 @@ const initialState = {
   topSellingKiosks: [],
   topSellingProducts: [],
   topSellHours: [],
+  topSellWeek: [],
+  isTopSellLoading: false,
   topRefillsWeek: [],
   topRefillsDay: [],
   isTopRefillsLoading: false,
@@ -61,9 +64,15 @@ const reportsReducer = handleActions(
       ...state,
       topSellingProducts: payload.topSellingProducts,
     }),
-    [getTopSellHoursSuccess]: (state, { payload }) => ({
+    [getTopSell]: state => ({
       ...state,
+      isTopSellLoading: true,
+    }),
+    [getTopSellSuccess]: (state, { payload }) => ({
+      ...state,
+      isTopSellLoading: false,
       topSellHours: payload.topSellHours,
+      topSellWeek: payload.topSellWeek,
     }),
     [getTopRefills]: state => ({
       ...state,
