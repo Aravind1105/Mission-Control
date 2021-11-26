@@ -10,6 +10,7 @@ import {
 import { DELETE_LOAD_CELL } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 import { refillMode } from '../selectors';
+import { toast } from 'react-semantic-toasts';
 
 function* handler({ payload }) {
   try {
@@ -31,6 +32,11 @@ function* handler({ payload }) {
         },
       };
       yield put(actionSuccess(kiosk));
+      toast({
+        type: 'success',
+        description: 'Scale was deleted successfully.',
+        animation: 'fade left',
+      });
       callback();
     }
   } catch (error) {
