@@ -6,6 +6,9 @@ import {
   getTopSellingKiosks,
   getTopSellingProducts,
   getTopSellHours,
+  getPaymentsMethodsStats,
+  getNetSalesProfitNetCostData,
+  getTopRefills,
 } from './actions';
 import StatsCard from 'modules/shared/components/StatsCard';
 import {
@@ -13,7 +16,9 @@ import {
   getWidgetDataState,
   getTopSellingProductsState,
   getTopSellHoursState,
+  getNetSalesProfitCostState,
   getTopRefillsState,
+  getPaymentsMethodsState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
@@ -23,11 +28,10 @@ import SoldProductsBarChart from './components/SoldProductsBarChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import './styles.less';
-import { getNetSalesProfitNetCostData, getTopRefills } from './actions';
-import { getNetSalesProfitCostState } from './selectors';
 import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 import BarChart from '../shared/components/BarChart';
+import UsedPaymentMethodsPiChart from './components/UsedPaymentMethodsPiChart';
 
 const ReportsContent = ({
   isLoading,
@@ -45,6 +49,9 @@ const ReportsContent = ({
   getTopRefills,
   topRefills,
   isTopRefillsLoading,
+  isPaymentMethodLoading,
+  paymentMethodsStats,
+  getPaymentsMethodsStats,
 }) => {
   const [dateRange, changeDateRange] = useState('');
   const [kiosk, changeKiosk] = useState([]);
@@ -63,6 +70,7 @@ const ReportsContent = ({
     getTopSellingProducts(data);
     getTopSellHours(data);
     getTopRefills(data);
+    getPaymentsMethodsStats(data);
   }, [dateRange, kiosk]);
 
   return (
@@ -151,9 +159,19 @@ const ReportsContent = ({
       </Grid>
       <Grid className="kiosks-reports-table">
         <Grid.Row stretched>
-          {isLoading && <Loader />}
           <Grid.Column mobile={16} computer={8}>
+            {isLoading && <Loader />}
             <TopSellingKiosksTable topSellingKiosks={topSellingKiosks} />
+          </Grid.Column>
+          <Grid.Column mobile={16} computer={8}>
+            {isPaymentMethodLoading && <Loader />}
+            {!isPaymentMethodLoading && (
+              <Segment>
+                <UsedPaymentMethodsPiChart
+                  paymentMethodsStatsdata={paymentMethodsStats}
+                />
+              </Segment>
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -215,6 +233,8 @@ const mapStateToProps = state => ({
   topSellHours: getTopSellHoursState(state),
   topRefills: getTopRefillsState(state),
   isTopRefillsLoading: state.reports.isTopRefillsLoading,
+  isPaymentMethodLoading: state.reports.isPaymentMethodLoading,
+  paymentMethodsStats: getPaymentsMethodsState(state),
 });
 
 const mapDispatchToProps = {
@@ -224,6 +244,7 @@ const mapDispatchToProps = {
   getTopSellingProducts,
   getTopSellHours,
   getTopRefills,
+  getPaymentsMethodsStats,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContent);
