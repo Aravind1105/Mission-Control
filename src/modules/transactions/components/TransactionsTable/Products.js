@@ -105,6 +105,8 @@ const ProductsTable = ({
                 onClick={
                   sortable ? handlerHCellClick('productLine') : undefined
                 }
+                textAlign="left"
+                width={4}
                 rowSpan="2"
               >
                 Product Name
@@ -117,7 +119,8 @@ const ProductsTable = ({
             </Table.Row>
             <Table.Row>
               <Table.HeaderCell
-                textAlign="center"
+                textAlign="left"
+                width={2}
                 sorted={sortBy === 'sold' ? direction : null}
                 onClick={sortable ? handlerHCellClick('sold') : null}
               >
@@ -125,43 +128,48 @@ const ProductsTable = ({
               </Table.HeaderCell>
 
               <Table.HeaderCell
-                textAlign="right"
+                textAlign="left"
                 sorted={sortBy === 'totalGrossSales' ? direction : null}
                 onClick={sortable ? handlerHCellClick('totalGrossSales') : null}
+                width={2}
               >
                 Value
               </Table.HeaderCell>
 
               <Table.HeaderCell
-                textAlign="center"
+                textAlign="left"
                 sorted={sortBy === 'refilled' ? direction : null}
                 onClick={sortable ? handlerHCellClick('refilled') : null}
+                width={2}
               >
                 Quantity
               </Table.HeaderCell>
 
               <Table.HeaderCell
-                textAlign="right"
+                textAlign="left"
                 sorted={sortBy === 'totalCost' ? direction : null}
                 onClick={sortable ? handlerHCellClick('totalCost') : null}
+                width={2}
               >
                 Value
               </Table.HeaderCell>
 
               <Table.HeaderCell
-                textAlign="center"
+                textAlign="left"
                 sorted={sortBy === 'removed' ? direction : null}
                 onClick={sortable ? handlerHCellClick('removed') : null}
+                width={2}
               >
                 Quantity
               </Table.HeaderCell>
 
               <Table.HeaderCell
-                textAlign="right"
+                textAlign="left"
                 sorted={sortBy === 'totalRemovedCost' ? direction : null}
                 onClick={
                   sortable ? handlerHCellClick('totalRemovedCost') : null
                 }
+                width={2}
               >
                 Value
               </Table.HeaderCell>
