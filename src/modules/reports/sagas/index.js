@@ -4,7 +4,7 @@ import getWidgetData from './getWidgetData';
 import getNetSalesProfitCostData from './getNetSalesProfitNetCostData';
 import getTopSellingKiosks from './getTopSellingKiosks';
 import getTopSellingProducts from './getTopSellingProducts';
-import getTopSellHours from './getTopSellHours';
+import getTopSell from './getTopSell';
 import getTopRefills from './getTopRefills';
 import getPaymentsMethodsStats from './getPaymentsMethodsStats';
 
@@ -14,7 +14,7 @@ export default function* reportsSaga() {
     fork(getTopSellingKiosks),
     fork(getTopSellingProducts),
     fork(getNetSalesProfitCostData),
-    fork(getTopSellHours),
+    fork(getTopSell),
     fork(getTopRefills),
     fork(getPaymentsMethodsStats),
   ]);

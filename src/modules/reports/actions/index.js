@@ -32,8 +32,8 @@ export const getTopSellingProductsSuccess = createAction(
 export const getTopRefills = createAction('@@saga/GET_TOP_REFILLS');
 
 // Action For Top Selling Products BarChart
-export const getTopSellHours = createAction('@@saga/GET_TOP_SELL_HOURS');
-export const getTopSellHoursSuccess = createAction(
+export const getTopSell = createAction('@@saga/GET_TOP_SELL_HOURS');
+export const getTopSellSuccess = createAction(
   '@@state/GET_TOP_SELL_HOURS_SUCCESS',
 );
 

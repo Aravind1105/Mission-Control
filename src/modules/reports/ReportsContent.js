@@ -5,7 +5,7 @@ import {
   getWidgetData,
   getTopSellingKiosks,
   getTopSellingProducts,
-  getTopSellHours,
+  getTopSell,
   getPaymentsMethodsStats,
   getNetSalesProfitNetCostData,
   getTopRefills,
@@ -15,7 +15,7 @@ import {
   getTopSellingKiosksState,
   getWidgetDataState,
   getTopSellingProductsState,
-  getTopSellHoursState,
+  getTopSellState,
   getNetSalesProfitCostState,
   getTopRefillsState,
   getPaymentsMethodsState,
@@ -24,7 +24,6 @@ import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
 import { format } from 'date-fns';
 import AreaChartComponent from './components/AreaChart';
-import SoldProductsBarChart from './components/SoldProductsBarChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import './styles.less';
@@ -41,14 +40,15 @@ const ReportsContent = ({
   getNetSalesProfitNetCostData,
   topSellingKiosks,
   topSellingProducts,
-  topSellHours,
+  topSell,
   getWidgetData,
   getTopSellingProducts,
   getTopSellingKiosks,
-  getTopSellHours,
+  getTopSell,
   getTopRefills,
   topRefills,
   isTopRefillsLoading,
+  isTopSellLoading,
   isPaymentMethodLoading,
   paymentMethodsStats,
   getPaymentsMethodsStats,
@@ -68,7 +68,7 @@ const ReportsContent = ({
     getNetSalesProfitNetCostData(data);
     getTopSellingKiosks(data);
     getTopSellingProducts(data);
-    getTopSellHours(data);
+    getTopSell(data);
     getTopRefills(data);
     getPaymentsMethodsStats(data);
   }, [dateRange, kiosk]);
@@ -177,13 +177,31 @@ const ReportsContent = ({
       </Grid>
       <Grid>
         <Grid.Row stretched>
-          {isLoading && <Loader />}
           <Grid.Column mobile={16} computer={8}>
-            {topSellHours && (
+            {isTopSellLoading && <Loader />}
+            {!isTopSellLoading && (
               <Segment>
-                <SoldProductsBarChart
-                  data={topSellHours}
+                <BarChart
+                  data={topSell}
                   dateRange={dateRange}
+                  defaultGraphType="daily"
+                  xAxisDataKey="key"
+                  yAxisDataKey="amount"
+                  xAxisLegend={{
+                    daily: 'Hours of the day',
+                    weekly: 'Days of the week',
+                  }}
+                  yAxisLegend={{
+                    daily: 'Accumulated sales per hour',
+                    weekly: 'Accumulated sales per day',
+                  }}
+                  barColor="#56CCF2"
+                  widgetTextColor="#56CCF2"
+                  toolTipTextColor="#56CCF2"
+                  widgetLegend={{
+                    daily: 'peak hour',
+                    weekly: 'highest activity',
+                  }}
                 />
               </Segment>
             )}
@@ -230,8 +248,9 @@ const mapStateToProps = state => ({
   NetSalesProfitNetCostData: getNetSalesProfitCostState(state),
   topSellingKiosks: getTopSellingKiosksState(state),
   topSellingProducts: getTopSellingProductsState(state),
-  topSellHours: getTopSellHoursState(state),
+  topSell: getTopSellState(state),
   topRefills: getTopRefillsState(state),
+  isTopSellLoading: state.reports.isTopSellLoading,
   isTopRefillsLoading: state.reports.isTopRefillsLoading,
   isPaymentMethodLoading: state.reports.isPaymentMethodLoading,
   paymentMethodsStats: getPaymentsMethodsState(state),
@@ -242,7 +261,7 @@ const mapDispatchToProps = {
   getNetSalesProfitNetCostData,
   getTopSellingKiosks,
   getTopSellingProducts,
-  getTopSellHours,
+  getTopSell,
   getTopRefills,
   getPaymentsMethodsStats,
 };

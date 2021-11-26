@@ -2,8 +2,8 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import gqlReports from 'lib/https/gqlTransactions';
 import {
-  getTopSellHours as action,
-  getTopSellHoursSuccess as actionSuccess,
+  getTopSell as action,
+  getTopSellSuccess as actionSuccess,
 } from '../actions';
 import { GET_TOP_SELL_HOURS } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
@@ -20,7 +20,7 @@ function* handler({ payload }) {
   }
   try {
     const {
-      data: { getTopSellHours },
+      data: { getTopSellHours, getTopSellWeek },
       errors,
     } = yield call(gqlReports.query, {
       query: GET_TOP_SELL_HOURS,
@@ -39,6 +39,7 @@ function* handler({ payload }) {
       yield put(
         actionSuccess({
           topSellHours: getTopSellHours,
+          topSellWeek: getTopSellWeek,
         }),
       );
     }

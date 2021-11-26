@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import get from 'lodash/get';
 
 export const getWidgetDataState = state => state.reports.widgetData;
 
@@ -9,7 +8,13 @@ export const getNetSalesProfitCostState = state =>
 export const getTopSellingProductsState = state =>
   state.reports.topSellingProducts;
 
-export const getTopSellHoursState = state => state.reports.topSellHours;
+export const getTopSellState = createSelector(
+  state => state.reports,
+  data => ({
+    daily: data.topSellHours,
+    weekly: data.topSellWeek,
+  }),
+);
 
 export const getPaymentsMethodsState = state =>
   state.reports.paymentMethodsStats;
