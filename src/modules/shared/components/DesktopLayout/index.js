@@ -59,7 +59,10 @@ const DesktopLayout = ({
         <Menu secondary fixed="top" className="desktop-navigation-secondary">
           <Menu.Menu position="right">
             <Menu.Item>
-              <AlertsList alerts={alerts} />
+              {
+                // LIV-2772 Hiding the notification Button
+                /* <AlertsList alerts={alerts} /> */
+              }
             </Menu.Item>
             {/* <Menu.Item>
               <LanguageSelect />
