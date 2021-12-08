@@ -6,19 +6,19 @@ const columns = [
     title: 'Date / Time',
     field: 'created',
     formatter: ({ created }) => {
-      if (created === '') {
+      if (!created) {
         return '';
-      } else
-        return (
-          <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
-        );
+      }
+      return (
+        <div style={{ textAlign: 'left', width: '120px' }}> {created} </div>
+      );
     },
   },
   {
     title: 'Kiosk',
     field: 'kioskName',
     formatter: ({ kioskName }) => {
-      if (kioskName === '') {
+      if (!kioskName) {
         return '';
       }
       return <div style={{ textAlign: 'left' }}> {kioskName} </div>;
@@ -29,10 +29,14 @@ const columns = [
     field: 'paymentMethod',
     formatter: ({ paymentMethod }) => {
       if (paymentMethod) {
-        if (paymentMethod.membercardId !== null)
+        if (paymentMethod.membercardId)
           return <div style={{ textAlign: 'center' }}>Member Card</div>;
-        else if (paymentMethod.stripeCustomerId !== null)
+        else if (paymentMethod.stripeCustomerId)
           return <div style={{ textAlign: 'center' }}>Consumer App</div>;
+        else if (paymentMethod.cardType)
+          return (
+            <div style={{ textAlign: 'center' }}>{paymentMethod.cardType}</div>
+          );
         else return <div style={{ textAlign: 'center' }}>Payment Terminal</div>;
       }
     },
@@ -42,10 +46,7 @@ const columns = [
     field: 'paymentMethod',
     formatter: ({ paymentMethod }) => {
       if (paymentMethod) {
-        if (
-          paymentMethod.isPaid === false &&
-          paymentMethod.stripePaymentIntentId !== null
-        ) {
+        if (!paymentMethod.isPaid && paymentMethod.stripePaymentIntentId) {
           return (
             <div style={{ textAlign: 'center' }}>
               <a
@@ -57,11 +58,11 @@ const columns = [
             </div>
           );
         } else if (
-          paymentMethod.isPaid === false &&
-          paymentMethod.stripePaymentIntentId === null
+          !paymentMethod.isPaid &&
+          !paymentMethod.stripePaymentIntentId
         )
           return <div style={{ textAlign: 'center' }}>Not Paid</div>;
-        else if (paymentMethod.isPaid === true)
+        else if (paymentMethod.isPaid)
           return <div style={{ textAlign: 'center' }}>Paid</div>;
       }
     },
@@ -70,7 +71,7 @@ const columns = [
     title: 'Member Card ID',
     field: 'paymentMethod',
     formatter: ({ paymentMethod }) => {
-      if (paymentMethod && paymentMethod.membercardId) {
+      if (paymentMethod?.membercardId) {
         return (
           <div style={{ textAlign: 'center' }}>
             {paymentMethod.membercardId}
@@ -87,7 +88,7 @@ const columns = [
     title: 'Product',
     field: 'productName',
     formatter: ({ productName }) => {
-      if (productName === '') {
+      if (!productName) {
         return '';
       }
       return <div style={{ textAlign: 'left' }}> {productName} </div>;
@@ -99,7 +100,8 @@ const columns = [
     formatter: ({ quantity }) => {
       if (quantity === 0) {
         return '';
-      } else return <div style={{ textAlign: 'center' }}> {quantity} </div>;
+      }
+      return <div style={{ textAlign: 'center' }}> {quantity} </div>;
     },
   },
   {
@@ -108,8 +110,8 @@ const columns = [
     formatter: ({ price }) => {
       if (price === 0) {
         return '';
-      } else
-        return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
+      }
+      return <div style={{ textAlign: 'right' }}> {price.toFixed(2)}€ </div>;
     },
   },
   {
@@ -118,8 +120,8 @@ const columns = [
     formatter: ({ total }) => {
       if (total === 0) {
         return '';
-      } else
-        return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
+      }
+      return <div style={{ textAlign: 'right' }}> {total.toFixed(2)}€ </div>;
     },
   },
 ];
@@ -130,9 +132,6 @@ const TransactionsContent = ({
   getData,
   setSortByInCaller,
 }) => {
-  // const clickRow = ({ _id }) => {
-  //   history.push(`/kiosks/detail/${_id}`);
-  // };
   return (
     <TransactionsTable
       sortByColumn="created"
