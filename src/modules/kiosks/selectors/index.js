@@ -9,6 +9,7 @@ import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
 import moment from 'moment';
+import { cardTypeMessages } from '../../transactions/selectors';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 export const refillMode = {
@@ -44,13 +45,15 @@ const activityLogMessages = {
   door_not_opened: 'Door Not Opened',
   payment_success: 'Payment Success',
   valid_card_read: 'Valid Card Read',
-  valid_membercard_read: 'Valid MemberCard Read',
+  valid_membercard_read: 'Valid Member Card Read',
+  valid_dmayrcard_read: 'Valid Member Card Read',
   invalid_card_read: 'Invalid Card Read',
   payment_failed: 'Payment Failed',
   app_purchase: 'Consumer App Purchase',
-  member_purchase: 'MemberCard Purchase',
+  member_purchase: 'Member Card Purchase',
   terminal_purchase: 'Terminal Purchase',
-  refill: 'Replenishment',
+  mc_refill: 'Replenishment (Mission Control)',
+  tablet_refill: 'Replenishment (Tablet)',
 };
 
 const playlistTypes = {
@@ -519,24 +522,39 @@ export const getActivityLogsState = createSelector(
           event: {
             type:
               actLog.type !== 'status'
-                ? activityLogMessages[actLog.type]
+                ? actLog.type === 'refill' && actLog.payload.user_id
+                  ? activityLogMessages['mc_refill']
+                  : actLog.type === 'refill' && !actLog.payload.user_id
+                  ? activityLogMessages['tablet_refill']
+                  : activityLogMessages[actLog.type]
                 : null,
-            alertType: activityLogMessages[actLog.payload.message.alert_type],
-            doorStatus: activityLogMessages[actLog.payload.message.door_status],
+            alertType: activityLogMessages[actLog.payload.message?.alert_type],
+            sessionId: actLog.payload.session_id,
+            doorStatus:
+              activityLogMessages[actLog.payload.message?.door_status],
             touchedScales: getActivityLogsScaleName(
               state.kiosks.kiosk,
-              actLog.payload.message.touchedScales,
+              actLog.payload.message?.touchedScales,
             ),
             scales: getActivityLogsScaleName(
               state.kiosks.kiosk,
-              actLog.payload.message.scales,
+              actLog.payload.message?.scales,
             ),
-            paymentTerminal:
-              activityLogMessages[
-                actLog.payload.message.card_details &&
-                  actLog.payload.message.card_details.payment_terminal
-              ],
-            user: actLog.payload.user_id,
+            cardDetails: {
+              paymentTerminal:
+                activityLogMessages[
+                  actLog.payload.message?.card_details?.payment_terminal
+                ],
+              cardName:
+                cardTypeMessages[
+                  actLog.payload.message?.card_details?.zvtMessage?.card_name
+                ] ||
+                actLog.payload.message?.card_details?.zvtMessage?.card_name,
+              cardNumber:
+                actLog.payload.message?.card_details?.zvtMessage?.card_number,
+            },
+            userId: actLog.payload.user_id,
+            userName: actLog.payload.user_name,
             sessionId: actLog.payload.session_id,
           },
         };

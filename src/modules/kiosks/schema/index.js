@@ -434,6 +434,7 @@ export const GET_ACTIVITY_LOGS = gql`
         payload {
           fridge_id
           user_id
+          user_name
           session_id
           id
           message_timestamp
@@ -451,6 +452,11 @@ export const GET_ACTIVITY_LOGS = gql`
             }
             card_details {
               payment_terminal
+              zvtMessage {
+                card_name
+                card_type
+                card_number
+              }
             }
           }
         }
