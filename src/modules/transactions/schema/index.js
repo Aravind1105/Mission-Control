@@ -42,6 +42,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
           stripePaymentIntentId
           isPaid
           membercardId
+          cardType
         }
         itemsPurchased {
           price
