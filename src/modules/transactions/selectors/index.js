@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import format from 'date-fns/format';
 import get from 'lodash/get';
 
-const cardTypeMessages = {
+export const cardTypeMessages = {
   girocard: 'Girocard',
   'Visa Credit': 'Visa Credit',
   'VISA DEBIT': 'Visa Debit',
@@ -93,7 +93,9 @@ export const getTransactionsTableState = createSelector(
           transactionID: rest._id,
           userId: rest.userId,
           paymentMethod: {
-            cardType: cardTypeMessages[paymentMethod[0].cardType],
+            cardType:
+              cardTypeMessages[paymentMethod[0].cardType] ||
+              paymentMethod[0].cardType,
             ...paymentRest,
           },
           type: rest.type,
