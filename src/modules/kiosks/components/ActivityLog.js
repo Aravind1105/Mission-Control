@@ -51,9 +51,13 @@ const columns = [
           event.cardDetails.paymentTerminal === 'Valid Card Read' ||
           event.cardDetails.paymentTerminal === 'Invalid Card Read'
         )
-          text = 'Card Type: ' + event.cardDetails.cardName + '\n\n';
+          text =
+            event.cardDetails.cardName &&
+            'Card Type: ' + event.cardDetails.cardName + '\n\n';
         else if (event.cardDetails.paymentTerminal === 'Valid Member Card Read')
-          text = 'Card Id: ' + event.cardDetails.cardNumber + '\n\n';
+          text =
+            event.cardDetails.cardId &&
+            'Card Id: ' + event.cardDetails.cardId + '\n\n';
         return text + 'Payment Terminal: ' + event.cardDetails.paymentTerminal;
       } else if (event.type)
         return `${

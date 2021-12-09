@@ -550,8 +550,7 @@ export const getActivityLogsState = createSelector(
                   actLog.payload.message?.card_details?.zvtMessage?.card_name
                 ] ||
                 actLog.payload.message?.card_details?.zvtMessage?.card_name,
-              cardNumber:
-                actLog.payload.message?.card_details?.zvtMessage?.card_number,
+              cardId: actLog.payload.message?.card_details?.cardId,
             },
             userId: actLog.payload.user_id,
             userName: actLog.payload.user_name,

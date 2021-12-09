@@ -452,6 +452,7 @@ export const GET_ACTIVITY_LOGS = gql`
             }
             card_details {
               payment_terminal
+              cardId
               zvtMessage {
                 card_name
                 card_type
