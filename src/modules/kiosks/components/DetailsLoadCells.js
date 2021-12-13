@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 import { useComponentDidMount } from 'lib/customHooks';
 import * as R from 'ramda';
 
-const DetailsLoadCells = ({ cells, kioskName, currentKioskSide }) => {
+const DetailsLoadCells = ({ cells, kioskName, currentKioskSide, rootUser }) => {
   const [product, selectProduct] = useState(null);
   const [isAddLoadCell, setIsAddLoadCell] = useState(false);
   const [currentSide, setCurrentSide] = useState(currentKioskSide);
@@ -82,7 +82,6 @@ const DetailsLoadCells = ({ cells, kioskName, currentKioskSide }) => {
     () => cells.filter(cell => cell.planogramPosition != null).length,
     [currentSide, sides],
   );
-
   return (
     <Segment>
       <PlanogramSwitcher
@@ -95,6 +94,7 @@ const DetailsLoadCells = ({ cells, kioskName, currentKioskSide }) => {
         handleAdd={
           activeShelves < (isTwoSides ? 30 : 15) ? handleAdd : undefined
         }
+        rootUser={rootUser}
       />
       {product && (
         <ModalLoadCell

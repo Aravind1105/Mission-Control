@@ -39,6 +39,8 @@ import {
   getOrgsList,
   getOrgsListSuccess,
   getAllSerialNumbersSuccess,
+  addSingleKiosk,
+  addDoubleKiosk,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -199,6 +201,14 @@ const kiosksReducer = handleActions(
       isLoading: false,
     }),
     [deleteLoadCell]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [addSingleKiosk]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [addDoubleKiosk]: state => ({
       ...state,
       isLoading: true,
     }),

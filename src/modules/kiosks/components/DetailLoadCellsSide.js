@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Icon, Button, Segment, Popup } from 'semantic-ui-react';
 
 import { ReactComponent as NoImg } from 'styling/assets/images/noImg.svg';
 import ColoredBlock from 'modules/shared/components/ColoredBlock';
 import { isNull } from 'lodash';
+import PlanogramAlert from './PlanogramAlert/PlanogramAlert';
 
 const Card = ({
   cellId,
@@ -74,45 +75,71 @@ const Card = ({
   );
 };
 
-const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd }) => (
-  <Grid.Column>
-    {cells.length > 0 && (
-      <Grid>
-        {cells.map((row, i) => {
-          // let fullWidth = false;
-          return (
-            <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
-              {row.map((props, j) => {
-                return (
-                  props && (
-                    <Card
-                      {...props}
-                      key={props.cellId}
-                      handleEdit={handleEdit}
-                    />
-                  )
-                );
-              })}
-            </Grid.Row>
-          );
-        })}
-      </Grid>
-    )}
-    {handleAdd && (
-      <Grid.Row className="add-scale-button">
-        <Button
-          icon
-          labelPosition="left"
-          color="green"
-          compact
-          onClick={handleAdd}
-        >
-          <Icon name="plus" />
-          Add Scale
-        </Button>
-      </Grid.Row>
-    )}
-  </Grid.Column>
-);
+const DetailLoadCellsSide = ({ cells, handleEdit, handleAdd, rootUser }) => {
+  const [showAddAlert, setShowAddAlert] = useState(false);
+  return (
+    <Grid.Column>
+      {cells.length > 0 && (
+        <Grid>
+          {cells.map((row, i) => {
+            // let fullWidth = false;
+            return (
+              <Grid.Row key={`${i}`} columns="equal" className="load-cell-row">
+                {row.map((props, j) => {
+                  return (
+                    props && (
+                      <Card
+                        {...props}
+                        key={props.cellId}
+                        handleEdit={handleEdit}
+                      />
+                    )
+                  );
+                })}
+              </Grid.Row>
+            );
+          })}
+        </Grid>
+      )}
+      {handleAdd && rootUser && cells.length == 0 && (
+        <Grid.Row className="add-scale-button">
+          <Button
+            icon
+            labelPosition="left"
+            color="green"
+            compact
+            onClick={() => {
+              setShowAddAlert(true);
+            }}
+          >
+            <Icon name="plus" />
+            Add Planogram
+          </Button>
+          <PlanogramAlert
+            visible={showAddAlert}
+            onApprove={() => {
+              setShowAddAlert(false);
+            }}
+            onCancel={() => setShowAddAlert(false)}
+          />
+        </Grid.Row>
+      )}
+      {handleAdd && cells.length > 0 && (
+        <Grid.Row className="add-scale-button">
+          <Button
+            icon
+            labelPosition="left"
+            color="green"
+            compact
+            onClick={handleAdd}
+          >
+            <Icon name="plus" />
+            Add Scale
+          </Button>
+        </Grid.Row>
+      )}
+    </Grid.Column>
+  );
+};
 
 export default DetailLoadCellsSide;
