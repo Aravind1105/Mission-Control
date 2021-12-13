@@ -6,6 +6,8 @@ export const getAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_LOAD',
 );
 export const resetKiosk = createAction('@@saga/RESET_KIOSK');
+export const addSingleKiosk = createAction('@@saga/ADD_SINGLE_KIOSK');
+export const addDoubleKiosk = createAction('@@saga/ADD_DOUBLE_KIOSK');
 export const modifyKiosk = createAction('@@saga/MODIFY_KIOSK');
 export const updateKioskProps = createAction('@@saga/UPDATE_KIOSK_PROPS');
 export const modifyKioskLoadCell = createAction(

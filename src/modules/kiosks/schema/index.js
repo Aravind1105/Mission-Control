@@ -479,6 +479,22 @@ export const DELETE_LOAD_CELL = gql`
   ${FragmentKioskOnKiosk}
 `;
 
+export const ADD_SINGLE_KIOSK = gql`
+  mutation modifyLoadCells($data: LoadCellsInput!) {
+    configureLoadCells(data: $data) {
+      _id
+    }
+  }
+`;
+
+export const ADD_DOUBLE_KIOSK = gql`
+  mutation modifyLoadCells($data: LoadCellsInput!) {
+    configureLoadCells(data: $data) {
+      _id
+    }
+  }
+`;
+
 export const UPDATE_PLAYLIST = gql`
   mutation updatePlayList($kioskId: String!, $data: [PlayListInput]!) {
     updatePlayList(kioskId: $kioskId, data: $data) {
