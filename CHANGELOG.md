@@ -1,3 +1,39 @@
+#### 1.4.31 (2021-12-14)
+
+##### New Features
+
+* **reports:** LIV-4122 sold products graph for weekly and daily complete (431ffa96)
+* **product form:**
+  * LIV-4043 selector updated as per the input component with... (5f04b1fe)
+  * LIV-4043 selector updated as per the input component with... (9c84e607)
+  * LIV-4043 selector updated as per the input component with... (fe3ef436)
+  * LIV-4043 selector updated as per the input component with... (12a9068c)
+* **LIV-4031:**  updated cardId in the sales table (f9e82b57)
+* **msg:**  payment terminal message format changed (2e6d1a56)
+* **transactions:** LIV-3842 Adding changes to set a default date for the current month in the transactions page (8aad8b61)
+* **refill:**  LIV-3740 updating transaction refills grid with the refill column (cd501811)
+
+##### Bug Fixes
+
+* **kiosks:**  [LIV-4183] Redirect to kiosk details (b0ccc2bd)
+* **LIV-4101:**  cardID added in graphql fixed (b8c239aa)
+* **Notification Bell:**  LIV-3772 Hiding Notification Button (87b2e8a7)
+* **Transactions:**  LIV-3996 Products Table Fixed Table headers width during sorting operations (18f09077)
+* **product form:** LIV-4133 product form family bug fix, net weight fix (c6660e1f)
+* **message:**  chk null before terminal messages (e52b6318)
+* **LIV-3999:**
+  *  fixed data replicate and added field validation (c2143264)
+  *  fixed kiosk with prod and loader and product to null initially for detail page. (3fd269c1)
+* **Kiosks:**
+  *  LIV-4045 Button Add to Update Button Option (d98f38f6)
+  *  LIV-4045 Show tooltips for new planogram and Add/Update Button Option (172109ae)
+* **kiosk:**  LIV-3738: adding changes to make refill type as enum (8f80ff6e)
+* **node:**  adjust base image to 14-alpine als lts switched to node 16 (ba6db126)
+
+##### Other Changes
+
+* //gitlab.com/livello-network/livello-mission-control into test-master (b0a394b7)
+
 #### 1.4.31 (2021-11-16)
 
 ##### New Features
