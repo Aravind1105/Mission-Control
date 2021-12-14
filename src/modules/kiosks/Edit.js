@@ -35,8 +35,8 @@ const KioskEdit = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const backLink = {
-    name: 'Back to kiosk',
-    link: '/kiosks',
+    name: 'Back to kiosk detail',
+    link: `/kiosks/detail/${params.id}`,
   };
   useEffect(() => {
     const isEdit = params.id !== 'new';
