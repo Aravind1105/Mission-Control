@@ -1,8 +1,11 @@
 @import '../../../../styling/theme/globals/site.variables';
 
 .table-cell-text {
+  padding: 10px 10px 10px 9px !important;
   white-space: pre-wrap;
 }
+
+// for selector color
 .table-cell-select {
   white-space: pre-wrap;
   background-color: #d9d9d9 !important;
@@ -13,14 +16,12 @@
     background-color: @grey2 !important;
     color: #ffffff !important;
     padding: 2px 0.78571429em !important;
+    border: 1px solid rgb(211, 211, 211) !important;
     cursor: default !important;
-    border: 0.5px solid rgb(211, 211, 211) !important;
-    border-radius: 2% 1% 1% 1% !important;
   }
   th.sorted {
     background-color: @greyExtraTable !important;
     color: #ffffff !important;
-    border-radius: 1% 1% 1% 1% !important;
   }
   tr:nth-child(2n) {
     background: @grey6 !important;

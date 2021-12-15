@@ -1,22 +1,24 @@
 @import '../../../../styling/theme/globals/site.variables';
-
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 .table-cell-text {
   white-space: pre-wrap;
+  padding: 10px 10px 10px 7px !important;
 }
-
 .ui.sortable.table {
   th {
     background-color: @grey2 !important;
     color: #ffffff !important;
     padding: 2px 0.78571429em !important;
     cursor: default !important;
-    border: 0.5px solid rgb(211, 211, 211) !important;
-    border-radius: 1% 1% 1% 1% !important;
+    border: 1px solid rgb(211, 211, 211) !important;
   }
   th.sorted {
     background-color: @greyExtraTable !important;
     color: #ffffff !important;
-    border-radius: 1% 1% 1% 1% !important;
+  }
+  tr:hover td {
+    background: #f1fcff !important;
   }
   tr:nth-child(2n) {
     background: @grey6 !important;
@@ -25,6 +27,7 @@
     cursor: pointer !important;
   }
   .sortable-transaction-header {
+    border-radius: 0% !important;
     cursor: pointer !important;
     width: 120px;
   }
@@ -32,22 +35,133 @@
 
 .table-cell-text-transaction {
   vertical-align: top;
+  padding: 10px 10px 10px 7px !important;
 }
 
 .table-cell-bg-grey {
   background: #f2f2f2 !important;
+  padding: 10px 10px 10px 7px !important;
 }
 
 .table-cell-bg-white {
   background: #ffffff !important;
+  padding: 10px 10px 10px 7px !important;
+}
+
+.product-table {
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 3px 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  tr:hover td {
+    background: #f1fcff !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
 }
 
 .transactions-table {
-  cursor: unset !important;
-  tbody:hover tr td {
-    background-color: #f1fcff !important;
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 0 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
   }
 }
+
+.refills-table {
+  tr {
+    font-size: 11px;
+  }
+  // for table header first element
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+
+  thead tr:first-child > th:nth-child(2) {
+    border-radius: 3px 0 0 0 !important;
+    width: 300px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+
+  thead tr:first-child > th:nth-child(5) {
+    border-radius: 3px 0 0 0 !important;
+    width: 360px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+  thead tr:first-child > th:nth-child(6) {
+    border-radius: 3px 0 0 0 !important;
+    width: 210px !important;
+    @media @mobile {
+      width: 140px !important;
+    }
+  }
+  thead tr:first-child > th:nth-child(10) {
+    border-radius: 3px 0 0 0 !important;
+    width: 60px !important;
+    @media @mobile {
+      width: 60px !important;
+    }
+  }
+
+  // for table header last element
+  thead tr:first-child > th:last-child {
+    border-radius: 0 0 0 0 !important;
+  }
+  tr td {
+    border-radius: 0 0 0 0 !important;
+  }
+  // for last row and first element
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+
+  // for last row and last element
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
+}
+
 .tb-refills,
 .tb-sales {
   line-height: normal;

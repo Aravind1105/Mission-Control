@@ -179,6 +179,7 @@ const KioskDetails = ({
                   cells={loadCells.list}
                   kioskName={kiosk && kiosk.name}
                   currentKioskSide={currentKioskSide}
+                  rootUser={rootUser}
                 />
               </Grid.Column>
             </Grid.Row>

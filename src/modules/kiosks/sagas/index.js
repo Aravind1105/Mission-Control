@@ -21,6 +21,9 @@ import exportCsvPackList from './exportCsvPacks';
 import exportCsvTempLogs from './exportCsvTempLogs';
 import getKiosksList from './getKiosksList';
 import getOrgsList from './getOrganizationsList';
+import getAllSerialNumbers from './getAllSerialNumbers';
+import addSingleKiosk from './addSingleKiosk';
+import addDoubleKiosk from './addDoubleKiosk';
 
 export default function* kiosksSaga() {
   yield all([
@@ -43,5 +46,8 @@ export default function* kiosksSaga() {
     fork(exportCsvTempLogs),
     fork(getKiosksList),
     fork(getOrgsList),
+    fork(getAllSerialNumbers),
+    fork(addSingleKiosk),
+    fork(addDoubleKiosk),
   ]);
 }

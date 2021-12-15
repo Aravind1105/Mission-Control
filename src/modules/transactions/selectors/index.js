@@ -2,6 +2,13 @@ import { createSelector } from 'reselect';
 import format from 'date-fns/format';
 import get from 'lodash/get';
 
+export const cardTypeMessages = {
+  girocard: 'Girocard',
+  'Visa Credit': 'Visa Credit',
+  'VISA DEBIT': 'Visa Debit',
+  MASTERCARD: 'Mastercard',
+};
+
 export const getAllTransactionsState = state => state.transactions.list;
 
 export const getGridRefillsState = state => state.transactions.refillsList;
@@ -81,10 +88,16 @@ export const getTransactionsTableState = createSelector(
     let newArr = [];
     transactions.forEach(
       ({ itemsPurchased, created, paymentMethod, ...rest }) => {
+        const { cardType, ...paymentRest } = paymentMethod[0];
         const item = {
           transactionID: rest._id,
           userId: rest.userId,
-          paymentMethod: paymentMethod[0],
+          paymentMethod: {
+            cardType:
+              cardTypeMessages[paymentMethod[0].cardType] ||
+              paymentMethod[0].cardType,
+            ...paymentRest,
+          },
           type: rest.type,
           created: format(new Date(created), 'dd-MM-yyyy, HH:mm:ss'),
           session: rest.session,
@@ -144,6 +157,7 @@ export const getGridRefillsTableState = createSelector(
           'dd-MM-yyyy, HH:mm:ss',
         ),
         kioskName: get(refill, 'kiosk.name', '') || 'unknown',
+        added: refill.added,
       };
       const newScale = refill.scale.filter(elem => elem.count !== 0);
       if (newScale.length > 1) {

@@ -9,7 +9,14 @@ import format from 'date-fns/format';
 import sortByText from 'lib/sortByText';
 import * as R from 'ramda';
 import moment from 'moment';
+import { cardTypeMessages } from '../../transactions/selectors';
 // import differenceInMinutes from 'date-fns/differenceInMinutes';
+
+export const refillMode = {
+  MISSION_CONTROL: 'mission_control',
+  TABLET: 'tablet',
+  AUTOMATIC: 'automatic',
+};
 
 const alertMessages = {
   KioskOffline: 'System Offline',
@@ -38,9 +45,15 @@ const activityLogMessages = {
   door_not_opened: 'Door Not Opened',
   payment_success: 'Payment Success',
   valid_card_read: 'Valid Card Read',
-  valid_membercard_read: 'Valid MemberCard Read',
+  valid_membercard_read: 'Valid Member Card Read',
+  valid_dmayrcard_read: 'Valid Member Card Read',
   invalid_card_read: 'Invalid Card Read',
   payment_failed: 'Payment Failed',
+  app_purchase: 'Consumer App Purchase',
+  member_purchase: 'Member Card Purchase',
+  terminal_purchase: 'Terminal Purchase',
+  mc_refill: 'Replenishment (Mission Control)',
+  tablet_refill: 'Replenishment (Tablet)',
 };
 
 const playlistTypes = {
@@ -63,9 +76,6 @@ const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.tableList;
 
-export const getKiosksSerialNumbers = createSelector(getKiosksState, kiosks => {
-  return kiosks.map(kiosk => get(kiosk, 'serialNumber', []));
-});
 export const getKiosksTableState = state =>
   state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
     ...el,
@@ -510,19 +520,40 @@ export const getActivityLogsState = createSelector(
         return {
           created: date,
           event: {
-            alertType: activityLogMessages[actLog.payload.message.alert_type],
-            doorStatus: activityLogMessages[actLog.payload.message.door_status],
+            type:
+              actLog.type !== 'status'
+                ? actLog.type === 'refill' && actLog.payload.user_id
+                  ? activityLogMessages['mc_refill']
+                  : actLog.type === 'refill' && !actLog.payload.user_id
+                  ? activityLogMessages['tablet_refill']
+                  : activityLogMessages[actLog.type]
+                : null,
+            alertType: activityLogMessages[actLog.payload.message?.alert_type],
+            sessionId: actLog.payload.session_id,
+            doorStatus:
+              activityLogMessages[actLog.payload.message?.door_status],
             touchedScales: getActivityLogsScaleName(
               state.kiosks.kiosk,
-              actLog.payload.message.touchedScales,
+              actLog.payload.message?.touchedScales,
             ),
             scales: getActivityLogsScaleName(
               state.kiosks.kiosk,
-              actLog.payload.message.scales,
+              actLog.payload.message?.scales,
             ),
-            paymentTerminal:
-              activityLogMessages[actLog.payload.message.payment_terminal],
-            user: actLog.payload.user_id,
+            cardDetails: {
+              paymentTerminal:
+                activityLogMessages[
+                  actLog.payload.message?.card_details?.payment_terminal
+                ],
+              cardName:
+                cardTypeMessages[
+                  actLog.payload.message?.card_details?.zvtMessage?.card_name
+                ] ||
+                actLog.payload.message?.card_details?.zvtMessage?.card_name,
+              cardId: actLog.payload.message?.card_details?.cardId,
+            },
+            userId: actLog.payload.user_id,
+            userName: actLog.payload.user_name,
             sessionId: actLog.payload.session_id,
           },
         };
@@ -596,3 +627,5 @@ export const getSelectedKiosksState = createSelector(
   getPaginationState,
   pagination => pagination.kiosk,
 );
+
+export const getAllSerialNumbersState = state => state.kiosks.serialNumbers;

@@ -1,9 +1,6 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
-
 import ProductsTable from './TransactionsTable/Products';
 
-//
 const ProductsContent = ({
   isLoading,
   products,
@@ -12,7 +9,7 @@ const ProductsContent = ({
 }) => {
   return (
     <ProductsTable
-      sortByColumn="productLine"
+      sortByColumn="sold"
       data={products}
       getData={getData}
       sortable
@@ -20,7 +17,7 @@ const ProductsContent = ({
       striped
       isLoading={isLoading}
       setSortByInCaller={sort => setSortByInCaller(sort)}
-      sortDirection="ASC"
+      sortDirection="DESC"
     />
   );
 };

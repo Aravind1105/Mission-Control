@@ -6,6 +6,8 @@ export const getAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_LOAD',
 );
 export const resetKiosk = createAction('@@saga/RESET_KIOSK');
+export const addSingleKiosk = createAction('@@saga/ADD_SINGLE_KIOSK');
+export const addDoubleKiosk = createAction('@@saga/ADD_DOUBLE_KIOSK');
 export const modifyKiosk = createAction('@@saga/MODIFY_KIOSK');
 export const updateKioskProps = createAction('@@saga/UPDATE_KIOSK_PROPS');
 export const modifyKioskLoadCell = createAction(
@@ -36,6 +38,9 @@ export const updateAlmostEmptyKiosks = createAction(
   '@@saga/ALMOST_EMPTY_KIOSKS_UPDATE',
 );
 export const exportCsvTempLogs = createAction('@@saga/GET_TEMP_LOGS_CSV');
+export const getAllSerialNumbers = createAction(
+  '@@saga/GET_ALL_SERIAL_NUMBERS',
+);
 
 export const modifyKioskSuccess = createAction('@@state/MODIFY_KIOSK_SUCCESS');
 export const updateKioskPropsSuccess = createAction(
@@ -76,6 +81,9 @@ export const getKiosksListSuccess = createAction(
   '@@state/GET_KIOSK_LIST_SUCCESS',
 );
 export const getOrgsListSuccess = createAction('@@state/GET_ORG_LIST_SUCCESS');
+export const getAllSerialNumbersSuccess = createAction(
+  '@@state/GET_ALL_SERIAL_NUMBERS_SUCCESS',
+);
 
 export const exportCsvOrderList = createAction('@@saga/GET_OrderList_CSV');
 export const exportCsvPackList = createAction('@@saga/GET_PackList_CSV');

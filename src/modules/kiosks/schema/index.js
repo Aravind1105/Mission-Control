@@ -290,8 +290,14 @@ export const RESET_LOAD_CELL_INVENTORY_MUTATION = gql`
     $id: String!
     $cellId: String!
     $data: ResetLoadcellAmountInput!
+    $added: RefillMode!
   ) {
-    resetLoadcellInventory(id: $id, cellId: $cellId, data: $data) {
+    resetLoadcellInventory(
+      id: $id
+      cellId: $cellId
+      data: $data
+      added: $added
+    ) {
       _id
     }
   }
@@ -428,6 +434,7 @@ export const GET_ACTIVITY_LOGS = gql`
         payload {
           fridge_id
           user_id
+          user_name
           session_id
           id
           message_timestamp
@@ -443,7 +450,15 @@ export const GET_ACTIVITY_LOGS = gql`
               weight
               id
             }
-            payment_terminal
+            card_details {
+              payment_terminal
+              cardId
+              zvtMessage {
+                card_name
+                card_type
+                card_number
+              }
+            }
           }
         }
       }
@@ -452,12 +467,32 @@ export const GET_ACTIVITY_LOGS = gql`
 `;
 
 export const DELETE_LOAD_CELL = gql`
-  mutation deleteLoadCell($kioskId: String!, $cellId: String!) {
-    deleteLoadCell(kioskId: $kioskId, cellId: $cellId) {
+  mutation deleteLoadCell(
+    $kioskId: String!
+    $cellId: String!
+    $added: RefillMode!
+  ) {
+    deleteLoadCell(kioskId: $kioskId, cellId: $cellId, added: $added) {
       ...FragmentKiosk
     }
   }
   ${FragmentKioskOnKiosk}
+`;
+
+export const ADD_SINGLE_KIOSK = gql`
+  mutation modifyLoadCells($data: LoadCellsInput!) {
+    configureLoadCells(data: $data) {
+      _id
+    }
+  }
+`;
+
+export const ADD_DOUBLE_KIOSK = gql`
+  mutation modifyLoadCells($data: LoadCellsInput!) {
+    configureLoadCells(data: $data) {
+      _id
+    }
+  }
 `;
 
 export const UPDATE_PLAYLIST = gql`
@@ -503,5 +538,11 @@ export const GET_ORGS_LIST = gql`
       _id
       name
     }
+  }
+`;
+
+export const GET_ALL_SERIAL_NUMBERS = gql`
+  query {
+    getAllSerialNumbers
   }
 `;

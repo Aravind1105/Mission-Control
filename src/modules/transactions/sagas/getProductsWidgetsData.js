@@ -9,9 +9,6 @@ import { GET_PRODUCTS_WIDGET_DATA } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload }) {
-  const startDateOfMonth = new Date(
-    new Date(new Date().setHours(0, 0, 0)).setDate(1),
-  );
   try {
     const variables = {
       period:
@@ -21,7 +18,7 @@ function* handler({ payload }) {
               to: payload.period.dateTo,
             }
           : {
-              from: startDateOfMonth,
+            from: new Date(+0),
               to: new Date(),
             }
     }

@@ -9,6 +9,7 @@ import Loader from 'modules/shared/components/Loader';
 import Pagination from 'modules/shared/components/Pagination';
 import { getOrganizationsState, getOrganizationsTotal } from '../selectors';
 import { getOrganizations } from '../actions';
+import './styles.less';
 
 const sortDefault = [
   {
@@ -85,6 +86,7 @@ const OrganizationsContent = ({
       {isLoading && <Loader />}
       <Segment>
         <CustomTable
+          className="organization-table"
           columns={columns}
           data={organizations}
           onRowClick={clickRow}

@@ -1,5 +1,6 @@
 @import './globals/site.variables';
-
+@tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
+@mobile: ~'only screen and (max-width: 600px)';
 .one-line-chart {
   color: #afb3b4;
   font-size: 14px;
@@ -131,4 +132,105 @@
 
 .performance-graph {
   margin: 0 12px 0 0;
+}
+
+.reports {
+  &-header {
+    margin-bottom: 20px !important;
+  }
+  .reports-table-component {
+    thead tr:first-child > th:first-child {
+      border-radius: 3px 0 0 0 !important;
+      width: 70px !important;
+      @media @mobile {
+        width: 50px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(2) {
+      border-radius: 3px 0 0 0 !important;
+      width: 365px !important;
+      @media @mobile {
+        width: 140px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(3) {
+      width: 170px !important;
+      @media @mobile {
+        width: 90px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(4) {
+      width: 170px !important;
+      @media @mobile {
+        width: 90px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(5) {
+      width: 170px !important;
+      @media @mobile {
+        width: 90px !important;
+      }
+    }
+    thead tr:first-child > th:last-child {
+      border-radius: 0 3px 0 0 !important;
+    }
+    tr:last-child > td:first-child {
+      border-radius: 0 0 0 3px !important;
+    }
+    tr:last-child > td:last-child {
+      border-radius: 0 0 3px 0 !important;
+    }
+
+    tr {
+      font-size: 11px !important;
+    }
+  }
+}
+
+.kiosks-reports-table {
+  &-header {
+    margin-bottom: 20px !important;
+  }
+  .reports-kiosks-table-component {
+    thead tr:first-child > th:first-child {
+      border-radius: 3px 0 0 0 !important;
+      width: 70px !important;
+      @media @mobile {
+        width: 50px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(2) {
+      border-radius: 3px 0 0 0 !important;
+      width: 200px !important;
+      @media @mobile {
+        width: 140px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(3) {
+      width: 80px !important;
+      @media @mobile {
+        width: 90px !important;
+      }
+    }
+    thead tr:first-child > th:nth-child(4) {
+      width: 80px !important;
+      @media @mobile {
+        width: 90px !important;
+      }
+    }
+    thead tr:first-child > th:last-child {
+      width: 80px !important;
+      border-radius: 0 3px 0 0 !important;
+    }
+    tr:last-child > td:first-child {
+      border-radius: 0 0 0 3px !important;
+    }
+    tr:last-child > td:last-child {
+      border-radius: 0 0 3px 0 !important;
+    }
+
+    tr {
+      font-size: 11px !important;
+    }
+  }
 }

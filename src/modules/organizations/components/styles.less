@@ -1,14 +1,38 @@
 @tablet: ~'only screen and (min-width: 720px) and (max-width: 959px)';
 @mobile: ~'only screen and (max-width: 600px)';
 
-.toolbar-container {
+.org-toolbar {
+  position: sticky !important;
+  z-index: 1;
+  top: 50px;
   @media @mobile {
-    margin-left: 0px !important;
+    position: initial !important;
+    margin-top: 0px !important;
+    width: 100% !important;
   }
 }
 .toolbar-dropdown {
   margin-left: -15px !important;
   @media @mobile {
     margin-left: 0px !important;
+  }
+}
+
+.organization-table {
+  thead tr:first-child > th:first-child {
+    border-radius: 3px 0 0 0 !important;
+  }
+  thead tr:first-child > th:last-child {
+    border-radius: 0 3px 0 0 !important;
+  }
+  tr:last-child > td:first-child {
+    border-radius: 0 0 0 3px !important;
+  }
+  tr:last-child > td:last-child {
+    border-radius: 0 0 3px 0 !important;
+  }
+
+  tr {
+    font-size: 11px;
   }
 }

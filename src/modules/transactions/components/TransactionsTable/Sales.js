@@ -86,14 +86,19 @@ const SalesTable = ({
   let toggleTableCellColor = true;
 
   return (
-    <div style={{ overflow: 'auto', borderRadius: '2px' }}>
+    <div
+      style={{
+        overflow: 'auto',
+      }}
+    >
       {isLoading && <Loader />}
       <Table
-        className="unitable transactions-table"
+        className="transactions-table"
         basic
         celled
         unstackable
-        padded
+        striped
+        // padded
         structured
         fixed={fixed}
         sortable={sortable}

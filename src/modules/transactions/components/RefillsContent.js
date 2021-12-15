@@ -1,5 +1,6 @@
 import React from 'react';
 import RefillsTable from './TransactionsTable/Refills';
+import { refillMode } from '../../kiosks/selectors';
 
 const columns = [
   {
@@ -25,7 +26,7 @@ const columns = [
   {
     title: 'Kiosk',
     field: 'kioskName',
-    ormatter: ({ kioskName }) => {
+    formatter: ({ kioskName }) => {
       if (kioskName === '') {
         return '';
       }
@@ -39,7 +40,7 @@ const columns = [
       if (status === '') {
         return '';
       }
-      return <div style={{ textAlign: 'left' }}> {status} </div>;
+      return <div style={{ textAlign: 'left' }}>{status}</div>;
     },
   },
   {
@@ -54,6 +55,20 @@ const columns = [
         return '';
       }
       return <div style={{ textAlign: 'left' }}> {productName} </div>;
+    },
+  },
+  {
+    title: 'Refill',
+    field: 'added',
+    formatter: ({ added }) => {
+      if (added === refillMode.AUTOMATIC) {
+        added = 'Automatic';
+      } else if (added === refillMode.MISSION_CONTROL) {
+        added = 'Manual\n(Mission Control)';
+      } else if (added === refillMode.TABLET) {
+        added = 'Manual (Tablet)';
+      }
+      return <div style={{ textAlign: 'left' }}> {added} </div>;
     },
   },
   {
@@ -121,6 +136,7 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         'status',
         'productName',
         'articleNumber',
+        'added',
         'count',
         'loadCell',
         'weight',

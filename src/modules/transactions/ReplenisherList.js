@@ -16,6 +16,7 @@ import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
 import { isEqual } from 'lodash';
+import { useComponentDidMount } from 'lib/customHooks';
 
 const sortDefault = [
   {
@@ -98,6 +99,16 @@ const ReplenisherList = ({
     getProductListSaga();
   }, []);
 
+  useComponentDidMount(() => {
+    const startDateOfMonth = new Date(
+      new Date(new Date().setHours(0, 0, 0)).setDate(1),
+    );
+    changeDate({
+      "$gte": startDateOfMonth,
+      "$lte": new Date()
+    })
+  })
+
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, kiosk, dateRange]);
@@ -109,7 +120,7 @@ const ReplenisherList = ({
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
-              text="Replen. Products Total Cost"
+              text="Total Cost of Added Products"
               amount={`${widgetsData.totalCostValueOfReplenishedProducts
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
@@ -128,7 +139,7 @@ const ReplenisherList = ({
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
               customColor="#219653"
-              text="Replen. Products Sales Value"
+              text="Total Cost of Removed Products"
               amount={`${widgetsData.totalSaleValueOfReplenishedProducts
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}

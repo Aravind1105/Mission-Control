@@ -22,6 +22,7 @@ import validatePlanogramPosition from 'lib/validatePlanogramPosition';
 import { modifyKioskLoadCell, deleteLoadCell } from '../actions';
 import planogramExplaination from '../../../styling/assets/images/Planogram_Explanation.png';
 import { getCellIdOptions, getUsedPlanogramPositions } from '../selectors';
+import CustomFormDropdown from 'modules/shared/components/CustomFormDropdown';
 import * as Yup from 'yup';
 
 const ToolTip = () => (
@@ -63,7 +64,8 @@ const ModalLoadCell = ({
   deleteLoadCell,
   usedPositions,
 }) => {
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAddAlert, setShowAddAlert] = useState(false);
+  const [showUpdateAlert, setShowUpdateAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [quantityState, setQuantityState] = useState(initVal.quantity);
   const [position, setPosition] = useState('');
@@ -161,7 +163,6 @@ const ModalLoadCell = ({
       callback: handleClose,
     });
   };
-
   return (
     <Formik
       onSubmit={data => {
@@ -173,14 +174,20 @@ const ModalLoadCell = ({
       validateOnChange
       enableReinitialize
       validationSchema={Yup.object().shape({
-        product: Yup.string().required('This field is required'),
+        product: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
         planogramPosition: Yup.string().required('This field is required'),
-        cellId: Yup.string().required('This field is required'),
+        cellId: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
         price: Yup.number().required('This field is required'),
-        surfaceSize: Yup.string().required('This field is required'),
+        surfaceSize: Yup.object({
+          value: Yup.string().required('This field is required'),
+        }),
       })}
     >
-      {({ dirty, handleSubmit }) => (
+      {({ dirty, handleSubmit, errors }) => (
         <ConfirmModal
           onClose={handleClose}
           isPristine={!dirty}
@@ -202,11 +209,11 @@ const ModalLoadCell = ({
                     {initVal.quantity ? <ToolTip /> : null}
                     <Field
                       name="product"
-                      isSearchable
                       options={options}
                       onChange={handleSelect}
                       disabled={Boolean(initVal.quantity)}
-                      component={FormAsyncSelect}
+                      component={CustomFormDropdown}
+                      placeholder="Select..."
                       required
                     />
                   </Grid.Column>
@@ -230,7 +237,7 @@ const ModalLoadCell = ({
                       Planogram Position
                       <span style={{ color: 'red' }}>&#42;</span>&nbsp;
                     </b>
-                    {initVal.quantity ? <PositionTip /> : null}
+                    <PositionTip />
                     <Field
                       name="planogramPosition"
                       required
@@ -291,7 +298,7 @@ const ModalLoadCell = ({
                         disableCableId
                       }
                       required
-                      component={FormAsyncSelect}
+                      component={CustomFormDropdown}
                       onChange={({ data }) => {
                         setIsValid({ ...isValid, cableId: true });
 
@@ -326,11 +333,9 @@ const ModalLoadCell = ({
                     <Field
                       name="surfaceSize"
                       options={shelfSizeOptions}
-                      component={FormAsyncSelect}
                       required
-                      onChange={({}) => {
-                        // setIsValid({ ...isValid, cableId: true });
-                      }}
+                      component={CustomFormDropdown}
+                      placeholder="Select..."
                     />
                   </Grid.Column>
                 </Grid.Row>
@@ -354,34 +359,52 @@ const ModalLoadCell = ({
                 type="submit"
                 disabled={!dirty}
                 onClick={() => {
-                  if (!isAddLoadCell) {
-                    setShowAlert(true);
-                  } else {
-                    if (validateCellContents()) {
-                      setShowAlert(true);
-                    } else if (!isValidPosition) {
-                      setShowPositionErrorAlert(true);
+                  if (R.isEmpty(errors)) {
+                    if (!isAddLoadCell) {
+                      setShowUpdateAlert(true);
+                    } else {
+                      if (validateCellContents()) {
+                        setShowAddAlert(true);
+                      } else if (!isValidPosition) {
+                        setShowPositionErrorAlert(true);
+                      }
                     }
                   }
                 }}
               >
-                Update
+                {initVal.product.value ? 'Update' : 'Save'}
               </Button>
             </Modal.Actions>
             <CustomAlert
-              visible={showAlert}
+              visible={showUpdateAlert}
               onApprove={() => {
                 handleSave(productInfo);
-                setShowAlert(false);
+                setShowUpdateAlert(false);
               }}
-              onCancel={() => setShowAlert(false)}
+              onCancel={() => setShowUpdateAlert(false)}
               alertMsg={
                 (isAddLoadCell &&
                   !isValidPosition &&
                   !showPositionErrorAlert) ||
                 (initVal.cellId.value && !isValidPosition)
                   ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
-                  : `Are you sure you want to\nupdate the product?`
+                  : `Are you sure you want to\nupdate the scale?`
+              }
+            />
+            <CustomAlert
+              visible={showAddAlert}
+              onApprove={() => {
+                handleSave(productInfo);
+                setShowAddAlert(false);
+              }}
+              onCancel={() => setShowAddAlert(false)}
+              alertMsg={
+                (isAddLoadCell &&
+                  !isValidPosition &&
+                  !showPositionErrorAlert) ||
+                (initVal.cellId.value && !isValidPosition)
+                  ? `A loadcell is already assigned to this position (${position})!\nDo you want to switch positions?`
+                  : `Are you sure you want to\nadd the scale?`
               }
             />
             <CustomAlert
@@ -393,7 +416,7 @@ const ModalLoadCell = ({
               alertMsg={
                 quantityState === 0
                   ? 'Are you sure you want to\ndelete this scale?'
-                  : 'There are still some products on this scale.\nAre you sure want to delete?'
+                  : 'There are still some products on this scale.\nAre you sure you want to delete?'
               }
             />
             <CustomAlert

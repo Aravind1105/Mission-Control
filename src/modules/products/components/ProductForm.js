@@ -12,22 +12,18 @@ import {
 } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-import prettierNumber from 'lib/prettierNumber';
-import Loader from 'modules/shared/components/Loader';
 import FormInput from 'modules/shared/components/FormInput';
-import FormInputWithSelector from 'modules/shared/components/FormInputWithSelector';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import { modifyProductSaga } from '../actions';
-import get from 'lodash/get';
 import { isEqual } from 'lodash';
+import FormInputWithUnit from 'modules/shared/components/FormInputWithUnit';
 
 let updatingProduct = false;
 const ProductForm = ({
   initialValues,
-  isLoading,
   taxesOption,
   organizations,
   setIsCancelTriggered,
@@ -45,8 +41,8 @@ const ProductForm = ({
         unitCount: values.packagingOptionsUnitCount,
         grossWeightGrams: parseInt(values.packagingOptionsGrossWeightGrams),
         packageWeightGrams: parseInt(values.packagingOptionsPackageWeightGrams),
-        netWeightGramsUnit: values.packagingOptionsPackageWeightGramsUnit,
-        netWeightGrams: parseInt(values.packagingOptionsNetWeightGrams),
+        netWeightGramsUnit: values.packagingOptionsNetWeightGrams.unit,
+        netWeightGrams: parseInt(values.packagingOptionsNetWeightGrams.value),
         shelfLifeDays: parseInt(values.packagingOptionsShelfLifeDays),
         tolerancePercentage: values.packagingOptionsTolerancePercentage,
         description: values.packagingOptionsDescription,
@@ -96,7 +92,6 @@ const ProductForm = ({
       .grossWeightGrams;
     values.packagingOptions[0].shelfLifeDays = +values.packagingOptions[0]
       .shelfLifeDays;
-    
     // CRITICAL
     values.packagingOptions[0].description = 'Optional field not used.';
     values.packagingOptions[0].ean == ''
@@ -123,7 +118,7 @@ const ProductForm = ({
   const handleCancel = resetForm => {
     resetForm();
     setIsCancelTriggered(true);
-    setIsImageDeleted(false);
+    // setIsImageDeleted(false);    LIV-3213
     history.push('/products');
   };
 
@@ -167,7 +162,6 @@ const ProductForm = ({
 
   return (
     <>
-      {isLoading && <Loader />}
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -184,6 +178,10 @@ const ProductForm = ({
           packagingOptionsGrossWeightGrams: Yup.string().required(
             'This field is required',
           ),
+          packagingOptionsNetWeightGrams: Yup.object({
+            value: Yup.number().required('This field is required'),
+            unit: Yup.string().required('This field is required'),
+          }),
           capacitiesSurfaceSize_33: Yup.number().required(
             'This field is required',
           ),
@@ -198,7 +196,7 @@ const ProductForm = ({
         })}
         enableReinitialize
       >
-        {({ dirty, handleSubmit, values, setValues, resetForm }) => {
+        {({ dirty, handleSubmit, values, setValues, resetForm, errors }) => {
           const netPrice =
             Math.round(
               ((+values.defaultPrice.replace(',', '.') || 0) /
@@ -206,7 +204,7 @@ const ProductForm = ({
                 100,
             ) / 100;
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} noValidate>
               <Grid>
                 <Grid.Row columns="equal">
                   <Grid.Column>
@@ -303,16 +301,14 @@ const ProductForm = ({
                       label="Net Quantity (ml/g)"
                       min={0}
                       maxLength="5"
-                      component={FormInputWithSelector}
+                      component={FormInputWithUnit}
                       limiting="integerField"
-                      selectorOptions={[
+                      required
+                      unitOptions={[
                         { key: 'ml', text: 'ml', value: 'ml' },
                         { key: 'g', text: 'g', value: 'g' },
                       ]}
-                      selectorDefaultValueIndex={1}
-                      dropdownSelectedValue={
-                        values.packagingOptionsPackageWeightGramsUnit
-                      }
+                      defaultUnitIndex={1}
                     />
                   </Grid.Column>
                   <Grid.Column>
@@ -569,7 +565,7 @@ const ProductForm = ({
                 <Grid.Row textAlign="center">
                   <Grid.Column>
                     <Button
-                      disabled={!dirty}
+                      // disabled={dirty}   LIV-3213
                       onClick={() => handleCancel(resetForm)}
                       type="button"
                     >
@@ -589,8 +585,4 @@ const ProductForm = ({
   );
 };
 
-const mapStateToProps = state => ({
-  isLoading: state.products.isLoading,
-});
-
-export default connect(mapStateToProps)(ProductForm);
+export default ProductForm;

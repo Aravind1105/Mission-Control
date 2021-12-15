@@ -38,6 +38,9 @@ import {
   getKiosksListSuccess,
   getOrgsList,
   getOrgsListSuccess,
+  getAllSerialNumbersSuccess,
+  addSingleKiosk,
+  addDoubleKiosk,
 } from '../actions';
 
 import { createRefill, createRefillSuccess } from '../../transactions/actions';
@@ -58,6 +61,7 @@ const initialState = {
   kiosksList: [],
   orgsList: [],
   isKiosksListLoading: false,
+  serialNumbers: [],
   pagination: {
     page: 0,
     perPage: 25,
@@ -200,6 +204,14 @@ const kiosksReducer = handleActions(
       ...state,
       isLoading: true,
     }),
+    [addSingleKiosk]: state => ({
+      ...state,
+      isLoading: true,
+    }),
+    [addDoubleKiosk]: state => ({
+      ...state,
+      isLoading: true,
+    }),
     [setPage]: (state, { payload }) => ({
       ...state,
       pagination: { ...state.pagination, page: payload },
@@ -248,6 +260,10 @@ const kiosksReducer = handleActions(
     [getOrgsListSuccess]: (state, { payload }) => ({
       ...state,
       orgsList: payload,
+    }),
+    [getAllSerialNumbersSuccess]: (state, { payload }) => ({
+      ...state,
+      serialNumbers: payload,
     }),
   },
   initialState,

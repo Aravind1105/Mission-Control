@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 
-const familyOnProductFamily = gql`
-  fragment family on ProductFamily {
-    name
-    category
-    _id
-  }
-`;
+// const familyOnProductFamily = gql`
+//   fragment family on ProductFamily {
+//     name
+//     category
+//     _id
+//   }
+// `;
 
 const taxItemOnTax = gql`
   fragment taxItem on Tax {
@@ -43,10 +43,6 @@ export const productOnProductLine = gql`
         taxId
         taxValue
       }
-    }
-    family {
-      _id
-      name
     }
     packagingOptions {
       ean
@@ -136,25 +132,21 @@ export const GET_PRODUCT_LINE_BY_ID = gql`
   ${productOnProductLine}
 `;
 
-export const GET_PRODUCTS_FAMILY_QUERY = gql`
-  {
-    getProductFamilies {
-      ...family
-    }
-  }
-  ${familyOnProductFamily}
-`;
+// export const GET_PRODUCTS_FAMILY_QUERY = gql`
+//   {
+//     getProductFamilies {
+//       ...family
+//     }
+//   }
+//   ${familyOnProductFamily}
+// `;
 
 export const GET_ASSETS_FOR_NEW_PRODUCT_QUERY = gql`
   {
-    getProductFamilies {
-      ...family
-    }
     taxFindAll {
       ...taxItem
     }
   }
-  ${familyOnProductFamily}
   ${taxItemOnTax}
 `;
 
@@ -163,15 +155,11 @@ export const GET_PRODUCT_BY_ID_QUERY = gql`
     getProductLineById(id: $id) {
       ...product
     }
-    getProductFamilies {
-      ...family
-    }
     taxFindAll {
       ...taxItem
     }
   }
   ${productOnProductLine}
-  ${familyOnProductFamily}
   ${taxItemOnTax}
 `;
 

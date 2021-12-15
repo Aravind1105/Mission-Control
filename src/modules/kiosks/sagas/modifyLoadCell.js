@@ -10,6 +10,7 @@ import {
 } from '../schema';
 import { modifyKioskLoadCell, getKiosk } from '../actions';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
+import { refillMode } from '../selectors';
 
 function* handler({ payload }) {
   const {
@@ -83,6 +84,7 @@ function* handler({ payload }) {
         id: kioskId,
         cellId,
         data: { amount: parseInt(quantity, 10) },
+        added: refillMode.MISSION_CONTROL,
       };
       const { data, errors } = yield call(gqlKiosk.mutate, {
         mutation: RESET_LOAD_CELL_INVENTORY_MUTATION,

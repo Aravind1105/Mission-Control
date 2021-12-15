@@ -42,6 +42,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
           stripePaymentIntentId
           isPaid
           membercardId
+          cardType
         }
         itemsPurchased {
           price
@@ -90,6 +91,7 @@ export const GRID_REFILLS_QUERY = gql`
       data {
         _id
         created
+        added
         kiosk {
           _id
           name

@@ -1,38 +1,38 @@
 import { createSelector } from 'reselect';
-import get from 'lodash/get';
 
-export const getReports = state => state.reports;
+export const getWidgetDataState = state => state.reports.widgetData;
 
-export const getSalesListReports = createSelector(getReports, ({ data }) => {
-  const { lastMonth = [], income = [], totalRevenue = [] } = data || {};
-  return { lastMonth, income, totalRevenue };
-});
+export const getNetSalesProfitCostState = state =>
+  state.reports.netSalesProfitCostData;
 
-export const getTargetStatistics = createSelector(getReports, ({ data }) => {
-  const { income = 0, expenses = 0, spending = 0, total = 0 } = get(
-    data,
-    'targetStatistics',
-    {},
-  );
-  return { income, expenses, spending, total };
-});
+export const getTopSellingProductsState = state =>
+  state.reports.topSellingProducts;
 
-export const getTargetSales = createSelector(getReports, ({ data }) => {
-  const { targetSales } = data || {};
-  return targetSales;
-});
+export const getTopSellState = createSelector(
+  state => state.reports,
+  data => ({
+    daily: data.topSellHours,
+    weekly: data.topSellWeek,
+  }),
+);
 
-export const getPortfolioStatistic = createSelector(getReports, ({ data }) => {
-  const { portfolioStatistic = null } = data || {};
-  return portfolioStatistic;
-});
+export const getPaymentsMethodsState = state =>
+  state.reports.paymentMethodsStats;
 
-export const getTopSellers = createSelector(getReports, ({ data }) => {
-  const { sellers = null } = data || {};
-  return sellers;
-});
+export const getTopSellingKiosksState = createSelector(
+  state => state.reports.topSellingKiosks,
+  data =>
+    data.map(row => {
+      row['netSales'] = row['netSales'].toFixed(2);
+      row['netCost'] = row['netCost'].toFixed(2);
+      return row;
+    }),
+);
 
-export const getBestSellingProducts = createSelector(getReports, ({ data }) => {
-  const { bestSellingProducts = null } = data || {};
-  return bestSellingProducts;
-});
+export const getTopRefillsState = createSelector(
+  state => state.reports,
+  data => ({
+    weekly: data.topRefillsWeek,
+    daily: data.topRefillsDay,
+  }),
+);

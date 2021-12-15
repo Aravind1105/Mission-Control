@@ -42,22 +42,32 @@ const columns = [
     title: 'Event',
     field: 'event',
     formatter: ({ event }) => {
-      if (event.doorStatus !== null && event.doorStatus !== undefined)
-        return `Door Status: ${event.doorStatus}`;
-      else if (event.alertType !== null && event.alertType !== undefined)
-        return event.alertType;
-      else if (
-        event.paymentTerminal !== null &&
-        event.paymentTerminal !== undefined
-      )
-        return `Payment Terminal: ${event.paymentTerminal}`;
-      else if (event.touchedScales.length > 0 || event.scales.length > 0) {
-        let prodTaken;
+      let data = {
+        [event.sessionId]: event.type?.includes('Replenishment'),
+      };
+      if (event.cardDetails.paymentTerminal) {
+        let text = '';
         if (
-          event.scales !== null &&
-          event.scales !== undefined &&
-          event.scales.length > 0
-        ) {
+          event.cardDetails.paymentTerminal === 'Valid Card Read' ||
+          event.cardDetails.paymentTerminal === 'Invalid Card Read'
+        )
+          text =
+            event.cardDetails.cardName &&
+            'Card Type: ' + event.cardDetails.cardName + '\n\n';
+        else if (event.cardDetails.paymentTerminal === 'Valid Member Card Read')
+          text =
+            event.cardDetails.cardId &&
+            'Card Id: ' + event.cardDetails.cardId + '\n\n';
+        return text + 'Payment Terminal: ' + event.cardDetails.paymentTerminal;
+      } else if (event.type)
+        return `${
+          event.userName ? 'User: ' + event.userName + '\n\n' : ''
+        }Session Type: ${event.type} `;
+      else if (event.doorStatus) return `Door Status: ${event.doorStatus}`;
+      else if (event.alertType) return event.alertType;
+      else if (event.touchedScales?.length > 0 || event.scales?.length > 0) {
+        let prodTaken;
+        if (event.scales?.length > 0) {
           let ScalLen = event.scales.length;
           let ScalResults = event.scales;
           prodTaken =
@@ -79,20 +89,16 @@ const columns = [
                     '  /  Name :  ' +
                     scl.name;
                   return event.touchedScales.length > 0
-                    ? '\n\t\t\t\t\t\t' + prodTaken_1
+                    ? '\n\t\t\t\t\t\t\t' + prodTaken_1
                     : '\n\t\t\t\t\t' + prodTaken_1;
                 })
               : '');
         }
-        if (
-          event.touchedScales !== null &&
-          event.touchedScales !== undefined &&
-          event.touchedScales.length > 0
-        ) {
+        if (event.touchedScales?.length > 0) {
           let touchedLen = event.touchedScales.length;
           let TouchedResults = event.touchedScales;
           return (
-            `Products Touched  - \t Cable ID :  ` +
+            `Product(s) Touched  - \t Cable ID :  ` +
             TouchedResults[0].id +
             '  /  Weight :  ' +
             TouchedResults[0].weight +
@@ -103,7 +109,7 @@ const columns = [
               ? ',' +
                 TouchedResults.slice(1, touchedLen).map(scl => {
                   return (
-                    '\n\t\t\t\t\t\t Cable ID :  ' +
+                    '\n\t\t\t\t\t\t\t Cable ID :  ' +
                     scl.id +
                     '  /  Weight :  ' +
                     scl.weight +
@@ -113,37 +119,36 @@ const columns = [
                   );
                 }) +
                 (prodTaken
-                  ? '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken
-                  : null)
+                  ? `\n\n${
+                      data[event.sessionId]
+                        ? 'Product(s) Replenished'
+                        : 'Product(s) Taken'
+                    }   - \t\t Cable ID :  ` + prodTaken
+                  : '')
               : prodTaken
-              ? '\n\nProduct Taken  - \t\t Cable ID :  ' + prodTaken
+              ? `\n\n${
+                  data[event.sessionId]
+                    ? 'Product(s) Replenished'
+                    : 'Product(s) Taken'
+                }  - \t\t Cable ID :  ` + prodTaken
               : '')
           );
-        } else return 'Product Taken  - \t Cable ID :  ' + prodTaken;
+        } else
+          return (
+            `${
+              data[event.sessionId]
+                ? 'Product(s) Replenished'
+                : 'Product(s) Taken'
+            }  - \t Cable ID :  ` + prodTaken
+          );
       } else if (
-        event.touchedScales !== null &&
-        event.touchedScales !== undefined &&
-        event.touchedScales.length === 0 &&
-        event.scales !== null &&
-        event.scales !== undefined &&
-        event.scales.length === 0
+        event.touchedScales?.length === 0 &&
+        event.scales?.length === 0
       )
-        return `Products Touched/Taken - Empty`;
+        return `Product Touched/Taken - Empty`;
       else return '-';
     },
   },
-  // {
-  //   title: 'By',
-  //   field: 'event',
-  //   formatter: ({ event }) => {
-  //     console.log(event.user);
-  //     return event.user !== null && event.user !== undefined
-  //       ? 'User App' + '\n' + 'User ID: ' + event.user
-  //       : event.paymentTerminal !== null && event.paymentTerminal !== undefined
-  //       ? 'Payment Terminal'
-  //       : 'Replenishment';
-  //   },
-  // },
 ];
 
 const ActivityLogGrid = ({
@@ -239,6 +244,7 @@ const ActivityLogGrid = ({
           <Grid.Row className="activity-log-filter-row">
             <Grid.Column>
               <CustomTable
+                className="kiosk-table"
                 sortByColumn="created"
                 sortable
                 data={activityLogs || []}
