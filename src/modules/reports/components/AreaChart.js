@@ -167,7 +167,6 @@ export default function AreaChartComponent({ data }) {
               tickSize={10}
               padding={{ left: 0, right: 0 }}
               dataKey="_id"
-              reversed
               domain={['No Data']}
               tick={<CustomizedAxisTick />}
             />
