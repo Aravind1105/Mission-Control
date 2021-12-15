@@ -92,7 +92,7 @@ const CustomTable = ({
         basic
         unstackable
         celled
-        padded
+        // padded
         fixed={fixed}
         sortable={sortable}
         selectable={selectable}

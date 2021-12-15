@@ -97,7 +97,7 @@ const RefillsTable = ({
         basic
         celled
         unstackable
-        padded
+        // padded
         structured
         striped
         fixed={fixed}
