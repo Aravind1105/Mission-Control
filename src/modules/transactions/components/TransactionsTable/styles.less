@@ -17,9 +17,6 @@
     background-color: @greyExtraTable !important;
     color: #ffffff !important;
   }
-  tr:hover td {
-    background: #f1fcff !important;
-  }
   tr:nth-child(2n) {
     background: @grey6 !important;
   }
@@ -165,6 +162,13 @@
 .tb-refills,
 .tb-sales {
   line-height: normal;
+}
+
+.transactions-table, .refills-table{
+  cursor: unset !important;	
+  tbody:hover tr td {	
+    background-color: #f1fcff !important;
+  }
 }
 // .active-body tr td {
 //   background-color: #F2F2F2 !important;
