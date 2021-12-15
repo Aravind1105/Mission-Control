@@ -1,3 +1,10 @@
+#### 1.4.32 (2021-12-15)
+
+##### Bug Fixes
+
+* **dashboard, kiosks, organizations, users, products, reports, transactions:** ... (6b10c0e8)
+* **refils:** LIV-3956 export CSV with date range filter bug fix (b61331cb)
+
 #### 1.4.31 (2021-12-14)
 
 ##### New Features
