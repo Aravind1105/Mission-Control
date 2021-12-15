@@ -98,7 +98,7 @@ const SalesTable = ({
         celled
         unstackable
         striped
-        padded
+        // padded
         structured
         fixed={fixed}
         sortable={sortable}
