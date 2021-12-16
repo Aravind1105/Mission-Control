@@ -19,6 +19,7 @@ const graphTypes = ['daily', 'weekly'];
 const graphTypesTitle = ['Daily', 'Weekly'];
 
 const CustomBarChart = ({
+  title,
   data,
   dateRange,
   yAxisLegend,
@@ -78,7 +79,7 @@ const CustomBarChart = ({
     </Text>
   );
 
-  const CustomTooltip = ({ active, payload, label, dateRange }) => {
+  const CustomTooltip = ({ active, payload, label, dateRange, textColor }) => {
     if (active && payload && payload.length) {
       let dateTo = dateRange.$lte ? dateRange.$lte : new Date();
       let dateFrom = dateRange.$gte
@@ -98,11 +99,14 @@ const CustomBarChart = ({
             }`}
           </div>
           <div style={{ width: '200px' }}>
-            <p style={{ float: 'left' }} className="tool-tip-qty-refills-bar">
+            <p
+              style={{ float: 'left', color: textColor }}
+              className="tool-tip-qty-refills-bar"
+            >
               {payload[0].payload.amount}
             </p>
             <p
-              style={{ float: 'left' }}
+              style={{ float: 'left', color: textColor }}
               className="tool-tip-products-refills-bar"
             >
               products
@@ -117,7 +121,7 @@ const CustomBarChart = ({
 
   return (
     <>
-      <Header size="small">Refills</Header>
+      <Header size="small">{title}</Header>
       <Divider fitted style={{ marginBottom: '48px' }}></Divider>
       {graphTypes.length > 1 && (
         <div className="graph-type-switch-container">
@@ -200,7 +204,11 @@ const CustomBarChart = ({
             <Tooltip
               cursor={{ fill: toolTipTextColor }}
               content={
-                <CustomTooltip data={selectedData} dateRange={dateRange} />
+                <CustomTooltip
+                  data={selectedData}
+                  dateRange={dateRange}
+                  textColor={toolTipTextColor}
+                />
               }
             />
             <Legend content={renderLegend} />
