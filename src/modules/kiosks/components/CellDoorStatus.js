@@ -1,23 +1,15 @@
 /* eslint-disable radix */
 import React from 'react';
-
+import determineColorCode from './determineColorCode';
 const CellDoorStatus = ({ doorStatus, session }) => {
-  let style = {};
-  let text = doorStatus;
-
+  const color = determineColorCode(doorStatus, session)
+  let style = { color}
+  let text = 'Unknown';
   if (doorStatus === 'open') {
-    if (session && session._id) {
-      style = { color: '#2D9CDB' };
-      text = 'Open - active session';
-    } else {
-      style = { color: '#DB2828' };
-      text = 'Open - no session';
-    }
+    text = 'opened'
   } else if (doorStatus === 'closed') {
-    style = { color: '#7cb122' };
-    text = 'Closed';
+    text = 'closed'
   }
-
   return <span style={style}>{text}</span>;
 };
 
