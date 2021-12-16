@@ -182,6 +182,7 @@ const ReportsContent = ({
             {!isTopSellLoading && (
               <Segment>
                 <BarChart
+                  title={'Sold products'}
                   data={topSell}
                   dateRange={dateRange}
                   defaultGraphType="daily"
@@ -211,6 +212,7 @@ const ReportsContent = ({
             {!isTopRefillsLoading && (
               <Segment>
                 <BarChart
+                  title={'Refills'}
                   data={topRefills}
                   dateRange={dateRange}
                   defaultGraphType="daily"

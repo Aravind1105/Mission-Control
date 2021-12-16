@@ -44,6 +44,7 @@ export const GET_TOP_SELLING_PRODUCTS = gql`
         _id
         name
       }
+      rank
       amount
       netSales
       netCost
