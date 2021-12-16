@@ -1,3 +1,16 @@
+#### 1.4.33 (2021-12-16)
+
+##### New Features
+
+* **kiosks:**  LIV-3901 Adding a new column session in the kiosk table (f1d26f7f)
+
+##### Bug Fixes
+
+* **Reports:**  LIV-3296 Update Top Selling Product Rank Column, Refills and sold Products component (f2917599)
+* **dashboard, kiosks, organizations, users, products, reports, transactions:**  LIV-3820 Update the padding of tables row (f10e190e)
+* **transacrtions:**  Hover fix for table body and table row (cfb441c8)
+* **reports:**  LIV-3295 Modifying revenue reports graph to show cumulative value (b00e2557)
+
 #### 1.4.32 (2021-12-15)
 
 ##### Bug Fixes
