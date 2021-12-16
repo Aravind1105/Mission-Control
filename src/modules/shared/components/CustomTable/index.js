@@ -102,7 +102,7 @@ const CustomTable = ({
         {!headless && (
           <Table.Header>
             <Table.Row>
-              {columns.map(({ title, field, className }) => {
+              {columns.map(({ title, field, className, textAlign }) => {
                 const sorted =
                   (sortBy && sortBy === field && direction) || undefined;
                 const sortClass =
@@ -116,6 +116,7 @@ const CustomTable = ({
                     key={field}
                     className={`${className || ''} ${sortClass}`}
                     sorted={sorted}
+                    textAlign={textAlign}
                     onClick={sortable ? handlerHCellClick(field) : undefined}
                   >
                     {title}
