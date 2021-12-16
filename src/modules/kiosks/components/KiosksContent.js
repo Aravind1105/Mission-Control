@@ -8,6 +8,7 @@ import Pagination from 'modules/shared/components/Pagination';
 import Loader from 'modules/shared/components/Loader';
 import CellHeartbeat from './CellHeartbeat';
 import CellDoorStatus from './CellDoorStatus';
+import CellSessionStatus from './CellSessionStatus';
 import CellTemp from './CellTemp';
 import {
   getTotalKiosks,
@@ -73,6 +74,24 @@ const KiosksContent = ({
       },
     },
     {
+      title: 'Network Status',
+      field: 'heartbeat.updated,temperature.updated',
+      formatter: ({ heartbeat, temperature }) => (
+        <CellHeartbeat
+          heartbeat={heartbeat}
+          temperature={temperature}
+          showTime
+        />
+      ),
+    },
+    {
+      title: 'Session',
+      field: 'session',
+      formatter: ({ doorStatus, session }) => (
+        <CellSessionStatus doorStatus={doorStatus} session={session} />
+      ),
+    },
+    {
       title: 'Door Status',
       field: 'doorStatus',
       formatter: ({ doorStatus, session }) => (
@@ -99,21 +118,10 @@ const KiosksContent = ({
       },
     },
     {
-      title: 'Network Status',
-      field: 'heartbeat.updated,temperature.updated',
-      formatter: ({ heartbeat, temperature }) => (
-        <CellHeartbeat
-          heartbeat={heartbeat}
-          temperature={temperature}
-          showTime
-        />
-      ),
-    },
-    {
       title: 'Address',
       field: 'location',
       formatter: ({ location: { address } }) => {
-        const { postalCode, city } = address;
+        const { postalCode, city } = address || {};
         const addr = [postalCode, city, !postalCode && !city && 'N.A.']
           .filter(el => Boolean(el))
           .join(', ');
@@ -135,11 +143,11 @@ const KiosksContent = ({
     },
   ];
   if (isSuperAdmin) {
-    columns.splice(2, 0, {
+    columns.splice(6, 0, {
       title: 'Organization',
       field: 'ownerOrganization.name',
     });
-    columns.splice(6, 1);
+    columns.splice(7, 1);
   }
   const getData = ({ sort }) => {
     const data = {
