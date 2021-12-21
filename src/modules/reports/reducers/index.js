@@ -5,7 +5,9 @@ import {
   getWidgetDataSuccess,
   getNetSalesProfitNetCostData,
   getNetSalesProfitCostDataSuccess,
+  getTopSellingKiosks,
   getTopSellingKiosksSuccess,
+  getTopSellingProducts,
   getTopSellingProductsSuccess,
   getTopSellSuccess,
   getTopRefillsSuccess,
@@ -16,16 +18,22 @@ import {
 } from '../actions';
 
 const initialState = {
-  isLoading: false,
   widgetData: {
     totalNumberOfProductsSold: 0,
     totalNetIncome: 0,
     averageDailyRevenue: 0,
-    peakSalesHour: null,
+    peakSalesHour: {
+      start: 0,
+      end: 0,
+    },
   },
+  isWidgetLoading: false,
   netSalesProfitCostData: [],
+  isNetSalesLoading: false,
   topSellingKiosks: [],
+  isTopSellKioskLoading: false,
   topSellingProducts: [],
+  isTopSellProductsLoading: false,
   topSellHours: [],
   topSellWeek: [],
   isTopSellLoading: false,
@@ -40,29 +48,39 @@ const reportsReducer = handleActions(
   {
     [getWidgetData]: state => ({
       ...state,
-      isLoading: true,
+      isWidgetLoading: true,
     }),
     [getWidgetDataSuccess]: (state, { payload }) => ({
       ...state,
       widgetData: payload,
-      isLoading: false,
+      isWidgetLoading: false,
     }),
     [getNetSalesProfitNetCostData]: state => ({
       ...state,
-      isLoading: true,
+      isNetSalesLoading: true,
     }),
     [getNetSalesProfitCostDataSuccess]: (state, { payload }) => ({
       ...state,
       netSalesProfitCostData: payload.netSalesProfitCostData,
-      isLoading: false,
+      isNetSalesLoading: false,
+    }),
+    [getTopSellingKiosks]: state => ({
+      ...state,
+      isTopSellKioskLoading: true,
     }),
     [getTopSellingKiosksSuccess]: (state, { payload }) => ({
       ...state,
       topSellingKiosks: payload.topSellingKiosks,
+      isTopSellKioskLoading: false,
+    }),
+    [getTopSellingProducts]: state => ({
+      ...state,
+      isTopSellProductLoading: true,
     }),
     [getTopSellingProductsSuccess]: (state, { payload }) => ({
       ...state,
       topSellingProducts: payload.topSellingProducts,
+      isTopSellProductLoading: false,
     }),
     [getTopSell]: state => ({
       ...state,

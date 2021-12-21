@@ -57,7 +57,7 @@ const TopSellingKiosksTable = ({ topSellingKiosks }) => {
     },
   ];
   return (
-    <Segment>
+    <>
       <SegmentHeader>
         <Header as="h4">
           <Header.Content>Top Selling Kiosks &nbsp;</Header.Content>
@@ -71,7 +71,7 @@ const TopSellingKiosksTable = ({ topSellingKiosks }) => {
         data={topSellingKiosks}
         columns={columns}
       />
-    </Segment>
+    </>
   );
 };
 

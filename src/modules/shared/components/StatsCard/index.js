@@ -43,7 +43,11 @@ const StatsCard = ({
                       overflow: 'hidden',
                       width: '140px',
                       whiteSpace: 'nowrap',
-                      fontSize: fontTo18 ? '18px' : '28px',
+                      fontSize: fontTo18
+                        ? '18px'
+                        : amount.length > 8
+                        ? '26px'
+                        : '28px',
                     }}
                   >
                     {amount}
@@ -58,7 +62,11 @@ const StatsCard = ({
             ) : (
               <Header.Content
                 style={{
-                  fontSize: fontTo18 ? '18px' : '28px',
+                  fontSize: fontTo18
+                    ? '18px'
+                    : amount.length > 8
+                    ? '26px'
+                    : '28px',
                 }}
               >
                 {amount}

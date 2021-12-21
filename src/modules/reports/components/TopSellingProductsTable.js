@@ -67,7 +67,7 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
     },
   ];
   return (
-    <Segment>
+    <>
       <SegmentHeader>
         <Header as="h4">
           <Header.Content>Top Selling Products &nbsp;</Header.Content>
@@ -81,7 +81,7 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
         data={topSellingProducts}
         columns={columns}
       />
-    </Segment>
+    </>
   );
 };
 
