@@ -31,7 +31,7 @@ const initialState = {
   netSalesProfitCostData: [],
   isNetSalesLoading: false,
   topSellingKiosks: [],
-  isTopSellKioskLoading: false,
+  isTopSellKiosksLoading: false,
   topSellingProducts: [],
   isTopSellProductsLoading: false,
   topSellHours: [],
@@ -66,21 +66,21 @@ const reportsReducer = handleActions(
     }),
     [getTopSellingKiosks]: state => ({
       ...state,
-      isTopSellKioskLoading: true,
+      isTopSellKiosksLoading: true,
     }),
     [getTopSellingKiosksSuccess]: (state, { payload }) => ({
       ...state,
       topSellingKiosks: payload.topSellingKiosks,
-      isTopSellKioskLoading: false,
+      isTopSellKiosksLoading: false,
     }),
     [getTopSellingProducts]: state => ({
       ...state,
-      isTopSellProductLoading: true,
+      isTopSellProductsLoading: true,
     }),
     [getTopSellingProductsSuccess]: (state, { payload }) => ({
       ...state,
       topSellingProducts: payload.topSellingProducts,
-      isTopSellProductLoading: false,
+      isTopSellProductsLoading: false,
     }),
     [getTopSell]: state => ({
       ...state,

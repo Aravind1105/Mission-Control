@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
 import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
-const Toolbar = ({ changeDate, kiosks, changeKiosk, isKiosksListLoading }) => {
+const Toolbar = ({
+  changeDate,
+  kiosks,
+  changeKiosk,
+  isKiosksListLoading,
+  dateRange,
+}) => {
   const [exportData, changeExportData] = useState(false);
 
   const handleDateChange = value => {
@@ -25,7 +32,7 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, isKiosksListLoading }) => {
         return prev;
       }, {});
     }
-    if (date.$gte && date.$lte) {
+    if (!isEqual(value, dateRange) && date.$gte && date.$lte) {
       changeDate(date);
       changeExportData({
         from: date.$gte,
@@ -53,7 +60,11 @@ const Toolbar = ({ changeDate, kiosks, changeKiosk, isKiosksListLoading }) => {
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <DatePicker type="range" onChange={handleDateChange} />
+            <DatePicker
+              type="range"
+              onChange={handleDateChange}
+              value={dateRange}
+            />
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>
