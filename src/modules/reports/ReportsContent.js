@@ -31,9 +31,14 @@ import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 import BarChart from '../shared/components/BarChart';
 import UsedPaymentMethodsPiChart from './components/UsedPaymentMethodsPiChart';
+import moment from 'moment';
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const ReportsContent = ({
-  isLoading,
   widgetData,
   kiosksOptions,
   NetSalesProfitNetCostData,
@@ -49,7 +54,7 @@ const ReportsContent = ({
   topRefills,
   isWidgetLoading,
   isNetSalesLoading,
-  isTopSellKioskLoading,
+  isTopSellKiosksLoading,
   isTopSellProductsLoading,
   isTopRefillsLoading,
   isTopSellLoading,
@@ -57,17 +62,19 @@ const ReportsContent = ({
   paymentMethodsStats,
   getPaymentsMethodsStats,
 }) => {
-  const [dateRange, changeDateRange] = useState('');
+  const [dateRange, changeDateRange] = useState({
+    $gte: date[0],
+    $lte: date[1],
+  });
   const [kiosk, changeKiosk] = useState([]);
 
   useEffect(() => {
     const data = {};
-    if (dateRange !== '') {
+    if (dateRange || kiosk) {
       data.period = dateRange;
-    }
-    if (kiosk.length > 0) {
       data.kioskId = kiosk;
     }
+
     getWidgetData(data);
     getNetSalesProfitNetCostData(data);
     getTopSellingKiosks(data);
@@ -76,7 +83,6 @@ const ReportsContent = ({
     getTopRefills(data);
     getPaymentsMethodsStats(data);
   }, [dateRange, kiosk]);
-
   return (
     <>
       <Segment>
@@ -84,6 +90,7 @@ const ReportsContent = ({
           changeDate={changeDateRange}
           kiosks={kiosksOptions}
           changeKiosk={changeKiosk}
+          dateRange={date}
         />
         <Grid>
           {isWidgetLoading && <Loader />}
@@ -162,7 +169,7 @@ const ReportsContent = ({
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={8}>
             <Segment>
-              {isTopSellKioskLoading && <Loader />}
+              {isTopSellKiosksLoading && <Loader />}
               <TopSellingKiosksTable topSellingKiosks={topSellingKiosks} />
             </Segment>
           </Grid.Column>
@@ -264,7 +271,7 @@ const mapStateToProps = state => ({
   topRefills: getTopRefillsState(state),
   isWidgetLoading: state.reports.isWidgetLoading,
   isNetSalesLoading: state.reports.isNetSalesLoading,
-  isTopSellKioskLoading: state.reports.isTopSellKioskLoading,
+  isTopSellKiosksLoading: state.reports.isTopSellKiosksLoading,
   isTopSellProductsLoading: state.reports.isTopSellProductsLoading,
   isTopSellLoading: state.reports.isTopSellLoading,
   isTopRefillsLoading: state.reports.isTopRefillsLoading,

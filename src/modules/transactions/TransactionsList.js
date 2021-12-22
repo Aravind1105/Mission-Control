@@ -93,7 +93,6 @@ const TransactionsList = ({
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, dateRange, kiosk]);
-
   return (
     <>
       <Toolbar
