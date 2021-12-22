@@ -11,19 +11,18 @@ import { updateSessionExpired } from '../../../core/actions/coreActions';
 function* handler({ payload }) {
   try {
     const variables = {
-      period:
-        payload && payload.period
-          ? {
-              from: payload.period.dateFrom,
-              to: payload.period.dateTo,
-            }
-          : {
+      period: payload?.period
+        ? {
+            from: payload.period.$gte,
+            to: payload.period.$lte,
+          }
+        : {
             from: new Date(+0),
-              to: new Date(),
-            }
-    }
-    if(payload && payload.kioskId) {
-      variables.kioskId = payload.kioskId
+            to: new Date(),
+          },
+    };
+    if (payload?.kioskId) {
+      variables.kioskId = payload.kioskId;
     }
     const {
       data: {
