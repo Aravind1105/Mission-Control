@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Dropdown, Button } from 'semantic-ui-react';
-import format from 'date-fns/format';
-import { exportCsvSales } from '../actions';
+import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import CustomButton from 'modules/shared/components/CustomButton';
 import { toast } from 'react-semantic-toasts';
 import DatePicker from 'modules/shared/components/Datepicker';
+import { isEqual } from 'lodash';
+import { exportCsvSales } from '../actions';
 import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
-import moment from 'moment'
-const startOfMonth = moment().startOf('month').toDate();
-const currentDay   = new Date();
-const date = [startOfMonth, currentDay];
 
 const Toolbar = ({
   changeDate,
@@ -19,6 +15,7 @@ const Toolbar = ({
   changeKiosk,
   exportCsvSales,
   isKiosksListLoading,
+  dateRange,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -39,8 +36,11 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    changeDate(date);
-    if (date.$gte && date.$lte) {
+    if (
+      (!isEqual(value, dateRange) && date.$gte && date.$lte) ||
+      value === null
+    ) {
+      changeDate(date);
       changeExportData({
         from: date.$gte,
         to: date.$lte,
@@ -82,7 +82,11 @@ const Toolbar = ({
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <DatePicker type="range" onChange={handleDateChange} value={date} />
+            <DatePicker
+              type="range"
+              onChange={handleDateChange}
+              value={dateRange}
+            />
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={3}>

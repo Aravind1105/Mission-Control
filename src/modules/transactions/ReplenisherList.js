@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-
+import { isEqual } from 'lodash';
+import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import RefillsToolbar from './components/RefillsToolbar';
 import RefillsContent from './components/RefillsContent';
-
 import {
   getGridRefillsTableState,
   getTotalGridRefillsCount,
@@ -15,8 +15,12 @@ import {
 import { getGridRefills, getRefillsWidgetsData } from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
-import { isEqual } from 'lodash';
-import { useComponentDidMount } from 'lib/customHooks';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const sortDefault = [
   {
@@ -46,7 +50,10 @@ const ReplenisherList = ({
   getRefillsWidgetsData,
   widgetsData,
 }) => {
-  const [dateRange, changeDate] = useState('');
+  const [dateRange, changeDate] = useState({
+    $gte: date[0],
+    $lte: date[1],
+  });
   const [kiosk, changeKiosk] = useState([]);
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
@@ -99,22 +106,17 @@ const ReplenisherList = ({
     getProductListSaga();
   }, []);
 
-  useComponentDidMount(() => {
-    const startDateOfMonth = new Date(
-      new Date(new Date().setHours(0, 0, 0)).setDate(1),
-    );
-    changeDate({
-      "$gte": startDateOfMonth,
-      "$lte": new Date()
-    })
-  })
-
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, kiosk, dateRange]);
+
   return (
     <>
-      <RefillsToolbar changeDate={changeDate} changeKiosk={changeKiosk} />
+      <RefillsToolbar
+        changeDate={changeDate}
+        changeKiosk={changeKiosk}
+        dateRange={date}
+      />
       <Grid>
         <Grid.Row stretched className="custom-widgets">
           <Grid.Column mobile={16} computer={3} tablet={8}>

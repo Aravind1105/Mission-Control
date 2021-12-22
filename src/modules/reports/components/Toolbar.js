@@ -32,7 +32,10 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    if (!isEqual(value, dateRange) && date.$gte && date.$lte) {
+    if (
+      (!isEqual(value, dateRange) && date.$gte && date.$lte) ||
+      value === null
+    ) {
       changeDate(date);
       changeExportData({
         from: date.$gte,

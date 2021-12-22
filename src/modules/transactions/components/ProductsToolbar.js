@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { func, arrayOf, object } from 'prop-types';
-import { Grid, Dropdown } from 'semantic-ui-react';
-import { exportCsvProducts } from '../actions';
+import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { toast } from 'react-semantic-toasts';
+import { isEqual } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
-import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
-import moment from 'moment'
-const startOfMonth = moment().startOf('month').toDate();
-const currentDay   = new Date();
-const date = [startOfMonth, currentDay];
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 
 const Toolbar = ({
   changeDate,
   changeKiosk,
-  exportCsvProducts,
   isKiosksLoading,
   kiosksOptions,
+  dateRange,
 }) => {
-  const [exportData, changeExportData] = useState(false);
-
   const handleDateChange = value => {
     let date = '';
     if (value) {
@@ -37,23 +30,16 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    changeDate(date);
-    if (date.$dateFrom && date.$dateTo) {
-      changeExportData({
-        from: date.$dateFrom,
-        to: date.$dateTo,
-        kiosk: exportData.kiosk ? exportData.kiosk : '',
-      });
+    if (
+      (!isEqual(value, dateRange) && date.$gte && date.$lte) ||
+      value === null
+    ) {
+      changeDate(date);
     }
   };
 
   const handleKioskChange = value => {
     changeKiosk(value);
-    changeExportData({
-      from: exportData.from ? exportData.from : '',
-      to: exportData.to ? exportData.to : '',
-      kiosk: value,
-    });
   };
 
   return (
@@ -65,7 +51,11 @@ const Toolbar = ({
       <Grid stackable>
         <Grid.Row verticalAlign="middle">
           <Grid.Column mobile={16} tablet={8} computer={3}>
-            <DatePicker type="range" onChange={handleDateChange} value={date}/>
+            <DatePicker
+              type="range"
+              onChange={handleDateChange}
+              value={dateRange}
+            />
           </Grid.Column>
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <SelectCheckBoxes
@@ -93,8 +83,5 @@ Toolbar.propTypes = {
 const mapStateToProps = state => ({
   isKiosksLoading: state.kiosks.isKiosksListLoading,
 });
-const mapDispatchToProps = {
-  exportCsvProducts,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default connect(mapStateToProps)(Toolbar);

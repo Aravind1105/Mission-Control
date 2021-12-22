@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-
+import { isEqual } from 'lodash';
+import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import Toolbar from './components/Toolbar';
@@ -13,7 +14,12 @@ import {
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllTransactions, getTransactionsWidgetsData } from './actions';
-import { isEqual } from 'lodash';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const sortDefault = [
   {
@@ -42,7 +48,10 @@ const TransactionsList = ({
   getTransactionsWidgetsData,
   widgetsData,
 }) => {
-  const [dateRange, changeDate] = useState('');
+  const [dateRange, changeDate] = useState({
+    $gte: date[0],
+    $lte: date[1],
+  });
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [kiosk, changeKiosk] = useState([]);
@@ -93,12 +102,14 @@ const TransactionsList = ({
   useEffect(() => {
     getData({ sort });
   }, [page, perPage, dateRange, kiosk]);
+
   return (
     <>
       <Toolbar
         changeDate={changeDate}
         kiosks={kiosksOptions}
         changeKiosk={changeKiosk}
+        dateRange={date}
       />
       <Grid>
         <Grid.Row>

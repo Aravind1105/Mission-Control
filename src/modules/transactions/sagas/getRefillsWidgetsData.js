@@ -23,17 +23,16 @@ function* handler({ payload }) {
     } = yield call(gqlTransactions.query, {
       query: GET_REFILLS_WIDGET_DATA,
       variables: {
-        period:
-          payload && payload.period
-            ? {
-                from: payload.period.$gte,
-                to: payload.period.$lte,
-              }
-            : {
-                from: new Date(+0),
-                to: new Date(),
-              },
-        kioskId: payload && payload.kioskId,
+        period: payload?.period
+          ? {
+              from: payload.period.$gte,
+              to: payload.period.$lte,
+            }
+          : {
+              from: new Date(+0),
+              to: new Date(),
+            },
+        kioskId: payload?.kioskId,
       },
     });
     if (errors && errors[0].message === 'Token expired')

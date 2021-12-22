@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Header, Divider, Grid, Segment } from 'semantic-ui-react';
-import {
-  getWidgetData,
-  getTopSellingKiosks,
-  getTopSellingProducts,
-  getTopSell,
-  getPaymentsMethodsStats,
-  getNetSalesProfitNetCostData,
-  getTopRefills,
-} from './actions';
+import moment from 'moment';
+import { format } from 'date-fns';
 import StatsCard from 'modules/shared/components/StatsCard';
+import Loader from 'modules/shared/components/Loader';
+import BarChart from 'modules/shared/components/BarChart';
 import {
   getTopSellingKiosksState,
   getWidgetDataState,
@@ -20,18 +15,23 @@ import {
   getTopRefillsState,
   getPaymentsMethodsState,
 } from './selectors';
+import {
+  getWidgetData,
+  getTopSellingKiosks,
+  getTopSellingProducts,
+  getTopSell,
+  getPaymentsMethodsStats,
+  getNetSalesProfitNetCostData,
+  getTopRefills,
+} from './actions';
+import './styles.less';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
-import { format } from 'date-fns';
 import AreaChartComponent from './components/AreaChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
-import './styles.less';
-import Loader from 'modules/shared/components/Loader';
-import './styles.less';
-import BarChart from '../shared/components/BarChart';
 import UsedPaymentMethodsPiChart from './components/UsedPaymentMethodsPiChart';
-import moment from 'moment';
+
 const startOfMonth = moment()
   .startOf('month')
   .toDate();
@@ -70,18 +70,17 @@ const ReportsContent = ({
 
   useEffect(() => {
     const data = {};
-    if (dateRange || kiosk) {
-      data.period = dateRange;
-      data.kioskId = kiosk;
-    }
+    if (dateRange) data.period = dateRange;
+
+    if (kiosk.length > 0) data.kioskId = kiosk;
 
     getWidgetData(data);
     getNetSalesProfitNetCostData(data);
-    getTopSellingKiosks(data);
     getTopSellingProducts(data);
+    getTopSellingKiosks(data);
+    getPaymentsMethodsStats(data);
     getTopSell(data);
     getTopRefills(data);
-    getPaymentsMethodsStats(data);
   }, [dateRange, kiosk]);
   return (
     <>
