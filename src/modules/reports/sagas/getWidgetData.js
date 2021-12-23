@@ -31,6 +31,7 @@ function* handler({ payload }) {
               to: new Date(),
             },
         kioskId: payload?.kioskId,
+        kioskIds: payload?.kioskId,
       },
     });
 

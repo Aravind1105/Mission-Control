@@ -230,6 +230,7 @@ export const GET_ALL_KIOSKS_GRID_QUERY = gql`
           _id
           type
           orgId
+          created
         }
         heartbeat {
           uptime

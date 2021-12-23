@@ -34,7 +34,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
   if (typeof paymentMethodsStatsdata[0] !== 'undefined') {
     for (var i = 0; i < paymentMethodsStatsdata.length; i++) {
       if (
-        paymentMethodsStatsdata[i]._id == 'Membercard' &&
+        paymentMethodsStatsdata[i]._id === 'Membercard' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -46,7 +46,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'App' &&
+        paymentMethodsStatsdata[i]._id === 'App' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -58,7 +58,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'V PAY' &&
+        paymentMethodsStatsdata[i]._id === 'V PAY' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -70,7 +70,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'Visa' &&
+        paymentMethodsStatsdata[i]._id === 'Visa' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -82,7 +82,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'girocard' &&
+        paymentMethodsStatsdata[i]._id === 'girocard' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -94,7 +94,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'Mastercard' &&
+        paymentMethodsStatsdata[i]._id === 'Mastercard' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -106,7 +106,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'Dallmayr-payment' &&
+        paymentMethodsStatsdata[i]._id === 'Dallmayr-payment' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
@@ -118,7 +118,7 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         };
         LegendArray.push(item);
       } else if (
-        paymentMethodsStatsdata[i]._id == 'VISA electron' &&
+        paymentMethodsStatsdata[i]._id === 'VISA electron' &&
         paymentMethodsStatsdata[i].cnt !== null
       ) {
         const item = {
