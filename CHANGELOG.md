@@ -1,3 +1,23 @@
+#### 1.4.34 (2021-12-23)
+
+##### New Features
+
+* **reports:**  add date filter for current month and whole data (58da135e)
+* **Reports:**  LIV-3295 Add Line Chart for Profit (9cc03f2a)
+
+##### Bug Fixes
+
+* **Reports:**
+  *  LIV-3298 update kiosk filter for reports (ae4f7dcc)
+  *  LIV-3295 Net Sales/Profit/ Net Cost Updated (d25cb297)
+  *  LIV-3295 Net Sales/Profit/ Net Cost Y-Axis Issue Resolved (f17fad86)
+* **reports:**
+  *  LIV-4253 placheolder fix and handle null values (3836f1b8)
+  *  LIV-4253 LIV-3901 fixed session created and kiosk filter (d0eb6b32)
+  *  loading and widgets fix for every component (9884fc56)
+* **transcations:**  LIV-4181 LIV-4255 remove duplicate graphqls and request... (70a0ed2a)
+* **MC-Reports:**  LIV-3295 Net Sales/Profit/ Net Cost diagram (d564cba2)
+
 #### 1.4.33 (2021-12-16)
 
 ##### New Features
