@@ -98,9 +98,13 @@ const ReportsContent = ({
               <StatsCard
                 customColor="#219653"
                 text="Total Net Sales"
-                amount={`${widgetData.totalNetIncome
-                  .toFixed(2)
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
+                amount={
+                  widgetData.totalNetIncome
+                    ? `${widgetData.totalNetIncome
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`
+                    : '0 €'
+                }
               />
             </Grid.Column>
             <Grid.Column mobile={16} computer={4} tablet={8}>
@@ -118,22 +122,30 @@ const ReportsContent = ({
                 icon="time"
                 customColor="#56CCF2"
                 text="Peak Hour"
-                amount={`${format(
-                  new Date(parseInt(widgetData.peakSalesHour.start)),
-                  'HH:mm',
-                )} - ${format(
-                  new Date(parseInt(widgetData.peakSalesHour.end)),
-                  'HH:mm',
-                )}`}
+                amount={
+                  widgetData.peakSalesHour
+                    ? `${format(
+                        new Date(parseInt(widgetData.peakSalesHour.start)),
+                        'HH:mm',
+                      )} - ${format(
+                        new Date(parseInt(widgetData.peakSalesHour.end)),
+                        'HH:mm',
+                      )}`
+                    : '00:00 - 00:00'
+                }
               />
             </Grid.Column>
             <Grid.Column mobile={16} computer={4} tablet={8}>
               <StatsCard
                 customColor="#BB6BD9"
                 text="Average Daily Net Sales"
-                amount={`${widgetData.averageDailyRevenue
-                  .toFixed(2)
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
+                amount={
+                  widgetData.averageDailyRevenue
+                    ? `${widgetData.averageDailyRevenue
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`
+                    : '0 €'
+                }
               />
             </Grid.Column>
           </Grid.Row>
