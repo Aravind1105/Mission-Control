@@ -151,31 +151,34 @@ export default function UsedPaymentMethodsPiChart({ paymentMethodsStatsdata }) {
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={500} height={500}>
-            <Pie
-              data={LegendArray}
-              cx="50%"
-              cy="48%"
-              innerRadius={80}
-              outerRadius={145}
-              labelLine={false}
-              minAngle={20}
-              label={renderCustomizedLabel}
-              dataKey="cntValue"
-            >
-              {LegendArray.map(item => (
-                <Cell key={`cell-${item.id}`} fill={item.color} />
-              ))}
-            </Pie>
-            <Legend
-              payload={LegendArray.map(item => ({
-                id: item.id,
-                type: 'square',
-                value: item.value,
-                color: item.color,
-              }))}
-            />
-          </PieChart>
+          {LegendArray && (
+            <PieChart width={500} height={500}>
+              <Pie
+                data={LegendArray}
+                cx="50%"
+                cy="48%"
+                innerRadius={80}
+                outerRadius={145}
+                labelLine={false}
+                minAngle={20}
+                isAnimationActive={false}
+                label={renderCustomizedLabel}
+                dataKey="cntValue"
+              >
+                {LegendArray.map(item => (
+                  <Cell key={`cell-${item.id}`} fill={item.color} />
+                ))}
+              </Pie>
+              <Legend
+                payload={LegendArray.map(item => ({
+                  id: item.id,
+                  type: 'square',
+                  value: item.value,
+                  color: item.color,
+                }))}
+              />
+            </PieChart>
+          )}
         </ResponsiveContainer>
       </div>
     </>
