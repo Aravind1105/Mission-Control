@@ -210,83 +210,81 @@ const UserLog = ({
     if (userName.firstName === '') getOneUserWithInfo({ id: params.id });
   }, [id, page, perPage, dateRange]);
   return (
-    <>
-      {isLoading && <Loader />}
-      <Grid>
-        <Grid.Row stretched>
-          <Grid.Column>
-            <Segment>
-              <Breadcrumbs
-                backLink={backLink}
-                links={links}
-                activeLink={`${
-                  userName.firstName !== ''
-                    ? userName.firstName
-                    : initValue.firstName
-                } ${
-                  userName.lastName !== ''
-                    ? userName.lastName
-                    : initValue.lastName
-                }`}
-              />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Segment>
-              <SegmentHeader>
-                <Header as="h4" color="black">
-                  <Header.Content>User Log</Header.Content>
-                </Header>
-              </SegmentHeader>
-              <Grid>
-                <Grid.Row className="user-log-filter-row">
-                  <Grid.Column width={4}>
-                    <DatePicker type="range" onChange={handleDateChange} />
-                  </Grid.Column>
-                  <Grid.Column width={3}>
-                    <CustomButton
-                      label="Download CSV&nbsp;"
-                      icon="arrow down"
-                      className="custom-button-default"
-                      // onClick={DownloadCsv}
-                      disabled={true}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+    <Grid>
+      <Grid.Row stretched>
+        <Grid.Column>
+          <Segment>
+            <Breadcrumbs
+              backLink={backLink}
+              links={links}
+              activeLink={`${
+                userName.firstName !== ''
+                  ? userName.firstName
+                  : initValue.firstName
+              } ${
+                userName.lastName !== ''
+                  ? userName.lastName
+                  : initValue.lastName
+              }`}
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment>
+            {isLoading && <Loader />}
+            <SegmentHeader>
+              <Header as="h4" color="black">
+                <Header.Content>User Log</Header.Content>
+              </Header>
+            </SegmentHeader>
+            <Grid>
               <Grid.Row className="user-log-filter-row">
-                <Grid.Column>
-                  <CustomTable
-                    className="user-log-table"
-                    sortByColumn="created"
-                    sortable
-                    data={user || []}
-                    columns={columns}
-                    getData={getData}
-                    excludeSortBy={['event']}
-                    setSortByInCaller={sort => setSort([sort])}
-                    sortDirection="DESC"
+                <Grid.Column width={4}>
+                  <DatePicker type="range" onChange={handleDateChange} />
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <CustomButton
+                    label="Download CSV&nbsp;"
+                    icon="arrow down"
+                    className="custom-button-default"
+                    // onClick={DownloadCsv}
+                    disabled={true}
                   />
                 </Grid.Column>
               </Grid.Row>
-              <Grid.Row>
-                <Grid.Column>
-                  <Pagination
-                    totalCount={total}
-                    page={page}
-                    perPage={perPage}
-                    changePage={changePage}
-                    changePerPage={changePerPage}
-                  />
-                </Grid.Column>
-              </Grid.Row>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+            </Grid>
+            <Grid.Row className="user-log-filter-row">
+              <Grid.Column>
+                <CustomTable
+                  className="user-log-table"
+                  sortByColumn="created"
+                  sortable
+                  data={user || []}
+                  columns={columns}
+                  getData={getData}
+                  excludeSortBy={['event']}
+                  setSortByInCaller={sort => setSort([sort])}
+                  sortDirection="DESC"
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Pagination
+                  totalCount={total}
+                  page={page}
+                  perPage={perPage}
+                  changePage={changePage}
+                  changePerPage={changePerPage}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
