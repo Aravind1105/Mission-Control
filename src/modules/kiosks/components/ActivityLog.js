@@ -7,7 +7,7 @@ import CustomTable from 'modules/shared/components/CustomTable';
 import Pagination from 'modules/shared/components/Pagination';
 import CustomButton from 'modules/shared/components/CustomButton';
 import DatePicker from 'modules/shared/components/Datepicker';
-import { toast } from 'react-semantic-toasts';
+import Loader from 'modules/shared/components/Loader';
 import {
   getKioskSingle,
   getActivityLogsState,
@@ -157,6 +157,7 @@ const ActivityLogGrid = ({
   total,
   activityLogs,
   getActivityLogs,
+  isLoading,
 }) => {
   const [dateRange, changeDate] = useState('');
   const [page, changePage] = useState(0);
@@ -220,6 +221,7 @@ const ActivityLogGrid = ({
     <Grid.Row>
       <Grid.Column>
         <Segment>
+          {isLoading && <Loader />}
           <SegmentHeader>
             <Header as="h4" color="black">
               <Header.Content>Activity Log</Header.Content>

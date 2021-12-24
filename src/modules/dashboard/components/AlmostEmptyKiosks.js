@@ -1,12 +1,16 @@
 import React from 'react';
-import { Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
+import Pagination from 'modules/shared/components/Pagination';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
+import Loader from 'modules/shared/components/Loader';
 import history from 'lib/history';
 import Toolbar from './Toolbar';
+import { getAlmostEmptyKiosksTotal } from 'modules/kiosks/selectors';
 import './styles.less';
 
 const backLink = {
@@ -21,6 +25,12 @@ const AlmostEmptyKiosks = ({
   changeSupplier,
   getData,
   setSortByInCaller,
+  isKioskLoading,
+  page,
+  perPage,
+  changePage,
+  changePerPage,
+  total,
 }) => {
   const { t } = useTranslation();
   const screenWidth = window.innerWidth;
@@ -78,6 +88,7 @@ const AlmostEmptyKiosks = ({
   };
   return (
     <Segment>
+      {isKioskLoading && <Loader />}
       <SegmentHeader>
         <Header as="h4" color="black">
           <Header.Content>Almost Empty</Header.Content>
@@ -91,20 +102,41 @@ const AlmostEmptyKiosks = ({
           changeSupplier={changeSupplier}
         />
       </div>
-      <CustomTable
-        className="dashboard-table"
-        sortable
-        onRowClick={handlerClickRow}
-        excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
-        fixed
-        selectable
-        data={almostEmptyKiosks}
-        columns={columns}
-        getData={getData}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-      />
+      <Grid stackable stretched>
+        <Grid.Row>
+          <Grid.Column>
+            <CustomTable
+              className="dashboard-table"
+              sortable
+              onRowClick={handlerClickRow}
+              excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
+              fixed
+              selectable
+              data={almostEmptyKiosks}
+              columns={columns}
+              getData={getData}
+              setSortByInCaller={sort => setSortByInCaller(sort)}
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Pagination
+              totalCount={total}
+              page={page}
+              perPage={perPage}
+              changePage={changePage}
+              changePerPage={changePerPage}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Segment>
   );
 };
 
-export default AlmostEmptyKiosks;
+const mapStateToProps = state => ({
+  total: getAlmostEmptyKiosksTotal(state),
+});
+
+export default connect(mapStateToProps)(AlmostEmptyKiosks);

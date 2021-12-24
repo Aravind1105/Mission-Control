@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
+
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormCheckbox from 'modules/shared/components/FormCheckbox';
@@ -69,7 +70,12 @@ const AgeRestrictionWarningMessage = () => (
   </Message>
 );
 
-const CustomizeScreen = ({ cancelHandler, kioskProps, kiosk }) => {
+const CustomizeScreen = ({
+  cancelHandler,
+  kioskProps,
+  kiosk,
+  isKioskLoading,
+}) => {
   const dispatch = useDispatch();
   const onSubmit = (values, formActions) => {
     const finalProps = {

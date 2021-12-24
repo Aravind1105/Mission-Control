@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
 
 import {
   getKioskOptions,
@@ -10,11 +9,7 @@ import {
 } from 'modules/kiosks/selectors';
 import StatsCard from 'modules/shared/components/StatsCard';
 import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
-import {
-  getSalesStatisticState,
-  getStatisticProductsListState,
-  getWidgetDataState,
-} from './selectors';
+import { getWidgetDataState } from './selectors';
 import {
   getSalesStatistic,
   getWidgetTodayData,
@@ -33,8 +28,6 @@ const Dashboard = ({
   getWidgetTodayData,
   getWidgetMonthlyData,
   widgetData,
-  salesStatistics,
-  isSalesStatLoading,
 }) => {
   useEffect(() => {
     const data = {
@@ -53,6 +46,7 @@ const Dashboard = ({
           <Alerts list={alertsLog} />
         </Grid.Column>
       </Grid.Row>
+
       <Grid.Row stretched className="custom-widgets">
         <Grid.Column mobile={8} computer={4}>
           <StatsCard
@@ -98,11 +92,10 @@ const Dashboard = ({
 
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
-          {!isSalesStatLoading && !isEmpty(salesStatistics) && (
-            <MainChart kiosksOptions={kiosksOptions} />
-          )}
+          <MainChart kiosksOptions={kiosksOptions} />
         </Grid.Column>
       </Grid.Row>
+
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
           <AlmostEmptyTable />
@@ -117,8 +110,6 @@ const mapStateToProps = state => ({
   kiosksOptions: getKioskOptions(state),
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   widgetData: getWidgetDataState(state),
-  isSalesStatLoading: state.dashboard.isSalesStatLoading,
-  salesStatistics: getSalesStatisticState(state),
 });
 
 const mapDispatchToProps = {

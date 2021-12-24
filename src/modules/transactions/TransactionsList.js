@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
+import Loader from 'modules/shared/components/Loader';
 import Toolbar from './components/Toolbar';
 import TransactionsContent from './components/TransactionsContent';
 import {
@@ -47,6 +48,7 @@ const TransactionsList = ({
   kiosksOptions,
   getTransactionsWidgetsData,
   widgetsData,
+  isWidgetsLoading,
 }) => {
   const [dateRange, changeDate] = useState({
     $gte: date[0],
@@ -105,13 +107,14 @@ const TransactionsList = ({
 
   return (
     <>
+      {(isWidgetsLoading || isLoading) && <Loader />}
       <Toolbar
         changeDate={changeDate}
         kiosks={kiosksOptions}
         changeKiosk={changeKiosk}
         dateRange={date}
       />
-      <Grid>
+      <Grid stackable stretched>
         <Grid.Row>
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
@@ -170,7 +173,7 @@ const TransactionsList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
-      <br></br>
+      <br />
       <Pagination
         totalCount={total}
         page={page}
@@ -187,6 +190,7 @@ const mapStateToProps = state => ({
   transactions: getTransactionsTableState(state),
   total: getTotalTransactionsCount(state),
   isLoading: state.transactions.isLoading,
+  isWidgetsLoading: state.transactions.isWidgetsLoading,
   kiosksOptions: getKioskOptionsForTableDropdown(state),
   widgetsData: getWidgetDataState(state),
 });

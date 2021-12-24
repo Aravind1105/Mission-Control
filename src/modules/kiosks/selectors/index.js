@@ -76,11 +76,12 @@ const twoHours = 1000 * 60 * 60 * 2;
 
 export const getKiosksState = state => state.kiosks.tableList;
 
-export const getKiosksTableState = state =>
-  state.kiosks.tableList.map(({ dayIncome, ...el }) => ({
+export const getKiosksTableState = createSelector(getKiosksState, kiosks =>
+  kiosks.map(({ dayIncome, ...el }) => ({
     ...el,
     dayIncome: `${dayIncome ? dayIncome.toFixed(2) : '0.00'}`,
-  }));
+  })),
+);
 
 export const getKioskDoorStatus = () => [
   {

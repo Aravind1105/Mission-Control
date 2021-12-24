@@ -15,7 +15,6 @@ const KioskForm = ({
   initialValues,
   organizations,
   cancelHandler,
-  isKioskLoading,
   modifyKiosk,
   getAllSerialNumbers,
   serialNumbers,

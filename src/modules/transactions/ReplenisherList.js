@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
+import Loader from 'modules/shared/components/Loader';
 import RefillsToolbar from './components/RefillsToolbar';
 import RefillsContent from './components/RefillsContent';
 import {
@@ -49,6 +50,7 @@ const ReplenisherList = ({
   getProductListSaga,
   getRefillsWidgetsData,
   widgetsData,
+  isWidgetsLoading,
 }) => {
   const [dateRange, changeDate] = useState({
     $gte: date[0],
@@ -112,12 +114,13 @@ const ReplenisherList = ({
 
   return (
     <>
+      {(isWidgetsLoading || isLoading) && <Loader />}
       <RefillsToolbar
         changeDate={changeDate}
         changeKiosk={changeKiosk}
         dateRange={date}
       />
-      <Grid>
+      <Grid stackable stretched>
         <Grid.Row stretched className="custom-widgets">
           <Grid.Column mobile={16} computer={3} tablet={8}>
             <StatsCard
@@ -173,7 +176,7 @@ const ReplenisherList = ({
         getData={getData}
         setSortByInCaller={sort => setSort([sort])}
       />
-      <br></br>
+      <br />
       <Pagination
         totalCount={total}
         page={page}
@@ -190,6 +193,7 @@ const mapStateToProps = state => ({
   refills: getGridRefillsTableState(state),
   total: getTotalGridRefillsCount(state),
   isLoading: state.transactions.isLoading,
+  isWidgetsLoading: state.transactions.isWidgetsLoading,
   productsList: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
 });

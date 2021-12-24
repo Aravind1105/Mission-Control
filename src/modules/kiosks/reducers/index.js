@@ -50,6 +50,8 @@ const initialState = {
   kiosk: null,
   isKioskLoading: false,
   isLoading: false,
+  isAlertsLoading: false,
+  isAlmostEmptyLoading: false,
   currentKioskSide: 'A',
   alerts: [],
   totalAlerts: 0,
@@ -130,7 +132,7 @@ const kiosksReducer = handleActions(
     [getAlertsGrid]: state => {
       return {
         ...state,
-        isLoading: true,
+        isAlertsLoading: true,
       };
     },
     [getAlertsGridSuccess]: (state, { payload }) => {
@@ -138,7 +140,7 @@ const kiosksReducer = handleActions(
         ...state,
         alerts: get(payload, 'gridAlerts.data', []),
         totalAlerts: get(payload, 'gridAlerts.total', 0),
-        isLoading: false,
+        isAlertsLoading: false,
       };
     },
     [combineActions(getOrganizationById, getOrganizationByIdSuccess)]: (
@@ -161,12 +163,12 @@ const kiosksReducer = handleActions(
     }),
     [getAlmostEmptyKiosks]: state => ({
       ...state,
-      isLoading: true,
+      isAlmostEmptyLoading: true,
     }),
     [updateAlmostEmptyKiosks]: (state, { payload }) => {
       return {
         ...state,
-        isLoading: false,
+        isAlmostEmptyLoading: false,
         almostEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.data', []),
         totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
       };

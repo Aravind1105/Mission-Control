@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import history from 'lib/history';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
+import Loader from 'modules/shared/components/Loader';
 import { getAlertsGrid } from '../../kiosks/actions';
 import {
   getKiosksAlertsForTable,
@@ -50,10 +51,16 @@ export const ToolTip = () => (
               </Grid.Column>
               <Grid.Column>Below 2 °C for more than 15 min.</Grid.Column>
               <Grid.Column>
-                <b>Tablet disconnected:</b>
+                <b>Tablet Internet disconnected:</b>
               </Grid.Column>
               <Grid.Column>
-                Tablet has not been updated for over 10 min.
+                Tablet has not been updated for over 15 min.
+              </Grid.Column>
+              <Grid.Column>
+                <b>Tablet MQTT disconnected:</b>
+              </Grid.Column>
+              <Grid.Column>
+                Tablet MQTT has not been connected for over 15 min.
               </Grid.Column>
               <Grid.Column>
                 <b>Unauthorized Access:</b>
@@ -67,6 +74,24 @@ export const ToolTip = () => (
               <Grid.Column>
                 No event has been updated from Kiosk for more than 10 min.
               </Grid.Column>
+              <Grid.Column>
+                <b>Empty Purchase session:</b>
+              </Grid.Column>
+              <Grid.Column>
+                No Product has been bought in that session.
+              </Grid.Column>
+              <Grid.Column>
+                <b>Invalid Scales weight:</b>
+              </Grid.Column>
+              <Grid.Column>
+                More products are detected than the current inventory.
+              </Grid.Column>
+              <Grid.Column>
+                <b>Left/Right Scales disconnected:</b>
+              </Grid.Column>
+              <Grid.Column>
+                Single/Multiple scales got disconnected on Left/Right Kiosk.
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Grid.Column>
@@ -75,7 +100,7 @@ export const ToolTip = () => (
   </Popup>
 );
 
-const Alerts = ({ getAlertsGrid, alerts }) => {
+const Alerts = ({ getAlertsGrid, alerts, isAlertsLoading }) => {
   useEffect(() => {
     getData({ sort });
   }, []);
@@ -138,6 +163,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
 
   return (
     <Segment>
+      {isAlertsLoading && <Loader />}
       <SegmentHeader>
         <Header as="h4" color="red">
           <Icon name="exclamation triangle" size="small" />
@@ -173,6 +199,7 @@ const Alerts = ({ getAlertsGrid, alerts }) => {
 const mapStateToProps = state => ({
   alerts: getKiosksAlertsForTable(state),
   total: getTotalAlerts(state),
+  isAlertsLoading: state.kiosks.isAlertsLoading,
 });
 
 const mapDispatchToProps = {

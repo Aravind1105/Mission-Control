@@ -1,7 +1,9 @@
 import { call, all, put, takeLatest, select } from 'redux-saga/effects';
+import { toast } from 'react-semantic-toasts';
 import get from 'lodash/get';
 
 import gqlProducts from 'lib/https/gqlProducts';
+import history from 'lib/history';
 import {
   CREATE_PRODUCT_LINE_MUTATION,
   UPDATE_PRODUCT_LINE_MUTATION,
@@ -66,23 +68,31 @@ function* handler({ payload: { values, initialValues, uploadedImage } }) {
           })
         : null,
     ]);
-    if (errors && errors[0].message === 'Token expired')
-      yield put(updateSessionExpired(true));
-    else {
+    if (!errors) {
       const responseData = data[id ? 'updateProductLine' : 'createProductLine'];
-
+      history.push('/products');
       const priceHistory = get(
         priceMutation,
         'data.updateProductLinePrice.priceHistory',
         responseData.priceHistory,
       );
+      toast({
+        type: 'success',
+        description: 'Product details saved successfully.',
+        animation: 'fade left',
+      });
       yield put(actionSuccess({ ...responseData, priceHistory }));
+    } else {
+      if (errors && errors[0].message === 'Token expired')
+        yield put(updateSessionExpired(true));
+      toast({
+        type: 'error',
+        description: 'Error! Something went wrong',
+        animation: 'fade left',
+      });
     }
   } catch (e) {
     console.log(e);
-    window.alert(
-      'An error has occurred with your action. Please contact the Livello staff.',
-    );
   }
 }
 

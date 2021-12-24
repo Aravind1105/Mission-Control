@@ -52,9 +52,7 @@ const KioskDetails = ({
 }) => {
   const { id } = match.params;
   useEffect(() => {
-    if (!isKioskLoading) {
-      getKiosk(id);
-    }
+    getKiosk(id);
   }, [id]);
 
   useEffect(() => {
@@ -82,127 +80,121 @@ const KioskDetails = ({
 
   const loaded = !isKioskLoading && orgData;
   return loaded ? (
-    <>
-      <Grid stackable>
-        <Grid.Column width={11}>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Breadcrumbs
-                    backLink={backLink}
-                    links={links}
-                    activeLink={kiosk && kiosk.name}
-                  />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <DetailsHeader
-                    name={kiosk && kiosk.name}
-                    doorStatus={kiosk && kiosk.doorStatus}
-                    temperature={kiosk && kiosk.temperature}
-                    heartbeat={kiosk && kiosk.heartbeat}
-                    session={kiosk && kiosk.session}
-                    service={kiosk && kiosk.controller.serviceCheck.enabled}
-                  />
-                  <Divider />
-                  <DetailsInfo
-                    serial={`#${kiosk && kiosk.serialNumber}`}
-                    session={kiosk && kiosk.session}
-                    location={kiosk && kiosk.location}
-                    ownerOrganization={orgData.name}
-                    notes={kiosk && kiosk.notes}
-                    pin={kiosk && kiosk.pin}
-                  >
-                    <>
-                      <CustomButton
-                        label="Open Door"
-                        icon="lock open"
-                        onClick={handlerOpenDoor}
-                      />
-                      <CustomButton
-                        label="Edit"
-                        icon="edit"
-                        onClick={handlerEdit}
-                      />
-                      <CustomButton
-                        label="Sync / Restart"
-                        icon="redo"
-                        onClick={handlerResetKiosk}
-                      />
-                      <CustomButton
-                        icon="thermometer quarter"
-                        label="Temp. Log"
-                        onClick={() =>
-                          history.push(`/kiosks/log/temp/${kiosk && kiosk._id}`)
-                        }
-                      />
-                      <CustomButton
-                        icon="list ul"
-                        label="Activity Log"
-                        onClick={() =>
-                          history.push(
-                            `/kiosks/log/activity/${kiosk && kiosk._id}`,
-                          )
-                        }
-                      />
-                      <CustomButton
-                        icon="setting"
-                        label="Settings"
-                        // disabled={(function() {
-                        //   const value = get(
-                        //     kiosk && kiosk.temperature,
-                        //     'updated',
-                        //     0,
-                        //   );
-                        //   const dif = differenceInMinutes(
-                        //     new Date(),
-                        //     new Date(value),
-                        //   );
-                        //   return !(dif <= 10);
-                        // })()}
-                        onClick={() =>
-                          history.push(`/kiosks/settings/${kiosk && kiosk._id}`)
-                        }
-                      />
-                    </>
-                  </DetailsInfo>
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row columns="equal">
-              <Grid.Column>
-                <DetailsLoadCells
-                  cells={loadCells.list}
-                  kioskName={kiosk && kiosk.name}
-                  currentKioskSide={currentKioskSide}
-                  rootUser={rootUser}
+    <Grid stackable>
+      <Grid.Column width={11}>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment>
+                <Breadcrumbs
+                  backLink={backLink}
+                  links={links}
+                  activeLink={kiosk?.name}
                 />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment>
+                <DetailsHeader
+                  name={kiosk?.name}
+                  doorStatus={kiosk?.doorStatus}
+                  temperature={kiosk?.temperature}
+                  heartbeat={kiosk?.heartbeat}
+                  session={kiosk?.session}
+                  service={kiosk?.controller?.serviceCheck?.enabled}
+                />
+                <Divider />
+                <DetailsInfo
+                  serial={`#${kiosk?.serialNumber}`}
+                  session={kiosk?.session}
+                  location={kiosk?.location}
+                  ownerOrganization={orgData?.name}
+                  notes={kiosk?.notes}
+                  pin={kiosk?.pin}
+                >
+                  <>
+                    <CustomButton
+                      label="Open Door"
+                      icon="lock open"
+                      onClick={handlerOpenDoor}
+                    />
+                    <CustomButton
+                      label="Edit"
+                      icon="edit"
+                      onClick={handlerEdit}
+                    />
+                    <CustomButton
+                      label="Sync / Restart"
+                      icon="redo"
+                      onClick={handlerResetKiosk}
+                    />
+                    <CustomButton
+                      icon="thermometer quarter"
+                      label="Temp. Log"
+                      onClick={() =>
+                        history.push(`/kiosks/log/temp/${kiosk?._id}`)
+                      }
+                    />
+                    <CustomButton
+                      icon="list ul"
+                      label="Activity Log"
+                      onClick={() =>
+                        history.push(`/kiosks/log/activity/${kiosk?._id}`)
+                      }
+                    />
+                    <CustomButton
+                      icon="setting"
+                      label="Settings"
+                      // disabled={(function() {
+                      //   const value = get(
+                      //     kiosk && kiosk.temperature,
+                      //     'updated',
+                      //     0,
+                      //   );
+                      //   const dif = differenceInMinutes(
+                      //     new Date(),
+                      //     new Date(value),
+                      //   );
+                      //   return !(dif <= 10);
+                      // })()}
+                      onClick={() =>
+                        history.push(`/kiosks/settings/${kiosk?._id}`)
+                      }
+                    />
+                  </>
+                </DetailsInfo>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns="equal">
+            <Grid.Column>
+              <DetailsLoadCells
+                cells={loadCells.list}
+                kioskName={kiosk?.name}
+                currentKioskSide={currentKioskSide}
+                rootUser={rootUser}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Grid.Column>
 
-        <Grid.Column width={5}>
-          <Grid>
-            <DetailQRCode
-              qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk &&
-                kiosk.qrcode}&slug=${orgData &&
-                orgData.slug}&appleId=${orgData && orgData.appleId}`}
-              fileName={(kiosk && kiosk.name) || ''}
-            />
-            <Grid.Row>
-              <Grid.Column>
-                <DetailsInventory {...loadCells} />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
-      </Grid>
-    </>
+      <Grid.Column width={5}>
+        <Grid>
+          <DetailQRCode
+            qrCode={`http://qrdeeplink.livello.com?qrCode=${kiosk?.qrcode}&slug=${orgData?.slug}&appleId=${orgData?.appleId}`}
+            fileName={kiosk?.name || ''}
+          />
+          <Grid.Row>
+            <Grid.Column>
+              <DetailsInventory {...loadCells} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Grid.Column>
+    </Grid>
   ) : (
     <Loader />
   );

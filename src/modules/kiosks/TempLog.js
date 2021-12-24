@@ -39,7 +39,6 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
 
   return (
     <>
-      {isLoading && <Loader />}
       <Grid>
         <Grid.Row stretched>
           <Grid.Column>
@@ -52,7 +51,7 @@ const Log = ({ getKiosk, kiosk, isLoading, ...props }) => {
             </Segment>
           </Grid.Column>
         </Grid.Row>
-        <TempLogVisualization {...props} />
+        <TempLogVisualization {...props} isLoading={isLoading} />
       </Grid>
     </>
   );

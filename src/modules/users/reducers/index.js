@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 
 import {
   getUsers,
@@ -16,6 +16,8 @@ import {
   setSort,
   setFilters,
   setSearch,
+  updateUser,
+  resetUser,
 } from '../actions';
 
 const initialState = {
@@ -56,7 +58,11 @@ const usersReducer = handleActions(
       activeUserId: payload,
       activeUser: state.list.find(el => el._id === payload),
     }),
-    [getOneUserWithInfo]: state => ({
+    [resetUser]: state => ({
+      ...state,
+      userWithDetails: null,
+    }),
+    [combineActions(getOneUserWithInfo, updateUser)]: state => ({
       ...state,
       isLoading: true,
     }),

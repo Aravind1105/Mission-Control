@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Pagination from 'modules/shared/components/Pagination';
 import Loader from 'modules/shared/components/Loader';
@@ -22,7 +23,6 @@ import {
   setSort,
   setFilters,
 } from '../actions';
-import { isEqual } from 'lodash';
 import { getUserType } from 'modules/authentication/selectors';
 import './styles.less';
 
@@ -210,31 +210,42 @@ const KiosksContent = ({
   const handlerClickRow = ({ _id }) => {
     history.push(`/kiosks/detail/${_id}`);
   };
+
   return (
     <>
-      {isLoading && <Loader />}
       <Segment>
-        <CustomTable
-          className="kiosk-table"
-          columns={columns}
-          data={kiosks}
-          onRowClick={handlerClickRow}
-          sortable
-          excludeSortBy={['temperature.value']}
-          selectable
-          getData={getData}
-          sortByColumn="name"
-          setSortByInCaller={sort => setSort([sort])}
-          sortDirection="ASC"
-        />
-        <Pagination
-          totalCount={total}
-          page={page}
-          perPage={perPage}
-          changePage={changePage}
-          changePerPage={changePerPage}
-          isLoading={isLoading}
-        />
+        {isLoading && <Loader />}
+        <Grid stackable stretched>
+          <Grid.Row>
+            <Grid.Column>
+              <CustomTable
+                className="kiosk-table"
+                columns={columns}
+                data={kiosks}
+                onRowClick={handlerClickRow}
+                sortable
+                excludeSortBy={['temperature.value']}
+                selectable
+                getData={getData}
+                sortByColumn="name"
+                setSortByInCaller={sort => setSort([sort])}
+                sortDirection="ASC"
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Pagination
+                totalCount={total}
+                page={page}
+                perPage={perPage}
+                changePage={changePage}
+                changePerPage={changePerPage}
+                isLoading={isLoading}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Segment>
     </>
   );

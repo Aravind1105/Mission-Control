@@ -57,11 +57,11 @@ const ProductDetail = ({
   // familyOption,
   taxesOption,
   isLoading,
+  isOrgLoading,
   match,
   getFullProductData,
   organizations,
   getOrganizations,
-  isProductLoading,
   getPriceHistory,
   defaultPriceHistory,
   activePriceHistory,
@@ -86,12 +86,11 @@ const ProductDetail = ({
   const [firstUploadImage, setFirstUploadImage] = useState(null);
 
   useEffect(() => {
-    const { id } = match.params;
-    if (!isLoading) {
-      getFullProductData(id);
-      getOrganizations();
-      setButtonVal(id == 'new' ? 'Submit' : 'Save');
-    }
+    // const { id } = match.params;
+    getFullProductData(id);
+    getOrganizations();
+    setButtonVal(id == 'new' ? 'Submit' : 'Save');
+    // }
     if (id !== 'new') {
       getPriceHistory({ productLineId: id });
       getKiosksWithProduct({ productLineId: id });
@@ -102,11 +101,13 @@ const ProductDetail = ({
       resetPriceHistory();
       resetKioskWithProduct();
     }
-  }, []);
+  }, [id]);
 
+  const isEdit = id !== 'new';
+  const hasData = isEdit ? initialValues.id === id : true;
+  const isLoaded = !isOrgLoading && !!organizations.length && hasData;
   return (
     <>
-      {isLoading && <Loader />}
       <Grid stackable>
         <Grid.Column width={11}>
           <Grid>
@@ -125,6 +126,7 @@ const ProductDetail = ({
             <Grid.Row>
               <Grid.Column>
                 <Segment>
+                  {(isLoading || !isLoaded) && <Loader />}
                   <Grid stackable>
                     <Grid.Row relaxed="very" columns={2}>
                       <Grid.Column width={10}>
@@ -185,7 +187,6 @@ const ProductDetail = ({
                       organizations={organizations}
                       setIsCancelTriggered={setIsCancelTriggered}
                       buttonVal={buttonVal}
-                      isProductLoading={isProductLoading}
                       firstUploadImage={firstUploadImage}
                     />
                   </Grid.Row>
@@ -239,10 +240,10 @@ const mapStateToProps = (state, { match: { params } }) => {
     product,
     isProductLoaded,
     isLoading: state.products.isLoading,
+    isOrgLoading: state.organizations.isLoading,
     kiosks: getKioskListName(state),
     productImg: get(product, 'images[0]', ''),
     taxesOption: selectorProductTaxOptions(state),
-    isProductLoading: state.products.isLoading,
     organizations: getOrganizationsAsOptions(state),
     defaultPriceHistory: getDefaultPriceHistoryState(state),
     activePriceHistory: getActivePriceHistoryState(state),

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 import get from 'lodash/get';
 
 import history from 'lib/history';
@@ -82,30 +82,38 @@ const OrganizationsContent = ({
   };
 
   return (
-    <>
+    <Segment>
       {isLoading && <Loader />}
-      <Segment>
-        <CustomTable
-          className="organization-table"
-          columns={columns}
-          data={organizations}
-          onRowClick={clickRow}
-          sortable
-          selectable
-          sortByColumn="name"
-          setSortByInCaller={sort => setSort([sort])}
-          sortDirection="ASC"
-        />
-        <Pagination
-          totalCount={total}
-          page={page}
-          perPage={perPage}
-          changePage={changePage}
-          changePerPage={changePerPage}
-          isLoading={isLoading}
-        />
-      </Segment>
-    </>
+      <Grid stackable stretched>
+        <Grid.Row>
+          <Grid.Column>
+            <CustomTable
+              className="organization-table"
+              columns={columns}
+              data={organizations}
+              onRowClick={clickRow}
+              sortable
+              selectable
+              sortByColumn="name"
+              setSortByInCaller={sort => setSort([sort])}
+              sortDirection="ASC"
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Pagination
+              totalCount={total}
+              page={page}
+              perPage={perPage}
+              changePage={changePage}
+              changePerPage={changePerPage}
+              isLoading={isLoading}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Segment>
   );
 };
 

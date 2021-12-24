@@ -17,7 +17,6 @@ import {
 import { connect } from 'react-redux';
 
 const KiosksList = ({
-  kiosks,
   organizations,
   kiosksStatus,
   kiosksNetworkStatus,
@@ -56,7 +55,6 @@ const KiosksList = ({
 };
 
 const mapStateToProps = state => ({
-  kiosks: getKioskOptionsForTableDropdown(state),
   kiosksStatus: getKioskDoorStatus(state),
   kiosksNetworkStatus: getKiosksNetworkStatus(state),
   organizations: getOrganizationOptionsForTableDropdown(state),

@@ -14,6 +14,7 @@ export const validateMemberCard = createAction('@@saga/VALIDATE_MEMBER_CARD');
 // State actions
 export const getUsersSuccess = createAction('@@state/GET_USERS_SUCCESS');
 export const setActiveUser = createAction('@@state/SET_ACTIVE_USER');
+export const resetUser = createAction('@@state/RESET_ACTIVE_USER');
 export const toggleUserRoleSuccess = createAction(
   '@@state/TOGGLE_USER_ROLE_SUCCESS',
 );

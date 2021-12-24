@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
-
-import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 
 const sortTypes = {
@@ -91,7 +89,6 @@ const SalesTable = ({
         overflow: 'auto',
       }}
     >
-      {isLoading && <Loader />}
       <Table
         className="transactions-table"
         basic
@@ -132,65 +129,71 @@ const SalesTable = ({
             </Table.Row>
           </Table.Header>
         )}
-        {resultData.map((resultItem, rowIdx) => (
-          <Table.Body
-            className="tb-sales"
-            // className={activeRow === rowIdx ? 'active-body' : ''}
-          >
-            {resultItem.map((item, i) => {
-              const rowKey = `${i}`;
-              if (item.transactionID) {
-                toggleTableCellColor = !toggleTableCellColor;
-              }
-              return (
-                <Table.Row
-                  key={rowKey}
-                  // onClick={handlerRowClick(resultItem, rowIdx)}
-                >
-                  {columns.map(({ field, formatter }, j) => {
-                    const cellKey = `${i}-${field}`;
-                    const cellValue = formatter
-                      ? formatter(item, j)
-                      : get(item, field, '');
-                    const isOnlyRootField =
-                      field === 'transactionID' ||
-                      field === 'kioskName' ||
-                      field === 'created' ||
-                      field === 'paymentMethod';
-                    if (!item.transactionID && isOnlyRootField) {
-                      return;
-                    }
-                    // eslint-disable-next-line consistent-return
-                    return (
-                      <Table.Cell
-                        key={cellKey}
-                        // eslint-disable-next-line no-nested-ternary
-                        rowSpan={
-                          item.transactionID && isOnlyRootField
-                            ? item.uniqueProducts === 1
-                              ? 1
-                              : item.uniqueProducts + 1
-                            : '1'
-                        }
-                        className={`table-cell-text ${
-                          item.transactionID
-                            ? 'table-cell-text-transaction'
-                            : ''
-                        } ${
-                          toggleTableCellColor
-                            ? 'table-cell-bg-grey'
-                            : 'table-cell-bg-white'
-                        }`}
-                      >
-                        {cellValue}
-                      </Table.Cell>
-                    );
-                  })}
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        ))}
+        {resultData.length > 0 &&
+          resultData.map((resultItem, rowIdx) => (
+            <Table.Body
+              className="tb-sales"
+              // className={activeRow === rowIdx ? 'active-body' : ''}
+            >
+              {resultItem.map((item, i) => {
+                const rowKey = `${i}`;
+                if (item.transactionID) {
+                  toggleTableCellColor = !toggleTableCellColor;
+                }
+                return (
+                  <Table.Row
+                    key={rowKey}
+                    // onClick={handlerRowClick(resultItem, rowIdx)}
+                  >
+                    {columns.map(({ field, formatter }, j) => {
+                      const cellKey = `${i}-${field}`;
+                      const cellValue = formatter
+                        ? formatter(item, j)
+                        : get(item, field, '');
+                      const isOnlyRootField =
+                        field === 'transactionID' ||
+                        field === 'kioskName' ||
+                        field === 'created' ||
+                        field === 'paymentMethod';
+                      if (!item.transactionID && isOnlyRootField) {
+                        return;
+                      }
+                      // eslint-disable-next-line consistent-return
+                      return (
+                        <Table.Cell
+                          key={cellKey}
+                          // eslint-disable-next-line no-nested-ternary
+                          rowSpan={
+                            item.transactionID && isOnlyRootField
+                              ? item.uniqueProducts === 1
+                                ? 1
+                                : item.uniqueProducts + 1
+                              : '1'
+                          }
+                          className={`table-cell-text ${
+                            item.transactionID
+                              ? 'table-cell-text-transaction'
+                              : ''
+                          } ${
+                            toggleTableCellColor
+                              ? 'table-cell-bg-grey'
+                              : 'table-cell-bg-white'
+                          }`}
+                        >
+                          {cellValue}
+                        </Table.Cell>
+                      );
+                    })}
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
+          ))}
+        {resultData.length === 0 && (
+          <Table.Row>
+            <Table.Cell>Your query returned no results.</Table.Cell>
+          </Table.Row>
+        )}
       </Table>
     </div>
   );

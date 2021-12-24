@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
-import uniqueId from 'lodash';
-import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 
 const sortTypes = {
@@ -84,7 +81,6 @@ const ProductsTable = ({
         borderRadius: '2px',
       }}
     >
-      {isLoading && <Loader />}
       <Table
         className="product-table"
         basic
