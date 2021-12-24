@@ -6,7 +6,6 @@ import './styles.less';
 
 const UsersDetail = ({ total }) => {
   return (
-
     <div className="user-info">
       <Segment className="usr-detail-style user-empty">
         <Grid stretched>
