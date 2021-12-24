@@ -44,6 +44,7 @@ export const GET_TOP_SELLING_PRODUCTS = gql`
         _id
         name
       }
+      rank
       amount
       netSales
       netCost
@@ -82,8 +83,8 @@ export const GET_TOP_REFILLS = gql`
 `;
 
 export const GET_PAYMENTS_METHODS_STATS = gql`
-  query($period: Period!) {
-    getPaymentsMethodsStats(period: $period) {
+  query($period: Period!, $kioskIds: [String]) {
+    getPaymentsMethodsStats(period: $period, kioskIds: $kioskIds) {
       _id
       cnt
     }

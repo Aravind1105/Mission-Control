@@ -8,7 +8,6 @@ import { toast } from 'react-semantic-toasts';
 function* handler({ payload }) {
   try {
     const { kioskId } = payload;
-    console.log('this is doule Kiosk');
     const variables = {
       data: {
         kioskId: kioskId,

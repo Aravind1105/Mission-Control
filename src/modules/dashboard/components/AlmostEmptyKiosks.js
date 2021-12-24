@@ -46,6 +46,7 @@ const AlmostEmptyKiosks = ({
         }
         return <div style={{ textAlign: 'center' }}> {amount} </div>;
       },
+      textAlign: 'center',
     },
     {
       title: t('Cable ID'),
@@ -58,6 +59,7 @@ const AlmostEmptyKiosks = ({
         }
         return <div style={{ textAlign: 'center' }}> {scale} </div>;
       },
+      textAlign: 'center',
     },
     {
       title: t('Kiosk'),

@@ -107,7 +107,7 @@ const CustomizedAxisTick = ({ x, y, payload }) => {
 };
 
 export default function AreaChartComponent({ data }) {
-  // Modifying Data For Legent Element
+  // Modifying Data For Legend Element
   let LegendArray = [];
   if (typeof data[0] !== 'undefined') {
     for (const [key, value] of Object.entries(data[0])) {
@@ -125,6 +125,14 @@ export default function AreaChartComponent({ data }) {
           value: 'Net Cost',
           type: 'square',
           color: '#BB6BD9',
+        };
+        LegendArray.push(item);
+      } else if (key == 'profit' && value !== null) {
+        const item = {
+          id: 'profit',
+          value: 'Profit',
+          type: 'square',
+          color: '#27AE60',
         };
         LegendArray.push(item);
       }
@@ -202,6 +210,15 @@ export default function AreaChartComponent({ data }) {
               fillOpacity={1}
               fill="url(#colorTC)"
             />
+            // Green Color for Profit
+            <Area
+              type="monotone"
+              dataKey="profit"
+              stackId="3"
+              stroke="#27AE60"
+              strokeWidth={1}
+              fillOpacity={0}
+              />
             {data && LegendArray && (
               <Tooltip content={<CustomTooltip data={LegendArray} />} />
             )}

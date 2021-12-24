@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-
+import moment from 'moment';
+import { isEqual } from 'lodash';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import ProductsToolbar from './components/ProductsToolbar';
 import ProductsContent from './components/ProductsContent';
-
 import {
   getGridProductsTableState,
   getTotalGridProductsCount,
@@ -15,8 +15,12 @@ import {
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import { getAllProducts, getProductsWidgetsData } from './actions';
 import { getProductsDropdownList } from '../products/selectors';
-import { isEqual } from 'lodash';
-import { useComponentDidMount } from 'lib/customHooks';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const sortDefault = [
   {
@@ -47,7 +51,10 @@ const ProductList = ({
   getProductsWidgetsData,
   widgetsData,
 }) => {
-  const [dateRange, changeDate] = useState('');
+  const [dateRange, changeDate] = useState({
+    $gte: date[0],
+    $lte: date[1],
+  });
   const [product, changeProduct] = useState('');
   const [kiosk, changeKiosk] = useState('');
   const [page, changePage] = useState(0);
@@ -102,16 +109,6 @@ const ProductList = ({
     getData({ sort });
   }, [page, perPage, kiosk, dateRange, product]);
 
-  useComponentDidMount(() => {
-    const startDateOfMonth = new Date(
-      new Date(new Date().setHours(0, 0, 0)).setDate(1),
-    );
-    changeDate({
-      "dateFrom": startDateOfMonth,
-      "dateTo": new Date()
-    })
-  })
-
   return (
     <>
       <ProductsToolbar
@@ -120,6 +117,7 @@ const ProductList = ({
         kiosksOptions={kiosks}
         productsListValue={productsListValue}
         changeProduct={changeProduct}
+        dateRange={date}
       />
       <Grid>
         <Grid.Row stretched className="custom-widgets">

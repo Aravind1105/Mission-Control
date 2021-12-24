@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Segment } from 'semantic-ui-react';
-import {
-  getWidgetData,
-  getTopSellingKiosks,
-  getTopSellingProducts,
-  getTopSell,
-  getPaymentsMethodsStats,
-  getNetSalesProfitNetCostData,
-  getTopRefills,
-} from './actions';
+import { Header, Divider, Grid, Segment } from 'semantic-ui-react';
+import moment from 'moment';
+import { format } from 'date-fns';
 import StatsCard from 'modules/shared/components/StatsCard';
+import Loader from 'modules/shared/components/Loader';
+import BarChart from 'modules/shared/components/BarChart';
 import {
   getTopSellingKiosksState,
   getWidgetDataState,
@@ -20,20 +15,30 @@ import {
   getTopRefillsState,
   getPaymentsMethodsState,
 } from './selectors';
+import {
+  getWidgetData,
+  getTopSellingKiosks,
+  getTopSellingProducts,
+  getTopSell,
+  getPaymentsMethodsStats,
+  getNetSalesProfitNetCostData,
+  getTopRefills,
+} from './actions';
+import './styles.less';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
 import Toolbar from './components/Toolbar';
-import { format } from 'date-fns';
 import AreaChartComponent from './components/AreaChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
-import './styles.less';
-import Loader from 'modules/shared/components/Loader';
-import './styles.less';
-import BarChart from '../shared/components/BarChart';
 import UsedPaymentMethodsPiChart from './components/UsedPaymentMethodsPiChart';
 
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
+
 const ReportsContent = ({
-  isLoading,
   widgetData,
   kiosksOptions,
   NetSalesProfitNetCostData,
@@ -47,32 +52,36 @@ const ReportsContent = ({
   getTopSell,
   getTopRefills,
   topRefills,
+  isWidgetLoading,
+  isNetSalesLoading,
+  isTopSellKiosksLoading,
+  isTopSellProductsLoading,
   isTopRefillsLoading,
   isTopSellLoading,
   isPaymentMethodLoading,
   paymentMethodsStats,
   getPaymentsMethodsStats,
 }) => {
-  const [dateRange, changeDateRange] = useState('');
+  const [dateRange, changeDateRange] = useState({
+    $gte: date[0],
+    $lte: date[1],
+  });
   const [kiosk, changeKiosk] = useState([]);
 
   useEffect(() => {
     const data = {};
-    if (dateRange !== '') {
-      data.period = dateRange;
-    }
-    if (kiosk.length > 0) {
-      data.kioskId = kiosk;
-    }
+    if (dateRange) data.period = dateRange;
+
+    if (kiosk.length > 0) data.kioskId = kiosk;
+
     getWidgetData(data);
     getNetSalesProfitNetCostData(data);
-    getTopSellingKiosks(data);
     getTopSellingProducts(data);
+    getTopSellingKiosks(data);
+    getPaymentsMethodsStats(data);
     getTopSell(data);
     getTopRefills(data);
-    getPaymentsMethodsStats(data);
   }, [dateRange, kiosk]);
-
   return (
     <>
       <Segment>
@@ -80,58 +89,64 @@ const ReportsContent = ({
           changeDate={changeDateRange}
           kiosks={kiosksOptions}
           changeKiosk={changeKiosk}
+          dateRange={date}
         />
         <Grid>
+          {isWidgetLoading && <Loader />}
           <Grid.Row stretched className="custom-widgets">
             <Grid.Column mobile={16} computer={4} tablet={8}>
-              {widgetData.totalNetIncome && (
-                <StatsCard
-                  customColor="#219653"
-                  text="Total Net Sales"
-                  amount={`${widgetData.totalNetIncome
-                    .toFixed(2)
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}€`}
-                />
-              )}
+              <StatsCard
+                customColor="#219653"
+                text="Total Net Sales"
+                amount={
+                  widgetData.totalNetIncome
+                    ? `${widgetData.totalNetIncome
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`
+                    : '0 €'
+                }
+              />
             </Grid.Column>
             <Grid.Column mobile={16} computer={4} tablet={8}>
-              {widgetData.totalNumberOfProductsSold && (
-                <StatsCard
-                  icon="boxes"
-                  customColor="#F2994A"
-                  text="Total Products Sold"
-                  amount={widgetData.totalNumberOfProductsSold
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                />
-              )}
+              <StatsCard
+                icon="boxes"
+                customColor="#F2994A"
+                text="Total Products Sold"
+                amount={widgetData.totalNumberOfProductsSold
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              />
             </Grid.Column>
             <Grid.Column mobile={16} computer={4} tablet={8}>
-              {widgetData.peakSalesHour && (
-                <StatsCard
-                  icon="time"
-                  customColor="#56CCF2"
-                  text="Peak Hour"
-                  amount={`${format(
-                    new Date(parseInt(widgetData.peakSalesHour.start)),
-                    'HH:mm',
-                  )} - ${format(
-                    new Date(parseInt(widgetData.peakSalesHour.end)),
-                    'HH:mm',
-                  )}`}
-                />
-              )}
+              <StatsCard
+                icon="time"
+                customColor="#56CCF2"
+                text="Peak Hour"
+                amount={
+                  widgetData.peakSalesHour
+                    ? `${format(
+                        new Date(parseInt(widgetData.peakSalesHour.start)),
+                        'HH:mm',
+                      )} - ${format(
+                        new Date(parseInt(widgetData.peakSalesHour.end)),
+                        'HH:mm',
+                      )}`
+                    : '00:00 - 00:00'
+                }
+              />
             </Grid.Column>
             <Grid.Column mobile={16} computer={4} tablet={8}>
-              {widgetData.averageDailyRevenue && (
-                <StatsCard
-                  customColor="#BB6BD9"
-                  text="Average Daily Net Sales"
-                  amount={`${widgetData.averageDailyRevenue
-                    .toFixed(2)
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`}
-                />
-              )}
+              <StatsCard
+                customColor="#BB6BD9"
+                text="Average Daily Net Sales"
+                amount={
+                  widgetData.averageDailyRevenue
+                    ? `${widgetData.averageDailyRevenue
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} €`
+                    : '0 €'
+                }
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -140,48 +155,53 @@ const ReportsContent = ({
       <Grid>
         <Grid.Row>
           <Grid.Column>
-            {isLoading && <Loader />}
-            {NetSalesProfitNetCostData && (
-              <Segment>
+            <Segment>
+              {isNetSalesLoading && <Loader />}
+              {NetSalesProfitNetCostData && (
                 <AreaChartComponent data={NetSalesProfitNetCostData} />
-              </Segment>
-            )}
+              )}
+            </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
       <Grid className="reports">
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={16}>
-            {isLoading && <Loader />}
-            <TopSellingProductsTable topSellingProducts={topSellingProducts} />
+            <Segment>
+              {isTopSellProductsLoading && <Loader />}
+              <TopSellingProductsTable
+                topSellingProducts={topSellingProducts}
+              />
+            </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
       <Grid className="kiosks-reports-table">
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={8}>
-            {isLoading && <Loader />}
-            <TopSellingKiosksTable topSellingKiosks={topSellingKiosks} />
+            <Segment>
+              {isTopSellKiosksLoading && <Loader />}
+              <TopSellingKiosksTable topSellingKiosks={topSellingKiosks} />
+            </Segment>
           </Grid.Column>
           <Grid.Column mobile={16} computer={8}>
-            {isPaymentMethodLoading && <Loader />}
-            {!isPaymentMethodLoading && (
-              <Segment>
-                <UsedPaymentMethodsPiChart
-                  paymentMethodsStatsdata={paymentMethodsStats}
-                />
-              </Segment>
-            )}
+            <Segment>
+              {isPaymentMethodLoading && <Loader />}
+              <UsedPaymentMethodsPiChart
+                paymentMethodsStatsdata={paymentMethodsStats}
+              />
+            </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
       <Grid>
         <Grid.Row stretched>
           <Grid.Column mobile={16} computer={8}>
-            {isTopSellLoading && <Loader />}
-            {!isTopSellLoading && (
-              <Segment>
+            <Segment>
+              {isTopSellLoading && <Loader />}
+              {!isTopSellLoading ? (
                 <BarChart
+                  title={'Sold products'}
                   data={topSell}
                   dateRange={dateRange}
                   defaultGraphType="daily"
@@ -203,14 +223,20 @@ const ReportsContent = ({
                     weekly: 'highest activity',
                   }}
                 />
-              </Segment>
-            )}
+              ) : (
+                <>
+                  <Header size="small">{'Sold products'}</Header>
+                  <Divider fitted style={{ marginBottom: '48px' }}></Divider>
+                </>
+              )}
+            </Segment>
           </Grid.Column>
           <Grid.Column mobile={16} computer={8}>
-            {isTopRefillsLoading && <Loader />}
-            {!isTopRefillsLoading && (
-              <Segment>
+            <Segment>
+              {isTopRefillsLoading && <Loader />}
+              {!isTopRefillsLoading ? (
                 <BarChart
+                  title={'Refills'}
                   data={topRefills}
                   dateRange={dateRange}
                   defaultGraphType="daily"
@@ -232,8 +258,13 @@ const ReportsContent = ({
                     weekly: 'highest activity',
                   }}
                 />
-              </Segment>
-            )}
+              ) : (
+                <>
+                  <Header size="small">{'Refills'}</Header>
+                  <Divider fitted style={{ marginBottom: '48px' }}></Divider>
+                </>
+              )}
+            </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -242,7 +273,6 @@ const ReportsContent = ({
 };
 
 const mapStateToProps = state => ({
-  isLoading: state.reports.isLoading,
   widgetData: getWidgetDataState(state),
   kiosksOptions: getKioskOptionsForTableDropdown(state),
   NetSalesProfitNetCostData: getNetSalesProfitCostState(state),
@@ -250,6 +280,10 @@ const mapStateToProps = state => ({
   topSellingProducts: getTopSellingProductsState(state),
   topSell: getTopSellState(state),
   topRefills: getTopRefillsState(state),
+  isWidgetLoading: state.reports.isWidgetLoading,
+  isNetSalesLoading: state.reports.isNetSalesLoading,
+  isTopSellKiosksLoading: state.reports.isTopSellKiosksLoading,
+  isTopSellProductsLoading: state.reports.isTopSellProductsLoading,
   isTopSellLoading: state.reports.isTopSellLoading,
   isTopRefillsLoading: state.reports.isTopRefillsLoading,
   isPaymentMethodLoading: state.reports.isPaymentMethodLoading,

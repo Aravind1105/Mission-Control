@@ -7,13 +7,12 @@ import './styles.less';
 
 const TopSellingProductsTable = ({ topSellingProducts }) => {
   const { t } = useTranslation();
-  let rank = 1;
   const columns = [
     {
       title: t('Rank'),
-      field: 'productLine',
-      formatter: ({}) => {
-        return <div style={{ textAlign: 'left' }}> {rank++}. </div>;
+      field: 'rank',
+      formatter: ({ rank }) => {
+        return <div style={{ textAlign: 'left' }}> {rank}. </div>;
       },
     },
     {
@@ -68,7 +67,7 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
     },
   ];
   return (
-    <Segment>
+    <>
       <SegmentHeader>
         <Header as="h4">
           <Header.Content>Top Selling Products &nbsp;</Header.Content>
@@ -82,7 +81,7 @@ const TopSellingProductsTable = ({ topSellingProducts }) => {
         data={topSellingProducts}
         columns={columns}
       />
-    </Segment>
+    </>
   );
 };
 
