@@ -5,7 +5,6 @@ import { Grid, Segment, Header, Divider } from 'semantic-ui-react';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
-
 import { getOrganizations } from 'modules/organizations/actions';
 import { getOrganizationsAsOptions } from 'modules/organizations/selectors';
 import history from 'lib/history';
@@ -42,8 +41,8 @@ const KioskEdit = ({
     const isEdit = params.id !== 'new';
     const hasData = isEdit ? initialValues.id === params.id : false;
 
-    if (!isOrgLoading) getOrganizations();
-    if (!hasData && !isKioskLoading) {
+    getOrganizations();
+    if (!hasData) {
       getKiosk(params.id);
     }
   }, []);
@@ -65,51 +64,49 @@ const KioskEdit = ({
   const kioskName = isEdit ? initialValues.name : 'New kiosk';
 
   return (
-    <Grid stackable>
-      <Grid.Column width={16}>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-              <Segment>
-                <Breadcrumbs
-                  links={links}
-                  backLink={backLink}
-                  activeLink={kioskName}
-                />
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-
-          {isLoaded ? (
+    <>
+      <Grid stackable>
+        <Grid.Column width={16}>
+          <Grid>
             <Grid.Row>
               <Grid.Column>
                 <Segment>
+                  <Breadcrumbs
+                    links={links}
+                    backLink={backLink}
+                    activeLink={kioskName}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column>
+                <Segment>
+                  {(isKioskLoading || !isLoaded) && <Loader />}
                   <Header as="h3">{kioskName}</Header>
                   <Divider />
                   <KioskForm
                     initialValues={initialValues}
                     organizations={organizationsOptions}
                     cancelHandler={cancelHandler}
-                    isKioskLoading={isKioskLoading}
                   />
                 </Segment>
               </Grid.Column>
             </Grid.Row>
-          ) : (
-            <Loader />
-          )}
-        </Grid>
-      </Grid.Column>
-      <ConfirmationModal
-        title="Confirm Cancelling"
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        confirmHandler={redirectHandler}
-      >
-        <p>You have unsaved changes.</p>
-        <p>Are you sure you want to leave the page?</p>
-      </ConfirmationModal>
-    </Grid>
+          </Grid>
+        </Grid.Column>
+        <ConfirmationModal
+          title="Confirm Cancelling"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          confirmHandler={redirectHandler}
+        >
+          <p>You have unsaved changes.</p>
+          <p>Are you sure you want to leave the page?</p>
+        </ConfirmationModal>
+      </Grid>
+    </>
   );
 };
 

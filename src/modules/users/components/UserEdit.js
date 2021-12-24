@@ -33,7 +33,7 @@ const UserEdit = ({
   isLoading,
   organizationsOptions,
   userMemberCardsOptions,
-  getOrganizations
+  getOrganizations,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const backLink = {
@@ -63,51 +63,49 @@ const UserEdit = ({
     ? `${initialValues.firstName} ${initialValues.lastName}`
     : 'New User';
   return (
-    <>
-      {isLoading && <Loader />}
-      <Grid stackable>
-        <Grid.Column width={16}>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Breadcrumbs
-                    links={links}
-                    backLink={backLink}
-                    activeLink={userName}
-                  />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
+    <Grid stackable>
+      <Grid.Column width={16}>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment>
+                <Breadcrumbs
+                  links={links}
+                  backLink={backLink}
+                  activeLink={userName}
+                />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
 
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Header as="h3">{userName}</Header>
-                  <Divider />
-                  <UserForm
-                    initialValues={initialValues}
-                    organizations={organizationsOptions}
-                    userMemberCardsOptions={userMemberCardsOptions}
-                    cancelHandler={cancelHandler}
-                    isOrgLoading={isOrgLoading}
-                  />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
-        <ConfirmationModal
-          title="Confirm Cancelling"
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          confirmHandler={redirectHandler}
-        >
-          <p>You have unsaved changes.</p>
-          <p>Are you sure you want to leave the page?</p>
-        </ConfirmationModal>
-      </Grid>
-    </>
+          <Grid.Row>
+            <Grid.Column>
+              <Segment>
+                {isLoading && <Loader />}
+                <Header as="h3">{userName}</Header>
+                <Divider />
+                <UserForm
+                  initialValues={initialValues}
+                  organizations={organizationsOptions}
+                  userMemberCardsOptions={userMemberCardsOptions}
+                  cancelHandler={cancelHandler}
+                  isOrgLoading={isOrgLoading}
+                />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Grid.Column>
+      <ConfirmationModal
+        title="Confirm Cancelling"
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        confirmHandler={redirectHandler}
+      >
+        <p>You have unsaved changes.</p>
+        <p>Are you sure you want to leave the page?</p>
+      </ConfirmationModal>
+    </Grid>
   );
 };
 
@@ -116,7 +114,7 @@ const mapStateToProps = state => ({
   organizationsOptions: getOrganizationsAsOptions(state),
   userMemberCardsOptions: getMemberCardsAsOptions(state),
   isOrgLoading: state.organizations.isOrgLoading,
-  isLoading: state.users.isLoading
+  isLoading: state.users.isLoading,
 });
 
 const mapDispatchToProps = {

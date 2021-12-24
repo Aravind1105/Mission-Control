@@ -1,11 +1,15 @@
 import React from 'react';
-import { Header, Segment, Icon } from 'semantic-ui-react';
+import { Header, Segment, Icon, Grid } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import history from 'lib/history';
 
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
-import history from 'lib/history';
+import Loader from 'modules/shared/components/Loader';
+import Pagination from 'modules/shared/components/Pagination';
+import { getTotalAlerts } from 'modules/kiosks/selectors';
 import Toolbar from './AlertsToolbar';
 import { ToolTip } from './Alerts';
 import './styles.less';
@@ -23,6 +27,11 @@ const AlertsTable = ({
   changePage,
   getData,
   setSortByInCaller,
+  isLoading,
+  total,
+  changePerPage,
+  page,
+  perPage,
 }) => {
   const { t } = useTranslation();
   const columns = [
@@ -62,6 +71,7 @@ const AlertsTable = ({
   };
   return (
     <Segment>
+      {isLoading && <Loader />}
       <SegmentHeader>
         <Header as="h4" color="red">
           <Icon name="exclamation triangle" size="small" />
@@ -80,22 +90,48 @@ const AlertsTable = ({
           changePage={changePage}
         />
       </div>
-      <CustomTable
-        className="dashboard-table"
-        sortable
-        sortByColumn="startDate"
-        onRowClick={handlerClickRow}
-        selectable
-        excludeSortBy={['status', 'duration', 'type', 'details.kioskId.name']}
-        fixed
-        data={alerts}
-        columns={columns}
-        getData={getData}
-        setSortByInCaller={sort => setSortByInCaller(sort)}
-        sortDirection="DESC"
-      />
+      <Grid stackable stretched>
+        <Grid.Row>
+          <Grid.Column>
+            <CustomTable
+              className="dashboard-table"
+              sortable
+              sortByColumn="startDate"
+              onRowClick={handlerClickRow}
+              selectable
+              excludeSortBy={[
+                'status',
+                'duration',
+                'type',
+                'details.kioskId.name',
+              ]}
+              fixed
+              data={alerts}
+              columns={columns}
+              getData={getData}
+              setSortByInCaller={sort => setSortByInCaller(sort)}
+              sortDirection="DESC"
+            />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Pagination
+              totalCount={total}
+              page={page}
+              perPage={perPage}
+              changePage={changePage}
+              changePerPage={changePerPage}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Segment>
   );
 };
 
-export default AlertsTable;
+const mapStateToProps = state => ({
+  total: getTotalAlerts(state),
+});
+
+export default connect(mapStateToProps)(AlertsTable);

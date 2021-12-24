@@ -48,52 +48,50 @@ const Screen = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   useEffect(() => {
     getKiosk(props.match.params.id);
   }, []);
+
   return (
-    <>
-      {isKioskLoading && <Loader />}
-      <Grid>
-        <Grid.Row stretched>
-          <Grid.Column>
-            <Segment>
-              <Breadcrumbs
-                backLink={backLink}
-                links={links}
-                activeLink="Settings"
+    <Grid stackable>
+      <Grid.Row stretched>
+        <Grid.Column>
+          <Segment>
+            <Breadcrumbs
+              backLink={backLink}
+              links={links}
+              activeLink="Settings"
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment>
+            <NavSwitcher config={navSwitcherConfig} />
+            <Switch>
+              <Route
+                exact
+                path={`/kiosks/settings/${
+                  !kiosk ? props.match.params.id : kiosk._id
+                }/general`}
+                component={Settings}
               />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Segment>
-              <NavSwitcher config={navSwitcherConfig} />
-              <Switch>
-                <Route
-                  exact
-                  path={`/kiosks/settings/${
-                    !kiosk ? props.match.params.id : kiosk._id
-                  }/general`}
-                  component={Settings}
-                />
-                {/* <Route
+              {/* <Route
                   exact
                   path={`/kiosks/settings/${
                     !kiosk ? props.match.params.id : kiosk._id
                   }/playlist`}
                   component={Playlist}
                 /> */}
-                <Redirect
-                  to={`/kiosks/settings/${
-                    !kiosk ? props.match.params.id : kiosk._id
-                  }/general`}
-                />
-              </Switch>
-            </Segment>
-            <Divider />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+              <Redirect
+                to={`/kiosks/settings/${
+                  !kiosk ? props.match.params.id : kiosk._id
+                }/general`}
+              />
+            </Switch>
+          </Segment>
+          <Divider />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 

@@ -10,8 +10,11 @@ import {
   getGridRefills,
   getGridRefillsSuccess,
   getGridRefillsFailed,
+  getTransactionsWidgetsData,
   getTransactionsWidgetsDataSuccess,
+  getRefillsWidgetsData,
   getRefillsWidgetsDataSuccess,
+  getProductsWidgetsData,
   getProductsWidgetsDataSuccess,
 } from '../actions';
 
@@ -23,6 +26,7 @@ const initialState = {
   totalTransactions: 0,
   totalProducts: 0,
   isLoading: false,
+  isWidgetsLoading: false,
   widgetData: {
     totalNumberOfProductsAdded: 0,
     totalGrossValueOfRefills: 0,
@@ -80,17 +84,22 @@ const transactionsReducer = handleActions(
       isLoading: false,
     }),
     [combineActions(
+      getTransactionsWidgetsData,
+      getRefillsWidgetsData,
+      getProductsWidgetsData,
+    )]: state => ({
+      ...state,
+      isWidgetsLoading: true,
+    }),
+    [combineActions(
       getTransactionsWidgetsDataSuccess,
       getRefillsWidgetsDataSuccess,
       getProductsWidgetsDataSuccess,
     )]: (state, { payload }) => ({
       ...state,
+      isWidgetsLoading: false,
       widgetData: {
         ...state.widgetData,
-        // mostRefilledProduct: payload.mostRefilledProduct,
-        // totalNumberOfTransactions: payload.totalNumberOfTransactions
-        // leastSoldProduct: payload.leastSoldProduct,
-        // mostRemovedProduct: payload.mostRemovedProduct.name,
         ...payload,
       },
     }),

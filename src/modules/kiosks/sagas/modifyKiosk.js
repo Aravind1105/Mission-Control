@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import toFlatLoadCellItem from 'lib/toFlatLoadCells';
-// import responseErrorFormatter from 'lib/responseErrorFormatter';
+import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import { modifyKiosk as action, getKiosk as actionSuccess } from '../actions';
@@ -9,7 +9,6 @@ import {
   UPDATE_KIOSK_MUTATION,
   GET_KIOSK_QUERY,
 } from '../schema';
-import { toast } from 'react-semantic-toasts';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
 function* handler({ payload: { values, formActions } }) {
@@ -49,7 +48,7 @@ function* handler({ payload: { values, formActions } }) {
       };
       toast({
         type: 'success',
-        description: 'Kiosk was saved successfully',
+        description: 'Kiosk details saved successfully',
         animation: 'fade left',
       });
       yield put(actionSuccess(responseData._id));

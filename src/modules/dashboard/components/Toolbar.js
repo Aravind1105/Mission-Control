@@ -7,6 +7,7 @@ import {
   selectorGetManufacturer,
 } from 'modules/products/selectors';
 import { getKioskOptionsForTableDropdown } from 'modules/kiosks/selectors';
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 import './styles.less';
 
 const Toolbar = ({
@@ -15,7 +16,9 @@ const Toolbar = ({
   changeKiosk,
   kiosks,
   products,
-  manufacturers,
+  manufacturersOptions,
+  manufacturer,
+  isManufacturesLoading,
 }) => {
   const handleKioskChange = (e, { value }) => {
     changeKiosk(value);
@@ -53,10 +56,18 @@ const Toolbar = ({
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
           <div className="manufactur-toolbar-dropdown">
+            {/* <SelectCheckBoxes
+              title="Manufacturers"
+              options={manufacturersOptions}
+              allOptionKey="all"
+              onClickApply={handleChangeManufacturer}
+              isLoading={isManufacturesLoading}
+              value={manufacturer}
+            /> */}
             <Dropdown
               placeholder="All Manufacturers"
               selection
-              options={manufacturers}
+              options={manufacturersOptions}
               className="full-width"
               onChange={handleChangeManufacturer}
             />
@@ -69,8 +80,10 @@ const Toolbar = ({
 
 const mapStateToProps = state => ({
   products: getProductsDropdownList(state),
-  manufacturers: selectorGetManufacturer(state),
+  manufacturersOptions: selectorGetManufacturer(state),
   kiosks: getKioskOptionsForTableDropdown(state),
+  manufacturer: state.products.manufacturers,
+  isManufacturesLoading: state.products.isManufacturesLoading,
 });
 const mapDispatchToProps = {};
 

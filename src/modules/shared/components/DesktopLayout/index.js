@@ -52,7 +52,7 @@ const DesktopLayout = ({
             checked={!minimized}
             onClick={handleClick}
           />
-          <h5>Version: {version}</h5>
+          {!minimized && <h5>Version: {version}</h5>}
         </Menu.Item>
       </Menu>
       <div className="desktop-content">

@@ -2,15 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 
-import Pagination from 'modules/shared/components/Pagination';
-import {
-  getAlmostEmptyKiosksForTable,
-  getAlmostEmptyKiosksTotal,
-} from 'modules/kiosks/selectors';
+import { getAlmostEmptyKiosksForTable } from 'modules/kiosks/selectors';
 import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
 import { getProductListSaga } from 'modules/products/actions';
 import AlmostEmptyKiosks from './components/AlmostEmptyKiosks';
-import Loader from 'modules/shared/components/Loader';
 import { isEqual } from 'lodash';
 
 const sortDefault = [
@@ -34,8 +29,8 @@ const AlmostEmptyKiosksPage = ({
   almostEmptyKiosks,
   kiosks,
   getProductListSaga,
-  total,
-  isLoading,
+  isProductsLoading,
+  isKioskLoading,
 }) => {
   const [product, changeProduct] = useState('');
   const [kiosk, changeKiosk] = useState('');
@@ -90,43 +85,34 @@ const AlmostEmptyKiosksPage = ({
   }, [page, perPage, product, kiosk, supplier]);
 
   return (
-    <>
-      {isLoading && <Loader />}
-      <Grid className="dashboard">
-        <Grid.Row stretched>
-          <Grid.Column mobile={16} computer={16}>
-            <AlmostEmptyKiosks
-              almostEmptyKiosks={almostEmptyKiosks}
-              fullTable
-              kiosks={kiosks}
-              changeKiosk={changeKiosk}
-              changeProduct={changeProduct}
-              changeSupplier={changeSupplier}
-              getData={getData}
-              setSortByInCaller={sort => setSort([sort])}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Pagination
-              totalCount={total}
-              page={page}
-              perPage={perPage}
-              changePage={changePage}
-              changePerPage={changePerPage}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+    <Grid className="dashboard">
+      <Grid.Row stretched>
+        <Grid.Column mobile={16} computer={16}>
+          <AlmostEmptyKiosks
+            almostEmptyKiosks={almostEmptyKiosks}
+            fullTable
+            kiosks={kiosks}
+            changeKiosk={changeKiosk}
+            changeProduct={changeProduct}
+            changeSupplier={changeSupplier}
+            getData={getData}
+            page={page}
+            perPage={perPage}
+            changePage={changePage}
+            changePerPage={changePerPage}
+            isKioskLoading={isKioskLoading}
+            setSortByInCaller={sort => setSort([sort])}
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
 const mapStateToProps = state => ({
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
-  total: getAlmostEmptyKiosksTotal(state),
-  isLoading: state.kiosks.isLoading,
+  isKioskLoading: state.kiosks.isAlmostEmptyLoading,
+  isProductsLoading: state.products.isLoading,
 });
 
 const mapDispatchToProps = {

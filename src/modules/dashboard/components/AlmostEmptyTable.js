@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import history from 'lib/history';
-
 import { getAlmostEmptyKiosksForTable } from 'modules/kiosks/selectors';
-
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
+import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 
-const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
+const AlmostEmptyTable = ({
+  almostEmptyKiosks,
+  getData,
+  isAlmostEmptyLoading,
+}) => {
   const { t } = useTranslation();
   const screenWidth = window.innerWidth;
   const columns = [
@@ -72,6 +75,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
   };
   return (
     <Segment>
+      {isAlmostEmptyLoading && <Loader />}
       <SegmentHeader>
         <Header as="h4" color="black">
           <Header.Content>Almost Empty</Header.Content>
@@ -101,6 +105,7 @@ const AlmostEmptyTable = ({ almostEmptyKiosks, getData }) => {
 
 const mapStateToProps = state => ({
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
+  isAlmostEmptyLoading: state.kiosks.isAlmostEmptyLoading,
 });
 
 export default connect(mapStateToProps, null)(AlmostEmptyTable);

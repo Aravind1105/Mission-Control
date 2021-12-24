@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import CustomButton from 'modules/shared/components/CustomButton';
 import UserInfoRow from 'modules/shared/components/UserInfoRow';
 import history from 'lib/history';
-import { toggleUserRole } from '../actions';
+import { toggleUserRole, resetUser } from '../actions';
 import {
   getActiveUserIDState,
   getUsersListState,
@@ -21,6 +21,7 @@ const UsersDetail = ({
   rootUser,
   loggedInUserId,
   color,
+  resetUser,
 }) => {
   const handlerRoleToggle = () => {
     const payload = {
@@ -31,6 +32,7 @@ const UsersDetail = ({
   };
 
   const editUserHandler = () => {
+    resetUser();
     history.push(`/users/edit/${user.id}`);
   };
   const userLogHandler = () => {
@@ -223,6 +225,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   toggleUserRole,
+  resetUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersDetail);

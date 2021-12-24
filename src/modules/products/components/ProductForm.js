@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {
   Grid,
@@ -21,14 +20,12 @@ import { modifyProductSaga } from '../actions';
 import { isEqual } from 'lodash';
 import FormInputWithUnit from 'modules/shared/components/FormInputWithUnit';
 
-let updatingProduct = false;
 const ProductForm = ({
   initialValues,
   taxesOption,
   organizations,
   setIsCancelTriggered,
   buttonVal,
-  isProductLoading,
   firstUploadImage,
 }) => {
   const dispatch = useDispatch();
@@ -143,22 +140,6 @@ const ProductForm = ({
       setIsFirstShelfSizeChange(false);
     }
   };
-
-  useEffect(() => {
-    if (updatingProduct) {
-      if (isProductLoading) {
-        // toast({description:'Product is being changed.', animation:'fade left', icon:'exclamation', color: 'orange'});
-      } else {
-        toast({
-          type: 'success',
-          description: 'Product was saved successfully.',
-          animation: 'fade left',
-        });
-        updatingProduct = false;
-        history.push('/products');
-      }
-    }
-  });
 
   return (
     <>

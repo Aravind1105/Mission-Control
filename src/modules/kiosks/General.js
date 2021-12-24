@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Segment, Divider } from 'semantic-ui-react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import ConfirmationModal from 'modules/shared/components/ConfirmationModal';
-import CustomizeScreen from './components/CustomizeGeneral';
+import Loader from 'modules/shared/components/Loader';
+import NavSwitcher from 'modules/shared/components/NavSwitcher';
+import CustomizeScreen from './components/CustomizeScreen';
 import history from 'lib/history';
 import { getKiosk } from './actions';
 import { getKioskSingle } from './selectors';
-import NavSwitcher from '../shared/components/NavSwitcher';
 
 const Settings = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,42 +63,41 @@ const Settings = ({ getKiosk, kiosk, isKioskLoading, ...props }) => {
   }, []);
 
   return (
-    <>
-      <Grid>
-        <Grid.Row stretched>
-          <Grid.Column>
-            <Segment>
-              <Breadcrumbs
-                backLink={backLink}
-                links={links}
-                activeLink="Settings"
-              />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Segment>
-              <NavSwitcher config={navSwitcherConfig} />
-              <CustomizeScreen
-                cancelHandler={cancelHandler}
-                isKioskLoading={isKioskLoading}
-                {...props}
-              />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-        <ConfirmationModal
-          title="Confirm Cancelling"
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          confirmHandler={redirectHandler}
-        >
-          <p>You have unsaved changes.</p>
-          <p>Are you sure you want to leave the page?</p>
-        </ConfirmationModal>
-      </Grid>
-    </>
+    <Grid>
+      <Grid.Row stretched>
+        <Grid.Column>
+          <Segment>
+            <Breadcrumbs
+              backLink={backLink}
+              links={links}
+              activeLink="Settings"
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <Segment>
+            {isKioskLoading && <Loader />}
+            <NavSwitcher config={navSwitcherConfig} />
+            <CustomizeScreen
+              cancelHandler={cancelHandler}
+              isKioskLoading={isKioskLoading}
+              {...props}
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+      <ConfirmationModal
+        title="Confirm Cancelling"
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        confirmHandler={redirectHandler}
+      >
+        <p>You have unsaved changes.</p>
+        <p>Are you sure you want to leave the page?</p>
+      </ConfirmationModal>
+    </Grid>
   );
 };
 

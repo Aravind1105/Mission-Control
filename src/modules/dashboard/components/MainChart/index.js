@@ -13,14 +13,14 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { isEmpty } from 'lodash';
-
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
+import Loader from 'modules/shared/components/Loader';
 import { colorsArr } from 'lib/colors';
 import CustomizedAxisTick from '../CustomizedAxisTick';
 import CustomTooltip from '../CustomTooltip';
 import { getSalesStatisticState } from '../../selectors';
 import { computeAndFormatData } from '../../sagas/formatData';
 import './styles.less';
-import SelectCheckBoxes from '../../../shared/components/SelectCheckBoxes';
 
 const optionsTime = [
   { label: 'Hourly', value: 'hourly' },
@@ -32,7 +32,13 @@ const optionsTime = [
   { label: 'Last 30 Days', value: 'last30Days' },
 ];
 
-const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
+const MainChart = ({
+  kiosksOptions,
+  salesStats,
+  isKiosksListLoading,
+  isSalesStatLoading,
+  salesStatistics,
+}) => {
   const [kioskId, setKiosk] = useState([]);
   const [time, setTime] = useState(optionsTime[3].value);
   const [data, setData] = useState(salesStats[time]);
@@ -46,7 +52,7 @@ const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
     );
     setKiosks(kioskNames);
     setData(formattedData);
-  }, [kioskId, time]);
+  }, [kioskId, time, salesStatistics]);
 
   const handleKioskChange = value => {
     setKiosk(value);
@@ -84,6 +90,7 @@ const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
+      {isSalesStatLoading && <Loader />}
       {isEmpty(kiosks) && (
         <div className="chart-empty-data">
           <p>
@@ -92,7 +99,7 @@ const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
           <p>Please try a different combination.</p>
         </div>
       )}
-      {!isEmpty(kiosks) && (
+      {!isEmpty(kiosks) && !isEmpty(salesStatistics) && (
         <div className="chart-data">
           <ResponsiveContainer>
             <BarChart
@@ -143,6 +150,8 @@ const MainChart = ({ kiosksOptions, salesStats, isKiosksListLoading }) => {
 const mapStateToProps = state => ({
   salesStats: getSalesStatisticState(state),
   isKiosksListLoading: state.kiosks.isKiosksListLoading,
+  isSalesStatLoading: state.dashboard.isSalesStatLoading,
+  salesStatistics: getSalesStatisticState(state),
 });
 
 export default connect(mapStateToProps)(MainChart);

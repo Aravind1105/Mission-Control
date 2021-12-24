@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
-
-import Loader from 'modules/shared/components/Loader';
 import './styles.less';
 
 const sortTypes = {
@@ -91,7 +89,6 @@ const RefillsTable = ({
         overflow: 'auto',
       }}
     >
-      {isLoading && <Loader />}
       <Table
         className="refills-table"
         basic
@@ -132,60 +129,66 @@ const RefillsTable = ({
           </Table.Header>
         )}
 
-        {resultData.map((resultItem, rowIdx) => (
-          <Table.Body
-            className="tb-refills"
-            // className={activeRow === rowIdx ? 'active-body' : ''}
-          >
-            {resultItem.map((item, i) => {
-              const rowKey = `${i}`;
-              if (item.refillsId) {
-                toggleTableCellColor = !toggleTableCellColor;
-              }
-              return (
-                <Table.Row
-                  key={rowKey}
-                  // onClick={handlerRowClick(item, rowIdx)}
-                >
-                  {columns.map(({ field, formatter }, j) => {
-                    const cellKey = `${i}-${field}`;
-                    const cellValue = formatter
-                      ? formatter(item, j)
-                      : get(item, field, '');
-                    const isOnlyRootField =
-                      field === 'kioskName' || field === 'created';
-                    if (!item.refillsId && isOnlyRootField) {
-                      return;
-                    }
-                    // eslint-disable-next-line consistent-return
-                    return (
-                      <Table.Cell
-                        key={cellKey}
-                        // eslint-disable-next-line no-nested-ternary
-                        rowSpan={
-                          item.refillsId && isOnlyRootField
-                            ? item.uniqueProducts === 1
-                              ? 1
-                              : item.uniqueProducts + 1
-                            : '1'
-                        }
-                        className={`table-cell-text ${
-                          item.refillsId ? 'table-cell-text-transaction' : ''
-                        } ${
-                          toggleTableCellColor
-                            ? 'table-cell-bg-grey'
-                            : 'table-cell-bg-white'
-                        }`}
-                      >
-                        {cellValue}
-                      </Table.Cell>
-                    );
-                  })}
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        ))}
+        {resultData.length > 0 &&
+          resultData.map((resultItem, rowIdx) => (
+            <Table.Body
+              className="tb-refills"
+              // className={activeRow === rowIdx ? 'active-body' : ''}
+            >
+              {resultItem.map((item, i) => {
+                const rowKey = `${i}`;
+                if (item.refillsId) {
+                  toggleTableCellColor = !toggleTableCellColor;
+                }
+                return (
+                  <Table.Row
+                    key={rowKey}
+                    // onClick={handlerRowClick(item, rowIdx)}
+                  >
+                    {columns.map(({ field, formatter }, j) => {
+                      const cellKey = `${i}-${field}`;
+                      const cellValue = formatter
+                        ? formatter(item, j)
+                        : get(item, field, '');
+                      const isOnlyRootField =
+                        field === 'kioskName' || field === 'created';
+                      if (!item.refillsId && isOnlyRootField) {
+                        return;
+                      }
+                      // eslint-disable-next-line consistent-return
+                      return (
+                        <Table.Cell
+                          key={cellKey}
+                          // eslint-disable-next-line no-nested-ternary
+                          rowSpan={
+                            item.refillsId && isOnlyRootField
+                              ? item.uniqueProducts === 1
+                                ? 1
+                                : item.uniqueProducts + 1
+                              : '1'
+                          }
+                          className={`table-cell-text ${
+                            item.refillsId ? 'table-cell-text-transaction' : ''
+                          } ${
+                            toggleTableCellColor
+                              ? 'table-cell-bg-grey'
+                              : 'table-cell-bg-white'
+                          }`}
+                        >
+                          {cellValue}
+                        </Table.Cell>
+                      );
+                    })}
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
+          ))}
+        {resultData.length === 0 && (
+          <Table.Row>
+            <Table.Cell>Your query returned no results.</Table.Cell>
+          </Table.Row>
+        )}
       </Table>
     </div>
   );

@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-
-import Pagination from 'modules/shared/components/Pagination';
-import {
-  getKiosksAlertsForTable,
-  getTotalAlerts,
-} from 'modules/kiosks/selectors';
+import { isEqual } from 'lodash';
+import { getKiosksAlertsForTable } from 'modules/kiosks/selectors';
 import { getAlertsGrid } from 'modules/kiosks/actions';
 import AlertsTable from './components/AlertsTable';
-import Loader from 'modules/shared/components/Loader';
-import { isEqual } from 'lodash';
 
 const sortDefault = [
   {
@@ -28,7 +22,7 @@ const sortValue = {
   'details.kioskId.name': 'details.kioskId.name',
 };
 
-const AlertsPage = ({ total, getAlertsGrid, alerts, isLoading }) => {
+const AlertsPage = ({ getAlertsGrid, alerts, isLoading }) => {
   const [dateRange, changeDate] = useState('');
   const [kiosk, changeKiosk] = useState([]);
   const [alert, changeAlert] = useState('');
@@ -78,43 +72,32 @@ const AlertsPage = ({ total, getAlertsGrid, alerts, isLoading }) => {
   }, [page, perPage, kiosk, alert, dateRange]);
 
   return (
-    <>
-      {isLoading && <Loader />}
-      <Grid className="dashboard">
-        <Grid.Row stretched>
-          <Grid.Column mobile={16} computer={16}>
-            <AlertsTable
-              alerts={alerts}
-              fullTable
-              changeKiosk={changeKiosk}
-              changeDate={changeDate}
-              changeAlert={changeAlert}
-              changePage={changePage}
-              getData={getData}
-              setSortByInCaller={sort => setSort([sort])}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Pagination
-              totalCount={total}
-              page={page}
-              perPage={perPage}
-              changePage={changePage}
-              changePerPage={changePerPage}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </>
+    <Grid className="dashboard">
+      <Grid.Row stretched>
+        <Grid.Column mobile={16} computer={16}>
+          <AlertsTable
+            alerts={alerts}
+            fullTable
+            changeKiosk={changeKiosk}
+            changeDate={changeDate}
+            changeAlert={changeAlert}
+            changePage={changePage}
+            changePerPage={changePerPage}
+            page={page}
+            perPage={perPage}
+            getData={getData}
+            isLoading={isLoading}
+            setSortByInCaller={sort => setSort([sort])}
+          />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
 const mapStateToProps = state => ({
   alerts: getKiosksAlertsForTable(state),
-  total: getTotalAlerts(state),
-  isLoading: state.kiosks.isLoading,
+  isLoading: state.kiosks.isAlertsLoading,
 });
 
 const mapDispatchToProps = {

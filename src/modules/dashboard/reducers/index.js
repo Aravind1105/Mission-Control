@@ -1,9 +1,17 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { getSalesStatistic, getSalesStatisticSuccess, getWidgetTodayData, getWidgetTodayDataSuccess, getWidgetMonthlyData, getWidgetMonthlyDataSuccess } from '../actions';
+import {
+  getSalesStatistic,
+  getSalesStatisticSuccess,
+  getWidgetTodayData,
+  getWidgetTodayDataSuccess,
+  getWidgetMonthlyData,
+  getWidgetMonthlyDataSuccess,
+} from '../actions';
 
 const initialState = {
   salesStat: [],
   salesStatProducts: [],
+  isWidgetsLoading: false,
   isSalesStatLoading: false,
   widgetData: {
     totalNumberOfCustomers: 0,
@@ -29,12 +37,15 @@ const dashboard = handleActions(
     }),
     [combineActions(getWidgetTodayData, getWidgetMonthlyData)]: state => ({
       ...state,
-      isSalesStatLoading: true,
+      isWidgetsLoading: true,
     }),
-    [combineActions(getWidgetTodayDataSuccess, getWidgetMonthlyDataSuccess)]: (state, { payload }) => ({
+    [combineActions(getWidgetTodayDataSuccess, getWidgetMonthlyDataSuccess)]: (
+      state,
+      { payload },
+    ) => ({
       ...state,
       widgetData: { ...state.widgetData, ...payload },
-      isSalesStatLoading: false,
+      isWidgetsLoading: false,
     }),
   },
   initialState,

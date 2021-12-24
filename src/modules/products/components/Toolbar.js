@@ -10,7 +10,7 @@ import {
   Divider,
   Input,
 } from 'semantic-ui-react';
-import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 import {
   selectorGetProductCategories,
   getProductsDropdownList,
