@@ -118,13 +118,19 @@ const columns = [
   },
 ];
 
-const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
+const RefillsContent = ({
+  isLoading,
+  refills,
+  getData,
+  setSortByInCaller,
+  sortFilter,
+}) => {
   // const clickRow = ({ _id }) => {
   //   history.push(`/kiosks/detail/${_id}`);
   // };
   return (
     <RefillsTable
-      sortByColumn="created"
+      sortByColumn={sortFilter[0].column}
       columns={columns}
       data={refills}
       getData={getData}
@@ -144,7 +150,7 @@ const RefillsContent = ({ isLoading, refills, getData, setSortByInCaller }) => {
         'total',
       ]}
       setSortByInCaller={sort => setSortByInCaller(sort)}
-      sortDirection="DESC"
+      sortDirection={sortFilter[0].direction}
     />
   );
 };

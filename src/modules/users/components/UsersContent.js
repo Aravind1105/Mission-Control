@@ -115,7 +115,7 @@ const UsersContent = ({
                 <Grid.Column>
                   <CustomTable
                     className="user-table"
-                    sortByColumn="name"
+                    sortByColumn={sort[0].column}
                     columns={columns}
                     onRowClick={handleRowClick}
                     data={userList}
@@ -123,7 +123,7 @@ const UsersContent = ({
                     sortable
                     selectable
                     setSortByInCaller={sort => setSort([sort])}
-                    sortDirection="ASC"
+                    sortDirection={sort[0].direction}
                   />
                 </Grid.Column>
               </Grid.Row>

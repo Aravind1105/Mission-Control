@@ -131,10 +131,11 @@ const TransactionsContent = ({
   transactions,
   getData,
   setSortByInCaller,
+  sortFilter,
 }) => {
   return (
     <TransactionsTable
-      sortByColumn="created"
+      sortByColumn={sortFilter[0].column}
       excludeSortBy={[
         'paymentMethod',
         'productName',
@@ -150,7 +151,7 @@ const TransactionsContent = ({
       striped
       isLoading={isLoading}
       setSortByInCaller={sort => setSortByInCaller(sort)}
-      sortDirection="DESC"
+      sortDirection={sortFilter[0].direction}
     />
   );
 };

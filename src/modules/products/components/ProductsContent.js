@@ -7,8 +7,8 @@ import {
   resetProduct,
   setPage as changePage,
   setPerPage as changePerPage,
-  setSort,
-  setFilters,
+  setSort as changeSort,
+  setFilters as changeFilter,
   getProductLinesWithFilter,
 } from '../actions';
 import history from 'lib/history';
@@ -63,8 +63,8 @@ const ProductsContent = ({
   total,
   changePage,
   changePerPage,
-  setSort,
-  setFilters,
+  changeSort,
+  changeFilter,
   getProductLinesWithFilter,
 }) => {
   const {
@@ -111,7 +111,8 @@ const ProductsContent = ({
 
       if (!searchIndex || !categoryIndex || !manufacturerIndex) {
         data.skip = 0;
-        setFilters({
+        changePage(0);
+        changeFilter({
           ...filters,
           search,
           category,
@@ -143,14 +144,15 @@ const ProductsContent = ({
           <Grid.Column>
             <CustomTable
               className="product-table"
-              sortByColumn="name"
+              sortByColumn={sort[0].column}
               columns={columns}
               data={products}
               onRowClick={clickRow}
               getData={getData}
               sortable
               selectable
-              setSortByInCaller={sort => setSort(sort)}
+              setSortByInCaller={sort => changeSort([sort])}
+              sortDirection={sort[0].direction}
             />
           </Grid.Column>
         </Grid.Row>
@@ -180,8 +182,8 @@ const mapDispatchToProps = {
   resetProduct,
   changePage,
   changePerPage,
-  setSort,
-  setFilters,
+  changeSort,
+  changeFilter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsContent);

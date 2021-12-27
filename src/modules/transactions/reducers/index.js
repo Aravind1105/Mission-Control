@@ -1,4 +1,5 @@
 import { handleActions, combineActions } from 'redux-actions';
+import moment from 'moment';
 
 import {
   getAllTransactions,
@@ -16,7 +17,32 @@ import {
   getRefillsWidgetsDataSuccess,
   getProductsWidgetsData,
   getProductsWidgetsDataSuccess,
+  setSalesPage,
+  setSalesDate,
+  setSalesPerPage,
+  setSalesKiosk,
+  setSalesFilter,
+  setSalesSort,
+  setRefillsPage,
+  setRefillsPerPage,
+  setRefillsDate,
+  setRefillsKiosk,
+  setRefillsFilter,
+  setRefillsSort,
+  setProductsPage,
+  setProductsPerPage,
+  setProductsDate,
+  setProductsKiosk,
+  setProductsFilter,
+  setProductsSort,
+  setProducts,
 } from '../actions';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const initialState = {
   list: [],
@@ -44,6 +70,74 @@ const initialState = {
     mostRefilledProductValue: 0,
     mostRemovedProductName: {},
     mostRemovedProductValue: 0,
+  },
+  salesPagination: {
+    dateRange: {
+      $gte: date[0],
+      $lte: date[1],
+    },
+    kiosk: [],
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'created',
+        direction: 'DESC',
+      },
+    ],
+    filter: {
+      dateRange: {
+        $gte: date[0],
+        $lte: date[1],
+      },
+      kiosk: [],
+    },
+  },
+  refillsPagination: {
+    dateRange: {
+      $gte: date[0],
+      $lte: date[1],
+    },
+    kiosk: [],
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'created',
+        direction: 'DESC',
+      },
+    ],
+    filter: {
+      dateRange: {
+        $gte: date[0],
+        $lte: date[1],
+      },
+      kiosk: [],
+    },
+  },
+  productsPagination: {
+    dateRange: {
+      $gte: date[0],
+      $lte: date[1],
+    },
+    kiosk: [],
+    product: '',
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'sold',
+        direction: 'DESC',
+      },
+    ],
+    filter: {
+      dateRange: {
+        $gte: date[0],
+        $lte: date[1],
+      },
+      kiosk: [],
+      product: '',
+    },
   },
 };
 
@@ -102,6 +196,84 @@ const transactionsReducer = handleActions(
         ...state.widgetData,
         ...payload,
       },
+    }),
+    [setSalesPage]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, page: payload },
+    }),
+    [setSalesDate]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, dateRange: payload },
+    }),
+    [setSalesPerPage]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, perPage: payload },
+    }),
+    [setSalesKiosk]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, kiosk: payload },
+    }),
+    [setSalesFilter]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, filter: payload },
+    }),
+    [setSalesSort]: (state, { payload }) => ({
+      ...state,
+      salesPagination: { ...state.salesPagination, sort: payload },
+    }),
+
+    [setRefillsPage]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, page: payload },
+    }),
+    [setRefillsDate]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, dateRange: payload },
+    }),
+    [setRefillsPerPage]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, perPage: payload },
+    }),
+    [setRefillsKiosk]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, kiosk: payload },
+    }),
+    [setRefillsFilter]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, filter: payload },
+    }),
+    [setRefillsSort]: (state, { payload }) => ({
+      ...state,
+      refillsPagination: { ...state.refillsPagination, sort: payload },
+    }),
+
+    [setProducts]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, product: payload },
+    }),
+    [setProductsPage]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, page: payload },
+    }),
+    [setProductsDate]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, dateRange: payload },
+    }),
+    [setProductsPerPage]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, perPage: payload },
+    }),
+    [setProductsKiosk]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, kiosk: payload },
+    }),
+    [setProductsFilter]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, filter: payload },
+    }),
+    [setProductsSort]: (state, { payload }) => ({
+      ...state,
+      productsPagination: { ...state.productsPagination, sort: payload },
     }),
   },
   initialState,
