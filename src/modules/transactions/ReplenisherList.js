@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
-import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import Loader from 'modules/shared/components/Loader';
@@ -13,23 +12,18 @@ import {
   getTotalGridRefillsCount,
   getWidgetDataState,
 } from './selectors';
-import { getGridRefills, getRefillsWidgetsData } from './actions';
+import {
+  getGridRefills,
+  getRefillsWidgetsData,
+  setRefillsPage as changePage,
+  setRefillsPerPage as changePerPage,
+  setRefillsKiosk as changeKiosk,
+  setRefillsDate as changeDate,
+  setRefillsSort as changeSort,
+  setRefillsFilter as changeFilter,
+} from './actions';
 import { getProductListSaga } from '../products/actions';
 import { getProductsDropdownList } from '../products/selectors';
-
-const startOfMonth = moment()
-  .startOf('month')
-  .toDate();
-const currentDay = new Date();
-const date = [startOfMonth, currentDay];
-
-const sortDefault = [
-  {
-    column: 'created',
-    direction: 'DESC',
-  },
-];
-const defaultFilterValues = { dateRange: '', kiosk: '' };
 
 const sortValue = {
   kioskName: 'kioskName',
@@ -51,16 +45,15 @@ const ReplenisherList = ({
   getRefillsWidgetsData,
   widgetsData,
   isWidgetsLoading,
+  paginationState,
+  changePage,
+  changePerPage,
+  changeDate,
+  changeFilter,
+  changeKiosk,
+  changeSort,
 }) => {
-  const [dateRange, changeDate] = useState({
-    $gte: date[0],
-    $lte: date[1],
-  });
-  const [kiosk, changeKiosk] = useState([]);
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+  const { page, perPage, dateRange, kiosk, filter, sort } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -88,7 +81,7 @@ const ReplenisherList = ({
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
         changePage(0);
-        setFilters({
+        changeFilter({
           ...filter,
           dateRange,
           kiosk,
@@ -117,8 +110,9 @@ const ReplenisherList = ({
       {(isWidgetsLoading || isLoading) && <Loader />}
       <RefillsToolbar
         changeDate={changeDate}
+        dateRange={[dateRange.$gte, dateRange.$lte]}
         changeKiosk={changeKiosk}
-        dateRange={date}
+        kioskFilter={kiosk}
       />
       <Grid stackable stretched>
         <Grid.Row stretched className="custom-widgets">
@@ -174,7 +168,8 @@ const ReplenisherList = ({
         refills={refills}
         isLoading={isLoading}
         getData={getData}
-        setSortByInCaller={sort => setSort([sort])}
+        setSortByInCaller={sort => changeSort([sort])}
+        sortFilter={sort}
       />
       <br />
       <Pagination
@@ -196,12 +191,19 @@ const mapStateToProps = state => ({
   isWidgetsLoading: state.transactions.isWidgetsLoading,
   productsList: getProductsDropdownList(state),
   widgetsData: getWidgetDataState(state),
+  paginationState: state.transactions.refillsPagination,
 });
 
 const mapDispatchToProps = {
   getGridRefills,
   getProductListSaga,
   getRefillsWidgetsData,
+  changePage,
+  changePerPage,
+  changeDate,
+  changeFilter,
+  changeKiosk,
+  changeSort,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReplenisherList);

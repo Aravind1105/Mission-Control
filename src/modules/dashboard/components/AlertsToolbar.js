@@ -1,8 +1,7 @@
 import React from 'react';
 import { Grid, Dropdown, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'ramda';
-
+import { isEqual } from 'lodash';
 import DatePicker from 'modules/shared/components/Datepicker';
 import {
   getKiosksAlertsForTable,
@@ -15,11 +14,13 @@ import './styles.less';
 const Toolbar = ({
   changeAlert,
   changeKiosk,
-  changePage,
   changeDate,
   kiosks,
   alertsOptions,
   isKiosksLoading,
+  dateRange,
+  kioskFilter,
+  alertFilter,
 }) => {
   const handleKioskChange = value => {
     changeKiosk(value);
@@ -44,8 +45,12 @@ const Toolbar = ({
         return prev;
       }, {});
     }
-    changePage(0);
-    changeDate(date);
+    if (
+      (!isEqual(value, dateRange) && date.$gte && date.$lte) ||
+      value === null
+    ) {
+      changeDate(date);
+    }
   };
   return (
     <Grid stackable>
@@ -55,6 +60,7 @@ const Toolbar = ({
             type="range"
             onChange={handleDateChange}
             className="full-width"
+            value={dateRange}
           />
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
@@ -62,6 +68,7 @@ const Toolbar = ({
             <SelectCheckBoxes
               title="Kiosks"
               options={kiosks}
+              value={kioskFilter}
               allOptionKey="all"
               onClickApply={handleKioskChange}
               isLoading={isKiosksLoading}
@@ -74,6 +81,7 @@ const Toolbar = ({
               placeholder="All Alerts"
               selection
               options={alertsOptions}
+              value={alertFilter}
               className="full-width"
               onChange={handleAlertsChange}
             />

@@ -4,16 +4,16 @@ import { Grid } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 import { getKiosksAlertsForTable } from 'modules/kiosks/selectors';
 import { getAlertsGrid } from 'modules/kiosks/actions';
+import {
+  setAlertDate as changeDate,
+  setAlertPage as changePage,
+  setAlertPerPage as changePerPage,
+  setAlertKiosk as changeKiosk,
+  setAlert as changeAlert,
+  setAlertFilters as changeFilter,
+  setAlertSort as changeSort,
+} from './actions';
 import AlertsTable from './components/AlertsTable';
-
-const sortDefault = [
-  {
-    column: 'startDate',
-    direction: 'DESC',
-  },
-];
-
-const defaultFilterValues = { dateRange: '', kiosk: '', alert: '' };
 
 const sortValue = {
   startDate: 'startDate',
@@ -22,14 +22,28 @@ const sortValue = {
   'details.kioskId.name': 'details.kioskId.name',
 };
 
-const AlertsPage = ({ getAlertsGrid, alerts, isLoading }) => {
-  const [dateRange, changeDate] = useState('');
-  const [kiosk, changeKiosk] = useState([]);
-  const [alert, changeAlert] = useState('');
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+const AlertsPage = ({
+  getAlertsGrid,
+  alerts,
+  isLoading,
+  paginationState,
+  changeAlert,
+  changePage,
+  changePerPage,
+  changeKiosk,
+  changeFilter,
+  changeSort,
+  changeDate,
+}) => {
+  const {
+    dateRange,
+    page,
+    perPage,
+    sort,
+    filters,
+    alert,
+    kiosk,
+  } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -45,15 +59,15 @@ const AlertsPage = ({ getAlertsGrid, alerts, isLoading }) => {
         ...kio,
         ...al,
       });
-      const dateIndex = isEqual(dateRange, filter.dateRange);
-      const kioskIndex = isEqual(kiosk, filter.kiosk);
-      const alertIndex = isEqual(alert, filter.alert);
+      const dateIndex = isEqual(dateRange, filters.dateRange);
+      const kioskIndex = isEqual(kiosk, filters.kiosk);
+      const alertIndex = isEqual(alert, filters.alert);
 
       if (!dateIndex || !kioskIndex || !alertIndex) {
         data.skip = 0;
         changePage(0);
-        setFilters({
-          ...filter,
+        changeFilter({
+          ...filters,
           dateRange,
           kiosk,
           alert,
@@ -85,9 +99,13 @@ const AlertsPage = ({ getAlertsGrid, alerts, isLoading }) => {
             changePerPage={changePerPage}
             page={page}
             perPage={perPage}
+            dateRange={[dateRange.$gte, dateRange.$lte]}
+            kioskFilter={kiosk}
+            alertFilter={alert}
             getData={getData}
             isLoading={isLoading}
-            setSortByInCaller={sort => setSort([sort])}
+            setSortByInCaller={sort => changeSort([sort])}
+            sortFilter={sort}
           />
         </Grid.Column>
       </Grid.Row>
@@ -98,10 +116,18 @@ const AlertsPage = ({ getAlertsGrid, alerts, isLoading }) => {
 const mapStateToProps = state => ({
   alerts: getKiosksAlertsForTable(state),
   isLoading: state.kiosks.isAlertsLoading,
+  paginationState: state.dashboard.alertPagination,
 });
 
 const mapDispatchToProps = {
   getAlertsGrid,
+  changeDate,
+  changeAlert,
+  changePage,
+  changePerPage,
+  changeKiosk,
+  changeFilter,
+  changeSort,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlertsPage);

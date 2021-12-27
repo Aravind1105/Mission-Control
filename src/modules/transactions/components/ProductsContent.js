@@ -6,10 +6,11 @@ const ProductsContent = ({
   products,
   getData,
   setSortByInCaller,
+  sortFilter,
 }) => {
   return (
     <ProductsTable
-      sortByColumn="sold"
+      sortByColumn={sortFilter[0].column}
       data={products}
       getData={getData}
       sortable
@@ -17,7 +18,7 @@ const ProductsContent = ({
       striped
       isLoading={isLoading}
       setSortByInCaller={sort => setSortByInCaller(sort)}
-      sortDirection="DESC"
+      sortDirection={sortFilter[0].direction}
     />
   );
 };

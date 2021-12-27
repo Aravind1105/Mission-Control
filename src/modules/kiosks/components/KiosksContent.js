@@ -227,9 +227,9 @@ const KiosksContent = ({
                 excludeSortBy={['temperature.value']}
                 selectable
                 getData={getData}
-                sortByColumn="name"
+                sortByColumn={sort[0].column}
                 setSortByInCaller={sort => setSort([sort])}
-                sortDirection="ASC"
+                sortDirection={sort[0].direction}
               />
             </Grid.Column>
           </Grid.Row>

@@ -17,6 +17,7 @@ const Toolbar = ({
   exportCsvRefills,
   isKiosksLoading,
   dateRange,
+  kioskFilter,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -94,6 +95,7 @@ const Toolbar = ({
               title="Kiosks"
               options={kiosks}
               allOptionKey="all"
+              value={kioskFilter}
               onClickApply={handleKioskChange}
               isLoading={isKiosksLoading}
             />

@@ -58,7 +58,7 @@ export default [
     path: '/reports',
     icon: 'chart line',
     Component: Reports,
-    rootOnly: true,
+    rootOnly: false,
     showOnMenu: true,
   },
   {
@@ -68,7 +68,6 @@ export default [
     Component: Transactions,
     rootOnly: false,
     showOnMenu: true,
-
   },
   {
     name: 'Settings',

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
-import moment from 'moment';
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import Loader from 'modules/shared/components/Loader';
-import Toolbar from './components/Toolbar';
+import Toolbar from './components/TransactionsToolbar';
 import TransactionsContent from './components/TransactionsContent';
 import {
   getTransactionsTableState,
@@ -14,21 +13,16 @@ import {
   getWidgetDataState,
 } from './selectors';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
-import { getAllTransactions, getTransactionsWidgetsData } from './actions';
-
-const startOfMonth = moment()
-  .startOf('month')
-  .toDate();
-const currentDay = new Date();
-const date = [startOfMonth, currentDay];
-
-const sortDefault = [
-  {
-    column: 'created',
-    direction: 'DESC',
-  },
-];
-const defaultFilterValues = { dateRange: '', kiosk: '' };
+import {
+  getAllTransactions,
+  getTransactionsWidgetsData,
+  setSalesPage as changePage,
+  setSalesPerPage as changePerPage,
+  setSalesKiosk as changeKiosk,
+  setSalesDate as changeDate,
+  setSalesSort as changeSort,
+  setSalesFilter as changeFilter,
+} from './actions';
 
 const sortValue = {
   kioskName: 'kioskName',
@@ -49,16 +43,15 @@ const TransactionsList = ({
   getTransactionsWidgetsData,
   widgetsData,
   isWidgetsLoading,
+  paginationState,
+  changePage,
+  changePerPage,
+  changeKiosk,
+  changeDate,
+  changeSort,
+  changeFilter,
 }) => {
-  const [dateRange, changeDate] = useState({
-    $gte: date[0],
-    $lte: date[1],
-  });
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [kiosk, changeKiosk] = useState([]);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+  const { page, perPage, dateRange, kiosk, filter, sort } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -84,7 +77,7 @@ const TransactionsList = ({
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
         changePage(0);
-        setFilters({
+        changeFilter({
           ...filter,
           dateRange,
           kiosk,
@@ -110,9 +103,10 @@ const TransactionsList = ({
       {(isWidgetsLoading || isLoading) && <Loader />}
       <Toolbar
         changeDate={changeDate}
+        dateRange={[dateRange.$gte, dateRange.$lte]}
         kiosks={kiosksOptions}
         changeKiosk={changeKiosk}
-        dateRange={date}
+        kioskFilter={kiosk}
       />
       <Grid stackable stretched>
         <Grid.Row>
@@ -171,7 +165,8 @@ const TransactionsList = ({
         transactions={transactions}
         isLoading={isLoading}
         getData={getData}
-        setSortByInCaller={sort => setSort([sort])}
+        setSortByInCaller={sort => changeSort([sort])}
+        sortFilter={sort}
       />
       <br />
       <Pagination
@@ -193,11 +188,18 @@ const mapStateToProps = state => ({
   isWidgetsLoading: state.transactions.isWidgetsLoading,
   kiosksOptions: getKioskOptionsForTableDropdown(state),
   widgetsData: getWidgetDataState(state),
+  paginationState: state.transactions.salesPagination,
 });
 
 const mapDispatchToProps = {
   getAllTransactions,
   getTransactionsWidgetsData,
+  changePage,
+  changePerPage,
+  changeKiosk,
+  changeDate,
+  changeFilter,
+  changeSort,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);

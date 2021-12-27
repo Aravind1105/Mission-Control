@@ -32,6 +32,10 @@ const AlertsTable = ({
   changePerPage,
   page,
   perPage,
+  dateRange,
+  kioskFilter,
+  alertFilter,
+  sortFilter,
 }) => {
   const { t } = useTranslation();
   const columns = [
@@ -88,6 +92,9 @@ const AlertsTable = ({
           changeKiosk={changeKiosk}
           changeAlert={changeAlert}
           changePage={changePage}
+          dateRange={dateRange}
+          kioskFilter={kioskFilter}
+          alertFilter={alertFilter}
         />
       </div>
       <Grid stackable stretched>
@@ -96,7 +103,7 @@ const AlertsTable = ({
             <CustomTable
               className="dashboard-table"
               sortable
-              sortByColumn="startDate"
+              sortByColumn={sortFilter[0].column}
               onRowClick={handlerClickRow}
               selectable
               excludeSortBy={[
@@ -110,7 +117,7 @@ const AlertsTable = ({
               columns={columns}
               getData={getData}
               setSortByInCaller={sort => setSortByInCaller(sort)}
-              sortDirection="DESC"
+              sortDirection={sortFilter[0].direction}
             />
           </Grid.Column>
         </Grid.Row>

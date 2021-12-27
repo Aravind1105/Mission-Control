@@ -12,12 +12,13 @@ const Toolbar = ({
   isKiosksLoading,
   kiosksOptions,
   dateRange,
+  kioskFilter,
 }) => {
   const handleDateChange = value => {
     let date = '';
     if (value) {
       date = value.reduce((prev, curr, i) => {
-        const key = i % 2 ? 'dateTo' : 'dateFrom';
+        const key = i % 2 ? '$lte' : '$gte';
         let formattedDate = curr;
         if (i % 2) {
           let date = new Date(curr);
@@ -62,6 +63,7 @@ const Toolbar = ({
               title="Kiosks"
               options={kiosksOptions}
               allOptionKey="all"
+              value={kioskFilter}
               onClickApply={handleKioskChange}
               isLoading={isKiosksLoading}
             />

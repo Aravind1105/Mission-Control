@@ -1,4 +1,5 @@
 import { handleActions, combineActions } from 'redux-actions';
+import moment from 'moment';
 import {
   getSalesStatistic,
   getSalesStatisticSuccess,
@@ -6,7 +7,20 @@ import {
   getWidgetTodayDataSuccess,
   getWidgetMonthlyData,
   getWidgetMonthlyDataSuccess,
+  setAlertPage,
+  setAlertFilters,
+  setAlertKiosk,
+  setAlertPerPage,
+  setAlertSort,
+  setAlert,
+  setAlertDate,
 } from '../actions';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const date = [startOfMonth, currentDay];
 
 const initialState = {
   salesStat: [],
@@ -20,6 +34,34 @@ const initialState = {
     totalNetIncome: 0,
     totalMonthlyNetIncome: 0,
     totalMonthlyGrossIncome: 0,
+  },
+  alertPagination: {
+    dateRange: {
+      $gte: date[0],
+      $lte: date[1],
+    },
+    kiosk: [],
+    alert: '',
+    page: 0,
+    perPage: 25,
+    sort: [
+      {
+        column: 'startDate',
+        direction: 'DESC',
+      },
+    ],
+    filters: {
+      dateRange: {
+        $gte: date[0],
+        $lte: date[1],
+      },
+      kiosk: [],
+      alert: '',
+    },
+  },
+  almostEmptyPagination: {
+    page: 0,
+    perPage: 25,
   },
 };
 
@@ -46,6 +88,34 @@ const dashboard = handleActions(
       ...state,
       widgetData: { ...state.widgetData, ...payload },
       isWidgetsLoading: false,
+    }),
+    [setAlert]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, alert: payload },
+    }),
+    [setAlertDate]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, dateRange: payload },
+    }),
+    [setAlertPage]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, page: payload },
+    }),
+    [setAlertPerPage]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, perPage: payload },
+    }),
+    [setAlertKiosk]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, kiosk: payload },
+    }),
+    [setAlertFilters]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, filters: payload },
+    }),
+    [setAlertSort]: (state, { payload }) => ({
+      ...state,
+      alertPagination: { ...state.alertPagination, sort: payload },
     }),
   },
   initialState,

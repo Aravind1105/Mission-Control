@@ -33,7 +33,7 @@ const SelectCheckBoxes = ({
   options,
   allOptionKey,
   onClickApply,
-  value = [],
+  value,
   isLoading,
 }) => {
   const containerRef = useRef(null);
@@ -42,7 +42,7 @@ const SelectCheckBoxes = ({
   const [icon, setIcon] = useState(ICONS.DOWN);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [selectedValues, setSelectedValues] = useState(value);
+  const [selectedValues, setSelectedValues] = useState(value || []);
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   useEffect(() => {
