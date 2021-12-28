@@ -5,37 +5,54 @@ import { Grid } from 'semantic-ui-react';
 import {
   getKioskOptions,
   getAlmostEmptyKiosksForTable,
-  getKiosksAlertsDashboard,
 } from 'modules/kiosks/selectors';
 import StatsCard from 'modules/shared/components/StatsCard';
-import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
+import { getAlmostEmptyKiosks, getAlertsGrid } from 'modules/kiosks/actions';
 import { getWidgetDataState } from './selectors';
 import {
   getSalesStatistic,
   getWidgetTodayData,
   getWidgetMonthlyData,
 } from './actions';
-import AlmostEmptyTable from './components/AlmostEmptyTable';
+import AlmostEmptyTable from './components/AlmostEmptyKiosks';
 import Alerts from './components/Alerts';
 import MainChart from './components/MainChart';
 import './styles.less';
+import { getKiosksAlertsForTable } from '../kiosks/selectors';
 
 const Dashboard = ({
-  alertsLog,
+  alerts,
   kiosksOptions,
   getSalesStatistic,
   getAlmostEmptyKiosks,
+  getAlertsGrid,
   getWidgetTodayData,
   getWidgetMonthlyData,
   widgetData,
+  almostEmptyKiosks,
 }) => {
   useEffect(() => {
-    const data = {
+    const almostEmptyData = {
       skip: 0,
       limit: 17,
+      sort: {
+        quantity: 1,
+      },
+    };
+    const alertData = {
+      data: {
+        skip: 0,
+        limit: 6,
+        search: '',
+        sort: {
+          column: 'startDate',
+          direction: 'DESC',
+        },
+      },
     };
     getSalesStatistic();
-    getAlmostEmptyKiosks({ ...data });
+    getAlertsGrid({ ...alertData });
+    getAlmostEmptyKiosks({ ...almostEmptyData });
     getWidgetTodayData();
     getWidgetMonthlyData();
   }, []);
@@ -43,7 +60,7 @@ const Dashboard = ({
     <Grid stackable className="dashboard">
       <Grid.Row>
         <Grid.Column>
-          <Alerts list={alertsLog} />
+          <Alerts alerts={alerts} />
         </Grid.Column>
       </Grid.Row>
 
@@ -98,7 +115,7 @@ const Dashboard = ({
 
       <Grid.Row stretched>
         <Grid.Column mobile={16} computer={16}>
-          <AlmostEmptyTable />
+          <AlmostEmptyTable almostEmptyKiosks={almostEmptyKiosks} />
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -106,7 +123,7 @@ const Dashboard = ({
 };
 
 const mapStateToProps = state => ({
-  alertsLog: getKiosksAlertsDashboard(state),
+  alerts: getKiosksAlertsForTable(state),
   kiosksOptions: getKioskOptions(state),
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   widgetData: getWidgetDataState(state),
@@ -115,6 +132,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getSalesStatistic,
   getAlmostEmptyKiosks,
+  getAlertsGrid,
   getWidgetTodayData,
   getWidgetMonthlyData,
 };

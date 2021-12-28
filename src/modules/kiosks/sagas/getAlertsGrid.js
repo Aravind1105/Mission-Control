@@ -5,13 +5,11 @@ import { GET_ALERTS_GRID } from '../schema';
 import { getAlertsGrid, getAlertsGridSuccess } from '../actions';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({ payload: { data } }) {
+function* handler({ payload }) {
   try {
     const resp = yield call(gqlKiosk.query, {
       query: GET_ALERTS_GRID,
-      variables: {
-        data,
-      },
+      variables: payload,
     });
     if (resp.errors && resp.errors[0].message === 'Token expired')
       yield put(updateSessionExpired(true));

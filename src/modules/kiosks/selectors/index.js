@@ -261,44 +261,6 @@ export const getAlmostEmptyKiosksForTable = createSelector(
   },
 );
 
-export const getKiosksAlertsDashboard = createSelector(
-  getKiosksState,
-  kiosks => {
-    const filteredTempKiosks = kiosks.reduce(
-      (prev, { _id: id, name, temperature, doorStatus }) => {
-        const temp = [];
-
-        if (temperature && temperature.value >= 7) {
-          const date = temperature
-            ? Math.round((Date.now() - new Date(temperature.updated)) / 3600000)
-            : '';
-          temp.push({
-            id,
-            name,
-            date,
-            message: 'Temperature high',
-            status: 'New',
-          });
-        }
-        if (doorStatus === 'open') {
-          temp.push({
-            id,
-            name,
-            date: '',
-            message: 'Door left open',
-            status: 'New',
-          });
-        }
-
-        return prev.concat(temp);
-      },
-      [],
-    );
-
-    return filteredTempKiosks;
-  },
-);
-
 export const getKioskListName = createSelector(getKiosksState, kiosks =>
   kiosks.reduce((prev, { _id, name }) => {
     prev[_id] = name;

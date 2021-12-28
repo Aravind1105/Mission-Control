@@ -12,7 +12,7 @@ const Settings = lazy(() => import('modules/settings'));
 export default [
   {
     name: 'Dashboard',
-    path: ['/', '/dashboard/almost-empty', '/dashboard/alerts'],
+    path: ['/', '/dashboard/almostEmpty', '/dashboard/alerts'],
     pathOptions: {
       exact: true,
     },

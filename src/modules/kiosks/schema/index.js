@@ -366,8 +366,14 @@ export const GET_ALMOST_EMPTY_KIOSKS = gql`
     $skip: Int
     $limit: Int
     $filter: KioskAlmostEmptyFilter
+    $sort: KioskAlmostEmptySort
   ) {
-    getAlmostEmptyKiosks(skip: $skip, limit: $limit, filter: $filter) {
+    getAlmostEmptyKiosks(
+      skip: $skip
+      limit: $limit
+      filter: $filter
+      sort: $sort
+    ) {
       data {
         _id
         name

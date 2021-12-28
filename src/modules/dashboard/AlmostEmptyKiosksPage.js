@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
+import { isEqual } from 'lodash';
 
 import { getAlmostEmptyKiosksForTable } from 'modules/kiosks/selectors';
 import { getAlmostEmptyKiosks } from 'modules/kiosks/actions';
 import { getProductListSaga } from 'modules/products/actions';
-import AlmostEmptyKiosks from './components/AlmostEmptyKiosks';
-import { isEqual } from 'lodash';
-
-const sortDefault = [
-  {
-    column: 'product',
-    direction: 'ASC',
-  },
-];
-
-const defaultFilterValues = { supplier: '', kiosk: '', product: '' };
+import AlmostEmptyKiosks from './components/AlmostEmptyKiosksTable';
+import {
+  setAlmostKiosk as changeKiosk,
+  setAlmostProduct as changeProduct,
+  setAlmostSupplier as changeSupplier,
+  setAlmostPage as changePage,
+  setAlmostPerPage as changePerPage,
+  setAlmostFilter as changeFilter,
+  setAlmostSort as changeSort,
+} from './actions';
+import { getManufacturers } from '../products/actions';
 
 const sortValue = {
   product: 'product',
@@ -31,14 +32,24 @@ const AlmostEmptyKiosksPage = ({
   getProductListSaga,
   isProductsLoading,
   isKioskLoading,
+  paginationState,
+  changeKiosk,
+  changeProduct,
+  changeSupplier,
+  changePage,
+  changePerPage,
+  changeFilter,
+  changeSort,
 }) => {
-  const [product, changeProduct] = useState('');
-  const [kiosk, changeKiosk] = useState('');
-  const [supplier, changeSupplier] = useState('');
-  const [page, changePage] = useState(0);
-  const [perPage, changePerPage] = useState(25);
-  const [sort, setSort] = useState(sortDefault);
-  const [filter, setFilters] = useState(defaultFilterValues);
+  const {
+    product,
+    kiosk,
+    supplier,
+    filter,
+    page,
+    perPage,
+    sort,
+  } = paginationState;
 
   const getData = ({ sort }) => {
     const data = {
@@ -61,7 +72,7 @@ const AlmostEmptyKiosksPage = ({
       if (!supplierIndex || !kioskIndex || !productIndex) {
         data.skip = 0;
         changePage(0);
-        setFilters({
+        changeFilter({
           ...filter,
           supplier,
           kiosk,
@@ -69,15 +80,19 @@ const AlmostEmptyKiosksPage = ({
         });
       }
     }
+
     if (sort && sortValue[sort[0].column]) {
-      sort[0].column = sortValue[sort[0].column];
-      data.sort = sort;
+      let sortDate = {
+        quantity: sort[0].direction === 'ASC' ? 1 : -1,
+      };
+      data.sort = sortDate;
     }
     getAlmostEmptyKiosks({ ...data });
   };
 
   useEffect(() => {
     getProductListSaga();
+    getManufacturers();
   }, []);
 
   useEffect(() => {
@@ -98,10 +113,14 @@ const AlmostEmptyKiosksPage = ({
             getData={getData}
             page={page}
             perPage={perPage}
+            kioskFilter={kiosk}
+            productFilter={product}
+            supplierFilter={supplier}
             changePage={changePage}
             changePerPage={changePerPage}
             isKioskLoading={isKioskLoading}
-            setSortByInCaller={sort => setSort([sort])}
+            setSortByInCaller={sort => changeSort([sort])}
+            sortFilter={sort}
           />
         </Grid.Column>
       </Grid.Row>
@@ -113,11 +132,19 @@ const mapStateToProps = state => ({
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   isKioskLoading: state.kiosks.isAlmostEmptyLoading,
   isProductsLoading: state.products.isLoading,
+  paginationState: state.dashboard.almostEmptyPagination,
 });
 
 const mapDispatchToProps = {
   getAlmostEmptyKiosks,
   getProductListSaga,
+  changeKiosk,
+  changeProduct,
+  changeSupplier,
+  changePage,
+  changePerPage,
+  changeFilter,
+  changeSort,
 };
 
 export default connect(
