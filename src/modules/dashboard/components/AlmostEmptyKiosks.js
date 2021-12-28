@@ -1,37 +1,16 @@
 import React from 'react';
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import history from 'lib/history';
+import { getAlmostEmptyKiosksForTable } from 'modules/kiosks/selectors';
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
-import Pagination from 'modules/shared/components/Pagination';
-import BackLink from 'modules/shared/components/Breadcrumbs/BackLink';
 import Loader from 'modules/shared/components/Loader';
-import history from 'lib/history';
-import Toolbar from './Toolbar';
-import { getAlmostEmptyKiosksTotal } from 'modules/kiosks/selectors';
 import './styles.less';
 
-const backLink = {
-  name: 'Back to Dashboard',
-  link: '/',
-};
-
-const AlmostEmptyKiosks = ({
-  almostEmptyKiosks,
-  changeProduct,
-  changeKiosk,
-  changeSupplier,
-  getData,
-  setSortByInCaller,
-  isKioskLoading,
-  page,
-  perPage,
-  changePage,
-  changePerPage,
-  total,
-}) => {
+const AlmostEmptyTable = ({ almostEmptyKiosks, isAlmostEmptyLoading }) => {
   const { t } = useTranslation();
   const screenWidth = window.innerWidth;
   const columns = [
@@ -83,60 +62,47 @@ const AlmostEmptyKiosks = ({
       },
     },
   ];
+
+  const handleClick = () => {
+    history.push('/dashboard/almostEmpty');
+  };
   const handlerClickRow = ({ kioskId }) => {
     history.push(`/kiosks/detail/${kioskId}`);
   };
   return (
     <Segment>
-      {isKioskLoading && <Loader />}
+      {isAlmostEmptyLoading && <Loader />}
       <SegmentHeader>
         <Header as="h4" color="black">
           <Header.Content>Almost Empty</Header.Content>
         </Header>
-        <BackLink {...{ ...backLink }} />
+        <div>
+          <Button icon labelPosition="right" basic onClick={handleClick}>
+            Show all
+            <Icon name="angle right" />
+          </Button>
+        </div>
       </SegmentHeader>
-      <div className="toolbar-container">
-        <Toolbar
-          changeProduct={changeProduct}
-          changeKiosk={changeKiosk}
-          changeSupplier={changeSupplier}
-        />
-      </div>
-      <Grid stackable stretched>
-        <Grid.Row>
-          <Grid.Column>
-            <CustomTable
-              className="dashboard-table"
-              sortable
-              onRowClick={handlerClickRow}
-              excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
-              fixed
-              selectable
-              data={almostEmptyKiosks}
-              columns={columns}
-              getData={getData}
-              setSortByInCaller={sort => setSortByInCaller(sort)}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Pagination
-              totalCount={total}
-              page={page}
-              perPage={perPage}
-              changePage={changePage}
-              changePerPage={changePerPage}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+
+      <CustomTable
+        className="dashboard-table"
+        onRowClick={handlerClickRow}
+        sortable
+        excludeSortBy={['product', 'amount', 'scale', 'kiosk']}
+        fixed
+        selectable
+        data={almostEmptyKiosks}
+        columns={columns}
+        sortByColumn="amount"
+        sortDirection="ASC"
+      />
     </Segment>
   );
 };
 
 const mapStateToProps = state => ({
-  total: getAlmostEmptyKiosksTotal(state),
+  almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
+  isAlmostEmptyLoading: state.kiosks.isAlmostEmptyLoading,
 });
 
-export default connect(mapStateToProps)(AlmostEmptyKiosks);
+export default connect(mapStateToProps, null)(AlmostEmptyTable);

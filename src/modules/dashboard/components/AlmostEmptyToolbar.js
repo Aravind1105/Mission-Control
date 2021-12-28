@@ -7,7 +7,6 @@ import {
   selectorGetManufacturer,
 } from 'modules/products/selectors';
 import { getKioskOptionsForTableDropdown } from 'modules/kiosks/selectors';
-import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 import './styles.less';
 
 const Toolbar = ({
@@ -15,9 +14,12 @@ const Toolbar = ({
   changeProduct,
   changeKiosk,
   kiosks,
+  kioskFilter,
   products,
+  productFilter,
   manufacturersOptions,
   manufacturer,
+  supplierFilter,
   isManufacturesLoading,
 }) => {
   const handleKioskChange = (e, { value }) => {
@@ -38,6 +40,7 @@ const Toolbar = ({
               placeholder="All Kiosks"
               selection
               options={kiosks}
+              value={kioskFilter}
               className="full-width"
               onChange={handleKioskChange}
             />
@@ -48,6 +51,7 @@ const Toolbar = ({
             <Dropdown
               placeholder="All Products"
               selection
+              value={productFilter}
               options={products}
               className="full-width"
               onChange={handleProductChange}
@@ -56,17 +60,10 @@ const Toolbar = ({
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
           <div className="manufactur-toolbar-dropdown">
-            {/* <SelectCheckBoxes
-              title="Manufacturers"
-              options={manufacturersOptions}
-              allOptionKey="all"
-              onClickApply={handleChangeManufacturer}
-              isLoading={isManufacturesLoading}
-              value={manufacturer}
-            /> */}
             <Dropdown
               placeholder="All Manufacturers"
               selection
+              value={supplierFilter}
               options={manufacturersOptions}
               className="full-width"
               onChange={handleChangeManufacturer}

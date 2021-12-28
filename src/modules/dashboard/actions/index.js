@@ -16,6 +16,14 @@ export const setAlert = createAction('@@state/SET_ALERT');
 export const setAlertFilters = createAction('@@state/SET_ALERT_FILTERS');
 export const setAlertSort = createAction('@@state/SET_ALERT_SORT');
 
+export const setAlmostProduct = createAction('@@state/SET_ALMOST_PRODUCT');
+export const setAlmostPage = createAction('@@state/SET_ALMOST_PAGE');
+export const setAlmostPerPage = createAction('@@state/SET_ALMOST_PER_PAGE');
+export const setAlmostKiosk = createAction('@@state/SET_ALMOST_KIOSK');
+export const setAlmostSupplier = createAction('@@state/SET_ALMOST_SUPPLIER');
+export const setAlmostFilter = createAction('@@state/SET_ALMOST_FILTER');
+export const setAlmostSort = createAction('@@state/SET_ALMOST_SORT');
+
 export const getSalesStatisticSuccess = createAction(
   '@@state/GET_SALES_STATISTIC_SUCCESS',
 );

@@ -10,7 +10,7 @@ import './styles.less';
 const Dashboard = () => (
   <Switch>
     <Route path="/" exact component={DashboardScreen} />
-    <Route path="/dashboard/almost-empty" exact component={AlmostEmptyScreen} />
+    <Route path="/dashboard/almostEmpty" exact component={AlmostEmptyScreen} />
     <Route path="/dashboard/alerts" exact component={AlertsScreen} />
     <Redirect to="/" />
   </Switch>

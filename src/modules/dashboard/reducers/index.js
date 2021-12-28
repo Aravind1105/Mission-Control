@@ -14,6 +14,13 @@ import {
   setAlertSort,
   setAlert,
   setAlertDate,
+  setAlmostPage,
+  setAlmostPerPage,
+  setAlmostKiosk,
+  setAlmostProduct,
+  setAlmostSupplier,
+  setAlmostFilter,
+  setAlmostSort,
 } from '../actions';
 
 const startOfMonth = moment()
@@ -62,6 +69,20 @@ const initialState = {
   almostEmptyPagination: {
     page: 0,
     perPage: 25,
+    kiosk: '',
+    product: '',
+    supplier: '',
+    sort: [
+      {
+        column: 'amount',
+        direction: 'ASC',
+      },
+    ],
+    filter: {
+      kiosk: '',
+      product: '',
+      supplier: '',
+    },
   },
 };
 
@@ -116,6 +137,47 @@ const dashboard = handleActions(
     [setAlertSort]: (state, { payload }) => ({
       ...state,
       alertPagination: { ...state.alertPagination, sort: payload },
+    }),
+
+    [setAlmostPage]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: { ...state.almostEmptyPagination, page: payload },
+    }),
+    [setAlmostPerPage]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: {
+        ...state.almostEmptyPagination,
+        perPage: payload,
+      },
+    }),
+    [setAlmostKiosk]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: { ...state.almostEmptyPagination, kiosk: payload },
+    }),
+    [setAlmostProduct]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: {
+        ...state.almostEmptyPagination,
+        product: payload,
+      },
+    }),
+    [setAlmostSupplier]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: {
+        ...state.almostEmptyPagination,
+        supplier: payload,
+      },
+    }),
+    [setAlmostFilter]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: {
+        ...state.almostEmptyPagination,
+        filter: payload,
+      },
+    }),
+    [setAlmostSort]: (state, { payload }) => ({
+      ...state,
+      almostEmptyPagination: { ...state.almostEmptyPagination, sort: payload },
     }),
   },
   initialState,

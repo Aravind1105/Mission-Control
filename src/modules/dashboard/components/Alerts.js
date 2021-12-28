@@ -16,10 +16,7 @@ import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Loader from 'modules/shared/components/Loader';
 import { getAlertsGrid } from '../../kiosks/actions';
-import {
-  getKiosksAlertsForTable,
-  getTotalAlerts,
-} from '../../kiosks/selectors';
+import { getTotalAlerts } from '../../kiosks/selectors';
 import './styles.less';
 
 const sort = [
@@ -100,11 +97,7 @@ export const ToolTip = () => (
   </Popup>
 );
 
-const Alerts = ({ getAlertsGrid, alerts, isAlertsLoading }) => {
-  useEffect(() => {
-    getData({ sort });
-  }, []);
-
+const Alerts = ({ alerts, isAlertsLoading }) => {
   const { t } = useTranslation();
   const columns = [
     {
@@ -141,20 +134,6 @@ const Alerts = ({ getAlertsGrid, alerts, isAlertsLoading }) => {
     history.push('/dashboard/alerts');
   };
 
-  const getData = ({ sort }) => {
-    let today = new Date().toISOString();
-    let yesterday = new Date(Date.now() - 86400 * 1000).toISOString();
-    const data = {
-      limit: 6,
-      search: `{"startDate":{"$gte":"${yesterday}","$lte":"${today}"}}`,
-    };
-
-    if (sort) {
-      data.sort = sort;
-    }
-    getAlertsGrid({ data });
-  };
-
   const handlerClickRow = ({ details }) => {
     if (details.kioskId) {
       history.push(`/kiosks/detail/${details.kioskId._id}`);
@@ -188,8 +167,13 @@ const Alerts = ({ getAlertsGrid, alerts, isAlertsLoading }) => {
         fixed
         data={alerts}
         columns={columns}
-        getData={getData}
-        excludeSortBy={['status', 'duration', 'type', 'details.kioskId.name']}
+        excludeSortBy={[
+          'status',
+          'startDate',
+          'duration',
+          'type',
+          'details.kioskId.name',
+        ]}
         sortDirection="DESC"
       />
     </Segment>
@@ -197,7 +181,6 @@ const Alerts = ({ getAlertsGrid, alerts, isAlertsLoading }) => {
 };
 
 const mapStateToProps = state => ({
-  alerts: getKiosksAlertsForTable(state),
   total: getTotalAlerts(state),
   isAlertsLoading: state.kiosks.isAlertsLoading,
 });
