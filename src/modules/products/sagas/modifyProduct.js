@@ -13,6 +13,7 @@ import { selectorGetProductTax } from '../selectors';
 import {
   modifyProductSaga as action,
   modifyProductSuccess as actionSuccess,
+  getManufacturers,
 } from '../actions';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
@@ -82,6 +83,7 @@ function* handler({ payload: { values, initialValues, uploadedImage } }) {
         animation: 'fade left',
       });
       yield put(actionSuccess({ ...responseData, priceHistory }));
+      yield put(getManufacturers());
     } else {
       if (errors && errors[0].message === 'Token expired')
         yield put(updateSessionExpired(true));
