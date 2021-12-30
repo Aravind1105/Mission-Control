@@ -8,13 +8,13 @@ import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const ProductsScreen = () => (
   <>
-  <SemanticToastContainer position='top-right'/>
-  <Switch>
-    <Route exact path="/products/list" component={ProductsList} />
-    <Route exact path="/products/:id" component={ProductDetail} />
-    <Route exact path="/products/:id/priceHistory" component={PriceHistory} />
-    <Redirect to="/products/list" />
-  </Switch>
+    <SemanticToastContainer position="top-right" />
+    <Switch>
+      <Route exact path="/products" component={ProductsList} />
+      <Route exact path="/products/:id" component={ProductDetail} />
+      <Route exact path="/products/:id/priceHistory" component={PriceHistory} />
+      <Redirect to="/products" />
+    </Switch>
   </>
 );
 

@@ -7,6 +7,7 @@ import {
   selectorGetManufacturer,
 } from 'modules/products/selectors';
 import { getKioskOptionsForTableDropdown } from 'modules/kiosks/selectors';
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 import './styles.less';
 
 const Toolbar = ({
@@ -15,20 +16,21 @@ const Toolbar = ({
   changeKiosk,
   kiosks,
   kioskFilter,
+  isKiosksLoading,
   products,
   productFilter,
+  isProductsLoading,
   manufacturersOptions,
-  manufacturer,
   supplierFilter,
   isManufacturesLoading,
 }) => {
-  const handleKioskChange = (e, { value }) => {
+  const handleKioskChange = value => {
     changeKiosk(value);
   };
-  const handleProductChange = (e, { value }) => {
+  const handleProductChange = value => {
     changeProduct(value);
   };
-  const handleChangeManufacturer = (e, { value }) => {
+  const handleChangeManufacturer = value => {
     changeSupplier(value);
   };
   return (
@@ -36,37 +38,40 @@ const Toolbar = ({
       <Grid.Row verticalAlign="middle">
         <Grid.Column mobile={16} tablet={8} computer={3}>
           <div className="kiosk-toolbar-dropdown">
-            <Dropdown
-              placeholder="All Kiosks"
-              selection
+            <SelectCheckBoxes
+              title="Kiosks"
               options={kiosks}
               value={kioskFilter}
+              allOptionKey="all"
               className="full-width"
-              onChange={handleKioskChange}
+              onClickApply={handleKioskChange}
+              isLoading={isKiosksLoading}
             />
           </div>
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
           <div className="products-toolbar-dropdown">
-            <Dropdown
-              placeholder="All Products"
-              selection
-              value={productFilter}
+            <SelectCheckBoxes
+              title="Products"
               options={products}
+              value={productFilter}
+              allOptionKey="all"
               className="full-width"
-              onChange={handleProductChange}
+              onClickApply={handleProductChange}
+              isLoading={isProductsLoading}
             />
           </div>
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
           <div className="manufactur-toolbar-dropdown">
-            <Dropdown
-              placeholder="All Manufacturers"
-              selection
-              value={supplierFilter}
+            <SelectCheckBoxes
+              title="Manufacturers"
               options={manufacturersOptions}
+              value={supplierFilter}
+              allOptionKey="all"
               className="full-width"
-              onChange={handleChangeManufacturer}
+              onClickApply={handleChangeManufacturer}
+              isLoading={isManufacturesLoading}
             />
           </div>
         </Grid.Column>
@@ -79,8 +84,9 @@ const mapStateToProps = state => ({
   products: getProductsDropdownList(state),
   manufacturersOptions: selectorGetManufacturer(state),
   kiosks: getKioskOptionsForTableDropdown(state),
-  manufacturer: state.products.manufacturers,
   isManufacturesLoading: state.products.isManufacturesLoading,
+  isKiosksLoading: state.kiosks.isKiosksListLoading,
+  isProductsLoading: state.products.isLoading,
 });
 const mapDispatchToProps = {};
 

@@ -3,7 +3,11 @@ import toFlatLoadCellItem from 'lib/toFlatLoadCells';
 import { toast } from 'react-semantic-toasts';
 import history from 'lib/history';
 import gqlKiosk from 'lib/https/gqlKiosk';
-import { modifyKiosk as action, getKiosk as actionSuccess } from '../actions';
+import {
+  modifyKiosk as action,
+  getKiosk as actionSuccess,
+  getKiosksList,
+} from '../actions';
 import {
   CREATE_KIOSK_MUTATION,
   UPDATE_KIOSK_MUTATION,
@@ -48,10 +52,13 @@ function* handler({ payload: { values, formActions } }) {
       };
       toast({
         type: 'success',
-        description: 'Kiosk details saved successfully',
+        description: id
+          ? 'Kiosk details saved successfully'
+          : 'Kiosk created successfully',
         animation: 'fade left',
       });
       yield put(actionSuccess(responseData._id));
+      !id && (yield put(getKiosksList()));
     } else {
       if (errors && errors[0].message === 'Token expired')
         yield put(updateSessionExpired(true));

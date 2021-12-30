@@ -79,7 +79,9 @@ function* handler({ payload: { values, initialValues, uploadedImage } }) {
       );
       toast({
         type: 'success',
-        description: 'Product details saved successfully.',
+        description: id
+          ? 'Product details saved successfully'
+          : 'Product created successfully',
         animation: 'fade left',
       });
       yield put(actionSuccess({ ...responseData, priceHistory }));

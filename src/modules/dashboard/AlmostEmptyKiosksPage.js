@@ -30,7 +30,7 @@ const AlmostEmptyKiosksPage = ({
   almostEmptyKiosks,
   kiosks,
   getProductListSaga,
-  isProductsLoading,
+  getManufacturers,
   isKioskLoading,
   paginationState,
   changeKiosk,
@@ -131,13 +131,13 @@ const AlmostEmptyKiosksPage = ({
 const mapStateToProps = state => ({
   almostEmptyKiosks: getAlmostEmptyKiosksForTable(state),
   isKioskLoading: state.kiosks.isAlmostEmptyLoading,
-  isProductsLoading: state.products.isLoading,
   paginationState: state.dashboard.almostEmptyPagination,
 });
 
 const mapDispatchToProps = {
   getAlmostEmptyKiosks,
   getProductListSaga,
+  getManufacturers,
   changeKiosk,
   changeProduct,
   changeSupplier,
