@@ -10,21 +10,21 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import { Formik, Field } from 'formik';
+import { isEqual } from 'lodash';
 import * as Yup from 'yup';
+
 import FormInput from 'modules/shared/components/FormInput';
 import FormSelect from 'modules/shared/components/FormSelect';
 import FormTextArea from 'modules/shared/components/FormTextArea';
-import { toast } from 'react-semantic-toasts';
-import history from 'lib/history';
-import { modifyProductSaga } from '../actions';
-import { isEqual } from 'lodash';
 import FormInputWithUnit from 'modules/shared/components/FormInputWithUnit';
+
+import { modifyProductSaga } from '../actions';
 
 const ProductForm = ({
   initialValues,
   taxesOption,
   organizations,
-  setIsCancelTriggered,
+  cancelHandler,
   buttonVal,
   firstUploadImage,
 }) => {
@@ -97,7 +97,6 @@ const ProductForm = ({
 
     delete values.image;
 
-    setIsCancelTriggered(false);
     //convert capacities field to Livello BE expected format
     capacityModifier(values);
 
@@ -110,13 +109,6 @@ const ProductForm = ({
         uploadedImage: firstUploadImage,
       }),
     );
-  };
-
-  const handleCancel = resetForm => {
-    resetForm();
-    setIsCancelTriggered(true);
-    // setIsImageDeleted(false);    LIV-3213
-    history.push('/products');
   };
 
   // In order to provide a faster filling out of the add products form,
@@ -546,8 +538,7 @@ const ProductForm = ({
                 <Grid.Row textAlign="center">
                   <Grid.Column>
                     <Button
-                      // disabled={dirty}   LIV-3213
-                      onClick={() => handleCancel(resetForm)}
+                      onClick={() => cancelHandler({ resetForm, dirty })}
                       type="button"
                     >
                       Cancel

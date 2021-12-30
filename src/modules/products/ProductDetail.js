@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Segment, Header, Divider, Button } from 'semantic-ui-react';
 import get from 'lodash/get';
 
+import history from 'lib/history';
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import { getKioskListName } from 'modules/kiosks/selectors';
 import ProductForm from './components/ProductForm';
@@ -81,12 +82,12 @@ const ProductDetail = ({
   const [buttonVal, setButtonVal] = useState('Submit');
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showDuplicateAlert, setShowDuplicateAlert] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // this state variable is used only when a product is created along with the image
   const [firstUploadImage, setFirstUploadImage] = useState(null);
 
   useEffect(() => {
-    // const { id } = match.params;
     getFullProductData(id);
     getOrganizations();
     setButtonVal(id == 'new' ? 'Submit' : 'Save');
@@ -102,6 +103,18 @@ const ProductDetail = ({
       resetKioskWithProduct();
     }
   }, [id]);
+
+  const redirectHandler = () => {
+    history.push('/products');
+  };
+
+  const cancelHandler = ({ dirty, resetForm }) => {
+    if (dirty) setIsModalOpen(true);
+    else {
+      resetForm();
+      redirectHandler();
+    }
+  };
 
   const isEdit = id !== 'new';
   const hasData = isEdit ? initialValues.id === id : true;
@@ -185,7 +198,7 @@ const ProductDetail = ({
                       // familyOption={familyOption}
                       taxesOption={taxesOption}
                       organizations={organizations}
-                      setIsCancelTriggered={setIsCancelTriggered}
+                      cancelHandler={cancelHandler}
                       buttonVal={buttonVal}
                       firstUploadImage={firstUploadImage}
                     />
@@ -193,6 +206,15 @@ const ProductDetail = ({
                 </Segment>
               </Grid.Column>
             </Grid.Row>
+            <ConfirmationModal
+              title="Confirm Cancelling"
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              confirmHandler={redirectHandler}
+            >
+              <p>You have unsaved changes.</p>
+              <p>Are you sure want to leave the page?</p>
+            </ConfirmationModal>
           </Grid>
         </Grid.Column>
 

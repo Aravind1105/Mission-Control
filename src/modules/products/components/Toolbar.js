@@ -62,7 +62,7 @@ const Toolbar = ({
               to="/products/new"
             >
               <Icon name="right arrow" />
-              Add Products
+              Add Product
             </Button>
           </Grid.Column>
         </Grid.Row>

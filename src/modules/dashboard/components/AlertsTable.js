@@ -89,12 +89,12 @@ const AlertsTable = ({
       <div className="toolbar-container">
         <Toolbar
           changeDate={changeDate}
-          changeKiosk={changeKiosk}
-          changeAlert={changeAlert}
-          changePage={changePage}
           dateRange={dateRange}
+          changeKiosk={changeKiosk}
           kioskFilter={kioskFilter}
+          changeAlert={changeAlert}
           alertFilter={alertFilter}
+          changePage={changePage}
         />
       </div>
       <Grid stackable stretched>

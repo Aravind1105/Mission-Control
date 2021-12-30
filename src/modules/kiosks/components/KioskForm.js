@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import FormInput from 'modules/shared/components/FormInput';
 import FormTextArea from 'modules/shared/components/FormTextArea';
 import FormSelect from 'modules/shared/components/FormSelect';
-import { modifyKiosk, getAllSerialNumbers } from '../actions';
+import { modifyKiosk } from '../actions';
 import { getAllSerialNumbersState } from '../selectors';
 
 let updatingKiosk = false;
@@ -16,13 +16,9 @@ const KioskForm = ({
   organizations,
   cancelHandler,
   modifyKiosk,
-  getAllSerialNumbers,
   serialNumbers,
+  buttonVal,
 }) => {
-  useEffect(() => {
-    getAllSerialNumbers();
-  }, []);
-
   const addressModifier = values => {
     values.location = {};
     values.location.address = {
@@ -317,7 +313,7 @@ const KioskForm = ({
                   Cancel
                 </Button>
                 <Button color="green" type="submit" disabled={!dirty}>
-                  Save
+                  {buttonVal}
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -334,7 +330,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   modifyKiosk,
-  getAllSerialNumbers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskForm);

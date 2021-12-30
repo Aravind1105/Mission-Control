@@ -9,7 +9,7 @@ import { getOrganizations } from 'modules/organizations/actions';
 import { getOrganizationsAsOptions } from 'modules/organizations/selectors';
 import history from 'lib/history';
 import KioskForm from './components/KioskForm';
-import { getKiosk } from './actions';
+import { getAllSerialNumbers, getKiosk } from './actions';
 import { getKioskInitValues } from './selectors';
 
 const links = [
@@ -31,20 +31,29 @@ const KioskEdit = ({
   organizationsOptions,
   getOrganizations,
   getKiosk,
+  getAllSerialNumbers,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const backLink = {
+  const [buttonVal, setButtonVal] = useState('Submit');
+
+  const backLinkToKioskDetail = {
     name: 'Back to kiosk detail',
     link: `/kiosks/detail/${params.id}`,
   };
+  const backLinkToKiosks = {
+    name: 'Back to kiosks',
+    link: '/kiosks',
+  };
+  const isEdit = params.id !== 'new';
+  const hasData = isEdit ? initialValues.id === params.id : true;
   useEffect(() => {
-    const isEdit = params.id !== 'new';
-    const hasData = isEdit ? initialValues.id === params.id : false;
-
     getOrganizations();
     if (!hasData) {
       getKiosk(params.id);
     }
+    if (!isEdit) {
+      getAllSerialNumbers();
+    } else setButtonVal('Save');
   }, []);
 
   const redirectHandler = () => {
@@ -53,49 +62,53 @@ const KioskEdit = ({
     history.push(redirectTo);
   };
 
-  const cancelHandler = ({ dirty }) => {
+  const cancelHandler = ({ dirty, resetForm }) => {
     if (dirty) setIsModalOpen(true);
-    else redirectHandler();
+    else {
+      resetForm();
+      redirectHandler();
+    }
   };
 
-  const isEdit = params.id !== 'new';
-  const hasData = isEdit ? initialValues.id === params.id : true;
   const isLoaded = !isOrgLoading && !!organizationsOptions.length && hasData;
-  const kioskName = isEdit ? initialValues.name : 'New kiosk';
+  const kioskName = isEdit ? initialValues.name : 'New Kiosk';
 
   return (
     <>
       <Grid stackable>
-        <Grid.Column width={16}>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  <Breadcrumbs
-                    links={links}
-                    backLink={backLink}
-                    activeLink={kioskName}
-                  />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Segment>
+              <Breadcrumbs
+                links={links}
+                backLink={isEdit ? backLinkToKioskDetail : backLinkToKiosks}
+                activeLink={kioskName}
+              />
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
 
-            <Grid.Row>
-              <Grid.Column>
-                <Segment>
-                  {(isKioskLoading || !isLoaded) && <Loader />}
-                  <Header as="h3">{kioskName}</Header>
-                  <Divider />
-                  <KioskForm
-                    initialValues={initialValues}
-                    organizations={organizationsOptions}
-                    cancelHandler={cancelHandler}
-                  />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
+        <Grid.Row>
+          <Grid.Column>
+            <Segment>
+              {(isKioskLoading || !isLoaded) && <Loader />}
+              <Grid stackable>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Header as="h2">{kioskName}</Header>
+                    <Divider />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+              <KioskForm
+                initialValues={initialValues}
+                organizations={organizationsOptions}
+                cancelHandler={cancelHandler}
+                buttonVal={buttonVal}
+              />
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
         <ConfirmationModal
           title="Confirm Cancelling"
           isModalOpen={isModalOpen}
@@ -103,7 +116,7 @@ const KioskEdit = ({
           confirmHandler={redirectHandler}
         >
           <p>You have unsaved changes.</p>
-          <p>Are you sure you want to leave the page?</p>
+          <p>Are you sure want to leave the page?</p>
         </ConfirmationModal>
       </Grid>
     </>
@@ -120,6 +133,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getOrganizations,
   getKiosk,
+  getAllSerialNumbers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KioskEdit);

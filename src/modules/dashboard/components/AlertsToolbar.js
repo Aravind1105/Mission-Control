@@ -8,7 +8,7 @@ import {
   getKioskOptionsForTableDropdown,
   getAlertsOptions,
 } from 'modules/kiosks/selectors';
-import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
+import SelectCheckBoxes from 'modules/shared/components/SelectCheckBoxes';
 import './styles.less';
 
 const Toolbar = ({
