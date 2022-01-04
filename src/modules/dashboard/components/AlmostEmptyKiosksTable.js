@@ -99,16 +99,14 @@ const AlmostEmptyKiosks = ({
         </Header>
         <BackLink {...{ ...backLink }} />
       </SegmentHeader>
-      <div className="toolbar-container">
-        <Toolbar
-          changeProduct={changeProduct}
-          productFilter={productFilter}
-          changeKiosk={changeKiosk}
-          kioskFilter={kioskFilter}
-          changeSupplier={changeSupplier}
-          supplierFilter={supplierFilter}
-        />
-      </div>
+      <Toolbar
+        changeProduct={changeProduct}
+        productFilter={productFilter}
+        changeKiosk={changeKiosk}
+        kioskFilter={kioskFilter}
+        changeSupplier={changeSupplier}
+        supplierFilter={supplierFilter}
+      />
       <Grid stackable stretched>
         <Grid.Row>
           <Grid.Column>

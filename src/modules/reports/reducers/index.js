@@ -15,6 +15,7 @@ import {
   getPaymentsMethodsStats,
   getPaymentsMethodsStatsSuccess,
   getTopSell,
+  setReportsKiosk,
 } from '../actions';
 
 const initialState = {
@@ -42,6 +43,9 @@ const initialState = {
   isTopRefillsLoading: false,
   paymentMethodsStats: [],
   isPaymentMethodLoading: false,
+  reportsState: {
+    kiosk: [],
+  },
 };
 
 const reportsReducer = handleActions(
@@ -110,6 +114,10 @@ const reportsReducer = handleActions(
       ...state,
       paymentMethodsStats: payload.paymentMethodsStats,
       isPaymentMethodLoading: false,
+    }),
+    [setReportsKiosk]: (state, { payload }) => ({
+      ...state,
+      reportsState: { kiosk: payload },
     }),
   },
   initialState,

@@ -18,20 +18,17 @@ import {
   getProductsWidgetsData,
   getProductsWidgetsDataSuccess,
   setSalesPage,
-  setSalesDate,
   setSalesPerPage,
   setSalesKiosk,
   setSalesFilter,
   setSalesSort,
   setRefillsPage,
   setRefillsPerPage,
-  setRefillsDate,
   setRefillsKiosk,
   setRefillsFilter,
   setRefillsSort,
   setProductsPage,
   setProductsPerPage,
-  setProductsDate,
   setProductsKiosk,
   setProductsFilter,
   setProductsSort,
@@ -72,10 +69,6 @@ const initialState = {
     mostRemovedProductValue: 0,
   },
   salesPagination: {
-    dateRange: {
-      $gte: date[0],
-      $lte: date[1],
-    },
     kiosk: [],
     page: 0,
     perPage: 25,
@@ -86,18 +79,10 @@ const initialState = {
       },
     ],
     filter: {
-      dateRange: {
-        $gte: date[0],
-        $lte: date[1],
-      },
       kiosk: [],
     },
   },
   refillsPagination: {
-    dateRange: {
-      $gte: date[0],
-      $lte: date[1],
-    },
     kiosk: [],
     page: 0,
     perPage: 25,
@@ -108,18 +93,10 @@ const initialState = {
       },
     ],
     filter: {
-      dateRange: {
-        $gte: date[0],
-        $lte: date[1],
-      },
       kiosk: [],
     },
   },
   productsPagination: {
-    dateRange: {
-      $gte: date[0],
-      $lte: date[1],
-    },
     kiosk: [],
     product: '',
     page: 0,
@@ -131,10 +108,6 @@ const initialState = {
       },
     ],
     filter: {
-      dateRange: {
-        $gte: date[0],
-        $lte: date[1],
-      },
       kiosk: [],
       product: '',
     },
@@ -201,10 +174,6 @@ const transactionsReducer = handleActions(
       ...state,
       salesPagination: { ...state.salesPagination, page: payload },
     }),
-    [setSalesDate]: (state, { payload }) => ({
-      ...state,
-      salesPagination: { ...state.salesPagination, dateRange: payload },
-    }),
     [setSalesPerPage]: (state, { payload }) => ({
       ...state,
       salesPagination: { ...state.salesPagination, perPage: payload },
@@ -225,10 +194,6 @@ const transactionsReducer = handleActions(
     [setRefillsPage]: (state, { payload }) => ({
       ...state,
       refillsPagination: { ...state.refillsPagination, page: payload },
-    }),
-    [setRefillsDate]: (state, { payload }) => ({
-      ...state,
-      refillsPagination: { ...state.refillsPagination, dateRange: payload },
     }),
     [setRefillsPerPage]: (state, { payload }) => ({
       ...state,
@@ -254,10 +219,6 @@ const transactionsReducer = handleActions(
     [setProductsPage]: (state, { payload }) => ({
       ...state,
       productsPagination: { ...state.productsPagination, page: payload },
-    }),
-    [setProductsDate]: (state, { payload }) => ({
-      ...state,
-      productsPagination: { ...state.productsPagination, dateRange: payload },
     }),
     [setProductsPerPage]: (state, { payload }) => ({
       ...state,

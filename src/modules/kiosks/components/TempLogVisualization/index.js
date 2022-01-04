@@ -113,7 +113,7 @@ const TempLogVisualization = ({
             </SegmentHeader>
             <Grid stackable>
               <Grid.Row className="temp-log-filter-row">
-                <Grid.Column mobile={16} computer={4}>
+                <Grid.Column mobile={16} tablet={8} computer={3}>
                   <DatePicker type="range" onChange={handleDateChange} />
                 </Grid.Column>
                 {/* <Grid.Column mobile={16} computer={4}>

@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 const labelColor = {
   BLACK: '#333333',
   RED: '#EB5757',
@@ -14,16 +14,21 @@ const determineColorCode = function(doorStatus, session) {
     }
     return color;
   }
-  const now = moment(new Date())
-  const created = moment(session.created)
-  const duration = Math.floor(moment.duration(now.diff(created)).asMinutes())
+  const now = moment(new Date());
+  const created = moment(session.created);
+  const duration = Math.floor(moment.duration(now.diff(created)).asMinutes());
   if (session.type === 'refill') {
     if (duration < 40 && doorStatus === 'open') {
       color = labelColor.GREEN;
     } else {
       color = labelColor.RED;
     }
-  } else if (session.type === 'purchase' || session.type === 'terminal_purchase') {
+  } else if (
+    session.type === 'purchase' ||
+    session.type === 'member_purchase' ||
+    session.type === 'terminal_purchase' ||
+    session.type === 'app_purchase'
+  ) {
     if (duration < 5 && doorStatus === 'open') {
       color = labelColor.GREEN;
     } else {

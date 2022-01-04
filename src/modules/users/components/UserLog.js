@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import format from 'date-fns/format';
 import { Grid, Segment, Header } from 'semantic-ui-react';
+import { isEqual } from 'lodash';
+import moment from 'moment';
+
 import Breadcrumbs from 'modules/shared/components/Breadcrumbs';
 import Loader from 'modules/shared/components/Loader';
 import CustomButton from 'modules/shared/components/CustomButton';
@@ -17,6 +19,12 @@ import {
 } from '../selectors';
 import { getUserTransactions, getOneUserWithInfo } from '../actions';
 import './styles.less';
+
+const startOfMonth = moment()
+  .startOf('month')
+  .toDate();
+const currentDay = new Date();
+const defaultDate = [startOfMonth, currentDay];
 
 const sortDefault = [
   {
@@ -57,11 +65,7 @@ const columns = [
             <span style={{ paddingLeft: '33px' }}>{event.type}</span>
           </div>
         );
-      if (
-        event.touchedScales !== null &&
-        event.touchedScales !== undefined &&
-        event.touchedScales.length > 0
-      ) {
+      if (event.touchedScales && event.touchedScales.length > 0) {
         touched = (
           <div id="ev-title">
             Products Taken:
@@ -84,11 +88,7 @@ const columns = [
           </div>
         );
       }
-      if (
-        event.productsTaken !== null &&
-        event.productsTaken !== undefined &&
-        event.productsTaken.length > 0
-      ) {
+      if (event.productsTaken && event.productsTaken.length > 0) {
         prodTaken = (
           <div id="ev-title">
             Products Taken:
@@ -112,7 +112,7 @@ const columns = [
           </div>
         );
       }
-      if (event.paymentMethod && event.paymentMethod !== undefined) {
+      if (event.paymentMethod && event.paymentMethod.length > 0) {
         paymentDetails = (
           <div>
             Payment Details:
@@ -148,11 +148,14 @@ const UserLog = ({
   getOneUserWithInfo,
   initValue,
 }) => {
-  const [dateRange, changeDate] = useState('');
+  const [dateRange, changeDate] = useState({
+    $gte: defaultDate[0],
+    $lte: defaultDate[1],
+  });
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
-  // const [exportData, changeExportData] = useState(false);
+  const [exportData, changeExportData] = useState(false);
   const { id } = match.params;
   const links = [
     {
@@ -172,16 +175,17 @@ const UserLog = ({
 
   const getData = ({ sort }) => {
     const data = {
-      search:
-        dateRange !== ''
-          ? `{"userId": \"${id}\","created":{"$gte":\"${dateRange.$gte}\"${
-              dateRange.$lte ? `,"$lte":\"${dateRange.$lte}\"` : ''
-            }}}`
-          : `{"userId": \"${id}\"}`,
       skip: page * perPage,
       limit: perPage,
       sort: sort,
     };
+    const date = dateRange ? { created: dateRange } : {};
+    const userId = { userId: id };
+    data.search = JSON.stringify({
+      ...date,
+      ...userId,
+    });
+
     getUserTransactions({ data });
   };
   const handleDateChange = value => {
@@ -189,26 +193,36 @@ const UserLog = ({
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] =
-          i % 2
-            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        let formattedDate = curr;
+        if (i % 2) {
+          let date = new Date(curr);
+          date.setHours(23);
+          date.setMinutes(59);
+          date.setSeconds(59);
+          formattedDate = date;
+        }
+        prev[key] = formattedDate;
         return prev;
       }, {});
     }
-    changePage(0);
-    changeDate(date);
-    // if (date.$gte && date.$lte) {
-    //     changeExportData({
-    //         from: date.$gte,
-    //         to: date.$lte,
-    //     });
-    // }
+    if (
+      (!isEqual(value, defaultDate) && date.$gte && date.$lte) ||
+      value === null
+    ) {
+      changePage(0);
+      changeDate(date);
+      changeExportData({
+        from: date.$gte,
+        to: date.$lte,
+      });
+    }
   };
+
   useEffect(() => {
     getData({ sort });
-    if (userName.firstName === '') getOneUserWithInfo({ id: params.id });
+    if (!userName.firstName) getOneUserWithInfo({ id: params.id });
   }, [id, page, perPage, dateRange]);
+
   return (
     <Grid>
       <Grid.Row stretched>
@@ -241,10 +255,14 @@ const UserLog = ({
             </SegmentHeader>
             <Grid>
               <Grid.Row className="user-log-filter-row">
-                <Grid.Column width={4}>
-                  <DatePicker type="range" onChange={handleDateChange} />
+                <Grid.Column mobile={16} tablet={8} computer={3}>
+                  <DatePicker
+                    type="range"
+                    onChange={handleDateChange}
+                    value={defaultDate}
+                  />
                 </Grid.Column>
-                <Grid.Column width={3}>
+                <Grid.Column mobile={16} tablet={8} computer={3}>
                   <CustomButton
                     label="Download CSV&nbsp;"
                     icon="arrow down"

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Header } from 'semantic-ui-react';
-import format from 'date-fns/format';
+import { isEqual } from 'lodash';
+import moment from 'moment';
+
 import SegmentHeader from 'modules/shared/components/SegmentHeader';
 import CustomTable from 'modules/shared/components/CustomTable';
 import Pagination from 'modules/shared/components/Pagination';
@@ -14,7 +16,6 @@ import {
   getTotalActivityLogs,
 } from '../selectors';
 import { getActivityLogs } from '../actions';
-
 import './styles.less';
 
 const sortDefault = [
@@ -81,7 +82,7 @@ const columns = [
               ? ',' +
                 ScalResults.slice(1, ScalLen).map(scl => {
                   let prodTaken_1 =
-                    ' Cable ID :  ' +
+                    '\t Cable ID :  ' +
                     scl.id +
                     '  /  Weight :  ' +
                     scl.weight +
@@ -159,7 +160,16 @@ const ActivityLogGrid = ({
   getActivityLogs,
   isLoading,
 }) => {
-  const [dateRange, changeDate] = useState('');
+  const startOfMonth = moment()
+    .startOf('month')
+    .toDate();
+  const currentDay = new Date();
+  const defaultDate = [startOfMonth, currentDay];
+
+  const [dateRange, changeDate] = useState({
+    $gte: defaultDate[0],
+    $lte: defaultDate[1],
+  });
   const [page, changePage] = useState(0);
   const [perPage, changePerPage] = useState(25);
   const [sort, setSort] = useState(sortDefault);
@@ -182,16 +192,24 @@ const ActivityLogGrid = ({
     if (value) {
       date = value.reduce((prev, curr, i) => {
         const key = i % 2 ? '$lte' : '$gte';
-        prev[key] =
-          i % 2
-            ? `${format(curr, 'yyyy-MM-dd')}T23:59:59.999Z`
-            : `${format(curr, 'yyyy-MM-dd')}T00:00:00.000Z`;
+        let formattedDate = curr;
+        if (i % 2) {
+          let date = new Date(curr);
+          date.setHours(23);
+          date.setMinutes(59);
+          date.setSeconds(59);
+          formattedDate = date;
+        }
+        prev[key] = formattedDate;
         return prev;
       }, {});
     }
-    changePage(0);
-    changeDate(date);
-    if (date.$gte && date.$lte) {
+    if (
+      (!isEqual(value, defaultDate) && date.$gte && date.$lte) ||
+      value === null
+    ) {
+      changePage(0);
+      changeDate(date);
       changeExportData({
         from: date.$gte,
         to: date.$lte,
@@ -229,10 +247,14 @@ const ActivityLogGrid = ({
           </SegmentHeader>
           <Grid stackable>
             <Grid.Row className="activity-log-filter-row">
-              <Grid.Column mobile={16} computer={4}>
-                <DatePicker type="range" onChange={handleDateChange} />
+              <Grid.Column mobile={16} tablet={8} computer={3}>
+                <DatePicker
+                  type="range"
+                  onChange={handleDateChange}
+                  value={defaultDate}
+                />
               </Grid.Column>
-              <Grid.Column mobile={16} computer={4}>
+              <Grid.Column mobile={16} tablet={8} computer={3}>
                 <CustomButton
                   label="Download CSV&nbsp;"
                   icon="arrow down"

@@ -44,9 +44,10 @@ const KioskEdit = ({
     name: 'Back to kiosks',
     link: '/kiosks',
   };
+
   const isEdit = params.id !== 'new';
-  const hasData = isEdit ? initialValues.id === params.id : true;
   useEffect(() => {
+    const hasData = isEdit ? initialValues.id === params.id : false;
     getOrganizations();
     if (!hasData) {
       getKiosk(params.id);
@@ -69,7 +70,7 @@ const KioskEdit = ({
       redirectHandler();
     }
   };
-
+  const hasData = isEdit ? initialValues.id === params.id : true;
   const isLoaded = !isOrgLoading && !!organizationsOptions.length && hasData;
   const kioskName = isEdit ? initialValues.name : 'New Kiosk';
 

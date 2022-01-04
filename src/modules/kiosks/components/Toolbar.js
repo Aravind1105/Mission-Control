@@ -117,19 +117,16 @@ const Toolbar = ({
           <>
             <Divider style={{ marginTop: 0, marginBottom: 0 }} />
             <Grid.Row verticalAlign="middle" verticalAlign="middle" columns={5}>
-              <Grid.Column computer={3}>
+              <Grid.Column mobile={16} tablet={16} computer={9}>
                 <Dropdown
                   placeholder="All Organization"
                   selection
-                  className="full-width"
                   onChange={handleOrganizationChange}
                   options={organizations}
                   value={selectedOrganization}
                 />
               </Grid.Column>
-              <Grid.Column computer={3}></Grid.Column>
-              <Grid.Column computer={3}></Grid.Column>
-              <Grid.Column computer={3}>
+              <Grid.Column mobile={16} tablet={8} computer={3}>
                 <div className="download_orderlist_button">
                   <CustomButton
                     label="Download Order List"
@@ -139,7 +136,7 @@ const Toolbar = ({
                   />
                 </div>
               </Grid.Column>
-              <Grid.Column computer={3}>
+              <Grid.Column mobile={16} tablet={8} computer={3}>
                 <div className="download_packlist_button">
                   <CustomButton
                     label="Download Pack List"

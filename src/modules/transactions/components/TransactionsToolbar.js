@@ -89,7 +89,6 @@ const Toolbar = ({
               value={dateRange}
             />
           </Grid.Column>
-
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <SelectCheckBoxes
               title="Kiosks"
@@ -100,10 +99,6 @@ const Toolbar = ({
               isLoading={isKiosksListLoading}
             />
           </Grid.Column>
-
-          {/* <Grid.Column width={4}>
-            <SearchInput onChange={changeSearch} timeout={500} />
-          </Grid.Column> */}
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <CustomButton
               label="Download CSV&nbsp;"

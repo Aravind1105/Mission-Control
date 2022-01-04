@@ -92,7 +92,7 @@ const kiosksReducer = handleActions(
       ...state,
       isLoading: true,
     }),
-    [combineActions(getKiosk, resetKiosk)]: state => ({
+    [combineActions(getKiosk, resetKiosk, createRefill)]: state => ({
       ...state,
       isKioskLoading: true,
     }),
@@ -117,6 +117,7 @@ const kiosksReducer = handleActions(
       modifyKioskSuccess,
       resetKioskSuccess,
       deleteLoadCellSuccess,
+      createRefillSuccess,
     )]: (state, { payload }) => ({
       ...state,
       kiosk: payload,
@@ -171,17 +172,6 @@ const kiosksReducer = handleActions(
         isAlmostEmptyLoading: false,
         almostEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.data', []),
         totalEmptyKiosks: get(payload, 'getAlmostEmptyKiosks.total', 0),
-      };
-    },
-    [createRefill]: state => ({
-      ...state,
-      isLoading: true,
-    }),
-    [createRefillSuccess]: (state, { payload }) => {
-      return {
-        ...state,
-        kiosk: payload,
-        isLoading: false,
       };
     },
     [getTemperatureLogs]: state => ({

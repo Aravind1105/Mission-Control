@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-semantic-toasts';
 
 import gqlKiosk from 'lib/https/gqlKiosk';
 import toFlatLoadCellItem from 'lib/toFlatLoadCells';
@@ -15,35 +16,42 @@ function* handler({ payload }) {
       id: payload,
     };
     const {
-      data: { kioskReset },
+      data: { kioskReset: response },
+      errors,
     } = yield call(gqlKiosk.mutate, {
       mutation: KIOSK_RESET_MUTATION,
       variables,
     });
-    // TODO: fix null name and img from resetKiosk endpoint. This is a workaround to solve LIV-1310.
+    if (errors && errors[0].message === 'Token expired')
+      yield put(updateSessionExpired(true));
     const {
       data: { getKioskWithCapacities },
-      errors,
     } = yield call(gqlKiosk.query, {
       query: GET_KIOSK_QUERY,
       variables,
     });
-    if (errors && errors[0].message === 'Token expired')
-      yield put(updateSessionExpired(true));
-    else {
-      const kiosk = {
-        // ...kioskReset,
-        ...getKioskWithCapacities,
-        inventory: {
-          // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
-          loadCells: toFlatLoadCellItem(
-            getKioskWithCapacities.inventory.loadCells,
-            payload,
-          ),
-        },
-      };
 
-      yield put(actionSuccess(kiosk));
+    const kiosk = {
+      ...getKioskWithCapacities,
+      inventory: {
+        loadCells: toFlatLoadCellItem(
+          getKioskWithCapacities.inventory.loadCells,
+        ),
+      },
+    };
+    yield put(actionSuccess(kiosk));
+    if (response?._id) {
+      toast({
+        type: 'success',
+        description: 'Session is reset',
+        animation: 'fade left',
+      });
+    } else {
+      toast({
+        type: 'error',
+        description: 'Error! Something went wrong',
+        animation: 'fade left',
+      });
     }
   } catch (error) {
     console.log(error);
