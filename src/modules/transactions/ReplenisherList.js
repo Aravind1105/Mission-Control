@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
+import moment from 'moment';
+
 import Pagination from 'modules/shared/components/Pagination';
 import StatsCard from 'modules/shared/components/StatsCard';
 import Loader from 'modules/shared/components/Loader';
@@ -18,7 +20,6 @@ import {
   setRefillsPage as changePage,
   setRefillsPerPage as changePerPage,
   setRefillsKiosk as changeKiosk,
-  setRefillsDate as changeDate,
   setRefillsSort as changeSort,
   setRefillsFilter as changeFilter,
 } from './actions';
@@ -48,12 +49,22 @@ const ReplenisherList = ({
   paginationState,
   changePage,
   changePerPage,
-  changeDate,
   changeFilter,
   changeKiosk,
   changeSort,
 }) => {
-  const { page, perPage, dateRange, kiosk, filter, sort } = paginationState;
+  const startOfMonth = moment()
+    .startOf('month')
+    .toDate();
+  const currentDay = new Date();
+  const defaultDate = [startOfMonth, currentDay];
+
+  const { page, perPage, kiosk, filter, sort } = paginationState;
+  const [dateRange, changeDate] = useState({
+    $gte: defaultDate[0],
+    $lte: defaultDate[1],
+  });
+  const [dateFilter, changeDateFilter] = useState('');
 
   const getData = ({ sort }) => {
     const data = {
@@ -70,7 +81,7 @@ const ReplenisherList = ({
         ...date,
         ...kio,
       });
-      const dateRangeIndex = isEqual(dateRange, filter.dateRange);
+      const dateRangeIndex = isEqual(dateRange, dateFilter);
       const kioskIndex = isEqual(kiosk, filter.kiosk);
 
       widgetPayload.period = dateRange;
@@ -81,9 +92,9 @@ const ReplenisherList = ({
       if (!dateRangeIndex || !kioskIndex) {
         data.skip = 0;
         changePage(0);
+        changeDateFilter(dateRange);
         changeFilter({
           ...filter,
-          dateRange,
           kiosk,
         });
       }
@@ -110,7 +121,7 @@ const ReplenisherList = ({
       {(isWidgetsLoading || isLoading) && <Loader />}
       <RefillsToolbar
         changeDate={changeDate}
-        dateRange={[dateRange.$gte, dateRange.$lte]}
+        dateRange={defaultDate}
         changeKiosk={changeKiosk}
         kioskFilter={kiosk}
       />
@@ -200,7 +211,6 @@ const mapDispatchToProps = {
   getRefillsWidgetsData,
   changePage,
   changePerPage,
-  changeDate,
   changeFilter,
   changeKiosk,
   changeSort,

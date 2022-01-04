@@ -37,43 +37,37 @@ const Toolbar = ({
     <Grid stackable>
       <Grid.Row verticalAlign="middle">
         <Grid.Column mobile={16} tablet={8} computer={3}>
-          <div className="kiosk-toolbar-dropdown">
-            <SelectCheckBoxes
-              title="Kiosks"
-              options={kiosks}
-              value={kioskFilter}
-              allOptionKey="all"
-              className="full-width"
-              onClickApply={handleKioskChange}
-              isLoading={isKiosksLoading}
-            />
-          </div>
+          <SelectCheckBoxes
+            title="Kiosks"
+            options={kiosks}
+            value={kioskFilter}
+            allOptionKey="all"
+            className="full-width"
+            onClickApply={handleKioskChange}
+            isLoading={isKiosksLoading}
+          />
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
-          <div className="products-toolbar-dropdown">
-            <SelectCheckBoxes
-              title="Products"
-              options={products}
-              value={productFilter}
-              allOptionKey="all"
-              className="full-width"
-              onClickApply={handleProductChange}
-              isLoading={isProductsLoading}
-            />
-          </div>
+          <SelectCheckBoxes
+            title="Products"
+            options={products}
+            value={productFilter}
+            allOptionKey="all"
+            className="full-width"
+            onClickApply={handleProductChange}
+            isLoading={isProductsLoading}
+          />
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
-          <div className="manufactur-toolbar-dropdown">
-            <SelectCheckBoxes
-              title="Manufacturers"
-              options={manufacturersOptions}
-              value={supplierFilter}
-              allOptionKey="all"
-              className="full-width"
-              onClickApply={handleChangeManufacturer}
-              isLoading={isManufacturesLoading}
-            />
-          </div>
+          <SelectCheckBoxes
+            title="Manufacturers"
+            options={manufacturersOptions}
+            value={supplierFilter}
+            allOptionKey="all"
+            className="full-width"
+            onClickApply={handleChangeManufacturer}
+            isLoading={isManufacturesLoading}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>

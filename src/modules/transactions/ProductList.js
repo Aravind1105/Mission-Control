@@ -20,7 +20,6 @@ import {
   setProductsPage as changePage,
   setProductsPerPage as changePerPage,
   setProductsKiosk as changeKiosk,
-  setProductsDate as changeDate,
   setProductsSort as changeSort,
   setProductsFilter as changeFilter,
 } from './actions';
@@ -49,21 +48,23 @@ const ProductList = ({
   paginationState,
   changePage,
   changePerPage,
-  changeDate,
   changeFilter,
   changeKiosk,
   changeSort,
   changeProduct,
 }) => {
-  const {
-    page,
-    perPage,
-    dateRange,
-    kiosk,
-    filter,
-    sort,
-    product,
-  } = paginationState;
+  const startOfMonth = moment()
+    .startOf('month')
+    .toDate();
+  const currentDay = new Date();
+  const defaultDate = [startOfMonth, currentDay];
+
+  const { page, perPage, kiosk, filter, sort, product } = paginationState;
+  const [dateRange, changeDate] = useState({
+    $gte: defaultDate[0],
+    $lte: defaultDate[1],
+  });
+  const [dateFilter, changeDateFilter] = useState('');
 
   const getData = ({ sort }) => {
     const data = {
@@ -81,7 +82,7 @@ const ProductList = ({
         ...kio,
         ...prod,
       });
-      const dateRangeIndex = isEqual(dateRange, filter.dateRange);
+      const dateRangeIndex = isEqual(dateRange, dateFilter);
       const kioskIndex = isEqual(kiosk, filter.kiosk);
       const productIndex = isEqual(product, filter.product);
 
@@ -92,9 +93,9 @@ const ProductList = ({
       if (!dateRangeIndex || !kioskIndex || !productIndex) {
         data.skip = 0;
         changePage(0);
+        changeDateFilter(dateRange);
         changeFilter({
           ...filter,
-          dateRange,
           kiosk,
           product,
         });
@@ -208,7 +209,6 @@ const mapDispatchToProps = {
   getProductsWidgetsData,
   changePage,
   changePerPage,
-  changeDate,
   changeFilter,
   changeKiosk,
   changeSort,

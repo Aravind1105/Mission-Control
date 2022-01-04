@@ -80,6 +80,7 @@ const ModalLoadCell = ({
   const [disablePlanogramPosition, setDisablePlanogramPosition] = useState(
     false,
   );
+  const [isScaleUpdating, setScaleUpdating] = useState(false);
 
   useEffect(() => {
     getProductLinesByOrgId(orgId);
@@ -106,7 +107,6 @@ const ModalLoadCell = ({
       cellId: initVal.cellId.value,
       callback: handleClose,
     });
-    setShowDeleteAlert(false);
   };
 
   const handleSave = data => {
@@ -199,7 +199,7 @@ const ModalLoadCell = ({
         >
           <Form onSubmit={handleSubmit} className="modal-form">
             <Modal.Content>
-              {isProductLoading && <Loader />}
+              {isScaleUpdating && <Loader />}
               <Grid>
                 <Grid.Row columns="equal">
                   <Grid.Column>
@@ -378,6 +378,7 @@ const ModalLoadCell = ({
             <CustomAlert
               visible={showUpdateAlert}
               onApprove={() => {
+                setScaleUpdating(true);
                 handleSave(productInfo);
                 setShowUpdateAlert(false);
               }}
@@ -394,6 +395,7 @@ const ModalLoadCell = ({
             <CustomAlert
               visible={showAddAlert}
               onApprove={() => {
+                setScaleUpdating(true);
                 handleSave(productInfo);
                 setShowAddAlert(false);
               }}
@@ -410,7 +412,9 @@ const ModalLoadCell = ({
             <CustomAlert
               visible={showDeleteAlert}
               onApprove={() => {
+                setScaleUpdating(true);
                 handleDeleteLoadCell();
+                setShowDeleteAlert(false);
               }}
               onCancel={() => setShowDeleteAlert(false)}
               alertMsg={

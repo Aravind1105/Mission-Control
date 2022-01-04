@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Header, Divider, Grid, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import { format } from 'date-fns';
+
 import StatsCard from 'modules/shared/components/StatsCard';
 import Loader from 'modules/shared/components/Loader';
 import BarChart from 'modules/shared/components/BarChart';
@@ -23,6 +24,7 @@ import {
   getPaymentsMethodsStats,
   getNetSalesProfitNetCostData,
   getTopRefills,
+  setReportsKiosk as changeKiosk,
 } from './actions';
 import './styles.less';
 import { getKioskOptionsForTableDropdown } from '../kiosks/selectors';
@@ -31,12 +33,6 @@ import AreaChartComponent from './components/AreaChart';
 import TopSellingProductsTable from './components/TopSellingProductsTable';
 import TopSellingKiosksTable from './components/TopSellingKiosksTable';
 import UsedPaymentMethodsPiChart from './components/UsedPaymentMethodsPiChart';
-
-const startOfMonth = moment()
-  .startOf('month')
-  .toDate();
-const currentDay = new Date();
-const date = [startOfMonth, currentDay];
 
 const ReportsContent = ({
   widgetData,
@@ -61,12 +57,20 @@ const ReportsContent = ({
   isPaymentMethodLoading,
   paymentMethodsStats,
   getPaymentsMethodsStats,
+  reportsState,
+  changeKiosk,
 }) => {
+  const startOfMonth = moment()
+    .startOf('month')
+    .toDate();
+  const currentDay = new Date();
+  const date = [startOfMonth, currentDay];
+
+  const { kiosk } = reportsState;
   const [dateRange, changeDateRange] = useState({
     $gte: date[0],
     $lte: date[1],
   });
-  const [kiosk, changeKiosk] = useState([]);
 
   useEffect(() => {
     const data = {};
@@ -87,9 +91,10 @@ const ReportsContent = ({
       <Segment>
         <Toolbar
           changeDate={changeDateRange}
-          kiosks={kiosksOptions}
-          changeKiosk={changeKiosk}
           dateRange={date}
+          changeKiosk={changeKiosk}
+          kiosksOptions={kiosksOptions}
+          kiosk={kiosk}
         />
         <Grid>
           {isWidgetLoading && <Loader />}
@@ -288,6 +293,7 @@ const mapStateToProps = state => ({
   isTopRefillsLoading: state.reports.isTopRefillsLoading,
   isPaymentMethodLoading: state.reports.isPaymentMethodLoading,
   paymentMethodsStats: getPaymentsMethodsState(state),
+  reportsState: state.reports.reportsState,
 });
 
 const mapDispatchToProps = {
@@ -298,6 +304,7 @@ const mapDispatchToProps = {
   getTopSell,
   getTopRefills,
   getPaymentsMethodsStats,
+  changeKiosk,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContent);

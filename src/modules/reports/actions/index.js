@@ -7,6 +7,8 @@ export const getTopSellingKiosks = createAction(
 );
 
 // State actions
+export const setReportsKiosk = createAction('@@state/SET_REPORTS_KIOSK');
+
 export const getWidgetDataSuccess = createAction(
   '@@state/GET_WIDGET_DATA_SUCCESS',
 );

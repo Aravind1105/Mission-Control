@@ -114,7 +114,7 @@ function* handler({ payload }) {
     yield put(getKiosk(kioskId));
     toast({
       type: 'success',
-      description: 'Scale was saved successfully.',
+      description: 'Scale updated successfully.',
       animation: 'fade left',
     });
     callback();

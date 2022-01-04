@@ -8,10 +8,11 @@ import SelectCheckBoxes from '../../shared/components/SelectCheckBoxes';
 
 const Toolbar = ({
   changeDate,
-  kiosks,
+  kiosksOptions,
   changeKiosk,
   isKiosksListLoading,
   dateRange,
+  kiosk,
 }) => {
   const [exportData, changeExportData] = useState(false);
 
@@ -73,8 +74,9 @@ const Toolbar = ({
           <Grid.Column mobile={16} tablet={8} computer={3}>
             <SelectCheckBoxes
               title="Kiosks"
-              options={kiosks}
+              options={kiosksOptions}
               allOptionKey="all"
+              value={kiosk}
               onClickApply={handleKioskChange}
               isLoading={isKiosksListLoading}
             />
@@ -87,7 +89,7 @@ const Toolbar = ({
 
 Toolbar.propTypes = {
   changeDate: PropTypes.func,
-  kiosks: PropTypes.arrayOf(PropTypes.object),
+  kiosksOptions: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = state => ({

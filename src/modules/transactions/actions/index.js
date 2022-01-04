@@ -59,14 +59,12 @@ export const exportCsvProductsSuccess = createAction(
 );
 export const setSalesPage = createAction('@@state/SET_SALES_PAGE');
 export const setSalesPerPage = createAction('@@state/SET_SALES_PER_PAGE');
-export const setSalesDate = createAction('@@state/SET_SALES_DATE');
 export const setSalesKiosk = createAction('@@state/SET_SALES_KIOSK');
 export const setSalesSort = createAction('@@state/SET_SALES_SORT');
 export const setSalesFilter = createAction('@@state/SET_SALES_FILTER');
 
 export const setRefillsPage = createAction('@@state/SET_REFILLS_PAGE');
 export const setRefillsPerPage = createAction('@@state/SET_REFILLS_PER_PAGE');
-export const setRefillsDate = createAction('@@state/SET_REFILLS_DATE');
 export const setRefillsKiosk = createAction('@@state/SET_REFILLS_KIOSK');
 export const setRefillsSort = createAction('@@state/SET_REFILLS_SORT');
 export const setRefillsFilter = createAction('@@state/SET_REFILLS_FILTER');
@@ -75,7 +73,7 @@ export const setProductsPage = createAction('@@state/SET_PRODUCTS_TXN_PAGE');
 export const setProductsPerPage = createAction(
   '@@state/SET_PRODUCTS_TXN_PER_PAGE',
 );
-export const setProductsDate = createAction('@@state/SET_PRODUCTS_TXN_DATE');
+
 export const setProductsKiosk = createAction('@@state/SET_PRODUCTS_TXN_KIOSK');
 export const setProductsSort = createAction('@@state/SET_PRODUCTS_TXN_SORT');
 export const setProductsFilter = createAction(

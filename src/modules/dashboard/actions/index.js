@@ -8,7 +8,6 @@ export const getWidgetMonthlyData = createAction(
 );
 
 // State actions
-export const setAlertDate = createAction('@@state/SET_ALERT_DATE');
 export const setAlertPage = createAction('@@state/SET_ALERT_PAGE');
 export const setAlertPerPage = createAction('@@state/SET_ALERT_PER_PAGE');
 export const setAlertKiosk = createAction('@@state/SET_ALERT_KIOSK');

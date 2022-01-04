@@ -12,7 +12,7 @@ const DatePicker = ({ type, onChange, value }) => {
     setInput(value);
   };
   useEffect(() => {
-    if (input && input.length === 13) {
+    if (input?.length === 13) {
       const datesStr = input.split('-');
       const split = datesStr[0].split('.');
       const date = new Date();
@@ -23,7 +23,7 @@ const DatePicker = ({ type, onChange, value }) => {
       date.setMinutes(0);
       date.setSeconds(0);
       onChange([date]);
-    } else if (input && input.length === 23) {
+    } else if (input?.length === 23) {
       const datesStr = input.split('-');
       onChange(
         datesStr.map(ele => {

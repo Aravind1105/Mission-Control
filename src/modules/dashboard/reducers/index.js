@@ -1,5 +1,5 @@
 import { handleActions, combineActions } from 'redux-actions';
-import moment from 'moment';
+
 import {
   getSalesStatistic,
   getSalesStatisticSuccess,
@@ -13,7 +13,6 @@ import {
   setAlertPerPage,
   setAlertSort,
   setAlert,
-  setAlertDate,
   setAlmostPage,
   setAlmostPerPage,
   setAlmostKiosk,
@@ -22,12 +21,6 @@ import {
   setAlmostFilter,
   setAlmostSort,
 } from '../actions';
-
-const startOfMonth = moment()
-  .startOf('month')
-  .toDate();
-const currentDay = new Date();
-const date = [startOfMonth, currentDay];
 
 const initialState = {
   salesStat: [],
@@ -43,10 +36,6 @@ const initialState = {
     totalMonthlyGrossIncome: 0,
   },
   alertPagination: {
-    dateRange: {
-      $gte: date[0],
-      $lte: date[1],
-    },
     kiosk: [],
     alert: '',
     page: 0,
@@ -58,10 +47,6 @@ const initialState = {
       },
     ],
     filters: {
-      dateRange: {
-        $gte: date[0],
-        $lte: date[1],
-      },
       kiosk: [],
       alert: '',
     },
@@ -113,10 +98,6 @@ const dashboard = handleActions(
     [setAlert]: (state, { payload }) => ({
       ...state,
       alertPagination: { ...state.alertPagination, alert: payload },
-    }),
-    [setAlertDate]: (state, { payload }) => ({
-      ...state,
-      alertPagination: { ...state.alertPagination, dateRange: payload },
     }),
     [setAlertPage]: (state, { payload }) => ({
       ...state,

@@ -5,17 +5,13 @@ import history from 'lib/history';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import {
   modifyKiosk as action,
-  getKiosk as actionSuccess,
+  modifyKioskSuccess as actionSuccess,
   getKiosksList,
 } from '../actions';
-import {
-  CREATE_KIOSK_MUTATION,
-  UPDATE_KIOSK_MUTATION,
-  GET_KIOSK_QUERY,
-} from '../schema';
+import { CREATE_KIOSK_MUTATION, UPDATE_KIOSK_MUTATION } from '../schema';
 import { updateSessionExpired } from '../../../core/actions/coreActions';
 
-function* handler({ payload: { values, formActions } }) {
+function* handler({ payload: { values } }) {
   try {
     const { id, orgId, pin, technicianPin, ...rest } = values;
     const variables = {
@@ -50,6 +46,7 @@ function* handler({ payload: { values, formActions } }) {
           loadCells: toFlatLoadCellItem(responseData.inventory.loadCells),
         },
       };
+      yield put(actionSuccess(kiosk));
       toast({
         type: 'success',
         description: id
@@ -57,7 +54,7 @@ function* handler({ payload: { values, formActions } }) {
           : 'Kiosk created successfully',
         animation: 'fade left',
       });
-      yield put(actionSuccess(responseData._id));
+
       !id && (yield put(getKiosksList()));
     } else {
       if (errors && errors[0].message === 'Token expired')

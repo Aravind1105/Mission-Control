@@ -1,4 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-semantic-toasts';
+
 import gqlTransactions from 'lib/https/gqlTransactions';
 import gqlKiosk from 'lib/https/gqlKiosk';
 import toFlatLoadCellItem from 'lib/toFlatLoadCells';
@@ -15,7 +17,10 @@ function* handler({ payload }) {
     let variables = {
       kioskId: payload,
     };
-    const { errors } = yield call(gqlTransactions.mutate, {
+    const {
+      data: { createRefill: response },
+      errors,
+    } = yield call(gqlTransactions.mutate, {
       mutation: CREATE_REFILL_MUTATION,
       variables,
     });
@@ -24,6 +29,7 @@ function* handler({ payload }) {
     variables = {
       id: payload,
     };
+
     const {
       data: { getKioskWithCapacities },
     } = yield call(gqlKiosk.query, {
@@ -32,16 +38,36 @@ function* handler({ payload }) {
     });
 
     const kiosk = {
-      ...getKioskById,
+      ...getKioskWithCapacities,
       inventory: {
-        // loadCells: toFlatLoadCellItem(kioskReset.inventory.loadCells, payload),
         loadCells: toFlatLoadCellItem(
           getKioskWithCapacities.inventory.loadCells,
-          payload,
         ),
       },
     };
     yield put(actionSuccess(kiosk));
+    if (response?._id) {
+      toast({
+        type: 'success',
+        description: 'Opening the door',
+        animation: 'fade left',
+        icon: 'info',
+        color: 'blue',
+      });
+    } else if (errors[0].message === 'Kiosk already in use.') {
+      toast({
+        type: 'error',
+        description: 'Kiosk is currently in use',
+        animation: 'fade left',
+        icon: 'info',
+      });
+    } else {
+      toast({
+        type: 'error',
+        description: 'Error! Something went wrong',
+        animation: 'fade left',
+      });
+    }
   } catch (error) {
     console.log(error);
   }

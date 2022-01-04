@@ -86,17 +86,15 @@ const AlertsTable = ({
         </Header>
         <BackLink {...{ ...backLink }} />
       </SegmentHeader>
-      <div className="toolbar-container">
-        <Toolbar
-          changeDate={changeDate}
-          dateRange={dateRange}
-          changeKiosk={changeKiosk}
-          kioskFilter={kioskFilter}
-          changeAlert={changeAlert}
-          alertFilter={alertFilter}
-          changePage={changePage}
-        />
-      </div>
+      <Toolbar
+        changeDate={changeDate}
+        dateRange={dateRange}
+        changeKiosk={changeKiosk}
+        kioskFilter={kioskFilter}
+        changeAlert={changeAlert}
+        alertFilter={alertFilter}
+        changePage={changePage}
+      />
       <Grid stackable stretched>
         <Grid.Row>
           <Grid.Column>

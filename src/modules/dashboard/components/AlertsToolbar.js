@@ -59,33 +59,28 @@ const Toolbar = ({
           <DatePicker
             type="range"
             onChange={handleDateChange}
-            className="full-width"
             value={dateRange}
           />
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
-          <div className="toolbar-dropdown">
-            <SelectCheckBoxes
-              title="Kiosks"
-              options={kiosks}
-              value={kioskFilter}
-              allOptionKey="all"
-              onClickApply={handleKioskChange}
-              isLoading={isKiosksLoading}
-            />
-          </div>
+          <SelectCheckBoxes
+            title="Kiosks"
+            options={kiosks}
+            value={kioskFilter}
+            allOptionKey="all"
+            onClickApply={handleKioskChange}
+            isLoading={isKiosksLoading}
+          />
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={3}>
-          <div className="toolbar-dropdown">
-            <Dropdown
-              placeholder="All Alerts"
-              selection
-              options={alertsOptions}
-              value={alertFilter}
-              className="full-width"
-              onChange={handleAlertsChange}
-            />
-          </div>
+          <Dropdown
+            placeholder="All Alerts"
+            selection
+            options={alertsOptions}
+            value={alertFilter}
+            className="full-width"
+            onChange={handleAlertsChange}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>
